@@ -19,4 +19,8 @@ if ($cache == 1) {
 
 include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
-include 'tmpl/login.php';
+$_body = 'login.php';
+ 
+$_SESSION['site_title'] = $_SESSION['site_name'] . ' - Панель администратора';
+
+include 'tmpl/index.php';
