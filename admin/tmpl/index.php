@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" dir="ltr">
-    
+
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -32,7 +32,7 @@
         <![endif]-->
         <script src="/assets/panel/assets/plugins/nprogress/nprogress.js"></script>
     </head>
-    
+
     <body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
 
         <script>
@@ -46,6 +46,15 @@
         <script src="/assets/panel/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
         <script src="/assets/panel/assets/plugins/jekyll-search.min.js"></script>
         <script src="/assets/panel/assets/js/sleek.bundle.js"></script>
+        <script src="/assets/panel/assets/plugins/select2/js/select2.min.js"></script>
+        <script src="/assets/panel/assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
+
+        <?
+        foreach ($_body_javascript as $value) {
+            echo $value . "<br/>\n";
+        }
+        ?>
+
     </body>
 
 </html>

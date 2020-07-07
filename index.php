@@ -2,6 +2,10 @@
 
 session_start();
 
+define('__CMS__', 1);
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+
 /*
  * Кэширование 
  */

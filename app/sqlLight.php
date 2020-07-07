@@ -4,7 +4,7 @@
  * работа с базой данных
  */
 
-include $_SERVER['DOCUMENT_ROOT'] . 'config.php';
+//include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 class sqlLight {
 
@@ -19,13 +19,8 @@ class sqlLight {
     }
 
     public function conect() {
-        //$url = str_replace('/api', '', dirname(__FILE__));
-        //include $url . '/conf.php';
-        $cfg_db_name = 'resko_japan';
-        $cfg_db_user = 'resko_resko';
-        $cfg_db_pass = 'Kopass1987'; // Niko1706
-        $cfg_db_host = 'localhost';
-        $cfg_db_prefix = '';
+        $url = str_replace('/app', '', dirname(__FILE__));
+        include $url . '/config.php';
         $this->db_prefix = $cfg_db_prefix;
         $conn = mysqli_connect($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
         $this->conn = $conn;
@@ -63,7 +58,7 @@ class sqlLight {
         $ret = false;
         /* Включить режим фиксации */
         mysqli_autocommit($this->conn, FALSE);
-        if (mysqli_query($this->conn, $query) === TRUE){
+        if (mysqli_query($this->conn, mysql_real_escape_string($query)) === TRUE){
             $ret = true;
         }
         // Commit transaction
@@ -85,7 +80,7 @@ class sqlLight {
         //$q = mysqli_query($this->conn, $query);
         
         $col = 0;
-        if ($result = mysqli_query($this->conn, $query)) {
+        if ($result = mysqli_query($this->conn, mysql_real_escape_string($query))) {
             //printf("Select вернул %d строк.\n", mysqli_num_rows($result));
             $col = mysqli_num_rows($result);
             /* очищаем результирующий набор */
@@ -121,7 +116,7 @@ class sqlLight {
 
     public function queryNumRows() {
         $col = 0;
-        $q = mysqli_query($this->conn, $query);
+        $q = mysqli_query($this->conn, mysql_real_escape_string($query));
         $c = mysqli_num_rows($q);
         if ($c > 0) {
             $col = $c;
