@@ -5,9 +5,15 @@ defined('__CMS__') or die;
 /*
  * Все настройки
  */
+// Режим отладки
+$_SESSION['DEBUG'] = 1;
+
+// Язык сайта
+$_SESSION['lang'] = 'ru';
+include $_SERVER['DOCUMENT_ROOT'] . '/admin/lang/' . $_SESSION['lang'] . '.php';
 
 // Заголовок
-$_SESSION['site_name'] = 'Сайт зайцева';
+$_SESSION['site_name'] = $lang['site_title'];
 
 // Подключение к базе данных
 $cfg_db_name = 'resko_zay';

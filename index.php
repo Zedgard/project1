@@ -29,3 +29,5 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
  */
 
 echo "Ok";
+
+$_SESSION['errors'] = array();

@@ -1,5 +1,7 @@
 <?php
 
+namespace project;
+
 /*
  * работа с базой данных
  */
@@ -15,6 +17,7 @@ class sqlLight {
     private $conn;
 
     public function __construct() {
+        $this->conect();
         return TRUE;
     }
 
@@ -25,7 +28,7 @@ class sqlLight {
         $conn = mysqli_connect($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
         $this->conn = $conn;
         //$conn = mysql_connect($cfg_db_host, $cfg_db_user, $cfg_db_pass);
-        
+
         /* проверка соединения */
         if (mysqli_connect_errno()) {
             printf("Не удалось подключиться: %s\n", mysqli_connect_error());
@@ -58,7 +61,7 @@ class sqlLight {
         $ret = false;
         /* Включить режим фиксации */
         mysqli_autocommit($this->conn, FALSE);
-        if (mysqli_query($this->conn, mysql_real_escape_string($query)) === TRUE){
+        if (mysqli_query($this->conn, mysqli_real_escape_string($this->conn, $query)) === TRUE) {
             $ret = true;
         }
         // Commit transaction
@@ -78,17 +81,18 @@ class sqlLight {
         $i = 0;
         //echo 'Query: ' . $query . "<br/>";
         //$q = mysqli_query($this->conn, $query);
-        
+
         $col = 0;
-        if ($result = mysqli_query($this->conn, mysql_real_escape_string($query))) {
+        $query = mysqli_real_escape_string($this->conn, $query);
+        $result = mysqli_query($this->conn, mysqli_real_escape_string($this->conn, $query));
+        if ($result = mysqli_query($this->conn, mysqli_real_escape_string($this->conn, $query))) {
             //printf("Select вернул %d строк.\n", mysqli_num_rows($result));
             $col = mysqli_num_rows($result);
-            /* очищаем результирующий набор */
-            //mysqli_free_result($result);
         }
-
-
+        /* очищаем результирующий набор */
+        //mysqli_free_result($result);
         //print_r($q); 
+        //
         //echo "G: " . count($q) .  " <br/>";
         if ($col > 0) {
             while ($r = mysqli_fetch_array($result, MYSQLI_BOTH)) {
@@ -96,7 +100,7 @@ class sqlLight {
                 $buffer[] = $r;
                 //print_r($r);
                 //echo "<br/>\n";
-            } 
+            }
         }
 //        if (count($q) > 0) {
 //            while ($r = mysqli_fetch_array($q)) {
@@ -104,19 +108,19 @@ class sqlLight {
 //                $buffer[] = $r;
 //            }
 //        }
-        
+
         /* очищаем результаты выборки */
-        if($col > 0){
+        if ($col > 0) {
             mysqli_free_result($result);
         }
-        
+
         $this->setCount($i);
         return $buffer;
     }
 
     public function queryNumRows() {
         $col = 0;
-        $q = mysqli_query($this->conn, mysql_real_escape_string($query));
+        $q = mysqli_query($this->conn, mysqli_real_escape_string($this->conn, $query));
         $c = mysqli_num_rows($q);
         if ($c > 0) {
             $col = $c;

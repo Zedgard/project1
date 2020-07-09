@@ -1,17 +1,19 @@
 <?php
 
+namespace project;
+
 /*
  * Сосдание и проверка токена
  */
 
-namespace core_app;
-
 // Для проверки
 //echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
-
-if(isset($_GET['token_kill'])){
-    $_SESSION['token_hash'] = '';
-    $_SESSION['token_data'] = '';
+if ($_SESSION['DEBUG'] == 1) {
+    //echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
+    if (isset($_GET['token_kill'])) {
+        $_SESSION['token_hash'] = '';
+        $_SESSION['token_data'] = '';
+    }
 }
 
 class token {
@@ -34,7 +36,7 @@ class token {
      */
     public function register() {
         $t = time();
-        if ($_SESSION['time'] < $t) {
+        if (($_SESSION['time'] + 3) < $t) {
             $this->token_key = random_int(1000000000, 9999999999);
             $this->token_hash = md5($this->token_key);
             if (strlen($this->token_hash) > 0) {
@@ -115,7 +117,7 @@ class token {
     public function javascript() {
         if (strlen($_SESSION['token_hash']) == 0) {
             ob_start();
-            ?>
+            ?>11
             <script>
                 $(document).ready(function () {
                     setTimeout(function () {
@@ -132,7 +134,6 @@ class token {
                 });
             </script>
             <?
-
             return ob_get_clean();
         }
     }

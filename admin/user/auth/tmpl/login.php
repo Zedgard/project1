@@ -41,16 +41,16 @@
                                 <div class="card-body p-5">
 
                                     <h4 class="text-dark mb-5">Авторизация</h4>
-                                    <form action="/">
+                                    <form id="authorization" action="/jpost.php" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">
-                                                <input type="login" class="form-control input-lg" id="email" aria-describedby="emailHelp" type="email" placeholder="Телефон / Эл. Почта" required />
+                                                <input type="login" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email" placeholder="Телефон / Эл. Почта" required />
                                                 <div class="valid-feedback">
                                                     принято!
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12 ">
-                                                <input type="password" class="form-control input-lg" id="password" placeholder="Пароль" required />
+                                                <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Пароль" required />
                                                 <div class="valid-feedback">
                                                     принято!
                                                 </div>
@@ -66,6 +66,7 @@
                                                 </p>
                                             </div> 
                                         </div>
+                                        <input type="hidden" name="authorization" />    
                                     </form>
                                 </div>
                             </div>
@@ -91,24 +92,24 @@
                                 </div>
                                 <div class="card-body p-5">
                                     <h4 class="text-dark mb-5">Регистрация</h4>
-                                    <form action="/index.html">
+                                    <form action="/jpost.php" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">
-                                                <input type="text" class="form-control input-lg" id="phone" data-mask="+7 (999) 999-9999" aria-describedby="nameHelp" type="phone" placeholder="Мобильный телефон">
+                                                <input type="text" class="form-control input-lg" name="phone" id="phone" data-mask="+7 (999) 999-9999" aria-describedby="nameHelp" type="phone" placeholder="Мобильный телефон">
                                             </div>
                                             <div class="form-group col-md-12 mb-4">
-                                                <input type="email" class="form-control input-lg" id="email" aria-describedby="emailHelp" type="email" placeholder="Адрес электронной почты">
+                                                <input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email" placeholder="Адрес электронной почты">
                                             </div>
                                             <div class="form-group col-md-12 ">
-                                                <input type="password" class="form-control input-lg" id="password" placeholder="Пароль">
+                                                <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Пароль">
                                             </div>
                                             <div class="form-group col-md-12 ">
-                                                <input type="password" class="form-control input-lg" id="cpassword" placeholder="Повторить пароль">
+                                                <input type="password" class="form-control input-lg" name="cpassword" id="cpassword" placeholder="Повторить пароль">
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="d-inline-block mr-3">
                                                     <label class="control control-checkbox">
-                                                        <input type="checkbox" id="check_indicator" value="1" />
+                                                        <input type="checkbox" id="check_indicator" name="check_indicator" value="1" />
                                                         <div class="control-indicator"></div>
                                                         Я согласен с условиями и положениями
                                                     </label>
@@ -120,6 +121,7 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="registration" />  
                                     </form>
 
                                 </div>
@@ -192,8 +194,6 @@
 
             </div>
 
-
-
             <footer class="footer mt-auto">
                 <div class="copyright bg-white">
                     <p>
@@ -216,3 +216,10 @@
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        $('#authorization').sendPost(function (result) {
+            //alert("Ok " + result['errors'][0]);
+        });
+    });
+</script> 

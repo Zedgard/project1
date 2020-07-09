@@ -23,18 +23,27 @@ if ($cache == 1) {
 
 include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
-$_body = 'login.php';
 
 $_SESSION['site_title'] = $_SESSION['site_name'] . ' - Панель администратора';
 
 // Токен
 include_once $_SERVER['DOCUMENT_ROOT'] . '/app/token.php';
-$token = new \core_app\token();
+$token = new \project\token();
 
 /**
  * Регистрируем javascript скрипты здесь
  */
 $_body_javascript[] = $token->javascript();
 
+if ($_SESSION['DEBUG'] == 1) {
+    echo "user_auth_data: " . $_SESSION['user_auth_data'] . "<br/>\n";
+    echo "Errors: "; 
+    print_r($_SESSION['errors']);
+}
+
+$_body = $_SERVER['DOCUMENT_ROOT'] . '/admin/user/auth/tmpl/login.php';
+
+
 include 'tmpl/index.php';
 
+$_SESSION['errors'] = array();

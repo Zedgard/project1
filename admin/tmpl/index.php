@@ -39,16 +39,15 @@
             NProgress.configure({showSpinner: false});
             NProgress.start();
         </script>
+        <script src="/assets/plugins/jquery/jquery.min.js"></script>
+        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
+        <script src="/assets/plugins/jekyll-search.min.js"></script>
+        <script src="/assets/js/sleek.bundle.js"></script>
+        <script src="/assets/plugins/select2/js/select2.min.js"></script>
+        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
+        <script src="/assets/js/ajax.js"></script>   
 
         <? include $_body ?>
-
-        <script src="/assets/panel/assets/plugins/jquery/jquery.min.js"></script>
-        <script src="/assets/panel/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
-        <script src="/assets/panel/assets/plugins/jekyll-search.min.js"></script>
-        <script src="/assets/panel/assets/js/sleek.bundle.js"></script>
-        <script src="/assets/panel/assets/plugins/select2/js/select2.min.js"></script>
-        <script src="/assets/panel/assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
-
         <?
         foreach ($_body_javascript as $value) {
             echo $value . "<br/>\n";
