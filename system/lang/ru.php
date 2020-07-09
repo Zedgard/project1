@@ -12,5 +12,11 @@ $lang = array(
     'no_input_form' => 'Обязательные поля не заполнены',
     'check_positions' => 'Я согласен с условиями и положениями',
     'user_search_register_true' => 'Пользователь уже зарегистрирован в системе',
-    'user_search_authorization_false' => 'Ошибка авторизации, такого пользователя нет в системе!',
+    'user_search_authorization_false' => 'Ошибка авторизации, такого пользователя нет в системе',
+    
+    'sql_connect_error' => 'Ошибка подключения к базе данных',
+    'sql_creat_table_true' => 'Таблица успешно создана',
+    'sql_set_names_true' => 'Ошибка установки SET NAMES',
+    'sql_query_false' => 'Ошибка выполнения запроса',
+    'sql_query_commit_false' => 'Не удалось зафиксировать транзакцию'
 );

@@ -27,6 +27,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
  * Расширения
  *  
  */
+echo "user_auth_data: ";
+print_r($_SESSION['user_auth_data']);
+echo "<br/>\n";
+
 
 echo "Ok";
 

@@ -10,7 +10,7 @@ $_SESSION['DEBUG'] = 1;
 
 // Язык сайта
 $_SESSION['lang'] = 'ru';
-include $_SERVER['DOCUMENT_ROOT'] . '/admin/lang/' . $_SESSION['lang'] . '.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
 
 // Заголовок
 $_SESSION['site_name'] = $lang['site_title'];

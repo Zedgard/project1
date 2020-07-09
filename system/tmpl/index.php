@@ -48,12 +48,12 @@
         <script src="/assets/js/ajax.js"></script>   
 
         <? include $_body ?>
+        
         <?
         foreach ($_body_javascript as $value) {
-            echo $value . "<br/>\n";
+            echo $value ;
         }
         ?>
-
     </body>
 
 </html>

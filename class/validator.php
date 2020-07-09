@@ -1,5 +1,10 @@
 <?php
 
+namespace project;
+
+/**
+ * Валидатор полей
+ */
 class Validator {
 
     private $_field_data = array();
@@ -395,7 +400,6 @@ class Validator {
 
         return checkdate($month, $day, $year);
     }
-
 
 }
 

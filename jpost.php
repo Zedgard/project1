@@ -14,14 +14,13 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 if (isset($_POST)) {
     //echo "post";
-    
     // Результат выполнения запроса
     $result = array();
-    
+
     // Регистрация пользователя
     if (isset($_POST['t'])) {
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/app/token.php';
-        $token = new \core_app\token();
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/class/token.php';
+        $token = new \project\token();
         if ($token->register()) {
             echo json_encode(array('t' => 1));
         } else {
@@ -35,12 +34,15 @@ if (isset($_POST)) {
 
     // Определим пользователя и разрешим ему отправлять запросы
     if (isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) {
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/admin/user/auth/jpost.php';
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/jpost.php';
+    }
+
+    // Если имеются ошибки!
+    if (count($_SESSION['errors']) > 0) {
+        $result = array('success' => 0, 'errors' => $_SESSION['errors']);
     }
     
-    // Если имеются ошибки!
-    if(count($_SESSION['errors']) > 0){
-        $result['errors'] = $_SESSION['errors'];
-    }
+    $_SESSION['errors'] = array();
+    
     echo json_encode($result);
 }

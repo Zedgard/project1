@@ -27,7 +27,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 $_SESSION['site_title'] = $_SESSION['site_name'] . ' - Панель администратора';
 
 // Токен
-include_once $_SERVER['DOCUMENT_ROOT'] . '/app/token.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/token.php';
 $token = new \project\token();
 
 /**
@@ -39,11 +39,11 @@ if ($_SESSION['DEBUG'] == 1) {
     echo "user_auth_data: " . $_SESSION['user_auth_data'] . "<br/>\n";
     echo "Errors: "; 
     print_r($_SESSION['errors']);
+    //echo "<br/>\n";
+    //echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
 }
 
-$_body = $_SERVER['DOCUMENT_ROOT'] . '/admin/user/auth/tmpl/login.php';
+$_body = $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/tmpl/login.php';
 
 
 include 'tmpl/index.php';
-
-$_SESSION['errors'] = array();

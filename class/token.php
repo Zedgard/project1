@@ -3,11 +3,10 @@
 namespace project;
 
 /*
- * Сосдание и проверка токена
+ * Создание и проверка токена
  */
 
 // Для проверки
-//echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
 if ($_SESSION['DEBUG'] == 1) {
     //echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
     if (isset($_GET['token_kill'])) {
@@ -16,6 +15,9 @@ if ($_SESSION['DEBUG'] == 1) {
     }
 }
 
+/**
+ * Встроеный токен 
+ */
 class token {
 
     private $token_key;
@@ -117,7 +119,7 @@ class token {
     public function javascript() {
         if (strlen($_SESSION['token_hash']) == 0) {
             ob_start();
-            ?>11
+            ?>
             <script>
                 $(document).ready(function () {
                     setTimeout(function () {
@@ -134,6 +136,7 @@ class token {
                 });
             </script>
             <?
+
             return ob_get_clean();
         }
     }

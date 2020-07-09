@@ -59,6 +59,9 @@
                                                 <div class="d-flex my-2 justify-content-between">
                                                     <p><a class="text-blue" href="#">Забыли пароль?</a></p>
                                                 </div>
+                                                <div class="form_result" style="display: none;">
+
+                                                </div>
                                                 <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Авторизация</button>
                                                 <p>
                                                     Нет учетной записи
@@ -92,10 +95,10 @@
                                 </div>
                                 <div class="card-body p-5">
                                     <h4 class="text-dark mb-5">Регистрация</h4>
-                                    <form action="/jpost.php" method="POST">
+                                    <form id="registration" action="/jpost.php" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">
-                                                <input type="text" class="form-control input-lg" name="phone" id="phone" data-mask="+7 (999) 999-9999" aria-describedby="nameHelp" type="phone" placeholder="Мобильный телефон">
+                                                <input type="text" class="form-control input-lg phone" name="phone" id="phone" data-mask="+7 (999) 999-9999" aria-describedby="nameHelp" type="phone" placeholder="Мобильный телефон">
                                             </div>
                                             <div class="form-group col-md-12 mb-4">
                                                 <input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email" placeholder="Адрес электронной почты">
@@ -115,6 +118,10 @@
                                                     </label>
 
                                                 </div>
+                                                <div class="form_result" style="display: none;">
+
+                                                </div>
+
                                                 <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Регистрация</button>
                                                 <p>У меня есть уже аккаунт
                                                     <a class="text-blue" href="./index.php">Авторизация</a>
@@ -129,69 +136,6 @@
                         </div>
                     <? endif; ?>
                 </div>
-            </div>
-
-
-
-            <div class="right-sidebar-2">
-                <div class="right-sidebar-container-2">
-                    <div class="slim-scroll-right-sidebar-2">
-
-                        <div class="right-sidebar-2-header">
-                            <h2>Layout Settings</h2>
-                            <p>User Interface Settings</p>
-                            <div class="btn-close-right-sidebar-2">
-                                <i class="mdi mdi-window-close"></i>
-                            </div>
-                        </div>
-
-                        <div class="right-sidebar-2-body">
-                            <span class="right-sidebar-2-subtitle">Header Layout</span>
-                            <div class="no-col-space">
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 header-fixed-to btn-right-sidebar-2-active">Fixed</a>
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 header-static-to">Static</a>
-                            </div>
-
-                            <span class="right-sidebar-2-subtitle">Sidebar Layout</span>
-                            <div class="no-col-space">
-                                <select class="right-sidebar-2-select" id="sidebar-option-select">
-                                    <option value="sidebar-fixed">Fixed Default</option>
-                                    <option value="sidebar-fixed-minified">Fixed Minified</option>
-                                    <option value="sidebar-fixed-offcanvas">Fixed Offcanvas</option>
-                                    <option value="sidebar-static">Static Default</option>
-                                    <option value="sidebar-static-minified">Static Minified</option>
-                                    <option value="sidebar-static-offcanvas">Static Offcanvas</option>
-                                </select>
-                            </div>
-
-                            <span class="right-sidebar-2-subtitle">Header Background</span>
-                            <div class="no-col-space">
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 btn-right-sidebar-2-active header-light-to">Light</a>
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 header-dark-to">Dark</a>
-                            </div>
-
-                            <span class="right-sidebar-2-subtitle">Navigation Background</span>
-                            <div class="no-col-space">
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 btn-right-sidebar-2-active sidebar-dark-to">Dark</a>
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 sidebar-light-to">Light</a>
-                            </div>
-
-                            <span class="right-sidebar-2-subtitle">Direction</span>
-                            <div class="no-col-space">
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 btn-right-sidebar-2-active ltr-to">LTR</a>
-                                <a href="javascript:void(0);" class="btn-right-sidebar-2 rtl-to">RTL</a>
-                            </div>
-
-                            <div class="d-flex justify-content-center" style="padding-top: 30px">
-                                <div id="reset-options" style="width: auto; cursor: pointer" class="btn-right-sidebar-2 btn-reset">Reset
-                                    Settings</div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
 
             <footer class="footer mt-auto">
@@ -219,7 +163,12 @@
 <script>
     $(function () {
         $('#authorization').sendPost(function (result) {
-            //alert("Ok " + result['errors'][0]);
+            //console.log("authorization ok");
         });
+        $('#registration').sendPost(function (result) {
+            //console.log("registration ok");
+        });
+
+        $('.phone').mask('+7 (999) 999-9999');
     });
 </script> 

@@ -70,6 +70,24 @@ namespace project;
 
  */
 
+/**
+ * Отправка писем на электронную почту
+ * 
+ * Пример<br/>
+ * $m= new Mail('windows-1251'); <br/>
+  $m->From( "Сергей;asd@asd.com" ); <br/>
+  $m->ReplyTo( 'Сергей Вадимыч;replay@bk.ru' ); <br/>
+  $m->To( "kuda@asd.ru" );  <br/>
+  $m->Subject( "тема сообщения" );<br/>
+  $m->Body("Сообщение. Текст письма");<br/>
+  $m->Cc( "kopiya@asd.ru");  <br/>
+  $m->Bcc( "skritaya_kopiya@asd.ru"); <br/>
+  $m->Priority(4) ;	<br/>
+  $m->Attach( "/toto.gif", "", "image/gif" ) ;	<br/>
+  $m->smtp_on("smtp.asd.com","login","passw", 25, 10); <br/>
+  $m->Send();	<br/>
+  echo "Письмо отправлено, вот исходный текст письма:<br><pre>", $m->Get(), "</pre>";
+ */
 class mail {
     /*     определение переменных идет через VAR, для обеспечения работы в php старых версий
       массивы адресов кому отправить
@@ -129,6 +147,7 @@ class mail {
                 $this->ctencoding = "7bit";
         }
     }
+
 //    function Mail($charset = "") {
 //        $this->autoCheck(true);
 //        $this->boundary = "--" . md5(uniqid("myboundary"));
@@ -231,7 +250,6 @@ class mail {
         // если это массив
         if (is_array($to)) {
             foreach ($to as $key => $value) { // перебираем массив и добавляем в массив для отправки через smtp
-
                 $temp_mass = explode(';', $value); // разбиваем по разделителю для выделения имени
 
                 if (count($temp_mass) == 2) { // если удалось разбить на два элемента
@@ -248,12 +266,10 @@ class mail {
             $temp_mass = explode(';', $to); // разбиваем по разделителю для выделения имени
 
             if (count($temp_mass) == 2) { // если удалось разбить на два элемента
-
                 $this->sendto[] = $temp_mass[1];
                 $this->smtpsendto[$temp_mass[1]] = $temp_mass[1]; // ключи и значения одинаковые, чтобы исключить дубли адресов
                 $this->names_email['To'][$temp_mass[1]] = $temp_mass[0]; // имя первая часть
             } else { // и если имя не определено
-
                 $this->sendto[] = $to;
                 $this->smtpsendto[$to] = $to; // ключи и значения одинаковые, чтобы исключить дубли адресов
 
@@ -489,13 +505,15 @@ class mail {
         if (!$this->smtp_on) {
             $res = @mail($this->strTo, $this->xheaders['Subject'], $this->fullBody, $this->headers);
         } else { // если через smtp
-
-            if (!$this->smtp_serv OR !$this->smtp_login OR !$this->smtp_pass OR !$this->smtp_port)
+            if (!$this->smtp_serv OR!$this->smtp_login OR!$this->smtp_pass OR!$this->smtp_port)
                 return false; // если нет хотя бы одного из основных данных для коннекта, выходим с ошибкой
 
 
 
 
+
+
+                
 // разбиваем (FROM - от кого) на юзера и домен. юзер понадобится в приветсвии с сервом
             $user_domen = explode('@', $this->xheaders['From']);
 
@@ -545,7 +563,7 @@ class mail {
 
 
             fputs($smtp_conn, base64_encode($this->smtp_pass) . "\r\n");
-            $this->smtp_log .="Я: " . base64_encode($this->smtp_pass) . "\n";
+            $this->smtp_log .= "Я: " . base64_encode($this->smtp_pass) . "\n";
             $this->smtp_log .= $data = $this->get_data($smtp_conn) . "\n";
 
             $code = substr($data, 0, 3);
@@ -584,7 +602,7 @@ class mail {
 
 
             fputs($smtp_conn, "DATA\r\n");
-            $this->smtp_log .="Я: DATA\n";
+            $this->smtp_log .= "Я: DATA\n";
             $this->smtp_log .= $data = $this->get_data($smtp_conn) . "\n";
 
             $code = substr($data, 0, 3);
@@ -607,7 +625,7 @@ class mail {
             }
 
             fputs($smtp_conn, "QUIT\r\n");
-            $this->smtp_log .="QUIT\r\n";
+            $this->smtp_log .= "QUIT\r\n";
             $this->smtp_log .= $data = $this->get_data($smtp_conn) . "\n";
             fclose($smtp_conn);
         }
@@ -645,8 +663,7 @@ class mail {
                 return true;
             else
                 return false;
-        }
-        else { // а если php еще старой версии, то проверка валидности пойдет старым способом
+        } else { // а если php еще старой версии, то проверка валидности пойдет старым способом
             if (ereg(".*<(.+)>", $address, $regs)) {
                 $address = $regs[1];
             }

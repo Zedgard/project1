@@ -6,11 +6,11 @@ namespace project;
  * Авторизация пользователя
  */
 
-include $_SERVER['DOCUMENT_ROOT'] . '/admin/lang/' . $_SESSION['lang'] . '.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/admin/user/inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/app/validator.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/app/sqlLight.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/app/mail.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/validator.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 
 class auth extends \project\user {
 
@@ -32,8 +32,8 @@ class auth extends \project\user {
             $pass_hash = $this->passHash($password);
 
             $sqlLight = new \project\sqlLight();
-            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='{$email}' or u.`phone`='{$email}') and u.`u_pass`='{$pass_hash}' and `active` = 1";
-            $users = $sqlLight->queryList($query);
+            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active` = 1";
+            $users = $sqlLight->queryList($query, array($email, $email, $pass_hash));
 
             if (count($users) > 0) {
                 $_SESSION['user_auth_data'] = $users;
@@ -59,6 +59,7 @@ class auth extends \project\user {
      */
     public function register($email, $phone, $pass, $pass_r, $check_private) {
         global $lang;
+        $error = array();
         // если все поля введены
         if (strlen($email) > 2 && strlen($phone) > 2 && strlen($pass) > 2) {
 
@@ -79,17 +80,17 @@ class auth extends \project\user {
 
             $sqlLight = new \project\sqlLight();
 
-            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='{$email}' or u.`phone`='{$phone}') and `active` = 1";
-            $users = $sqlLight->queryList($query);
+            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active` = 1";
+            $users = $sqlLight->queryList($query, array($email, $phone));
             if ($sqlLight->getCount() > 0) {
                 $error[] = $lang['user_search_register_true'];
             }
 
             if (count($error) == 0) {
                 $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_lastdate`) "
-                        . "VALUES ({$email},{$phone},'','',{$pass_hash},0, NOW() )";
-                if ($sqlLight->query($query)) {
-                    $this->sendActivateEmail($email);
+                        . "VALUES ('?','?','','','?',0, NOW() )";
+                if ($sqlLight->query($query, array($email, $phone, $pass_hash))) {
+                    //$this->sendActivateEmail($email);
                     return true;
                 }
             }
@@ -104,7 +105,7 @@ class auth extends \project\user {
     }
 
     protected function phoneReplace($phone) {
-        $phone = str_replace(+7, '', $phone);
+        $phone = str_replace('+7', '', $phone);
         $phone = preg_replace("/[^,.0-9]/", '', $phone);
         return $phone;
     }
@@ -126,7 +127,7 @@ class auth extends \project\user {
      */
     private function fileTmpl($file_name, $email = '') {
         ob_start();
-        include $_SERVER['DOCUMENT_ROOT'] . '/admin/user/auth/emailTmpl/' . $file_name . '_' . $_SESSION['lang'];
+        include $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/emailTmpl/' . $file_name . '_' . $_SESSION['lang'];
         $html = ob_get_clean();
         $html = str_replace('{email}', $email, $html);
         return $html;
