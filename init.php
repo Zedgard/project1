@@ -16,5 +16,9 @@ if (!isset($_SESSION['user_auth_data']))
     $_SESSION['user_auth_data'];
 
 // Ошибки которые произошли в системе
+if (!isset($_SESSION['url']))
+    $_SESSION['url'] = array();
+
+// Ошибки которые произошли в системе
 if (!isset($_SESSION['errors']))
     $_SESSION['errors'] = array();

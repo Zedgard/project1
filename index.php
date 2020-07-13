@@ -27,11 +27,26 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
  * Расширения
  *  
  */
-echo "user_auth_data: ";
-print_r($_SESSION['user_auth_data']);
-echo "<br/>\n";
+//echo "user_auth_data: ";
+//print_r($_SESSION['user_auth_data']);
+//echo "<br/>\n";
 
 
-echo "Ok";
+//echo "Ok";
+
+?>
+<a href="/system/">Форма авторизации (как редизайним?)</a>
+<br/>
+    <?
 
 $_SESSION['errors'] = array();
+
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
+
+$url = new \project\url();
+$url->request();
+
+echo $url->getParam(2) . "<br>\n";
+echo $url->getTag('id') . "<br>\n";
+print_r($_SESSION['url']);

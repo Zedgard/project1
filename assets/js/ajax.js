@@ -53,7 +53,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                                 $('.form_result').removeClass("alert-success");
                                 $('.form_result').addClass("alert").addClass("alert-danger");
                                 for (var i = 0; i < result['errors'].length; i++) {
-                                    $(obj).find(".form_result").append(result['errors'][i]);
+                                    $(obj).find(".form_result").append("<div>" + result['errors'][i] + "</div>\n");
                                 }
                             }
                             metod = 2;
@@ -75,10 +75,10 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                         if (!!result['action'] && result['action'].length > 0) {
                             var action_time = 3;
                             if (!!result['action_time'] && Number(result['action_time']) > 0) {
-                                action_time = result['action_time'];
+                                action_time = Number(result['action_time']);
                             }
                             setTimeout(function () {
-                                window.location.href = action;
+                                window.location.href = result['action'];
                             }, (action_time * 1000));
 
                         }

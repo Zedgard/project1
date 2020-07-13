@@ -160,6 +160,8 @@
         </div>
     </div>
 </div>
+
+
 <script>
     $(function () {
         $('#authorization').sendPost(function (result) {

@@ -90,7 +90,7 @@ class auth extends \project\user {
                 $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_lastdate`) "
                         . "VALUES ('?','?','','','?',0, NOW() )";
                 if ($sqlLight->query($query, array($email, $phone, $pass_hash))) {
-                    //$this->sendActivateEmail($email);
+                    $this->sendActivateEmail($email);
                     return true;
                 }
             }
@@ -134,8 +134,8 @@ class auth extends \project\user {
     }
 
     /**
-     * Отправка формы после регистрации
-     * @global type $lang
+     * Отправка письма от администратора
+     * @global \project\type $lang
      * @param type $email
      * @return boolean
      */
@@ -145,19 +145,25 @@ class auth extends \project\user {
 
         $email_body = $this->fileTmpl('mailActivateAccount', $email);
 
-        $m = new \project\Mail();  // utf-8 проходит везде на отлично.  можно сразу указать кодировку, можно ничего не указывать ($m= new Mail;)
-        $m->From("{$from_name};{$_SERVER['SERVER_NAME']}"); // от кого Можно использовать имя, отделяется точкой с запятой
-        $m->ReplyTo("{$from_name}};hello@edgardzaitsev.com"); // куда ответить, тоже можно указать имя
-        $m->To("hello@edgardzaitsev.com");   // кому, в этом поле так же разрешено указывать имя
-        $m->Subject("{$lang['text_activate_account']} {$_SERVER['SERVER_NAME']}");
-        $m->Body($email_body);
-        //$m->Cc("kopiya@asd.ru");  // кому отправить копию письма
-        //$m->Bcc("skritaya_kopiya@asd.ru"); // кому отправить скрытую копию
-        $m->Priority(4); // установка приоритета
-        //$m->Attach("/toto.gif", "", "image/gif"); // прикрепленный файл типа image/gif. типа файла указывать не обязательно
-        //$m->smtp_on("smtp.asd.com", "login", "passw", 25, 10); // используя эу команду отправка пойдет через smtp
-        $m->Send(); // отправка
-        return true;
+        $mail = new \project\Mail("hello@edgardzaitsev.com");  // Создаём экземпляр класса
+        /*
+          $m->From("{$from_name};{$_SERVER['SERVER_NAME']}"); // от кого Можно использовать имя, отделяется точкой с запятой
+          $m->ReplyTo("{$from_name}};hello@edgardzaitsev.com"); // куда ответить, тоже можно указать имя
+          $m->To($email);   // кому, в этом поле так же разрешено указывать имя
+          $m->Subject("{$lang['text_activate_account']} {$_SERVER['SERVER_NAME']}");
+          $m->Body($email_body);
+          //$m->Cc("kopiya@asd.ru");  // кому отправить копию письма
+          //$m->Bcc("skritaya_kopiya@asd.ru"); // кому отправить скрытую копию
+          $m->Priority(4); // установка приоритета
+          //$m->Attach("/toto.gif", "", "image/gif"); // прикрепленный файл типа image/gif. типа файла указывать не обязательно
+          //$m->smtp_on("smtp.asd.com", "login", "passw", 25, 10); // используя эу команду отправка пойдет через smtp
+          $m->Send(); // отправка
+         */
+        $mail->setFromName($from_name); // Устанавливаем имя в обратном адресе
+        if ($mail->send($email, "{$lang['text_activate_account']} {$_SERVER['SERVER_NAME']}", $email_body)) {
+            return true;
+        }
+        return false;
     }
 
 }
