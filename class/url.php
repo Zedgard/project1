@@ -4,6 +4,7 @@ namespace project;
 
 /**
  * Работа с URL строкой
+ * Получение данных из ЧПУ адреса
  * $url = new \project\url();<br>
  * $url->request();<br>
  *
@@ -82,7 +83,7 @@ class url {
      * @param type $r
      * @return array
      */
-    public function getArray($r = 0) {
+    static public function getArray($r = 0) {
         return $_SESSION['url'][$r];
     }
 
@@ -91,7 +92,7 @@ class url {
      * @param type $r
      * @return string
      */
-    public function getParam($r = 0) {
+    static public function getParam($r = 0) {
         if (is_numeric($r)) {
             return $_SESSION['url'][$r];
         }
@@ -103,7 +104,7 @@ class url {
      * @param type $tag
      * @return string
      */
-    public function getTag($tag) {
+    static public function getTag($tag) {
         foreach ($_SESSION['url'] as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $tagKey => $tagValue) {
@@ -117,3 +118,6 @@ class url {
     }
 
 }
+
+$url = new \project\url();
+$url->request();

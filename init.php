@@ -4,6 +4,10 @@
  * Инициализация
  */
 
+session_start();
+
+define('__CMS__', 1);
+
 // Время
 $_SESSION['time'] = time();
 
@@ -22,3 +26,21 @@ if (!isset($_SESSION['url']))
 // Ошибки которые произошли в системе
 if (!isset($_SESSION['errors']))
     $_SESSION['errors'] = array();
+
+// Сообщения сайта (Отображаются на странице сайта или всплывают)
+if (!isset($_SESSION['message']))
+    $_SESSION['message'] = array();
+/*
+ * примеры подсветки
+ * http://1.sybix.ru/assets/panel/alert.html
+ * $_SESSION['message'] = array('type' => 'primary', 'text' => $lang['text']);
+ * $_SESSION['message'] = array('type' => 'secondary', 'text' => $lang['text']);
+ * $_SESSION['message'] = array('type' => 'success', 'text' => $lang['text']);
+ * $_SESSION['message'] = array('type' => 'danger', 'text' => $lang['text']);
+ * $_SESSION['message'] = array('type' => 'warning', 'text' => $lang['text']);
+ * $_SESSION['message'] = array('type' => 'info', 'text' => $lang['text']);
+ * $_SESSION['message'] = array('type' => 'light', 'text' => $lang['text']);
+ * $_SESSION['message'] = array('type' => 'dark', 'text' => $lang['text']);
+ */
+
+ 

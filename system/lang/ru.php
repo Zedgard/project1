@@ -18,5 +18,9 @@ $lang = array(
     'sql_creat_table_true' => 'Таблица успешно создана',
     'sql_set_names_true' => 'Ошибка установки SET NAMES',
     'sql_query_false' => 'Ошибка выполнения запроса',
-    'sql_query_commit_false' => 'Не удалось зафиксировать транзакцию'
+    'sql_query_commit_false' => 'Не удалось зафиксировать транзакцию',
+    
+    'user_activate_true' => 'Успешно активирован',
+    'user_activate_false' => 'Ошибка при активации учетной записи',
 );
+// $lang['user_activate_false']

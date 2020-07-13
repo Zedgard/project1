@@ -26,3 +26,4 @@ if (isset($_POST['registration'])) {
         $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован');
     }
 }
+

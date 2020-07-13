@@ -1,9 +1,5 @@
 <?php
 
-session_start();
-
-define('__CMS__', 1);
-
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
 /*
@@ -15,7 +11,8 @@ if ($cache == 1) {
     include 'cache.php';
 }
 
-include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
 
 /*
  * Система управления
@@ -30,23 +27,16 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 //echo "user_auth_data: ";
 //print_r($_SESSION['user_auth_data']);
 //echo "<br/>\n";
-
-
 //echo "Ok";
-
-?>
+?> 
 <a href="/system/">Форма авторизации (как редизайним?)</a>
 <br/>
-    <?
+<? 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/url.php';
+
+//print_r($_SESSION['message']);
+print_r($_SESSION['user_auth_data']);
 
 $_SESSION['errors'] = array();
-
-
-include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
-
-$url = new \project\url();
-$url->request();
-
-echo $url->getParam(2) . "<br>\n";
-echo $url->getTag('id') . "<br>\n";
-print_r($_SESSION['url']);
+$_SESSION['message'] = array();

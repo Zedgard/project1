@@ -1,14 +1,8 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Системные вызовы
  */
-
-session_start();
-
-define('__CMS__', 1);
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
@@ -22,6 +16,7 @@ if ($cache == 1) {
 }
 
 include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
 
 
 $_SESSION['site_title'] = $_SESSION['site_name'] . ' - Панель администратора';

@@ -15,7 +15,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '
  *  <br/>
  * }<br/>
  */
-
 class sqlLight {
 
     public $db_prefix;
@@ -25,12 +24,12 @@ class sqlLight {
     private $mysqli;
 
     public function __construct() {
-        
+
         $this->conect();
     }
 
     public function conect() {
-        
+
         global $lang;
         include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
         $this->db_prefix = $cfg_db_prefix;
@@ -52,7 +51,7 @@ class sqlLight {
         if ($this->mysqli->query("SET NAMES 'utf8'") === FALSE) {
             echo "{$lang['sql_set_names_true']}\n";
         }
-        
+
         return $this->mysqli;
     }
 
@@ -82,6 +81,7 @@ class sqlLight {
      * @return boolian
      */
     public function query($query, $values = array()) {
+        global $lang;
         $ret = false;
         // Защитим отиньекций
         if (count($values) > 0) {
@@ -93,12 +93,21 @@ class sqlLight {
 
         /* Включить режим фиксации */
         $this->mysqli->autocommit(TRUE);
+        echo "query: {$query}";
         if ($this->mysqli->query($query) === FALSE) {
-            echo "{$lang['sql_query_false']} - (" . $this->mysqli->connect_errno . ") \n";
+            if ($_SESSION['DEBUG'] == 1) {
+                $this->errArr[] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+            } else {
+                $this->errArr[] = $lang['sql_query_false'];
+            }
         } else {
             /* Фиксировать транзакцию */
             if (!$this->mysqli->commit()) {
-                echo "{$lang['sql_query_commit_false']} - (" . $this->mysqli->connect_errno . ") \n";
+                if ($_SESSION['DEBUG'] == 1) {
+                    $this->errArr[] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                } else {
+                    $this->errArr[] = $lang['sql_query_commit_false'];
+                }
             } else {
                 $ret = true;
             }
@@ -113,10 +122,11 @@ class sqlLight {
      * @return boolian
      */
     public function queryList($query, $values = array()) {
+        global $lang;
         $this->setCount(0);
         $buffer = array();
         $i = 0;
-        
+
         // Защитим отиньекций
         if (count($values) > 0) {
             foreach ($values as $value) {
@@ -147,6 +157,14 @@ class sqlLight {
 
     public function __destruct() {
         $this->close();
+    }
+
+    /**
+     * Получить массив ошибок
+     * @return array
+     */
+    public function errors() {
+        return $this->errArr;
     }
 
 }

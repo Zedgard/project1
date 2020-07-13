@@ -8,9 +8,15 @@ defined('__CMS__') or die;
 // Режим отладки
 $_SESSION['DEBUG'] = 1;
 
+// Приватный код для защиты данных
+define('PRIVATE_CODE', 3947);
+
+// корневая дирректория
+define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT']);
+
 // Язык сайта
 $_SESSION['lang'] = 'ru';
-include $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include DOCUMENT_ROOT . '/system/lang/' . $_SESSION['lang'] . '.php';
 
 // Заголовок
 $_SESSION['site_name'] = $lang['site_title'];

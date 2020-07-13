@@ -78,6 +78,9 @@ class auth extends \project\user {
                 $pass_hash = $this->passHash($pass);
             }
 
+            $activate_code = $this->passHash(PRIVATE_CODE . $email . $pass . time());
+            $activate_codeBase64 = base64_encode($activate_code);
+
             $sqlLight = new \project\sqlLight();
 
             $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active` = 1";
@@ -87,11 +90,13 @@ class auth extends \project\user {
             }
 
             if (count($error) == 0) {
-                $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_lastdate`) "
-                        . "VALUES ('?','?','','','?',0, NOW() )";
-                if ($sqlLight->query($query, array($email, $phone, $pass_hash))) {
-                    $this->sendActivateEmail($email);
+                $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
+                        . "VALUES ('?','?','','','?',0, '?', NOW() )";
+                if ($sqlLight->query($query, array($email, $phone, $pass_hash, $activate_code))) {
+                    $this->sendActivateEmail($email, $activate_codeBase64);
                     return true;
+                } else {
+                    $error[] = $sqlLight->errors();
                 }
             }
         } else {
@@ -139,31 +144,41 @@ class auth extends \project\user {
      * @param type $email
      * @return boolean
      */
-    private function sendActivateEmail($email) {
+    private function sendActivateEmail($email, $activate_code) {
         global $lang;
         $from_name = str_replace(' ', '_', $lang['site_author_name']);
 
+        // получи фаил шаблона письма
         $email_body = $this->fileTmpl('mailActivateAccount', $email);
+        // заменим тэги
+        $email_body = str_replace("{site}", $_SERVER['SERVER_NAME'], $email_body);
+        $email_body = str_replace("{activate_code}", "?activation=" . $activate_code, $email_body);
 
         $mail = new \project\Mail("hello@edgardzaitsev.com");  // Создаём экземпляр класса
-        /*
-          $m->From("{$from_name};{$_SERVER['SERVER_NAME']}"); // от кого Можно использовать имя, отделяется точкой с запятой
-          $m->ReplyTo("{$from_name}};hello@edgardzaitsev.com"); // куда ответить, тоже можно указать имя
-          $m->To($email);   // кому, в этом поле так же разрешено указывать имя
-          $m->Subject("{$lang['text_activate_account']} {$_SERVER['SERVER_NAME']}");
-          $m->Body($email_body);
-          //$m->Cc("kopiya@asd.ru");  // кому отправить копию письма
-          //$m->Bcc("skritaya_kopiya@asd.ru"); // кому отправить скрытую копию
-          $m->Priority(4); // установка приоритета
-          //$m->Attach("/toto.gif", "", "image/gif"); // прикрепленный файл типа image/gif. типа файла указывать не обязательно
-          //$m->smtp_on("smtp.asd.com", "login", "passw", 25, 10); // используя эу команду отправка пойдет через smtp
-          $m->Send(); // отправка
-         */
+        $mail->setType('text/html');
         $mail->setFromName($from_name); // Устанавливаем имя в обратном адресе
         if ($mail->send($email, "{$lang['text_activate_account']} {$_SERVER['SERVER_NAME']}", $email_body)) {
             return true;
         }
         return false;
+    }
+
+    public function activate($activate_code) {
+        global $lang;
+        $code = base64_decode($activate_code);
+        $sqlLight = new \project\sqlLight();
+
+        $query = "SELECT * FROM `zay_users` u WHERE `active_code`='?' and `active`=0 ";
+        $users = $sqlLight->queryList($query, array($code));
+        if ($sqlLight->getCount() > 0) {
+            $queryUpdate = "UPDATE `zay_users` SET `active`='1', `active_code`='' "
+                    . "WHERE `id`='?' and `active_code`='?' ";
+            if ($sqlLight->query($queryUpdate, array($users[0]['id'], $code))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
 }
