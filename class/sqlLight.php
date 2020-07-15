@@ -81,38 +81,40 @@ class sqlLight {
      * @return boolian
      */
     public function query($query, $values = array()) {
-        global $lang;
         $ret = false;
-        // Защитим отиньекций
-        if (count($values) > 0) {
-            foreach ($values as $value) {
-                $value = $this->mysqli->real_escape_string($value);
-                $query = $this->str_replace_once('?', $value, $query);
-            }
-        }
+        if (strlen($query) > 0) {
+            global $lang;
 
-        /* Включить режим фиксации */
-        $this->mysqli->autocommit(TRUE);
-        echo "query: {$query}";
-        if ($this->mysqli->query($query) === FALSE) {
-            if ($_SESSION['DEBUG'] == 1) {
-                $this->errArr[] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
-            } else {
-                $this->errArr[] = $lang['sql_query_false'];
+            // Защитим отиньекций
+            if (count($values) > 0) {
+                foreach ($values as $value) {
+                    $value = $this->mysqli->real_escape_string($value);
+                    $query = $this->str_replace_once('?', $value, $query);
+                }
             }
-        } else {
-            /* Фиксировать транзакцию */
-            if (!$this->mysqli->commit()) {
+
+            /* Включить режим фиксации */
+            $this->mysqli->autocommit(TRUE);
+            //echo "query: {$query} <br/>\n";
+            if ($this->mysqli->query($query) === FALSE) {
                 if ($_SESSION['DEBUG'] == 1) {
                     $this->errArr[] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
                 } else {
-                    $this->errArr[] = $lang['sql_query_commit_false'];
+                    $this->errArr[] = $lang['sql_query_false'];
                 }
             } else {
-                $ret = true;
+                /* Фиксировать транзакцию */
+                if (!$this->mysqli->commit()) {
+                    if ($_SESSION['DEBUG'] == 1) {
+                        $this->errArr[] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                    } else {
+                        $this->errArr[] = $lang['sql_query_commit_false'];
+                    }
+                } else {
+                    $ret = true;
+                }
             }
         }
-
         return $ret;
     }
 
@@ -143,9 +145,14 @@ class sqlLight {
                 $i++;
                 $buffer[] = $row;
             }
-            $result->free();
+        } else {
+            if ($_SESSION['DEBUG'] == 1) {
+                echo "{$this->mysqli->errno} {$this->mysqli->error}\n";
+            } else {
+                echo $lang['sql_query_commit_false'];
+            }
         }
-
+        $result->free();
         $this->setCount($i);
         return $buffer;
     }

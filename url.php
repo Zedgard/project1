@@ -4,22 +4,27 @@
  * Обработка запросов на сайте
  */
 
+session_start();
+
 defined('__CMS__') or die;
 
 /*
- * Автивация пользователя
+ * Для пользователя
  */
-//$activation = \project\url::getTag('activation');
-
 include_once DOCUMENT_ROOT . "/system/user/auth/get.php";
+include_once DOCUMENT_ROOT . "/system/page/inc.php";
+include_once DOCUMENT_ROOT . "/system/theme/inc.php";
 
-//print_r($_SESSION['url']);
+/*
+ * Отобразим страницы сайта
+ */
+if ($p == 0) {
+    $page = new \project\page();
 
-if($_SESSION['url'][1]=='admin'){
-    echo 'admin';
-} 
+    $pageArray = $page->show($_SESSION['url'][1]);
+    
+    $theme = new \project\theme();
+    $html = $theme->getTemplateFile($pageArray['server_name'], '');
 
-if($_SESSION['url'][1]=='office'){
-    echo 'office';
-} 
-
+    echo $html;
+}

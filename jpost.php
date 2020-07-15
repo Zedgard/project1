@@ -41,8 +41,18 @@ if (isset($_POST)) {
     if (count($_SESSION['errors']) > 0) {
         $result = array('success' => 0, 'errors' => $_SESSION['errors']);
     }
-    
+
     $_SESSION['errors'] = array();
-    
+
     echo json_encode($result);
+
+    // sidebar_toggler
+    if (isset($_POST['sidebar_toggler'])) {
+        if ($_POST['sidebar_toggler'] == 'true') {
+            $sidebar_toggler == 'false';
+        } else {
+            $sidebar_toggler == 'true';
+        }
+        $_SESSION['system']['sidebar_toggler'] = $sidebar_toggler;
+    }
 }

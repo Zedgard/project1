@@ -43,4 +43,13 @@ if (!isset($_SESSION['message']))
  * $_SESSION['message'] = array('type' => 'dark', 'text' => $lang['text']);
  */
 
+/*
+ * Глобальные
+ */
+$_SESSION['page'] = array();
+
+if (!isset($_SESSION['system']['sidebar_toggler'])) {
+    $_SESSION['system']['sidebar_toggler'] = 'false';
+}
  
+unset($_SESSION['extension_init']);

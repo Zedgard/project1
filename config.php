@@ -19,7 +19,7 @@ $_SESSION['lang'] = 'ru';
 include DOCUMENT_ROOT . '/system/lang/' . $_SESSION['lang'] . '.php';
 
 // Заголовок
-$_SESSION['site_name'] = $lang['site_title'];
+$_SESSION['site_title'] = $lang['site_title'];
 
 // Подключение к базе данных
 $cfg_db_name = 'resko_zay';

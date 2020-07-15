@@ -12,6 +12,11 @@ if ($cache == 1) {
 }
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/validator.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
 
 /*
@@ -28,15 +33,19 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
 //print_r($_SESSION['user_auth_data']);
 //echo "<br/>\n";
 //echo "Ok";
-?> 
-<a href="/system/">Форма авторизации (как редизайним?)</a>
-<br/>
-<? 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
+//echo '<a href="/system/">Форма авторизации (как редизайним?)</a>' . "<br/>\n";
+
+
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
+$extension = new \project\extension();
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/url.php';
 
+
+
 //print_r($_SESSION['message']);
-print_r($_SESSION['user_auth_data']);
+//print_r($_SESSION['user_auth_data']);
 
 $_SESSION['errors'] = array();
 $_SESSION['message'] = array();
