@@ -48,10 +48,19 @@ class url {
         }
 
         $mPageUrl = explode('/', $mRequestUri);
-        //print_r($mPageUrl);
-        //echo "<br>\n";
-        $mPageUrl[0] = $_SERVER['SERVER_NAME'];
+        
+        $mPageUrl[0] = 'index';
 
+        foreach ($mPageUrl as $value) {
+            if (strlen($value) > 0) {
+                $mPageUrlNew[] = $value;
+            }
+        }
+        
+        $mPageUrl = $mPageUrlNew;
+        unset($mPageUrlNew);
+        $mPageUrl[0] = array_reverse($mPageUrl)[0];
+        
         for ($i = 1; $i < count($mPageUrl); $i++) {
             $pageStr = $mPageUrl[$i];
             //echo "{$pageStr} <br>\n";

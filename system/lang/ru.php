@@ -13,6 +13,7 @@ $lang = array(
     'check_positions' => 'Я согласен с условиями и положениями',
     'user_search_register_true' => 'Пользователь уже зарегистрирован в системе',
     'user_search_authorization_false' => 'Ошибка авторизации, такого пользователя нет в системе',
+    'link_go_home_page' => 'Перейти на главную страницу',
     
     'sql_connect_error' => 'Ошибка подключения к базе данных',
     'sql_creat_table_true' => 'Таблица успешно создана',

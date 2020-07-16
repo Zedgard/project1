@@ -21,10 +21,17 @@ include_once DOCUMENT_ROOT . "/system/theme/inc.php";
 if ($p == 0) {
     $page = new \project\page();
 
-    $pageArray = $page->show($_SESSION['url'][1]);
+    //array_reverse($_SESSION['url']);
+    $pageArray = $page->show();
+    //echo "site_title: {$_SESSION['site_title']}<br/>\n";
+    //print_r($pageArray);
     
     $theme = new \project\theme();
     $html = $theme->getTemplateFile($pageArray['server_name'], '');
-
+    //print_r($_SESSION['page']['info']);
+    
     echo $html;
 }
+
+
+

@@ -24,14 +24,14 @@ class sqlLight {
     private $mysqli;
 
     public function __construct() {
-
         $this->conect();
     }
 
     public function conect() {
 
         global $lang;
-        include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+        global $cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name;
+        //include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
         $this->db_prefix = $cfg_db_prefix;
 
         $this->mysqli = new \mysqli($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
