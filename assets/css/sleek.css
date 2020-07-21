@@ -13559,3 +13559,10 @@ html[dir="rtl"] .github-link svg {
   transform: rotateY(180deg); }
 
 /*# sourceMappingURL=sleek.css.map */
+
+.drag_elements .list-group-item:hover{
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}

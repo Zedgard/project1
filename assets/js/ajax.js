@@ -4,7 +4,7 @@
 var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets/img/ajax_load_2.svg" style="width: 40px;" /></center></div>';
 (function ($) {
     $.fn.sendPost = function (func) {
-        
+        console.log("sendPost init");
         var make = function () {
             // реализация работы метода с отдельным элементом страницы
             var obj = this;

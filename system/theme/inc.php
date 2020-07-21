@@ -30,7 +30,6 @@ class theme {
             if (isset($_SESSION['page']['info']['id']) && $_SESSION['page']['info']['id'] > 0) {
                 //echo "gg: {$_SESSION['page']['info']['id']} <br/>\n";
                 $this->getBlocksContents($_SESSION['page']['info']['id']);
-                
             }
             global $lang;
             include $_SERVER['DOCUMENT_ROOT'] . '/themes/' . $file_name . '/index_' . $_SESSION['lang'] . '.php';
@@ -46,19 +45,20 @@ class theme {
 
     public function getBlocksContents($page_id) {
         $blocks = array();
+        global $lang;
         $sqlLight = new \project\sqlLight();
         $querySelect = "SELECT pbc.content_title, pbc.content_descr, pbc.extension, pb.block_code, pb.block_name
           FROM `zay_page_block_contents` pbc
           left join `zay_pages_blocks` pb on pb.id=pbc.block_id
           where pbc.page_id='?' 
           ORDER BY pbc.`sort` ASC ";
-        
+
         $blocks = $sqlLight->queryList($querySelect, array($page_id));
-        
+
         //echo 'blocks' . "<br/>\n";
         //print_r($blocks);
         //echo "<br/>\n";
-        
+
         if (count($blocks) > 0) {
             foreach ($blocks as $key => $value) {
                 if (strlen($value['extension']) == 0) {
@@ -68,15 +68,32 @@ class theme {
                     // Выводим расширение
                     $extension = new \project\extension();
                     $e = $extension->getExtensionListArray($value['extension']);
+                    //echo "et: {$value['extension']} <br/>\n";
                     //print_r($e);
-                    ob_start();
-                    include DOCUMENT_ROOT . $e[0]['url'];
-                    $html_extension = ob_get_clean();
+                    if (count($e) > 0) {
+                        ob_start();
+                        include DOCUMENT_ROOT . $e[0]['url'];
+                        $html_extension = ob_get_clean();
+                    } else {
+                        $html_extension = $lang['not_find_extension'];
+                    }
                     $elems[] = $html_extension;
                 }
                 $_SESSION['page'][$value['block_code']] = implode("\n", $elems);
             }
         }
+    }
+
+    public function getExtensionContentsReturn($extension_id) {
+        global $lang;
+        $blocks = array();
+        $extension = new \project\extension();
+        $e = $extension->getExtensionListArray($extension_id);
+        //print_r($e);
+        ob_start();
+        include DOCUMENT_ROOT . $e[0]['url'];
+        $html_extension = ob_get_clean();
+        return $html_extension;
     }
 
 }

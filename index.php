@@ -1,5 +1,4 @@
 <?php
-
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
 /*
@@ -41,9 +40,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 $extension = new \project\extension();
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/url.php';
-
-
-
 //print_r($_SESSION['message']);
 //print_r($_SESSION['user_auth_data']);
 

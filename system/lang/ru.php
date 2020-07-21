@@ -4,7 +4,7 @@
  * Русский перевод админки
  */
  
-$lang = array(
+$lang = array( 
     'site_title' => 'Сайт зайцева',
     'site_author_name' => 'Эдгард Зайцев',
     'text_activate_account' => 'Активация учтной записи на сайте',
@@ -14,6 +14,7 @@ $lang = array(
     'user_search_register_true' => 'Пользователь уже зарегистрирован в системе',
     'user_search_authorization_false' => 'Ошибка авторизации, такого пользователя нет в системе',
     'link_go_home_page' => 'Перейти на главную страницу',
+    'not_find_extension' => 'Не найдено расширение',
     
     'sql_connect_error' => 'Ошибка подключения к базе данных',
     'sql_creat_table_true' => 'Таблица успешно создана',

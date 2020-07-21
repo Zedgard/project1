@@ -15,7 +15,9 @@ define('PRIVATE_CODE', 3947);
 define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT']);
 
 // Язык сайта
-$_SESSION['lang'] = 'ru';
+if (!isset($_SESSION['lang']))
+    $_SESSION['lang'] = 'ru';
+
 include DOCUMENT_ROOT . '/system/lang/' . $_SESSION['lang'] . '.php';
 
 // Заголовок

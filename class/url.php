@@ -51,15 +51,8 @@ class url {
         
         $mPageUrl[0] = 'index';
 
-        foreach ($mPageUrl as $value) {
-            if (strlen($value) > 0) {
-                $mPageUrlNew[] = $value;
-            }
-        }
         
-        $mPageUrl = $mPageUrlNew;
-        unset($mPageUrlNew);
-        $mPageUrl[0] = array_reverse($mPageUrl)[0];
+        
         
         for ($i = 1; $i < count($mPageUrl); $i++) {
             $pageStr = $mPageUrl[$i];
@@ -67,16 +60,30 @@ class url {
 
             $pos = strpos($pageStr, '?');
             if ($pos !== false) {
-                $post = array();
+                //$post = array();
                 //echo "ok {$pos}<br>\n";
-                $getExp = explode('=', $pageStr);
-                $getExp[0] = str_replace('?', '', $getExp[0]);
+                //$getExp = explode('=', $pageStr);
+                //$getExp[0] = str_replace('?', '', $getExp[0]);
                 //print_r($getExp);
                 //echo "getExp: {$getExp} <br>\n";
                 //$post[$getExp[0]] = $getExp[1];
-                $mPageUrl[$i] = array($getExp[0] => $getExp[1]);
+                //$mPageUrl[$i] = array($getExp[0] => $getExp[1]);
+                unset($mPageUrl[$i]);
             }
         }
+        
+        foreach ($mPageUrl as $value) {
+            if (strlen($value) > 0) {
+                $mPageUrlNew[] = $value;
+            }
+        }
+        
+        //print_r( $mPageUrlNew);
+        //echo "<br/>\n";
+        $mPageUrl = $mPageUrlNew;
+        unset($mPageUrlNew);
+        
+        $mPageUrl[0] = array_reverse($mPageUrl)[0];
         $_SESSION['url'] = $mPageUrl;
 
         // если нет заданных страниц то покажем главную Index

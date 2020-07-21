@@ -4,11 +4,7 @@
  * Все POST запросы отправляем на эту форму
  */
 
-
-session_start();
-
-define('__CMS__', 1);
-
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 
@@ -35,6 +31,17 @@ if (isset($_POST)) {
     // Определим пользователя и разрешим ему отправлять запросы
     if (isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/jpost.php';
+    }
+
+    /*
+     * Отправляем данные на расширения
+     */
+    if (isset($_GET['extension']) && strlen($_GET['extension']) > 0) {
+        if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php')) {
+            include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php';
+        } else {
+            $_SESSION['errors'][] = 'Not file jpost!';
+        }
     }
 
     // Если имеются ошибки!

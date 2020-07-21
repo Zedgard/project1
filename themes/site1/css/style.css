@@ -36,7 +36,7 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Montserrat', 'Raleway', sans-serif;
     font-size: 1rem;
     color: #a5a5a5;
     overflow-x: hidden !important;
@@ -1652,12 +1652,12 @@ i::before,i::after{
 	cursor: url(/themes/site1/images/openhand.cur), move;
 }
 .rev_slider li.rev_gradient::after {
-   background: -webkit-linear-gradient(90deg, #48459f, #8a2a5d);
-   background: -webkit-gradient(linear, left top, right top, color-stop(#48459f), color-stop(#8a2a5d));
-   background: -webkit-linear-gradient(left, #48459f, #8a2a5d);
-   background: -o-linear-gradient(left, #48459f, #8a2a5d);
-   background: -webkit-gradient(linear, left top, right top, from(#48459f), to(#8a2a5d));
-   background: linear-gradient(90deg, #48459f, #8a2a5d); 
+   background: -webkit-linear-gradient(90deg, #f9f9d8, #dde9f4);
+   background: -webkit-gradient(linear, left top, right top, color-stop(#f9f9d8), color-stop(#dde9f4));
+   background: -webkit-linear-gradient(left, #f9f9d8, #dde9f4);
+   background: -o-linear-gradient(left, #f9f9d8, #dde9f4);
+   background: -webkit-gradient(linear, left top, right top, from(#f9f9d8), to(#dde9f4));
+   background: linear-gradient(90deg, #f9f9d8, #dde9f4); 
 }
 .rev_slider li.rev_gradient::after,
 .banner-overlay::after  {

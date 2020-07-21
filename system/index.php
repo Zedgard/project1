@@ -1,8 +1,14 @@
 <?php
 
 /*
- * Системные вызовы
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
+
+session_start();
+
+define('__CMS__', 1);
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 

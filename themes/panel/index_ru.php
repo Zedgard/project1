@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Sleek Dashboard - Free Bootstrap 4 Admin Dashboard Template and UI Kit. It is very powerful bootstrap admin dashboard, which allows you to build products like admin panels, content management systems and CRMs etc.">
+        <meta name="description" content="Панель администрирования">
 
 
         <title><?= $_SESSION['site_title'] ?></title>
@@ -13,7 +13,9 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
         <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
 
-
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" 
+              integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
+              crossorigin="anonymous">
         <!-- PLUGINS CSS STYLE -->
         <link href="/assets/plugins/nprogress/nprogress.css" rel="stylesheet" />
 
@@ -40,6 +42,50 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script src="/assets/plugins/nprogress/nprogress.js"></script>
+
+        <script src="/assets/plugins/jquery/jquery.min.js"></script>
+        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
+        <script src="/assets/plugins/jekyll-search.min.js"></script>
+
+        <script src="/assets/plugins/select2/js/select2.min.js"></script>
+        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
+        <script src="/assets/js/ajax.js"></script>   
+
+        <script src="/assets/plugins/charts/Chart.min.js"></script>
+
+
+        <script src="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
+        <script src="/assets/plugins/jvectormap/jquery-jvectormap-world-mill.js"></script>
+
+
+
+        <script src="/assets/plugins/daterangepicker/moment.min.js"></script>
+        <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
+        <script>
+            jQuery(document).ready(function () {
+                jQuery('input[name="dateRange"]').daterangepicker({
+                    autoUpdateInput: false,
+                    singleDatePicker: true,
+                    locale: {
+                        cancelLabel: 'Clear'
+                    }
+                });
+                jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
+                    jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
+                });
+                jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
+                    jQuery(this).val('');
+                });
+
+            });
+            window.isMinified = <?= $_SESSION['system']['sidebar_toggler'] ?>;
+            window.isCollapsed = false;
+        </script>
+
+        <script src="/assets/plugins/toastr/toastr.min.js"></script>
+
+        <script src="/assets/js/sleek.bundle.js"></script>
+        <script src="/assets/js/sortable.js"></script>
     </head>
 
 
@@ -100,7 +146,7 @@
                         </a>
                     </div>
                     <!-- begin sidebar scrollbar -->
-                    <? 
+                    <?
                     include 'menu_left.php';
                     ?>
 
@@ -224,9 +270,9 @@
 
                 <div class="content-wrapper">
                     <div class="content">						 
-                        
-                       <?= $_SESSION['page']['block_center'] ?>
-                  
+
+                        <?= $_SESSION['page']['block_center'] ?>
+
                     </div>
 
 
@@ -316,52 +362,6 @@
             </div>
         </div>
 
-        <script src="/assets/plugins/jquery/jquery.min.js"></script>
-        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
-        <script src="/assets/plugins/jekyll-search.min.js"></script>
-
-
-
-        <script src="/assets/plugins/charts/Chart.min.js"></script>
-
-
-
-        <script src="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
-        <script src="/assets/plugins/jvectormap/jquery-jvectormap-world-mill.js"></script>
-
-
-
-        <script src="/assets/plugins/daterangepicker/moment.min.js"></script>
-        <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
-        <script>
-                        jQuery(document).ready(function () {
-                            jQuery('input[name="dateRange"]').daterangepicker({
-                                autoUpdateInput: false,
-                                singleDatePicker: true,
-                                locale: {
-                                    cancelLabel: 'Clear'
-                                }
-                            });
-                            jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
-                                jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
-                            });
-                            jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
-                                jQuery(this).val('');
-                            });
-
-                        });
-                        window.isMinified = <?= $_SESSION['system']['sidebar_toggler'] ?>;
-                        window.isCollapsed = false;
-        </script>
-
-
-
-        <script src="/assets/plugins/toastr/toastr.min.js"></script>
-
-    <scritp>
-
-    </script>
-    <script src="/assets/js/sleek.bundle.js"></script>
-</body>
+    </body>
 
 </html>

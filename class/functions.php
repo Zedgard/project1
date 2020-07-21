@@ -214,6 +214,74 @@ function run($file) {
         ob_get_clean();
     }
 }
+/**
+ * tinymce
+ */
+function importWisiwyng($elm_id = '') {
+    if(strlen($elm_id)>0){
+        $elm_id = "#{$elm_id}";
+    }
+    ?>
+    <script src="/assets/plugins/tinymce/tinymce.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea' + "<?= $elm_id ?>",
+            height: 500,
+            theme: 'modern',
+            directionality: 'ltr',
+            language: 'ru',
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
+            image_advtab: true,
+            templates: [
+                {title: 'Test template 1', content: 'Test 1'},
+                {title: 'Test template 2', content: 'Test 2'}
+            ],
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tinymce.com/css/codepen.min.css'
+            ],
+            file_browser_callback: function (field, url, type, win) {
+                tinyMCE.activeEditor.windowManager.open({
+                    file: '/assets/plugins/tinymce/kcfinder/browse.php?opener=tinymce4&field=' + field + '&dir=' + field + '/public&type=' + type + '&lang=ru',
+                    title: 'KCFinder',
+                    width: 700,
+                    height: 500,
+                    inline: true,
+                    close_previous: false
+                }, {
+                    window: win,
+                    input: field
+                });
+                return false;
+            }
+        });
+        function openKCFinder(field, url, type, win) {
+            tinyMCE.activeEditor.windowManager.open({
+                file: '/assets/plugins/tinymce/kcfinder/browse.php?opener=tinymce&type=' + type,
+                title: 'KCFinder',
+                width: 700,
+                height: 500,
+                resizable: true,
+                inline: true,
+                close_previous: false,
+                popup_css: false
+            }, {
+                window: win,
+                input: field
+            });
+            return false;
+        }
+    </script>
+    <?
+
+}
 
 /**
  * импортируем основные стили

@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+
+
+/* Simple Search */
+.simple-search .form-control {
+	border-radius: 1.3rem 0 0 1.3rem;
+	border-color: #EEE;
+	border-right: 0;
+}
+
+.simple-search .form-control:focus {
+	box-shadow: none;
+}
+
+.simple-search .input-group-append {
+	border-radius: 0 1.3rem 1.3rem 0;
+	border: 1px solid #EEE;
+	border-left: 0;
+}
+
+.simple-search .input-group-append .btn {
+	background: transparent !important;
+	border: 0;
+	box-shadow: none !important;
+}
+
+/* Not Included */
+.not-included {
+	color: #b7b7b7;
+	display: block;
+	font-size: 0.8em;
+	font-style: normal;
+	margin: -4px 0;
+	padding: 0;
+}
+
+/* Tip */
+.tip {
+	display: inline-block;
+	padding: 0 5px;
+	background: #FFF;
+	color: #111;
+	text-shadow: none;
+	border-radius: 3px;
+	margin-left: 8px;
+	position: relative;
+	text-transform: uppercase;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.tip:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #fff;
+	border-width: 5px;
+	margin-top: -5px;
+}
+
+.tip.skin {
+	color: #FFF;
+}
