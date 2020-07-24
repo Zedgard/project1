@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,800;1,900&display=swap" rel="stylesheet">
 
 <!-- Vendor CSS -->
-<link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">		
+<link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.css">		
 
 <!-- Theme CSS -->
 <link rel="stylesheet" href="/assets/css/porto/css/theme.css">
@@ -28,20 +28,40 @@
     <div class="header-body border-top-0" style="position: absolute;">
 
         <div class="container"> <!-- header-container --> 
-            <div class="row mb-3 mt-3">
-                <div class="col-md-5 mb-2">
-                    <div class="header_mobile_app_block mobile_contxt_center"><i class="app_block_text">Мобильное приложение</i></div>
+            <div class="row  mt-3">
+                <div class="col-md-5 mb-2 mobile_contxt_center">
+                    <div class="header_mobile_app_block mobile_contxt_center">
+                        <i class="app_block_text">Мобильное приложение</i>
+                    </div>
+                    <a href="#"><img src="/assets/img/google_play.png" class="mobile_apk_img1" /></a>
+                    <a href="#"><img src="/assets/img/app_store.svg" class="mobile_apk_img2" /></a>
                 </div>
                 <div class="col-md-2 mb-2 mobile_contxt_center">
+                    <a href="#"><img src="/assets/img/lang_ru.svg" class="flag" /></a>
+                    <a href="#"><img src="/assets/img/lang_us.svg" class="flag" /></a>
+                    <a href="#"><img src="/assets/img/lang_ch.svg" class="flag" /></a>
+                    <!--
+                    <a href="#"><img src="/assets/img/lang_ru.svg" class="flag" /></a>
+                    <a href="#"><img src="/assets/img/lang_us.svg" class="flag" /></a>
+                    <a href="#"><img src="/assets/img/lang_ch.svg" class="flag" /></a>
+                    -->
+                </div>
+                <!--
+                <div class="col-md-2 mb-2 mobile_contxt_center" style="text-align: center;">
+                    
+                </div>
+                
+                <div class="col-md-2 mb-2 mobile_contxt_center" style="text-align: center;">
+                    <a href="#" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a>
+                </div>
+                -->
+                <div class="col-md-5 contxt_right mobile_contxt_center">
                     <a href="#" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 28px;color: #04be4e;"></i></a>
                     <a href="#" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 28px;color: #04be4e;"></i></a>
                     <a href="#" target="_blank"><i class="fab fa-instagram" style="font-size: 28px;color: #04be4e;"></i></a>
-                </div>
-                <div class="col-md-2 mb-2 mobile_contxt_center">
-                    <a href="#" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a>
-                </div>
-                <div class="col-md-3 contxt_right mobile_contxt_center">
-                    <a href="#" class="header_close_club" style="color: #808080;">hello@edgardzaitsev.com</a> | 
+                    &nbsp;&nbsp;
+                    <!--<a href="#" class="header_close_club" style="color: #808080;">hello@edgardzaitsev.com</a>-->
+                    <a href="#" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | 
                     <a href="#" class="header_close_club" style="color: #808080;">Мой кабинет</a>
                 </div>
             </div>
@@ -63,6 +83,7 @@
                             <div class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">
                                 <nav class="collapse ">
                                     <ul class="nav nav-pills" id="mainNav">
+                                        <!--
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle active" href="/">Главная</a>					
                                             <ul class="dropdown-menu">
@@ -135,8 +156,9 @@
                                                 </li>
                                             </ul>
                                         </li>
+                                        -->
                                         <li class="dropdown dropdown-mega">
-                                            <a class="dropdown-item dropdown-toggle" href="/promos/" style="color: red;">Акции</a>				
+                                            <a class="dropdown-item dropdown-toggle" href="/promos/" style="color: red;">Акции &nbsp;<i class="fas fa-angle-down" style="margin-top: 4px;"></i></a>				
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <div class="dropdown-mega-content">
@@ -208,7 +230,7 @@
                                             </ul>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="#">Обо мне</a>														
+                                            <a class="dropdown-item dropdown-toggle" href="#">Обо мне &nbsp;<i class="fas fa-angle-down" style="margin-top: 4px;"></i></a>														
                                             <ul class="dropdown-menu">
                                                 <li class="dropdown-submenu">
                                                     <a class="dropdown-item" href="#">Headers</a>																
@@ -692,7 +714,7 @@
                                             </ul>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="#">Услуги</a>														
+                                            <a class="dropdown-item dropdown-toggle" href="#">Услуги &nbsp;<i class="fas fa-angle-down" style="margin-top: 4px;"></i></a>														
                                             <ul class="dropdown-menu">
                                                 <li class="dropdown-submenu">
                                                     <a class="dropdown-item" href="#">Contact Us</a>																
@@ -755,7 +777,7 @@
                                             </ul>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="#">Консультации</a>														
+                                            <a class="dropdown-item dropdown-toggle" href="#">Консультации &nbsp;<i class="fas fa-angle-down" style="margin-top: 4px;"></i></a>														
                                             <ul class="dropdown-menu">
                                                 <li class="dropdown-submenu">
                                                     <a class="dropdown-item" href="#">Single Project</a>																
@@ -831,6 +853,7 @@
                                                 </li>
                                             </ul>
                                         </li>
+                                        <!--
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle" href="#">Тренинги и Марафоны</a>														
                                             <ul class="dropdown-menu">
@@ -910,8 +933,9 @@
                                                 </li>
                                             </ul>
                                         </li>
+                                        -->
                                         <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="#" style="color: #f39c12;">Учебный центр</a>														
+                                            <a class="dropdown-item dropdown-toggle" href="#" style="color: #f39c12;">Учебный центр &nbsp;<i class="fas fa-angle-down" style="margin-top: 4px;"></i></a>														
                                             <ul class="dropdown-menu">
                                                 <li class="dropdown-submenu">
                                                     <a class="dropdown-item" href="#">Single Product</a>																
@@ -954,12 +978,12 @@
                                                 <li><a class="dropdown-item" href="shop-checkout.html">Checkout</a></li>
                                             </ul>
                                         </li>
-                                        <!--
+
                                         <li class="dropdown">
                                             <a class="dropdown-item dropdown-toggle" href="/">Контакты</a>														
-                                            
+
                                         </li>
-                                        -->
+
                                     </ul>
                                 </nav>
                             </div>
@@ -980,7 +1004,7 @@
                             </div>
                             <div class="header-nav-feature header-nav-features-cart d-inline-flex ml-2">
                                 <a href="#" class="header-nav-features-toggle">
-                                    <i class="fa fa-shopping-basket fa-2x header-nav-top-icon-img"></i>
+                                    <i class="fa fa-shopping-basket fa-4x header-nav-top-icon-img"></i>
                                     <!--<img src="/assets/img/shop/icon-cart.svg" width="18" alt="" class="header-nav-top-icon-img">-->	
                                     <span class="cart-info">					
                                         <span class="cart-qty">1</span>	
@@ -1010,7 +1034,39 @@
                 </div>
             </div>
         </div>
+        <!--
+        <div class="container" style="margin-top: 50px;">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="tp-caption tp-resizeme plastik plastik_1"> 
+                        <h1 class="plastik_text p_color_t_red">Акции</h1>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="tp-caption tp-resizeme plastik plastik_2"> 
+                        <h1 class="plastik_text">Учебный центр</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="tp-caption tp-resizeme plastik plastik_3"> 
+                        <h1 class="plastik_text p_color_black">С чего начать</h1>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="tp-caption tp-resizeme plastik plastik_4"> 
+                        <h1 class="plastik_text">Консультации</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
     </div>
+
+
+
+
 </header>
 
 <!-- Theme Initialization Files -->

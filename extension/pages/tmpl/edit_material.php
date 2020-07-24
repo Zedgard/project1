@@ -32,9 +32,9 @@
                                 <input type="radio" name="ext_urls" value="0" class="ext_urls" <?= $checked_null ?> /> Обычные HTML <?= $checked_null ?><br/>
                                 <? for ($i = 0; $i < count($extensions); $i++): ?>
                                     <?
-                                    $checked = ($content['extension'] == $extensions[$i]['id']) ? 'checked="checked"' : '';
+                                    $checked = ($content['extension'] == $extensions[$i]['eu_id']) ? 'checked="checked"' : '';
                                     ?>
-                                    <input type="radio" name="ext_urls" value="<?= $extensions[$i]['id'] ?>" class="ext_urls" <?= $checked ?> /> <?= $extensions[$i]['conf']['title'] ?> <?= $extensions[$i]['url'] ?><br/>
+                                    <input type="radio" name="ext_urls" value="<?= $extensions[$i]['eu_id'] ?>" class="ext_urls" <?= $checked ?> /> <?= $extensions[$i]['conf']['title'] ?> <?= $extensions[$i]['url'] ?><br/>
                                 <? endfor; ?>
                             </div>
                             <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['choose_available_options'] ?></span>
@@ -51,7 +51,7 @@
                             <input type="hidden" name="block_id" value="<?= ($_GET['block_id'] > 0) ? $_GET['block_id'] : 0 ?>" />
                             <input type="hidden" name="edit_material" value="<?= ($_GET['edit_material'] > 0) ? $_GET['edit_material'] : 0 ?>" />
                             <button type="submit" class="btn btn-primary btn-default"><?= $lang['pages'][$_SESSION['lang']]['apply'] ?></button>
-                            <a href="./" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['cancel'] ?></a>
+                            <a href="./?content=<?= $_GET['content'] ?>" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['cancel'] ?></a>
                         </div>
 
                     </div>

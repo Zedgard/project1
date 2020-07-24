@@ -19,6 +19,13 @@
             </a>
 
         </li>
+        <li  class="has-sub <?= ($_SESSION['page_url'] == 'admin_users') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/admin/admin_users/">
+                <i class="mdi mdi-image-filter-none"></i>
+                <span class="nav-text">Пользователи</span> </b>
+            </a>
+
+        </li>
 
 
 

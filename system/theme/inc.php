@@ -26,18 +26,17 @@ class theme {
         $html = '';
         if (strlen($file_name) > 0 && $type != 'E') {
             ob_start();
-
             if (isset($_SESSION['page']['info']['id']) && $_SESSION['page']['info']['id'] > 0) {
                 //echo "gg: {$_SESSION['page']['info']['id']} <br/>\n";
                 $this->getBlocksContents($_SESSION['page']['info']['id']);
             }
             global $lang;
-            include $_SERVER['DOCUMENT_ROOT'] . '/themes/' . $file_name . '/index_' . $_SESSION['lang'] . '.php';
+            include DOCUMENT_ROOT . '/themes/' . $file_name . '/index_' . $_SESSION['lang'] . '.php';
             $html = ob_get_clean();
         } else {
             ob_start();
             global $lang;
-            include $_SERVER['DOCUMENT_ROOT'] . '/themes/site1/error_' . $_SESSION['lang'] . '.php';
+            include DOCUMENT_ROOT . '/themes/site1/error_' . $_SESSION['lang'] . '.php';
             $html = ob_get_clean();
         }
         return $html;

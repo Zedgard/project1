@@ -38,6 +38,7 @@ class token {
      */
     public function register() {
         $t = time();
+        //echo ' ' . $_SESSION['time'] .' < ' .$t . "\n";
         if (($_SESSION['time'] + 3) < $t) {
             $this->token_key = random_int(1000000000, 9999999999);
             $this->token_hash = md5($this->token_key);

@@ -60,7 +60,6 @@ $(document).ready(function () {
     /*======== 4. SIDEBAR TOGGLE FOR VARIOUS SIDEBAR LAYOUT ========*/
     var body = $("#body");
     if ($(window).width() >= 768) {
-        console.log("63");
         if (!window.isMinified) {
             window.isMinified = false;
         }
@@ -217,5 +216,15 @@ $(document).ready(function () {
     var cardClosebutton = $('.card-right-sidebar .close');
     cardClosebutton.on('click', function () {
         body.removeClass('right-sidebar-in').addClass('right-sidebar-out');
-    })
+    });
+
+
+    $(".btn_logout").click(function () {
+        //console.log("btn_logout");
+        sendPostLigth('/jpost.php?extension=auth', {"logout":1}, function () {
+
+        });
+    });
+
+
 });

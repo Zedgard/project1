@@ -44,7 +44,7 @@ if ($_SESSION['DEBUG'] == 1) {
     //echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
 }
 
-$_body = $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/tmpl/login.php';
+$_body = $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/index.php';
 
 
 include 'tmpl/index.php';

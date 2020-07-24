@@ -548,7 +548,7 @@ $("#submit_btn").click(function() {
    /*main slider*/ 
    $("#banner-main").show().revolution({
       sliderType: "standard",
-      sliderLayout: "fullscreen",
+      sliderLayout: "auto",
       scrollbarDrag: "true",
       dottedOverlay: "none",
       navigation: {

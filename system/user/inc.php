@@ -6,7 +6,7 @@ namespace project;
  * Класс пользователя
  */
 
-class user {
+class user2 { 
 
     private $id, $email, $phone, $first_name, $last_name, $u_pass, $lastdate;
     protected $errors = array();

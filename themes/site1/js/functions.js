@@ -548,9 +548,10 @@ $("#submit_btn").click(function() {
    /*main slider*/ 
    $("#banner-main").show().revolution({
       sliderType: "standard",
-      sliderLayout: "fullscreen",
+      sliderLayout: "auto",
       scrollbarDrag: "true",
       dottedOverlay: "none",
+      delay: 15000,
       navigation: {
          keyboardNavigation: "off",
          keyboard_direction: "horizontal",
@@ -573,7 +574,7 @@ $("#submit_btn").click(function() {
          },
          arrows: {
             enable: false,
-            hide_onmobile: true,
+            hide_onmobile: false,
             hide_onleave: false,
             hide_under: 767,
             left: {
@@ -608,9 +609,9 @@ $("#submit_btn").click(function() {
       lazyType: "none",
       parallax: {
          type: "mouse",
-         origo: "slidercenter",
-         speed: 9000,
-         levels: [2, 3, 4, 5, 6, 7, 12, 16, 10, 50],
+         origo: "enterpoint ", /* slidercenter */
+         speed: 15000,
+         /* levels: [2, 3, 4, 5, 6, 7, 12, 16, 10, 50], */
       },
       shadow: 0,
       spinner: "off",

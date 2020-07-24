@@ -2,21 +2,23 @@
 
 namespace project;
 
+defined('__CMS__') or die;
+
 /*
  * Авторизация пользователя
  */
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/inc.php';
+//include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/validator.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 
-class auth extends \project\user {
+class auth2 {
 
     public function __construct() {
-        parent::__construct();
-        ;
+        //parent::__construct();
+        //;
     }
 
     /**
@@ -163,6 +165,12 @@ class auth extends \project\user {
         return false;
     }
 
+    /**
+     * Активация пользователя
+     * @global \project\type $lang
+     * @param type $activate_code
+     * @return boolean
+     */
     public function activate($activate_code) {
         global $lang;
         $code = base64_decode($activate_code);

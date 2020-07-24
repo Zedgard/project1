@@ -136,7 +136,7 @@ class sqlLight {
                 $query = $this->str_replace_once('?', $value, $query);
             }
         }
-        //echo $query . "<br/>\n";
+        //echo 'query: ' . $query . "<br/>\n";
         /* Select запросы возвращают результирующий набор */
         if ($result = $this->mysqli->query($query)) {
             $this->count = $result->num_rows;

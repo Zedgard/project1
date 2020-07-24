@@ -160,7 +160,7 @@ class page {
         $contents = $sqlLight->queryList($querySelect, array($page_id));
         return $contents;
     }
-    
+
     public function pageBlockContentsListArray($id) {
         $pageBlockContents = array();
         $sqlLight = new \project\sqlLight();
@@ -194,7 +194,7 @@ class page {
     public function contentEdit($id, $content_title, $page_id, $block_id, $content_descr, $extension) {
         $sqlLight = new \project\sqlLight();
 
-        if($extension == '0'){
+        if ($extension == '0') {
             $extension = '';
         }
         if ($id == 0 || $id == '') {
@@ -217,16 +217,16 @@ class page {
         }
         return false;
     }
-    
+
     /**
      * Удаление контента
      * @param type $id
      * @return type
      */
     public function materialDelete($id) {
-        $query = "delete from `zay_page_block_contents` pb "
-                    . "WHERE pb.`id`='?' ";
-            return $sqlLight->query($query, array($id));
+        $sqlLight = new \project\sqlLight();
+        $query = "DELETE FROM `zay_page_block_contents` WHERE `id`='?' ";
+        return $sqlLight->query($query, array($id));
     }
 
 }

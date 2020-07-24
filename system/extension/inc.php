@@ -4,6 +4,8 @@ namespace project;
 
 defined('__CMS__') or die;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+
 /*
  * Управление расширениями на сайте
  */
@@ -12,7 +14,7 @@ class extension {
 
     public function __construct() {
         $this->init();
-    } 
+    }
 
     /**
      * Заполение данных о расширениях
@@ -108,6 +110,27 @@ class extension {
         }
 
         return $data;
+    }
+
+    /*
+     * Вспомогающие методы
+     */
+
+    public function getSelectArray($querySelect, $queryValues = array()) {
+        $sqlLight = new \project\sqlLight();
+        $data = array();
+        $data = $sqlLight->queryList($querySelect, $queryValues);
+        return $data;
+    }
+
+    public function query($query, $queryValues = array()) {
+        $sqlLight = new \project\sqlLight();
+        return $sqlLight->query($query, $queryValues);
+    }
+
+    public function updateOneRow($table, $elm_id, $row, $val) {
+        $s = "UPDATE ? set ?='?' WHERE id='?' ";
+        return $this->query($s, array($table, $row, $val, $elm_id));
     }
 
 }

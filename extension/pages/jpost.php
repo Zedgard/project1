@@ -35,7 +35,7 @@ if (isset($_POST['edit_material'])) {
 if (isset($_POST['delete_material'])) {
     $id = $_POST['delete_material'];
     if ($p->materialDelete($id)) {
-        $result = array('success' => 1, 'success_text' => 'Упешно удалено', 'action' => './?content=' . $_POST['page_id']);
+        $result = array('success' => 1, 'success_text' => 'Упешно удалено');
         $_SESSION['message'][] = 'Упешно удалено';
     } else {
         $_SESSION['errors'][] = $lang['pages'][$_SESSION['lang']]['error'];

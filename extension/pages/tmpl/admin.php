@@ -7,7 +7,6 @@
                     <h2 class="col-lg-6"><?= $lang['pages'][$_SESSION['lang']]['descr'] ?></h2>
                     <div class="col-lg-6" style="text-align: right;">
                         <a href="?bloks=1" class="btn btn-info">Блоки</a>
-                        <a href="./" target="_blank" class="btn btn-info">Материалы</a>
                     </div>
                 </div>
 

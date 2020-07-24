@@ -41,7 +41,7 @@
                                 <div class="card-body p-5">
 
                                     <h4 class="text-dark mb-5">Авторизация</h4>
-                                    <form id="authorization" action="/jpost.php" method="POST">
+                                    <form id="authorization" action="/jpost.php?extension=auth" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">
                                                 <input type="login" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email" placeholder="Телефон / Эл. Почта" required />
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="card-body p-5">
                                     <h4 class="text-dark mb-5">Регистрация</h4>
-                                    <form id="registration" action="/jpost.php" method="POST">
+                                    <form id="registration" action="/jpost.php?extension=auth" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">
                                                 <input type="text" class="form-control input-lg phone" name="phone" id="phone" data-mask="+7 (999) 999-9999" aria-describedby="nameHelp" type="phone" placeholder="Мобильный телефон">

@@ -17,19 +17,20 @@ if (!isset($_SESSION['user_load_page_time']))
 
 // Данные авторезированного пользователя
 if (!isset($_SESSION['user_auth_data']))
-    $_SESSION['user_auth_data'];
+    $_SESSION['user_auth_data'] = array();
 
 // Ошибки которые произошли в системе
-if (!isset($_SESSION['url']))
-    $_SESSION['url'] = array();
+$_SESSION['url'] = array();
 
 // Ошибки которые произошли в системе
-if (!isset($_SESSION['errors']))
-    $_SESSION['errors'] = array();
+$_SESSION['errors'] = array();
 
 // Сообщения сайта (Отображаются на странице сайта или всплывают)
 if (!isset($_SESSION['message']))
     $_SESSION['message'] = array();
+
+$_SESSION['body_javascript'] = array();
+
 /*
  * примеры подсветки
  * http://1.sybix.ru/assets/panel/alert.html

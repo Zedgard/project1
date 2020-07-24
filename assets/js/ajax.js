@@ -3,15 +3,21 @@
  */
 var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets/img/ajax_load_2.svg" style="width: 40px;" /></center></div>';
 (function ($) {
+
+    /**
+     * Отправка формы с серилизацией данные из нее
+     * @param {type} func
+     * @returns {ajaxL#5.$.fn@call;each}
+     */
     $.fn.sendPost = function (func) {
-        console.log("sendPost init");
+        //console.log("sendPost init");
         var make = function () {
             // реализация работы метода с отдельным элементом страницы
             var obj = this;
             $(this).submit(function (e) {
                 $('.form_result').hide(200);
                 $('.form_result').after(ajax_load);
-                
+
                 var objid = $(obj)[0]['id'];
                 //console.log("sendPost1 " + objid);
                 e.preventDefault();
@@ -100,4 +106,73 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
         return this.each(make);
 
     };
+
+
+
+
 })(jQuery);
+
+/**
+ * Простая форма отправки POST запроса
+ * @param {type} url
+ * @param {type} data
+ * @param {type} func
+ * @returns {ajaxL#5.$.fn@call;each}
+ */
+function sendPostLigth(url, data, func) {
+    //console.log("sendPostLigth init");
+
+    // реализация работы метода с отдельным элементом страницы
+    //var obj = this;
+    $('.form_result').after(ajax_load);
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        success: function (result) {
+            /*
+             * Обработка ответа от сервера
+             */
+            $(".ajax_load").remove();
+            var metod = 0;
+            if (result['success'] == 1) {
+                toastr.success(result['success_text'], 'Выполнено');
+                metod = 1;
+            }
+            if (result['success'] == 0) {
+                if (result['errors'].length > 0) {
+                    for (var i = 0; i < result['errors'].length; i++) {
+                        toastr.success(result['errors'][i], 'ошибка!');
+                    }
+                }
+                metod = 2;
+            }
+            // Непредвиденная ошибка, если result['success'] не передали
+            if (metod == 0) {
+                if (!!result['errors'] && result['errors'].length > 0) {
+                    for (var i = 0; i < result['errors'].length; i++) {
+                        toastr.success("Error system №101 !", 'ошибка!');
+                    }
+                }
+            }
+            // Выполнить втроенную функцию
+            func(result);
+
+            // Выполнить переадресацию
+            if (!!result['action'] && result['action'].length > 0) {
+                var action_time = 3;
+                if (!!result['action_time'] && Number(result['action_time']) > 0) {
+                    action_time = Number(result['action_time']);
+                }
+                setTimeout(function () {
+                    window.location.href = result['action'];
+                }, (action_time * 1000));
+
+            }
+
+        }
+    });
+
+}
+
