@@ -16,8 +16,8 @@ if (!isset($_SESSION['user_load_page_time']))
     $_SESSION['user_load_page_time'];
 
 // Данные авторезированного пользователя
-if (!isset($_SESSION['user_auth_data']))
-    $_SESSION['user_auth_data'] = array();
+if (!isset($_SESSION['user']))
+    $_SESSION['user'] = array();
 
 // Ошибки которые произошли в системе
 $_SESSION['url'] = array();
@@ -47,6 +47,7 @@ $_SESSION['body_javascript'] = array();
 /*
  * Глобальные
  */
+$_SESSION['REFERER'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $_SERVER['REQUEST_URI'];
 $_SESSION['page'] = array();
 
 if (!isset($_SESSION['system']['sidebar_toggler'])) {

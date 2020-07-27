@@ -98,7 +98,7 @@ class sqlLight {
             //echo "query: {$query} <br/>\n";
             if ($this->mysqli->query($query) === FALSE) {
                 if ($_SESSION['DEBUG'] == 1) {
-                    $this->errArr[] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                    $_SESSION['errors'] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
                 } else {
                     $this->errArr[] = $lang['sql_query_false'];
                 }
@@ -106,7 +106,7 @@ class sqlLight {
                 /* Фиксировать транзакцию */
                 if (!$this->mysqli->commit()) {
                     if ($_SESSION['DEBUG'] == 1) {
-                        $this->errArr[] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                        $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
                     } else {
                         $this->errArr[] = $lang['sql_query_commit_false'];
                     }

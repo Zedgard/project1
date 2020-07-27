@@ -37,7 +37,7 @@ $token = new \project\token();
 $_body_javascript[] = $token->javascript();
 
 if ($_SESSION['DEBUG'] == 1) {
-    echo "user_auth_data: " . $_SESSION['user_auth_data'] . "<br/>\n";
+    echo "user: " . $_SESSION['user'] . "<br/>\n";
     echo "Errors: "; 
     print_r($_SESSION['errors']);
     //echo "<br/>\n";

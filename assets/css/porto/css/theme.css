@@ -15,6 +15,16 @@
     z-index: 1001;
 }
 
+
+
+#header .header-nav-main{
+    z-index: 5;
+}
+#header .header-nav-main nav > ul li a.dropdown-toggle .fas {
+    margin-top: 3px;
+    font-size: 11px;
+}
+
 #header .header-body.header-body-bottom-border-fixed {
     border-bottom: 1px solid rgba(234, 234, 234, 0.5) !important;
 }
@@ -49,7 +59,9 @@
     width: 36px;
     height: 30px;
     margin-left: 4px;
+    margin-top: -2px;
 }
+
 
 
 #header .header_mobile_app_block{
@@ -61,7 +73,7 @@
 }
 
 #header .header_mobile_app_block .app_block_text{
-        font-style: normal;
+    font-style: normal;
 }
 
 @media (max-width: 991px) {
@@ -98,16 +110,13 @@
     text-align: right;
 }
 
+
 @media (max-width: 767px) {
     #header .container {
         width: 100%;
     }
     #header .header_logo{
         width: 200px;
-    }
-    #header .header_mobile_app_block .app_block_text{
-        font-style: normal;
-        display: none;
     }
     #header .mobile_contxt_center{
         text-align: center;
@@ -116,13 +125,13 @@
         width: 90px;
         height: 30px;
         float: none;
-        margin-bottom: 10px;
+        margin-top: 0;
     }
     #header .mobile_apk_img2{
         width: 104px;
         height: 38px;
         float: none;
-        margin-bottom: 10px;
+        margin-top: 0;
     }
     #header .flag{
         width: 50px;
@@ -949,11 +958,16 @@
     background: transparent;
     font-size: 22px !important;
     line-height: 1;
-    border-bottom: 2px solid #CCC;
+    border: 1px solid #CCC;
     border-radius: 0;
     box-shadow: none;
-    position: relative;
+
+    float: left;
     z-index: 1;
+}
+#header .header-nav-features-search .fa-search-block { 
+    float: right;
+    margin-right: 10px;
 }
 
 #header .header-nav-features .header-nav-features-search-reveal-big-search .header-nav-features-search-hide-icon {
@@ -1013,16 +1027,6 @@
     margin-left: 1rem;
 }
 
-#header .header-search .form-control {
-    border-radius: 20px;
-    font-size: 0.9em;
-    height: 34px;
-    margin: 0;
-    padding: 6px 12px;
-    transition: width 0.3s ease;
-    perspective: 1000px;
-    width: 170px;
-}
 
 #header .header-search .btn-light {
     background: transparent;
@@ -1827,6 +1831,7 @@ html.sticky-header-enabled.sticky-header-active #header .header-logo-sticky-chan
         padding: 4px;
         text-align: left;
         width: 190px;
+        
     }
 
     #header .header-nav-main a > .thumb-info-preview .thumb-info-image {
@@ -4518,8 +4523,16 @@ html.ie #header .header-column .header-extra-info .feature-box .feature-box-info
     flex: none;
 }
 
+
 @media (max-width: 991px) {
     html.safari #header .header-body {
         overflow: visible !important;
     }
+    #header .app_block_text{
+        display: none;
+    }
+
 }
+
+
+

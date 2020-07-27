@@ -5,3 +5,4 @@
  */
 
 
+include_once 'tmpl/index.php';

@@ -20,3 +20,11 @@ if (isset($_GET['activation']) && strlen($_GET['activation']) > 0) {
         $_SESSION['errors'][] = $lang['user_activate_false'];
     }
 }
+
+if (isset($_GET['kill_token'])) {
+    $_SESSION['token_hash'] = '';
+    $_SESSION['visitor'] = array();
+    $ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
+    header("Location: ".$ref);
+    exit;
+}

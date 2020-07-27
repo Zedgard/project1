@@ -30,26 +30,34 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
  * 
  * Расширения
  *  
- */
-//echo "user_auth_data: ";
-//print_r($_SESSION['user_auth_data']);
+ */;
 //echo "<br/>\n";
 //echo "Ok";
 //echo '<a href="/system/">Форма авторизации (как редизайним?)</a>' . "<br/>\n";
-
-//print_r($_SESSION['user_auth_data']);
-
 //include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 //$extension = new \project\extension();
-
+//print_r($_SESSION['user']);
+//$_SESSION['visitor'] = array();
+//$_SESSION['token_hash'] = array();
+//$_SESSION['token_hash'] = '';
+//$_SESSION['visitor'] = array();
+//echo "visitor: <br/>\n";
+//print_r($_SESSION['visitor']);
+//echo "token_hash: <br/>\n";
+//print_r($_SESSION['token_hash']);
 include_once $_SERVER['DOCUMENT_ROOT'] . '/url.php';
-//print_r($_SESSION['message']);
-//print_r($_SESSION['user_auth_data']);
+
 $user = new \project\user();
 $user->updateActiveLastdate();
 
 
+if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php')) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php';
+    $statistic = new \project\statistic();
+    //$statistic->visitorInit();
+    $statistic->updateLastTime();
+}
+
 $_SESSION['errors'] = array();
 $_SESSION['message'] = array();
 
-include 'system/chat/chat.php';

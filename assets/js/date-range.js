@@ -51,12 +51,12 @@ $(function() {
 
   /*======== 2. USER ACTIVITY ========*/
   if ($("#user-activity")) {
+      console.log("user-activity ");
     var start = moment().subtract(1, "days");
     var end = moment().subtract(1, "days");
     var cb = function(start, end) {
-      $("#user-activity .date-range-report span").html(
-        start.format("ll") + " - " + end.format("ll")
-      );
+      $("#user-activity .date-range-report span").html(start.format("L") + " - " + end.format("L"));
+      console.log("start: " + start);
     };
 
     $("#user-activity .date-range-report").daterangepicker(

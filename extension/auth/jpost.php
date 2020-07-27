@@ -12,13 +12,19 @@ $auth = new \project\auth();
  */
 if (isset($_POST['authorization'])) {
     if ($auth->authorization($_POST['email'], $_POST['password'])) {
-        if(\project\user::isAdmin() || \project\user::isEditor()){
+        $r = 0;
+        if (\project\user::isAdmin() || \project\user::isEditor()) {
             $url = '/admin/';
+            $r = 1;
         }
-        if(\project\user::isClient()){
+        if (\project\user::isClient()) {
             $url = '/office/';
+            $r = 1;
         }
-        $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '2');
+        if ($r == 0) {
+            $url = '/';
+        }
+        $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '0');
     }
 }
 /*
@@ -26,11 +32,11 @@ if (isset($_POST['authorization'])) {
  */
 if (isset($_POST['registration'])) {
     if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
-        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован');
+        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес');
     }
 }
 
 if (isset($_POST['logout'])) {
-    unset($_SESSION['user_auth_data']);
-    $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/', 'action_time' => '2');
+    unset($_SESSION['user']);
+    $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/', 'action_time' => '1');
 }

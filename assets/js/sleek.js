@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 
         $("#sidebar-toggler").on("click", function () {
-            console.log("sidebar-toggler 73");
+            console.log("sidebar-toggler 72");
             if (
                     body.hasClass("sidebar-fixed-offcanvas") ||
                     body.hasClass("sidebar-static-offcanvas")
@@ -83,7 +83,6 @@ $(document).ready(function () {
                     window.isCollapsed = true;
                     window.isMinified = false;
                 } else {
-                    console.log("87");
                     body.removeClass("sidebar-collapse");
                     body.addClass("sidebar-collapse-out");
                     setTimeout(function () {

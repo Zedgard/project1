@@ -38,7 +38,7 @@ class auth2 {
             $users = $sqlLight->queryList($query, array($email, $email, $pass_hash));
 
             if (count($users) > 0) {
-                $_SESSION['user_auth_data'] = $users;
+                $_SESSION['user']['info'] = $users;
                 return true;
             } else {
                 $_SESSION['errors'][] = $lang['user_search_authorization_false'];

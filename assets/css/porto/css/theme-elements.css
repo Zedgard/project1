@@ -24,6 +24,31 @@
 	border: 0;
 	box-shadow: none !important;
 }
+.input-group-rounded .input-group-append .btn {
+	border-color: rgba(0, 0, 0, 0.09);
+	border-radius: 0rem 2rem 2rem 0rem;
+	font-size: 11.2px;
+	font-size: 0.7rem;
+	padding: 13.92px;
+	padding: 0.87rem;
+	border-top: 0;
+	border-bottom: 0;
+	border-right: 0;
+	z-index: 3;
+}
+html.dark .simple-search .input-group-append {
+	border-color: #2c3237;
+}
+.simple-search .input-group-append {
+	border-radius: 0 1.3rem 1.3rem 0;
+	border: 1px solid #EEE;
+	border-left: 0;
+}
+.simple-search .input-group-append .btn {
+	background: transparent !important;
+	border: 0;
+	box-shadow: none !important;
+}
 
 /* Not Included */
 .not-included {

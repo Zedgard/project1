@@ -47,135 +47,38 @@
         <?= $_SESSION['page']['block_top'] ?>
 
         <!--Main Slider-->
-        <script>
-            function sliderResize() {
-                var width = $(".container").width();
-                var height = $(".container").height();
-                var w = 0;
-                var h = 0;
-                if (width >= 300) {
-                    var w = 300;
-                    var h = 150;
-                    dh1 = "['200','0','0','0']";
-                    dv1 = "['0','0','0','0']";
-                    dh2 = "['0','0','0','0']";
-                    dv2 = "['0','0','0','0']";
-                    dh3 = "['0','0','0','0']";
-                    dv3 = "['0','0','0','0']";
-                    dh4 = "['0','0','0','0']";
-                    dv4 = "['0','0','0','0']";
-                }
-                if (width >= 540) {
-                    var w = 160;
-                    var h = 150;
-                    dh1 = "['200','0','0','0']";
-                    dv1 = "['0','0','0','0']";
-                    dh2 = "['0','0','0','0']";
-                    dv2 = "['0','0','0','0']";
-                    dh3 = "['0','0','0','0']";
-                    dv3 = "['0','0','0','0']";
-                    dh4 = "['0','0','0','0']";
-                    dv4 = "['0','0','0','0']";
-                }
-                if (width >= 720) {
-                    var w = 200;
-                    var h = 150;
-                    dh1 = "['-150','0','0','0']";
-                    dv1 = "['10','0','0','0']";
-                    dh2 = "['150','0','0','0']";
-                    dv2 = "['10','0','0','0']";
-                    dh3 = "['-150','0','0','0']";
-                    dv3 = "['150','0','0','0']";
-                    dh4 = "['150','0','0','0']";
-                    dv4 = "['150','0','0','0']";
-                }
-                if (width >= 940) {
-                    var w = 290;
-                    var h = 190;
-                    dh1 = "['-185','0','0','0']";
-                    dv1 = "['-20','0','0','0']";
-                    dh2 = "['185','0','0','0']";
-                    dv2 = "['-20','0','0','0']";
-                    dh3 = "['-185','0','0','0']";
-                    dv3 = "['145','0','0','0']";
-                    dh4 = "['185','0','0','0']";
-                    dv4 = "['145','0','0','0']";
-                }
-                if (width >= 1100) {
-                    var w = 380;
-                    var h = 170;
-                    dh1 = "['-245','0','0','0']";
-                    dv1 = "['-50','0','0','0']";
-                    dh2 = "['245','0','0','0']";
-                    dv2 = "['-50','0','0','0']";
-                    dh3 = "['-245','0','0','0']";
-                    dv3 = "['165','0','0','0']";
-                    dh4 = "['245','0','0','0']";
-                    dv4 = "['165','0','0','0']";
-                    /*
-                     dh1 = "['-280','0','0','0']";
-                     dv1 = "['-60','0','0','0']";
-                     dh2 = "['290','0','0','0']";
-                     dv2 = "['-60','0','0','0']";
-                     dh3 = "['-280','0','0','0']";
-                     dv3 = "['190','0','0','0']";
-                     dh4 = "['290','0','0','0']";
-                     dv4 = "['190','0','0','0']";
-                     */
-                }
-                $(".ggg").html("w: " + width + " h: " + height + " <br/>w2: " + w);
-                $(".plitka_1").width(w).height(h);
-                $(".caption_1").attr("data-hoffset", dh1);
-                $(".caption_1").attr("data-voffset", dv1);
-                $(".plitka_2").width(w).height(h);
-                $(".caption_2").attr("data-hoffset", dh2);
-                $(".caption_2").attr("data-voffset", dv2);
-                $(".plitka_3").width(w).height(h);
-                $(".caption_3").attr("data-hoffset", dh3);
-                $(".caption_3").attr("data-voffset", dv3);
-                $(".plitka_4").width(w).height(h);
-                $(".caption_4").attr("data-hoffset", dh4);
-                $(".caption_4").attr("data-voffset", dv4);
-                $(".ggg").html("w: " + width + " h: " + height + " <br/>w2: " + w);
 
-            }
-            $(document).ready(function () {
-                sliderResize();
-                setInterval(function () {
-                    //var w = $(".container").width();
-                    //var h = $(".container").height();
-                    //$(".ggg").html("w: " + w + " h: " + h);
-                }, 500);
-            });
-        </script>
-        <div id="revo_main_wrapper" class="rev_slider_wrapper fullwidthbanner-container" >
+
+
+        <div id="revo_main_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
             <div id="banner-main" class="rev_slider" style="display:none;max-height: 600px;" data-version="5.4.1">
                 <ul>
                     <!-- SLIDE   id="banner-main" class="rev_slider fullwidthabanner"  -->
-                    <li data-index="rs-01" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="rev_gradient">
+                    <li data-index="rs-01" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="revo_slide_1 rev_gradient">
 
                         <!-- MAIN IMAGE -->
                         <img src="/themes/site1/images/transparent.png" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10"  data-no-retina>
                         <!-- LAYER NR. 1 -->
-                        <a href="/auth/">
-                            <div class="tp-caption tp-resizeme not_show_mobile caption_1" 
-                                 data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']" 
-                                 data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']" 
-                                 data-whitespace="nowrap" data-responsive_offset="on"
-                                 data-width="['none','none','none','none']" data-type="text"
-                                 data-textalign="['center','center','center','center']" 
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;" 
-                                 data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" 
-                                 data-start="1000" data-splitin="none" data-splitout="none">
 
-                                <span class="button plitka_1" 
+                        <div class="tp-caption tp-resizeme not_show_mobile caption_1" 
+                             data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']" 
+                             data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']" 
+                             data-whitespace="nowrap" data-responsive_offset="on"
+                             data-width="['none','none','none','none']" data-type="text"
+                             data-textalign="['center','center','center','center']" 
+                             data-transform_idle="o:1;"
+                             data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;" 
+                             data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" 
+                             data-start="1000" data-splitin="none" data-splitout="none">
+                            <a href="/auth/" >
+                                <span class="button plitka_1 image hover-effect img-container" 
                                       style="background-image: url(/assets/img/EZsite_button_Centr.svg);
                                       background-repeat: no-repeat;
                                       "
                                       ></span> 
-                            </div>
-                        </a>
+                            </a>
+                        </div>
+
                         <a href="#">
                             <div class="tp-caption tp-resizeme not_show_mobile caption_2" 
                                  data-x="['center','center','center','center']" data-hoffset="['250','0','0','0']" 
@@ -185,7 +88,7 @@
                                  data-textalign="['center','center','center','center']"
                                  data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;" 
                                  data-start="1000" data-splitin="none" data-splitout="none">
-                                <span class="button plitka_2" 
+                                <span class="button plitka_2 image hover-effect img-container" 
                                       style="background-image: url(/assets/img/EZsite_button_Centr.svg);
                                       background-repeat: no-repeat;
                                       "
@@ -204,7 +107,7 @@
                                  data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" 
                                  data-start="1000" data-splitin="none" data-splitout="none">
 
-                                <span class="button plitka_3" 
+                                <span class="button plitka_3 image hover-effect img-container" 
                                       style="background-image: url(/assets/img/EZsite_button_Centr.svg);
                                       background-repeat: no-repeat;
                                       "
@@ -220,7 +123,7 @@
                                  data-textalign="['center','center','center','center']"
                                  data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;" 
                                  data-start="1000" data-splitin="none" data-splitout="none">
-                                <span class="button plitka_3" 
+                                <span class="button plitka_4 image hover-effect img-container" 
                                       style="background-image: url(/assets/img/EZsite_button_Centr.svg);
                                       background-repeat: no-repeat;
                                       "
@@ -258,7 +161,7 @@
                         data-videoloop="loopandnoslidestop"  
                         data-videoattributes="version=3&enablejsapi=1&html5=1&hd=1&autoplay=1&wmode=opaque&showinfo=0&rel=0&
                         origin=http://server.local"></div>
-                        --> 
+                        
 
                         <div class="rs-background-video-layer" 
                              data-forcerewind="on" 
@@ -310,17 +213,24 @@
                            data-start="2000" data-splitin="none" data-splitout="none" data-responsive_offset="on">
                             <span>Learn More</span>
                         </a>
+                        --> 
                     </li>
 
                     <!-- SLIDE 3  -->
 
                 </ul>
+
+
             </div>
+
         </div>
         <!--
         <div style="position: fixed;top: 0px;right: 0px;width: 100px;height: 40px;background-color: #FFFFFF;" class="ggg"></div>
         -->
         <!--Main Slider ends -->
+
+        
+        <?= $_SESSION['page']['block_center'] ?>
 
 
         <!--half img section-->
@@ -1302,5 +1212,10 @@
         <!--Google Map API-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
         <script src="/themes/site1/js/functions.js"></script>	
+        <?
+        foreach ($_SESSION['body_javascript'] as $js) {
+            echo $js . "\n";
+        }
+        ?>
     </body>
 </html>

@@ -37,7 +37,7 @@ class auth extends \project\user {
             $users = $sqlLight->queryList($query, array($email, $email, $pass_hash));
 
             if (count($users) > 0) {
-                $_SESSION['user_auth_data'] = $users[0];
+                $_SESSION['user']['info'] = $users[0];
                 $this->getUserInfo($users[0]['id']);
                 return true;
             } else {
@@ -95,6 +95,7 @@ class auth extends \project\user {
                 $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
                         . "VALUES ('?','?','','','?',0, '?', NOW() )";
                 if ($sqlLight->query($query, array($email, $phone, $pass_hash, $activate_code))) {
+
                     $this->sendActivateEmail($email, $activate_codeBase64);
                     return true;
                 } else {
@@ -203,11 +204,36 @@ class auth extends \project\user {
             $queryUpdate = "UPDATE `zay_users` SET `active`='1', `active_code`='' "
                     . "WHERE `id`='?' and `active_code`='?' ";
             if ($sqlLight->query($queryUpdate, array($users[0]['id'], $code))) {
+                // присвоим роль
+                $this->insertRole($users[0]['id'], 3);
                 return true;
             } else {
                 return false;
             }
         }
+    }
+
+    /**
+     * Добавить роль
+     * @param type $user_id
+     * @param type $role_id
+     * @return boolean
+     */
+    private function insertRole($user_id, $role_id) {
+        $sqlLight = new \project\sqlLight();
+        $querySelect = "select * from `zay_roles_users` WHERE `user_id`='?'";
+        $obj = $sqlLight->queryList($querySelect, array($user_id))[0];
+        if ($obj['user_id'] > 0) {
+            $query = "INSERT `zay_roles_users` (`role_id`,`user_id`) "
+                    . "VALUES ('?','?') ";
+        } else {
+            $query = "UPDATE `zay_roles_users` SET `role_id`='?' "
+                    . "WHERE `user_id`='?' ";
+        }
+        if ($this->query($query, array($role_id, $user_id))) {
+            return true;
+        }
+        return false;
     }
 
 }

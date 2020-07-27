@@ -4,7 +4,7 @@ namespace project;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 /*
- * $_SESSION['user_auth_data']
+ * $_SESSION['user']['info']
  */
 
 class user extends \project\extension {

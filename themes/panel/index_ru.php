@@ -236,7 +236,7 @@
                                     <li class="dropdown user-menu">
                                         <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                             <img src="/assets/img/user/user.png" class="user-image" alt="User Image" />
-                                            <span class="d-none d-lg-inline-block"><?= $_SESSION['user_auth_data']['last_name'] . ' ' . $_SESSION['user_auth_data']['first_name'] ?></span>
+                                            <span class="d-none d-lg-inline-block"><?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <!-- User image -->
@@ -244,7 +244,7 @@
                                                 <!-- <img src="/assets/img/user/user.png" class="img-circle" alt="User Image" /> -->
                                                 <div class="d-inline-block">
                                                     Добрый день!<br/>
-                                                    <?= $_SESSION['user_auth_data']['last_name'] . ' ' . $_SESSION['user_auth_data']['first_name'] ?> <small class="pt-1"><?= $_SESSION['user_auth_data']['email'] ?></small>
+                                                    <?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?> <small class="pt-1"><?= $_SESSION['user']['info']['email'] ?></small>
                                                 </div>
                                             </li>
 

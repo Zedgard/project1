@@ -56,13 +56,13 @@
                 </div>
                 -->
                 <div class="col-md-5 contxt_right mobile_contxt_center">
-                    <a href="#" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 28px;color: #04be4e;"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 28px;color: #04be4e;"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram" style="font-size: 28px;color: #04be4e;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
                     &nbsp;&nbsp;
                     <!--<a href="#" class="header_close_club" style="color: #808080;">hello@edgardzaitsev.com</a>-->
-                    <a href="#" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | 
-                    <a href="#" class="header_close_club" style="color: #808080;">Мой кабинет</a>
+                    <a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | 
+                    <a href="/auth/" class="header_close_club" style="color: #808080;">Мой кабинет</a>
                 </div>
             </div>
             <div class="header-row">
@@ -158,7 +158,7 @@
                                         </li>
                                         -->
                                         <li class="dropdown dropdown-mega">
-                                            <a class="dropdown-item dropdown-toggle" href="/promos/" style="color: red;">Акции &nbsp;<i class="fas fa-angle-down" style="margin-top: 4px;"></i></a>				
+                                            <a class="dropdown-item dropdown-toggle" href="/promos/" style="color: red;">Акции &nbsp;<i class="fas fa-angle-down"></i></a>				
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <div class="dropdown-mega-content">
@@ -992,17 +992,20 @@
                             </button>
                         </div>
                         <div class="header-nav-features header-nav-features-no-border header-nav-features-lg-show-border order-1 order-lg-2">
-                            <div class="header-nav-feature header-nav-features-search d-inline-flex">
+                            <div class="header-nav-feature header-nav-features-search d-inline-flex"  style="float: left;margin-right: 14px;">
                                 <a href="#" class="header-nav-features-toggle" data-focus="headerSearch">
                                     <i class="fa fa-search fa-2x header-nav-top-icon"></i>
                                 </a>											
                                 <div class="header-nav-features-dropdown" id="headerTopSearchDropdown">
                                     <form role="search" action="page-search-results.html" method="get">
-                                        <div class="simple-search input-group">														<input class="form-control text-1" id="headerSearch" name="q" type="search" value="" placeholder="Search...">														<span class="input-group-append">															<button class="btn" type="submit">																<i class="fa fa-search header-nav-top-icon"></i>															</button>														</span>													</div>
+                                        <div class="simple-search input-group">		
+                                            <!-- <div class="fa-search-block"><i class="fa fa-search"></i></div> -->
+                                            <input class="form-control" name="search" type="search" value="" placeholder="Поиск..." style="width: 100%;">								
+                                        </div>
                                     </form>
                                 </div>
                             </div>
-                            <div class="header-nav-feature header-nav-features-cart d-inline-flex ml-2">
+                            <div class="header-nav-feature header-nav-features-cart d-inline-flex" style="float: right;">
                                 <a href="#" class="header-nav-features-toggle">
                                     <i class="fa fa-shopping-basket fa-4x header-nav-top-icon-img"></i>
                                     <!--<img src="/assets/img/shop/icon-cart.svg" width="18" alt="" class="header-nav-top-icon-img">-->	
@@ -1034,34 +1037,34 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="container" style="margin-top: 50px;">
+
+        <div class="container plastik_block" style="margin-top: 50px;display: none;">
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <div class="tp-caption tp-resizeme plastik plastik_1"> 
-                        <h1 class="plastik_text p_color_t_red">Акции</h1>
-                    </div>
+                    <a href="#" class="image hover-effect img-container">
+                        <img src="/assets/img/EZsite_button_Centr.svg" class="plastik" />
+                    </a>
                 </div>
                 <div class="col-md-6 mb-4">
-                    <div class="tp-caption tp-resizeme plastik plastik_2"> 
-                        <h1 class="plastik_text">Учебный центр</h1>
-                    </div>
+                    <a href="#" class="image hover-effect img-container">
+                        <img src="/assets/img/EZsite_button_Centr.svg" class="plastik" />
+                    </a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <div class="tp-caption tp-resizeme plastik plastik_3"> 
-                        <h1 class="plastik_text p_color_black">С чего начать</h1>
-                    </div>
+                    <a href="#" class="image hover-effect img-container">
+                        <img src="/assets/img/EZsite_button_Centr.svg" class="plastik" />
+                    </a>
                 </div>
                 <div class="col-md-6 mb-4">
-                    <div class="tp-caption tp-resizeme plastik plastik_4"> 
-                        <h1 class="plastik_text">Консультации</h1>
-                    </div>
+                    <a href="#" class="image hover-effect img-container">
+                        <img src="/assets/img/EZsite_button_Centr.svg" class="plastik" />
+                    </a>
                 </div>
             </div>
         </div>
-        -->
+
     </div>
 
 

@@ -19,22 +19,33 @@ if (isset($_POST)) {
      *  Регистрация token
      */
 
-    
+
     if (isset($_POST['t'])) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/token.php';
         $token = new \project\token();
-        
+
         // Сам хеш если он есть 
         if (!isset($_SESSION['token_hash'])) {
             $_SESSION['token_hash'] = '';
         }
-        
+
         if ($token->register()) {
+            /*
+             * Соберем статистики о посетителе
+             */
+            if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php')) {
+                include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php';
+                $statistic = new \project\statistic();
+                $_SESSION['browser']['height'] = $_POST['h'];
+                $_SESSION['browser']['width'] = $_POST['w'];
+                $statistic->visitorInit();
+                unset($_SESSION['browser']['height']);
+                unset($_SESSION['browser']['width']);
+            }
             $result = array('t' => 1);
         } else {
             $result = array('t' => 0);
         }
-        
     }
 
     // Определим пользователя и разрешим ему отправлять запросы

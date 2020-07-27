@@ -28,32 +28,66 @@ class page {
     }
 
     /**
-     * Отобразить страницу на сайте
+     * Инициализировать страницу на сайте
      * @param string $page_url
      * @return type
      */
-    public function show() {
+    public function init() {
+        $sqlLight = new \project\sqlLight();
         if ($_SESSION['url'][0] == $_SESSION['url'][1]) {
             $page_url = $_SESSION['url'][1];
         } else {
             $page_url = $_SESSION['url'][0];
         }
-
         $_SESSION['page_url'] = $page_url;
 
-
+        // По умолчанию загрузим основную страницу сайта
         if (strlen($page_url) == 0) {
             $page_url = 'index';
         }
+
+        $page = $this->getPageInfoOrUrl($page_url);
+        //echo "\n page: {$page['id']} \n";
+
+        if ($page['id'] > 0) {
+            $queryRole = "SELECT * FROM `zay_pages_roles` WHERE page_id='?' ";
+            $roles = $sqlLight->queryList($queryRole, array($page['id']));
+            /*
+             * Если страница открыта только для определенной роли то необходима авторизация
+             */
+            $user_role = 0;
+            $role_count = count($roles);
+            if ($role_count > 0) {
+                $r = array();
+                for ($i = 0; $i < $role_count; $i++) {
+                    if ($_SESSION['user']['info']['role_id'] == $roles[$i]['role_id']) {
+                        $user_role = 1;
+                    }
+                    $r[] = $roles[$i]['role_id'];
+                }
+                $_SESSION['page']['roles'] = $r;
+                if ($user_role == 0) {
+                    // отправим на страницу авторизации
+                    $page = $this->getPageInfoOrUrl('auth');
+                }
+            }
+            $_SESSION['page']['info'] = $page;
+            $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
+        } else {
+            $_SESSION['site_title'] = $_SESSION['site_title'];
+            $_SESSION['page'] = array();
+        }
+
+        return $page;
+    }
+
+    private function getPageInfoOrUrl($page_url) {
         $sqlLight = new \project\sqlLight();
-        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, t.theme_title, t.server_name "
+        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, t.theme_title, t.server_name, p.visible "
                 . "FROM `zay_pages` p "
                 . "left join `zay_themes` t on t.id=p.theme_id "
-                . "where p.url='?' and p.visible=1 ";
-        $page = $sqlLight->queryList($query, array($page_url))[0];
-        $_SESSION['page']['info'] = $page;
-        $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
-        return $page;
+                . "where p.url='?' ";
+        return $sqlLight->queryList($query, array($page_url))[0];
     }
 
     public function adminList($page_id) {

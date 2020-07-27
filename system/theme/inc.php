@@ -22,26 +22,36 @@ class theme {
      * @param type $type передать E = страница с ошибкой
      * @return type
      */
-    public function getTemplateFile($file_name, $type = '') {
+    public function getTemplateFile($theme_name, $type = '') {
         $html = '';
-        if (strlen($file_name) > 0 && $type != 'E') {
+        $run = 0;
+        if($type == 'E'){
+            $run = 1;
+            ob_start();
+            global $lang;
+            include DOCUMENT_ROOT . '/themes/site1/error_' . $_SESSION['lang'] . '.php';
+            $html = ob_get_clean();
+        }
+        
+        if (strlen($theme_name) > 0 && $run == 0) {
             ob_start();
             if (isset($_SESSION['page']['info']['id']) && $_SESSION['page']['info']['id'] > 0) {
                 //echo "gg: {$_SESSION['page']['info']['id']} <br/>\n";
                 $this->getBlocksContents($_SESSION['page']['info']['id']);
             }
             global $lang;
-            include DOCUMENT_ROOT . '/themes/' . $file_name . '/index_' . $_SESSION['lang'] . '.php';
+            include DOCUMENT_ROOT . '/themes/' . $theme_name . '/index_' . $_SESSION['lang'] . '.php';
             $html = ob_get_clean();
-        } else {
-            ob_start();
-            global $lang;
-            include DOCUMENT_ROOT . '/themes/site1/error_' . $_SESSION['lang'] . '.php';
-            $html = ob_get_clean();
-        }
+        } 
+        
         return $html;
     }
 
+    /**
+     * Отображение материалов на странице
+     * @global type $lang
+     * @param type $page_id
+     */
     public function getBlocksContents($page_id) {
         $blocks = array();
         global $lang;
@@ -60,6 +70,7 @@ class theme {
 
         if (count($blocks) > 0) {
             foreach ($blocks as $key => $value) {
+                $elems = array();
                 if (strlen($value['extension']) == 0) {
                     // Обычный контент
                     $elems[] = $value['content_descr'];

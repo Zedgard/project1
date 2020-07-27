@@ -118,17 +118,19 @@ class token {
      * @return type
      */
     public function javascript() {
-        if (strlen($_SESSION['token_hash']) == 0) {
+        if (!isset($_SESSION['token_hash']) || strlen($_SESSION['token_hash']) == 0) {
             ob_start();
             ?>
             <script>
                 $(document).ready(function () {
                     setTimeout(function () {
+                        var h = window.screen.availHeight;
+                        var w = window.screen.availWidth;
                         $.ajax({
                             url: '/jpost.php',
                             method: 'POST',
                             dataType: 'json',
-                            data: {t: '1'},
+                            data: {t: '1', 'h': h, 'w': w},
                             success: function (data) {
                                 console.log(data['t']);
                             }
