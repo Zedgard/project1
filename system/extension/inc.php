@@ -31,10 +31,16 @@ class extension {
 
             if (count($dirs) > 0) {
                 foreach ($dirs as $value) {
-
+                    $lang_file = '';
                     // конфиг расширения
-                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/lang.php';
-                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/conf.php';
+                    $lang_file = $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/lang.php';
+                    if (is_file($lang_file)) {
+                        include $lang_file;
+                    }
+                    $conf = $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/conf.php';
+                    if (is_file($conf)) {
+                        include $conf;
+                    }
 
                     $querySelect = "SELECT `id`, `extension_url`, `version` FROM `zay_extension` e WHERE e.extension_url='?'";
                     $e = $sqlLight->queryList($querySelect, array($value));

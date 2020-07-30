@@ -8,7 +8,7 @@ session_start();
 define('__CMS__', 1);
 
 include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 
 if (isset($_POST)) {
     //echo "post";

@@ -16,7 +16,6 @@ $(document).ready(function () {
     if ($(window).width() < 768) {
         var shadowClass = $(".mobile-sticky-body-overlay");
         $(".sidebar-toggle").on("click", function () {
-            console.log(".sidebar-toggle 18");
             shadowClass.addClass("active");
             $("body").css("overflow", "hidden");
         });
@@ -42,7 +41,6 @@ $(document).ready(function () {
     /*======== 3. SIDEBAR TOGGLE FOR MOBILE ========*/
     if ($(window).width() < 768) {
         $(document).on("click", ".sidebar-toggle", function (e) {
-            console.log(".sidebar-toggle 45");
             e.preventDefault();
             var min = "sidebar-minified",
                     min_out = "sidebar-minified-out",
@@ -60,16 +58,10 @@ $(document).ready(function () {
     /*======== 4. SIDEBAR TOGGLE FOR VARIOUS SIDEBAR LAYOUT ========*/
     var body = $("#body");
     if ($(window).width() >= 768) {
-        if (!window.isMinified) {
-            window.isMinified = false;
-        }
-        if (!window.isCollapsed) {
-            window.isCollapsed = false;
-        }
-
+        window.isMinified = false;
+        window.isCollapsed = false;
 
         $("#sidebar-toggler").on("click", function () {
-            console.log("sidebar-toggler 72");
             if (
                     body.hasClass("sidebar-fixed-offcanvas") ||
                     body.hasClass("sidebar-static-offcanvas")
@@ -78,7 +70,6 @@ $(document).ready(function () {
                         .addClass("sidebar-offcanvas-toggle")
                         .removeClass("sidebar-toggle");
                 if (window.isCollapsed === false) {
-                    console.log("82");
                     body.addClass("sidebar-collapse");
                     window.isCollapsed = true;
                     window.isMinified = false;
@@ -99,7 +90,7 @@ $(document).ready(function () {
                 $(this)
                         .addClass("sidebar-toggle")
                         .removeClass("sidebar-offcanvas-toggle");
-                if (window.isMinified === false) {
+                if (window.isMinified === true) {
                     body
                             .removeClass("sidebar-collapse sidebar-minified-out")
                             .addClass("sidebar-minified");
@@ -111,15 +102,6 @@ $(document).ready(function () {
                     window.isMinified = false;
                 }
             }
-            $.ajax({
-                url: "/jpost.php",
-                type: 'POST',
-                dataType: 'json',
-                data: "sidebar_toggler=" + window.isMinified,
-                success: function (data) {
-
-                }
-            });
         });
     }
 
@@ -217,10 +199,9 @@ $(document).ready(function () {
         body.removeClass('right-sidebar-in').addClass('right-sidebar-out');
     });
 
-
     $(".btn_logout").click(function () {
         //console.log("btn_logout");
-        sendPostLigth('/jpost.php?extension=auth', {"logout":1}, function () {
+        sendPostLigth('/jpost.php?extension=auth', {"logout": 1}, function () {
 
         });
     });

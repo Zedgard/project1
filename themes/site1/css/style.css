@@ -120,6 +120,22 @@ blockquote.blockquote::before{
     font-family:'FontAwesome';
 }
 
+
+.sign_up_consultation{
+    background-image: linear-gradient(to bottom right,  #b0e1fa, #fbf0ea);
+
+}
+.sign_up_consultation_back{
+    background-image: url('/assets/img/sign_up_consultation.svg');
+    background-position: center center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    width: 100%;
+}
+
+
 /* Helper Classes & Shorcodes */
 .padding {
     padding: 7.5rem 0;
@@ -205,9 +221,31 @@ blockquote.blockquote::before{
 .top60{
     margin-top: 60px;
 }
+.top70{
+    margin-top: 70px;
+}
+.top80{
+    margin-top: 80px;
+}
+.top90{
+    margin-top: 90px;
+}
 .bottom60{
     margin-bottom: 60px;
 }
+.bottom70{
+    margin-bottom: 70px;
+}
+.bottom80{
+    margin-bottom: 80px;
+}
+.bottom90{
+    margin-bottom: 90px;
+}
+.bottom100{
+    margin-bottom: 100px;
+}
+
 .bottom0 {
     margin-bottom: 0;
 }
@@ -222,6 +260,18 @@ blockquote.blockquote::before{
 }
 .fontmedium {
     font-weight: 500;
+}
+.fontweight600 {
+    font-weight: 600;
+}
+.fontweight700 {
+    font-weight: 700;
+}
+.fontweight800 {
+    font-weight: 800;
+}
+.fontweight900 {
+    font-weight: 900;
 }
 .font-light{
     font-weight: 300;
@@ -246,6 +296,9 @@ blockquote.blockquote::before{
 }
 .extradark-color {
     color: #212331;
+}
+.textuppercase{
+    text-transform: uppercase;
 }
 .defaultcolor {
     color: #000000;
@@ -277,6 +330,19 @@ blockquote.blockquote::before{
 }
 .textcenter{
     text-align: center;
+}
+
+.width100{
+    width: 100%;
+}
+.width90{
+    width: 90%;
+}
+.width80{
+    width: 80%;
+}
+.width70{
+    width: 70%;
 }
 section{
     position: relative;
@@ -516,7 +582,7 @@ ul.social-icons.white li a:focus{
     position: relative;
     display: inline-block;
     font-size: 13px;
-    padding: 1rem 2.5rem;
+    padding: 0.75rem 1.5rem;
     line-height: 1;
     text-transform: uppercase;
     text-align: center;
@@ -2772,6 +2838,7 @@ i::before,i::after{
     background: #fff;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+    background-color: #FFFFFF;
 }
 .square-layout .price-table{
     -webkit-border-radius: 0;
@@ -2848,8 +2915,10 @@ i::before,i::after{
 .centered-table .price-table ul li:last-child > span::after {
     width: 0;
 }
-.price-table .promo_li_text{
+.promo_li_text{
     color: #6e6e6e;
+    font-weight: 600;
+    margin-left: 5px;
 }
 .price-table .promo_li_title {
     color: #000000;
@@ -2859,6 +2928,7 @@ i::before,i::after{
 .price-table:hover {
     background: #f4dcc9;
     border-color: #f4dcc9;
+
 }
 .price-table.active:hover {
     background: #f4dcc9;
@@ -2872,12 +2942,24 @@ i::before,i::after{
     color: #000000;
 }
 
+.price-table:hover .button 
+/* .price-table:hover ul li > span::before, */{
+    color: #FFFFFF;
+}
+
+.price-table:hover .smark  
+/* .price-table:hover ul li > span::before, */{
+    color: #04be4e;
+}
+
+
 
 .price-table:hover .ammount2 *,
 .price-table:hover .ammount2 h2
 {
     color: #ff0000;
 }
+/*
 .price-table:hover .btnsecondary,
 .price-table:focus .btnsecondary,
 .price-table:hover .btnprimary,
@@ -2886,6 +2968,7 @@ i::before,i::after{
     border-color: #414141;
     background-color: #414141;
 }
+*/
 .price-table .btnsecondary:hover,
 .price-table .btnsecondary:focus,
 .price-table .btnprimary:hover,
@@ -4177,4 +4260,76 @@ footer .copyrights > a:focus {
 
 .buttonBar {
     display: none;
+}
+.promoTime {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.promoTime promoTime_title {
+    color: #6e6e6e;
+    font-size: 0.5em;
+    font-weight: 500;
+}
+
+.promoTime li {
+    font-weight: 600;
+    display: inline-block;
+    font-size: 0.7em;
+    list-style-type: none;
+    padding: 1em;
+    text-transform: uppercase;
+}
+
+.promoTime li span {
+    display: block;
+    font-size: 1.5rem;
+}
+
+.consult_form_input{
+    background: none;
+    border: none;
+    border-bottom: 1px solid #000000;
+    padding: 12px;
+}
+
+.sign_up_consultation_back select{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    position: relative;
+    outline: none;
+    padding: 5px;
+    border-bottom: 1px solid #000000;
+    padding-right: 40px;
+}
+.sign_up_consultation_back select:after{
+    content: "";
+    display: block;
+    border-bottom: 1px solid #000000;
+    width: 25px;
+    height: 25px;
+    padding: 10px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.borderradius30{
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+}
+.datetime_piker_select_block{
+    background-color: #FFFFFF;
+}
+.datetime_piker_select_title{
+    background-color: #00bfda;
+    color: #FFFFFF;
+    padding: 18px;
+    font-size: 130%;
+    font-weight: 400;
+}
+.ui-datepicker-title{
+    display: none;  
 }

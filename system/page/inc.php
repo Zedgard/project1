@@ -19,7 +19,8 @@ class page {
     public function list() {
         $pages = array();
         $sqlLight = new \project\sqlLight();
-        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, t.theme_title, t.server_name "
+        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, p.description "
+                . "t.theme_title, t.server_name "
                 . "FROM `zay_pages` p "
                 . "left join `zay_themes` t on t.id=p.theme_id "
                 . "where p.url='?' and p.visible=1 ";
@@ -83,7 +84,8 @@ class page {
 
     private function getPageInfoOrUrl($page_url) {
         $sqlLight = new \project\sqlLight();
-        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, t.theme_title, t.server_name, p.visible "
+        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, t.theme_title, "
+                . "t.server_name, p.description, p.visible "
                 . "FROM `zay_pages` p "
                 . "left join `zay_themes` t on t.id=p.theme_id "
                 . "where p.url='?' ";
@@ -93,7 +95,8 @@ class page {
     public function adminList($page_id) {
         $pages = array();
         $sqlLight = new \project\sqlLight();
-        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, t.theme_title, t.server_name "
+        $query = "SELECT p.id, p.url, p.page_title, p.theme_id, p.visible, p.description, "
+                . "t.theme_title, t.server_name "
                 . "FROM `zay_pages` p "
                 . "left join `zay_themes` t on t.id=p.theme_id ";
         if ($page_id > 0) {
@@ -120,7 +123,7 @@ class page {
      * @param type $visible
      * @return type
      */
-    public function edit($id, $url, $page_title, $theme_id, $visible) {
+    public function edit($id, $url, $page_title, $description, $theme_id, $visible) {
         $sqlLight = new \project\sqlLight();
 
         if ($id == 0 || $id == '') {
@@ -131,15 +134,15 @@ class page {
                 $_SESSION['errors'][] = 'Такая ссылка на страницу уже существует';
             }
             if (count($_SESSION['errors']) == 0) {
-                $query = "INSERT INTO `zay_pages`(`url`, `page_title`, `theme_id`, `visible`, `higter`) "
-                        . "VALUES ('?','?','?','?', '0')";
-                return $sqlLight->query($query, array($url, $page_title, $theme_id, $visible));
+                $query = "INSERT INTO `zay_pages`(`url`, `page_title`, `description`, `theme_id`, `visible`, `higter`) "
+                        . "VALUES ('?','?','?','?','?', '0')";
+                return $sqlLight->query($query, array($url, $page_title, $description, $theme_id, $visible));
             }
         } else {
             $query = "UPDATE `zay_pages` SET "
-                    . "`theme_id`='?',`visible`='?' "
+                    . "`theme_id`='?',`visible`='?', `description`='?' "
                     . "WHERE `id`='?' ";
-            return $sqlLight->query($query, array($theme_id, $visible, $id));
+            return $sqlLight->query($query, array($theme_id, $visible, $description, $id));
         }
         return false;
     }

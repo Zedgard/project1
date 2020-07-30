@@ -129,7 +129,7 @@ class sqlLight {
         $buffer = array();
         $i = 0;
 
-        // Защитим отиньекций
+        // Защитим от инъекций
         if (count($values) > 0) {
             foreach ($values as $value) {
                 $value = $this->mysqli->real_escape_string($value);

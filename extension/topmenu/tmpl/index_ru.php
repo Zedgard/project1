@@ -15,10 +15,7 @@
 <!-- Skin CSS -->
 <link rel="stylesheet" href="/assets/css/porto/css/skins/skin-corporate-4.css">	
 
-<!-- Vendor -->
-<script src="/assets/plugins/jquery/jquery.min.js"></script>		
-<script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>		
-<script src="/assets/css/porto/vendor/common/common.min.js"></script>			
+		
 
 <!-- Theme Base, Components and Settings -->
 <script src="/assets/css/porto/js/theme.js"></script>

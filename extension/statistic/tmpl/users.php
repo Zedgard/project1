@@ -31,8 +31,8 @@
         /*======== 2. USER ACTIVITY ========*/
         if ($("#user-activity1")) {
             //console.log("user-activity ");
-            var start = moment().subtract(1, "days");
-            var end = moment().subtract(1, "days");
+            var start = moment().subtract(6, "days");
+            var end = moment();
             var cb = function (start, end) {
                 $("#user-activity1 .date-range-report span").html(start.format("L") + " - " + end.format("L"));
                 //console.log("start: " + start.format("L"));
@@ -140,13 +140,15 @@
                         endDate: end,
                         opens: 'left',
                         ranges: {
+                            /*
                             "Сегодня": [moment(), moment()],
                             "Вчера": [
                                 moment().subtract(1, "days"),
                                 moment().subtract(1, "days")
                             ],
+                             */
                             "Последние 7 дней": [moment().subtract(6, "days"), moment()],
-                            "Последние 30 дней": [moment().subtract(29, "days"), moment()],
+                            /* "Последние 30 дней": [moment().subtract(29, "days"), moment()], */
                             "Этот месяц": [moment().startOf("month"), moment().endOf("month")],
                             "Прошлый месяц": [
                                 moment()
@@ -155,7 +157,9 @@
                                 moment()
                                         .subtract(1, "month")
                                         .endOf("month")
-                            ]
+                            ],
+                            "Последние 3 месяца": [moment().subtract(3, "month").startOf("month"), moment().endOf("month")],
+                            "Последние 6 месяца": [moment().subtract(6, "month").startOf("month"), moment().endOf("month")],
                         }
                     },
                     cb

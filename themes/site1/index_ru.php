@@ -5,7 +5,10 @@
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title><?= $_SESSION['site_title'] ?></title>
+        <meta name="description" content="<?= $_SESSION['page']['info']['description'] ?>" />
         <link href="/themes/site1/images/favicon.png" rel="icon">
+        <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
+        <meta name="google-site-verification" content="ce3lVfDDMEXXbJpONOEWKi4rfuBvU5MA0bIMU9Q87DI" />
 
         <link rel="stylesheet" href="/themes/site1/css/plugins.css">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
@@ -13,8 +16,21 @@
               integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
               crossorigin="anonymous">
         <link rel="stylesheet" href="/themes/site1/css/style.css">
+        <link href="/assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
 
-    </head> 
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="/assets/plugins/jquery/jquery.js"></script>
+        <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css">
+        <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.theme.css">
+        <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+        <!-- timepicker -->
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js"></script>
+        <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css" />
+
+    </head>  
     <body data-spy="scroll" data-target=".navbar" data-offset="90">
 
         <!--PreLoader-->
@@ -229,7 +245,7 @@
         -->
         <!--Main Slider ends -->
 
-        
+
         <?= $_SESSION['page']['block_center'] ?>
 
 
@@ -1155,8 +1171,7 @@
         <!--Footer ends-->   
 
 
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="/themes/site1/js/jquery-3.1.1.min.js"></script>
+
 
         <!--Bootstrap Core-->
         <script src="/themes/site1/js/popper.min.js"></script>
@@ -1208,6 +1223,8 @@
         <script src="/themes/site1/js/revolution/extensions/revolution.extension.parallax.min.js"></script>
         <script src="/themes/site1/js/revolution/extensions/revolution.extension.slideanims.min.js"></script>
         <script src="/themes/site1/js/revolution/extensions/revolution.extension.video.min.js"></script>
+        <script src="/assets/plugins/daterangepicker/moment.min.js"></script>
+        <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
 
         <!--Google Map API-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>

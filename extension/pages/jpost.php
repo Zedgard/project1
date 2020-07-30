@@ -12,9 +12,10 @@ if (isset($_POST['page_edit'])) {
     $id = $_POST['page_edit'];
     $url = (isset($_POST['url'])) ? $_POST['url'] : '';
     $page_title = (isset($_POST['page_title'])) ? $_POST['page_title'] : '';
+    $description = (isset($_POST['description'])) ? $_POST['description'] : '';
     $theme_id = $_POST['theme_id'];
     $visible = $_POST['visible'];
-    if ($p->edit($id, $url, $page_title, $theme_id, $visible)) {
+    if ($p->edit($id, $url, $page_title, $description, $theme_id, $visible)) {
         $result = array('success' => 1, 'success_text' => $lang['pages'][$_SESSION['lang']]['success'], 'action' => './');
         $_SESSION['message'][] = $lang['pages'][$_SESSION['lang']]['success'];
     } else {

@@ -20,12 +20,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><?= $lang['pages'][$_SESSION['lang']]['link_to_page'] ?></label>
-                            <input class="form-control" name="url" id="url" value="<?= $obj['url'] ?>" 
-                                   onkeyup="this.value = this.value.replace(/[^a-z_+]/, '')"
-                                   placeholder="<?= $lang['pages'][$_SESSION['lang']]['internet_address'] ?>..." <?= (strlen($obj['url']) > 0) ? 'readonly="readonly"' : '' ?> type="text" required>
+                            <label><?= $lang['pages'][$_SESSION['lang']]['title_page'] ?></label>
+                            <input class="form-control" name="page_title" id="page_title" value="<?= $obj['page_title'] ?>" placeholder="<?= $lang['pages'][$_SESSION['lang']]['title'] ?>..." <?= (strlen($obj['page_title']) > 0) ? 'readonly="readonly"' : '' ?> type="text" required>
                             <div class="valid-feedback">
                                 <?= $lang['pages'][$_SESSION['lang']]['accepted'] ?>
+                            </div>
+                            <div class="invalid-feedback">
+                                <?= $lang['pages'][$_SESSION['lang']]['name_page_is_true'] ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Описание страницы</label>
+                            <input class="form-control" name="description" id="description" value="<?= $obj['description'] ?>" 
+                                   placeholder="description" type="text">
+                            <div class="valid-feedback">
+                                Описание страницы тег description
                             </div>
                             <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['must_be_lowercase_only_in_latin'] ?></span>
                         </div>

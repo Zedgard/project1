@@ -15,6 +15,11 @@ function getSiteUrl($url) {
     $this->url = $url;
 }
 
+function location_href($url){
+    header("Location: {$url}");
+    exit();
+}
+
 /**
  * translit
  * функция транслитерации

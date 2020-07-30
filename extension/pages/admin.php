@@ -30,7 +30,11 @@ if ($user->isAdmin()) {
                 //echo "f: {$f} <br/>\n";
                 $config = array();
                 if (is_file($f)) {
-                    include DOCUMENT_ROOT . '/extension/' . $extensions[$i]['extension_url'] . '/lang.php';
+                    //include DOCUMENT_ROOT . '/extension/' . $extensions[$i]['extension_url'] . '/lang.php';
+                    $lang_file = DOCUMENT_ROOT . '/extension/' . $extensions[$i]['extension_url'] . '/lang.php';
+                    if (is_file($lang_file)) {
+                        include $lang_file;
+                    }
                     include $f;
                     //echo "f: {$f}<br/>\n";
                     //print_r($config);
