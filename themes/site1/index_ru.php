@@ -8,7 +8,6 @@
         <meta name="description" content="<?= $_SESSION['page']['info']['description'] ?>" />
         <link href="/themes/site1/images/favicon.png" rel="icon">
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
-        <meta name="google-site-verification" content="ce3lVfDDMEXXbJpONOEWKi4rfuBvU5MA0bIMU9Q87DI" />
 
         <link rel="stylesheet" href="/themes/site1/css/plugins.css">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
@@ -34,7 +33,7 @@
     <body data-spy="scroll" data-target=".navbar" data-offset="90">
 
         <!--PreLoader-->
-        <!--
+     
         <div class="loader">
            <div class="loader-inner">
               <div class="loader-blocks">
@@ -57,7 +56,7 @@
               </div>
            </div>
         </div>
-        -->
+       
         <!--PreLoader Ends-->
 
         <?= $_SESSION['page']['block_top'] ?>
@@ -247,6 +246,58 @@
 
 
         <?= $_SESSION['page']['block_center'] ?>
+
+
+
+        <section id="funfacts" class="padding_top fact-iconic gradient_bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12 margin_bottom text-md-left text-center wow fadeInLeft" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInLeft;">
+                        <h3 class="bottom25" style="font-size: 36px;">Опыт нашей команды в цирах</h3>
+                        <p class="title">Наша команда высококвалифицированных профессионалов широко зарекомендовала себя за десять лет работы.</p>
+                    </div>
+                    <div class="col-md-7 col-sm-12 text-center">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom  wow fadeInRight" data-wow-delay="400ms" style="visibility: visible; animation-delay: 400ms; animation-name: fadeInRight;text-align: center;">
+                                <div class="img-icon bottom15">
+                                    <!--<i class="fa fa-smile-o"></i>--> 
+                                    <img src="/assets/img/mental-health.svg" style="width: 60px;"/>
+
+                                </div>
+                                <p class="title">более</p>
+                                <div class="counters">
+                                    <span class="count_nums" data-to="900" data-speed="3000">900</span> <i class="fa fa-plus"></i>
+                                </div>
+                                <p class="title">Консультаций в год</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom wow fadeInRight" data-wow-delay="350ms" style="visibility: visible; animation-delay: 350ms; animation-name: fadeInRight;">
+                                <div class="img-icon bottom15">
+                                    <!-- <i class="fa fa-language"> </i>-->
+                                    <img src="/assets/img/positive-thinking.svg" style="width: 60px;"/>
+                                </div>
+                                <p class="title">более</p>
+                                <div class="counters">
+                                    <span class="count_nums" data-to="20000" data-speed="2500">20000</span> <i class="fa fa-plus"></i>
+                                </div>
+                                <p class="title">Счастливых клиентов</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom wow fadeInRight" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInRight;">
+                                <div class="img-icon bottom15">
+                                    <!--<i class="fa fa-desktop"></i>-->
+                                    <img src="/assets/img/award.svg" style="width: 60px;"/>
+                                </div>
+                                <p class="title">более</p>
+                                <div class="counters">
+                                    <span class="count_nums" data-to="7" data-speed="3000">7</span> <i class="fa fa-plus"></i>
+                                </div>
+                                <p class="title">Книг и более 20 статей написано</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
 
         <!--half img section-->
@@ -1155,6 +1206,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 text-center">
+                        <!--
                         <ul class="social-icons bottom25 wow fadeInUp" data-wow-delay="300ms">
                             <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i> </a> </li>
                             <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i> </a> </li>
@@ -1164,6 +1216,7 @@
                             <li><a href="javascript:void(0)"><i class="fa fa-envelope-o"></i> </a> </li>
                         </ul>
                         <p class="copyrights wow fadeInUp" data-wow-delay="350ms"> &copy; 2019 XeOne. made with love by <a href="http://www.themesindustry.com/" target="_blank">themesindustry</a> </p>
+                        -->
                     </div>
                 </div>
             </div>
@@ -1225,6 +1278,9 @@
         <script src="/themes/site1/js/revolution/extensions/revolution.extension.video.min.js"></script>
         <script src="/assets/plugins/daterangepicker/moment.min.js"></script>
         <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
+        <script src="/assets/plugins/select2/js/select2.min.js"></script>
+        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
+        <script src="/assets/js/ajax.js"></script>   
 
         <!--Google Map API-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>

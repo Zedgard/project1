@@ -68,9 +68,11 @@ html .ui-button.ui-state-disabled:active {
     background: #FFFFFF;
     font-weight: normal;
     color: #454545;
+    /*
     -webkit-border-radius: 200px;
     -moz-border-radius: 200px;
     border-radius: 200px;
+    */
     padding: 5px;
     margin: 0;
 }

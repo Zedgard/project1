@@ -100,6 +100,9 @@ button{
     line-height: 1;
 }
 
+#funfacts p.title {
+    font-size: 16px;
+}
 
 /*common font family*/
 p, .heading-title > span, .process-wrapp li > .pro-step,
@@ -124,6 +127,18 @@ blockquote.blockquote::before{
 .sign_up_consultation{
     background-image: linear-gradient(to bottom right,  #b0e1fa, #fbf0ea);
 
+}
+.btn_next_step, .btn_last_step, .btn_step_end{
+    background-color: #00bfda;
+    color: #FFF;
+}
+.btn_step_end{
+    background-color: #FF0000;
+    color: #FFF;
+}
+.btn_step_end:hover{
+    background-color: #04be4e;
+    color: #FFF;
 }
 .sign_up_consultation_back{
     background-image: url('/assets/img/sign_up_consultation.svg');
@@ -351,12 +366,15 @@ section{
     padding-left: 2.25rem;
     padding-right: 2.25rem;
 }
+/*
+радиент: левый верхний угол (d1c3fc) - нижний правый (9bc4fc)
+*/
 .gradient_bg{
-    background: -webkit-linear-gradient(90deg, #423f9c 31%, #862359 69%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(31%, #423f9c), color-stop(69%, #862359));
-    background: -webkit-linear-gradient(left, #423f9c 31%, #862359 69%);
-    background: -o-linear-gradient(left, #423f9c 31%, #862359 69%);
-    background: linear-gradient(90deg, #423f9c 31%, #862359 69%);
+    background: -webkit-linear-gradient(90deg, #d1c3fc 31%, #9bc4fc 69%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(31%, #d1c3fc), color-stop(69%, #9bc4fc));
+    background: -webkit-linear-gradient(left, #d1c3fc 31%, #9bc4fc 69%);
+    background: -o-linear-gradient(left, #d1c3fc 31%, #9bc4fc 69%);
+    background: linear-gradient(90deg, #d1c3fc 31%, #9bc4fc 69%);
 }
 .gradient_bg_default{
     background: -webkit-linear-gradient(90deg, #00e4ce 31%, #00abc9 69%);
@@ -468,12 +486,21 @@ a.image{
     opacity: 0;
     visibility: hidden;
     bottom: 70px;
+    /*
     background: -webkit-linear-gradient(90deg, #423f9c, #862359);
     background: -webkit-gradient(linear, left top, right top, color-stop(#423f9c), color-stop(#862359));
     background: -webkit-linear-gradient(left, #423f9c, #862359);
     background: -o-linear-gradient(left, #423f9c, #862359);
     background: -webkit-gradient(linear, left top, right top, from(#423f9c), to(#862359));
     background: linear-gradient(90deg, #423f9c, #862359);
+    */
+    background: -webkit-linear-gradient(90deg, #00bfda 31%, #00bfda 69%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(31%, #00bfda), color-stop(69%, #00bfda));
+    background: -webkit-linear-gradient(left, #00bfda 31%, #00bfda 69%);
+    background: -o-linear-gradient(left, #00bfda 31%, #00bfda 69%);
+    background: linear-gradient(90deg, #00bfda 31%, #00bfda 69%);
+    
+    
     -webkit-transform: scale(0);
     -ms-transform: scale(0);
     -o-transform: scale(0);
@@ -2716,7 +2743,7 @@ i::before,i::after{
     content: "";
     height: 3px;
     width: 50px;
-    background: #ffffff;
+    background: #000000;
     display: block;
     margin-top: 15px;
 }
@@ -2780,6 +2807,9 @@ i::before,i::after{
 }
 .counters .count_nums {
     font-size: 1.875rem;
+}
+#funfacts .counters .count_nums {
+    font-size: 36px;
 }
 .icon-counters.table-display .count_nums {
     font-size: 2.5rem;
@@ -3949,11 +3979,11 @@ footer .copyrights > a:focus {
     width: 58px;
 }
 .loader span {
-    background: -webkit-linear-gradient(90deg, #423f9c 31%, #862359 69%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(31%, #423f9c), color-stop(69%, #862359));
-    background: -webkit-linear-gradient(left, #423f9c 31%, #862359 69%);
-    background: -o-linear-gradient(left, #423f9c 31%, #862359 69%);
-    background: linear-gradient(90deg, #423f9c 31%, #862359 69%);
+    background: -webkit-linear-gradient(90deg, #f39c12 31%, #F7F8D9 69%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(31%, #f39c12), color-stop(69%, #F7F8D9));
+    background: -webkit-linear-gradient(left, #f39c12 31%, #F7F8D9 69%);
+    background: -o-linear-gradient(left, #f39c12 31%, #F7F8D9 69%);
+    background: linear-gradient(90deg, #f39c12 31%, #F7F8D9 69%);
     -webkit-border-radius: 50%;
     border-radius: 50%;
     display: block;
@@ -4331,5 +4361,5 @@ footer .copyrights > a:focus {
     font-weight: 400;
 }
 .ui-datepicker-title{
-    display: none;  
+
 }
