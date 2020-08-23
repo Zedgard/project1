@@ -4,23 +4,23 @@ namespace project;
 
 defined('__CMS__') or die;
 
-class config extends \project\extension {
+class wares extends \project\extension {
 
     public function __construct() {
         parent::__construct();
     }
 
     /**
-     * Список настроек
+     * Список товаров
      * @param string $searchStr
      * @return array
      */
-    public function getConfigArray($searchStr) {
+    public function getWaresArray($searchStr) {
         if (strlen($searchStr) > 0) {
-            $querySelect = "SELECT * FROM `zay_configs` WHERE `config_code` like '%?%' OR `config_title` like '%?%' ";
+            $querySelect = "SELECT * FROM `zay_wares` WHERE `title` like '%?%' ";
             return $this->getSelectArray($querySelect, array($searchStr, $searchStr));
         } else {
-            $querySelect = "SELECT * FROM `zay_configs` ";
+            $querySelect = "SELECT * FROM `zay_wares` ";
             return $this->getSelectArray($querySelect, array());
         }
     }

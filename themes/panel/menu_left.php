@@ -3,14 +3,27 @@
     <!-- sidebar menu -->
     <ul class="nav sidebar-inner" id="sidebar-menu">
 
-
-
         <li  class="has-sub <?= ($_SESSION['page_url'] == 'admin') ? 'active' : '' ?> expand" >
             <a class="sidenav-item-link" href="/admin/" >
                 <i class="mdi mdi-view-dashboard-outline"></i>
                 <span class="nav-text">Статистика</span> 
+            </a> 
+        </li>
+        
+        <li  class="has-sub <?= ($_SESSION['page_url'] == 'products') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/admin/products/">
+                <i class="mdi mdi-image-filter-none"></i>
+                <span class="nav-text">Продукты</span> </b>
+            </a> 
+        </li>
+        
+        <li  class="has-sub <?= ($_SESSION['page_url'] == 'wares') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/admin/wares/">
+                <i class="mdi mdi-image-filter-none"></i>
+                <span class="nav-text">Товары</span> </b>
             </a>
         </li>
+        
 
         <li  class="has-sub <?= ($_SESSION['page_url'] == 'pages') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/admin/pages/">
@@ -26,8 +39,6 @@
             </a>
 
         </li>
-
-
 
         <li  class="has-sub" >
             <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#system_configs"

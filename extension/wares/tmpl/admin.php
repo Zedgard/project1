@@ -4,8 +4,8 @@
             <div class="card card-default">
                 <div class="card-header card-header-border-bottom">
                     <div class="col-md-6">
-                        <h2>Настройки значения</h2>
-                    </div>
+                        <h2>Товары сайта</h2>
+                    </div> 
                     <div class="col-md-6">
                         <a href="#" class="btn btn-primary add_config" data-toggle="modal" data-target="#form_edit_config_modal" style="float: right;">Добавить</a>
                     </div>

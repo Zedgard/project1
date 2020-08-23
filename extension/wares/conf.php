@@ -1,10 +1,11 @@
 <?php
 
 $config = array(
-    'title' => 'Настройки сайта',
-    'descr' => 'Разные настройки сайта',
+    'title' => 'Товары сайта',
+    'descr' => 'Товары сайта',
     'urls' => array(
-        'Настройки сайта админка (admin.php)' => '/extension/config/admin.php'
+        'Управление товарами (admin.php)' => '/extension/wares/admin.php',
+        'Отображение товаров (index.php)' => '/extension/wares/index.php'
     ),
     'version' => '0.1'
 );
