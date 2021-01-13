@@ -1,0 +1,164 @@
+<?php
+/*
+ * Yandex оплата
+ * Настройки находятся в файле config.php 
+ * 
+ *  */
+session_start();
+
+include $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+$sqlLight = new \project\sqlLight();
+$config = new \project\config();
+$products = new \project\products();
+
+// Ссылка на переадресацию ответа 
+$url_ref = $config->getConfigParam('pay_site_url_ref');
+$ya_shop_id = $config->getConfigParam('ya_shop_id');
+$ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
+
+
+$pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
+$pay_status = "pending"; // Устанавливаем стандартный статус платежа
+// Подключаем библиотеку Я.Кассы
+require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
+
+use YandexCheckout\Client;
+
+$client = new Client();
+$client->setAuth($ya_shop_id, $ya_shop_api_key);
+
+/*
+  Собираем данные по платежу
+ */
+$u = new \project\user();
+
+$price_total = 0;
+foreach ($_SESSION['cart']['itms'] as $key => $value) {
+    $email = $value['user_email'];
+    if ($value['price_promo'] > 0) {
+        $price = $value['price_promo'];
+    } else {
+        $price = $value['price'];
+    }
+    $price_total += $price;
+}
+//echo "price_total: {$price_total} <br/>\n"; 
+
+if (count($_SESSION['cart']['itms']) > 0) {
+    $client_id = ($u->isClientId() > 0) ? $u->isClientId() : 0;
+
+    // Передадим ID пользователя (Создается при консультации)
+    if ($client_id == 0) {
+        $client_id = $_SESSION['cart']['itms'][0]['user_id'];
+    }
+    $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
+    if (strlen($pay_descr) > 0) {
+        $_SESSION['consultation'] = $_SESSION['cart']['itms'][0];
+    }
+
+    // Создаем платеж
+    $idempotenceKey = uniqid('', true); // Генерируем ключ идемпотентности
+    //print_r($_SESSION['user']['info']['email']);
+    //echo $price_total . " em: {$_SESSION['user']['info']['email']} | {$u->isClientEmail()}<br/>\n";
+    //echo $u->isClientEmail();
+    //echo $u->isClientEmail();
+    //  exit();
+    $errors = 0;
+
+    // Если авторезированный
+    if (strlen($u->isClientEmail()) > 0) {
+        $email = $u->isClientEmail();
+    }
+
+    $data_array = array(
+        "amount" => array(
+            "value" => $price_total, // Сумма платежа
+            "currency" => "RUB" // Валюта платежа
+        ),
+        "confirmation" => array(
+            "type" => "redirect",
+            "return_url" => "{$url_ref}/shop/cart/?ya_payment_true=1" // Куда отправлять пользователя после оплаты
+        ),
+        "capture" => true, // Платеж в один этап
+        "receipt" => array(
+            "customer" => array(
+                "email" => $email,
+            ),
+            "items" => array(
+                array(
+                    "description" => "Описание услуги",
+                    "quantity" => "1.00", // Количество
+                    "amount" => array(
+                        "value" => $price_total,
+                        "currency" => "RUB"
+                    ),
+                    "tax_system_code" => "2", // Налогообложение 
+                    "vat_code" => "2",
+                    "payment_mode" => "full_prepayment", // Полный платеж
+                    "payment_subject" => "service" // Услуга
+                )
+            )
+        ),
+            //'save_payment_method' => true  // сохранение данных о платеже, при тестовом платеже вызывает ошибку
+    );
+    //print_r($data_array);
+    try {
+        $payment = $client->createPayment(
+                $data_array,
+                uniqid('', true)
+        );
+    } catch (Exception $exc) {
+        $errors = 1;
+        //echo $exc->getTraceAsString();
+        echo 'Ошибка генерации массива данных';
+    }
+
+    if ($errors == 0) {
+//print_r($payment);
+// Получаем ссылку на оплату
+        $confirmationUrl = $payment->getConfirmation()->getConfirmationUrl();
+
+// Получаем платежный ключ
+        $pay_key = $payment->getid();
+        $_SESSION['PAY_KEY'] = $pay_key;
+
+        $queryMaxId = "select MAX(p.id) max_id from `zay_pay` p";
+        $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
+//echo $max_id . "<br/>\n";
+// Сохраняем данные платежа в базу
+        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
+                . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+        if ($sqlLight->query($query, array(($max_id), 'ya', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $confirmationUrl), 1)) {
+            foreach ($_SESSION['cart']['itms'] as $key => $value) {
+                $product_id = $value['id'];
+                if ($product_id > 0) {
+                    if ($value['price_promo'] > 0) {
+                        $price = $value['price_promo'];
+                    } else {
+                        $price = $value['price'];
+                    }
+                    $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+                            . "VALUES ('?','?','?')";
+                    $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+                    // Зафиксируем продажу
+                    //$products->setSoldAdd($product_id);
+                }
+            }
+            // Отправляем пользователя на страницу оплаты
+            header('Location: ' . $confirmationUrl);
+        } else {
+            echo 'Ошибка операции!';
+        }
+    } else {
+        echo "<div>Ошибка операции!</div>";
+    }
+} else {
+    ?>
+    <div>Корзина пуста</div>
+    <?
+}

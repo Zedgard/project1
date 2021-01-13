@@ -1,0 +1,48 @@
+.get_emails_container{
+    background: rgb(107,221,120);
+    background: linear-gradient(135deg, rgba(107,221,120,1) 0%, rgba(99,167,214,1) 100%);
+}
+.get_emails_text1{
+    margin-top: 0.4rem;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    color: #000000;
+    font-weight: 700;
+    display: block;
+    clear: both;
+}
+.get_emails_text2{
+    margin-top: -0.4rem;
+    font-size: 1.1rem;
+    color: #000000;
+    font-weight: 500;
+    display: block;
+    clear: both;
+}
+.get_emails_input{
+    margin: 0;
+    padding: 0;
+    border: 0px solid #CCCCCC;
+    width: 75%;
+    height: 2.8rem;
+    float: right;
+    padding: 0rem 0.5rem;
+}
+.get_emails_btn_submit{
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 700;
+    height: 2.8rem;
+    width: 25%;
+    background-color: #e6db74;
+    border: 0px solid #e6db74;
+    float: right;
+    padding: 0rem 0.5rem;
+}
+/* Текст с ошибкой */
+.get_emails_error_text{
+    color: #FF0000;
+    font-size: 1rem;
+}
