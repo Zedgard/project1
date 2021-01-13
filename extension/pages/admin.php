@@ -9,13 +9,13 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include 'lang.php';
 
 $user = new \project\user();
-if ($user->isAdmin()) {
+if ($user->isEditor()) {
 
     $p = new \project\page();
 
     if (isset($_GET['content'])) {
         $theme = new \project\theme();
-        $blocks = $p->bloksListArray();
+        $blocks = $p->bloksListArray(0);
         $contents = $p->contentsListArray($_GET['content']);
 
         if (isset($_GET['edit_material'])) {
@@ -25,6 +25,7 @@ if ($user->isAdmin()) {
             $content = $p->pageBlockContentsListArray($extension_url_id)[0];
             //print_r($content);
             $extensions = $e->getExtensionListArray(0);
+
             for ($i = 0; $i < count($extensions); $i++) {
                 $f = DOCUMENT_ROOT . '/extension/' . $extensions[$i]['extension_url'] . '/conf.php';
                 //echo "f: {$f} <br/>\n";
@@ -48,10 +49,13 @@ if ($user->isAdmin()) {
             include 'tmpl/content.php';
         }
     } elseif (isset($_GET['bloks'])) {
-        $blocks = $p->bloksListArray();
+        //$blocks = $p->bloksListArray();
         include 'tmpl/bloks.php';
+        include 'tmpl/block_edit.php';
     } else {
         $pages = $p->adminList(0);
+        
+        
         if (isset($_GET['edit'])) {
             if ($_GET['edit'] > 0) {
                 $obj = $p->adminList($_GET['edit'])[0];
@@ -66,4 +70,5 @@ if ($user->isAdmin()) {
     ?>
     <div>Нет доступа для просмотра данной страницы</div>
     <?
+    goBack('/admin/', 3);
 }

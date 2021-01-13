@@ -249,5 +249,6 @@ $(document).ready(function() {
   }
 
   /*======== 10. PROGRESS BAR ========*/
-  NProgress.done();
+  //NProgress.done();
+  
 });

@@ -55,12 +55,15 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             metod = 1;
                         }
                         if (result['success'] == 0) {
-                            if (result['errors'].length > 0) {
+                            if (!!result['errors'] && result['errors'].length > 0) {
                                 $('.form_result').removeClass("alert-success");
                                 $('.form_result').addClass("alert").addClass("alert-danger");
                                 for (var i = 0; i < result['errors'].length; i++) {
                                     $(obj).find(".form_result").append("<div>" + result['errors'][i] + "</div>\n");
                                 }
+                            }
+                            if (!!result['success_text'] && result['success_text'].length > 0) {
+                                $('.form_result').append("<div>" + result['success_text'] + "</div>\n");
                             }
                             metod = 2;
                         }
@@ -70,22 +73,30 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                                 $('.form_result').removeClass("alert-success");
                                 $('.form_result').addClass("alert").addClass("alert-danger");
                                 for (var i = 0; i < result['errors'].length; i++) {
-                                    $(obj).find(".form_result_error").append("Error system №101 !");
+                                    $(obj).find(".form_result").append("Error system №101 !");
                                 }
                             }
+                            if (!!result['success_text'] && result['success_text'].length > 0) {
+                                $(obj).find('.form_result').append(result['success_text']);
+                            }
                         }
-                        $('.form_result').show(200);
+                        $(obj).find('.form_result').show(200);
                         // Выполнить втроенную функцию
                         func(result);
                         // Выполнить переадресацию
                         if (!!result['action'] && result['action'].length > 0) {
-                            var action_time = 3;
+                            var action_time = 2;
                             if (!!result['action_time'] && Number(result['action_time']) > 0) {
                                 action_time = Number(result['action_time']);
+                                setTimeout(function () {
+                                    window.location.href = result['action'];
+                                }, (action_time * 1000));
+                            } else {
+                                if (!!result['action']) {
+                                    window.location.href = result['action'];
+                                }
                             }
-                            setTimeout(function () {
-                                window.location.href = result['action'];
-                            }, (action_time * 1000));
+
 
                         }
 
@@ -112,6 +123,8 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
 
 })(jQuery);
 
+
+
 /**
  * Простая форма отправки POST запроса
  * @param {type} url
@@ -124,6 +137,7 @@ function sendPostLigth(url, data, func) {
 
     // реализация работы метода с отдельным элементом страницы
     //var obj = this;
+    $('.form_result').html("");
     $('.form_result').after(ajax_load);
     $.ajax({
         url: url,
@@ -137,13 +151,26 @@ function sendPostLigth(url, data, func) {
             $(".ajax_load").remove();
             var metod = 0;
             if (result['success'] == 1) {
-                toastr.success(result['success_text'], 'Выполнено');
+                if (!!result['success_text'] && result['success_text'].length > 0) {
+                    if (typeof toastr !== 'undefined') {
+                        toastr.success(result['success_text'], 'Выполнено');
+
+                    }
+                    if (!!$('.form_result')) {
+                        $('.form_result').append('<div>' + result['success_text'] + '</div>');
+                    }
+                }
                 metod = 1;
             }
             if (result['success'] == 0) {
-                if (result['errors'].length > 0) {
+                if (typeof result['errors'] !== 'undefined' && result['errors'].length > 0) {
                     for (var i = 0; i < result['errors'].length; i++) {
-                        toastr.success(result['errors'][i], 'ошибка!');
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(result['errors'][i], 'ошибка!');
+                        }
+                        if (!!$('.form_result')) {
+                            $('.form_result').append('<div>' + result['errors'][i] + '</div>');
+                        }
                     }
                 }
                 metod = 2;
@@ -152,7 +179,12 @@ function sendPostLigth(url, data, func) {
             if (metod == 0) {
                 if (!!result['errors'] && result['errors'].length > 0) {
                     for (var i = 0; i < result['errors'].length; i++) {
-                        toastr.success("Error system №101 !", 'ошибка!');
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success("Error system №101 !", 'ошибка!');
+                        }
+                        if (!!$('.form_result')) {
+                            $('.form_result').append("Error system №101 !");
+                        }
                     }
                 }
             }
@@ -161,7 +193,7 @@ function sendPostLigth(url, data, func) {
 
             // Выполнить переадресацию
             if (!!result['action'] && result['action'].length > 0) {
-                var action_time = 3;
+                var action_time = 2;
                 if (!!result['action_time'] && Number(result['action_time']) > 0) {
                     action_time = Number(result['action_time']);
                 }

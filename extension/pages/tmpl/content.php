@@ -8,14 +8,15 @@
                 </div>
 
                 <div class="card-body">
-                    
+
                     <div class="form_result" style="display: none;">
 
                     </div>
-                    
+
                     <? for ($i = 0; $i < count($blocks); $i++): ?>
                         <div class="row">
                             <div class="col-sm-12 form-group">
+
                                 <label>
                                     <a href="?content=<?= $_GET['content'] ?>&block_id=<?= $blocks[$i]['id'] ?>&edit_material=0" class="btn-sm btn-primary">добавить материал</a>
                                     <?= $blocks[$i]['block_name'] ?>
@@ -137,8 +138,8 @@
 
                 }
             });
-             
+
         });
-             
+
     });
 </script>

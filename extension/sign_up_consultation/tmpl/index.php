@@ -1,72 +1,96 @@
 <div class="sign_up_consultation ">
     <div class="sign_up_consultation_back">
         <div class="container">
+            <style>
+                .ui-icon-circle-triangle-e{
+                    background-image: url('/assets/plugins/jquery/jquery-ui-1.12.1/images/l.svg') !important;
+                    background-repeat: no-repeat;
+                }
+                .ui-icon-circle-triangle-w{
+                    background-image: url('/assets/plugins/jquery/jquery-ui-1.12.1/images/r.svg') !important;
+                    background-repeat: no-repeat;
+                }
+                *
+                .ui-datepicker-prev{
+                    background-image: url('/assets/plugins/jquery/jquery-ui-1.12.1/images/l.svg') !important;
+                    background-repeat: no-repeat;
+                    font-size: 0.9rem;
+                }
+                .ui-datepicker-next{
+                    background-image: url('/assets/plugins/jquery/jquery-ui-1.12.1/images/r.svg') !important;
+                    background-repeat: no-repeat;
+                    font-size: 0.9rem;
+                }
+
+            </style>
+            <?
+            //print_r($_SESSION['cart']);
+            ?>
             <div class="row">
                 <div class="col-md-12 top80 bottom100">
                     <div class="datetime_piker_select_block">
                         <div class="datetime_piker_select_title">
-                            Записаться на консультацию
+                            <div class="float-left">Записаться на консультацию</div> <div class="float-right" style="display: none;">время Мск. <?= date("H:i") ?></div>
+                            <div style="height: 0px;clear: both;"></div>
                         </div>  
                         <div style="width: 100%;">
 
-                            <div style="margin-top: -50px;padding: 5% 8%;">
+                            <div style="padding: 0% 6%;">
 
                                 <!-- STEP 1 -->
                                 <div class="step1">
-                                    <div class="top50 text-left">
-                                        <input type="text" name="consult_first_name" value="" placeholder="Ваше Имя и Фамилия" class="consult_form_input consult_first_name width70 fontfize150" />
-                                    </div>
-                                    <div class="top30 text-left">
-                                        <input type="text" name="consult_user_phone" value="" placeholder="Телефон" data-mask="+7 (999) 999-9999" class="consult_form_input consult_user_phone width70 fontfize150" />
-                                    </div>
-                                    <div class="top30 text-left">
-                                        <input type="text" name="consult_user_email" value="" placeholder="Email" class="consult_form_input consult_user_email width70 fontfize150" />
-                                    </div>
-                                    <div class="top50 text-left">
-                                        <select name="consult_your_master" class="consult_form_input consult_your_master width70 fontfize150" >
-                                            <option value="0">Выберите специалиста</option>
-                                            <option value="1">Эдгард Зайцев</option>
-                                            <option value="2">Сергей Александрович</option>
-                                            <option value="3">Татьяна Владимировна</option>
-                                            <option value="4">Кирил Зотов</option>
-                                        </select>
-                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-md-6 mb-5">
 
-                                    <div style="text-align: right;padding: 30px 0;">
-                                        <input type="button" value="Следующий шаг" step="2" class="btn btn-lg btn_next_step fontmedium font-size-18" />
-                                    </div>
-
-                                </div> 
-
-                                <!-- STEP 2 -->
-                                <div class="step2" style="display: none;">
-                                    <div class="col-md-12">
-                                        <div class="top50 text-left">
-                                            <div class="fontfize150" style="margin-bottom: 30px;">
-                                                Выберите дату и время
+                                            <div class="top30 text-left">
+                                                <input type="text" name="consult_first_name" value="" placeholder="Ваше Имя и Фамилия" class="consult_form_input consult_first_name w-100 fontfize150" />
                                             </div>
-                                            <div class="datepicker" style="width: 300px;"></div>
-                                            <input type="text" name="datepicker_data" value="" class="datepicker_data" style="display: none;" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="top50 text-left">
-                                            <div>
-                                                <div class="timepicker"></div>
-                                                <input type="text" name="timepicker_data" value="" class="timepicker_data" style="display: none;" />
+                                            <div class="top30 text-left">
+                                                <input type="text" name="consult_user_phone" value="" placeholder="Телефон" class="consult_form_input consult_user_phone w-100 fontfize150" />
+                                            </div>
+                                            <div class="top30 text-left">
+                                                <input type="text" name="consult_user_email" value="" placeholder="Email" class="consult_form_input consult_user_email w-100 fontfize150" />
+                                            </div>
+                                            <div class="top50 text-left">
+                                                <select name="consult_your_master" class="consult_form_input consult_your_master w-100 fontfize150" >
+
+                                                </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-4 mt-5 mb-5">
+                                            <div class="text-center mt-3">
+                                                <div class="fontfize150" style="margin-bottom: 10px;">
+                                                    Выберите дату
+                                                </div>
+                                                <div class="datepicker"></div>
+                                                <input type="hidden" name="datepicker_data" value="" class="datepicker_data" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 mt-5" title="Выберите специалиста">
+                                            <div class="fontfize150 text-center mt-3" style="margin-bottom: 10px;">
+                                                Время (МСК.)
+                                            </div>
+                                            <div class="d-flex bd-highlight text-center">
+                                                <div class="select_timer align-self-center p-2 bd-highlight"></div>
+                                                <input type="hidden" name="timepicker_data" value="" class="timepicker_data"  />
+                                            </div>
+                                        </div> 
+
+
                                     </div>
-                                    <div style="text-align: right;padding: 30px 0;">
-                                        <input type="button" value="Назад" step="1" class="btn btn-lg btn_last_step fontmedium font-size-18" />
-                                        <input type="button" value="Следующий шаг" step="3" class="btn btn-lg btn_next_step fontmedium font-size-18" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div style="text-align: right;padding: 30px 0;">
+                                                <input type="button" value="Следующий шаг" step="2" class="btn btn-lg btn_next_step fontmedium font-size-18" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- STEP 3 -->
-                                <div class="step3" style="display: none;">
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                <div class="step2" style="display: none;">
+                                    <div class="row mt-5">
+                                        <div class="col-md-4">
                                             <div class="row">
                                                 <div class="form-group col-md-12">
                                                     <div class="fontmedium">Ваше Имя и Фамилия</div>
@@ -87,7 +111,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="row">
                                                 <div class="form-group col-md-12">
                                                     <div class="fontmedium">Специалист</div>
@@ -107,44 +131,91 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h2 class="defaultcolor fontfize150 textcenter">
-                                                <span>Цена: 1500</span> <i class="fa fa-ruble"></i>
-                                            </h2>
+                                        <div class="col-md-4">
+
+                                            <div class="row mb-5">
+                                                <div class="col-12">
+                                                    <div class="fontmedium mb-4">Продолжительность</div>
+                                                    <select name="select_time_period" class="form-control select_time_period w-100">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-12 defaultcolor fontfize150">
+                                                    Цена: <span class="total_price font-bold">0</span> <i class="fa fa-ruble"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div style="text-align: right;padding: 30px 0;">
-                                        <input type="button" value="Назад" step="2" class="btn btn-lg btn_last_step fontmedium font-size-18" />
-                                        <input type="button" value="Записаться" step="3" class="btn btn-lg btn_step_end fontmedium font-size-18" />
+                                        <input type="button" value="Назад" step="1" class="btn btn-lg btn_last_step fontmedium font-size-18" />
+                                        <input type="button" value="Оплатить" step="3" class="btn btn-lg btn_step_end disabled fontmedium font-size-18" />
                                     </div>
 
                                 </div>
 
-                            </div>
 
+
+                            </div>
                         </div>
                     </div>
                 </div>
 
-
                 <!-- true alert -->
                 <div class="modal fade" id="consultation_send" tabindex="-1" role="dialog" aria-labelledby="consultation_send" aria-hidden="true">
-                    <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalSmallTitle">Данные успешно отправлены</h5>
+                                <h5 class="modal-title" id="exampleModalSmallTitle">Оплата</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Встреча зарегистрирована, подробности в личном кабинете
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        Оплатить любым удобным способом
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 text-left mt-3">
+                                        <a href="/pay.php?yandex=1" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
+                                    </div>
+                                    <div class="col-lg-3 text-left mt-3">
+                                        <?
+                                        if (strlen($paypal_email) == 0) {
+                                            ?>
+                                            <a href="javascript:alert('Недоступен')" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
+                                            <?
+                                        } else {
+                                            ?>
+                                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                                <input type="hidden" name="cmd" value="_xclick">
+                                                <input type="hidden" name="business" value="<?= $paypal_email ?>">
+                                                <input type="hidden" name="item_name" value="<?= $title ?>">
+                                                <input type="hidden" name="item_number" value="1">
+                                                <input type="hidden" name="amount" value="<?= $price_total ?>">
+                                                <input type="hidden" name="return" value="<?= $url_ref ?>">
+                                                <input type="hidden" name="no_shipping" value="1">
+                                                <input type="hidden" name="email" value="<?= $email ?>">
+                                                <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
+                                            </form>
+                                            <?
+                                        }
+                                        ?>
+
+                                    </div>
+                                    <div class="col-lg-3 text-left mt-3">
+                                        <a href="/pay.php?interkassa=1" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
+                                    </div>
+                                    <div class="col-lg-3 text-left mt-3">
+
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Отмена</button>
-                                <button type="button" class="btn btn-primary btn-pill">Оплатить</button>
                             </div>
                         </div>
                     </div>
@@ -153,5 +224,6 @@
             </div>
         </div>
     </div>
-</div>
-<script src="/assets/js/consultation.js"></script>
+
+
+    <script src="/assets/js/consultation.js?v=<?= rand() ?>"></script>

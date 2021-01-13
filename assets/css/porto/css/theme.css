@@ -15,7 +15,10 @@
     z-index: 1001;
 }
 
-
+.header-body-bg{
+    background-color: #FFFFFF;
+    background-image: url('/themes/site1/images/top_bg.png');
+}
 
 #header .header-nav-main{
     z-index: 5;
@@ -111,7 +114,7 @@
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 992px) {
     #header .container {
         width: 100%;
     }
@@ -145,10 +148,23 @@
 
 
 #header .header_close_club{
-    font-size: 12px;
+    font-size: 0.8rem;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
 }
+#header .header_user_auth{
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+#header .header_user_auth i{
+    color: #000000;
+    transition: 1s;
+}
+#header .header_user_auth i:hover{
+    color: #ff0000;
+}
+
 #header .header-row {
     display: flex;
     flex-grow: 1;
@@ -284,8 +300,10 @@
 }
 
 #header .header-logo {
+    /*
     margin: 16px 0;
     margin: 1rem 0;
+    */
     position: relative;
     z-index: 1;
 }
@@ -557,7 +575,7 @@
 
 #header .header-nav-features .header-nav-top-icon,
 #header .header-nav-features .header-nav-top-icon-img {
-    font-size: 12.8px;
+    /* font-size: 12.8px; */
     font-size: 1.6rem;
     position: relative;
     top: -1px;
@@ -587,7 +605,7 @@
     min-width: 300px;
     z-index: 10000;
     right: 100%;
-    margin-right: -25px;
+    margin-right: -32px;
     margin-top: 30px;
     transition: opacity .2s ease-out;
     pointer-events: none;
@@ -700,7 +718,8 @@
 #header .header-nav-features .header-nav-features-cart .mini-products-list li {
     position: relative;
     padding: 15px 0;
-    border-bottom: 1px solid #EEE;
+    height: 115px;
+    /* border-bottom: 1px solid #EEE; */
 }
 
 #header .header-nav-features .header-nav-features-cart .mini-products-list li:first-child {
@@ -760,7 +779,7 @@
 }
 
 #header .header-nav-features .header-nav-features-cart .totals {
-    padding: 15px 0 25px;
+    padding: 0px;
     overflow: hidden;
 }
 
@@ -3617,9 +3636,11 @@ html.sticky-header-enabled.sticky-header-active #header .header-logo-sticky-chan
 }
 /* Responsive */
 @media (min-width: 992px) {
+    /*
     #header .header-body:not(.h-100) {
         height: auto !important;
     }
+    */
 }
 
 @media (max-width: 991px) {

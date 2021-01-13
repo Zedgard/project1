@@ -13,10 +13,10 @@
       var defaults = {
 
         // width in pixels of the visible scroll area
-        width : 'auto',
+        width : '100%',
 
         // height in pixels of the visible scroll area
-        height : '250px',
+        height : '450px;',
 
         // width in pixels of the scrollbar and rail
         size : '7px',
@@ -76,7 +76,7 @@
         borderRadius: '7px',
 
         // sets border radius of the rail
-        railBorderRadius : '7px'
+        railBorderRadius : '10px'
       };
 
       var o = $.extend(defaults, options);
@@ -162,14 +162,14 @@
           .addClass(o.wrapperClass)
           .css({
             position: 'relative',
-            overflow: 'hidden',
+            //overflow: 'hidden',
             width: o.width,
             height: o.height
           });
 
         // update style for the div
         me.css({
-          overflow: 'hidden',
+          //overflow: 'hidden',
           width: o.width,
           height: o.height
         });

@@ -4,7 +4,7 @@
  * Перевод extension pages
  */
 
-$lang['pages']['ru'] = array(
+$lang['users']['ru'] = array(
     'title' => 'Страницы сайта',
     'descr' => 'Управление страницами сайта',
     'extension_admin' => 'Страницы сайта админка (admin.php)',

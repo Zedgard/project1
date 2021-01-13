@@ -5,21 +5,21 @@
  */
 session_start();
 
-define('__CMS__', 1);
-
-include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+//include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php'; не подключаем а то токен не будет работать
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
 if (isset($_POST)) {
-    //echo "post";
+    //echo "post \n";
     // Результат выполнения запроса
     $result = array();
+    $_SESSION['errors'] = array();
 
     /*
      *  Регистрация token
      */
-
-
     if (isset($_POST['t'])) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/token.php';
         $token = new \project\token();
@@ -31,7 +31,7 @@ if (isset($_POST)) {
 
         if ($token->register()) {
             /*
-             * Соберем статистики о посетителе
+             * Соберем статистику о посетителе
              */
             if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php')) {
                 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php';
@@ -55,9 +55,9 @@ if (isset($_POST)) {
         /*
          * Отправляем данные на расширения
          */
-
         if (isset($_GET['extension']) && strlen($_GET['extension']) > 0) {
             if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php')) {
+                //echo $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php' . "\n";
                 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php';
             } else {
                 $_SESSION['errors'][] = 'Not file jpost!';
@@ -65,27 +65,31 @@ if (isset($_POST)) {
         }
     }
 
+    /*
+     * Отправка только редакторы сайта
+     */
+    $user = new \project\user();
+    if ($user->isEditor()) {
+        include $_SERVER['DOCUMENT_ROOT'] . '/system/extension/jpost.php';
+    }
 
     /*
      * Обработки
+     * Если имеются ошибки!
      */
-
-    // Если имеются ошибки!
+    if ($result['success'] == '0') {
+        //$result = array('success' => 0, 'errors' => array($result['success_text']));
+        if (isset($result['success_text']) && strlen($result['success_text']) > 0) {
+            $_SESSION['errors'] = array();
+            $_SESSION['errors'][] = $result['success_text']; 
+        }
+    }
     if (is_array($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
         $result = array('success' => 0, 'errors' => $_SESSION['errors']);
     }
 
+
     $_SESSION['errors'] = array();
 
     echo json_encode($result);
-
-    // sidebar_toggler
-    if (isset($_POST['sidebar_toggler'])) {
-        if ($_POST['sidebar_toggler'] == 'true') {
-            $sidebar_toggler == 'false';
-        } else {
-            $sidebar_toggler == 'true';
-        }
-        $_SESSION['system']['sidebar_toggler'] = $sidebar_toggler;
-    }
 }

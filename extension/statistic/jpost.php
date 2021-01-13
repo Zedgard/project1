@@ -13,3 +13,8 @@ if (isset($_POST['getStatDaysData'])) {
     $data = $statistic->getStatDaysDataArray($_POST['date_start'], $_POST['date_end']);
     $result = array('success' => 1, 'data' => $data);
 }
+
+if (isset($_POST['getWaresVideoSeeData'])) {
+    $data = $statistic->getWaresVideoSeeData($_POST['date_start'], $_POST['date_end']);
+    $result = array('success' => 1, 'data' => $data);
+}

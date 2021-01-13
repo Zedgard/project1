@@ -11,24 +11,24 @@
 
         <!-- GOOGLE FONTS -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
-        <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+        <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css?v=<?= $_SESSION['rand'] ?>" 
               integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
               crossorigin="anonymous">
         <!-- PLUGINS CSS STYLE -->
-        <link href="/assets/plugins/nprogress/nprogress.css" rel="stylesheet" />
+        <link href="/assets/plugins/nprogress/nprogress.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
         <!-- No Extra plugin used -->
 
-        <link href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
+        <link href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
-        <link href="/assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
+        <link href="/assets/plugins/daterangepicker/daterangepicker.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
-        <link href="/assets/plugins/toastr/toastr.min.css" rel="stylesheet" />
+        <link href="/assets/plugins/toastr/toastr.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
         <!-- SLEEK CSS -->
-        <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.css" />
+        <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.css?v=<?= $_SESSION['rand'] ?>" />
 
         <!-- FAVICON -->
         <link href="/assets/img/favicon.png" rel="shortcut icon" />
@@ -38,60 +38,70 @@
         -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js?v=<?= $_SESSION['rand'] ?>"></script>
         <![endif]-->
-        <script src="/assets/plugins/nprogress/nprogress.js"></script>
-
-        <script src="/assets/plugins/jquery/jquery.js"></script>
-        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
-        <script src="/assets/plugins/jekyll-search.min.js"></script>
-
-        <script src="/assets/plugins/select2/js/select2.min.js"></script>
-        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
-        <script src="/assets/js/ajax.js"></script>   
-
-        <script src="/assets/plugins/charts/Chart.min.js"></script>
+        <script src="/assets/plugins/nprogress/nprogress.js?v=<?= $_SESSION['rand'] ?>"></script>
 
 
-        <script src="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
-        <script src="/assets/plugins/jvectormap/jquery-jvectormap-world-mill.js"></script>
+        <script src="/assets/plugins/jquery/jquery.js?v=<?= $_SESSION['rand'] ?>"></script>
 
+        <link href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js?v=<?= $_SESSION['rand'] ?>"></script>
 
-        <script src="/assets/plugins/daterangepicker/moment.min.js"></script>
-        <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
+        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/jekyll-search.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+
+        <link href="/assets/plugins/select2/css/select2.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <script src="/assets/plugins/select2/js/select2.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/ajax.js?v=<?= $_SESSION['rand'] ?>"></script>   
+
+        <script src="/assets/plugins/charts/Chart.js?v=<?= $_SESSION['rand'] ?>"></script>
+
+        <!-- timepicker -->
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css?v=<?= $_SESSION['rand'] ?>" />
+        
+        <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
+
+        <script src="/assets/plugins/daterangepicker/moment.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/daterangepicker2.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script>
             jQuery(document).ready(function () {
-                jQuery('input[name="dateRange"]').daterangepicker({
-                    autoUpdateInput: false,
-                    singleDatePicker: true,
-                    locale: {
-                        cancelLabel: 'Clear'
-                    }
-                });
-                jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
-                    jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
-                });
-                jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
-                    jQuery(this).val('');
-                });
-
-
-
-
+                if (!!$("input[name='dateRange']")[0]) {
+                    jQuery('input[name="dateRange"]').daterangepicker({
+                        autoUpdateInput: false,
+                        singleDatePicker: true,
+                        locale: {
+                            cancelLabel: 'Clear'
+                        }
+                    });
+                    jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
+                        jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
+                    });
+                    jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
+                        jQuery(this).val('');
+                    });
+                }
             });
             window.isMinified = <?= $_SESSION['system']['sidebar_toggler'] ?>;
             window.isCollapsed = false;
-        </script>
+        </script>  
+        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/toastr/toastr.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
 
-        <script src="/assets/plugins/toastr/toastr.min.js"></script>
-
-        <script src="/assets/js/sleek.bundle.js"></script>
-        <script src="/assets/js/sleek.js"></script>
-        <script src="/assets/js/sortable.js"></script>
+        <?
+        //<script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] "></script> 139
+        ?>
+        <link href="/assets/css/sleek.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet">
+        <script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/sleek.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/sortable.js?v=<?= $_SESSION['rand'] ?>"></script>
     </head>
-
-
     <body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
 
         <script>
@@ -162,7 +172,6 @@
                     </div>
                 </aside>
 
-
                 <div class="page-wrapper">
                     <!-- Header -->
                     <header class="main-header " id="header">
@@ -191,7 +200,7 @@
 
                             <div class="navbar-right ">
                                 <ul class="nav navbar-nav">
-                                    <li class="dropdown notifications-menu">
+                                    <li class="dropdown notifications-menu" style="display: none;">
                                         <button class="dropdown-toggle" data-toggle="dropdown">
                                             <i class="mdi mdi-bell-outline"></i>
                                         </button>
@@ -232,14 +241,17 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <!--
                                     <li class="right-sidebar-in right-sidebar-2-menu">
                                         <i class="mdi mdi-settings mdi-spin"></i>
                                     </li>
-
+                                    -->
                                     <!-- User Account -->
                                     <li class="dropdown user-menu">
                                         <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                            <img src="/assets/img/user/user.png" class="user-image" alt="User Image" />
+                                            <? if (strlen($_SESSION['user']['info']['avatar']) > 0): ?>
+                                                <img src="<?= $_SESSION['user']['info']['avatar'] ?>" class="user-image" alt="User Image" />
+                                            <? endif; ?>
                                             <span class="d-none d-lg-inline-block"><?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
@@ -251,9 +263,13 @@
                                                     <?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?> <small class="pt-1"><?= $_SESSION['user']['info']['email'] ?></small>
                                                 </div>
                                             </li>
-
                                             <li>
-                                                <a href="user-profile.html">
+                                                <a href="/office/">
+                                                    <i class="mdi mdi-account"></i> Кабинет 
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/office/userprofile_admin/">
                                                     <i class="mdi mdi-account"></i> Настройки 
                                                 </a>
                                             </li>
@@ -273,7 +289,7 @@
                                             -->
                                             <li class="dropdown-footer">
                                                 <div class="d-inline-block">
-                                                    <a href="#" class="btn_logout btn_logout"> 
+                                                    <a href="#" class="btn_logout"> 
                                                         <i class="mdi mdi-logout"></i>Выйти из системы
                                                     </a>
                                                 </div>
@@ -363,6 +379,15 @@
                     <footer class="footer mt-auto">
                         <div class="copyright bg-white">
                             <p>
+                                &copy; <span id="copy-year"><?= date("Y") ?></span> Copyright by 
+                                <a
+                                    class="text-primary"
+                                    href="/"
+                                    target="_blank"
+                                    ><?= $_SERVER['SERVER_NAME'] ?></a>.
+                            </p>
+                            <!--
+                            <p>
                                 &copy; <span id="copy-year">2019</span> Copyright Sleek Dashboard Bootstrap Template by
                                 <a
                                     class="text-primary"
@@ -371,6 +396,7 @@
                                     >Abdus</a
                                 >.
                             </p>
+                            -->
                         </div>
                         <script>
                             var d = new Date();

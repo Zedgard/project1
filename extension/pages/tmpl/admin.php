@@ -6,7 +6,7 @@
                 <div class="card-header card-header-border-bottom">
                     <h2 class="col-lg-6"><?= $lang['pages'][$_SESSION['lang']]['descr'] ?></h2>
                     <div class="col-lg-6" style="text-align: right;">
-                        <a href="?bloks=1" class="btn btn-info">Блоки</a>
+                        <a href="?bloks=1" class="btn btn-info">Блоки сайта</a>
                     </div>
                 </div>
 
@@ -19,12 +19,12 @@
                     </div>
                     <br/>
                     <div class="row">
-                        <table class="table table-striped table-bordered" style="width:100%;background-color: #FFFFFF;">
+                        <table class="table table-striped table-bordered w-100" style="background-color: #FFFFFF;">
                             <thead>
                                 <tr>
                                     <th><?= $lang['pages'][$_SESSION['lang']]['page_title'] ?></th>
                                     <th><?= $lang['pages'][$_SESSION['lang']]['url'] ?></th>
-                                    <th><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></th>
+                                    <th style="text-align: center;"><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></th>
                                     <th style="text-align: center;">видимость</th>
                                     <th></th>
                                     <th></th>
@@ -34,14 +34,18 @@
                                 <? for ($i = 0; $i < count($pages); $i++): ?>
                                     <tr>
                                         <td><?= $pages[$i]['page_title'] ?></td>
-                                        <td><?= $pages[$i]['url'] ?></td>
-                                        <td><?= $pages[$i]['theme_title'] ?></td>
-                                        <td style="text-align: center;"><?= ($pages[$i]['visible'] == '1') ? '<span class="badge badge-success">'.$lang['pages'][$_SESSION['lang']]['s_opened'].'</span>' : '<span class="badge badge-danger">'.$lang['pages'][$_SESSION['lang']]['s_close'].'</span>' ?></td>
-                                        <td><a href="?content=<?= $pages[$i]['id'] ?>" class="btn-sm btn-primary">материалы</a></td>
+                                        <td>
+                                            <a href="<?= $pages[$i]['url_a_href'] ?>"><?= $pages[$i]['url_a_href'] ?></a> 
+                                            <!--<?= $pages[$i]['url_a_href_bread'] ?>-->
+                                        </td>
+                                        <td style="text-align: center;"><?= $pages[$i]['theme_title'] ?></td>
+                                        <td style="text-align: center;"><?= ($pages[$i]['visible'] == '1') ? '<span class="badge badge-success">' . $lang['pages'][$_SESSION['lang']]['s_opened'] . '</span>' : '<span class="badge badge-danger">' . $lang['pages'][$_SESSION['lang']]['s_close'] . '</span>' ?></td>
+                                        <td style="text-align: center;"><a href="?content=<?= $pages[$i]['id'] ?>" class="btn-sm btn-primary">материалы</a></td>
                                         <td style="text-align: center;">
                                             <a href="?edit=<?= $pages[$i]['id'] ?>" class="btn-sm btn-primary"><?= $lang['pages'][$_SESSION['lang']]['edit'] ?></a>
-                                            <a href="/<?= $pages[$i]['url'] ?>/" target="_blank" class="btn-sm btn-primary"><?= $lang['pages'][$_SESSION['lang']]['show'] ?></a>
+                                            
                                             <!--
+                                            <a href="/<?= $pages[$i]['url'] ?>/" target="_blank" class="btn-sm btn-primary"><?= $lang['pages'][$_SESSION['lang']]['show'] ?></a>
                                             <input type="button" value="<?= $lang['pages'][$_SESSION['lang']]['role'] ?>" class="btn-sm btn-primary"/>
                                             -->
                                         </td>

@@ -1,8 +1,12 @@
 var errors = [];
+var consult_masters = [];
 var consultation = new Object();
 
+
 $(function () {
-    $('.consult_user_phone').mask('+7 (999) 999-9999');
+    //$('.consult_user_phone').mask('+7 (999) 999-9999');
+    $(".select_timer").html("Выберите специалиста");
+    // Следующий шаг
     $(".btn_next_step").click(function () {
         var step_next = Number($(this).attr("step"));
         var step_last = step_next - 1;
@@ -10,18 +14,16 @@ $(function () {
         if (step_next == '2') {
             step2();
         }
-        if (step_next == '3') {
-            step3();
-        }
-        for (var i = 0; i < errors.length; i++) {
-            console.log("errors: " + errors[i]);
-        }
+//        for (var i = 0; i < errors.length; i++) {
+//            console.log("errors: " + errors[i]);
+//        }
         if (errors.length == 0) {
             $(".step" + step_next).show(400);
             $(".step" + step_last).hide(400);
         }
     });
 
+    // Предыдущий шаг
     $(".btn_last_step").click(function () {
         var last_step = Number($(this).attr("step"));
         var step_next = last_step + 1;
@@ -29,15 +31,20 @@ $(function () {
         $(".step" + step_next).hide(400);
     });
 
+    // Завершить
     $(".btn_step_end").click(function () {
-        $('#consultation_send').modal('show');
+        if (!$(this).hasClass("disabled") && consultation.total_price > 0) {
+            send_consultation_form();
+            $('#consultation_send').modal('show');
+        } else {
+            $(".select_time_period").css("border", "3px solid #FF0000");
+        }
     });
 
     var dateToday = new Date();
     var minDate = new Date();
     // Русифицируем
     $.datepicker.regional['ru'] = {
-
         closeText: 'Закрыть',
         prevText: 'Пред',
         nextText: 'След',
@@ -77,79 +84,122 @@ $(function () {
         changeYear: false,
         //maxDate: dateToday,
         minDate: minDate,
-        numberOfMonths: 3,
+        numberOfMonths: 1, // колличество отображаемых месяцев
         showButtonPanel: false,
         onSelect: function (selectedDate) {
-            //console.log("onSelect: " + selectedDate);
+            console.log("selectedDate: " + selectedDate);
             //$(".datepicker_data").datepicker("option", "maxDate", selectedDate);
             $(".datepicker_data").val(selectedDate);
+            //init_calendar_user_data(selectedDate);
+            $(".datepicker").css("border", "");
         }
     });
 
-    /*
-     * Время
+    init_consultation_master();
+
+    /**
+     * Выбор консультанта 
      */
-    $('.timepicker').timepicker({
-        timeFormat: 'HH:mm',
-        timeOnly: true,
-        hourMin: 8,
-        hourMax: 17,
-        stepHour: 1,
-        stepMinute: 30,
-        showButtonPanel: false,
-        controlType: 'select',
-        timeOnlyTitle: 'Выберите время',
-        timeText: 'Время',
-        hourText: 'Часы',
-        minuteText: 'Минуты',
-        secondText: 'Секунды',
-        currentText: 'Сейчас',
-        closeText: 'Закрыть',
-        onSelect: function (selectedTime) {
-            //console.log("selectedTime: " + selectedTime);
-            $(".timepicker_data").val(selectedTime);
+    $(".consult_your_master").change(function () {
+        var master_id = $(this).val();
+        var consult_masters_i = $('.step1 .consult_your_master option[value="' + master_id + '"]').attr("consult_masters_i");
+
+        init_select_time_period(master_id);
+
+        
+        if (master_id > 0) {
+            $(".select_timer").html("");
+            var list_times = consult_masters[consult_masters_i]['list_times'].split(',');
+            for (var i = 0; i < list_times.length; i++) {
+                $(".select_timer").append('<span class="mb-3 ml-3 btn btn-sm btn-outline-info float-left btn_select_timer" val="' + list_times[i] + '">' + list_times[i] + '</span>');
+            }
+        } else {
+            $(".select_timer").html("Выберите специалиста");
+        }
+        $(".btn_select_timer").click(function () {
+            $(".btn_select_timer").removeClass('active');
+            $(this).addClass('active');
+            $(".select_timer").css("border", "");
+
+            $(".timepicker_data").val($(this).html());
+        });
+    });
+
+    $(".select_time_period").change(function () {
+        var total_price = $(this).val();
+        if (total_price > 0) {
+            $(".select_time_period").css("border", "");
+            $(".total_price").html(total_price);
+            consultation.total_price = total_price;
+            //consultation.total_price = total_price;
+            $(".btn_step_end").removeClass('disabled');
+        } else {
+            $(".btn_step_end").addClass('disabled');
         }
     });
+
 
 });
 
+
+
 function step2() {
-    var consult_first_name = $(".step1 .consult_first_name").val();
-    var consult_user_phone_noformat = $(".step1 .consult_user_phone").val();
-    var consult_user_phone = replasePhone($(".step1 .consult_user_phone").val());
-    var consult_user_email = $(".step1 .consult_user_email").val();
-    var consult_your_master = $('.step1 .consult_your_master').val();
-    var consult_your_master_text = $('.step1 .consult_your_master option[value="' + consult_your_master + '"]').html();
+    var consult_first_name = $(".consult_first_name").val();
+    var consult_user_phone_noformat = $(".consult_user_phone").val();
+    var consult_user_phone = replasePhone($(".consult_user_phone").val());
+    var consult_user_email = $(".consult_user_email").val();
+    var consult_your_master = $('.consult_your_master').val();
+    var consult_your_master_text = $('.consult_your_master option[value="' + consult_your_master + '"]').html();
+    var consult_masters_i = $('.consult_your_master option[value="' + consult_your_master + '"]').attr("consult_masters_i");
+    var datepicker_data = $(".datepicker_data").val();
+    var timepicker_data = $(".timepicker_data").val();
 
     if (consult_first_name.length < 4) {
         errors.push('consult_first_name');
-        $(".step1 .consult_first_name").css("border", "3px solid #FF0000");
+        move(".consult_first_name");
+        $(".consult_first_name").css("border", "3px solid #FF0000");
     }
     if (consult_user_phone.length < 10) {
         errors.push('consult_user_phone');
-        $(".step1 .consult_user_phone").css("border", "3px solid #FF0000");
+        move(".consult_user_phone");
+        $(".consult_user_phone").css("border", "3px solid #FF0000");
     }
     if (validateEmail(consult_user_email) == false) {
         errors.push('consult_user_email');
-        $(".step1 .consult_user_email").css("border", "3px solid #FF0000");
+        $(".consult_user_email").css("border", "3px solid #FF0000");
     }
     if (consult_your_master == '0') {
         errors.push('consult_your_master');
-        $(".step1 .consult_your_master").css("border", "3px solid #FF0000");
+        move(".consult_your_master");
+        $(".consult_your_master").css("border", "3px solid #FF0000");
     }
 
-    $(".step1 .consult_first_name").keydown(function () {
+    if (datepicker_data == '') {
+        errors.push('datepicker_data');
+        move(".datepicker_data");
+        $(".datepicker").css("border", "3px solid #FF0000");
+    }
+    if (timepicker_data == '') {
+        errors.push('timepicker_data');
+        move(".select_timer");
+        $(".select_timer").css("border", "3px solid #FF0000");
+    }
+
+    $(".consult_first_name").keydown(function () {
         $(this).css("border", "");
     });
-    $(".step1 .consult_user_phone").keydown(function () {
+    $(".consult_user_phone").keydown(function () {
         $(this).css("border", "");
     });
-    $(".step1 .consult_user_email").keydown(function () {
+    $(".consult_user_email").keydown(function () {
         $(this).css("border", "");
     });
-    $(".step1 .consult_your_master").change(function () {
+    $(".consult_your_master").change(function () {
         $(this).css("border", "");
     });
+
+
+
     if (errors.length == 0) {
         consultation.first_name = consult_first_name;
         consultation.user_phone = consult_user_phone;
@@ -157,41 +207,80 @@ function step2() {
         consultation.user_email = consult_user_email;
         consultation.your_master = consult_your_master;
         consultation.your_master_text = consult_your_master_text;
-    }
-
-}
-function step3() {
-    var datepicker_data = $(".step2 .datepicker_data").val();
-    var timepicker_data = replasePhone($(".step2 .timepicker_data").val());
-
-    if (datepicker_data == '') {
-        errors.push('datepicker_data');
-        $(".step2 .datepicker .ui-datepicker-multi").css("border", "3px solid #FF0000");
-    }
-
-    if (timepicker_data == '') {
-        errors.push('timepicker_data');
-        $(".step2 .ui-timepicker-div").css("border", "3px solid #FF0000");
-    }
-
-    $(".step2 .datepicker .ui-datepicker-multi").hover(function () {
-        $(this).css("border", "");
-    });
-    $(".step2 .ui-timepicker-div").hover(function () {
-        $(this).css("border", "");
-    });
-    if (errors.length == 0) {
+        consultation.consult_masters_i = consult_masters_i;
         consultation.datepicker_data = datepicker_data;
         consultation.timepicker_data = timepicker_data;
+        move(".step2");
     }
 
-    $(".step3 .first_name").html(consultation.first_name);
-    $(".step3 .user_phone").html(consultation.user_phone_noformat);
-    $(".step3 .user_email").html(consultation.user_email);
-    $(".step3 .your_master").html(consultation.your_master_text);
-    $(".step3 .datepicker_data").html(consultation.datepicker_data);
-    $(".step3 .timepicker_data").html(consultation.timepicker_data);
+
+
+    $(".first_name").html(consultation.first_name);
+    $(".user_phone").html(consultation.user_phone_noformat);
+    $(".user_email").html(consultation.user_email);
+    $(".your_master").html(consultation.your_master_text);
+    $(".datepicker_data").html(consultation.datepicker_data);
+    $(".timepicker_data").html(consultation.timepicker_data);
+
 }
+
+
+/**
+ * Список людей которые проводят консультации
+ * @returns {undefined}
+ */
+function init_consultation_master() {
+    $(".consult_your_master").html("");
+    consult_masters = [];
+    sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultation_master": 1}, function (e) {
+        $(".consult_your_master").append('<option value="0">Выберите специалиста</option>');
+        for (var i = 0; i < e['data'].length; i++) {
+            consult_masters.push(e['data'][i]);
+            $(".consult_your_master").append('<option value="' + e['data'][i]['id'] + '" consult_masters_i="' + i + '">' + e['data'][i]['master_name'] + '</option>');
+        }
+    });
+}
+
+function send_consultation_form() {
+    sendPostLigth('/jpost.php?extension=cart', {
+        "send_consultation_form": 1,
+        "first_name": consultation.first_name,
+        "user_phone": consultation.user_phone,
+        "user_email": consultation.user_email,
+        "your_master": consultation.your_master,
+        "your_master_text": consultation.your_master_text,
+        "datepicker_data": consultation.datepicker_data,
+        "timepicker_data": consultation.timepicker_data,
+        "price": consultation.total_price
+    }, function (e) {
+
+    });
+}
+var master_consultation_periods = [];
+function init_select_time_period(master_id) {
+    sendPostLigth('/jpost.php?extension=sign_up_consultation', {
+        "get_master_consultation_periods": 1,
+        "master_id": master_id,
+    }, function (e) {
+        $(".select_time_period").html("");
+        master_consultation_periods = [];
+        $(".select_time_period").append('<option value="0">Выберите продолжительность...</option>');
+        for (var i = 0; i < e['data'].length; i++) { // periods_minute
+            master_consultation_periods.push(e['data'][i]);
+            var period_hour = '';
+            if (e['data'][i]['period_hour'] > 1) {
+                period_hour = e['data'][i]['period_hour'] + ' часа ';
+            } else {
+                period_hour = e['data'][i]['period_hour'] + ' час ';
+            }
+            if (e['data'][i]['period_hour'] == 0) {
+                period_hour = '';
+            }
+            $(".select_time_period").append('<option value="' + e['data'][i]['period_price'] + '">' + period_hour + e['data'][i]['periods_minute'] + ' минут</option>');
+        }
+    });
+}
+
 
 function replasePhone(phoneStr) {
     var regexp = /\D+/g;

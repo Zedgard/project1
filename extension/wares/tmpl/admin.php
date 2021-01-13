@@ -1,217 +1,261 @@
 <div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="card card-default">
+
                 <div class="card-header card-header-border-bottom">
-                    <div class="col-md-6">
-                        <h2>Товары сайта</h2>
-                    </div> 
-                    <div class="col-md-6">
-                        <a href="#" class="btn btn-primary add_config" data-toggle="modal" data-target="#form_edit_config_modal" style="float: right;">Добавить</a>
-                    </div>
+                    <h2 class="col-lg-6">Управление товарами</h2>
                 </div>
+
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <? if (!isset($_GET['edit'])): ?>
+                                <a href="#" class="btn btn-primary float-left add_wares" data-toggle="modal" data-target="#form_edit_wares_modal">Добавление товара</a>
+                                <?
+                                include 'admin_edit.php';
+                                importWisiwyng('wares_descr');
+                                ?>
+                            <? endif; ?>
+                            <select name="visible" class="form-control w-25 float-left ml-2 visible_wares">
+                                <option value="1">Отображаемые</option>
+                                <option value="0">Не отображаемые</option>
+                                <option value="9">Удаленные</option>
+                            </select>
+                        </div>
+                        <div class="col-4 col-offset-4">
+                            <input type="text" class="form-control search_wares" placeholder="Поиск товаров...">
+                        </div>
 
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped table-bordered wares_arrays_data" style="width:100%;background-color: #FFFFFF;">
+                                <thead>
+                                    <tr>
+                                        <th>Наименование</th>
+                                        <th style="text-align: center;">Код</th>
+                                        <th style="text-align: center;">Артикул</th>
+                                        <th style="text-align: center;">Отображение</th>
+                                        <th style="text-align: center;"></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                    <table class="table table-bordered table-striped config_arrays_data">
-                        <thead>
-                            <tr>
-                                <th>Код</th>
-                                <th>Наименование</th>
-                                <th>Описание</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-footer pt-4 pt-5 mt-4 border-top">
-                    <i class="">
+
                 </div>
+
             </div> 
         </div>
-
     </div>
 </div>
 <script>
+    var wares_id = '<?= $wares_id ?>';
+    var searchStr = '';
+    var visible_wares = '1';
     $(document).ready(function () {
+
+        $(".search_wares").change(function () {
+            searchStr = $(this).val();
+            getWaresArray(searchStr, visible_wares);
+        });
+        $(".visible_wares").change(function () {
+            visible_wares = $(this).val();
+            getWaresArray(searchStr, visible_wares);
+        });
+
+
         /*
          * Настройки значения список
          */
-        function getConfigArray(searchStr) {
-            $(".config_arrays_data tbody tr").remove();
-            sendPostLigth('/jpost.php?extension=config', {"getConfigArray": '1', "searchStr": searchStr}, function (e) {
+        function getWaresArray(str, visible) {
+            searchStr = str;
+            $(".wares_arrays_data tbody tr").remove();
+            sendPostLigth('/jpost.php?extension=wares', {"getWaresArray": '1', "searchStr": searchStr, "visible": visible}, function (e) {
                 var data = e['data'];
-                for (var i = 0; i < data.length;
-                        i++
-                        ) {
-                    $(".config_arrays_data tbody").append(
-                            '<tr elm_id="' + data[i]['id'] + '"> \n\
-                                <td>' + data[i]['config_code'] + '</td>\n\
-                                <td>' + data[i]['config_title'] + '</td>\n\
-                                <td>' + data[i]['config_descr'] + '</td>\n\
-                                <td style="text-align: center;">\n\
-<a href="#" class="btn btn-sm btn-primary btn_config_edit" title="Редактировать"><i class="mdi mdi-pencil"></i></a>\n\
-<a href="#" class="btn btn-sm btn-danger btn_config_delete" title="Удалить"><i class="mdi mdi-delete"></i></a> \n\
-</td>\n\
-                            </tr>'
-//                        '<div class="form-group"> \
-//                        <label for="' + data['config_code'] + '">' + data['config_title'] + '</label> \
-//                        <input type="text" class="form-control" config_id="' + data['id'] + '" value="' + data['config_val'] + '" placeholder="Введите значение..."> \
-//                    </div>'
-                            );
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        var checked = '';
+                        var active_str = 'не отображается';
+                        if (data[i]['active'] > 0) {
+                            checked = 'checked="checked"';
+                            active_str = 'отображается';
+                        }
+                        var is_delete_str = '';
+                        if (data[i]['is_delete'] > 0) {
+                            is_delete_str = 'удален';
+                        }
+
+
+
+                        $(".wares_arrays_data tbody").append(
+                                '<tr elm_id="' + data[i]['id'] + '"> \n\
+                                <td>' + data[i]['title'] + '</td>\n\
+                                <td style="text-align: center;">' + data[i]['ex_code'] + '</td>\n\
+                                <td style="text-align: center;">' + data[i]['articul'] + '</td>\n\
+                                <td style="text-align: center;">' + data[i]['col'] + '</td>\n\
+                                <td style="text-align: center;"><span style="font-size: 0.7rem;">' + active_str + ' ' + is_delete_str + '</span></td>\n\
+                                <td style="text-align: center;white-space: nowrap">\n\
+                                <a href="?edit=' + data[i]['id'] + '" class="btn btn-sm btn-primary" title="Редактировать"><i class="mdi mdi-pencil"></i></a>\n\
+                                <a href="javascript:void(0)" class="btn btn-sm btn-danger btn_wares_delete" title="Удалить"><i class="mdi mdi-delete"></i></a> \n\
+                                </td>\n\
+                            </tr>');
+                    }
+                    /*
+                     <td style="text-align: center;">\n\
+                     <label class="switch switch-text switch-primary form-control-label">\n\
+                     <input type="checkbox" class="switch-input form-check-input wares_active wares_active_switch" elm_id="' + data[i]['id'] + '" value="1" ' + checked + '>\n\
+                     <span class="switch-label" data-on="On" data-off="Off"></span>\n\
+                     <span class="switch-handle"></span>\n\
+                     </label>\n\
+                     </td>\n\
+                     */
+                    wares_switch_init();
                 }
 
-                save_config_init();
-                config_delete_init();
+                save_wares_init();
+                wares_delete_init();
             });
         }
-        getConfigArray('');
+        getWaresArray(searchStr, visible_wares);
 
-
-        /*
-         * Действия
-         */
-
-        function config_delete_init() {
-            $(".btn_config_delete").click(function () {
-                var config_id = $(this).closest("tr").attr("elm_id");
-                sendPostLigth('/jpost.php?extension=config',
-                        {"deleteConfig": config_id},
-                        function (e) {
-                            getConfigArray('');
-                        });
-            });
-        }
 
 
         // Инициализация кнопки редактирования
-        function save_config_init() {
-            $(".btn_config_edit").click(function () {
-                clear_form_save_config();
-                var config_id = $(this).closest("tr").attr("elm_id");
-                sendPostLigth('/jpost.php?extension=config',
-                        {"getConfigElemId": config_id},
-                        function (e) {
-                            if (e['success'] == '1') {
-                                console.log('config_code: ' + e['data']['config_code']);
-                                $(".form_save_config").find(".config_id").val(config_id);
-                                $(".form_save_config").find(".config_code").val(e['data']['config_code']);
-                                $(".form_save_config").find(".config_title").val(e['data']['config_title']);
-                                $(".form_save_config").find(".config_descr").val(e['data']['config_descr']);
-                                $(".form_save_config").find('.config_type option[value="' + e['data']['config_type'] + '"]').attr("selected", "selected"); // 
+        function save_wares_init() {
+            if (wares_id != '') {
 
-                                $(".form_save_config").find(".block").hide();
-                                if (e['data']['config_type'] == 'input') {
-                                    $(".form_save_config").find(".block_input").show();
-                                    $(".form_save_config").find(".config_input_val").val(e['data']['config_val']);
-                                }
-                                if (e['data']['config_type'] == 'textarea') {
-                                    $(".form_save_config").find(".block_textarea").show();
-                                    $(".form_save_config").find(".config_textarea_val").val(e['data']['config_val']);
-                                }
-                                if (e['data']['config_type'] == 'checkbox') {
-                                    $(".form_save_config").find(".block_checkbox").show();
-                                    if (e['data']['config_val'] == '1') {
-                                        $(".form_save_config").find(".config_checkbox_val").attr("checked", "checked"); // checked="checked"
-                                    }else{
-                                        $(".form_save_config").find(".config_checkbox_val").removeAttr("checked");
+            } else {
+                $(".btn_wares_edit").click(function () {
+                    clear_form_save_wares();
+                    var wares_id = $(this).closest("tr").attr("elm_id");
+                    sendPostLigth('/jpost.php?extension=wares',
+                            {"getWaresElemId": wares_id},
+                            function (e) {
+                                if (e['success'] == '1') {
+                                    $(".form_save_wares").find(".wares_id").val(e['data']['id']);
+                                    $(".form_save_wares").find(".wares_title").val(e['data']['title']);
+                                    $(".form_save_wares").find(".wares_ex_code").val(e['data']['ex_code']);
+                                    $(".form_save_wares").find(".wares_articul").val(e['data']['articul']);
+                                    tinymce.get('wares_descr').setContent(e['data']['descr']);
+                                    $(".form_save_wares").find(".wares_col").val(e['data']['col']);
+                                    if (e['data']['active'] > 0) {
+                                        if (!$(".form_save_wares").find(".wares_active").is(':checked')) {
+                                            $(".form_save_wares").find(".wares_active").click();
+                                        }
+                                    } else {
+                                        $(".form_save_wares").find(".wares_active").removeAttr("checked");
                                     }
+                                    /* -- images -- */
+                                    var images = e['data']['images'].split(',');
+                                    for (var i = 0; i < images.length; i++) {
+                                        $(".form_save_wares").find(".images").append(get_html_images_block(images[i], i));
+                                    }
+                                    /* -- images end -- */
+                                    $('#form_edit_wares_modal').modal('show');
                                 }
+                            });
+                });
+            }
 
-                                // Залочим поля которые нельзя изменять
-                                $(".form_save_config").find('.config_code').attr("disabled", "disabled");
-                                $(".form_save_config").find('.config_type').attr("disabled", "disabled");
-                                $('#form_edit_config_modal').modal('show');
-                            }
-                        });
-            });
+
         }
 
 
         // обнулить данные блока
-        function clear_form_save_config() {
-            $(".form_save_config").find(".config_id").val("0");
-            $(".form_save_config").find(".config_code").val("");
-            $(".form_save_config").find(".config_title").val("");
-            $(".form_save_config").find(".config_descr").val("");
-            $(".form_save_config").find(".config_type").val("");
-            $(".form_save_config").find('.config_code').removeAttr("disabled");
-            $(".form_save_config").find('.config_type').removeAttr("disabled");
-            $(".form_save_config").find('[name="config_val"]').val("");
+        function clear_form_save_wares() {
+            $(".form_save_wares").find(".wares_id").val("0");
+            $(".form_save_wares").find(".wares_title").val("");
+            $(".form_save_wares").find(".wares_ex_code").val("");
+            $(".form_save_wares").find(".wares_articul").val("");
+            tinymce.get('wares_descr').setContent("<p></p>");
+            $(".form_save_wares").find(".wares_col").val("");
+            $(".form_save_wares").find('.images').html("");
+            $(".form_save_wares").find(".wares_id").val("0");
+        }
+
+        $(".btn_save_config").click(function () {
+            var wares_id = $(".form_save_wares").find(".wares_id").val();
+            var wares_title = $(".form_save_wares").find(".wares_title").val();
+            var wares_ex_code = $(".form_save_wares").find(".wares_ex_code").val();
+            var wares_articul = $(".form_save_wares").find(".wares_articul").val();
+            var wares_col = $(".form_save_wares").find(".wares_col").val();
+            var wares_descr = tinymce.get('wares_descr').getContent();
+            // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
+            //var wares_active = $(".form_save_wares").find(".wares_active").val();
+
+            let images_col = $(".form_save_wares").find('.image_elm').length;
+            var images_str = [];
+            for (var i = 0; i < images_col; i++) {
+                images_str.push($($(".form_save_wares").find('.image_elm')[i]).find(".image_obj_value").val());
+            }
+
+            sendPostLigth('/jpost.php?extension=wares',
+                    {"edit_wares": wares_id,
+                        "wares_title": wares_title,
+                        "wares_ex_code": wares_ex_code,
+                        "wares_articul": wares_articul,
+                        "wares_col": wares_col,
+                        "wares_descr": wares_descr,
+                        //"wares_active": wares_active,
+                        "wares_images": images_str.toString()},
+                    function (e) {
+                        if (e['success'] == '1') {
+                            //$(".form_save_wares").find('data-dismiss="modal"').click();
+                            $('#form_edit_wares_modal').modal('hide');
+                            getWaresArray(searchStr, visible_wares);
+                        }
+                    });
+        });
+
+        // если нажали создать новый блок
+        $(".add_wares").click(function () {
+            clear_form_save_wares();
+        });
+
+        /**
+         * Действия
+         */
+        function wares_delete_init() {
+            $(".btn_wares_delete").click(function () {
+                var wares_id = $(this).closest("tr").attr("elm_id");
+                sendPostLigth('/jpost.php?extension=wares',
+                        {"deleteWares": wares_id},
+                        function (e) {
+                            getWaresArray(searchStr, visible_wares);
+                        });
+            });
         }
 
 
 
 
-        // Выбрать тип блока
-        $(".config_type").change(function () {
-            var v = $(this).val();
-            $(".block").hide();
-            if (v.length > 0) {
-                if (v == "input") {
-                    $(".block_input").show(200);
-                }
-                if (v == "textarea") {
-                    $(".block_textarea").show(200);
-                }
-                if (v == "checkbox") {
-                    $(".block_checkbox").show(200);
-                }
-            } else {
-                alert("Выбирите тип настройки");
-            }
-        });
-
-
-        $(".btn_save_config").click(function () {
-            var config_id = $(".form_save_config").find(".config_id").val();
-            var config_code = $(".form_save_config").find(".config_code").val();
-            var config_title = $(".form_save_config").find(".config_title").val();
-            var config_descr = $(".form_save_config").find(".config_descr").val();
-            var config_type = $(".form_save_config").find(".config_type").val();
-            var config_val = '';
-            if (config_type == 'input') {
-                config_val = $(".form_save_config").find(".config_input_val").val();
-            }
-            if (config_type == 'textarea') {
-                config_val = $(".form_save_config").find(".config_textarea_val").val();
-            }
-            if (config_type == 'checkbox') {
-                if ($(".form_save_config").find(".config_checkbox_val").is(':checked')) {
-                    config_val = '1';
-                } else {
-                    config_val = '';
-                }
-            }
-
-            sendPostLigth('/jpost.php?extension=config',
-                    {"configEdit": config_id,
-                        "config_code": config_code,
-                        "config_title": config_title,
-                        "config_descr": config_descr,
-                        "config_type": config_type,
-                        "config_val": config_val},
-                    function (e) {
-                        if (e['success'] == '1') {
-                            //$(".form_save_config").find('data-dismiss="modal"').click();
-                            $('#form_edit_config_modal').modal('hide');
-                            getConfigArray('');
-                        }
-                    });
-        });
-
-
-        // если нажали создать новый блок
-        $(".add_config").click(function () {
-            clear_form_save_config();
-        });
 
     });
 
-
-
-</script>
+    function wares_switch_init() {
+        $(".wares_active_switch").unbind("click").click(function () {
+            var wares_id = $(this).attr("elm_id");
+            var checked = 0;
+            if ($(this).prop('checked')) {
+                checked = 1;
+            }
+            sendPostLigth('/jpost.php?extension=wares',
+                    {"setWaresActive": wares_id,
+                        "active": checked},
+                    function (e) {
+                        getWaresArray(searchStr, visible_wares);
+                    });
+        });
+    }
+    
+</script>    

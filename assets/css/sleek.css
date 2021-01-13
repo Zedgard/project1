@@ -9198,17 +9198,27 @@ label {
       padding: 1.5rem; }
     .chat .chat-right-side .slimScrollDiv {
       overflow: auto; }
+    
     .chat .chat-right-side .slimScrollDiv,
     .chat .chat-right-side #chat-right-content {
-      height: 373px !important; }
+      height: 305px !important; }
+    /*
+    .chat .chat-right-side .slimScrollDiv,
+    .chat .chat-right-side #chat-right-content {
+      height: 343px !important; }
       @media (min-width: 992px) {
         .chat .chat-right-side .slimScrollDiv,
         .chat .chat-right-side #chat-right-content {
-          height: calc(100vh - 395px) !important; } }
+          height: calc(100vh - 235px) !important; } }
       @media (min-width: 1200px) {
         .chat .chat-right-side .slimScrollDiv,
         .chat .chat-right-side #chat-right-content {
-          height: calc(100vh - 405px) !important; } }
+          height: calc(100vh - 225px) !important; } }
+      @media (min-width: 1600px) {
+        .chat .chat-right-side .slimScrollDiv,
+        .chat .chat-right-side #chat-right-content {
+          height: calc(100vh - 312px) !important; } }
+    */
 
 /*===== CAROUSEL =====*/
 .carousel-indicators {
@@ -9521,7 +9531,7 @@ code {
   position: relative;
   padding-left: 1.56rem;
   color: #1b223c;
-  margin-bottom: 0.9375rem;
+  /* margin-bottom: 0.9375rem; */
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500; }
@@ -9631,11 +9641,12 @@ code {
   .radio-info .control-indicator::after {
     color: #ffffff;
     border-color: #ffffff;
-    background: #ffffff; }
+    background: #ffffff; } 
 
 /* All Outline Contextual Style */
-.control.outlined .control-indicator {
-  background: transparent !important; }
+.control.outlined .control-indicator { 
+  /* background: transparent !important; */
+}
 
 .control.outlined input:disabled ~ .control-indicator {
   background: transparent !important; }
@@ -13566,3 +13577,4 @@ html[dir="rtl"] .github-link svg {
     cursor: -moz-grab;
     cursor: -webkit-grab;
 }
+

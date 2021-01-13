@@ -1,10 +1,10 @@
 <!-- User activity statistics -->
 <div class="card card-default" id="user-activity1">
-    <div class="col-xl-12">
-        <div data-scroll-height="642">
-            <div class="card-header pt-5 flex-column align-items-start">
-                <h4>Посетители за период </h4>
-                <div class="date-range-report mt-2" style="float: right;">
+
+        <div><!-- data-scroll-height="642" -->
+            <div class="card-header card-header-border-bottom flex-column align-items-start">
+                <h4 class="float-left">Посетители за период </h4>
+                <div class="date-range-report float-right mt-2" style="float: right;">
                     <span></span>
                 </div>
 
@@ -19,7 +19,7 @@
             </div>
             -->
         </div>
-    </div>
+
 </div>
 <script>
     var data = [];
@@ -31,7 +31,7 @@
         /*======== 2. USER ACTIVITY ========*/
         if ($("#user-activity1")) {
             //console.log("user-activity ");
-            var start = moment().subtract(6, "days");
+            var start = moment().subtract(30, "days");
             var end = moment();
             var cb = function (start, end) {
                 $("#user-activity1 .date-range-report span").html(start.format("L") + " - " + end.format("L"));
@@ -141,11 +141,11 @@
                         opens: 'left',
                         ranges: {
                             /*
-                            "Сегодня": [moment(), moment()],
-                            "Вчера": [
-                                moment().subtract(1, "days"),
-                                moment().subtract(1, "days")
-                            ],
+                             "Сегодня": [moment(), moment()],
+                             "Вчера": [
+                             moment().subtract(1, "days"),
+                             moment().subtract(1, "days")
+                             ],
                              */
                             "Последние 7 дней": [moment().subtract(6, "days"), moment()],
                             /* "Последние 30 дней": [moment().subtract(29, "days"), moment()], */

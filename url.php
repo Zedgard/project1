@@ -11,6 +11,7 @@ defined('__CMS__') or die;
 /*
  * Для пользователя
  */
+// activation
 include_once DOCUMENT_ROOT . "/extension/auth/get.php";
 include_once DOCUMENT_ROOT . "/system/page/inc.php";
 include_once DOCUMENT_ROOT . "/system/theme/inc.php";
@@ -32,10 +33,16 @@ if (strlen($token_js) > 0) {
 }
 
 $page = new \project\page();
+
+$page->showMessage();
 //array_reverse($_SESSION['url']);
 $pageArray = $page->init();
 //echo "site_title: {$_SESSION['site_title']}<br/>\n";
 //print_r($pageArray);
+//echo "<br/>\n";
+//echo 'url_a_href: ' . $pageArray['url_a_href']."<br/>\n";
+//echo 'url_a_href_bread: ' . $pageArray['url_a_href_bread']."<br/>\n";
+
 //print_r($_SESSION);
 
 $theme = new \project\theme();
@@ -45,7 +52,7 @@ if (count($_SESSION['page']) > 0) {
     $html = $theme->getTemplateFile($pageArray['server_name'], 'E');
 }
 //print_r($_SESSION['page']['info']);
-
+//print_r();
 echo $html;
 //}
 

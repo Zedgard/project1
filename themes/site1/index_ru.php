@@ -6,239 +6,495 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title><?= $_SESSION['site_title'] ?></title>
         <meta name="description" content="<?= $_SESSION['page']['info']['description'] ?>" />
-        <link href="/themes/site1/images/favicon.png" rel="icon">
+        <link href="/favicon.ico<?= $_SESSION['rand'] ?>" rel="icon">
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
+        <meta name="interkassa-verification" content="777d8a842d5f8a07fe433d7f9e9537fd" />
 
-        <link rel="stylesheet" href="/themes/site1/css/plugins.css">
+        <!-- SLEEK CSS -->
+        <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.min.css<?= $_SESSION['rand'] ?>" />
+        <link rel="stylesheet" href="/themes/site1/css/plugins.css<?= $_SESSION['rand'] ?>">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css<?= $_SESSION['rand'] ?>" 
               integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
               crossorigin="anonymous">
-        <link rel="stylesheet" href="/themes/site1/css/style.css">
-        <link href="/assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
 
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
+
+        
+        <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+
+
+        <!-- Web Fonts  -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,800;1,900&display=swap" rel="stylesheet">
+
+        <!-- Vendor CSS -->
+        <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.css<?= $_SESSION['rand'] ?>">	
+        
+        <link rel="stylesheet" href="/themes/site1/css/style.css<?= $_SESSION['rand'] ?>">
+        
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="/assets/plugins/jquery/jquery.js"></script>
-        <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css">
-        <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.theme.css">
-        <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js"></script>
+        <script src="/assets/plugins/jquery/jquery.js<?= $_SESSION['rand'] ?>"></script>
+        <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.theme.css<?= $_SESSION['rand'] ?>">
+        <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js<?= $_SESSION['rand'] ?>"></script>
 
         <!-- timepicker -->
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js"></script>
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js"></script>
-        <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css" />
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js<?= $_SESSION['rand'] ?>"></script>
+        <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css<?= $_SESSION['rand'] ?>" />
 
+        <script type="text/javascript" src="/assets/plugins/mixitup/mixitup.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
     </head>  
-    <body data-spy="scroll" data-target=".navbar" data-offset="90">
+    <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">
+
+        <?= $config->getConfigParam('site_development') ?>
+
+        <?= $_SESSION['message']['text'] ?>
 
         <!--PreLoader-->
-     
+        <!--
         <div class="loader">
-           <div class="loader-inner">
-              <div class="loader-blocks">
-                 <span class="block-1"></span>
-                 <span class="block-2"></span>
-                 <span class="block-3"></span>
-                 <span class="block-4"></span>
-                 <span class="block-5"></span>
-                 <span class="block-6"></span>
-                 <span class="block-7"></span>
-                 <span class="block-8"></span>
-                 <span class="block-9"></span>
-                 <span class="block-10"></span>
-                 <span class="block-11"></span>
-                 <span class="block-12"></span>
-                 <span class="block-13"></span>
-                 <span class="block-14"></span>
-                 <span class="block-15"></span>
-                 <span class="block-16"></span>
-              </div>
-           </div>
+            <div class="loader-inner">
+                <div class="loader-blocks">
+                    <span class="block-1"></span>
+                    <span class="block-2"></span>
+                    <span class="block-3"></span>
+                    <span class="block-4"></span>
+                    <span class="block-5"></span>
+                    <span class="block-6"></span>
+                    <span class="block-7"></span>
+                    <span class="block-8"></span>
+                    <span class="block-9"></span>
+                    <span class="block-10"></span>
+                    <span class="block-11"></span>
+                    <span class="block-12"></span>
+                    <span class="block-13"></span>
+                    <span class="block-14"></span>
+                    <span class="block-15"></span>
+                    <span class="block-16"></span>
+                </div>
+            </div>
         </div>
-       
+        -->
         <!--PreLoader Ends-->
-
         <?= $_SESSION['page']['block_top'] ?>
 
+
+
         <!--Main Slider-->
+        <!--
+        <video id="v0" class="d-block w-100" data-src="http://www.mokselle.ru/video/video-bg.mp4" src="http://www.mokselle.ru/video/video-bg.mp4" data-holder-rendered="true"></video>
+                    
+        -->
+        <style>
+            .carousel {
+                height: 40rem !important;
+                overflow: hidden;
+            }
+            .carousel-inner {
+                overflow: visible;
+            }
+            .carousel-inner img {
+                left: 50%;
+                width: 100%;
+                max-width: none !important;
+                min-height: 60rem;
+                min-width: 100%;
+                position: absolute;
+                top: 20rem;
+                transform: translate(-50%,-50%);
+            }
+            .carousel-inner video {
+                left: 50%;
+                width: 100%;
+                max-width: none !important;
+                min-height: 40rem;
+                min-width: 100%;
+                position: absolute;
+                top: 10rem;
+                transform: translate(-50%,-50%);
+            }
+            .carousel-inner .video {
+                left: 50%;
+                width: 100%;
+                max-width: none !important;
+                min-height: 30rem;
+                min-width: 100%;
+                position: absolute;
+                top: 30rem;
+                transform: translate(-50%,-50%);
+            }
+            @media (max-width: 682px) {
+
+                .carousel {
+                    height: 40rem !important;
+                    overflow: hidden;
+                }
+                .carousel-inner img {
+                    left: 50%;
+                    width: 180%;
+                    max-width: none !important;
+                    min-height: 36rem;
+                    min-width: 180%;
+                    position: absolute;
+                    top: 16rem;
+                    transform: translate(-50%,-50%);
+                }
+                .carousel-inner video {
+                    left: 50%;
+                    width: 185%;
+                    max-width: none !important;
+                    min-height: 50rem;
+                    min-width: 185%;
+                    position: absolute;
+                    top: 17rem;
+                    transform: translate(-50%,-50%);
+                }
+                .carousel-inner .video {
+                    left: 60%;
+                    width: 130%;
+                    max-width: none !important;
+                    min-height: 60rem;
+                    min-width: 130%;
+                    position: absolute;
+                    top: 20rem;
+                    transform: translate(-50%,-50%);
+                }
+
+            }
+        </style>
 
 
+        <div id="carouselExampleCaptions" class="carousel slide  carousel-fade" data-ride="carousel" >
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="1" class=""></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="2" class=""></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item carousel-item-next carousel-item-left" data-interval="50000">
+                    <!--
+                    <object width="100%" class="d-block w-100 video">
+                        <param name="movie" value="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&autoplay=1&modestbranding=0&rel=0&showinfo=0"/>
+                        <param name="allowFullScreen" value="true"/>
+                        <param name="allowscriptaccess" value="always"/>
+                        <embed width="100%" height="360" src="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&&autoplay=1&modestbranding=0&rel=0&showinfo=0" class="youtube-player" type="text/html" allowscriptaccess="always" allowfullscreen="true"/>
+                    </object>
+                    -->
+                    <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>
+                        <source src="/themes/site1/video/video-slide.mp4" type="video/mp4">
+                        <source src="/themes/site1/video/video-slide.webm" type="video/webm"> 
+                        <source src="/themes/site1/video/video-slide.ogv" type="video/ogg">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!--
+                    <img class="d-block w-100" data-src="/themes/site1/images/transparent.png" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
+                    -->
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>First slide label</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    </div>
+                </div>
+                <div class="carousel-item" data-interval="50000">
+                    <!--
+                    <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>
+                        <source src="/themes/site1/video/video-slide.mp4" type="video/mp4">
+                        <source src="/themes/site1/video/video-slide.webm" type="video/webm"> 
+                        <source src="/themes/site1/video/video-slide.ogv" type="video/ogg">
+                        Your browser does not support the video tag.
+                    </video>
+                    -->
+                    <img class="d-block w-100" data-src="/themes/site1/images/slider_banner 2.jpg" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
 
-        <div id="revo_main_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
-            <div id="banner-main" class="rev_slider" style="display:none;max-height: 600px;" data-version="5.4.1">
-                <ul>
-                    <!-- SLIDE   id="banner-main" class="rev_slider fullwidthabanner"  -->
-                    <li data-index="rs-01" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="revo_slide_1 rev_gradient">
-
-                        <!-- MAIN IMAGE -->
-                        <img src="/themes/site1/images/transparent.png" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10"  data-no-retina>
-                        <!-- LAYER NR. 1 -->
-
-                        <div class="tp-caption tp-resizeme not_show_mobile caption_1" 
-                             data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']" 
-                             data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']" 
-                             data-whitespace="nowrap" data-responsive_offset="on"
-                             data-width="['none','none','none','none']" data-type="text"
-                             data-textalign="['center','center','center','center']" 
-                             data-transform_idle="o:1;"
-                             data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;" 
-                             data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" 
-                             data-start="1000" data-splitin="none" data-splitout="none">
-                            <a href="/auth/" >
-                                <span class="button plitka_1 image hover-effect img-container" 
-                                      style="background-image: url(/assets/img/EZsite_button_Centr.svg);
-                                      background-repeat: no-repeat;
-                                      "
-                                      ></span> 
-                            </a>
-                        </div>
-
-                        <a href="#">
-                            <div class="tp-caption tp-resizeme not_show_mobile caption_2" 
-                                 data-x="['center','center','center','center']" data-hoffset="['250','0','0','0']" 
-                                 data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']" 
-                                 data-whitespace="nowrap" data-responsive_offset="on"
-                                 data-width="['none','none','none','none']" data-type="text"
-                                 data-textalign="['center','center','center','center']"
-                                 data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;" 
-                                 data-start="1000" data-splitin="none" data-splitout="none">
-                                <span class="button plitka_2 image hover-effect img-container" 
-                                      style="background-image: url(/assets/img/EZsite_button_Centr.svg);
-                                      background-repeat: no-repeat;
-                                      "
-                                      ></span> 
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="tp-caption tp-resizeme not_show_mobile caption_3" 
-                                 data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']" 
-                                 data-y="['middle','middle','middle','middle']" data-voffset="['220','0','0','0']" 
-                                 data-whitespace="nowrap" data-responsive_offset="on"
-                                 data-width="['none','none','none','none']" data-type="text"
-                                 data-textalign="['center','center','center','center']" 
-                                 data-transform_idle="o:1;"
-                                 data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;" 
-                                 data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" 
-                                 data-start="1000" data-splitin="none" data-splitout="none">
-
-                                <span class="button plitka_3 image hover-effect img-container" 
-                                      style="background-image: url(/assets/img/EZsite_button_Centr.svg);
-                                      background-repeat: no-repeat;
-                                      "
-                                      ></span> 
-                            </div>
-                        </a>
-                        <a href="#">
-                            <div class="tp-caption tp-resizeme not_show_mobile caption_4" 
-                                 data-x="['center','center','center','center']" data-hoffset="['250','0','0','0']" 
-                                 data-y="['middle','middle','middle','middle']" data-voffset="['220','0','0','0']" 
-                                 data-whitespace="nowrap" data-responsive_offset="on"
-                                 data-width="['none','none','none','none']" data-type="text"
-                                 data-textalign="['center','center','center','center']"
-                                 data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;" 
-                                 data-start="1000" data-splitin="none" data-splitout="none">
-                                <span class="button plitka_4 image hover-effect img-container" 
-                                      style="background-image: url(/assets/img/EZsite_button_Centr.svg);
-                                      background-repeat: no-repeat;
-                                      "
-                                      ></span> 
-                            </div>
-                        </a>
-
-                    </li>
-
-                    <!-- SLIDE 2  -->
-                    <li data-index="rs-02" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="rev_gradient"<!-- banner-overlay -->>
-                        <!-- MAIN IMAGE -->
-                        <img src="/themes/site1/images/bg-youtube.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="7" data-no-retina>
-                        <!--<div class="rs-background-video-layer" 
-                         data-forcerewind="on" 
-                         data-volume="mute" 
-                         data-videowidth="100%" 
-                         data-videoheight="100%" 
-                         data-videomp4="video/video-slide.mp4" 
-                         data-videopreload="auto" 
-                         data-videoloop="loopandnoslidestop" 
-                         data-forceCover="1" 
-                         data-aspectratio="16:9" 
-                         data-autoplay="true" 
-                         data-autoplayonlyfirsttime="false"></div>-->
-
-                        <!--If you need youtube video-->
-                        <!--<div class="rs-background-video-layer" 
-                        data-ytid="hEkiWaEp03k" 
-                        data-volume="mute" 
-                        data-forcerewind="on" 
-                        data-nextslideatend="true"
-                        data-autoplay="true"
-                        data-autoplayonlyfirsttime="true"
-                        data-videoloop="loopandnoslidestop"  
-                        data-videoattributes="version=3&enablejsapi=1&html5=1&hd=1&autoplay=1&wmode=opaque&showinfo=0&rel=0&
-                        origin=http://server.local"></div>
-                        
-
-                        <div class="rs-background-video-layer" 
-                             data-forcerewind="on" 
-                             data-volume="mute" 
-                             data-ytid="RU9NUfgjvMI"
-                             data-videoattributes="version=3&amp;enablejsapi=1&amp;html5=1&amp;hd=1&amp;wmode=opaque&amp;showinfo=0&amp;rel=0&amp;origin=http://sadaf.ads;"
-                             data-videowidth="100%" 
-                             data-videoheight="100%" 
-                             data-videocontrols="none" 
-                             data-videostartat="00:00" 
-                             data-videoendat="05:02" 
-                             data-videoloop="loop" 
-                             data-forceCover="1"
-                             data-aspectratio="16:9" 
-                             data-autoplay="true" 
-                             data-autoplayonlyfirsttime="false" 
-                             data-nextslideatend="true" 
-                             ></div>
+                   <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
 
 
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
 
-                        <div class="tp-caption tp-resizeme" 
-                             data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']" 
-                             data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-50','-50']" 
-                             data-whitespace="nowrap" data-responsive_offset="on"
-                             data-width="['none','none','none','none']" data-type="text"
-                             data-textalign="['left','left','left','center']"
-                             data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;" 
-                             data-start="1200" data-splitin="none" data-splitout="none">
-                            <h1 class="text-capitalize whitecolor fontbold"> Video Background </h1>
-                        </div>
-                        <div class="tp-caption tp-resizeme whitecolor" 
-                             data-x="['left','left','left','center']" data-hoffset="['0','50','0','0']" 
-                             data-y="['middle','middle','middle','middle']" data-voffset="['-10','-10','0','0']" 
-                             data-whitespace="nowrap" data-responsive_offset="on"
-                             data-width="['none','none','none','none']" data-type="text"
-                             data-textalign="['left','left','left','center']" data-fontsize="['24','24','20','20']"
-                             data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power3.easeInOut;" 
-                             data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;" 
-                             data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                             data-start="1500" data-splitin="none" data-splitout="none">
-                            <h4 class="whitecolor font-light">The Best Multipurpose One Page Template in Market</h4>
-                        </div>
-                        <a class="tp-caption tp-resizeme text-center button btnwhite-hole pagescroll" href="#our-process" 
-                           data-x="['left','left','left','center']" data-hoffset="['0','50','0','0']" 
-                           data-y="['middle','middle','middle','middle']" data-voffset="['90','80','80','80']"  
-                           data-whitespace="nowrap" data-type="button" data-transform_idle="o:1;" data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:1500;e:Power4.easeInOut;" 
-                           data-transform_out="s:900;e:Power2.easeInOut;s:900;e:Power2.easeInOut;" 
-                           data-start="2000" data-splitin="none" data-splitout="none" data-responsive_offset="on">
-                            <span>Learn More</span>
-                        </a>
-                        --> 
-                    </li>
-
-                    <!-- SLIDE 3  -->
-
-                </ul>
-
-
+                </div>
+                <div class="carousel-item active carousel-item-left" data-interval="50000">
+                    <img class="d-block w-100" data-src="/themes/site1/images/slider_banner 2.jpg" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Third slide label</h5>
+                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                    </div>
+                </div>
             </div>
-
+            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
+        
+        
+        <?php
+        /*
+          <div id="revo_main_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
+          <div id="banner-main" class="rev_slider" style="display:none;max-height: 600px;" data-version="5.4.1">
+          <ul>
+          <!-- SLIDE 1  id="banner-main" class="rev_slider fullwidthabanner"  -->
+          <li data-index="rs-01" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="revo_slide_1 rev_gradient">
+
+          <!-- MAIN IMAGE -->
+          <img src="/themes/site1/images/transparent.png" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10"  data-no-retina>
+          <!-- LAYER NR. 1 -->
+
+          <div class="tp-caption tp-resizeme not_show_mobile caption_1"
+          data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;"
+          data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;"
+          data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+          <a href="/auth/" >
+          <span class="button plitka_1 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </a>
+          </div>
+
+          <a href="#">
+          <div class="tp-caption tp-resizeme not_show_mobile caption_2"
+          data-x="['center','center','center','center']" data-hoffset="['250','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+          <span class="button plitka_2 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </div>
+          </a>
+          <a href="#">
+          <div class="tp-caption tp-resizeme not_show_mobile caption_3"
+          data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['220','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;"
+          data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;"
+          data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+
+          <span class="button plitka_3 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </div>
+          </a>
+          <a href="#">
+          <div class="tp-caption tp-resizeme not_show_mobile caption_4"
+          data-x="['center','center','center','center']" data-hoffset="['250','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['220','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+          <span class="button plitka_4 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </div>
+          </a>
+
+          </li>
+          <!-- SLIDE 2  -->
+          <li data-index="rs-02" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="banner-overlay">
+          <!-- MAIN IMAGE -->
+          <img src="/themes/site1/images/slider_banner 2.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="7" data-no-retina>
+          <!-- LAYER NR. 1 -->
+          <!--
+          <div class="tp-caption tp-resizeme not_show_mobile caption_1"
+          data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;"
+          data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;"
+          data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+          <a href="/auth/" >
+          <span class="button plitka_1 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </a>
+          </div>
+
+          <a href="#">
+          <div class="tp-caption tp-resizeme not_show_mobile caption_2"
+          data-x="['center','center','center','center']" data-hoffset="['250','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['10','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+          <span class="button plitka_2 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </div>
+          </a>
+          <a href="#">
+          <div class="tp-caption tp-resizeme not_show_mobile caption_3"
+          data-x="['center','center','center','center']" data-hoffset="['-240','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['220','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;"
+          data-transform_in="x:-50px;opacity:0;s:2000;e:Power3.easeOut;"
+          data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+
+          <span class="button plitka_3 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </div>
+          </a>
+          <a href="#">
+          <div class="tp-caption tp-resizeme not_show_mobile caption_4"
+          data-x="['center','center','center','center']" data-hoffset="['250','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['220','0','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['center','center','center','center']"
+          data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
+          data-start="1000" data-splitin="none" data-splitout="none">
+          <span class="button plitka_4 image hover-effect img-container"
+          style="background-image: url(/assets/img/EZsite_button_Centr.svg);
+          background-repeat: no-repeat;
+          "
+          ></span>
+          </div>
+          </a>
+          -->
+
+          </li>
+
+          <!-- SLIDE 3  -->
+          <li data-index="rs-03" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="rev_gradient"<!-- banner-overlay -->>
+          <!-- MAIN IMAGE -->
+          <img src="/themes/site1/images/bg-youtube.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="7" data-no-retina>
+          <!--<div class="rs-background-video-layer"
+          data-forcerewind="on"
+          data-volume="mute"
+          data-videowidth="100%"
+          data-videoheight="100%"
+          data-videomp4="video/video-slide.mp4"
+          data-videopreload="auto"
+          data-videoloop="loopandnoslidestop"
+          data-forceCover="1"
+          data-aspectratio="16:9"
+          data-autoplay="true"
+          data-autoplayonlyfirsttime="false"></div>-->
+
+          <!--If you need youtube video-->
+          <!--<div class="rs-background-video-layer"
+          data-ytid="hEkiWaEp03k"
+          data-volume="mute"
+          data-forcerewind="on"
+          data-nextslideatend="true"
+          data-autoplay="true"
+          data-autoplayonlyfirsttime="true"
+          data-videoloop="loopandnoslidestop"
+          data-videoattributes="version=3&enablejsapi=1&html5=1&hd=1&autoplay=1&wmode=opaque&showinfo=0&rel=0&
+          origin=http://server.local"></div>
+
+
+          <div class="rs-background-video-layer"
+          data-forcerewind="on"
+          data-volume="mute"
+          data-ytid="RU9NUfgjvMI"
+          data-videoattributes="version=3&amp;enablejsapi=1&amp;html5=1&amp;hd=1&amp;wmode=opaque&amp;showinfo=0&amp;rel=0&amp;origin=http://sadaf.ads;"
+          data-videowidth="100%"
+          data-videoheight="100%"
+          data-videocontrols="none"
+          data-videostartat="00:00"
+          data-videoendat="05:02"
+          data-videoloop="loop"
+          data-forceCover="1"
+          data-aspectratio="16:9"
+          data-autoplay="true"
+          data-autoplayonlyfirsttime="false"
+          data-nextslideatend="true"
+          ></div>
+
+
+
+          <div class="tp-caption tp-resizeme"
+          data-x="['left','left','left','center']" data-hoffset="['0','0','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-50','-50']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['left','left','left','center']"
+          data-transform_idle="o:1;" data-transform_in="z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;" data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
+          data-start="1200" data-splitin="none" data-splitout="none">
+          <h1 class="text-capitalize whitecolor fontbold"> Video Background </h1>
+          </div>
+          <div class="tp-caption tp-resizeme whitecolor"
+          data-x="['left','left','left','center']" data-hoffset="['0','50','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['-10','-10','0','0']"
+          data-whitespace="nowrap" data-responsive_offset="on"
+          data-width="['none','none','none','none']" data-type="text"
+          data-textalign="['left','left','left','center']" data-fontsize="['24','24','20','20']"
+          data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power3.easeInOut;"
+          data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
+          data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
+          data-start="1500" data-splitin="none" data-splitout="none">
+          <h4 class="whitecolor font-light">The Best Multipurpose One Page Template in Market</h4>
+          </div>
+          <a class="tp-caption tp-resizeme text-center button btnwhite-hole pagescroll" href="#our-process"
+          data-x="['left','left','left','center']" data-hoffset="['0','50','0','0']"
+          data-y="['middle','middle','middle','middle']" data-voffset="['90','80','80','80']"
+          data-whitespace="nowrap" data-type="button" data-transform_idle="o:1;" data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:1500;e:Power4.easeInOut;"
+          data-transform_out="s:900;e:Power2.easeInOut;s:900;e:Power2.easeInOut;"
+          data-start="2000" data-splitin="none" data-splitout="none" data-responsive_offset="on">
+          <span>Learn More</span>
+          </a>
+          -->
+          </li>
+
+          <!-- SLIDE 3  -->
+
+          </ul>
+
+
+          </div>
+
+          </div>
+
+         */
+        ?>
         <!--
         <div style="position: fixed;top: 0px;right: 0px;width: 100px;height: 40px;background-color: #FFFFFF;" class="ggg"></div>
         -->
@@ -300,7 +556,172 @@
 
 
 
-        <!--half img section-->
+           
+
+
+        <!-- Testimonials -->
+        <section id="our-testimonial" class="padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <div class="heading-title bottom30 wow fadeInUp" data-wow-delay="300ms">
+                            <h2 class="TestimonialsTitle">Отзывы счастливых людей</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div id="testimonial-slider" class="owl-carousel">
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
+                                    <small class="defaultcolor">Бизнес-вумен</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
+                                    <small class="defaultcolor">Менеджер</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
+
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
+                                    <small class="defaultcolor">Счастливая жена</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
+                                    <small class="defaultcolor">Бизнес-вумен</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
+                                    <small class="defaultcolor">Менеджер</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
+
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
+                                    <small class="defaultcolor">Счастливая жена</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
+                                    <small class="defaultcolor">Бизнес-вумен</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
+                                    <small class="defaultcolor">Менеджер</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
+
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
+                                    <small class="defaultcolor">Счастливая жена</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Testimonials Ends-->
+
+
+        <!-- WOrk Process-->  
+        <!--
+        <section id="our-process" class="padding gradient_bg_default">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <div class="heading-title wow fadeInUp" data-wow-delay="300ms">
+                            <h2 class="whitecolor">Work <span class="fontregular">Process</span> </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <ul class="process-wrapp">
+                        <li class="whitecolor wow fadeIn" data-wow-delay="300ms">
+                            <span class="pro-step bottom20">01</span>
+                            <p class="fontbold bottom25">Concept</p>
+                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
+                        </li>
+                        <li class="whitecolor wow fadeIn" data-wow-delay="400ms">
+                            <span class="pro-step bottom20">02</span>
+                            <p class="fontbold bottom25">Plan</p>
+                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
+                        </li>
+                        <li class="whitecolor wow fadeIn" data-wow-delay="500ms">
+                            <span class="pro-step bottom20">03</span>
+                            <p class="fontbold bottom25">Design</p>
+                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
+                        </li>
+                        <li class="whitecolor wow fadeIn" data-wow-delay="600ms">
+                            <span class="pro-step bottom20">04</span>
+                            <p class="fontbold bottom25">Development</p>
+                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
+                        </li>
+                        <li class="whitecolor wow fadeIn" data-wow-delay="700ms">
+                            <span class="pro-step bottom20">05</span>
+                            <p class="fontbold bottom25">Quality Check</p>
+                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        -->
+        <!--WOrk Process ends-->
+
+        <? /*
+
+
+<!--half img section-->
         <div id="twocopies">  
             <section class="half-section">
                 <div class="container-fluid">
@@ -345,53 +766,9 @@
                 </div>
             </section>
         </div>  
-        <!--half img section ends-->     
+        <!--half img section ends-->  
+ 
 
-        <!-- WOrk Process-->  
-        <section id="our-process" class="padding gradient_bg_default">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 text-center">
-                        <div class="heading-title wow fadeInUp" data-wow-delay="300ms">
-                            <h2 class="whitecolor">Work <span class="fontregular">Process</span> </h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <ul class="process-wrapp">
-                        <li class="whitecolor wow fadeIn" data-wow-delay="300ms">
-                            <span class="pro-step bottom20">01</span>
-                            <p class="fontbold bottom25">Concept</p>
-                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
-                        </li>
-                        <li class="whitecolor wow fadeIn" data-wow-delay="400ms">
-                            <span class="pro-step bottom20">02</span>
-                            <p class="fontbold bottom25">Plan</p>
-                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
-                        </li>
-                        <li class="whitecolor wow fadeIn" data-wow-delay="500ms">
-                            <span class="pro-step bottom20">03</span>
-                            <p class="fontbold bottom25">Design</p>
-                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
-                        </li>
-                        <li class="whitecolor wow fadeIn" data-wow-delay="600ms">
-                            <span class="pro-step bottom20">04</span>
-                            <p class="fontbold bottom25">Development</p>
-                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
-                        </li>
-                        <li class="whitecolor wow fadeIn" data-wow-delay="700ms">
-                            <span class="pro-step bottom20">05</span>
-                            <p class="fontbold bottom25">Quality Check</p>
-                            <p>Quisque tellus risus, adipisci viverra bibendum urna.</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <!--WOrk Process ends-->
-        <? /*
-         * 
-         *                    
           <li data-index="rs-03" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="rev_gradient">
           <!-- MAIN IMAGE -->
           <img src="/themes/site1/images/banner-1.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
@@ -928,126 +1305,7 @@
           <!--Background Parallax-->
 
 
-          <!-- Testimonials -->
-          <section id="our-testimonial" class="padding">
-          <div class="container">
-          <div class="row">
-          <div class="col-md-12 col-sm-12 text-center">
-          <div class="heading-title bottom30 wow fadeInUp" data-wow-delay="300ms">
-          <span>Testimonials</span>
-          <h2 class="darkcolor">What People Say</h2>
-          </div>
-          </div>
-          </div>
-          <div class="row">
-          <div class="col-md-12 col-sm-12">
-          <div id="testimonial-slider" class="owl-carousel">
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-1.jpg"></div>
-          <h4 class="darkcolor">David Raleway</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-2.jpg"></div>
-          <h4 class="darkcolor">Sam Billings</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
 
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-3.jpg"></div>
-          <h4 class="darkcolor">Jatinder Shahg</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-1.jpg"></div>
-          <h4 class="darkcolor">David Zucker</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-2.jpg"></div>
-          <h4 class="darkcolor">Akten Jansen</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-3.jpg"></div>
-          <h4 class="darkcolor">Doe Raleway</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-1.jpg"></div>
-          <h4 class="darkcolor">Shamoun Raleway</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-3.jpg"></div>
-          <h4 class="darkcolor">Albugdadi Raleway</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          <div class="item">
-          <div class="testimonial-wrapp">
-          <span class="quoted"><i class="fa fa-quote-right"></i></span>
-          <div class="testimonial-text">
-          <p class="bottom40">Donec semper euismod nisi quis feugiat. Nullam finibus metus eget orci volutpat porta. Morbi quis arcu vulputate, dignissim mi ac, varius magna.</p>
-          </div>
-          <div class="testimonial-photo"><img alt="" src="/themes/site1/images/testimonial-3.jpg"></div>
-          <h4 class="darkcolor">Albugdadi Raleway</h4>
-          <small class="defaultcolor">Businessman</small>
-          </div>
-          </div>
-          </div>
-          </div>
-          </div>
-          </div>
-          </section>
-          <!--Testimonials Ends-->
 
 
           <!-- Partners -->
@@ -1201,94 +1459,87 @@
           <!--Contact US Ends-->
          */
         ?>
-        <!--Site Footer Here-->
-        <footer id="site-footer" class="padding_half">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 text-center">
-                        <!--
-                        <ul class="social-icons bottom25 wow fadeInUp" data-wow-delay="300ms">
-                            <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i> </a> </li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i> </a> </li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-google-plus"></i> </a> </li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-linkedin"></i> </a> </li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-instagram"></i> </a> </li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-envelope-o"></i> </a> </li>
-                        </ul>
-                        <p class="copyrights wow fadeInUp" data-wow-delay="350ms"> &copy; 2019 XeOne. made with love by <a href="http://www.themesindustry.com/" target="_blank">themesindustry</a> </p>
-                        -->
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!--Footer ends-->   
+
+
+
+        <?
+        include 'footer_' . $_SESSION['lang'] . '.php'
+        ?>
 
 
 
 
         <!--Bootstrap Core-->
-        <script src="/themes/site1/js/popper.min.js"></script>
-        <script src="/themes/site1/js/bootstrap.min.js"></script>
+        <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--to view items on reach-->
-        <script src="/themes/site1/js/jquery.appear.js"></script>
+        <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--Equal-Heights-->
-        <script src="/themes/site1/js/jquery.matchHeight-min.js"></script>
+        <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--Owl Slider-->
-        <script src="/themes/site1/js/owl.carousel.min.js"></script>
+        <script src="/themes/site1/js/owl.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--number counters-->
-        <script src="/themes/site1/js/jquery-countTo.js"></script>
+        <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--Parallax Background-->
-        <script src="/themes/site1/js/parallaxie.js"></script>
+        <script src="/themes/site1/js/parallaxie.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--Cubefolio Gallery-->
-        <script src="/themes/site1/js/jquery.cubeportfolio.min.js"></script>
+        <script src="/themes/site1/js/jquery.cubeportfolio.min.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--FancyBox popup-->
-        <script src="/themes/site1/js/jquery.fancybox.min.js"></script>       
+        <script src="/themes/site1/js/jquery.fancybox.min.js<?= $_SESSION['rand'] ?>"></script>       
 
         <!-- Video Background-->
-        <script src="/themes/site1/js/jquery.background-video.js"></script>
+        <script src="/themes/site1/js/jquery.background-video.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--TypeWriter-->
-        <script src="/themes/site1/js/typewriter.js"></script> 
+        <script src="/themes/site1/js/typewriter.js<?= $_SESSION['rand'] ?>"></script> 
 
         <!--Particles-->
-        <script src="/themes/site1/js/particles.min.js"></script>            
+        <script src="/themes/site1/js/particles.min.js<?= $_SESSION['rand'] ?>"></script>            
 
         <!--WOw animations-->
-        <script src="/themes/site1/js/wow.min.js"></script>
+        <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--Revolution SLider-->
-        <script src="/themes/site1/js/revolution/jquery.themepunch.tools.min.js"></script>
-        <script src="/themes/site1/js/revolution/jquery.themepunch.revolution.min.js"></script>
+        <script src="/themes/site1/js/revolution/jquery.themepunch.tools.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/jquery.themepunch.revolution.min.js<?= $_SESSION['rand'] ?>"></script>
         <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.actions.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.carousel.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.kenburn.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.layeranimation.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.migration.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.navigation.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.parallax.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.slideanims.min.js"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.video.min.js"></script>
-        <script src="/assets/plugins/daterangepicker/moment.min.js"></script>
-        <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script>
-        <script src="/assets/plugins/select2/js/select2.min.js"></script>
-        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js"></script>
-        <script src="/assets/js/ajax.js"></script>   
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.actions.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.kenburn.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.layeranimation.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.migration.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.navigation.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.parallax.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.slideanims.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/revolution/extensions/revolution.extension.video.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
 
         <!--Google Map API-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
-        <script src="/themes/site1/js/functions.js"></script>	
+        <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>	
         <?
         foreach ($_SESSION['body_javascript'] as $js) {
             echo $js . "\n";
         }
         ?>
+        <script>
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $(".link_ed_mailto").attr("href", "mailto:<?= $config->getConfigParam('link_ed_mailto') ?>");
+                    $(".link_ed_mailto").html("<?= $config->getConfigParam('link_ed_mailto') ?>");
+                }, 2000);
+            });
+        </script>
     </body>
 </html>

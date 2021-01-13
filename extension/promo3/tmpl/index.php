@@ -2,26 +2,26 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12  mt-5">
+            <div class="col-lg-12  mt-5">
                 <h1 class="textcenter text textuppercase redcolor fontweight600 fontfize250">Выгодные акции</h1>
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-md-12 promo_li_text textcenter" style="color: #6e6e6e;">
+            <div class="col-lg-12 promo_li_text textcenter" style="color: #6e6e6e;">
                 Выгодные предложения на тренинги, кейсы и книги.
                 Срок акции ограничен по времени.
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-4 col-sm-12 promo_block">
                 <div class="promoTime promoTime1 textcenter mt-5">
                     <div class="promoTime_title" style="color: #6e6e6e;">До конца акции осталось:</div>
                     <ul>
                         <li><span class="promoTime_days"></span>дни</li>
                         <li><span class="promoTime_hours"></span>часы</li>
-                        <li>:</li>
+                        <li><span class="promoTime_reh">:</span>&nbsp;</li>
                         <li><span class="promoTime_minutes"></span>минуты</li>
-                        <li>:</li>
+                        <li><span class="promoTime_reh">:</span>&nbsp;</li>
                         <li><span class="promoTime_seconds"></span>секунды</li>
                     </ul>
                 </div>
@@ -60,13 +60,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-4 col-sm-12 promo_block">
                 <div class="promoTime promoTime1 textcenter mt-5">
                     <div class="promoTime_title" style="color: #6e6e6e;">До конца акции осталось:</div>
                     <ul>
                         <li><span class="promoTime_days"></span>дни</li>
                         <li><span class="promoTime_hours"></span>часы</li>
+                        <li><span class="promoTime_reh">:</span>&nbsp;</li>
                         <li><span class="promoTime_minutes"></span>минуты</li>
+                        <li><span class="promoTime_reh">:</span>&nbsp;</li>
                         <li><span class="promoTime_seconds"></span>секунды</li>
                     </ul>
                 </div>
@@ -105,13 +107,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-lg-4 col-sm-12 promo_block">
                 <div class="promoTime promoTime1 textcenter mt-5">
                     <div class="promoTime_title" style="color: #6e6e6e;">До конца акции осталось:</div>
                     <ul>
                         <li><span class="promoTime_days"></span>дни</li>
                         <li><span class="promoTime_hours"></span>часы</li>
+                        <li><span class="promoTime_reh">:</span>&nbsp;</li>
                         <li><span class="promoTime_minutes"></span>минуты</li>
+                        <li><span class="promoTime_reh">:</span>&nbsp;</li>
                         <li><span class="promoTime_seconds"></span>секунды</li>
                     </ul>
                 </div>
@@ -153,3 +157,4 @@
         </div>
     </div>
 </div>
+<script src="/extension/promo3/promo3.js<?= $_SESSION['rand'] ?>"></script>

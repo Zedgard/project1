@@ -42,19 +42,19 @@
         </div>
 
         <div class="form-group mb-4">
-            <label for="oldPassword">Old password</label>
-            <input type="password" name="oldPassword" class="form-control oldPassword" id="oldPassword">
+            <label for="user_role">Роль пользователя</label>
+            <select class="form-control user_role" name="user_role" name="user_role">
+                
+            </select>
         </div>
 
         <div class="form-group mb-4">
-            <label for="newPassword">New password</label>
-            <input type="password" name="newPassword" class="form-control newPassword" id="newPassword">
+            <label for="conPassword">Изменить пароль <a href="javascript:void(0)" class="passwordGen">сгенерировать пароль</a></label>
+            <input type="text" name="conPassword" class="form-control conPassword" id="conPassword">
         </div>
 
-        <div class="form-group mb-4">
-            <label for="conPassword">Confirm password</label>
-            <input type="password" name="conPassword" class="form-control conPassword" id="conPassword">
-        </div>
+
+
         <div class="form_result" style="display: none;">
 
         </div>
@@ -64,7 +64,22 @@
 <script>
     $(function () {
 
-
-
+        $(".passwordGen").click(function (){
+           var p = gen_password(8);
+           $(".conPassword").val(p);
+        });
+        
     });
+
+    
+
+    // генерация пароля
+    function gen_password(len) {
+        var password = "";
+        var symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!№;%:?*()_+=";
+        for (var i = 0; i < len; i++) {
+            password += symbols.charAt(Math.floor(Math.random() * symbols.length));
+        }
+        return password;
+    }
 </script> 

@@ -4,7 +4,7 @@
  * Перевод extension pages
  */
 
-$lang['pages']['ru'] = array(
+$lang['auth']['ru'] = array(
     'title' => 'Авторизация - регистрация пользователей',
     'descr' => 'Управление авторизация - регистрация пользователей',
     'extension_admin' => 'Авторизация админка (admin.php)',
@@ -34,5 +34,6 @@ $lang['pages']['ru'] = array(
     'title_page' => 'Наименование страницы',
     'editing' => 'Редактирование',
     'back_link' => '< назад',
-    
+    'no_input_form' => 'Не верно ввели данные',
+    'error_register_form' => 'Ошибка регистрации, попробуйте позже!'
 );

@@ -541,6 +541,8 @@ jQuery(function ($) {
         animationEffect: "fade",
         hash: null,
     });
+    
+    $(".fancybox").fancybox();
 
 
     /* ------ Revolution Slider ------ */
@@ -1084,44 +1086,44 @@ jQuery(function ($) {
     }, 200);
 
     /* Промо время */
-
-    function promoTimeInit(e, startTime) {
-        if (startTime == undefined) {
-            startTime = 'Sep 30, 2020 00:00:00';
-        }
-        let obj = $(e);
-        const second = 1000,
-                minute = second * 60,
-                hour = minute * 60,
-                day = hour * 24;
-        
-        let countDown = new Date(startTime).getTime();
-        let x = setInterval(function () {
-
-            let now = new Date().getTime();
-            let distance = countDown - now;
-            
-            //console.log('distance: ' + distance + ' countDown - now: ' + countDown + ' - ' + now);
-            //console.log('days: ' + Math.floor(distance / (day)));
-            
-            $(e).find(".promoTime_days").html( String(Math.floor(distance / (day))) );
-            $(e).find(".promoTime_hours").html( String(Math.floor((distance % (day)) / (hour)))) ;
-            $(e).find(".promoTime_minutes").html( String(Math.floor((distance % (hour)) / (minute)))) ;
-            $(e).find(".promoTime_seconds").html( String(Math.floor((distance % (minute)) / second))) ;
-
-
-            //do something later when date is reached
-            //if (distance < 0) {
-            //  clearInterval(x);
-            //  Акция закончилась
-            //}
-
-        }, second);
-    }
-
-    promoTimeInit(".promoTime1", 'Sep 30, 2020 00:00:00');
-    promoTimeInit(".promoTime2", 'Sep 30, 2020 00:00:00');
-    promoTimeInit(".promoTime3", 'Sep 24, 2020 00:00:00');
+//
+//    function promoTimeInit(e, startTime) {
+//        if (startTime == undefined) {
+//            startTime = 'Sep 30, 2020 00:00:00';
+//        }
+//        let obj = $(e);
+//        const second = 1000,
+//                minute = second * 60,
+//                hour = minute * 60,
+//                day = hour * 24;
+//        
+//        let countDown = new Date(startTime).getTime();
+//        let x = setInterval(function () {
+//
+//            let now = new Date().getTime();
+//            let distance = countDown - now;
+//            
+//            //console.log('distance: ' + distance + ' countDown - now: ' + countDown + ' - ' + now);
+//            //console.log('days: ' + Math.floor(distance / (day)));
+//            
+//            $(e).find(".promoTime_days").html( String(Math.floor(distance / (day))) );
+//            $(e).find(".promoTime_hours").html( String(Math.floor((distance % (day)) / (hour)))) ;
+//            $(e).find(".promoTime_minutes").html( String(Math.floor((distance % (hour)) / (minute)))) ;
+//            $(e).find(".promoTime_seconds").html( String(Math.floor((distance % (minute)) / second))) ;
+//
+//
+//            //do something later when date is reached
+//            //if (distance < 0) {
+//            //  clearInterval(x);
+//            //  Акция закончилась
+//            //}
+//
+//        }, second);
+//    }
+//
+//    promoTimeInit(".promoTime1", 'Sep 30, 2020 00:00:00');
+//    promoTimeInit(".promoTime2", 'Sep 30, 2020 00:00:00');
+//    promoTimeInit(".promoTime3", 'Sep 24, 2020 00:00:00');
 
 });
 

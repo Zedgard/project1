@@ -6,7 +6,7 @@
  4. SIDEBAR TOGGLE FOR VARIOUS SIDEBAR LAYOUT
  5. TODO LIST
  6. RIGHT SIDEBAR
- 
+ 11
  ====== End ======*/
 
 $(document).ready(function () {
@@ -199,12 +199,23 @@ $(document).ready(function () {
         body.removeClass('right-sidebar-in').addClass('right-sidebar-out');
     });
 
-    $(".btn_logout").click(function () {
+    $(".btn_logout").unbind('click').click(function () {
         //console.log("btn_logout");
         sendPostLigth('/jpost.php?extension=auth', {"logout": 1}, function () {
 
         });
     });
 
+    /*
+     * Перемещение модального окна 
+     */
+    if (!!$(".modal-content")) {
+        $(".modal-header").mouseover(function () {
+            $(".modal-dialog").draggable({ disabled: false });
+        });
+        $(".modal-header").mouseout(function () {
+            $(".modal-dialog").draggable({ disabled: true });//.draggable();
+        });
+    }
 
 });

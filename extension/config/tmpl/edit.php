@@ -9,6 +9,13 @@
                 </button>
             </div>
             <div class="modal-body">
+                
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Категория</label>
+                    <select name="config_category" id="config_category" class="form-control config_category">
+
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <label for="config_code">Код</label>

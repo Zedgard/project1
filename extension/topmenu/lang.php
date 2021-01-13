@@ -4,7 +4,7 @@
  * Перевод extension pages
  */
 
-$lang['pages']['ru'] = array(
+$lang['topmenu']['ru'] = array(
     'title' => 'Верхнее меню',
     'descr' => 'Управление верхним меню',
     'extension_admin' => 'Верхнее меню админка (admin.php)',

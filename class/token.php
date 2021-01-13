@@ -37,9 +37,12 @@ class token {
      * @return type
      */
     public function register() {
-        $t = time();
-        //echo ' ' . $_SESSION['time'] .' < ' .$t . "\n";
-        if (($_SESSION['time'] + 3) < $t) {
+        $timer = time();
+        //echo "session_time: {$_SESSION['site_time']} \n";
+        $t_start = ($_SESSION['site_time'] + 3);
+        echo ' ' . $t_start .' < ' . $timer . "\n";
+        if ($t_start < $timer) {
+            //echo 'yea';
             $this->token_key = random_int(1000000000, 9999999999);
             $this->token_hash = md5($this->token_key);
             if (strlen($this->token_hash) > 0) {

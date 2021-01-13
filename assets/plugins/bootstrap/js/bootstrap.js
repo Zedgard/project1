@@ -2580,4 +2580,5 @@ if (typeof jQuery === 'undefined') {
     }
   })
 
+$(".modal-dialog").draggable();
 }(jQuery);

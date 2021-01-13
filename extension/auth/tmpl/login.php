@@ -14,13 +14,35 @@
         <i class="mdi mdi-home"></i>
     </a>
 
-
     <div class="wrapper">
 
         <div class="content-wrapper">
             <div class="content">							
                 <div class="row">
 
+                    <!-- Обработка ошибок -->
+                    <?
+                    if (count($_SESSION['errors']) > 0) {
+                        ?>
+                        <div class="col-xl-5 col-lg-6 col-md-10 offset-md-3">
+                            <div class="card">
+                                <div class="card-body p-3">  
+                                    <?
+                                    foreach ($_SESSION['errors'] as $value) {
+                                        ?>
+                                        <div class="alert alert-danger" role="alert"><?= $value ?></div>
+                                        <?
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?
+                    }
+                    ?>
+                    <!-- Обработка ошибок КОНЕЦ -->
+
+                    <!-- Блок Авторизация -->
                     <? if (!isset($_GET['registrations'])): ?>
                         <div class="col-xl-5 col-lg-6 col-md-10 offset-md-3">
                             <div class="card">
@@ -57,16 +79,22 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="d-flex my-2 justify-content-between">
-                                                    <p><a class="text-blue" href="#">Забыли пароль?</a></p>
+                                                    <p><a class="text-blue re_password_link" href="javascript:void(0)">Забыли пароль?</a></p>
                                                 </div>
                                                 <div class="form_result" style="display: none;">
 
                                                 </div>
                                                 <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Авторизация</button>
-                                                <p>
-                                                    Нет учетной записи
-                                                    <a class="text-blue" href="/auth/?registrations">Регистрация</a>
-                                                </p>
+                                                <div class="mb-4 text-center">
+                                                    <div style="font-size: 0.8rem;">авторизация с помощью</div>
+
+                                                    <script src="//ulogin.ru/js/ulogin.js<?= $_SESSION['rand'] ?>"></script>
+                                                    <div id="uLogin993aba3c" data-ulogin="display=panel;fields=first_name,last_name,email;theme=flat;providers=google,vkontakte,odnoklassniki,mailru,facebook;hidden=yandex,twitter,livejournal,openid,lastfm,linkedin,liveid,soundcloud,steam,flickr,uid,youtube,webmoney,foursquare,tumblr,googleplus,vimeo,wargaming,instagram;redirect_uri=https%3A%2F%2Fwww.edgardzaycev.com%2Fauth%2F%3Fs_login%3D273456781"></div>
+
+                                                </div>
+                                                <div class="text-right">
+                                                    Нет учетной записи <a class="text-blue" href="/auth/?registrations">Регистрация</a>
+                                                </div>
                                             </div> 
                                         </div>
                                         <input type="hidden" name="authorization" />    
@@ -76,6 +104,7 @@
                         </div>
                     <? endif; ?>
 
+                    <!-- Блок Регистрация -->
                     <? if (isset($_GET['registrations'])): ?>
                         <div class="col-xl-5 col-lg-6 col-md-10 offset-md-3">
                             <div class="card">
@@ -98,7 +127,7 @@
                                     <form id="registration" action="/jpost.php?extension=auth" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">
-                                                <input type="text" class="form-control input-lg phone" name="phone" id="phone" data-mask="+7 (999) 999-9999" aria-describedby="nameHelp" type="phone" placeholder="Мобильный телефон">
+                                                <input type="text" class="form-control input-lg phone" name="phone" id="phone" aria-describedby="nameHelp" type="phone" placeholder="Мобильный телефон">
                                             </div>
                                             <div class="form-group col-md-12 mb-4">
                                                 <input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email" placeholder="Адрес электронной почты">
@@ -138,6 +167,7 @@
                 </div>
             </div>
 
+            <!-- Блок подвала -->
             <footer class="footer mt-auto">
                 <div class="copyright bg-white">
                     <p>
@@ -146,8 +176,7 @@
                             class="text-primary"
                             href="/"
                             target="_blank"
-                            ><?= $_SESSION['site_name'] ?></a
-                        >.
+                            ><?= $_SERVER['SERVER_NAME'] ?></a>.
                     </p>
                 </div>
                 <script>
@@ -155,12 +184,14 @@
                     var year = d.getFullYear();
                     document.getElementById("copy-year").innerHTML = year;
                 </script>
-            </footer>
+            </footer                >
 
         </div>
     </div>
 </div>
-
+<?
+include 're_login.php';
+?>
 
 <script>
     $(function () {
@@ -170,7 +201,58 @@
         $('#registration').sendPost(function (result) {
             //console.log("registration ok");
         });
-
-        $('.phone').mask('+7 (999) 999-9999');
+        $(".re_password_link").unbind("click").click(function () {
+            $("#form_re_password_modal").modal("show");
+            $(".btn_re_password").unbind("click").click(function () {
+                init_send_re_password();
+            });
+        });
+        /*
+         * Удаляет выпадающий список из ulogin
+         */
+        var uLogin = setInterval(function () {
+            // .ulogin-dropdown-button
+            if (!!$(".ulogin-dropdown-button")) {
+                $(".ulogin-dropdown-button").remove();
+                $(".ulogin-buttons-container").css("width", "168px");
+                clearInterval(uLogin);
+            }
+        }, 300);
+        //$('.phone').mask('+7 (999) 999-9999');
     });
+
+    /*
+     * Отправить сообщение на восстановление пароля
+     */
+    function init_send_re_password() {
+        var re_user_email = $(".re_user_email").val();
+        sendPostLigth('/jpost.php?extension=auth',
+                {
+                    "re_password": 1,
+                    "re_user_email": re_user_email
+                },
+                function (e) {
+                    if (e['success'] == '1') {
+                        $(".modal-body").html("На указанную почту отправлено письмо с инструкцией восстановления");
+                    }
+                });
+    }
+    /*
+     * Восстановление 
+     */
+    function init_re_password() {
+        var re_password = $(".re_password").val();
+        var re_password2 = $(".re_password2").val();
+        sendPostLigth('/jpost.php?extension=auth',
+                {
+                    "re_password_go": 1,
+                    "u_re_password": re_password,
+                    "u_re_password2": re_password2
+                },
+                function (e) {
+                    if (e['success'] == '1') {
+                        $(".modal-body").html("На указанную почту отправлено письмо с инструкцией восстановления");
+                    }
+                });
+    }
 </script> 

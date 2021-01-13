@@ -1,45 +1,136 @@
 <?php
 
+session_start();
 defined('__CMS__') or die;
 
-
 include_once 'inc.php';
-$config = new \project\config();
 
-if (isset($_POST['getConfigArray'])) {
+$pr_wares = new \project\wares();
+
+// Все товары с фильром
+if (isset($_POST['getWaresArray'])) {
     $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
-    $data = $config->getConfigArray($searchStr);
-    $result = array('success' => 1, 'success_text' => 'Список настроек получен', 'data' => $data);
+    $visible = (strlen($_POST['visible']) > 0) ? $_POST['visible'] : '';
+    $data = $pr_wares->getWaresArray($searchStr, $visible);
+
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
-if (isset($_POST['getConfigElemId'])) {
-    $id = $_POST['getConfigElemId'];
-    $data = $config->getConfigElem($id)[0];
-    $result = array('success' => 1, 'success_text' => 'Данные получены', 'data' => $data);
+// Получить элемент
+if (isset($_POST['getWaresElemId'])) {
+    $id = $_POST['getWaresElemId'];
+    $data = $pr_wares->getWaresElem($id)[0];
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
-if (isset($_POST['deleteConfig'])) {
-    if ($data = $config->deleteConfig($_POST['deleteConfig'])) {
-        $result = array('success' => 1, 'success_text' => 'Список настроек получен');
+// Смена активности
+if (isset($_POST['setWaresActive'])) {
+    $id = $_POST['setWaresActive'];
+    $active = $_POST['active'];
+    if ($pr_wares->setWaresActive($id, $active)) {
+        $result = array('success' => 1, 'success_text' => 'Выполнено');
     } else {
-        $result = array('success' => 0, 'success_text' => 'Ошибка удаления');
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
     }
 }
 
-if (isset($_POST['configEdit'])) {
-    $id = ($_POST['configEdit'] != '') ? $_POST['configEdit'] : 0;
-    $config_code = $_POST['config_code'];
-    $config_title = $_POST['config_title'];
-    $config_descr = $_POST['config_descr'];
-    $config_type = $_POST['config_type'];
-    $config_val = $_POST['config_val'];
-    if (strlen($config_code) > 0 && strlen($config_title) > 0) {
-        if ($config->insertOrUpdateConfig($id, $config_code, $config_title, $config_descr, $config_type, $config_val)) {
-            $result = array('success' => 1, 'success_text' => 'Успешно сохранено');
-        } else {
-            $result = array('success' => 0, 'success_text' => 'Ошибка сохранения');
+// Редактирование товара
+if (isset($_POST['edit_wares'])) {
+    //echo "edit_wares \n";
+    //echo "wares_images: {$_POST['wares_images']}\n";
+    $wares_id = $_POST['edit_wares'];
+    $wares_title = (isset($_POST['wares_title'])) ? $_POST['wares_title'] : '';
+    $wares_ex_code = (isset($_POST['wares_ex_code'])) ? $_POST['wares_ex_code'] : '';
+    $wares_articul = (isset($_POST['wares_articul'])) ? $_POST['wares_articul'] : '';
+    $wares_col = (isset($_POST['wares_col'])) ? $_POST['wares_col'] : '';
+    $wares_descr = (isset($_POST['wares_descr'])) ? $_POST['wares_descr'] : '';
+    $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
+    $wares_active = (isset($_POST['wares_active'])) ? $_POST['wares_active'] : '1';
+    $wares_images = (isset($_POST['wares_images'])) ? $_POST['wares_images'] : '';
+
+    //echo "wares_id: {$wares_id} \n";
+
+    if ($pr_wares->insertOrUpdateWares($wares_id, $wares_title, $wares_descr, $wares_url_file, $wares_col, $wares_ex_code, $wares_articul, $wares_images, $wares_active)) {
+        $result = array('success' => 1, 'success_text' => 'Выполнено');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}
+
+// Удаление товара
+if (isset($_POST['deleteWares'])) {
+    $id = $_POST['deleteWares'];
+    if ($pr_wares->deleteWares($id, 1)) {
+        $result = array('success' => 1, 'success_text' => 'Удалено');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}
+
+
+
+
+
+
+
+// редактипрование полей video
+if (isset($_POST['editMaterial'])) {
+    $row_db = $_POST['row_db'];
+    $obj_id = $_POST['obj_id'];
+    $val = $_POST['val'];
+    if ($pr_wares->editTableRowValue('zay_wares_video', $obj_id, $row_db, $val)) {
+        $result = array('success' => 1, 'success_text' => 'Изменено');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}
+
+/**
+ * Редактирование серии
+ */
+if (isset($_POST['editSeries'])) {
+    $row_db = $_POST['row_db'];
+    $obj_id = $_POST['obj_id'];
+    $val = $_POST['val'];
+    if ($pr_wares->editTableRowValue('zay_wares_video_series', $obj_id, $row_db, $val)) {
+        $result = array('success' => 1, 'success_text' => 'Изменено');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}
+
+/**
+ * Перемещение серии
+ */
+if (isset($_POST['setPositionVideoSeries'])) {
+    $series_id = $_POST['series_id'];
+    $position = $_POST['position'];
+    $metod = $_POST['metod'];
+    if ($pr_wares->setPositionVideoSeries($series_id, $position, $metod)) {
+        $result = array('success' => 1, 'success_text' => '');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}
+
+// Продукты купленные клиентом кроме вебинаров
+if (isset($_POST['getClientProducts'])) {
+    $data = $pr_wares->getClientProducts();
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+if (isset($_POST['getClientWebinarsProducts'])) {
+    $data = $pr_wares->getClientWebinarsProducts();
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+
+if (isset($_POST['waresVideoSee'])) {
+    if ($_POST['waresVideoSee'] > 0) {
+        if ($pr_wares->insertWaresVideoSee($_POST['waresVideoSee'])) {
+            
         }
-    } else {
-        $result = array('success' => 0, 'success_text' => 'Ошибка поля Код или Наименование настройки');
     }
+    $result = array('success' => 1, 'success_text' => '');
 }
+

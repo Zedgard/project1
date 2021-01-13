@@ -485,7 +485,8 @@ ul.social-icons.white li a:focus{
    position: relative;
    display: inline-block;
    font-size: 13px;
-   padding: 1rem 2.5rem;
+   white-space: nowrap;
+   /* padding: 1rem 2.5rem; */
    line-height: 1;
    text-transform: uppercase;
    text-align: center;

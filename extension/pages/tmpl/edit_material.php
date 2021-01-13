@@ -12,6 +12,7 @@
                     </div>
 
                     <div class="card-body">
+                        <a href="./?content=<?= $_GET['content'] ?>" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['cancel'] ?></a>
                         <div class="form-group">
                             <label><?= $lang['pages'][$_SESSION['lang']]['content_title'] ?></label>
                             <input class="form-control" name="content_title" id="content_title" value="<?= $content['content_title'] ?>" placeholder="<?= $lang['pages'][$_SESSION['lang']]['title'] ?>..." <?= (strlen($content['content_title']) > 0) ? 'readonly="readonly"' : '' ?> type="text" required>
@@ -22,7 +23,17 @@
                                 <?= $lang['pages'][$_SESSION['lang']]['name_page_is_true'] ?>
                             </div>
                         </div>
-
+                        <style>
+                            .extension_checked_elms{
+                                clear: both;
+                                border-bottom: 1px solid #cccccc;
+                            }
+                            .extension_checked_elms:hover{
+                                color: #000000;
+                                cursor: pointer;
+                            }
+                        </style>
+                        
                         <div class="form-group">
                             <label>Выбирите расширение</label>
                             <div>
@@ -34,12 +45,17 @@
                                     <?
                                     $checked = ($content['extension'] == $extensions[$i]['eu_id']) ? 'checked="checked"' : '';
                                     ?>
-                                    <input type="radio" name="ext_urls" value="<?= $extensions[$i]['eu_id'] ?>" class="ext_urls" <?= $checked ?> /> <?= $extensions[$i]['conf']['title'] ?> <?= $extensions[$i]['url'] ?><br/>
+
+                                    <div class="extension_checked_elms">
+                                        <div style="float: left;"><input type="radio" name="ext_urls" value="<?= $extensions[$i]['eu_id'] ?>" class="ext_urls" <?= $checked ?> /></div> 
+                                        <div style="float: left;width: 300px;margin: 0 20px;"><?= (strlen($extensions[$i]['title']) > 0) ? $extensions[$i]['title'] : $extensions[$i]['conf']['title'] ?></div>
+                                        <div style="float: left;"><?= $extensions[$i]['url'] ?></div>
+                                    </div>
                                 <? endfor; ?>
                             </div>
                             <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['choose_available_options'] ?></span>
                         </div>
-                        <div class="form-group content_descr_block" style="<?= (strlen($checked_null)>0)?'display: block;':'display: none;' ?>">
+                        <div class="form-group content_descr_block" style="<?= (strlen($checked_null) > 0) ? 'display: block;' : 'display: none;' ?>">
                             <label><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></label>
                             <textarea id="content_descr" name="content_descr" id="content_descr" style="width: 100%;height: 140px;"><?= $content['content_descr'] ?></textarea>
                         </div>

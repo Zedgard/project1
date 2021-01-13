@@ -10123,21 +10123,21 @@
 	  }
 
 	  /*======== 6. PROGRESS BAR ========*/
-	  NProgress.done();
+	  //NProgress.done();
 
 	  /*======== 6. PROGRESS BAR ========*/
-	  $('.slim-scroll-right-sidebar-2').slimScroll({
-	    opacity: 0,
-	    height: '100%',
-	    color: "#999",
-	    size: "5px",
-	    touchScrollStep: 50
-	  })
-	    .mouseover(function () {
-	      $(this)
-	        .next(".slimScrollBar")
-	        .css("opacity", 0.4);
-	    });
+//	  $('.slim-scroll-right-sidebar-2').slimScroll({
+//	    opacity: 0,
+//	    height: '100%',
+//	    color: "#999",
+//	    size: "5px",
+//	    touchScrollStep: 50
+//	  })
+//	    .mouseover(function () {
+//	      $(this)
+//	        .next(".slimScrollBar")
+//	        .css("opacity", 0.4);
+//	    });
 
 	    /*======== 7. CIRCLE PROGRESS ========*/
 	    var circle = $('.circle');

@@ -20,6 +20,7 @@ class sqlLight {
     public $db_prefix;
     private $errArr = array();
     private $count = 0;
+    private $htmlspecialchars_true = 1;
     /* @var $mysqli new mysqli */
     private $mysqli;
 
@@ -64,6 +65,14 @@ class sqlLight {
     }
 
     /**
+     * Отключить преобразование HTML сущности, передать 0
+     * @param type $v = 1 по умолчанию
+     */
+    public function setHtmlspecialchars($v = 1) {
+        $this->htmlspecialchars_true = $v;
+    }
+
+    /**
      * Замена по очереди вхождений строки
      * @param type $search
      * @param type $replace
@@ -71,31 +80,43 @@ class sqlLight {
      * @return type
      */
     private function str_replace_once($search, $replace, $text) {
+        //echo "text: {$text} \n";
         $pos = strpos($text, $search);
         return $pos !== false ? substr_replace($text, $replace, $pos, strlen($search)) : $text;
     }
 
     /**
-     * Отправим запро к DB
+     * Отправим запроса к DB
      * @param string $query
      * @return boolian
      */
-    public function query($query, $values = array()) {
+    public function query($query, $values = array(), $see = 0) {
         $ret = false;
         if (strlen($query) > 0) {
             global $lang;
 
-            // Защитим отиньекций
+            // Защитим от иньекций
+            foreach ($values as $value) {
+                $value = $this->mysqli->real_escape_string($value);
+                $query = $this->str_replace_once('?', '|^^^|', $query);
+            }
             if (count($values) > 0) {
                 foreach ($values as $value) {
                     $value = $this->mysqli->real_escape_string($value);
-                    $query = $this->str_replace_once('?', $value, $query);
+                    if ($this->htmlspecialchars_true == 1) {
+                        $value = htmlspecialchars($value, ENT_QUOTES);
+                    }
+                    $query = $this->str_replace_once('|^^^|', $value, $query);
                 }
             }
 
             /* Включить режим фиксации */
             $this->mysqli->autocommit(TRUE);
-            //echo "query: {$query} <br/>\n";
+            if ($see != 0) {
+                echo "query: {$query} <br/>\n";
+            } else {
+                //$_SESSION['errors'][] = $query;
+            }
             if ($this->mysqli->query($query) === FALSE) {
                 if ($_SESSION['DEBUG'] == 1) {
                     $_SESSION['errors'] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
@@ -123,27 +144,40 @@ class sqlLight {
      * @param string $query
      * @return boolian
      */
-    public function queryList($query, $values = array()) {
+    public function queryList($query, $values = array(), $see = 0) {
         global $lang;
         $this->setCount(0);
         $buffer = array();
         $i = 0;
 
         // Защитим от инъекций
+        
         if (count($values) > 0) {
             foreach ($values as $value) {
                 $value = $this->mysqli->real_escape_string($value);
                 $query = $this->str_replace_once('?', $value, $query);
             }
         }
-        //echo 'query: ' . $query . "<br/>\n";
+        
+        if ($see != 0) {
+            echo 'query: ' . $query . "<br/>\n";
+        } else {
+            //$_SESSION['errors'][] = $query;
+        }
         /* Select запросы возвращают результирующий набор */
         if ($result = $this->mysqli->query($query)) {
             $this->count = $result->num_rows;
-
-            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            while ($row = $result->fetch_array(MYSQLI_BOTH)) {
+                $bufferRow = array();
                 $i++;
-                $buffer[] = $row;
+                foreach ($row as $key => $value) {
+                    if ($this->htmlspecialchars_true == 1) {
+                        $bufferRow[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
+                    }else{
+                        $bufferRow[$key] = $value;
+                    }
+                }
+                $buffer[] = $bufferRow;
             }
         } else {
             if ($_SESSION['DEBUG'] == 1) {
@@ -152,9 +186,28 @@ class sqlLight {
                 echo $lang['sql_query_commit_false'];
             }
         }
+
         $result->free();
         $this->setCount($i);
         return $buffer;
+    }
+
+    /**
+     * Возвращаем html тэги
+     * @param type $str
+     * @return type
+     */
+    public function getNormalHTML($str) {
+        return htmlspecialchars_decode($str, ENT_QUOTES);
+    }
+
+    /**
+     * Преобразует строку в спец символы
+     * @param type $str
+     * @return type
+     */
+    public function setSpecialcharsHtml($str) {
+        return htmlspecialchars($str, ENT_QUOTES);
     }
 
     public function close() {

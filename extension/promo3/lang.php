@@ -4,7 +4,7 @@
  * Перевод extension pages
  */
 
-$lang['pages']['ru'] = array(
+$lang['promo3']['ru'] = array(
     'title' => 'Промо акции блоки',
     'descr' => 'Промо акции сайта',
     'extension_admin' => 'Промо акции блоки админка (admin.php)',

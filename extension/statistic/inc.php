@@ -92,6 +92,21 @@ class statistic extends \project\extension {
     }
 
     /**
+     * Статистика по дням
+     * @param type $start_date
+     * @param type $end_date
+     * @return type
+     */
+    public function getWaresVideoSeeData($start_date, $end_date) {
+        $querySelect = "SELECT sum(vs.`count_see`) as col, "
+                . "date(vs.`video_see_date`) as day "
+                . "FROM `zay_wares_video_see` vs "
+                . "WHERE vs.`video_see_date` >= '?' and vs.`video_see_date` <= '?' "
+                . "GROUP by date(`video_see_date`)";
+        return $this->getSelectArray($querySelect, array($start_date . ' 00:00:00', $end_date . ' 23:59:59'));
+    }
+
+    /**
      * Статистика за выбранный год по месецам
      * @param type $year
      * @return type
