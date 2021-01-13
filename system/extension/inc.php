@@ -12,7 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 
 class extension {
 
-    public function __construct() {
+    public function __construct() { 
         $this->init();
     }
 
@@ -80,16 +80,16 @@ class extension {
         $sqlLight = new \project\sqlLight();
         if ($extension_id > 0) {
             foreach ($config['urls'] as $key => $value) {
-                $querySelect = "SELECT * FROM `zay_extension_urls` WHERE extension_id='?' and url='?'";
-                $e = $sqlLight->queryList($querySelect, array($extension_id, $value));
-                if (count($e) > 0) {
-                    $queryUpdate = "UPDATE `zay_extension_urls` set extension_id='?', url='?' ";
-                    $sqlLight->query($queryInsert, array($extension_id, $value));
-                } else {
-                    $queryInsert = "INSERT INTO `zay_extension_urls`(`extension_id`, `url`) "
-                            . "VALUES ('?','?')";
-                    $sqlLight->query($queryInsert, array($extension_id, $value));
-                }
+//                $querySelect = "SELECT * FROM `zay_extension_urls` WHERE extension_id='?' and url='?'";
+//                $e = $sqlLight->queryList($querySelect, array($extension_id, $value));
+//                if (count($e) > 0) {
+//                    $queryUpdate = "UPDATE `zay_extension_urls` set extension_id='?', title='?', url='?' ";
+//                    $sqlLight->query($queryInsert, array($extension_id, $key, $value));
+//                } else {
+                $queryInsert = "INSERT INTO `zay_extension_urls`(`extension_id`, `title`, `url`) "
+                        . "VALUES ('?','?','?')";
+                $sqlLight->query($queryInsert, array($extension_id, $key, $value));
+                //}
             }
         }
     }
@@ -103,13 +103,13 @@ class extension {
         $sqlLight = new \project\sqlLight();
         $data = array();
         if ($eu_id > 0) {
-            $querySelect = "SELECT  e.`id`, e.`extension_url`, e.`version`, eu.`id` as eu_id, eu.`url` "
+            $querySelect = "SELECT  e.`id`, e.`extension_url`, e.`version`, eu.`id` as eu_id, eu.`url`, eu.`title` "
                     . "FROM `zay_extension` e "
                     . "left join `zay_extension_urls` eu on eu.extension_id=e.id "
                     . "WHERE eu.`id`='?'";
             $data = $sqlLight->queryList($querySelect, array($eu_id));
         } else {
-            $querySelect = "SELECT  e.`id`, e.`extension_url`, e.`version`, eu.`id` as eu_id, eu.`url` "
+            $querySelect = "SELECT  e.`id`, e.`extension_url`, e.`version`, eu.`id` as eu_id, eu.`url`, eu.`title` "
                     . "FROM `zay_extension` e "
                     . "left join `zay_extension_urls` eu on eu.extension_id=e.id ";
             $data = $sqlLight->queryList($querySelect, array());
@@ -122,21 +122,92 @@ class extension {
      * Вспомогающие методы
      */
 
-    public function getSelectArray($querySelect, $queryValues = array()) {
+    public function getSelectArray($querySelect, $queryValues = array(), $see = 0) {
         $sqlLight = new \project\sqlLight();
-        $data = array();
-        $data = $sqlLight->queryList($querySelect, $queryValues);
+        $data = $sqlLight->queryList($querySelect, $queryValues, $see);
         return $data;
     }
 
-    public function query($query, $queryValues = array()) {
+    public function query($query, $queryValues = array(), $see = 0) {
         $sqlLight = new \project\sqlLight();
-        return $sqlLight->query($query, $queryValues);
+        return $sqlLight->query($query, $queryValues, $see);
     }
 
     public function updateOneRow($table, $elm_id, $row, $val) {
+        $sqlLight = new \project\sqlLight();
         $s = "UPDATE ? set ?='?' WHERE id='?' ";
-        return $this->query($s, array($table, $row, $val, $elm_id));
+        return $sqlLight->query($s, array($table, $row, $val, $elm_id));
+    }
+
+    /**
+     * Возвращаем html тэги
+     * @param type $str
+     * @return type
+     */
+    public function getNormalHTML($str) {
+        $sqlLight = new \project\sqlLight();
+        return $sqlLight->getNormalHTML($str);
+    }
+
+    /**
+     * Возвращает настройки расширения
+     * @param type $extension_name
+     * @return type 
+     */
+    public function getConfigData($extension_name) {
+        include DOCUMENT_ROOT . '/extension/' . $extension_name . '/conf.php';
+        return $config;
+    }
+
+    /**
+     * Изменение еденичного поля в таблице 
+     * @param type $table
+     * @param type $itm_id
+     * @param type $row
+     * @param type $value
+     * @return type
+     */
+    public function editTableRowValue($table, $itm_id, $row, $value) {
+        $sqlLight = new \project\sqlLight();
+        $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'";
+        return $sqlLight->query($query, array($table, $row, $value, $itm_id));
+    }
+
+    /**
+     * Инициализация супер формы<br>
+     * отправка данных прямо с полей<br>
+     * Пример:<br>
+     * <input type="text" name="elm_name" value="elm_val" elm_id="" elm_table="" elm_row="" class="init_elm_edit" />
+     */
+    public function initSuperForm() {
+        ?>
+        <script src="/system/extension/admin_super_init.js<?= $_SESSION['rand'] ?>"></script>
+        <?
+    }
+
+    /**
+     * Отправка данны в БД из супер формы
+     * @param type $elm_id
+     * @param type $value
+     * @param type $elm_table
+     * @param type $elm_row
+     * @return type
+     */
+    public function initSuperFormPOST($elm_id, $value, $elm_table, $elm_row) {
+        $sqlLight = new \project\sqlLight();
+        $query = "UPDATE `?` SET `?`='?' WHERE id='?'";
+        return $sqlLight->query($query, array($elm_table, $elm_row, $value, $elm_id));
+    }
+
+    /**
+     * Удаление элемента
+     * @param type $elm_id
+     * @return type
+     */
+    public function initSuperFormDelete($elm_id, $elm_table) {
+        $sqlLight = new \project\sqlLight();
+        $query = "DELETE FROM `?` WHERE id='?'";
+        return $sqlLight->query($query, array($elm_table, $elm_id));
     }
 
 }

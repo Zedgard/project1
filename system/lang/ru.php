@@ -7,7 +7,7 @@
 $lang = array( 
     'site_title' => 'Сайт зайцева',
     'site_author_name' => 'Эдгард Зайцев',
-    'text_activate_account' => 'Активация учтной записи на сайте',
+    'text_activate_account' => 'Активация учетной записи на сайте',
     'email_false' => 'Адрес электронной почты введен не верно',
     'no_input_form' => 'Обязательные поля не заполнены',
     'check_positions' => 'Я согласен с условиями и положениями',
@@ -22,7 +22,7 @@ $lang = array(
     'sql_query_false' => 'Ошибка выполнения запроса',
     'sql_query_commit_false' => 'Не удалось зафиксировать транзакцию',
     
-    'user_activate_true' => 'Успешно активирован',
+    'user_activate_true' => 'Учетная запись успешно активирована',
     'user_activate_false' => 'Ошибка при активации учетной записи',
 );
 // $lang['user_activate_false']

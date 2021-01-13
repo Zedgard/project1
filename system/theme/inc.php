@@ -28,6 +28,9 @@ class theme {
         if ($type == 'E') {
             $run = 1;
             ob_start();
+            header("HTTP/1.0 404 Not Found");
+            header("HTTP/1.1 404 Not Found");
+            header("Status: 404 Not Found");
             global $lang;
             include DOCUMENT_ROOT . '/themes/site1/error_' . $_SESSION['lang'] . '.php';
             $html = ob_get_clean();
@@ -45,7 +48,10 @@ class theme {
                 //print_r($_SESSION['page']);
                 //echo "<br/>\n";
             }
+            
             global $lang;
+            include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+            $config = new \project\config();
             include DOCUMENT_ROOT . '/themes/' . $theme_name . '/index_' . $_SESSION['lang'] . '.php';
             $html = ob_get_clean();
         }
@@ -59,9 +65,12 @@ class theme {
      * @param type $page_id
      */
     public function getBlocksContents($page_id, $block_id, $block_code) {
-        $blocks = array();
+        include_once DOCUMENT_ROOT . '/system/page/inc.php';
+        //$blocks = array();
         global $lang;
         $sqlLight = new \project\sqlLight();
+        $p = new \project\page();
+        $roles = $p->blok_select_roles_list($block_id);
         $querySelect = "SELECT pbc.content_title, pbc.content_descr, pbc.extension, 
             eu.url
           FROM `zay_page_block_contents` pbc 
@@ -70,9 +79,23 @@ class theme {
           ORDER BY pbc.`sort` ASC ";
 
         $block_extension = $sqlLight->queryList($querySelect, array($page_id, $block_id));
-        $_SESSION['page'][$block_code] = array();
-        
-        if (count($block_extension) > 0) {
+        $_SESSION['page'][$block_code] = '';
+
+        if (count($roles) > 0) {
+            // Признак отображения блока
+            $block_see = 0;
+            // проверим на роли
+            foreach ($roles as $value) {
+                if ($value['role_privilege'] == 0) {
+                    $block_see = 1;
+                }
+                if ($block_see == 0 && count($_SESSION['user']) > 0 && $_SESSION['user']['info']['role_privilege'] >= $value['role_privilege']) {
+                    $block_see = 1;
+                }
+            }
+        }
+
+        if (count($block_extension) > 0 && $block_see > 0) {
             $html_extension = array();
             foreach ($block_extension as $key => $value) {
                 $elems = array();
@@ -84,6 +107,8 @@ class theme {
                     //echo "ext_url: {$ext_url} <br/>\n";
                     if (is_file(DOCUMENT_ROOT . $ext_url)) {
                         ob_start();
+                        include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+                        $config = new \project\config();
                         include DOCUMENT_ROOT . $ext_url;
                         $html_extension[] = ob_get_clean();
                     } else {
@@ -91,13 +116,17 @@ class theme {
                     }
                     $elems[] = implode("\n", $html_extension);
                 }
-
                 $_SESSION['page'][$block_code] = implode("\n", $elems);
             }
         }
-        
     }
 
+    /**
+     * Получить расширение
+     * @global \project\type $lang
+     * @param type $extension_id
+     * @return type
+     */
     public function getExtensionContentsReturn($extension_id) {
         global $lang;
         $blocks = array();
@@ -110,6 +139,10 @@ class theme {
         return $html_extension;
     }
 
+    /**
+     * Получить список имеющийхся блоков
+     * @return type
+     */
     public function getPagesBlocks() {
         $sqlLight = new \project\sqlLight();
         $querySelect = "SELECT * FROM `zay_pages_blocks`";
