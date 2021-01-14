@@ -113,8 +113,16 @@ class user extends \project\extension {
      * @return type
      */
     public function edit_user_role($user_id, $role_id) {
-        $update = "update `zay_roles_users` ru set ru.`role_id`='?' where ru.`user_id`='?' ";
-        return $this->query($update, array($role_id, $user_id));
+        $querySelect = "SELECT * FROM zay_roles_users WHERE user_id='?'";
+        $objs = $this->getSelectArray($querySelect);
+        if (count($objs) == 0) {
+            $insetr = "INSERT INTO `zay_roles_users`(`role_id`, `user_id`) VALUES ('?','?')";
+            return $this->query($insetr, array($role_id, $user_id));
+        } else {
+            $update = "update `zay_roles_users` ru set ru.`role_id`='?' where ru.`user_id`='?' ";
+            return $this->query($update, array($role_id, $user_id));
+        }
+        return false;
     }
 
     /**

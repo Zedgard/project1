@@ -34,9 +34,22 @@ class auth extends \project\user {
             $pass_hash = $this->passHash($password);
 
             $sqlLight = new \project\sqlLight();
-            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active` = 1";
+            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active`=1";
             $users = $sqlLight->queryList($query, array($email, $email, $pass_hash));
 
+            // Если не получилось авторизироваться проверим есть ли регистрация и не активная запись
+            if (count($users) == 0) {
+                $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active`=0";
+                $find_user = $sqlLight->queryList($query, array($email, $email, $pass_hash));
+                if (count($find_user) > 0) {
+                    $_SESSION['errors'][] = 'Учетная запиь не активирована!';
+                    return false;
+                }else{
+                    $_SESSION['errors'][] = 'Не найдена учетная запись, пожалуйста зарегистируйтесь в системе!';
+                    return false;
+                }
+            }
+            
             if (count($users) > 0) {
                 $_SESSION['user']['info'] = $users[0];
                 $data = $this->getUserInfo($users[0]['id']);
@@ -46,9 +59,7 @@ class auth extends \project\user {
                     $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.png';
                 }
                 return true;
-            } else {
-                $_SESSION['errors'][] = 'Введен неверный логин или пароль';
-            }
+            } 
         } else {
             $_SESSION['errors'][] = $lang['no_input_form'];
         }
@@ -96,14 +107,13 @@ class auth extends \project\user {
                 $activate_codeBase64 = base64_encode($activate_code);
             }
 
-
             $sqlLight = new \project\sqlLight();
-// e159086ea548b2a39a6d0359aa083e9f9c63d2cb
+
             if (strlen($phone) == 0) { // если не передан номер телефона
-                $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' "; // and `active` = 1 // ТОлько активированых 
+                $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1"; // and `active` = 1 // ТОлько активированых 
                 $users = $sqlLight->queryList($query, array($email));
             } else {
-                $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') "; // and `active` = 1 // ТОлько активированых 
+                $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active`=1"; // and `active` = 1 // ТОлько активированых 
                 $users = $sqlLight->queryList($query, array($email, $phone));
             }
 
@@ -115,7 +125,7 @@ class auth extends \project\user {
             if (count($error) == 0) {
                 $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
                         . "VALUES ('?','?','','','?','?','?', NOW() )";
-                if ($sqlLight->query($query, array($email, $phone, $pass_hash, $active, $activate_code), 1)) {
+                if ($sqlLight->query($query, array($email, $phone, $pass_hash, $active, $activate_code), 0)) {
                     if (strlen($activate_codeBase64) > 0) {
                         $this->sendActivateEmail($email, $activate_codeBase64);
                     }
@@ -313,18 +323,18 @@ class auth extends \project\user {
         $from_name = str_replace(' ', '_', $lang['site_author_name']);
 
         // получи фаил шаблона письма
-        $email_body = $this->fileTmpl('mailActivateAccount', $email);
-        // заменим тэги
-        $email_body = str_replace("{site}", $_SERVER['SERVER_NAME'], $email_body);
-        $email_body = str_replace("{activate_code}", "?activation=" . $activate_code, $email_body);
-
-        $mail = new \project\Mail($link_ed_mailto);  // Создаём экземпляр класса
-        $mail->setType('text/html');
-        $mail->setFromName($from_name); // Устанавливаем имя в обратном адресе
+//        $email_body = $this->fileTmpl('mailActivateAccount', $email);
+//        // заменим тэги
+//        $email_body = str_replace("{site}", $_SERVER['SERVER_NAME'], $email_body);
+//        $email_body = str_replace("{activate_code}", "?activation=" . $activate_code, $email_body);
+//
+//        $mail = new \project\Mail($link_ed_mailto);  // Создаём экземпляр класса
+//        $mail->setType('text/html');
+//        $mail->setFromName($from_name); // Устанавливаем имя в обратном адресе
 //        if ($mail->send($email, "{$lang['text_activate_account']} {$_SERVER['SERVER_NAME']}", $email_body)) {
 //            return true;
 //        }
-        if ($send_emails->send('mail_activate_account', $email, array('site' => $_SERVER['SERVER_NAME'], 'activate_code' => "/?activation=" . $activate_code))) {
+        if ($send_emails->send('mail_activate_account', $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'activate_code' => "/?activation=" . $activate_code))) {
             return true;
         }
         return false;
@@ -415,7 +425,7 @@ class auth extends \project\user {
             if ($this->query($queryUpdate, array($re_pass, $u_id))) {
                 $send_emails = new \project\send_emails();
                 // Отправка подготовленного сообщения
-                if ($send_emails->send('re_password', $email, array('site' => $_SERVER['SERVER_NAME'], 'link' => "<a href='https://www.{$_SERVER['SERVER_NAME']}/auth/?repassword={$re_pass}' target='_blank'>перейти</a>"))) {
+                if ($send_emails->send('re_password', $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'link' => "<a href='https://www.{$_SERVER['SERVER_NAME']}/auth/?repassword={$re_pass}' target='_blank'>перейти</a>"))) {
                     return true;
                 }
             }

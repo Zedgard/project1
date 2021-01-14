@@ -48,7 +48,7 @@ class get_emails extends \project\extension {
         if ($return) {
             // Отправить сообщение пользователю для подтверждения почты
             $send_emails = new \project\send_emails();
-            if ($send_emails->send('set_emails', $email, array('site' => $_SERVER['SERVER_NAME'], 'site_activate_email' => "https://www.{$_SERVER['SERVER_NAME']}/auth/?set_email_true={$token}"))) {
+            if ($send_emails->send('set_emails', $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'site_activate_email' => "https://www.{$_SERVER['SERVER_NAME']}/auth/?set_email_true={$token}"))) {
                 return true;
             }
         }

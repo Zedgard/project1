@@ -71,7 +71,7 @@
                                     <div class="form-group">
                                         <form method="POST" enctype="multipart/form-data">
                                             <div><label for="upload_file">
-                                                    <img src="/assets/img/user/user.png" class="user-image img-thumbnail avatar_img mb-1" style="width: 100px;" title="Аватар">
+                                                    <img src="<?= $avatar ?>" class="user-image img-thumbnail avatar_img mb-1" style="width: 100px;" title="Аватар">
                                                 </label>
                                             </div>
                                             <div class="">

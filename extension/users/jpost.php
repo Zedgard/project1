@@ -11,6 +11,7 @@ $user = new \project\user();
 $auth = new \project\auth();
 
 if ($user->isEditor()) {
+    // Данные по пользователю
     if (isset($_POST['getUsersList'])) {
         $page_num = $_POST['page_num'];
         $input_search_str = (strlen(trim($_POST['input_search_str'])) > 0) ? $_POST['input_search_str'] : '';

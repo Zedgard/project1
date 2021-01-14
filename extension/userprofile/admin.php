@@ -8,6 +8,9 @@ include_once 'inc.php';
 $user = new \project\user();
 $userprofile = new \project\userprofile();
 
+// Данные по пользователю
+$user_data = $userprofile->get_user_info($_SESSION['user']['info']['id']);
+
 /**
  * Загрузка файла
  */
@@ -15,8 +18,13 @@ if (isset($_FILES['upload_file']) && strlen($_FILES['upload_file']['name']) > 0)
     //подключаем файл
     include($_SERVER['DOCUMENT_ROOT'] . '/class/image.php');
 
+    if (strlen($user_data['avatar']) > 0 && is_file($_SERVER['DOCUMENT_ROOT'] . $user_data['avatar'])) {
+        @unlink($_SERVER['DOCUMENT_ROOT'] . $user_data['avatar']);
+    }
+
     $avatar_type = get_image_type($_FILES['upload_file']['type']);
-    $avatar_file_name = 'avatar_' . $user->isClientId();
+    $rand = mt_rand(1000, 9999);
+    $avatar_file_name = 'avatar_' . $rand . '_' . $user->isClientId(); // . $rand . '_' 
 
     $handle = new \project\upload($_FILES['upload_file']);
 
@@ -38,7 +46,12 @@ if (isset($_FILES['upload_file']) && strlen($_FILES['upload_file']['name']) > 0)
         //загружаем изображение в папку images
         $handle->process($_SERVER['DOCUMENT_ROOT'] . '/assets/avatars');
         if ($handle->processed) {
-            $userprofile->upload_avatar($user->isClientId(), '/assets/avatars/' . $avatar_file_name . $avatar_type);
+
+            if ($userprofile->upload_avatar($user->isClientId(), '/assets/avatars/' . $avatar_file_name . $avatar_type)) {
+                location_href($_SERVER['REQUEST_URI']);
+            } else {
+                echo 'Error: фото не обновлено!';
+            }
             $handle->clean();
         } else {
             echo 'Error : ' . $handle->error;
@@ -46,9 +59,11 @@ if (isset($_FILES['upload_file']) && strlen($_FILES['upload_file']['name']) > 0)
     }
 }
 
-
 if ($user->isClient() || $user->isEditor()) {
     //$pr_products = new \project\products();
+
+
+    $avatar = (strlen($user_data['avatar']) > 0) ? $user_data['avatar'] : '/assets/img/user/user.png';
     include 'tmpl/admin.php';
 } else {
     ?>

@@ -41,10 +41,7 @@ if (isset($_POST['authorization'])) {
 if (isset($_POST['registration'])) {
     if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
         $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес', 'action' => '/auth/');
-    } else {
-        //$_SESSION['errors'] = 'Ошибка регистрации, попробуйте позже!';
-        $result = array('success' => 0, 'success_text' => 'Ошибка регистрации, попробуйте позже!');
-    }
+    } 
 }
 /*
  * Выход
