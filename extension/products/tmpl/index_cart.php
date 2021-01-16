@@ -64,6 +64,14 @@
         <div class="col-md-7 mb-4">
             <!-- Title -->
             <h1 class="product_info_title_card mb-3"><?= $title_category_str ?> <?= $productData['title'] ?></h1>
+
+            <?
+            if ($p_user->isEditor()) {
+                ?>
+                <div class="text-right"><a href="/admin/products/?product_edit=4153" target="_blank" class="btn btn-link">Редактировать товар</a></div>
+                <?
+            }
+            ?>
             <div class="mb-5">
                 <div class="mb-1">Поделиться в соцсетях</div>
                 <?

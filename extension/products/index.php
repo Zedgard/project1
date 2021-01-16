@@ -11,12 +11,14 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/category/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/topic/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/page/inc.php';
 include_once 'inc.php';
 
 $c_category = new \project\category();
 $c_topic = new \project\topic();
 $c_wares = new \project\wares();
+$p_user = new \project\user();
 $c_product = new \project\products();
 $page = new \project\page();
 

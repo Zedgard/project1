@@ -75,6 +75,9 @@
     var products_id = 0;
     var searchStr = '';
     var visible_products = '1';
+    // если перешли по ссылке откроем товар сразу
+    var product_edit = '<?= $_GET['product_edit'] ?>';
+
     $(document).ready(function () {
 
         /*======== MULTIPLE SELECT ========*/
@@ -196,7 +199,7 @@
                         $(".products_arrays_data tbody").append(
                                 '<tr elm_id="' + data[i]['id'] + '"> \n\
                                 <td style="text-align: center;"><img src="' + data[i]['images_str'] + '" style="width: 100px;" /></td>\n\
-                                <td>' + data[i]['title'] + '</td>\n\
+                                <td><a href="/shop/?product=' + data[i]['id'] + '" target="_blank">' + data[i]['title'] + '</a></td>\n\
                                 <td style="text-align: center;">' + price + '</td>\n\
                                 <td style="text-align: center;">' + data[i]['sold'] + '</td>\n\
                                 <td style="text-align: center;">\n\
@@ -211,6 +214,7 @@
                             <span class="btn btn-sm btn-danger btn_products_delete" title="Удалить"><i class="mdi mdi-delete"></i></span> \n\
                             </td>\n\
                             </tr>');
+                        
                     }
                     products_switch_init();
                 }
@@ -310,7 +314,7 @@
                                 }
                                 init_block_profit_questions_array();
                                 init_block_profit_plus_array();
-                                
+
                                 // Отобразим "Блок выгода" 
                                 if (e['data']['block_trailer'] == '1') {
                                     if (!$(".block_trailer_checked").is(':checked')) {
@@ -319,7 +323,7 @@
                                     }
                                 }
                                 init_block_trailer_array();
-                                
+
                                 // Отобразим "Отзывы счастливых клиентов" 
                                 if (e['data']['block_feedback'] == '1') {
                                     if (!$(".block_feedback_checked").is(':checked')) {
@@ -335,6 +339,7 @@
                             }
                         });
             });
+            $(".products_arrays_data").find('[elm_id="' + product_edit + '"]').find(".btn_products_edit").click();
         }
 
 
