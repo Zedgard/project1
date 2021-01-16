@@ -12,7 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once 'inc.php';
 
 $c_cart = new \project\cart();
-$u = new \project\user();
+$p_user = new \project\user();
 
 
 $form_show = 0;
@@ -155,9 +155,18 @@ if ($form_show == 0) {
             $price_total += $price;
         }
     }
+
+    /**
+     * Заглушка для админов покупка за 1 рубль
+     */
+    if ($p_user->isEditor()) {
+        $price_total = 1;
+    }
+
+
     // Если авторезированный
-    if (strlen($u->isClientEmail()) > 0) {
-        $email = $u->isClientEmail();
+    if (strlen($p_user->isClientEmail()) > 0) {
+        $email = $p_user->isClientEmail();
     }
 
     include 'tmpl/index.php';

@@ -35,9 +35,10 @@ $client->setAuth($ya_shop_id, $ya_shop_api_key);
 /*
   Собираем данные по платежу
  */
-$u = new \project\user();
+$p_user = new \project\user();
 
 $price_total = 0;
+
 foreach ($_SESSION['cart']['itms'] as $key => $value) {
     $email = $value['user_email'];
     if ($value['price_promo'] > 0) {
@@ -47,10 +48,15 @@ foreach ($_SESSION['cart']['itms'] as $key => $value) {
     }
     $price_total += $price;
 }
-//echo "price_total: {$price_total} <br/>\n"; 
+/**
+ * Заглушка для админов покупка за 1 рубль
+ */
+if ($p_user->isEditor()) {
+    $price_total = 1;
+}
 
 if (count($_SESSION['cart']['itms']) > 0) {
-    $client_id = ($u->isClientId() > 0) ? $u->isClientId() : 0;
+    $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
     // Передадим ID пользователя (Создается при консультации)
     if ($client_id == 0) {
@@ -64,15 +70,15 @@ if (count($_SESSION['cart']['itms']) > 0) {
     // Создаем платеж
     $idempotenceKey = uniqid('', true); // Генерируем ключ идемпотентности
     //print_r($_SESSION['user']['info']['email']);
-    //echo $price_total . " em: {$_SESSION['user']['info']['email']} | {$u->isClientEmail()}<br/>\n";
-    //echo $u->isClientEmail();
-    //echo $u->isClientEmail();
+    //echo $price_total . " em: {$_SESSION['user']['info']['email']} | {$p_user->isClientEmail()}<br/>\n";
+    //echo $p_user->isClientEmail();
+    //echo $p_user->isClientEmail();
     //  exit();
     $errors = 0;
 
     // Если авторезированный
-    if (strlen($u->isClientEmail()) > 0) {
-        $email = $u->isClientEmail();
+    if (strlen($p_user->isClientEmail()) > 0) {
+        $email = $p_user->isClientEmail();
     }
 
     $data_array = array(

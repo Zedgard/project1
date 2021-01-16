@@ -10,7 +10,7 @@ $sqlLight = new \project\sqlLight();
 
 include_once DOCUMENT_ROOT . '/extension/users/inc.php';
 include_once DOCUMENT_ROOT . '/class/functions.php';
-$u = new \project\user();
+$p_user = new \project\user();
 
 $config = new \project\config();
 
@@ -26,8 +26,8 @@ if (!isset($_SESSION['pay_key'])) {
 $pay_key = $_SESSION['pay_key'];
 
 
-$client_email = $u->isClientEmail();
-$client_id = ($u->isClientId() > 0) ? $u->isClientId() : 0;
+$client_email = $p_user->isClientEmail();
+$client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
 // Передадим ID пользователя (Создается при консультации)
 if ($client_id == 0) {
@@ -53,6 +53,13 @@ if (count($_SESSION['cart']['itms']) > 0) {
     foreach ($_SESSION['cart']['itms'] as $value) {
         $price_total += $value['price'];
     }
+}
+
+/**
+ * Заглушка для админов покупка за 1 рубль
+ */
+if ($p_user->isEditor()) {
+    $price_total = 1;
 }
 
 if ($price_total > 0) {
