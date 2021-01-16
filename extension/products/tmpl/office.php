@@ -66,12 +66,14 @@
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
                     $(".products_arrays_data").append(
-                            '<div class="col-lg-4 mb-3">\n\
-                                <div class="mb-3"><h3><a href="?wares_id=' + data[i]['id'] + '">' + data[i]['title'] + '</a></h3></div>\n\
-                                <div class="text-center"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                            '<div class="col-lg-4 mb-3 text-center">\n\
+                                <a href="?wares_id=' + data[i]['id'] + '">\n\
+                                <div class="mb-3"><h3>' + data[i]['title'] + '</h3></div>\n\
+                                <div class=""><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                                </a>\n\
                                 </div>\n\
-                                <div class="col-lg-8 mb-3">' + data[i]['descr'] + '</div>');
-                    $(".products_arrays_data").append('<div class="col-lg-12 mb-2"><hr/></div>');
+                                '); // <div class="col-lg-8 mb-3">' + data[i]['descr'] + '</div>
+                    //$(".products_arrays_data").append('<div class="col-lg-12 mb-2"><hr/></div>');
 //                    $(".products_arrays_data tbody").append(
 //                            '<tr elm_id="' + data[i]['id'] + '"> \n\
 //                                <td>\n\

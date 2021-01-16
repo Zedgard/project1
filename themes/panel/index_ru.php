@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Панель администрирования">
 
-
+        <link href="/favicon.ico<?= $_SESSION['rand'] ?>" rel="icon">
         <title><?= $_SESSION['site_title'] ?></title>
 
         <!-- GOOGLE FONTS -->
