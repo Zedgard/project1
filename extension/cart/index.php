@@ -137,16 +137,16 @@ if ($form_show == 0) {
      * Подготови данные для PayPal
      */
     $url_ref = $config->getConfigParam('pay_site_url_ref');
-    $url_ref = "{$url_ref}/shop/cart/?pay_payment_true=1";
+    $url_ref = "{$url_ref}/pay.php?pay_payment_true=1";
 
     $paypal_email = $config->getConfigParam('paypal_email');
-
+    //print_r($_SESSION['cart']['itms']);
     $price_total = 0;
     if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
         $title = "";
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
             $email = $value['user_email'];
-            $title .= $value['pay_descr'] . " : ";
+            $title .= $value['title'] . " : ";
             if ($value['price_promo'] > 0) {
                 $price = $value['price_promo'];
             } else {

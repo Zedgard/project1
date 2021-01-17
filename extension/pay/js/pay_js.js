@@ -51,15 +51,15 @@ function init_pay_data_list() {
                     pay_status = 'Незавершенная';
                     border_class = 'table-danger';
                 }
-                
-                
+
+
                 var processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-danger btn-pill btn_set_processed btn-sm text-nowrap">не просмотрено</a>';
                 if (e['data'][i]['processed'] == '1') {
                     processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-success btn-pill btn_set_processed btn-sm text-nowrap">обработано</a>';
                 }
 
                 $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
-                                    <td class="text-center">' + e['data'][i]['id'] + '</td> \
+                                    <td class="text-center"><a href="javascript:void(0)" class="btn btn-link btn_pay_info_modal" objid="' + e['data'][i]['id'] + '">' + e['data'][i]['id'] + '</a></td> \
                                     <td>' + user_title + '</td> \
                                     <td class="text-center">' + e['data'][i]['pay_type_title'] + '</td> \
                                     <td class="text-center font-weight-bold">' + e['data'][i]['pay_sum'] + '</td> \
@@ -78,6 +78,8 @@ function init_pay_data_list() {
         }
         init_btn_set_processed();
         pay_list_col_true = 1;
+
+        init_pay_info();
     });
 }
 
@@ -113,5 +115,15 @@ function init_search_pay_user() {
         search_pay_user_str = $(this).val();
         pay_num = 1;
         init_pay_data_list();
+    });
+}
+
+function init_pay_info() {
+    $(".btn_pay_info_modal").click(function () {
+        $('#form_pay_info_modal').modal('toggle');
+        var objid = $(this).attr('objid');
+        sendPostLigth('/jpost.php?extension=pay', {"get_pay_info": objid}, function (e) {
+            console.log(e['data']);
+        });
     });
 }

@@ -17,7 +17,7 @@ $products = new \project\products();
 $u = new \project\user();
 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
-$url_ref = "{$url_ref}/shop/cart/?pay_payment_true=1";
+$url_ref = "{$url_ref}/pay.php?pay_payment_true=1";
 
 $paypal_email = $config->getConfigParam('paypal_email');
 

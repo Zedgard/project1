@@ -30,6 +30,9 @@ if ($price_total > 0) {
     if (isset($_GET['interkassa'])) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_pay.php';
     }
+    if (isset($_GET['paypal'])) {
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/paypal_pay.php';
+    }
 } else {
     include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/pay_no_money.php';
 }

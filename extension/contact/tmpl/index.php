@@ -55,18 +55,18 @@
                     <div class="row mt-3 mb-3">
                         <div class="col-12 form_send_user_message">
                             <div class="contact-left">
-                                <p>
+                                <p class="mb-2">
                                     <input type="text" name="user_fio" value="" size="40" class="form-control user_fio" placeholder="Ваше имя *">
                                 </p>
-                                <p>
+                                <p class="mb-2">
                                     <input type="text" name="user_email" value="" size="40" class="form-control user_email" placeholder="Email *">
                                 </p>
-                                <p>
+                                <p class="mb-2">
                                     <input type="text" name="user_subject" value="" size="40" class="form-control user_subject" placeholder="Тема *">
                                 </p>
                             </div>
                             <div class="contact-right">
-                                <p>
+                                <p class="mb-2">
                                     <textarea name="user_message" class="form-control user_message" placeholder="Сообщение *"></textarea>
                                 </p>
                             </div>
@@ -97,7 +97,7 @@
                         </button>
                     </div>
                     <div class="collapse show" id="collapseExample1">
-                        <div class="card card-body">
+                        <div class="card card-body" style="margin-top: -8px;z-index: -1;">
                             <p>На электронный адрес, указанный при оформлении заказа, сразу после оплаты, автоматически, отправляется письмо со ссылками. Если вы не получили такое письмо, то:</p>
                             <p><span class="">1.</span> Проверьте все папки вашей электронной почты, возможно письмо попало в папку СПАМ.</p>
                             <p><span class="">2.</span> Все ваши заказы и ссылки на загрузку хранятся в вашем личном кабинете, с которого вы в любое время можете загрузить свой заказ. Войти в свой личный кабинет можно <a href="/auth/">здесь</a>.</p>
@@ -114,7 +114,7 @@
                         </button>
                     </div>
                     <div class="collapse" id="collapseExample2">
-                        <div class="card card-body">
+                        <div class="card card-body" style="margin-top: -8px;z-index: -1;">
                             <p>Регистрация происходит автоматически, при оформлении первого заказа и на Ваш электронный адрес приходит письмо с логином и паролем для входа в личный кабинет. Если вы не смогли найти это письмо, то запросите новый пароль <a href="/auth/">здесь</a>.</p>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                         </button>
                     </div>
                     <div class="collapse" id="collapseExample3">
-                        <div class="card card-body">
+                        <div class="card card-body" style="margin-top: -8px;z-index: -1;">
                             <p>Если у вас похожая ситуация, значит вы вводите логин и пароль с ошибкой. Введите корректные учетные данные. Вы можете сбросить автоматический пароль и создать свой собственный, легкий пароль <a href="/auth/">здесь</a>.</p>
                         </div>
                     </div>

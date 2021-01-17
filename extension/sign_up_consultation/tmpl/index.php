@@ -182,6 +182,10 @@
                                     <div class="col-lg-3 text-left mt-3">
                                         <a href="/pay.php?yandex=1" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
                                     </div>
+
+                                    <div class="col-lg-3 text-left mt-3">
+                                        <a href="/pay.php?interkassa=1" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
+                                    </div>
                                     <div class="col-lg-3 text-left mt-3">
                                         <?
                                         if (strlen($paypal_email) == 0) {
@@ -189,8 +193,8 @@
                                             <a href="javascript:alert('Недоступен')" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
                                             <?
                                         } else {
-                                            ?>
-                                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                            /*
+                                             * <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
                                                 <input type="hidden" name="cmd" value="_xclick">
                                                 <input type="hidden" name="business" value="<?= $paypal_email ?>">
                                                 <input type="hidden" name="item_name" value="<?= $title ?>">
@@ -201,13 +205,13 @@
                                                 <input type="hidden" name="email" value="<?= $email ?>">
                                                 <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
                                             </form>
+                                             */
+                                            ?>
+                                            <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
                                             <?
                                         }
                                         ?>
 
-                                    </div>
-                                    <div class="col-lg-3 text-left mt-3">
-                                        <a href="/pay.php?interkassa=1" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
                                     </div>
                                     <div class="col-lg-3 text-left mt-3">
 

@@ -41,9 +41,9 @@ $(document).ready(function () {
                 'gtm-ee-event-non-interaction': 'False',
             });
         }
-        setTimeout(function (){
-            document.location.href = '/pay.php?yandex=1'; 
-        }, 1000);
+        setTimeout(function () {
+            document.location.href = '/pay.php?yandex=1';
+        }, 500);
     });
     $(".btn_cart_interkassa").click(function () {
         // /pay.php?yandex=1
@@ -87,10 +87,20 @@ $(document).ready(function () {
                 'gtm-ee-event-non-interaction': 'False',
             });
         }
-        setTimeout(function (){
-            document.location.href = '/pay.php?interkassa=1'; 
-        }, 1000);
+        setTimeout(function () {
+            document.location.href = '/pay.php?interkassa=1';
+        }, 500);
     });
     // btn_cart_interkassa
+    $(".btn_cart_paypal").click(function () {
+        var e = $(this).attr('e');
+        var pay_email = prompt("Email для платежа?", e);
+        if (pay_email != null) {
+            setTimeout(function () {
+                //alert(onSubmit);
+                document.location.href = '/pay.php?paypal=1';
+            }, 500);
+        }
+    });
 });
 // btn_cart_yandex

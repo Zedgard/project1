@@ -11,6 +11,7 @@ $user = new \project\user();
 if ($user->isEditor()) {
     //$users_data = $user->getUserInfo();
     include 'tmpl/admin.php';
+    include 'tmpl/info.php';
 } else {
     ?>
     <div>Нет доступа для просмотра данной страницы</div>

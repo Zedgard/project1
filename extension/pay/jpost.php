@@ -30,4 +30,9 @@ if ($u->isEditor()) {
             $result = array('success' => 0, 'success_text' => 'Ошибка операции');
         }
     }
+    // Данные по тразакции
+    if (isset($_POST['get_pay_info'])) {
+        $data = $pay->get_pay_info($_POST['get_pay_info']);
+        $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    }
 }

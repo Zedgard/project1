@@ -52,6 +52,16 @@ class pay extends \project\extension {
     }
 
     /**
+     * информация по транзакции
+     * @param type $id
+     * @return type
+     */
+    public function get_pay_info($id) {
+        $querySelect = "SELECT * FROM `zay_pay` WHERE id='?'";
+        return $this->getSelectArray($querySelect, array($id))[0];
+    }
+
+    /**
      * Отметить что запись просмотрена
      * @param type $obj_id
      * @return boolean
@@ -76,6 +86,12 @@ class pay extends \project\extension {
         return false;
     }
 
+    /**
+     * Создаем новую транзакцию
+     * @param type $user_id
+     * @param type $wares_ex_code
+     * @param type $price
+     */
     public function set_product_pay($user_id, $wares_ex_code, $price) {
         $sqlLight = new \project\sqlLight();
         $products = new \project\products();
@@ -115,7 +131,7 @@ class pay extends \project\extension {
                 // Зафиксируем продажу
                 $products->setSoldAdd($product_id);
             }
-        //echo "product_id: {$product_id}";
+            //echo "product_id: {$product_id}";
 //exit();
             // Отправляем пользователя на страницу оплаты
             //header('Location: /office/');

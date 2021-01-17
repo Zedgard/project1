@@ -19,14 +19,15 @@
         width: 90%;
     }
 </style>
-<div class="container mt-5">
-    <div class="row">
+<div class="container mt-4">
+    <h1>Корзина</h1>
+    <div class="row mt-5">
         <div class="col-lg-12">
             <div class="cart_list">
 
             </div>
 
-            <div class="row text-nowrap">
+            <div class="row">
                 <div class="col-12 font-weight-bold">
 
                     <div class="row pb-4 pt-3">
@@ -57,7 +58,7 @@
             </div>
             <div class="row">
                 <?
-                if ($u->isClientId() > 0) {
+                if ($p_user->isClientId() > 0) {
                     ?>
                     <div class="col-lg-3 text-left mt-3">
                         <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
@@ -72,8 +73,10 @@
                             <a href="javascript:alert('В разработке')" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
                             <?
                         } else {
-                            ?>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                            // Справка 
+                            // https://dcblog.dev/how-to-integrate-paypal-into-php
+                            /*
+                             * <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
                                 <input type="hidden" name="cmd" value="_xclick">
                                 <input type="hidden" name="business" value="<?= $paypal_email ?>">
                                 <input type="hidden" name="item_name" value="<?= $title ?>">
@@ -81,9 +84,19 @@
                                 <input type="hidden" name="amount" value="<?= $price_total ?>">
                                 <input type="hidden" name="return" value="<?= $url_ref ?>">
                                 <input type="hidden" name="no_shipping" value="1">
+                                <input type="hidden" name="currency_code" value="RUB">
+                                <input type="hidden" name="lc" value="RU" />
                                 <input type="hidden" name="email" value="<?= $email ?>">
                                 <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
                             </form>
+                             */
+                            ?>
+                            <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" e="<?= $email ?>">PayPal</a> 
+                            <div id="smart-button-container">
+                                <div style="text-align: center;">
+                                    <div id="paypal-button-container"></div>
+                                </div>
+                            </div>
                             <?
                         }
                         ?>
