@@ -46,7 +46,7 @@ class pay extends \project\extension {
                 . "left join `zay_pay_type` pt on pt.pay_type_code=p.pay_type "
                 . "{$where} "
                 . "ORDER BY p.`id` DESC LIMIT ?";
-        $data = $sqlLight->queryList($querySelect, $queryArray, 0);
+        $data = $sqlLight->queryList($querySelect, $queryArray, 1);
 
         return $data;
     }
@@ -57,9 +57,24 @@ class pay extends \project\extension {
      * @return type
      */
     public function get_pay_info($id) {
-        $querySelect = "SELECT * FROM `zay_pay` WHERE id='?'";
+        $querySelect = "SELECT p.*, pt.* FROM zay_pay p "
+                . "left join zay_pay_type pt on pt.pay_type_code=p.pay_type "
+                . "WHERE p.id='?'";
         return $this->getSelectArray($querySelect, array($id))[0];
     }
+    
+    /**
+     * информация по транзакции
+     * @param type $id
+     * @return type
+     */
+    public function get_pay_products_info($id) {
+        $querySelect = "SELECT pp.*, p.* FROM zay_pay_products pp "
+                . "left join zay_product p on p.id=pp.product_id "
+                . "where pp.pay_id='?' ORDER BY `pay_id` ASC";
+        return $this->getSelectArray($querySelect, array($id));
+    }
+    
 
     /**
      * Отметить что запись просмотрена

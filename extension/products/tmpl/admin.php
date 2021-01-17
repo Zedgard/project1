@@ -339,7 +339,7 @@
                             }
                         });
             });
-            $(".products_arrays_data").find('[elm_id="' + product_edit + '"]').find(".btn_products_edit").click();
+            
         }
 
 

@@ -10,6 +10,36 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <div class="col-6">
+                        <div style="font-size: 1.4rem;">Информация</div>
+                        <table border="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table table-striped pay_info_data">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div style="font-size: 1.4rem;">Продукты</div>
+                        <table border="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table table-striped pay_info_data_products">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-12">
                         
                     </div>

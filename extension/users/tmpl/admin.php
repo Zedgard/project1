@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-12">
-                            <input type="text" class="form-control input_search w-25" placeholder="Поиск...">
+                            <input type="text" class="form-control input_search w-25" value="<?= $_GET['edit'] ?>" placeholder="Поиск...">
                         </div>
                     </div>
                     <div class="row">
@@ -79,8 +79,10 @@
 </div>
 <script>
     var page_num = 1;
-    var input_search_str = '';
+    var input_search_str = '<?= $_GET['search_str'] ?>';
     var obj_id = 0;
+    var user_edit = '<?= $_GET['edit'] ?>';
+
     $(document).ready(function () {
         // поиск
         $(".input_search").change(function () {
@@ -112,7 +114,7 @@
                 if (data['data'][i]['active_subscriber'] == '1') {
                     active_subscriber = '<span style="color: #FF0000;">ПОДПИСКА</span>';
                 }
-                $(".users_data tbody").append('<tr title="' + data['data'][i]['first_name'] + ' ' + data['data'][i]['last_name'] + '"> \
+                $(".users_data tbody").append('<tr elmid="' + data['data'][i]['id'] + '" title="' + data['data'][i]['first_name'] + ' ' + data['data'][i]['last_name'] + '"> \
                                     <td style="text-align: center;">' + data['data'][i]['id'] + '</td> \
                                     <td style="text-align: center;">' + data['data'][i]['email'] + '</td> \
                                     <td style="text-align: center;">' + data['data'][i]['phone'] + '</td> \
@@ -136,8 +138,9 @@
                             </td> \
                                 </tr>');
             }
-
-
+            setTimeout(function () {
+                $(".users_data").find('tr[elmid="' + user_edit + '"]').find(".userEdit").click();
+            }, 1000);
 
             initUserEdit();
         });

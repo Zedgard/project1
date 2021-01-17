@@ -9,9 +9,9 @@ include_once DOCUMENT_ROOT . '/extension/users/inc.php';
 include 'lang.php';
 
 $pay = new \project\pay();
-$u = new \project\user();
+$p_user = new \project\user();
 
-if ($u->isEditor()) {
+if ($p_user->isEditor()) {
 
     // список для таблицы
     if (isset($_POST['pay_data_page'])) {
@@ -33,6 +33,10 @@ if ($u->isEditor()) {
     // Данные по тразакции
     if (isset($_POST['get_pay_info'])) {
         $data = $pay->get_pay_info($_POST['get_pay_info']);
-        $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+        if($data['user_id'] > 0){
+            $data_user = $p_user->getUserInfo($data['user_id']);
+        }
+        $data_products = $pay->get_pay_products_info($_POST['get_pay_info']);
+        $result = array('success' => 1, 'success_text' => '', 'data' => $data, 'data_user' => $data_user, 'data_products' => $data_products);
     }
 }

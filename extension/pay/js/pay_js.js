@@ -122,8 +122,36 @@ function init_pay_info() {
     $(".btn_pay_info_modal").click(function () {
         $('#form_pay_info_modal').modal('toggle');
         var objid = $(this).attr('objid');
+        $(".pay_info_data").html("");
         sendPostLigth('/jpost.php?extension=pay', {"get_pay_info": objid}, function (e) {
-            console.log(e['data']);
+            var pay_status = '';
+            var border_class = '';
+            if (e['data']['pay_status'] === 'succeeded') {
+                pay_status = 'выполнено';
+                border_class = 'table-success';
+            }
+            if (e['data']['pay_status'] === 'canceled') {
+                pay_status = 'отмененная';
+                border_class = 'table-danger';
+            }
+            if (e['data']['pay_status'] === 'pending') {
+                pay_status = 'Незавершенная';
+                border_class = 'table-danger';
+            }
+            $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + "</td></tr>");
+            $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
+            $(".pay_info_data").append("<tr><td>Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
+            $(".pay_info_data").append("<tr><td>Статус платежа</td><td class=\"border_class\">" + pay_status + "</td></tr>");
+            $(".pay_info_data").append("<tr><td>Сумма</td><td>" + e['data']['pay_sum'] + " руб</td></tr>");
+            $(".pay_info_data").append("<tr><td>Тип</td><td>" + e['data']['pay_type_title'] + "</td></tr>");
+            $(".pay_info_data").append("<tr><td>Пользователь</td><td>" + e['data_user']['first_name'] + " " + e['data_user']['last_name'] + "<br/>\n\
+                " + e['data_user']['email'] + "<br/>\n\
+                " + e['data_user']['phone'] + "<br/>\n\
+                <a href=\"/admin/admin_users/?edit=" + e['data_user']['id'] + "&search_str=" + e['data_user']['email'] + "\" target=\"_blank\">Ред. данные пользователя</a></td></tr>");
+            for (var i = 0; i < e['data_products'].length; i++) {
+                $(".pay_info_data_products").append("<tr><td><img src=\"" + e['data_products'][i]['images_str'] + "\" class=\"w-100\"/></td><td><div class=\"mb-3\"><a href=\"/shop/?product=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Просмотреть</a></div>\n\
+<div class=\"mb-3\"><a href=\"/admin/products/?product_edit=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Редактировать</a></div></td></tr>")
+            }
         });
     });
 }
