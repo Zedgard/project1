@@ -69,27 +69,7 @@
 
         <script src="/assets/plugins/daterangepicker/moment.min.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/daterangepicker2.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script>
-            jQuery(document).ready(function () {
-                if (!!$("input[name='dateRange']")[0]) {
-                    jQuery('input[name="dateRange"]').daterangepicker({
-                        autoUpdateInput: false,
-                        singleDatePicker: true,
-                        locale: {
-                            cancelLabel: 'Clear'
-                        }
-                    });
-                    jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
-                        jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
-                    });
-                    jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
-                        jQuery(this).val('');
-                    });
-                }
-            });
-            window.isMinified = <?= $_SESSION['system']['sidebar_toggler'] ?>;
-            window.isCollapsed = false;
-        </script>  
+
         <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/toastr/toastr.min.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
@@ -429,5 +409,26 @@
                 $("#sidebar-toggler").remove();
             }, 200);
         });
+    
+//            jQuery(document).ready(function () {
+//                if (!!$("input[name='dateRange']")[0]) {
+//                    jQuery('input[name="dateRange"]').daterangepicker({
+//                        autoUpdateInput: false,
+//                        singleDatePicker: true,
+//                        locale: {
+//                            cancelLabel: 'Clear'
+//                        }
+//                    });
+//                    jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
+//                        jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
+//                    });
+//                    jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
+//                        jQuery(this).val('');
+//                    });
+//                }
+//            });
+//            window.isMinified = <?= $_SESSION['system']['sidebar_toggler'] ?>;
+//            window.isCollapsed = false;
+        </script>  
     </script>
 </html>

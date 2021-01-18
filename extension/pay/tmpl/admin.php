@@ -10,8 +10,34 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-6">
                             <input type="text" class="form-control search_pay_user" placeholder="Поиск...">
+                        </div>
+                        <div class="col-6">
+
+                            <div class="form-group">
+                                <!-- элемент input с id = datetimepicker1 -->
+                                <div class="input-group" id="datetimepicker10">
+                                    <input type="text" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Инициализация виджета "Bootstrap datetimepicker" -->
+                            <script>
+                                $(function () {
+                                    // идентификатор элемента (например: #datetimepicker1), для которого необходимо инициализировать виджет Bootstrap DateTimePicker
+                                    $('#datetimepicker10').datetimepicker({
+                                        autoUpdateInput: false,
+                                        singleDatePicker: true,
+                                        locale: {
+                                            cancelLabel: 'Clear'
+                                        }
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="row">
