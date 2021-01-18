@@ -59,7 +59,7 @@
                     importELFinder(1);
                     ?>
 
-                    
+
 
                     <input type="hidden" name="wares_id" class="wares_id" id="wares_id" value="0" />
                     <!--<button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Закрыть</button>-->
@@ -161,7 +161,7 @@ importWisiwyng('wares_descr');
                                 $(".wares_active").removeAttr("checked");
                             }
 
-                            
+
 
                             /* -- images -- */
                             var images = e['data']['images'].split(',');
@@ -171,7 +171,9 @@ importWisiwyng('wares_descr');
                             /* -- images end -- */
                             $('#form_edit_wares_modal').modal('show');
                         }
-                        block_checked_init();
+                        if (typeof block_checked_init == 'function') {
+                            block_checked_init();
+                        }
                     });
         } else {
             $(".btn_wares_edit").click(function () {
@@ -241,6 +243,6 @@ importWisiwyng('wares_descr');
         });
     }
 
-  
+
 
 </script>    

@@ -61,7 +61,7 @@
         
         <li  class="has-sub <?= ($_SESSION['page_url'] == 'get_emails') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/admin/get_emails/">
-                <i class="mdi mdi-account-box"></i>
+                <i class="mdi mdi-email-open"></i>
                 <span class="nav-text">Подписчики</span> <span class="get_emails_col"></span>
             </a>
         </li>

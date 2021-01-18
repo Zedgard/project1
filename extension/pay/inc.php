@@ -46,7 +46,7 @@ class pay extends \project\extension {
                 . "left join `zay_pay_type` pt on pt.pay_type_code=p.pay_type "
                 . "{$where} "
                 . "ORDER BY p.`id` DESC LIMIT ?";
-        $data = $sqlLight->queryList($querySelect, $queryArray, 1);
+        $data = $sqlLight->queryList($querySelect, $queryArray, 0);
 
         return $data;
     }

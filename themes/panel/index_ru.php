@@ -64,7 +64,7 @@
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js?v=<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css?v=<?= $_SESSION['rand'] ?>" />
-        
+
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
 
         <script src="/assets/plugins/daterangepicker/moment.min.js?v=<?= $_SESSION['rand'] ?>"></script>
@@ -422,5 +422,12 @@
         ?>
 
     </body>
-
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#sidebar-toggler").click();
+                $("#sidebar-toggler").remove();
+            }, 200);
+        });
+    </script>
 </html>

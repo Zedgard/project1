@@ -47,7 +47,7 @@ class wares extends \project\extension {
         }
         //print_r($search);
         //echo "{$where} \n";
-        $querySelect = "SELECT * FROM `zay_wares` {$where} ";
+        $querySelect = "SELECT * FROM `zay_wares` {$where} order by id desc ";
         //echo "w: {$querySelect} \n";
         return $this->getSelectArray($querySelect, $search, 0);
 
@@ -83,7 +83,7 @@ class wares extends \project\extension {
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
                     . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `ex_code`='?', `articul`='?', `images`='?', `active`='?', "
-                    . "`lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
+                    . "`lastdate`=NOW() "
                     . "WHERE `id`='?' ";
             if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active, $id), 0)) {
                 return true;
@@ -91,13 +91,39 @@ class wares extends \project\extension {
         } else {
             $query = "INSERT INTO `zay_wares` "
                     . "(`title`, `descr`, `url_file`, `col`, `ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','0', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)), "
-                    . "(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active, 0))) {
+                    . "VALUES ('?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
+                    . "";
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active), 0)) {
                 return true;
             }
         }
-
+/*
+ * INSERT INTO `zay_wares` (
+ * `title`, 
+ * `descr`, 
+ * `url_file`, 
+ * `col`, 
+ * `ex_code`, 
+ * `articul`, 
+ * `images`,
+ * `active`, 
+ * `is_delete`, 
+ * `creat_date`, 
+ * `lastdate`
+ * ) VALUES (
+ * 'www',
+ * '<p>&nbsp;1111</p>',
+ * '',
+ * '1',
+ * '53335',
+ * 'A-53335',
+ * '',
+ * '1', 
+ * (DATE_ADD(NOW(), INTERVAL 7 HOUR)), 
+ * (DATE_ADD(NOW(), INTERVAL 7 HOUR)) 
+ * )
+ * 
+ */
         return false;
     }
 

@@ -7240,11 +7240,12 @@
 	      window.isCollapsed = false;
 	    }
 
-	    $("#sidebar-toggler").on("click", function () {
+	    $("#sidebar-toggler").unbind('click').on("click", function () {
 	      if (
 	        body.hasClass("sidebar-fixed-offcanvas") ||
 	        body.hasClass("sidebar-static-offcanvas")
 	      ) {
+              console.log(111); 
 	        $(this)
 	          .addClass("sidebar-offcanvas-toggle")
 	          .removeClass("sidebar-toggle");
@@ -7266,21 +7267,24 @@
 	        body.hasClass("sidebar-fixed") ||
 	        body.hasClass("sidebar-static")
 	      ) {
+        //  console.log(222);
 	        $(this)
 	          .addClass("sidebar-toggle")
 	          .removeClass("sidebar-offcanvas-toggle");
 	        if (window.isMinified === false) {
+                 //   console.log('false');
 	          body
 	            .removeClass("sidebar-collapse sidebar-minified-out")
 	            .addClass("sidebar-minified");
 	          window.isMinified = true;
 	          window.isCollapsed = false;
 	        } else {
+               //     console.log('false');
 	          body.removeClass("sidebar-minified");
 	          body.addClass("sidebar-minified-out");
 	          window.isMinified = false;
 	        }
-	      }
+	        }
 	    });
 	  }
 
@@ -7377,7 +7381,7 @@
 	      }
 	    });
 	  }
-
+               
 	});
 
 	/* ====== Index ======

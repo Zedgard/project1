@@ -73,7 +73,7 @@ if (isset($_POST)) {
         include $_SERVER['DOCUMENT_ROOT'] . '/system/extension/jpost.php';
     }
 
-    /*
+    /* 
      * Обработки
      * Если имеются ошибки!
      */

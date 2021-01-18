@@ -214,9 +214,15 @@
                             <span class="btn btn-sm btn-danger btn_products_delete" title="Удалить"><i class="mdi mdi-delete"></i></span> \n\
                             </td>\n\
                             </tr>');
-                        
+
                     }
                     products_switch_init();
+                    if (product_edit.length > 0) {
+                        setTimeout(function () {
+                            $(".products_arrays_data tbody").find('tr[elm_id="' + product_edit + '"]').find(".btn_products_edit").click();
+                        }, 1000)
+                    }
+
                 }
 
                 save_products_init();
@@ -229,9 +235,7 @@
 
         // Инициализация кнопки редактирования
         function save_products_init() {
-            console.log("save_products_init");
             $(".btn_products_edit").click(function () {
-                //console.log("btn_products_edit");
                 clear_form_save_products();
                 products_id = $(this).closest("tr").attr("elm_id");
                 sendPostLigth('/jpost.php?extension=products',
@@ -339,7 +343,7 @@
                             }
                         });
             });
-            
+
         }
 
 
