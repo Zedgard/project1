@@ -119,10 +119,11 @@ echo "external_code: {$user_id} <br/>\n";
 /*
  * Получим код пользователя
  */
-$queryInsertImport = "SELECT * FROM `zay_users` u where u.`id`>'?' and u.`external_code`>0 ORDER BY `id` ASC limit 10";
+$queryInsertImport = "SELECT * FROM `zay_users` u where u.`id`>'?' and u.`external_code`>0 ORDER BY `id` ASC limit 1";
 $users = $sqlLight->queryList($queryInsertImport, array($user_id));
 //print_r($obj_imports);
 //echo "----------<br/>\n\n";
+
 if (count($users) > 0) {
     /*
      * Импортируем данные из другой базы
@@ -161,14 +162,15 @@ if (count($users) > 0) {
             FROM
                 wp_posts p
                 LEFT JOIN wp_woocommerce_downloadable_product_permissions dpp on dpp.order_id=p.ID
-            LEFT JOIN wp_postmeta pm ON
+                LEFT JOIN wp_postmeta pm ON
                 pm.post_id = p.ID
             WHERE
                 p.post_type = 'shop_order' AND p.post_status = 'wc-completed' and pm.meta_value='?'";
 
         $wp_pays = $sqlLight->queryList($q, array($value['email']), 1);
         //echo 'wp_pays'."<br/>\n";
-        //print_r($wp_wares);
+        print_r($wp_wares);
+        exit();
         if (count($wp_pays) > 0) {
             unset($sqlLight);
             include $_SERVER['DOCUMENT_ROOT'] . '/config.php';

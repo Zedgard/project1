@@ -51,14 +51,14 @@
                 <span class="nav-text">Меню</span> 
             </a>
         </li>
-        
+
         <li  class="has-sub <?= ($_SESSION['page_url'] == 'admin_users') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/admin/admin_users/">
                 <i class="mdi mdi-account-box"></i>
                 <span class="nav-text">Пользователи</span> 
             </a>
         </li>
-        
+
         <li  class="has-sub <?= ($_SESSION['page_url'] == 'get_emails') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/admin/get_emails/">
                 <i class="mdi mdi-email-open"></i>
@@ -72,13 +72,13 @@
                 <i class="mdi mdi-pencil-box-multiple"></i>
                 <span class="nav-text">Настройки</span> <b class="caret"></b>
             </a>
-            <ul  class="collapse <?= 
-        (
-        $_SESSION['page_url'] == 'system_configs' || 
-        $_SESSION['page_url'] == 'config_emails' ||
-        $_SESSION['page_url'] == 'template'
-        ) ? 'show' : '' 
-        ?>"  id="system_configs"
+            <ul  class="collapse <?=
+            (
+            $_SESSION['page_url'] == 'system_configs' ||
+            $_SESSION['page_url'] == 'config_emails' ||
+            $_SESSION['page_url'] == 'template'
+            ) ? 'show' : ''
+            ?>"  id="system_configs"
                  data-parent="#sidebar-menu">
                 <div class="sub-menu">
 
@@ -100,7 +100,7 @@
                             <span class="nav-text">Шаблоны</span>
                         </a>
                     </li>
-                    
+
                     <!--
                                         <li >
                                             <a class="sidenav-item-link" href="/admin/langs/">
@@ -125,5 +125,5 @@
             </a>
         </li>
     </ul>
-
+    <div style="height: 300px;"></div>
 </div>

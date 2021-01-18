@@ -23,6 +23,7 @@ class sqlLight {
     private $htmlspecialchars_true = 1;
     /* @var $mysqli new mysqli */
     private $mysqli;
+    private $MYSQLI_TYPE = MYSQLI_BOTH; // MYSQLI_ASSOC
 
     public function __construct() {
         $this->conect();
@@ -151,14 +152,14 @@ class sqlLight {
         $i = 0;
 
         // Защитим от инъекций
-        
+
         if (count($values) > 0) {
             foreach ($values as $value) {
                 $value = $this->mysqli->real_escape_string($value);
                 $query = $this->str_replace_once('?', $value, $query);
             }
         }
-        
+
         if ($see != 0) {
             echo 'query: ' . $query . "<br/>\n";
         } else {
@@ -167,13 +168,13 @@ class sqlLight {
         /* Select запросы возвращают результирующий набор */
         if ($result = $this->mysqli->query($query)) {
             $this->count = $result->num_rows;
-            while ($row = $result->fetch_array(MYSQLI_BOTH)) {
+            while ($row = $result->fetch_array($this->MYSQLI_TYPE)) {
                 $bufferRow = array();
                 $i++;
                 foreach ($row as $key => $value) {
                     if ($this->htmlspecialchars_true == 1) {
                         $bufferRow[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
-                    }else{
+                    } else {
                         $bufferRow[$key] = $value;
                     }
                 }
@@ -208,6 +209,11 @@ class sqlLight {
      */
     public function setSpecialcharsHtml($str) {
         return htmlspecialchars($str, ENT_QUOTES);
+    }
+    
+    // MYSQLI_ASSOC вернуть без нумераций
+    public function setMysqliAssos() {
+        $this->MYSQLI_TYPE = MYSQLI_ASSOC;
     }
 
     public function close() {
