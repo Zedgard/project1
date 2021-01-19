@@ -421,6 +421,9 @@
                             //$(".form_save_products").find('data-dismiss="modal"').click();
                             $('#form_edit_products_modal').modal('hide');
                             getProductsArray();
+                            if (product_edit.length > 0) {
+                                window.location.href = '/admin/products/';
+                            }
                         }
                     });
         });

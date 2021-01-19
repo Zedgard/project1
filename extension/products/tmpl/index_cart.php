@@ -19,6 +19,7 @@
               <img class="d-block w-100" src="..." alt="Third slide">
               </div>
              */
+            //print_r($productData);
             ?>
             <div id="carouselExampleIndicators" class="carousel slide m-auto w-100" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -37,26 +38,35 @@
                 <div class="carousel-inner">
                     <div style="position: absolute;margin-top: 20px;"><?= $title_category_bg ?></div>
                     <?
-                    $first = 'active';
-                    foreach ($productData['products_wares_info'] as $value):
-                        //$array = $value['images'];
+                    if (strlen($productData['images_str']) > 0) {
                         ?>
-
-                        <div class="carousel-item text-center <?= $first ?>">
-                            <a href="<?= $value['images'] ?>" class="fancybox"><img class="d-block w-100" style="background-color: #CCCCCC;" src="<?= $value['images'] ?>" ></a>
+                        <div class="carousel-item text-center active">
+                            <a href="<?= $productData['images_str'] ?>" class="fancybox"><img class="d-block w-100" style="background-color: #CCCCCC;" src="<?= $productData['images_str'] ?>" ></a>
                         </div>
                         <?
                         $first = '';
-                    endforeach;
+                    } else {
+                        $first = 'active';
+                        foreach ($productData['products_wares_info'] as $value):
+                            if (strlen($value['images']) > 0) {
+                                ?>
+                                <div class="carousel-item text-center <?= $first ?>">
+                                    <a href="<?= $value['images'] ?>" class="fancybox"><img class="d-block w-100" style="background-color: #CCCCCC;" src="<?= $value['images'] ?>" ></a>
+                                </div>
+                                <?
+                                $first = '';
+                            }
+                        endforeach;
+                    }
                     ?>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
+                    <span class="sr-only">Предыдущая</span>
                 </a>
                 <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
+                    <span class="sr-only">Следующая</span>
                 </a>
             </div>
 
@@ -68,7 +78,7 @@
             <?
             if ($p_user->isEditor()) {
                 ?>
-                <div class="text-right"><a href="/admin/products/?product_edit=4153" target="_blank" class="btn btn-link">Редактировать товар</a></div>
+                <div class="text-right"><a href="/admin/products/?product_edit=<?= $productData['id'] ?>" target="_blank" class="btn btn-link">Редактировать товар</a></div>
                 <?
             }
             ?>

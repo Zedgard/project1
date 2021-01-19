@@ -150,6 +150,13 @@ if (isset($_POST['block_data_edit'])) {
     $block_type = $_POST['block_type'];
     $row = $_POST['row'];
     $val = $_POST['val'];
+    
+    if($block_type == 'block_trailer'){
+        $ex = array_reverse(explode('/', $val));
+        $val = 'http://www.youtube.com/embed/' . $ex[0];
+    }
+    
+    
     if (!$pr_products->blockDataEdit($id, $products_id, $block_type, $row, $val)) {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
     }
