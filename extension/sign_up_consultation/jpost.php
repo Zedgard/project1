@@ -140,3 +140,33 @@ if (isset($_POST['set_consultation_config'])) {
         $result = array('success' => 0, 'success_text' => 'Не определен консультант', 'data' => $data);
     }
 }
+
+if (isset($_POST['send_fast_consultation'])) {
+    $send_emails = new \project\send_emails();
+    $config = new \project\config();
+
+    $fio = (isset($_POST['fio'])) ? $_POST['fio'] : '';
+    $email = (isset($_POST['email'])) ? $_POST['email'] : '';
+    $phone = (isset($_POST['phone'])) ? $_POST['phone'] : '';
+    $topic = (isset($_POST['topic'])) ? $_POST['topic'] : '';
+
+    $send_fast_consultation = $config->getConfigParam('send_fast_consultation');
+
+    if (strlen($fio) > 0 && strlen($email) > 0 && strlen($phone) > 0 && strlen($topic) > 0) {
+        // Письмо пользователю
+        if ($send_emails->send('send_fast_consultation', $email, array(
+                    'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
+                    'fio' => $fio, 'email' => $email, 'phone' => $phone, 'topic' => $topic))) {
+            // Письмо менеджерам
+            $send_emails->send('send_fast_consultation', $send_fast_consultation, array(
+                'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
+                'fio' => $fio, 'email' => $email, 'phone' => $phone, 'topic' => $topic));
+
+            $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Ошибка отправки запроса на консультацию!', 'data' => $data);
+        }
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Необходимо заполнить все поля!', 'data' => $data);
+    }
+}

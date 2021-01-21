@@ -7,6 +7,8 @@ namespace project;
 defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 
 class sign_up_consultation extends \project\extension {
 

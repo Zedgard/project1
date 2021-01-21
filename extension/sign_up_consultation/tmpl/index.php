@@ -79,7 +79,12 @@
 
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div style="text-align: left;padding: 30px 0;">
+                                                <input type="button" value="Срочная консультация" step="2" class="btn btn-lg btn_fast_consultation fontmedium font-size-18" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div style="text-align: right;padding: 30px 0;">
                                                 <input type="button" value="Следующий шаг" step="2" class="btn btn-lg btn_next_step fontmedium font-size-18" />
                                             </div>
@@ -195,16 +200,16 @@
                                         } else {
                                             /*
                                              * <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                                <input type="hidden" name="cmd" value="_xclick">
-                                                <input type="hidden" name="business" value="<?= $paypal_email ?>">
-                                                <input type="hidden" name="item_name" value="<?= $title ?>">
-                                                <input type="hidden" name="item_number" value="1">
-                                                <input type="hidden" name="amount" value="<?= $price_total ?>">
-                                                <input type="hidden" name="return" value="<?= $url_ref ?>">
-                                                <input type="hidden" name="no_shipping" value="1">
-                                                <input type="hidden" name="email" value="<?= $email ?>">
-                                                <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
-                                            </form>
+                                              <input type="hidden" name="cmd" value="_xclick">
+                                              <input type="hidden" name="business" value="<?= $paypal_email ?>">
+                                              <input type="hidden" name="item_name" value="<?= $title ?>">
+                                              <input type="hidden" name="item_number" value="1">
+                                              <input type="hidden" name="amount" value="<?= $price_total ?>">
+                                              <input type="hidden" name="return" value="<?= $url_ref ?>">
+                                              <input type="hidden" name="no_shipping" value="1">
+                                              <input type="hidden" name="email" value="<?= $email ?>">
+                                              <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
+                                              </form>
                                              */
                                             ?>
                                             <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
@@ -228,6 +233,11 @@
             </div>
         </div>
     </div>
+</div>
 
 
-    <script src="/assets/js/consultation.js?v=<?= rand() ?>"></script>
+<?php
+include 'fast_consultation.php';
+?>
+
+<script src="/assets/js/consultation.js?v=<?= rand() ?>"></script>

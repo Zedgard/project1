@@ -106,7 +106,7 @@ $(function () {
 
         init_select_time_period(master_id);
 
-        
+
         if (master_id > 0) {
             $(".select_timer").html("");
             var list_times = consult_masters[consult_masters_i]['list_times'].split(',');
@@ -138,6 +138,19 @@ $(function () {
         }
     });
 
+    $(".btn_fast_consultation").unbind('click').click(function () {
+        $("#form_fast_consultation_modal").modal('show');
+        $(".btn_send_fast_consultation").unbind('click').click(function () {
+            var fio = $(".fast_consultation_fio").val();
+            var email = $(".fast_consultation_email").val();
+            var phone = $(".fast_consultation_name_phone").val();
+            var topic = $(".fast_consultation_topic").val();
+            sendPostLigth('/jpost.php?extension=sign_up_consultation', {"send_fast_consultation": 1,
+                'fio': fio, 'email': email, 'phone': phone, 'topic': topic, }, function (e) {
+
+            });
+        });
+    });
 
 });
 

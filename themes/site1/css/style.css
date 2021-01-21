@@ -129,9 +129,23 @@ blockquote.blockquote::before{
     background-image: linear-gradient(to bottom right,  #b0e1fa, #fbf0ea);
 
 }
+
+.btn_fast_consultation{
+    background-color: #ff0000;
+    color: #FFF;
+}
+.btn_fast_consultation:hover{
+    color: #FFF;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
 .btn_next_step, .btn_last_step, .btn_step_end{
     background-color: #00bfda;
     color: #FFF;
+}
+.btn_next_step:hover, .btn_last_step:hover, .btn_step_end:hover {
+    color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 .btn_step_end{
     background-color: #FF0000;
@@ -1207,6 +1221,7 @@ i::before,i::after{
     opacity:1;
     transform: scale(1);
 }
+
 
 /*Side overlay*/
 #close_side_menu {

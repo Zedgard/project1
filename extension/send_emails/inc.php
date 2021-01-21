@@ -2,6 +2,8 @@
 
 namespace project;
 
+defined('__CMS__') or die;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -10,9 +12,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/Exception.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/PHPMailer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/SMTP.php';
+ 
 
-
-defined('__CMS__') or die;
 
 class send_emails extends \project\extension {
 
