@@ -24,7 +24,7 @@
                             </select>
                         </div>
                         <div class="col-4 col-offset-4">
-                            <input type="text" class="form-control search_wares" placeholder="Поиск товаров...">
+                            <input type="text" class="form-control search_wares" value="<?= $_SESSION['wares']['searchStr'] ?>" placeholder="Поиск товаров...">
                         </div>
 
                     </div>
@@ -37,8 +37,8 @@
                                         <th>Наименование</th>
                                         <th style="text-align: center;">Код</th>
                                         <th style="text-align: center;">Артикул</th>
+                                        <th style="text-align: center;">Колличество</th>
                                         <th style="text-align: center;">Отображение</th>
-                                        <th style="text-align: center;"></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -64,10 +64,13 @@
     var visible_wares = '1';
     $(document).ready(function () {
 
-        $(".search_wares").change(function () {
-            searchStr = $(this).val();
+        searchStr = $(".search_wares").val();
+        $(".search_wares").delayKeyup(function () {
+            var v = $(".search_wares").val();
+            searchStr = v;
             getWaresArray(searchStr, visible_wares);
-        });
+        }, 700);
+
         $(".visible_wares").change(function () {
             visible_wares = $(this).val();
             getWaresArray(searchStr, visible_wares);
@@ -257,5 +260,5 @@
                     });
         });
     }
-    
+
 </script>    

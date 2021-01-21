@@ -208,3 +208,17 @@ function sendPostLigth(url, data, func) {
 
 }
 
+/*
+ * отправить запрос с задержкой
+ * $(".search_wares").delayKeyup(function () {}, 700);
+ */
+(function ($) {
+    $.fn.delayKeyup = function(callback, ms){
+        var timer = 0;
+        $(this).keyup(function(){                   
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        });
+        return $(this);
+    };
+})(jQuery);

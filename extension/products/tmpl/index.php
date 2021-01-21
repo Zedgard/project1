@@ -159,7 +159,8 @@
                                             /*
                                              * Product Images
                                              */
-                                            $image = $c_product->checkImageFile($productsFilterArray[$i]['images_str']);
+                                            $image = $productsFilterArray[$i]['images_str'];//$c_product->checkImageFile($productsFilterArray[$i]['images_str']);
+                                            //echo "{$productsFilterArray[$i]['images_str']} <br/>";
                                             if (strlen($image) > 0) {
                                                 ?>
                                                 <div class="<?= $sclass_boot ?> align-self-center text-center w-100 <?= ($ii > 0) ? $scaleN : $scale ?>">

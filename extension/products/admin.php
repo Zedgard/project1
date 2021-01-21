@@ -8,6 +8,11 @@ include_once 'inc.php';
 $user = new \project\user();
 if ($user->isEditor()) {
     // для администрирования
+    
+    if (!isset($_SESSION['product']['searchStr'])) {
+        $_SESSION['product']['searchStr'] = '';
+    }
+    
     $get_page = '';
     if (isset($_GET['index_promo'])) {
         $get_page = 'index_promo';

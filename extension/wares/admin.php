@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
@@ -7,7 +9,9 @@ include_once 'inc.php';
 
 $user = new \project\user();
 if ($user->isEditor()) {
-
+    if (!isset($_SESSION['wares']['searchStr'])) {
+        $_SESSION['wares']['searchStr'] = '';
+    }
     $pr_wares = new \project\wares();
 
     if (isset($_GET['edit'])) {

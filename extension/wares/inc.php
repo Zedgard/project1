@@ -83,6 +83,7 @@ class wares extends \project\extension {
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
                     . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `ex_code`='?', `articul`='?', `images`='?', `active`='?', "
+                    . "is_delete='0', "
                     . "`lastdate`=NOW() "
                     . "WHERE `id`='?' ";
             if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active, $id), 0)) {
@@ -97,33 +98,33 @@ class wares extends \project\extension {
                 return true;
             }
         }
-/*
- * INSERT INTO `zay_wares` (
- * `title`, 
- * `descr`, 
- * `url_file`, 
- * `col`, 
- * `ex_code`, 
- * `articul`, 
- * `images`,
- * `active`, 
- * `is_delete`, 
- * `creat_date`, 
- * `lastdate`
- * ) VALUES (
- * 'www',
- * '<p>&nbsp;1111</p>',
- * '',
- * '1',
- * '53335',
- * 'A-53335',
- * '',
- * '1', 
- * (DATE_ADD(NOW(), INTERVAL 7 HOUR)), 
- * (DATE_ADD(NOW(), INTERVAL 7 HOUR)) 
- * )
- * 
- */
+        /*
+         * INSERT INTO `zay_wares` (
+         * `title`, 
+         * `descr`, 
+         * `url_file`, 
+         * `col`, 
+         * `ex_code`, 
+         * `articul`, 
+         * `images`,
+         * `active`, 
+         * `is_delete`, 
+         * `creat_date`, 
+         * `lastdate`
+         * ) VALUES (
+         * 'www',
+         * '<p>&nbsp;1111</p>',
+         * '',
+         * '1',
+         * '53335',
+         * 'A-53335',
+         * '',
+         * '1', 
+         * (DATE_ADD(NOW(), INTERVAL 7 HOUR)), 
+         * (DATE_ADD(NOW(), INTERVAL 7 HOUR)) 
+         * )
+         * 
+         */
         return false;
     }
 
@@ -135,9 +136,19 @@ class wares extends \project\extension {
      * @return boolean
      */
     public function deleteWares($id, $is_delete = 1) {
-        $query = "UPDATE `zay_wares` set `is_delete`='?' WHERE `id`='?' ";
-        if ($this->query($query, array($is_delete, $id))) {
-            return true;
+        $querySelect = "select * from zay_wares where id='?'";
+        $obj = $this->getSelectArray($querySelect, array($id))[0];
+        // Окончательное удаление
+        if ($obj['is_delete'] == '1') {
+            $query = "delete from `zay_wares` WHERE `id`='?' ";
+            if ($this->query($query, array($id))) {
+                return true;
+            }
+        } else {
+            $query = "UPDATE `zay_wares` set `is_delete`='?' WHERE `id`='?' ";
+            if ($this->query($query, array($is_delete, $id))) {
+                return true;
+            }
         }
         return false;
     }
@@ -434,5 +445,4 @@ class wares extends \project\extension {
         return 0;
     }
 
- 
 }

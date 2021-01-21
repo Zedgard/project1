@@ -10,6 +10,9 @@ $pr_products = new \project\products();
 if (isset($_POST['getProductsArray'])) {
     $searchStr = (isset($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
     $active = (isset($_POST['visible_products'])) ? $_POST['visible_products'] : '1';
+    if(strlen($searchStr) > 0){
+        $_SESSION['product']['searchStr'] = $searchStr;
+    }
     $data = $pr_products->getProductsArray($active, $searchStr);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }

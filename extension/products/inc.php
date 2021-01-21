@@ -52,21 +52,21 @@ class products extends \project\extension {
      */
     public function getProductsArray($active, $searchStr) {
         if (strlen($searchStr) > 0) {
-            $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' ";
+            $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
             $d = $this->getSelectArray($querySelect, array($active, $searchStr));
         } else {
-            if ($visible_products == 9) {
-                $querySelect = "SELECT * FROM `zay_product` WHERE `is_delete`='1'";
+            if ($active == 9) {
+                $querySelect = "SELECT * FROM `zay_product` WHERE `is_delete`='1' order by lastdate desc";
                 $d = $this->getSelectArray($querySelect, array());
             } else {
-                $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `is_delete`='0'";
+                $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `is_delete`='0' order by id desc";
                 $d = $this->getSelectArray($querySelect, array($active));
             }
         }
         $data = array();
         foreach ($d as $key => $value) {
             //$value['images_str'];
-            $image = $this->checkImageFile($value['images_str']);
+            $image = $value['images_str'];//$this->checkImageFile($value['images_str']);
             if (strlen($image) > 0) {
                 $value['images_str'] = $value['images_str'];
                 ;
@@ -132,9 +132,9 @@ class products extends \project\extension {
         if ($id > 0) {
             $query = "UPDATE `zay_product` "
                     . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', "
-                    . "`images_str`='?', `product_new`='?', `active`='?', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
+                    . "`images_str`='?', `product_new`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active, $id))) {
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active, $id),0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -284,9 +284,19 @@ class products extends \project\extension {
      * @return boolean
      */
     public function deleteProducts($id, $is_delete = 1) {
-        $query = "UPDATE `zay_product` set `is_delete`='?' WHERE `id`='?' ";
-        if ($this->query($query, array($is_delete, $id))) {
-            return true;
+        $querySelect = "select * from zay_product where id='?'";
+        $obj = $this->getSelectArray($querySelect, array($id))[0];
+        // Окончательное удаление
+        if ($obj['is_delete'] == '1') {
+            $query = "delete from `zay_product` WHERE `id`='?' ";
+            if ($this->query($query, array($id))) {
+                return true;
+            }
+        } else {
+            $query = "UPDATE `zay_product` set `is_delete`='?' WHERE `id`='?' ";
+            if ($this->query($query, array($is_delete, $id))) {
+                return true;
+            }
         }
         return false;
     }
@@ -438,7 +448,7 @@ class products extends \project\extension {
     }
 
     /**
-     * Проверка ссылки на изображение
+     * Проверка ссылки на изображение (не корректно работает)
      * @param type $url
      * @return type
      */
@@ -447,7 +457,7 @@ class products extends \project\extension {
         if (strlen($url) > 0) {
             $http_pos = strpos($url, 'http');
             if ($http_pos === false) {
-                if (is_file(DOCUMENT_ROOT . $url)) {
+                if (filesize(DOCUMENT_ROOT . $url) > 0) {
                     $ret = DOCUMENT_ROOT . $url;
                 }
             } else {
@@ -457,8 +467,6 @@ class products extends \project\extension {
         return $ret;
     }
 
-    
-    
     /**
      * Отообразить или скрыть блок
      * @param type $wares_id Идентификатор товара
