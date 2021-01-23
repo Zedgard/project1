@@ -117,7 +117,7 @@
                 var data = e['data'];
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
-                        $(".products_wares").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                        $(".products_wares").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + ' ' + data[i]['articul'] + ' ' + data[i]['ex_code'] + '</option>');
                     }
                     if (!!v && v.length > 0) {
                         products_wares.val(v).trigger("change");
