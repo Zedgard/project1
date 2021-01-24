@@ -4,35 +4,49 @@ namespace project;
 
 defined('__CMS__') or die;
 
-class topic extends \project\extension {
+class free_book extends \project\extension {
 
     public function __construct() {
         parent::__construct();
     }
 
     /**
-     * Список тем с реализацией поиска
+     * Список бесплатных продуктов
      * @param string $searchStr
      * @return array
      */
-    public function getTopicArray($searchStr) {
+    public function getFreeBookArray($searchStr) {
+        /**
+         * Список продуктов с реализацией поиска
+         * @param string $searchStr
+         * @return array
+         */
+        $active = 1;
         if (strlen($searchStr) > 0) {
-            $querySelect = "SELECT `id`, `title`, (SELECT count(*) FROM `zay_product_topic` pt where pt.topic_id=t.id) as product_col "
-                    . "FROM `zay_topics` t WHERE `title` like '%?%' ";
-            return $this->getSelectArray($querySelect, array($searchStr, $searchStr));
+            $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
+            $d = $this->getSelectArray($querySelect, array($active, $searchStr));
         } else {
-            $querySelect = "SELECT `id`, `title`, (SELECT count(*) FROM `zay_product_topic` pt where pt.topic_id=t.id) as product_col "
-                    . "FROM `zay_topics` t";
-            return $this->getSelectArray($querySelect, array());
+            if ($active == 9) {
+                $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `is_delete`='1' order by lastdate desc";
+                $d = $this->getSelectArray($querySelect, array());
+            } else {
+                $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `active`='?' and `is_delete`='0' order by id desc";
+                $d = $this->getSelectArray($querySelect, array($active));
+            }
         }
-    }
-    
-    public function getTopicElem($id) {
-        if ($id > 0) {
-            $querySelect = "SELECT * FROM `zay_topics` WHERE id='?' ";
-            return $this->getSelectArray($querySelect, array($id))[0];
+        $data = array();
+        foreach ($d as $key => $value) {
+            //$value['images_str'];
+            $image = $value['images_str']; //$this->checkImageFile($value['images_str']);
+            if (strlen($image) > 0) {
+                $value['images_str'] = $value['images_str'];
+                ;
+            } else {
+                $value['images_str'] = '/assets/img/no_tovar_bg.jpg';
+            }
+            $data[] = $value;
         }
-        return array();
+        return $data;
     }
 
 }

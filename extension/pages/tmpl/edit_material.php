@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label>Выбирите расширение</label>
                             <div>
-                                <?
+                                <? 
                                 $checked_null = (strlen($content['extension']) == 0) ? 'checked="checked"' : '';
                                 ?>
                                 <input type="radio" name="ext_urls" value="0" class="ext_urls" <?= $checked_null ?> /> Обычные HTML <?= $checked_null ?><br/>

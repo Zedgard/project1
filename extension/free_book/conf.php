@@ -1,10 +1,11 @@
 <?php
 
 $config = array(
-    'title' => 'Темы',
-    'descr' => 'Управление темами на сайте',
+    'title' => 'Блок бесплатно для вас',
+    'descr' => 'Блок бесплатно для вас',
     'urls' => array(
-        'Панель администрирования' => '/extension/topic/admin.php'
+        'Отображение' => '/extension/free_book/index.php'//,
+        //'Панель администрирования' => '/extension/free_book/admin.php',
     ),
     'version' => '0.1'
 );

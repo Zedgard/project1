@@ -692,7 +692,7 @@ if (!function_exists('initELFinderSelectFile')) {
                 padding-top: 0;
             }
         </style>
-        
+
         <!-- Center small Modal -->
         <div id="form_elfinder_modal" class="elfinder_model" style="display: none;" >
             <div class="modal-header">
@@ -1067,6 +1067,7 @@ if (!function_exists('randomColor')) {
 
 
 if (!function_exists('get_extension')) {
+
     /**
      * Получить тип изображения
      * @param type $imagetype
@@ -1098,6 +1099,36 @@ if (!function_exists('get_extension')) {
             case 'image/x-jps': return '.jps';
             case 'image/x-freehand': return '.fh';
             default: return false;
+        }
+    }
+
+}
+
+
+if (!function_exists('rand_number')) {
+
+    /**
+     * Генерация не повторяющегося случайного числа
+     * @param type $min_number
+     * @param type $max_number
+     * @param array $array_nums
+     * @param type $n
+     * @return type
+     */
+    function rand_number($min_number, $max_number, $array_nums = array(), $n = 0) {
+        $num = mt_rand($min_number, $max_number);
+        //echo "num: {$num}<br/>\n";
+        $array_nums[] = $num;
+        //print_r($array_nums);
+        if (is_array($num)) {
+            if ($n > 5) {
+                return $num;
+            } else {
+                $n++;
+                return rand_number($min_number, $max_number, $array_nums, $n);
+            }
+        } else {
+            return $num;
         }
     }
 
