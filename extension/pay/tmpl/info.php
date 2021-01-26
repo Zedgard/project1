@@ -1,6 +1,6 @@
 <!-- Large Modal -->
 <div class="modal fade" id="form_pay_info_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content form_pay_info">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Информация по транзакции</h5>

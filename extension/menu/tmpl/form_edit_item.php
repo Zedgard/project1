@@ -1,6 +1,6 @@
 <!-- Large Modal -->
 <div class="modal fade" id="form_edit_item_modal" tabindex="-1" role="dialog" aria-labelledby="form_edit_item_modal" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content form_save_edit_item">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Управление меню</h5>

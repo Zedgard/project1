@@ -510,7 +510,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-5 col-sm-12 margin_bottom text-md-left text-center wow fadeInLeft" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInLeft;">
-                        <h3 class="bottom25" style="font-size: 36px;">Опыт нашей команды в цирах</h3>
+                        <h3 class="bottom25" style="font-size: 36px;">Опыт нашей команды в цифрах</h3>
                         <p class="title">Наша команда высококвалифицированных профессионалов широко зарекомендовала себя за десять лет работы.</p>
                     </div>
                     <div class="col-md-7 col-sm-12 text-center">

@@ -4,7 +4,7 @@
             <div class="card card-default">
 
                 <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6">Продукты</h2>
+                    <h2 class="col-lg-6">Каталог</h2>
                     <div class="col-lg-6">
                         <a href="?index_promo" class="btn btn-primary float-right">Специальные предложения на главной</a>
                     </div>
@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="col-8">
                             <? if (!isset($_GET['edit'])): ?>
-                                <a href="javascript:void(0)" class="btn btn-primary float-left add_products" data-toggle="modal" data-target="#form_edit_products_modal">Добавление продукта</a>
+                                <a href="javascript:void(0)" class="btn btn-primary float-left add_products" data-toggle="modal" data-target="#form_edit_products_modal">Добавление</a>
                                 <?
                                 include 'admin_edit.php';
                                 importWisiwyng('products_desc_minimal', 150);
@@ -36,7 +36,7 @@
                             </select>
                         </div>
                         <div class="col-4 col-offset-4">
-                            <input type="text" class="form-control search_products" value="<?= $_SESSION['product']['searchStr'] ?>" placeholder="Поиск продуктов...">
+                            <input type="text" class="form-control search_products" value="<?= $_SESSION['product']['searchStr'] ?>" placeholder="Поиск...">
                         </div>
 
                     </div>

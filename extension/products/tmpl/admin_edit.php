@@ -1,9 +1,9 @@
 <!-- Large Modal -->
 <div class="modal fade" id="form_edit_products_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content form_save_products">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLarge">Управление продуктом</h5>
+                <h5 class="modal-title" id="exampleModalLarge">Управление</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,7 +13,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label for="config_title">Название</label>
-                            <input type="text" class="form-control products_title" id="products_title" placeholder="Наименование продукта..." required>
+                            <input type="text" class="form-control products_title" id="products_title" placeholder="Наименование..." required>
                         </div>
 
                         <div class="form-group">

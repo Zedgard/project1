@@ -5,7 +5,7 @@
             <div class="card card-default">
 
                 <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6"><a href="/admin/products/">Продукты</a> - Промо на главной</h2>
+                    <h2 class="col-lg-6"><a href="/admin/products/">Каталог</a> - Промо на главной</h2>
                     <div class="col-lg-6">
 
                     </div>
@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8">
-                            <a href="javascript:void(0)" class="btn btn-primary float-left add_promo_product" data-toggle="modal" data-target="#form_add_promo_product_modal">Добавление продукта</a>
+                            <a href="javascript:void(0)" class="btn btn-primary float-left add_promo_product" data-toggle="modal" data-target="#form_add_promo_product_modal">Добавление</a>
                         </div>
                     </div>
                     <br/>
@@ -44,7 +44,7 @@
 <!-- Modal add promo product -->
 <!-- Large Modal -->
 <div class="modal fade" id="form_add_promo_product_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content form_save_promo_product">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Добавление промо продукта</h5>

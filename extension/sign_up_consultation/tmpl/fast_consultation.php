@@ -1,6 +1,6 @@
 <!-- Large Modal -->
 <div class="modal fade" id="form_fast_consultation_modal" tabindex="-1" role="dialog" aria-labelledby="fast_consultation" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content form_save_fast_consultation">
             <div class="modal-header">
                 <h5 class="modal-title" id="fast_consultation">Заявка на быструю консультацию</h5>
