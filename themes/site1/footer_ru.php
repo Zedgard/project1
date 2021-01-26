@@ -73,6 +73,20 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
+                        <a class="instagram hasTooltip" href="http://instagram.com/edgard_zaycev" target="_self">
+                            <i class="fa fa-instagram rounded-circle"></i><span class="ml-3">Instagram</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <a class="youtube hasTooltip" href="https://www.youtube.com/user/zaiaz67" target="_self">
+                            <i class="fa fa-youtube rounded-circle"></i><span class="ml-3">Youtube</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-12">
                         <a class="facebook hasTooltip" href="https://www.facebook.com/profile.php?id=100002017651033" target="_self">
                             <i class="fa fa-facebook rounded-circle"></i><span class="ml-3">Facebook</span>
                         </a>
@@ -89,20 +103,6 @@
                     <div class="col-lg-12">
                         <a class="pinterest hasTooltip" href="https://vm.tiktok.com/J1kKUEL/" target="_self">
                             <i class="fa fa-pinterest rounded-circle"></i><span class="ml-3">Tik-Tok</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-lg-12">
-                        <a class="instagram hasTooltip" href="http://instagram.com/edgard_zaycev" target="_self">
-                            <i class="fa fa-instagram rounded-circle"></i><span class="ml-3">Instagram</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-lg-12">
-                        <a class="youtube hasTooltip" href="https://www.youtube.com/user/zaiaz67" target="_self">
-                            <i class="fa fa-youtube rounded-circle"></i><span class="ml-3">Youtube</span>
                         </a>
                     </div>
                 </div>
