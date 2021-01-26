@@ -62,10 +62,10 @@ if (isset($_POST['re_password'])) {
     }
 }
 if (isset($_POST['re_password_go'])) {
-    $re_password = trim($_POST['u_re_password']);
-    $re_password2 = trim($_POST['u_re_password2']);
+    $p = trim($_POST['p']);
+    $p2 = trim($_POST['p2']);
     $repassword = $_SESSION['repassword'];
-    if ($auth->re_password_go($repassword, $re_password, $re_password2)) {
+    if ($auth->re_password_go($repassword, $p, $p2)) {
         $result = array('success' => 1, 'success_text' => 'Выполнено', 'action' => '/auth/', 'action_time' => '0');
     } else {
         $result = array('success' => 0, 'success_text' => '');

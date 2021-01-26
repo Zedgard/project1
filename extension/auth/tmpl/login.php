@@ -241,17 +241,17 @@ include 're_login.php';
      * Восстановление 
      */
     function init_re_password() {
-        var re_password = $(".re_password").val();
-        var re_password2 = $(".re_password2").val();
+        var p = $(".re_password").val();
+        var p2 = $(".re_password2").val();
         sendPostLigth('/jpost.php?extension=auth',
                 {
                     "re_password_go": 1,
-                    "u_re_password": re_password,
-                    "u_re_password2": re_password2
+                    "p": p,
+                    "p2": p2
                 },
                 function (e) {
                     if (e['success'] == '1') {
-                        $(".modal-body").html("На указанную почту отправлено письмо с инструкцией восстановления");
+                        $(".modal-body").html("Пароль изменен!");
                     }
                 });
     }
