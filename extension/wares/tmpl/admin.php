@@ -34,6 +34,7 @@
                             <table class="table table-striped table-bordered wares_arrays_data" style="width:100%;background-color: #FFFFFF;">
                                 <thead>
                                     <tr>
+                                        <th style="text-align: center;">id</th>
                                         <th>Наименование</th>
                                         <th style="text-align: center;">Код</th>
                                         <th style="text-align: center;">Артикул</th>
@@ -102,6 +103,7 @@
 
                         $(".wares_arrays_data tbody").append(
                                 '<tr elm_id="' + data[i]['id'] + '"> \n\
+                                <td>' + data[i]['id'] + '</td>\n\
                                 <td>' + data[i]['title'] + '</td>\n\
                                 <td style="text-align: center;">' + data[i]['ex_code'] + '</td>\n\
                                 <td style="text-align: center;">' + data[i]['articul'] + '</td>\n\

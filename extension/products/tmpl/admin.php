@@ -3,8 +3,8 @@
         <div class="col-lg-12">
             <div class="card card-default">
 
-                <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6">Каталог</h2>
+                <div class="card-header card-header-border-bottom"> 
+                    <h2 class="col-lg-6">Каталог &nbsp;&nbsp;&nbsp;&nbsp; <span style="font-size: 0.8rem;">Кол. актуальных: (<?= $productsFilterCount ?>)</span></h2>
                     <div class="col-lg-6">
                         <a href="?index_promo" class="btn btn-primary float-right">Специальные предложения на главной</a>
                     </div>
@@ -46,6 +46,7 @@
                             <table class="table table-striped table-bordered products_arrays_data" style="width:100%;background-color: #FFFFFF;">
                                 <thead>
                                     <tr>
+                                        <th style="text-align: center;">id</th>
                                         <th style="text-align: center;"></th>
                                         <th>Наименование</th>
                                         <!--<th style="text-align: center;">Описание краткое</th>-->
@@ -204,6 +205,7 @@
                         // <td style="text-align: center;">' + data[i]['desc_minimal'] + '</td>\n\
                         $(".products_arrays_data tbody").append(
                                 '<tr elm_id="' + data[i]['id'] + '"> \n\
+                                <td style="text-align: center;">' + data[i]['id'] + '</td>\n\
                                 <td style="text-align: center;"><img src="' + data[i]['images_str'] + '" style="width: 100px;" /></td>\n\
                                 <td><a href="/shop/?product=' + data[i]['id'] + '" target="_blank">' + data[i]['title'] + '</a></td>\n\
                                 <td style="text-align: center;">' + price + '</td>\n\

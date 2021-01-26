@@ -6,6 +6,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once 'inc.php';
 
 $user = new \project\user();
+$c_product = new \project\products();
+
+$productsFilterArray = $c_product->getProductsIndex('');
+$productsFilterCount = count($productsFilterArray);
+
+
 if ($user->isEditor()) {
     // для администрирования
     
