@@ -80,7 +80,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div style="text-align: left;padding: 30px 0;">
+                                            <div class="text-center d-block d-lg-none mt-3">
+                                                <input type="button" value="Срочная консультация" step="2" class="btn btn-lg btn_fast_consultation fontmedium font-size-18" />
+                                            </div>
+                                            <div style="padding: 30px 0;" class="d-none d-lg-block">
                                                 <input type="button" value="Срочная консультация" step="2" class="btn btn-lg btn_fast_consultation fontmedium font-size-18" />
                                             </div>
                                         </div>
