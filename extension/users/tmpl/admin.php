@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-12">
-                            <input type="text" class="form-control input_search w-25" value="<?= $_GET['edit'] ?>" placeholder="Поиск...">
+                            <input type="text" class="form-control input_search w-25" value="<?= $_GET['search_str'] ?>" placeholder="Поиск...">
                         </div>
                     </div>
                     <div class="row">
@@ -187,6 +187,9 @@
                     if (result['success'] == 1) {
                         $('.form_result').append(result['success_text']);
                         metod = 1;
+                        if(user_edit.length > 0){
+                            document.location.href = '/admin/admin_users/?search_str=' + input_search_str;
+                        }
                     }
                     if (result['success'] == 0) {
                         if (result['errors'].length > 0) {

@@ -114,7 +114,7 @@ class user extends \project\extension {
      */
     public function edit_user_role($user_id, $role_id) {
         $querySelect = "SELECT * FROM zay_roles_users WHERE user_id='?'";
-        $objs = $this->getSelectArray($querySelect);
+        $objs = $this->getSelectArray($querySelect, array($user_id));
         if (count($objs) == 0) {
             $insetr = "INSERT INTO `zay_roles_users`(`role_id`, `user_id`) VALUES ('?','?')";
             return $this->query($insetr, array($role_id, $user_id));
