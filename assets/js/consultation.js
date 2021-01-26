@@ -21,6 +21,8 @@ $(function () {
             $(".step" + step_next).show(400);
             $(".step" + step_last).hide(400);
         }
+
+
     });
 
     // Предыдущий шаг
@@ -87,7 +89,7 @@ $(function () {
         numberOfMonths: 1, // колличество отображаемых месяцев
         showButtonPanel: false,
         onSelect: function (selectedDate) {
-            console.log("selectedDate: " + selectedDate);
+            //console.log("selectedDate: " + selectedDate);
             //$(".datepicker_data").datepicker("option", "maxDate", selectedDate);
             $(".datepicker_data").val(selectedDate);
             //init_calendar_user_data(selectedDate);
@@ -235,6 +237,19 @@ function step2() {
     $(".datepicker_data").html(consultation.datepicker_data);
     $(".timepicker_data").html(consultation.timepicker_data);
 
+    sendPostLigth('/jpost.php?extension=sign_up_consultation', {"consultation_s_save": 1,
+        'first_name': consultation.first_name,
+        'user_phone': consultation.user_phone,
+        'user_email': consultation.user_email,
+        'your_master': consultation.your_master,
+        'your_master_text': consultation.your_master_text,
+        'consult_masters_i': consultation.consult_masters_i,
+        'datepicker_data': consultation.datepicker_data,
+        'timepicker_data': consultation.timepicker_data
+    }, function (e) {
+
+    });
+
 }
 
 
@@ -243,13 +258,20 @@ function step2() {
  * @returns {undefined}
  */
 function init_consultation_master() {
-    $(".consult_your_master").html("");
-    consult_masters = [];
+
     sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultation_master": 1}, function (e) {
+        consult_masters = [];
+        $(".consult_your_master").html("");
         $(".consult_your_master").append('<option value="0">Выберите специалиста</option>');
-        for (var i = 0; i < e['data'].length; i++) {
-            consult_masters.push(e['data'][i]);
-            $(".consult_your_master").append('<option value="' + e['data'][i]['id'] + '" consult_masters_i="' + i + '">' + e['data'][i]['master_name'] + '</option>');
+        if (e['data'].length > 0) {
+            for (var i = 0; i < e['data'].length; i++) {
+                consult_masters.push(e['data'][i]);
+                var select = '';
+//            if(Number(consult_your_master_select) == e['data'][i]['id']) {
+//                select = ' selected="selected" ';
+//            }
+                $(".consult_your_master").append('<option value="' + e['data'][i]['id'] + '" consult_masters_i="' + i + '" ' + select + ' >' + e['data'][i]['master_name'] + '</option>');
+            }
         }
     });
 }

@@ -261,4 +261,3 @@
         </div>
     </div>
 </div>
-<script src="/assets/js/cart.js?v=<?= rand() ?>"></script>   

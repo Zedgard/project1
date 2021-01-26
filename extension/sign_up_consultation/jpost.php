@@ -7,6 +7,17 @@ defined('__CMS__') or die;
 include_once 'inc.php';
 $sign_up_consultation = new \project\sign_up_consultation();
 
+
+if(isset($_POST['consultation_s_save'])){
+    $_SESSION['consultation']['first_name'] = $_POST['first_name'];
+    $_SESSION['consultation']['user_phone'] = $_POST['user_phone'];
+    $_SESSION['consultation']['user_email'] = $_POST['user_email'];
+    $_SESSION['consultation']['your_master'] = $_POST['your_master'];
+    $_SESSION['consultation']['your_master_text'] = $_POST['your_master_text'];
+    $_SESSION['consultation']['datepicker_data'] = $_POST['datepicker_data'];
+    $_SESSION['consultation']['timepicker_data'] = $_POST['timepicker_data'];
+}
+
 /**
  * Получение данные по событиям
  */

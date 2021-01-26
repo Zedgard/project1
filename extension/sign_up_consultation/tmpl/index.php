@@ -43,13 +43,13 @@
                                         <div class="col-md-6 mb-5">
 
                                             <div class="top30 text-left">
-                                                <input type="text" name="consult_first_name" value="" placeholder="Ваше Имя и Фамилия" class="consult_form_input consult_first_name w-100 fontfize150" />
+                                                <input type="text" name="consult_first_name" value="<?= $_SESSION['consultation']['first_name'] ?>" placeholder="Ваше Имя и Фамилия" class="consult_form_input consult_first_name w-100 fontfize150" />
                                             </div>
                                             <div class="top30 text-left">
-                                                <input type="text" name="consult_user_phone" value="" placeholder="Телефон" class="consult_form_input consult_user_phone w-100 fontfize150" />
+                                                <input type="text" name="consult_user_phone" value="<?= $_SESSION['consultation']['user_phone'] ?>" placeholder="Телефон" class="consult_form_input consult_user_phone w-100 fontfize150" />
                                             </div>
                                             <div class="top30 text-left">
-                                                <input type="text" name="consult_user_email" value="" placeholder="Email" class="consult_form_input consult_user_email w-100 fontfize150" />
+                                                <input type="text" name="consult_user_email" value="<?= $_SESSION['consultation']['user_email'] ?>" placeholder="Email" class="consult_form_input consult_user_email w-100 fontfize150" />
                                             </div>
                                             <div class="top50 text-left">
                                                 <select name="consult_your_master" class="consult_form_input consult_your_master w-100 fontfize150" >
@@ -195,7 +195,7 @@
                                         <?
                                         if (strlen($paypal_email) == 0) {
                                             ?>
-                                            <a href="javascript:alert('Недоступен')" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
+                                            <a href="javascript:alert('Недоступен')" class="btn button btngreen2 text-center btn_cart">PayPal</a>
                                             <?
                                         } else {
                                             /*
@@ -235,9 +235,10 @@
     </div>
 </div>
 
-
 <?php
 include 'fast_consultation.php';
 ?>
-
+<script>
+    var consult_your_master_select = '<?= $_SESSION['consultation']['your_master'] ?>';
+</script>
 <script src="/assets/js/consultation.js?v=<?= rand() ?>"></script>

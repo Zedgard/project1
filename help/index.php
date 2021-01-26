@@ -9,7 +9,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 $user = new \project\user();
 
-if (!$user->isAdmin()) {
+if (!$user->isEditor()) {
     header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
     location_href('/');
     exit();

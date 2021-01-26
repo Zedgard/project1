@@ -129,13 +129,18 @@ if (isset($_POST['cart_product_remove'])) {
 }
 
 if (isset($_POST['cart_product_get_array'])) {
-    //foreach ($_SESSION['cart']['itms'] as $key => $value) {
-    //    echo "itms: {$_SESSION['cart']['itms'][$key]}\n";
-    //$_SESSION['cart']['itms'][$key]['product_info'] = $pr_products->getProductElem($_SESSION['cart']['itms'][$key]);
-    //print_r($pr_products->getProductElem($_SESSION['cart']['itms'][$key]));
-    //    echo "\n";
-    //}
-    $result = array('success' => 1, 'success_text' => '', 'data' => $_SESSION['cart']['itms']);
+    $arr = array();
+    foreach ($_SESSION['cart']['itms'] as $key => $value) {
+        if (strlen($value['pay_descr']) == 0) {
+            $arr[] = $value;
+        }
+        //    echo "itms: {$_SESSION['cart']['itms'][$key]}\n";
+        //$_SESSION['cart']['itms'][$key]['product_info'] = $pr_products->getProductElem($_SESSION['cart']['itms'][$key]);
+        //print_r($pr_products->getProductElem($_SESSION['cart']['itms'][$key]));
+        //    echo "\n";
+    }
+    // $_SESSION['cart']['itms']
+    $result = array('success' => 1, 'success_text' => '', 'data' => $arr);
 }
 
 if (isset($_POST['cart_product_get_count'])) {

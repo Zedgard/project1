@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".btn_cart_yandex").click(function () {
+    $(".btn_cart_yandex").unbind('click').click(function () {
         // /pay.php?yandex=1
         //console.log(cart_itms);
         window.dataLayer = window.dataLayer || [];
@@ -45,7 +45,7 @@ $(document).ready(function () {
             document.location.href = '/pay.php?yandex=1';
         }, 500);
     });
-    $(".btn_cart_interkassa").click(function () {
+    $(".btn_cart_interkassa").unbind('click').click(function () {
         // /pay.php?yandex=1
         //console.log(cart_itms);
         window.dataLayer = window.dataLayer || [];
@@ -91,8 +91,9 @@ $(document).ready(function () {
             document.location.href = '/pay.php?interkassa=1';
         }, 500);
     });
+    
     // btn_cart_interkassa
-    $(".btn_cart_paypal").click(function () {
+    $(".btn_cart_paypal").unbind('click').click(function () {
         var e = $(this).attr('e');
         var pay_email = prompt("Email для платежа?", e);
         if (pay_email != null) {
