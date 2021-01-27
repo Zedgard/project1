@@ -1,17 +1,21 @@
 var errors = [];
 var consult_masters = [];
 var consultation = new Object();
-
+var consult_main_body = 0;
 
 $(function () {
     //$('.consult_user_phone').mask('+7 (999) 999-9999');
     $(".select_timer").html("Выберите специалиста");
+    consult_main_body = $(".consult_main_body").height();
+    $(".consult_main_body").height(consult_main_body);
     // Следующий шаг
     $(".btn_next_step").click(function () {
+
         var step_next = Number($(this).attr("step"));
         var step_last = step_next - 1;
         errors = [];
         if (step_next == '2') {
+
             step2();
         }
 //        for (var i = 0; i < errors.length; i++) {
@@ -143,14 +147,41 @@ $(function () {
     $(".btn_fast_consultation").unbind('click').click(function () {
         $("#form_fast_consultation_modal").modal('show');
         $(".btn_send_fast_consultation").unbind('click').click(function () {
+            var e = [];
             var fio = $(".fast_consultation_fio").val();
             var email = $(".fast_consultation_email").val();
             var phone = $(".fast_consultation_name_phone").val();
             var topic = $(".fast_consultation_topic").val();
-            sendPostLigth('/jpost.php?extension=sign_up_consultation', {"send_fast_consultation": 1,
-                'fio': fio, 'email': email, 'phone': phone, 'topic': topic, }, function (e) {
+            if (fio.length == 0) {
+                $(".fast_consultation_fio").css("border", "1px solid #FF0000");
+                e.push(1);
+            }
+            if (email.length == 0) {
+                $(".fast_consultation_email").css("border", "1px solid #FF0000");
+                e.push(1);
+            }
+            if (phone.length == 0) {
+                $(".fast_consultation_name_phone").css("border", "1px solid #FF0000");
+                e.push(1);
+            }
+            if (topic.length == 0) {
+                $(".fast_consultation_topic").css("border", "1px solid #FF0000");
+                e.push(1);
+            }
+            if (e.length == 0) {
+                sendPostLigth('/jpost.php?extension=sign_up_consultation', {"send_fast_consultation": 1,
+                    'fio': fio, 'email': email, 'phone': phone, 'topic': topic, }, function (e) {
 
-            });
+                });
+            } else {
+                $(".form_save_fast_consultation").find("input").keydown(function () {
+                    $(this).css("border", "");
+                });
+                setTimeout(function () {
+                    alert("Заполните все поля!");
+                }, 200);
+
+            }
         });
     });
 
@@ -171,7 +202,7 @@ function step2() {
 
     if (consult_first_name.length < 4) {
         errors.push('consult_first_name');
-        move(".consult_first_name");
+        move(".consult_user_phone");
         $(".consult_first_name").css("border", "3px solid #FF0000");
     }
     if (consult_user_phone.length < 10) {
@@ -185,18 +216,18 @@ function step2() {
     }
     if (consult_your_master == '0') {
         errors.push('consult_your_master');
-        move(".consult_your_master");
+        move(".consult_user_phone");
         $(".consult_your_master").css("border", "3px solid #FF0000");
     }
 
     if (datepicker_data == '') {
         errors.push('datepicker_data');
-        move(".datepicker_data");
+        move(".consult_user_phone");
         $(".datepicker").css("border", "3px solid #FF0000");
     }
     if (timepicker_data == '') {
         errors.push('timepicker_data');
-        move(".select_timer");
+        move(".consult_user_phone");
         $(".select_timer").css("border", "3px solid #FF0000");
     }
 
@@ -225,7 +256,7 @@ function step2() {
         consultation.consult_masters_i = consult_masters_i;
         consultation.datepicker_data = datepicker_data;
         consultation.timepicker_data = timepicker_data;
-        move(".step2");
+        //move(".step2");
     }
 
 

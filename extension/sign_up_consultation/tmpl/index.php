@@ -33,9 +33,9 @@
                             <div class="float-left">Записаться на консультацию</div> <div class="float-right" style="display: none;">время Мск. <?= date("H:i") ?></div>
                             <div style="height: 0px;clear: both;"></div>
                         </div>  
-                        <div style="width: 100%;">
+                        <div class="consult_main_body" style="width: 100%;">
 
-                            <div style="padding: 0% 6%;">
+                            <div style="padding: 0% 5%;">
 
                                 <!-- STEP 1 -->
                                 <div class="step1">
@@ -244,4 +244,4 @@ include 'fast_consultation.php';
 <script>
     var consult_your_master_select = '<?= $_SESSION['consultation']['your_master'] ?>';
 </script>
-<script src="/assets/js/consultation.js?v=<?= rand() ?>"></script>
+<script src="/assets/js/consultation.js<?= $_SESSION['rand'] ?>"></script>

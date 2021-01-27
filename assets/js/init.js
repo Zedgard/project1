@@ -95,7 +95,7 @@ function move(elm) {
             //event.preventDefault();
             var height = $(window).height();
             var top = $(elm).offset().top - (height / 2);
-            $('body,html').animate({scrollTop: top}, 1000);
+            $('body,html').animate({scrollTop: top}, 300);
             move_start = 0;
         }, 500);
     }
