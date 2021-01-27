@@ -2,6 +2,8 @@
 
 namespace project;
 
+session_start();
+
 defined('__CMS__') or die;
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 
@@ -148,7 +150,9 @@ class menu_item extends \project\extension {
     public function index_menu_items_list($menu_id) {
         $buffer = array();
         if ($menu_id > 0) {
-            $querySelect = "SELECT * FROM `zay_menu_items` it WHERE it.`menu_id`='?' and it.`parent_id`='0' order by it.`position` ASC";
+            $querySelect = "SELECT * FROM `zay_menu_items` it "
+                    . "left join zay_roles r on r.id=it.role "
+                    . "WHERE it.`menu_id`='?' and it.`parent_id`='0' order by it.`position` ASC";
             $data = $this->getSelectArray($querySelect, array($menu_id));
             if (count($data) > 0) {
                 //$buffer[] = '<div class="header-column justify-content-end">';
@@ -157,10 +161,12 @@ class menu_item extends \project\extension {
                 //$buffer[] = '<div class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">';
                 $buffer[] = '<nav class="collapse"><ul class="nav nav-pills" id="mainNav">';
                 for ($i = 0; $i < count($data); $i++) {
-                    $buffer[] = '<li class="dropdown">';
-                    $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '">' . $data[$i]['title'] . '</a>';
-                    $buffer[] = $this->index_menu_items_parent_list($menu_id, $data[$i]['id']);
-                    $buffer[] = '</li>';
+                    if ($data[$i]['role_privilege']==0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
+                        $buffer[] = '<li class="dropdown">';
+                        $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '">' . $data[$i]['title'] . '</a>';
+                        $buffer[] = $this->index_menu_items_parent_list($menu_id, $data[$i]['id']);
+                        $buffer[] = '</li>';
+                    }
                 }
                 $buffer[] = '</ul></nav>';
                 //$buffer[] = '</div>';
@@ -179,12 +185,14 @@ class menu_item extends \project\extension {
             $data = $this->getSelectArray($querySelect, array($menu_id, $parent_id));
             if (count($data) > 0) {
                 for ($i = 0; $i < count($data); $i++) {
-                    $buffer[] = '<ul class="dropdown-menu">';
-                    $buffer[] = '<li class="dropdown-submenu">';
-                    $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '">' . $data[$i]['title'] . '</a>';
-                    $buffer[] = $this->index_menu_items_parent_list($menu_id, $data[$i]['id']);
-                    $buffer[] = '</li>';
-                    $buffer[] = '</ul>';
+                    if ($data[$i]['role_privilege']==0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
+                        $buffer[] = '<ul class="dropdown-menu">';
+                        $buffer[] = '<li class="dropdown-submenu">';
+                        $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '">' . $data[$i]['title'] . '</a>';
+                        $buffer[] = $this->index_menu_items_parent_list($menu_id, $data[$i]['id']);
+                        $buffer[] = '</li>';
+                        $buffer[] = '</ul>';
+                    }
                 }
             }
         }

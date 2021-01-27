@@ -44,8 +44,7 @@
                     <a href="#" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                     <a href="#" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
                     &nbsp;&nbsp;
-                    <!--<a href="#" class="header_close_club" style="color: #808080;">hello@edgardzaitsev.com</a>-->
-                    <a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | 
+                    <!--<a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | -->
                     <a href="/auth/" class="header_close_club" style="color: #808080;">Мой кабинет <?= (isset($_SESSION['user']['info']['id'])) ? ' : ' . $_SESSION['user']['info']['first_name'] : '' ?></a>  
                     <? if (isset($_SESSION['user']['info']['id'])): ?>
                         <a href="javascript:void(0)" class="btn_logout header_user_auth btn_logout"><i class="fas fa-sign-out-alt"></i></a>
