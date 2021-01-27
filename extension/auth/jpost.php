@@ -12,7 +12,13 @@ $auth = new \project\auth();
  */
 if (isset($_POST['authorization'])) {
 
-    if ($auth->authorization($_POST['email'], $_POST['password'])) {
+    // галка запомни меня
+    $remember_me = 0;
+    if (isset($_POST['remember_me']) && $_POST['remember_me'] == 1) {
+        $remember_me = 1;
+    }
+
+    if ($auth->authorization($_POST['email'], $_POST['password'], $remember_me)) {
 
         $r = 0;
         if (isset($_POST['cart'])) {
@@ -30,7 +36,8 @@ if (isset($_POST['authorization'])) {
         if ($r == 0) {
             $url = '/';
         }
-        $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '0');
+        // , 'action' => $url, 'action_time' => '0'
+        $result = array('success' => 1, 'success_text' => 'Успешно авторизирован');
     } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка авторизации', 'action_time' => '0');
     }
@@ -41,7 +48,7 @@ if (isset($_POST['authorization'])) {
 if (isset($_POST['registration'])) {
     if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
         $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес', 'action' => '/auth/');
-    } 
+    }
 }
 /*
  * Выход

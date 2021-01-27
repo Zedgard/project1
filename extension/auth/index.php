@@ -41,6 +41,11 @@ if ($_GET['set_email_true']) {
     exit();
 }
 
+// Авторизация спомощью cookie
+if (isset($_COOKIE["edgard_master_cookie_token"])) {
+    $auth->authorization_cookie($_COOKIE["edgard_master_cookie_token"]);
+}
+
 /*
  * Редирект в зависимости от роли
  */

@@ -26,9 +26,10 @@ class auth extends \project\user {
      * @global \project\type $lang
      * @param type $email
      * @param type $password
+     * @param type $set_cookie сохранить в куки
      * @return boolean
      */
-    public function authorization($email, $password) {
+    public function authorization($email, $password, $set_cookie = 0) {
         global $lang;
         if (strlen($email) > 2 && strlen($password) > 2) {
             $pass_hash = $this->passHash($password);
@@ -44,13 +45,19 @@ class auth extends \project\user {
                 if (count($find_user) > 0) {
                     $_SESSION['errors'][] = 'Учетная запиь не активирована!';
                     return false;
-                }else{
+                } else {
                     $_SESSION['errors'][] = 'Не найдена учетная запись, пожалуйста зарегистируйтесь в системе!';
                     return false;
                 }
             }
-            
+
             if (count($users) > 0) {
+                // если галочку поставили то запомним куку
+                if ($set_cookie == 1) {
+                    $this->set_cookie($users[0]['id']);
+                } else {
+                    $this->unset_cookie($users[0]['id']);
+                }
                 $_SESSION['user']['info'] = $users[0];
                 $data = $this->getUserInfo($users[0]['id']);
                 $_SESSION['user']['info'] = $data;
@@ -59,7 +66,7 @@ class auth extends \project\user {
                     $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.png';
                 }
                 return true;
-            } 
+            }
         } else {
             $_SESSION['errors'][] = $lang['no_input_form'];
         }
@@ -144,6 +151,64 @@ class auth extends \project\user {
             $_SESSION['errors'][] = $error;
         }
         return false;
+    }
+
+    /**
+     * Регистрируем куки
+     * @param type $user_id
+     * @return boolean
+     */
+    public function set_cookie($user_id) {
+        $sqlLight = new \project\sqlLight();
+        //Создаём токен
+        $password_cookie_token = md5($user_id . time());
+        $query = "UPDATE `zay_users` SET `cookie`='{$password_cookie_token}' WHERE `id`='{$user_id}'";
+        if ($sqlLight->query($query, array($password_cookie_token, $user_id), 0)) {
+            setcookie("edgard_master_cookie_token", $password_cookie_token, time() + (1000 * 60 * 60 * 24 * 30));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Удаляем куки
+     * @param type $user_id
+     * @return boolean
+     */
+    public function unset_cookie($user_id) {
+        //Если галочка "запомнить меня" небыла поставлена, то мы удаляем куки
+        if (isset($_COOKIE["edgard_master_cookie_token"])) {
+            $q = "UPDATE `zay_users` SET `cookie`='?' WHERE  `id`='?'";
+            if ($sqlLight->query($query, array('', $user_id))) {
+                //Удаляем куку 
+                setcookie('edgard_master_cookie_token', '', time() - 3600);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Авторизация спомощью cookie
+     * @param type $cookie
+     * @return boolean
+     */
+    public function authorization_cookie($cookie) {
+        $sqlLight = new \project\sqlLight();
+        $query = "SELECT * FROM `zay_users` u WHERE cookie='?' and `active`=1";
+        $users = $sqlLight->queryList($query, array($cookie));
+
+        // Если найден пользователь то авторизируем его
+        if (count($users) > 0) {
+            $_SESSION['user']['info'] = $users[0];
+            $data = $this->getUserInfo($users[0]['id']);
+            $_SESSION['user']['info'] = $data;
+            if (strlen($_SESSION['user']['info']['avatar']) == 0) {
+                // Аватар по умолчанию
+                $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.png';
+            }
+            return true;
+        }
     }
 
     /**

@@ -8532,8 +8532,7 @@ button {
   overflow: hidden; }
 
 /*===== ALERT =====*/
-label {
-  text-transform: capitalize; }
+label { }
 
 .alert {
   font-size: 0.98rem;
@@ -9883,8 +9882,7 @@ code {
         padding: 0.3125rem 1.25rem; }
         .media-chat.media-chat-header .dropdown-menu .dropdown-item a {
           font-size: 0.875rem;
-          color: #8a909d;
-          text-transform: capitalize; }
+          color: #8a909d; }
         .media-chat.media-chat-header .dropdown-menu .dropdown-item:hover {
           background-color: transparent; }
           .media-chat.media-chat-header .dropdown-menu .dropdown-item:hover a {
@@ -13499,8 +13497,7 @@ tbody tr td:first-child {
     padding: 0.3125rem 1.25rem; }
     .widget-dropdown .dropdown-menu .dropdown-item a {
       font-size: 0.875rem;
-      color: #8a909d;
-      text-transform: capitalize; }
+      color: #8a909d; }
     .widget-dropdown .dropdown-menu .dropdown-item:hover {
       background-color: transparent; }
       .widget-dropdown .dropdown-menu .dropdown-item:hover a {
