@@ -6,8 +6,8 @@ var consult_main_body = 0;
 $(function () {
     //$('.consult_user_phone').mask('+7 (999) 999-9999');
     $(".select_timer").html("Выберите специалиста");
-    consult_main_body = $(".consult_main_body").height();
-    $(".consult_main_body").height(consult_main_body);
+    //consult_main_body = $(".consult_main_body").height();
+    //$(".consult_main_body").height(consult_main_body);
     // Следующий шаг
     $(".btn_next_step").click(function () {
 

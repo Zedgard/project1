@@ -16,7 +16,7 @@ include_once DOCUMENT_ROOT . "/extension/auth/get.php";
 include_once DOCUMENT_ROOT . "/system/page/inc.php";
 include_once DOCUMENT_ROOT . "/system/theme/inc.php";
 
-/*
+/* 
  * Отобразим страницы сайта
  */
 //if ($p == 0) {

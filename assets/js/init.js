@@ -180,49 +180,7 @@ function initCartArray() {
             }
         }
 
-        /* Отображение в корзине */
-        /*
-         if (!!$(".cart_list")) {
-         var total = 0;
-         $(".cart_list").html("");
-         if (!!e['data']) {
-         for (var i = 0; i < e['data'].length; i++) {
-         var price = e['data'][i]['price'];
-         if (e['data'][i]['price_promo'] > 0) {
-         price = e['data'][i]['price_promo'];
-         }
-         var imgFirst = '/themes/site1/images/gallery-box1.jpg';
-         if (e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
-         imgFirst = e['data'][i]['images_str'];//e['data'][i]['products_wares_info'][0]['images'];
-         }
-         html = '<tr class="cart-item js-cart-item" data-id="1">';
-         html += '<td class="text-center align-middle" style="max-width: 200px;"><img src="' + imgFirst + '" class="w-75"/></td>';
-         html += '<td class="align-middle">' + e['data'][i]['title'] + '</td>';
-         html += '<td class="text-center align-middle">' + price + ' руб.</td>';
-         html += '<td class="text-center align-middle">';
-         html += '<span class="cart-item__btn-dec-count js-change-count" title="Уменьшить на 1" data-id="1" data-delta="-1">';
-         html += '<span class="fas fa-minus"></span>';
-         html += '</span>';
-         html += '<span class="js-count">1</span>';
-         html += '<span class="cart-item__btn-inc-count js-change-count" title="Увеличить на 1" data-id="1" data-delta="1">';
-         html += '<span class="fas fa-plus"></span>';
-         html += '</span>';
-         html += '</td>';
-         html += '<td class="text-center align-middle"><span class="js-summa">' + price + '</span> руб.</td>';
-         html += '<td class="text-center align-middle">';
-         html += '<span class="cart-item__btn-remove cart_product_remove" product_id="' + e['data'][i]['id'] + '" title="Удалить из корзины" data-id="1">';
-         html += '<span class="fas fa-times"></span> ';
-         html += '</span>';
-         html += '</td>';
-         html += '</tr>';
-         total += Number(price);
-         $(".cart_list").append(html);
-         }
-         $(".cart_total").html('Итого: <span  class="total-cart-summ">' + total + '</span> руб.');
-         }
-         }
-         */
-
+        
         if (!!$(".cart_list")) {
             cart_itms = [];
             var total = 0;
@@ -248,7 +206,7 @@ function initCartArray() {
                     var products_category_list = e['data'][i]['products_category_list'];
                     // ' + products_category_list.toString() + '
 
-                    var html = '<div class="row text-nowrap">';
+                    var html = '<div class="row">';
                     html += '<div class="col-3">';
 
                     html += '<a href="' + imgFirst + '" class="fancybox d-none d-lg-block"><img src="' + imgFirst + '" class="w-75"/></a>';

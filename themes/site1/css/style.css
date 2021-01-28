@@ -1492,8 +1492,12 @@ i::before,i::after{
 .cart_list .btn_cart_product_remove_display_none{
     margin-top: -30px;
     float: right;
-    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #CCCCCC;
     display: block;
+}
+.cart_list .btn_cart_product_remove_display_none:hover{
+    background-color: #f5f5f5;
 }
 .cart_list:hover .btn_cart_product_remove_display_none{
     display: block;
@@ -1695,7 +1699,13 @@ i::before,i::after{
     transform: translate3d(0, 0, 0);
     visibility: visible;
 }
-
+.animate1 {
+    animation-delay: 1s;
+    -o-animation-delay: 1s;
+    -ms-animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+} 
 .animate-out {
     -webkit-animation-delay : 0ms;
     -o-animation-delay : 0ms;
@@ -4499,4 +4509,17 @@ footer .copyrights > a:focus {
 }
 .ui-datepicker-title{
 
+}
+
+.js-count{
+    padding: 0 10px;
+}
+.total-cart-summ{
+    font-weight: bold;
+}
+.btn_cart{
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 90%;
 }

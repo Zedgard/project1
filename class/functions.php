@@ -1133,3 +1133,23 @@ if (!function_exists('rand_number')) {
     }
 
 }
+if (!function_exists('init_prices')) {
+
+    /**
+     * Зарегистрируем цены
+     */
+    function init_prices() {
+        $_SESSION['cart']['prices'] = array();
+        if (is_array($_SESSION['cart']['itms'])) {
+            foreach ($_SESSION['cart']['itms'] as $key => $value) {
+                if ($value['price_promo'] > 0) {
+                    $price = $value['price_promo'];
+                } else {
+                    $price = $value['price'];
+                }
+                $_SESSION['cart']['prices'][] = $price;
+            }
+        }
+    }
+
+}

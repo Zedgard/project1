@@ -36,7 +36,7 @@
                                     <tr>
                                         <th style="text-align: center;">id</th>
                                         <th>Наименование</th>
-                                        <th style="text-align: center;">Код</th>
+                                        <!--<th style="text-align: center;">Код</th>-->
                                         <th style="text-align: center;">Артикул</th>
                                         <th style="text-align: center;">Колличество</th>
                                         <th style="text-align: center;">Отображение</th>
@@ -105,7 +105,6 @@
                                 '<tr elm_id="' + data[i]['id'] + '"> \n\
                                 <td>' + data[i]['id'] + '</td>\n\
                                 <td>' + data[i]['title'] + '</td>\n\
-                                <td style="text-align: center;">' + data[i]['ex_code'] + '</td>\n\
                                 <td style="text-align: center;">' + data[i]['articul'] + '</td>\n\
                                 <td style="text-align: center;">' + data[i]['col'] + '</td>\n\
                                 <td style="text-align: center;"><span style="font-size: 0.7rem;">' + active_str + ' ' + is_delete_str + '</span></td>\n\

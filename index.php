@@ -29,7 +29,7 @@ $cache = 1;
 
 if ($cache == 1) {
     opcache_reset();
-    include 'cache.php';
+    include_once 'cache.php';
 }
 //print_r($_SESSION['user']['info']);
 if (isset($_GET['ya_payment_true'])) {
@@ -45,10 +45,13 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '
 //include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 //print_r($_SERVER);
 //echo "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}<br/>";
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 $send_emails = new \project\send_emails();
+$p_auth = new \project\auth();
+
 //if($send_emails->send(1,'resko1987@mail.ru', array('user_password'=>12345) )){
 //    echo 'Ok'; 
 //}
@@ -67,11 +70,15 @@ $send_emails = new \project\send_emails();
  *  
  */
 
+// Авторизация спомощью cookie
+if (isset($_COOKIE["edgard_master_cookie_token"])) {
+    $p_auth->authorization_cookie($_COOKIE["edgard_master_cookie_token"]);
+}
 
 $user = new \project\user();
 $user->upUserRole(); // role_privilege
 
-include $_SERVER['DOCUMENT_ROOT'] . '/extension/menu/index.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/menu/index.php';
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 $config = new \project\config();

@@ -3,15 +3,17 @@ session_start();
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 $sqlLight = new \project\sqlLight();
 
-include_once DOCUMENT_ROOT . '/extension/users/inc.php';
-include_once DOCUMENT_ROOT . '/class/functions.php';
-$p_user = new \project\user();
 
+
+$p_user = new \project\user();
+$p_products = new \project\products();
 $config = new \project\config();
 
 // Ссылка на переадресацию ответа 
@@ -91,7 +93,7 @@ if ($price_total > 0) {
                     $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
                     // Зафиксируем продажу
                     echo $product_id . "<br/>\n";
-                    $products->setSoldAdd($product_id);
+                    $p_products->setSoldAdd($product_id);
                 }
             }
         }
@@ -142,12 +144,14 @@ if ($price_total > 0) {
                     <div class="col-sm-6">
                         <div class="card text-center mt-5 mb-5">
                             <div class="card-header">
-                                Платежная система Interkassa
+                                Платежная система Interkassa 
                             </div>
                             <div class="card-body">
                                 <div class="row mb-5">
                                     <div class="col-12">
-                                        <img src="/assets/img/interkassa_logo_ru.png" class="card-img-top w-75 mt-4 mb-5" title="www.interkassa.com">
+                                        <img src="/assets/img/interkassa_logo_ru.png" class="card-img-top mt-4 mb-5" style="width: 60%;" title="www.interkassa.com">
+                                        <div style="margin-bottom: 1rem;font-size: 1rem;">ИП Зайцев Эдгард Александрович</div>
+                                        <div style="margin: 1rem 0;font-size: 1rem;">Оплата:&nbsp;&nbsp;<span style="font-weight: 600;"><?= $price_total ?>&nbsp;&nbsp;Р</span></div>
                                         <form action="https://sci.interkassa.com/" method="post">
                                             <input type="hidden" name="ik_co_id" value="<?= $in_shop_id ?>" />
                                             <input type="hidden" name="ik_am" value="<?= $price_total ?>" />

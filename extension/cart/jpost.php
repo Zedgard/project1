@@ -7,6 +7,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 include_once 'inc.php';
 
@@ -15,20 +16,6 @@ $pr_products = new \project\products();
 $p_user = new \project\user();
 $config = new \project\config();
 
-// Зарегистрируем цены
-function init_prices() {
-    $_SESSION['cart']['prices'] = array();
-    if (is_array($_SESSION['cart']['itms'])) {
-        foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            if ($value['price_promo'] > 0) {
-                $price = $value['price_promo'];
-            } else {
-                $price = $value['price'];
-            }
-            $_SESSION['cart']['prices'][] = $price;
-        }
-    }
-}
 
 // Добавление в корзину
 if (isset($_POST['cart_product_add'])) {

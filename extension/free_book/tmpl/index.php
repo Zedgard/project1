@@ -1,7 +1,7 @@
 <link id="sleek-css" rel="stylesheet" href="/extension/free_book/free_book.css<?= $_SESSION['rand'] ?>" />
 <div class="free_book_container">
     <div class="container pb-4">
-        <div class="mt-4 mb-4 free_book_title">Мои книги без оплаты для вас</div>
+        <div class="mt-4 mb-4 free_book_title">Мои безоплатные книги для тебя</div>
         <div class="row pt-2 pb-2">
             <div class="col-lg-6">
                 <div class="row">

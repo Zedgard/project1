@@ -6,7 +6,7 @@
 
 defined('__CMS__') or die;
 
-include 'inc.php';
+include_once 'inc.php';
 
 $auth = new \project\auth();
 

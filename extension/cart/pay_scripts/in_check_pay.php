@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,11 +25,12 @@ $client_email = $u->isClientEmail();
 $client_id = ($u->isClientId() > 0) ? $u->isClientId() : 0;
 
 $total = 0;
-foreach ($_SESSION['cart']['prices'] as $value) {
-    $total += $value;
-}
-
 $pay_key = $_SESSION['pay_key'];
+if (count($_SESSION['cart']) > 0) {
+    foreach ($_SESSION['cart']['prices'] as $value) {
+        $total += $value;
+    }
+}
 
 /*
   echo "client_email: {$client_email} <br/>\n";
@@ -46,6 +46,7 @@ $ik_inv_id = $_POST['ik_inv_id'];
 $ik_inv_st = $_POST['ik_inv_st'];
 $ik_pm_no = $_POST['ik_pm_no'];
 
+// Array ( [ik_co_id] => 5f5dfdf8f3f7ad5888515cd6 [ik_inv_id] => 283226857 [ik_inv_st] => success [ik_pm_no] => 1 )
 if (isset($_POST['ik_co_id']) && strlen($pay_key) > 0 && $ik_co_id == $in_shop_id) {
     if ($ik_inv_st == 'success') {
         echo $ik_inv_st;
@@ -90,15 +91,22 @@ if (isset($_POST['ik_co_id']) && strlen($pay_key) > 0 && $ik_co_id == $in_shop_i
                         include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
                     }
                 }
+                echo 'end';
                 $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
                 $_SESSION['cart']['total'] = $total;
                 $_SESSION['cart']['pay_id'] = $pay_id;
                 $_SESSION['cart']['itms'] = array();
                 unset($_SESSION['pay_key']);
-                goBack($url = '/shop/cart/?in_payment_true=1', $time = '0');
+                goBack('/shop/cart/?in_payment_true=1', '0');
             } else {
                 echo 'Ошибка регистрации платежа! Пожалуйста сообщите администрации сайта о данный проблеме!';
             }
         }
     }
+} else {
+    ?>
+    <div>Произошла ошибка платежа!</div>
+    <div>Сессия утеряна</div>
+    <?
+    goBack('/shop/', '10000');
 }

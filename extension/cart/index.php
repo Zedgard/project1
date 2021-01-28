@@ -9,11 +9,40 @@ defined('__CMS__') or die;
 include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once 'inc.php';
 
+$p_products = new \project\products();
 $c_cart = new \project\cart();
 $p_user = new \project\user();
+$auth = new \project\auth();
 
+
+/*
+ * Добавления товара в корзину
+ */
+if (isset($_GET['product_id'])) {
+    $product_id = $_GET['product_id'];
+    $new_arr = array();
+    if ($product_id > 0) {
+        if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+            foreach ($_SESSION['cart']['itms'] as $key => $value) {
+                if ($product_id == $value['id']) {
+                    //unset($_SESSION['cart']['itms'][$key]);
+                } else {
+                    $new_arr[] = $_SESSION['cart']['itms'][$key];
+                }
+            }
+            $_SESSION['cart']['itms'] = $new_arr;
+        }
+        // Зарегистрируем товары
+        $obj = $p_products->getProductElem($product_id);
+        $_SESSION['cart']['itms'][] = $obj;
+        init_prices();
+    }
+    goBack('/shop/cart/', 0);
+}
 
 $form_show = 0;
 if (isset($_GET['ya_payment_true'])) {
@@ -97,7 +126,6 @@ if (isset($_GET['ya_payment_true'])) {
 if (isset($_GET['in_payment_true'])) {
     $form_show = 1;
     ?>
-
     <div class="container mb-5">
         <div class="row">
             <div class="col-sm-3"></div>
@@ -132,7 +160,6 @@ if (isset($_GET['in_payment_true'])) {
 }
 
 if ($form_show == 0) {
-
     /**
      * Подготови данные для PayPal
      */

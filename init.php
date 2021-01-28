@@ -3,9 +3,9 @@
 /*
  * Инициализация
  */
- 
+
 define('__CMS__', 1);
- 
+
 // Время прихода пользователя на сайт
 if (!isset($_SESSION['user_load_page_time'])) {
     $_SESSION['user_load_page_time'];
@@ -26,17 +26,6 @@ $_SESSION['rand'] = '?v=' . rand();
 $_SESSION['errors'] = array();
 
 // Сообщения сайта (Отображаются на странице сайта или всплывают)
-if (!isset($_SESSION['message'])) {
-    $_SESSION['message'] = array();
-}
-
-$_SESSION['body_javascript'] = array();
-//$_SESSION['cart'] = array();
-// Для корзины
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = array();
-}
-
 /*
  * примеры подсветки
  * http://1.sybix.ru/assets/panel/alert.html
@@ -49,6 +38,16 @@ if (!isset($_SESSION['cart'])) {
  * $_SESSION['message'] = array('type' => 'light', 'text' => $lang['text']);
  * $_SESSION['message'] = array('type' => 'dark', 'text' => $lang['text']);
  */
+if (!isset($_SESSION['message'])) {
+    $_SESSION['message'] = array();
+}
+
+$_SESSION['body_javascript'] = array();
+//$_SESSION['cart'] = array();
+// Для корзины
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+}
 
 /*
  * Глобальные
