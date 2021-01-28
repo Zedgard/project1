@@ -22,8 +22,8 @@ $auth = new \project\auth();
 /*
  * Добавления товара в корзину
  */
-if (isset($_GET['product_id'])) {
-    $product_id = $_GET['product_id'];
+if (isset($_GET['go_cart'])) {
+    $product_id = $_GET['go_cart'];
     $new_arr = array();
     if ($product_id > 0) {
         if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
