@@ -20,7 +20,7 @@
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
 
-        
+
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
 
@@ -29,9 +29,9 @@
 
         <!-- Vendor CSS -->
         <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.css<?= $_SESSION['rand'] ?>">	
-        
+
         <link rel="stylesheet" href="/themes/site1/css/style.css<?= $_SESSION['rand'] ?>">
-        
+
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="/assets/plugins/jquery/jquery.js<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css<?= $_SESSION['rand'] ?>">
@@ -236,8 +236,8 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        
-        
+
+
         <?php
         /*
           <div id="revo_main_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
@@ -557,7 +557,7 @@
 
 
 
-           
+
 
 
         <!-- Testimonials -->
@@ -722,53 +722,53 @@
         <? /*
 
 
-<!--half img section-->
-        <div id="twocopies">  
-            <section class="half-section">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6 nopadding">
-                            <div class="image hover-effect img-container">
-                                <img alt="" src="/themes/site1/images/split-img1.jpg" class="equalheight">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 nopadding">
-                            <div class="split-box text-center center-block container-padding equalheight">
-                                <div class="heading-title padding">
-                                    <span class="wow fadeInUp" data-wow-delay="300ms">Services We Offer</span>
-                                    <h2 class="darkcolor bottom20 wow fadeInUp" data-wow-delay="400ms">Creative Designs</h2>
-                                    <p class="heading_space wow fadeInUp" data-wow-delay="500ms">Curabitur mollis bibendum luctus. Duis suscipit vitae dui sed suscipit. Vestibulum auctor nunc vitae diam eleifend, in maximus metus sollicitudin. Quisque vitae sodales lectus. Nam porttitor justo sed mi finibus, vel tristique risus faucibus.  Fusce faucibus nulla at viverra condimentum. </p>
-                                    <a href="#portfolio_top" class="button btnprimary pagescroll wow fadeInUp" data-wow-delay="600ms">Design Works</a>  
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="half-section">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6 nopadding">
-                            <div class="split-box text-center center-block container-padding equalheight">
-                                <div class="heading-title padding">
-                                    <span class="wow fadeInUp" data-wow-delay="300ms">Services We Offer</span>
-                                    <h2 class="darkcolor bottom20 wow fadeInUp" data-wow-delay="400ms">SEO Marketing</h2>
-                                    <p class="heading_space wow fadeInUp" data-wow-delay="500ms">Curabitur mollis bibendum luctus. Duis suscipit vitae dui sed suscipit. Vestibulum auctor nunc vitae diam eleifend, in maximus metus sollicitudin. Quisque vitae sodales lectus. Nam porttitor justo sed mi finibus, vel tristique risus faucibus.</p>
-                                    <a href="#our-team" class="button btnsecondary pagescroll wow fadeInUp" data-wow-delay="600ms">SEO Team</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 nopadding">
-                            <div class="image hover-effect img-container">
-                                <img alt="" src="/themes/site1/images/split-img2.jpg" class="equalheight">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>  
-        <!--half img section ends-->  
- 
+          <!--half img section-->
+          <div id="twocopies">
+          <section class="half-section">
+          <div class="container-fluid">
+          <div class="row">
+          <div class="col-lg-6 nopadding">
+          <div class="image hover-effect img-container">
+          <img alt="" src="/themes/site1/images/split-img1.jpg" class="equalheight">
+          </div>
+          </div>
+          <div class="col-lg-6 nopadding">
+          <div class="split-box text-center center-block container-padding equalheight">
+          <div class="heading-title padding">
+          <span class="wow fadeInUp" data-wow-delay="300ms">Services We Offer</span>
+          <h2 class="darkcolor bottom20 wow fadeInUp" data-wow-delay="400ms">Creative Designs</h2>
+          <p class="heading_space wow fadeInUp" data-wow-delay="500ms">Curabitur mollis bibendum luctus. Duis suscipit vitae dui sed suscipit. Vestibulum auctor nunc vitae diam eleifend, in maximus metus sollicitudin. Quisque vitae sodales lectus. Nam porttitor justo sed mi finibus, vel tristique risus faucibus.  Fusce faucibus nulla at viverra condimentum. </p>
+          <a href="#portfolio_top" class="button btnprimary pagescroll wow fadeInUp" data-wow-delay="600ms">Design Works</a>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </section>
+          <section class="half-section">
+          <div class="container-fluid">
+          <div class="row">
+          <div class="col-lg-6 nopadding">
+          <div class="split-box text-center center-block container-padding equalheight">
+          <div class="heading-title padding">
+          <span class="wow fadeInUp" data-wow-delay="300ms">Services We Offer</span>
+          <h2 class="darkcolor bottom20 wow fadeInUp" data-wow-delay="400ms">SEO Marketing</h2>
+          <p class="heading_space wow fadeInUp" data-wow-delay="500ms">Curabitur mollis bibendum luctus. Duis suscipit vitae dui sed suscipit. Vestibulum auctor nunc vitae diam eleifend, in maximus metus sollicitudin. Quisque vitae sodales lectus. Nam porttitor justo sed mi finibus, vel tristique risus faucibus.</p>
+          <a href="#our-team" class="button btnsecondary pagescroll wow fadeInUp" data-wow-delay="600ms">SEO Team</a>
+          </div>
+          </div>
+          </div>
+          <div class="col-lg-6 nopadding">
+          <div class="image hover-effect img-container">
+          <img alt="" src="/themes/site1/images/split-img2.jpg" class="equalheight">
+          </div>
+          </div>
+          </div>
+          </div>
+          </section>
+          </div>
+          <!--half img section ends-->
+
 
           <li data-index="rs-03" data-transition="fade" data-slotamount="default" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="2000" data-fsmasterspeed="1500" class="rev_gradient">
           <!-- MAIN IMAGE -->
@@ -1525,6 +1525,7 @@
         <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+        <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--Google Map API-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
@@ -1534,13 +1535,5 @@
             echo $js . "\n";
         }
         ?>
-        <script>
-            $(document).ready(function () {
-                setTimeout(function () {
-                    $(".link_ed_mailto").attr("href", "mailto:<?= $config->getConfigParam('link_ed_mailto') ?>");
-                    $(".link_ed_mailto").html("<?= $config->getConfigParam('link_ed_mailto') ?>");
-                }, 2000);
-            });
-        </script>
     </body>
 </html>

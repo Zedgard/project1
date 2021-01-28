@@ -36,8 +36,8 @@ if (isset($_POST['authorization'])) {
         if ($r == 0) {
             $url = '/';
         }
-        // , 'action' => $url, 'action_time' => '0'
-        $result = array('success' => 1, 'success_text' => 'Успешно авторизирован');
+
+        $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '0');
     } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка авторизации', 'action_time' => '0');
     }
@@ -54,6 +54,7 @@ if (isset($_POST['registration'])) {
  * Выход
  */
 if (isset($_POST['logout'])) {
+    $auth->unset_cookie();
     unset($_SESSION['user']);
     $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/', 'action_time' => '0');
 }

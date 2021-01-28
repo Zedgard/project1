@@ -16,7 +16,7 @@ include_once DOCUMENT_ROOT . "/extension/auth/get.php";
 include_once DOCUMENT_ROOT . "/system/page/inc.php";
 include_once DOCUMENT_ROOT . "/system/theme/inc.php";
 
-/* 
+/*
  * Отобразим страницы сайта
  */
 //if ($p == 0) {
@@ -34,6 +34,9 @@ if (strlen($token_js) > 0) {
 
 $page = new \project\page();
 
+$_SESSION['body_javascript'][] = $page->javascript();
+ 
+
 $page->showMessage();
 //array_reverse($_SESSION['url']);
 $pageArray = $page->init();
@@ -42,7 +45,6 @@ $pageArray = $page->init();
 //echo "<br/>\n";
 //echo 'url_a_href: ' . $pageArray['url_a_href']."<br/>\n";
 //echo 'url_a_href_bread: ' . $pageArray['url_a_href_bread']."<br/>\n";
-
 //print_r($_SESSION);
 
 $theme = new \project\theme();

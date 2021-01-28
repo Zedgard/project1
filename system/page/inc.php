@@ -6,6 +6,7 @@ defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 
 /*
  * Страницы сайта
@@ -851,7 +852,7 @@ class page {
                 $new_url = $url;
             }
             $_SESSION['bread_urls'][] = $url;
-        }else{
+        } else {
             $new_url = '';
         }
         $_SESSION['breads'][] = array('url' => $new_url, 'title' => $title); // "<a href=\"{$url}\">{$title}</a>";
@@ -883,6 +884,36 @@ class page {
         unset($_SESSION['breads']);
         unset($_SESSION['bread_urls']);
         return true;
+    }
+
+    /**
+     * Javascript на всех страницах
+     * @return type
+     */ 
+    public function javascript() {
+        $config = new \project\config();
+        ob_start();
+        ?>
+        <script>
+            var go_move = '<?= $_GET['move'] ?>';
+            $(document).ready(function () {
+                if (go_move.length > 0) {
+                    if (!!$("#" + go_move)[0]) {
+                        move("#" + go_move, 1000);
+                    }
+                    if (!!$("." + go_move)[0]) {
+                        move("." + go_move, 1000);
+                    }
+                }
+
+                setTimeout(function () {
+                    $(".link_ed_mailto").attr("href", "mailto:<?= $config->getConfigParam('link_ed_mailto') ?>");
+                    $(".link_ed_mailto").html("<?= $config->getConfigParam('link_ed_mailto') ?>");
+                }, 2000);
+            });
+        </script>
+        <?
+        return ob_get_clean();
     }
 
 }

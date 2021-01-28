@@ -172,13 +172,14 @@ class auth extends \project\user {
 
     /**
      * Удаляем куки
-     * @param type $user_id
      * @return boolean
      */
-    public function unset_cookie($user_id) {
+    public function unset_cookie() {
+        $sqlLight = new \project\sqlLight();
+        $user_id = $_SESSION['user']['info']['id'];
         //Если галочка "запомнить меня" небыла поставлена, то мы удаляем куки
         if (isset($_COOKIE["edgard_master_cookie_token"])) {
-            $q = "UPDATE `zay_users` SET `cookie`='?' WHERE  `id`='?'";
+            $query = "UPDATE `zay_users` SET `cookie`='?' WHERE  `id`='?'";
             if ($sqlLight->query($query, array('', $user_id))) {
                 //Удаляем куку 
                 setcookie('edgard_master_cookie_token', '', time() - 3600);

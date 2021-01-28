@@ -177,7 +177,8 @@
         <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
-
+        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+        <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--Google Map API-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
@@ -187,13 +188,5 @@
             echo $js . "\n";
         }
         ?>
-        <script>
-            $(document).ready(function () {
-                setTimeout(function () {
-                    $(".link_ed_mailto").attr("href", "mailto:<?= $config->getConfigParam('link_ed_mailto') ?>");
-                    $(".link_ed_mailto").html("<?= $config->getConfigParam('link_ed_mailto') ?>");
-                }, 2000);
-            });
-        </script>
     </body>
 </html>

@@ -89,13 +89,17 @@ function animateTop(val, height) {
 
 
 var move_start = 0;
-function move(elm) {
+function move(elm, animate) {
+    if(animate.length == 0){
+       animate = 300; 
+    }
+    console.log('move: ' + elm);
     if (move_start == 0) {
         setTimeout(function () {
             //event.preventDefault();
             var height = $(window).height();
             var top = $(elm).offset().top - (height / 2);
-            $('body,html').animate({scrollTop: top}, 300);
+            $('body,html').animate({scrollTop: top}, animate);
             move_start = 0;
         }, 500);
     }
