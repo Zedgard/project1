@@ -20,8 +20,8 @@
                     <div class="header_mobile_app_block mobile_contxt_center">
                         <i class="app_block_text">Мобильное приложение</i>
                     </div>
-                    <a href="#"><img src="/assets/img/google_play.png" class="mobile_apk_img1" /></a>
-                    <a href="#"><img src="/assets/img/app_store.svg" class="mobile_apk_img2" /></a>
+                    <a href="https://play.google.com/store/apps/details?id=ru.dvfx.edgardzaitsev" target="_blank"><img src="/assets/img/google_play.png" class="mobile_apk_img1" /></a>
+                    <a href="https://apps.apple.com/us/app/эдгард-зайцев/id1468250750" target="_blank"><img src="/assets/img/app_store.svg" class="mobile_apk_img2" /></a>
                 </div>
                 <div class="col-lg-2 mb-2 mobile_contxt_center">
                     <span <?= ($_SESSION['config']['language_enable'] == '1') ? '' : 'style="display: none;"' ?>>
