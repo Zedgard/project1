@@ -15,6 +15,13 @@
                     <input type="text" class="form-control wares_title" id="wares_title" placeholder="Наименование товара..." required>
                 </div>
 
+                <div class="form-group">
+                    <label for="config_code">Категории</label>
+                    <select class="form-control wares_categorys" name="states[]" multiple="multiple" style="width: 100%">
+
+                    </select> 
+                </div>
+
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="config_code">Код товара</label>

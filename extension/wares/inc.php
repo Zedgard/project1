@@ -3,11 +3,24 @@
 namespace project;
 
 defined('__CMS__') or die;
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/category/inc.php';
 
 class wares extends \project\extension {
 
+    private $wares_categorys = array();
+
     public function __construct() {
         parent::__construct();
+    }
+
+    /**
+     * Сохраним данные для обработки по категориям
+     * @param array $wares_categorys
+     */
+    function setWaresCategory($wares_categorys = array()) {
+        if (is_array($wares_categorys)) {
+            $this->wares_categorys = $wares_categorys;
+        }
     }
 
     /**
@@ -63,7 +76,18 @@ class wares extends \project\extension {
     public function getWaresElem($id) {
         if ($id > 0) {
             $querySelect = "SELECT * FROM `zay_wares` WHERE id='?' ";
-            return $this->getSelectArray($querySelect, array($id));
+            $obj = $this->getSelectArray($querySelect, array($id))[0];
+            $obj['wares_category'] = $this->getWaresCategory($obj['id']);
+            $category = new category();
+
+            if (count($obj['wares_category']) > 0) {
+                $category = new category();
+                foreach ($obj['wares_category'] as $value) {
+                    $obj['wares_categorys_list'][] = $category->getCategoryElem($value)[0]['title'];
+                }
+            }
+
+            return $obj;
         }
         return array();
     }
@@ -87,6 +111,7 @@ class wares extends \project\extension {
                     . "`lastdate`=NOW() "
                     . "WHERE `id`='?' ";
             if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active, $id), 0)) {
+                $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
             }
         } else {
@@ -95,6 +120,7 @@ class wares extends \project\extension {
                     . "VALUES ('?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
             if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active), 0)) {
+                $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
             }
         }
@@ -323,26 +349,36 @@ class wares extends \project\extension {
     /**
      * Купленные продукты клиента
      */
-    public function getClientProducts($wares_id = 0) {
+    public function getClientProducts($wares_id = 0, $category_id = 0) {
         if ($_SESSION['user']['info']['id'] > 0) {
-            // `zay_wares` w SELECT * FROM `zay_product_category`
+            $category_sql = "";
+            $vals[] = $_SESSION['user']['info']['id'];
+            if($category_id > 0){
+                $category_sql = " and wcat.category_id='?' ";
+                $vals[] = $category_id;
+            }
             if ($wares_id == 0) {
                 $querySelect = "SELECT DISTINCT w.* FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
                         . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
                         . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
-                        . "and (pcat.category_id<>2 or pcat.category_id is null) " // Отбросим вебинары
+                        . "{$category_sql} "
+                        . "and (pcat.category_id<>2 or pcat.category_id is null) " 
                         . "order by w.`title` asc ";
-                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
+                        //echo "{$querySelect}\n\n";
+                $objs = $this->getSelectArray($querySelect, $vals, 0);
+                return $objs;
             } else {
                 $querySelect = "SELECT DISTINCT w.* FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
                         . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
                         . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
                         . "and (pcat.category_id<>2 or pcat.category_id is null) " // Отбросим вебинары"
@@ -358,24 +394,28 @@ class wares extends \project\extension {
      */
     public function getClientWebinarsProducts($wares_id = 0) {
         if ($_SESSION['user']['info']['id'] > 0) {
-            // `zay_wares` w SELECT * FROM `zay_product_category`
+            
             if ($wares_id == 0) {
-                $querySelect = "SELECT DISTINCT w.* FROM `zay_pay` p "
+                $querySelect = "SELECT DISTINCT w.*, wcat.category_id FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
                         . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
                         . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
                         . "and pcat.`category_id`=2 " // вебинары
                         . "order by pp.`id` DESC ";
-                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
+                $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
+
+                return $objs;
             } else {
-                $querySelect = "SELECT DISTINCT w.* FROM `zay_pay` p "
+                $querySelect = "SELECT DISTINCT w.*, wcat.category_id FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
                         . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
                         . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
                         . "and pcat.`category_id`=2 " //  вебинары
@@ -383,6 +423,27 @@ class wares extends \project\extension {
                 //echo "{$querySelect}\n";
                 return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, 0))[0];
             }
+        }
+        return array();
+    }
+
+    /**
+     * Получить колличество купоеллных продуктов данной категории
+     * @return type
+     */
+    public function getClientWaresCol() {
+        if ($_SESSION['user']['info']['id'] > 0) {
+            $querySelect = "SELECT wcat.category_id, SUM(1) as col FROM `zay_pay` p 
+                    left join `zay_pay_products` pp on pp.`pay_id`=p.`id` 
+                    left join `zay_product` pr on pr.`id`=pp.`product_id` 
+                    left join `zay_product_wares` pw on pw.`product_id`=pr.`id` 
+                    left join zay_wares w on w.id=pw.wares_id 
+                    left join zay_wares_category wcat on wcat.wares_id=w.id 
+                    where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 
+                    and (wcat.category_id<>2 or wcat.category_id is null) 
+                    group by wcat.category_id";
+            $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
+            return $objs;
         }
         return array();
     }
@@ -443,6 +504,36 @@ class wares extends \project\extension {
             }
         }
         return 0;
+    }
+
+    /**
+     * Список ID связанных категорий 
+     * @param type $product_id
+     * @return type
+     */
+    function getWaresCategory($wares_id) {
+        $querySelect = "SELECT c.wares_id, GROUP_CONCAT(c.category_id) as category_ids FROM `zay_wares_category` c WHERE c.`wares_id`='?'  GROUP BY c.wares_id ";
+        $this->wares_categorys = explode(',', $this->getSelectArray($querySelect, array($wares_id))[0]['category_ids']);
+        return $this->wares_categorys;
+    }
+
+    /**
+     * Привязка категорий
+     * @param type $wares_id товара ид
+     * @param type $category_ids массив категорий
+     */
+    public function insertWaresCategory($wares_id, $category_ids_array) {
+        if ($wares_id > 0) {
+            $query = "DELETE FROM `zay_wares_category` WHERE `wares_id`='?' ";
+            $this->query($query, array($wares_id));
+            $col = count($category_ids_array);
+            if ($col > 0) {
+                foreach ($category_ids_array as $value) {
+                    $query = "INSERT INTO `zay_wares_category`(`wares_id`, `category_id`) VALUES ('?','?') ";
+                    $this->query($query, array($wares_id, $value), 0);
+                }
+            }
+        }
     }
 
 }

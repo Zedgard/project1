@@ -66,8 +66,8 @@
         <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css?v=<?= $_SESSION['rand'] ?>" />
 
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/daterangepicker/moment.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/daterangepicker/daterangepicker2.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/daterangepicker2.js<?= $_SESSION['rand'] ?>"></script>
         <script>
             jQuery(document).ready(function () {
                 if (!!$("input[name='dateRange']")[0]) {
@@ -89,9 +89,9 @@
             window.isMinified = <?= $_SESSION['system']['sidebar_toggler'] ?>;
             window.isCollapsed = false;
         </script>  
-        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/toastr/toastr.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script type="text/javascript" src="/assets/js/init.js?v=2"></script>
+        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
 
         <?
         //<script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] "></script> 139
@@ -264,10 +264,21 @@
                                             </li>
 
                                             <li>
-                                                <a href="/office/">
+                                                <a href="/office/?katalog">
                                                     <i class="mdi mdi-account"></i> Кабинет 
                                                 </a>
                                             </li>
+                                            <?
+                                            if ($_SESSION['user']['info']['role_privilege'] > 8) {
+                                                ?>
+                                                <li>
+                                                    <a href="/admin/">
+                                                        <i class="mdi mdi-account"></i> Админ панель 
+                                                    </a>
+                                                </li>
+                                                <?
+                                            }
+                                            ?>
                                             <li>
                                                 <a href="/office/userprofile_admin/">
                                                     <i class="mdi mdi-account"></i> Настройки 

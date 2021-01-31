@@ -11,8 +11,8 @@ $pr_wares = new \project\wares();
 if (isset($_POST['getWaresArray'])) {
     $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
     $visible = (strlen($_POST['visible']) > 0) ? $_POST['visible'] : '';
-    
-    if(strlen($searchStr) > 0){
+
+    if (strlen($searchStr) > 0) {
         $_SESSION['wares']['searchStr'] = $searchStr;
     }
     $data = $pr_wares->getWaresArray($searchStr, $visible);
@@ -23,7 +23,7 @@ if (isset($_POST['getWaresArray'])) {
 // Получить элемент
 if (isset($_POST['getWaresElemId'])) {
     $id = $_POST['getWaresElemId'];
-    $data = $pr_wares->getWaresElem($id)[0];
+    $data = $pr_wares->getWaresElem($id);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
@@ -51,10 +51,13 @@ if (isset($_POST['edit_wares'])) {
     $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
     $wares_active = (isset($_POST['wares_active'])) ? $_POST['wares_active'] : '1';
     $wares_images = (isset($_POST['wares_images'])) ? $_POST['wares_images'] : '';
+    $wares_category = (isset($_POST['wares_categorys'])) ? $_POST['wares_categorys'] : '';
 
     if (!is_numeric($wares_ex_code)) {
         $_SESSION['errors'][] = 'Код товара не число!';
-    } 
+    }
+
+    $pr_wares->setWaresCategory($wares_category);
 
     if (count($_SESSION['errors']) == 0) {
         if ($pr_wares->insertOrUpdateWares($wares_id, $wares_title, $wares_descr, $wares_url_file, $wares_col, $wares_ex_code, $wares_articul, $wares_images, $wares_active)) {
@@ -123,7 +126,8 @@ if (isset($_POST['setPositionVideoSeries'])) {
 
 // Продукты купленные клиентом кроме вебинаров
 if (isset($_POST['getClientProducts'])) {
-    $data = $pr_wares->getClientProducts();
+    $category_id = (isset($_POST['category_id']) && $_POST['category_id'] > 0) ? $_POST['category_id'] : 0;
+    $data = $pr_wares->getClientProducts(0, $category_id);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
@@ -142,3 +146,8 @@ if (isset($_POST['waresVideoSee'])) {
     $result = array('success' => 1, 'success_text' => '');
 }
 
+// Купленные колличество товаров в категориях
+if (isset($_POST['init_office_list_categorys_col'])) {
+    $data = $pr_wares->getClientWaresCol();
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}

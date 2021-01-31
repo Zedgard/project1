@@ -14,6 +14,11 @@
                         <input type="text" class="form-control wares_title" id="wares_title" placeholder="Наименование товара" required>
                     </div>
 
+                    <div class="form-group">
+                        <label for="config_code">Категории</label>
+                        <select class="form-control wares_categorys w-100" name="states[]" multiple="multiple"></select> 
+                    </div>
+
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="config_code">Код товара</label>
@@ -83,7 +88,17 @@ importWisiwyng('wares_descr');
 
 <script>
     var wares_id = '<?= $wares_id ?>';
+    
+    var wares_categorys = '';
+    
+    
     $(document).ready(function () {
+
+        wares_categorys = $(".wares_categorys").select2({
+            width: "100%",
+            placeholder: "Выбирете категории",
+            allowClear: true
+        });
 
         $(".btn_save_config").click(function () {
             var wares_id = $(".wares_id").val();
@@ -93,6 +108,7 @@ importWisiwyng('wares_descr');
             var wares_col = $(".wares_col").val();
             var wares_descr = tinymce.get('wares_descr').getContent();
             var wares_url_file = $(".wares_url_file").val();
+            var categorys = $(".wares_categorys").val();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
             var wares_active = 1;
             if (!$(".form_save_wares").find(".wares_active").prop('checked')) {
@@ -115,12 +131,13 @@ importWisiwyng('wares_descr');
                         "wares_descr": wares_descr,
                         "wares_url_file": wares_url_file,
                         "wares_active": wares_active,
-                        "wares_images": images_str.toString()},
+                        "wares_images": images_str.toString(),
+                        "wares_categorys": categorys
+                    },
                     function (e) {
                         if (e['success'] == '1') {
                             //$(".form_save_wares").find('data-dismiss="modal"').click();
                             $('#form_edit_wares_modal').modal('hide');
-                            getWaresArray(searchStr);
                         }
                     });
         });
@@ -161,7 +178,15 @@ importWisiwyng('wares_descr');
                                 $(".wares_active").removeAttr("checked");
                             }
 
-
+                            // Каталоги
+                            var wares_categorys_array = [];
+                            if (e['data']['wares_category'].length > 0) {
+                                for (var i = 0; i < e['data']['wares_category'].length; i++) {
+                                    wares_categorys_array.push(e['data']['wares_category'][i]);
+                                }
+                            }
+                            
+                            getCategoryArray(wares_categorys_array);
 
                             /* -- images -- */
                             var images = e['data']['images'].split(',');
@@ -221,7 +246,6 @@ importWisiwyng('wares_descr');
             sendPostLigth('/jpost.php?extension=wares',
                     {"deleteWares": wares_id},
                     function (e) {
-                        getWaresArray(searchStr);
                     });
         });
     }
@@ -238,11 +262,27 @@ importWisiwyng('wares_descr');
                     {"setWaresActive": wares_id,
                         "active": checked},
                     function (e) {
-                        getWaresArray(searchStr);
                     });
         });
     }
 
-
+    /**
+     * Категории 
+     * @returns {undefined}
+     */
+    function getCategoryArray(v) {
+        $(".wares_categorys option").remove();
+        sendPostLigth('/jpost.php?extension=category', {"getCategoryArray": '1', "searchStr": ''}, function (e) {
+            var data = e['data'];
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    $(".wares_categorys").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                }
+                if (!!v && v.length > 0) {
+                    wares_categorys.val(v).trigger("change");
+                }
+            }
+        });
+    }
 
 </script>    

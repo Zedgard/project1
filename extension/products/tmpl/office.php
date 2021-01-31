@@ -50,6 +50,7 @@
  */
 ?>
 <script>
+    var category_id = '<?= (isset($_GET['katalog']) && strlen($_GET['katalog']) > 0) ? $_GET['katalog'] : '' ?>';
     $(document).ready(function () {
         getClientProducts();
     });
@@ -60,7 +61,10 @@
     function getClientProducts() {
         $(".products_arrays_data tbody tr").remove();
         $(".products_arrays_data").html('<div class="w-100 text-center"><div class="spinner-border text-dark" role="status"><span class="sr-only">Loading...</span></div></div>');
-        sendPostLigth('/jpost.php?extension=wares', {"getClientProducts": '1'}, function (e) {
+        sendPostLigth('/jpost.php?extension=wares', {
+            "getClientProducts": '1',
+            "category_id": category_id
+        }, function (e) {
             $(".products_arrays_data").html("");
             var data = e['data'];
             if (data.length > 0) {
@@ -90,4 +94,6 @@
             }
         });
     }
+
+
 </script>    

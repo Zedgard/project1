@@ -63,7 +63,7 @@ class auth extends \project\user {
                 $_SESSION['user']['info'] = $data;
                 if (strlen($_SESSION['user']['info']['avatar']) == 0) {
                     // Аватар по умолчанию
-                    $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.png';
+                    $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.jpg';
                 }
                 return true;
             }
@@ -206,7 +206,7 @@ class auth extends \project\user {
             $_SESSION['user']['info'] = $data;
             if (strlen($_SESSION['user']['info']['avatar']) == 0) {
                 // Аватар по умолчанию
-                $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.png';
+                $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.jpg';
             }
             return true;
         }

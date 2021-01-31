@@ -30,7 +30,7 @@ if (isset($_POST['authorization'])) {
             $r = 1;
         }
         if (\project\user::isClient()) {
-            $url = '/office/';
+            $url = '/office/?katalog';
             $r = 1;
         }
         if ($r == 0) {

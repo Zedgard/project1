@@ -255,3 +255,4 @@ if (isset($_POST['delete_promo_product'])) {
         $result = array('success' => 0, 'success_text' => 'Ошибка не передано промо!');
     }
 }
+

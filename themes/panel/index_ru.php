@@ -244,10 +244,21 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <a href="/office/">
+                                                <a href="/office/?katalog">
                                                     <i class="mdi mdi-account"></i> Кабинет 
                                                 </a>
                                             </li>
+                                            <?
+                                            if ($_SESSION['user']['info']['role_privilege'] > 8) {
+                                                ?>
+                                                <li>
+                                                    <a href="/admin/">
+                                                        <i class="mdi mdi-account"></i> Админ панель 
+                                                    </a>
+                                                </li>
+                                                <?
+                                            }
+                                            ?>
                                             <li>
                                                 <a href="/office/userprofile_admin/">
                                                     <i class="mdi mdi-account"></i> Настройки 
@@ -409,7 +420,7 @@
                 $("#sidebar-toggler").remove();
             }, 200);
         });
-    
+
 //            jQuery(document).ready(function () {
 //                if (!!$("input[name='dateRange']")[0]) {
 //                    jQuery('input[name="dateRange"]').daterangepicker({
@@ -429,6 +440,6 @@
 //            });
 //            window.isMinified = <?= $_SESSION['system']['sidebar_toggler'] ?>;
 //            window.isCollapsed = false;
-        </script>  
-    </script>
+    </script>  
+</script>
 </html>

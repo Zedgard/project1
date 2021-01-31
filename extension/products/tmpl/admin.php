@@ -76,6 +76,8 @@
     var products_id = 0;
     var searchStr = '';
     var visible_products = '1';
+    
+    var products_category = '';
     // если перешли по ссылке откроем товар сразу
     var product_edit = '<?= $_GET['product_edit'] ?>';
 
@@ -88,7 +90,7 @@
             allowClear: true
         });
 
-        var products_category = $(".products_category").select2({
+        products_category = $(".products_category").select2({
             width: "100%",
             placeholder: "Выбирете категории",
             allowClear: true
@@ -263,7 +265,7 @@
                                 //products_wares.val(products_wares_array).trigger("change");
 
                                 // Каталоги
-                                products_category_array = [];
+                                var products_category_array = [];
                                 if (e['data']['products_category'].length > 0) {
                                     for (var i = 0; i < e['data']['products_category'].length; i++) {
                                         products_category_array.push(e['data']['products_category'][i]);

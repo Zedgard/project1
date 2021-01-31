@@ -65,6 +65,14 @@
     var visible_wares = '1';
     $(document).ready(function () {
 
+        var wares_categorys = $(".wares_categorys").select2({
+            width: "100%",
+            placeholder: "Выбирете категории",
+            allowClear: true
+        });
+        
+        getCategoryArray([]);
+
         searchStr = $(".search_wares").val();
         $(".search_wares").delayKeyup(function () {
             var v = $(".search_wares").val();
@@ -152,6 +160,17 @@
                                     $(".form_save_wares").find(".wares_articul").val(e['data']['articul']);
                                     tinymce.get('wares_descr').setContent(e['data']['descr']);
                                     $(".form_save_wares").find(".wares_col").val(e['data']['col']);
+
+                                    // Каталоги
+                                    var wares_categorys_array = [];
+                                    if (e['data']['products_category'].length > 0) {
+                                        for (var i = 0; i < e['data']['products_category'].length; i++) {
+                                            wares_categorys_array.push(e['data']['products_category'][i]);
+                                        }
+                                    }
+                                    getCategoryArray(wares_categorys_array);
+                                    
+
                                     if (e['data']['active'] > 0) {
                                         if (!$(".form_save_wares").find(".wares_active").is(':checked')) {
                                             $(".form_save_wares").find(".wares_active").click();
@@ -160,6 +179,7 @@
                                         $(".form_save_wares").find(".wares_active").removeAttr("checked");
                                     }
                                     /* -- images -- */
+                                    console.log( e['data']['images']);
                                     var images = e['data']['images'].split(',');
                                     for (var i = 0; i < images.length; i++) {
                                         $(".form_save_wares").find(".images").append(get_html_images_block(images[i], i));
@@ -181,6 +201,7 @@
             $(".form_save_wares").find(".wares_title").val("");
             $(".form_save_wares").find(".wares_ex_code").val("");
             $(".form_save_wares").find(".wares_articul").val("");
+            wares_categorys.val([]).trigger("change");
             tinymce.get('wares_descr').setContent("<p></p>");
             $(".form_save_wares").find(".wares_col").val("");
             $(".form_save_wares").find('.images').html("");
@@ -259,6 +280,26 @@
                     function (e) {
                         getWaresArray(searchStr, visible_wares);
                     });
+        });
+    }
+
+    /**
+     * Категории 
+     * @returns {undefined}
+     */
+    function getCategoryArray(v) {
+        console.log('getCategoryArray');
+        $(".wares_categorys option").remove();
+        sendPostLigth('/jpost.php?extension=category', {"getCategoryArray": '1', "searchStr": ''}, function (e) {
+            var data = e['data'];
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    $(".wares_categorys").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                }
+                if (!!v && v.length > 0) {
+                    wares_categorys.val(v).trigger("change");
+                }
+            }
         });
     }
 

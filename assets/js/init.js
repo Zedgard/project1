@@ -24,6 +24,7 @@ $(document).ready(function () {
     init_not_processed_col();
     init_get_emails_col();
     init_btn_send_message();
+    init_office_list_categorys_col();
 
 //    $("#menu").on("click", "a", function (event) {
 //        event.preventDefault();
@@ -90,10 +91,10 @@ function animateTop(val, height) {
 
 var move_start = 0;
 function move(elm, animate) {
-    if(animate.length == 0){
-       animate = 300; 
+    if (animate.length == 0) {
+        animate = 300;
     }
-    console.log('move: ' + elm);
+    //console.log('move: ' + elm);
     if (move_start == 0) {
         setTimeout(function () {
             //event.preventDefault();
@@ -184,7 +185,7 @@ function initCartArray() {
             }
         }
 
-        
+
         if (!!$(".cart_list")) {
             cart_itms = [];
             var total = 0;
@@ -463,6 +464,28 @@ function init_btn_send_message() {
                 alert('Не заполнены поля!');
             }
 
+        });
+    }
+}
+
+
+function init_office_list_categorys_col() {
+    if (!!$(".office_list_categorys")) {
+        sendPostLigth('/jpost.php?extension=wares', {
+            "init_office_list_categorys_col": 1
+        }, function (e) {
+            if (e['data'].length > 0) {
+                var a = 0;
+                for (var i = 0; i < e['data'].length; i++) {
+                    if (!!$(".katalog_elm_col_" + e['data'][i]['category_id'])) {
+                        $(".katalog_elm_col_" + e['data'][i]['category_id']).html(e['data'][i]['col']);
+                    }
+                    a = a + Number(e['data'][i]['col']);
+                }
+                if (!!$('.katalog_elm_col_all')) {
+                    $('.katalog_elm_col_all').html(a);
+                }
+            }
         });
     }
 }
