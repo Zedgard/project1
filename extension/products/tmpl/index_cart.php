@@ -78,7 +78,7 @@
             <?
             if ($p_user->isEditor()) {
                 ?>
-                <div class="text-right"><a href="/admin/products/?product_edit=<?= $productData['id'] ?>" target="_blank" class="btn btn-link">Редактировать товар</a></div>
+                <div class="text-right"><a href="/admin/catalog/?product_edit=<?= $productData['id'] ?>" target="_blank" class="btn btn-link">Редактировать товар</a></div>
                 <?
             }
             ?>

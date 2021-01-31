@@ -14,13 +14,16 @@ $(document).ready(function () {
  */
 function init_pay_data_list() {
     // pay_datas_page
-    sendPostLigth('/jpost.php?extension=pay', {"pay_data_page": pay_num, "search_pay_user_str": search_pay_user_str}, function (e) {
+    sendPostLigth('/jpost.php?extension=pay', {
+        "pay_data_page": pay_num,
+        "search_pay_user_str": search_pay_user_str
+    }, function (e) {
         $(".pay_data tbody").html("");
 
         for (var i = 0; i < e['data'].length; i++) {
             var user_title = '';
             var user_descr = '';
-            var pay_result_id = '';
+            var pay_descr = '';
             if (e['data'][i]['email'].length > 0) {
                 user_title = e['data'][i]['email'];
 
@@ -29,12 +32,14 @@ function init_pay_data_list() {
                 }
                 user_descr = e['data'][i]['first_name'] + ' ' + e['data'][i]['last_name'];
 
-
-                if (e['data'][i]['pay_key'].length > 0) {
-                    pay_result_id = e['data'][i]['pay_key'];
+                if (e['data'][i]['pay_descr'].length > 0) {
+                    pay_descr = e['data'][i]['pay_descr'];
                 }
-                if (e['data'][i]['pay_interkassa_id'].length > 0) {
-                    pay_result_id = e['data'][i]['pay_interkassa_id'];
+                if (e['data'][i]['info'].length > 0) {
+                    pay_descr = '';
+                    for (var a = 0; a < e['data'][i]['info'].length; a++) {
+                        pay_descr = pay_descr + '<div class="mb-2"><img src="' + e['data'][i]['info'][a]['images_str'] + '" style="width:60px;" />' + e['data'][i]['info'][a]['title'] + ' Цена:' + e['data'][i]['info'][a]['price'] + ' <a href="/shop/?product=' + e['data'][i]['info'][a]['id'] + '" target="_blank">>></a></div>';
+                    }
                 }
 
                 var pay_status = e['data'][i]['pay_status'];
@@ -65,7 +70,7 @@ function init_pay_data_list() {
                                     <td class="text-center font-weight-bold">' + e['data'][i]['pay_sum'] + '</td> \
                                     <td class="text-center">' + e['data'][i]['pay_date'] + '</td> \
                                     <td class="text-center">' + pay_status + '</td> \
-                                    <td class="text-center">' + pay_result_id + '</td> \
+                                    <td class="text-center">' + pay_descr + '</td> \
                                     <td class="text-center">' + processed + '</td> \
                                     </tr>');
             }
@@ -148,6 +153,7 @@ function init_pay_info() {
                 " + e['data_user']['email'] + "<br/>\n\
                 " + e['data_user']['phone'] + "<br/>\n\
                 <a href=\"/admin/admin_users/?edit=" + e['data_user']['id'] + "&search_str=" + e['data_user']['email'] + "\" target=\"_blank\">Ред. данные пользователя</a></td></tr>");
+            $(".pay_info_data_products").html("");
             for (var i = 0; i < e['data_products'].length; i++) {
                 $(".pay_info_data_products").append("<tr><td><img src=\"" + e['data_products'][i]['images_str'] + "\" class=\"w-100\"/></td><td><div class=\"mb-3\"><a href=\"/shop/?product=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Просмотреть</a></div>\n\
 <div class=\"mb-3\"><a href=\"/admin/products/?product_edit=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Редактировать</a></div></td></tr>")

@@ -18,13 +18,14 @@
                                 ?>
                             <? endif; ?>
                             <select name="visible" class="form-control w-25 float-left ml-2 visible_wares">
-                                <option value="1">Отображаемые</option>
-                                <option value="0">Не отображаемые</option>
-                                <option value="9">Удаленные</option>
+                                <option value="1" <?= (isset($_SESSION['wares']['visible']) && $_SESSION['wares']['visible'] == 1) ? 'selected="selected"' : '' ?>>Отображаемые</option>
+                                <option value="0" <?= (isset($_SESSION['wares']['visible']) && $_SESSION['wares']['visible'] == 0) ? 'selected="selected"' : '' ?>>Не отображаемые</option>
+                                <option value="9" <?= (isset($_SESSION['wares']['visible']) && $_SESSION['wares']['visible'] == 9) ? 'selected="selected"' : '' ?>>Удаленные</option>
                             </select>
                         </div>
                         <div class="col-4 col-offset-4">
                             <input type="text" class="form-control search_wares" value="<?= $_SESSION['wares']['searchStr'] ?>" placeholder="Поиск товаров...">
+                            <div class="float-right" style="font-size: 0.7rem;">Найдено <span class="search_wares_col"></span></div>
                         </div>
 
                     </div>
@@ -70,7 +71,7 @@
             placeholder: "Выбирете категории",
             allowClear: true
         });
-        
+
         getCategoryArray([]);
 
         searchStr = $(".search_wares").val();
@@ -94,7 +95,9 @@
             $(".wares_arrays_data tbody tr").remove();
             sendPostLigth('/jpost.php?extension=wares', {"getWaresArray": '1', "searchStr": searchStr, "visible": visible}, function (e) {
                 var data = e['data'];
+                $(".search_wares_col").html(0);
                 if (data.length > 0) {
+                    $(".search_wares_col").html(data.length);
                     for (var i = 0; i < data.length; i++) {
                         var checked = '';
                         var active_str = 'не отображается';
@@ -106,9 +109,6 @@
                         if (data[i]['is_delete'] > 0) {
                             is_delete_str = 'удален';
                         }
-
-
-
                         $(".wares_arrays_data tbody").append(
                                 '<tr elm_id="' + data[i]['id'] + '"> \n\
                                 <td>' + data[i]['id'] + '</td>\n\
@@ -169,7 +169,7 @@
                                         }
                                     }
                                     getCategoryArray(wares_categorys_array);
-                                    
+
 
                                     if (e['data']['active'] > 0) {
                                         if (!$(".form_save_wares").find(".wares_active").is(':checked')) {
@@ -179,7 +179,7 @@
                                         $(".form_save_wares").find(".wares_active").removeAttr("checked");
                                     }
                                     /* -- images -- */
-                                    console.log( e['data']['images']);
+                                    console.log(e['data']['images']);
                                     var images = e['data']['images'].split(',');
                                     for (var i = 0; i < images.length; i++) {
                                         $(".form_save_wares").find(".images").append(get_html_images_block(images[i], i));

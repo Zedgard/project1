@@ -12,9 +12,8 @@ if (isset($_POST['getWaresArray'])) {
     $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
     $visible = (strlen($_POST['visible']) > 0) ? $_POST['visible'] : '';
 
-    if (strlen($searchStr) > 0) {
-        $_SESSION['wares']['searchStr'] = $searchStr;
-    }
+    $_SESSION['wares']['searchStr'] = $searchStr;
+    $_SESSION['wares']['visible'] = $visible;
     $data = $pr_wares->getWaresArray($searchStr, $visible);
 
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);

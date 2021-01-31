@@ -11,7 +11,7 @@
 
                     <div class="row mb-3">
                         <div class="col-6">
-                            <input type="text" class="form-control search_pay_user" placeholder="Поиск...">
+                            <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, типу, телефону...">
                         </div>
                         <div class="col-6 text-right">
 
@@ -98,7 +98,7 @@
                                             <th class="text-center">Платеж</th>
                                             <th class="text-center">Дата</th>
                                             <th class="text-center">Статус</th>
-                                            <th class="text-center">Идентификатор</th>
+                                            <th class="text-center">Товары</th>
                                             <th class="text-center"></th>
                                         </tr>
                                     </thead>

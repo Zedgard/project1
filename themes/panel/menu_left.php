@@ -24,8 +24,8 @@
             </a> 
         </li>
 
-        <li  class="has-sub <?= ($_SESSION['page_url'] == 'products') ? 'active' : '' ?> ">
-            <a class="sidenav-item-link" href="/admin/products/">
+        <li  class="has-sub <?= ($_SESSION['page_url'] == 'catalog') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/admin/catalog/">
                 <i class="mdi mdi-shopping"></i>
                 <span class="nav-text">Каталог</span> 
             </a> 

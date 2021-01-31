@@ -53,27 +53,27 @@ class products extends \project\extension {
     public function getProductsArray($active, $searchStr) {
         if (strlen($searchStr) > 0) {
             $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
-            $d = $this->getSelectArray($querySelect, array($active, $searchStr));
+            $data = $this->getSelectArray($querySelect, array($active, $searchStr));
         } else {
             if ($active == 9) {
                 $querySelect = "SELECT * FROM `zay_product` WHERE `is_delete`='1' order by lastdate desc";
-                $d = $this->getSelectArray($querySelect, array());
+                $data = $this->getSelectArray($querySelect, array());
             } else {
                 $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `is_delete`='0' order by id desc";
-                $d = $this->getSelectArray($querySelect, array($active));
+                $data = $this->getSelectArray($querySelect, array($active));
             }
         }
-        $data = array();
-        foreach ($d as $key => $value) {
+
+        for ($i = 0; $i < count($data); $i++) {
             //$value['images_str'];
-            $image = $value['images_str'];//$this->checkImageFile($value['images_str']);
+            $image = $data[$i]['images_str']; //$this->checkImageFile($value['images_str']);
             if (strlen($image) > 0) {
-                $value['images_str'] = $value['images_str'];
+                $data[$i]['images_str'] = $image;
                 ;
             } else {
-                $value['images_str'] = '/assets/img/no_tovar_bg.jpg';
+                $data[$i]['images_str'] = '/assets/img/no_tovar_bg.jpg';
             }
-            $data[] = $value;
+            $data[$i]['wares_info'] = $this->getProducts_waresInfo($data[$i]['id']);
         }
         return $data;
     }
@@ -134,7 +134,7 @@ class products extends \project\extension {
                     . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', "
                     . "`images_str`='?', `product_new`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active, $id),0)) {
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active, $id), 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);

@@ -47,7 +47,9 @@ class pay extends \project\extension {
                 . "{$where} "
                 . "ORDER BY p.`id` DESC LIMIT ?";
         $data = $sqlLight->queryList($querySelect, $queryArray, 0);
-
+        for ($i = 0; $i < count($data); $i++) {
+            $data[$i]['info'] = $this->get_pay_products_info($data[$i]['id']);
+        }
         return $data;
     }
 
@@ -62,7 +64,7 @@ class pay extends \project\extension {
                 . "WHERE p.id='?'";
         return $this->getSelectArray($querySelect, array($id))[0];
     }
-    
+
     /**
      * информация по транзакции
      * @param type $id
@@ -74,7 +76,6 @@ class pay extends \project\extension {
                 . "where pp.pay_id='?' ORDER BY `pay_id` ASC";
         return $this->getSelectArray($querySelect, array($id));
     }
-    
 
     /**
      * Отметить что запись просмотрена

@@ -10,9 +10,10 @@ $pr_products = new \project\products();
 if (isset($_POST['getProductsArray'])) {
     $searchStr = (isset($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
     $active = (isset($_POST['visible_products'])) ? $_POST['visible_products'] : '1';
-    if(strlen($searchStr) > 0){
-        $_SESSION['product']['searchStr'] = $searchStr;
-    }
+
+    $_SESSION['product']['searchStr'] = $searchStr;
+    $_SESSION['product']['active'] = $active;
+
     $data = $pr_products->getProductsArray($active, $searchStr);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
@@ -59,6 +60,7 @@ if (isset($_POST['edit_products'])) {
     if ($pr_products->insertOrUpdateProducts($products_id, $products_title, $products_desc_minimal,
                     $products_price, $products_price_promo, $products_desc, $products_sold, $images_str, $product_new, $products_active)) {
         $result = array('success' => 1, 'success_text' => 'Выполнено');
+        $_SESSION['product']['searchStr'] = '';
         $_SESSION['message'][] = 'Успешно выполнено';
     } else {
         $_SESSION['errors'][] = 'Ошибка операции';
@@ -153,13 +155,13 @@ if (isset($_POST['block_data_edit'])) {
     $block_type = $_POST['block_type'];
     $row = $_POST['row'];
     $val = $_POST['val'];
-    
-    if($block_type == 'block_trailer'){
+
+    if ($block_type == 'block_trailer') {
         $ex = array_reverse(explode('/', $val));
         $val = 'http://www.youtube.com/embed/' . $ex[0];
     }
-    
-    
+
+
     if (!$pr_products->blockDataEdit($id, $products_id, $block_type, $row, $val)) {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
     }

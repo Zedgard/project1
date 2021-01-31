@@ -30,13 +30,14 @@
                                 ?>
                             <? endif; ?>
                             <select name="visible" class="form-control w-25 float-left ml-2 visible_products">
-                                <option value="1">Отображаемые</option>
-                                <option value="0">Не отображаемые</option>
-                                <option value="9">Удаленные</option>
+                                <option value="1" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 1) ? 'selected="selected"' : '' ?>>Отображаемые</option>
+                                <option value="0" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 0) ? 'selected="selected"' : '' ?>>Не отображаемые</option>
+                                <option value="9" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 9) ? 'selected="selected"' : '' ?>>Удаленные</option>
                             </select>
                         </div>
                         <div class="col-4 col-offset-4">
                             <input type="text" class="form-control search_products" value="<?= $_SESSION['product']['searchStr'] ?>" placeholder="Поиск...">
+                            <div class="float-right" style="font-size: 0.7rem;">Найдено <span class="search_products_col"></span></div>
                         </div>
 
                     </div>
@@ -49,7 +50,7 @@
                                         <th style="text-align: center;">id</th>
                                         <th style="text-align: center;"></th>
                                         <th>Наименование</th>
-                                        <!--<th style="text-align: center;">Описание краткое</th>-->
+                                        <th style="text-align: center;">Товары</th>
                                         <th style="text-align: center;">Цена</th>
                                         <th style="text-align: center;">Продажи</th>
                                         <th style="text-align: center;">Отображение</th>
@@ -76,7 +77,7 @@
     var products_id = 0;
     var searchStr = '';
     var visible_products = '1';
-    
+
     var products_category = '';
     // если перешли по ссылке откроем товар сразу
     var product_edit = '<?= $_GET['product_edit'] ?>';
@@ -171,8 +172,8 @@
         searchStr = $(".search_products").val();
         $(".search_products").delayKeyup(function () {
             var v = $(".search_products").val();
-                searchStr = v;
-                getProductsArray();
+            searchStr = v;
+            getProductsArray();
         }, 700);
 //        $(".search_products").change(function () {
 //            searchStr = $(this).val();
@@ -192,7 +193,9 @@
                     }, function (e) {
                 $(".products_arrays_data tbody tr").remove();
                 var data = e['data'];
+                $(".search_products_col").html(0);
                 if (data.length > 0) {
+                    $(".search_products_col").html(data.length);
                     for (var i = 0; i < data.length; i++) {
                         let checked = '';
                         if (data[i]['active'] > 0) {
@@ -204,12 +207,20 @@
                             price = data[i]['price_promo'] + ' <span class="price_promo">promo</span>';
                         }
 
+                        var waress = '';
+                        if (data[i]['wares_info'].length > 0) {
+                            for (var a = 0; a < data[i]['wares_info'].length; a++) {
+                                waress = waress + '<div class="mb-2" title="Просмотреть информацию по товару">' + data[i]['wares_info'][a]['title'] + ' <a href="/admin/wares/?edit=' + data[i]['wares_info'][a]['id'] + '" target="_blank">>></a></div>';
+                            }
+                        }
+
                         // <td style="text-align: center;">' + data[i]['desc_minimal'] + '</td>\n\
                         $(".products_arrays_data tbody").append(
                                 '<tr elm_id="' + data[i]['id'] + '"> \n\
                                 <td style="text-align: center;">' + data[i]['id'] + '</td>\n\
                                 <td style="text-align: center;"><img src="' + data[i]['images_str'] + '" style="width: 100px;" /></td>\n\
                                 <td><a href="/shop/?product=' + data[i]['id'] + '" target="_blank">' + data[i]['title'] + '</a></td>\n\
+                                <td style="text-align: center;">' + waress + '</td>\n\
                                 <td style="text-align: center;">' + price + '</td>\n\
                                 <td style="text-align: center;">' + data[i]['sold'] + '</td>\n\
                                 <td style="text-align: center;">\n\
