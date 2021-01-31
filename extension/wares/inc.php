@@ -104,6 +104,9 @@ class wares extends \project\extension {
      * @return boolean
      */
     public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active) {
+        if (strlen($col) == 0) {
+            $col = 0;
+        }
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
                     . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `ex_code`='?', `articul`='?', `images`='?', `active`='?', "
@@ -353,7 +356,7 @@ class wares extends \project\extension {
         if ($_SESSION['user']['info']['id'] > 0) {
             $category_sql = "";
             $vals[] = $_SESSION['user']['info']['id'];
-            if($category_id > 0){
+            if ($category_id > 0) {
                 $category_sql = " and wcat.category_id='?' ";
                 $vals[] = $category_id;
             }
@@ -367,9 +370,9 @@ class wares extends \project\extension {
                         . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
                         . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
                         . "{$category_sql} "
-                        . "and (pcat.category_id<>2 or pcat.category_id is null) " 
+                        . "and (pcat.category_id<>2 or pcat.category_id is null) "
                         . "order by w.`title` asc ";
-                        //echo "{$querySelect}\n\n";
+                //echo "{$querySelect}\n\n";
                 $objs = $this->getSelectArray($querySelect, $vals, 0);
                 return $objs;
             } else {
@@ -394,7 +397,7 @@ class wares extends \project\extension {
      */
     public function getClientWebinarsProducts($wares_id = 0) {
         if ($_SESSION['user']['info']['id'] > 0) {
-            
+
             if ($wares_id == 0) {
                 $querySelect = "SELECT DISTINCT w.*, wcat.category_id FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "

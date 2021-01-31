@@ -92,9 +92,10 @@
          */
         function getWaresArray(str, visible) {
             searchStr = str;
-            $(".wares_arrays_data tbody tr").remove();
+            
             sendPostLigth('/jpost.php?extension=wares', {"getWaresArray": '1', "searchStr": searchStr, "visible": visible}, function (e) {
                 var data = e['data'];
+                $(".wares_arrays_data tbody tr").remove();
                 $(".search_wares_col").html(0);
                 if (data.length > 0) {
                     $(".search_wares_col").html(data.length);
