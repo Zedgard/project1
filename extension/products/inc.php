@@ -164,8 +164,8 @@ class products extends \project\extension {
      */
     public function insertProductWares($product_id, $wares_ids_array) {
         if ($product_id > 0) {
-            $query = "DELETE FROM `zay_product_wares` WHERE `product_id`='?' ";
-            $this->query($query, array($product_id));
+            $queryDelete = "DELETE FROM `zay_product_wares` WHERE `product_id`='?' ";
+            $this->query($queryDelete, array($product_id));
             $col = count($wares_ids_array);
             if ($col > 0) {
                 for ($i = 0; $i < $col; $i++) {
@@ -183,8 +183,8 @@ class products extends \project\extension {
      */
     public function insertProductCategory($product_id, $category_ids_array) {
         if ($product_id > 0) {
-            $query = "DELETE FROM `zay_product_category` WHERE `product_id`='?' ";
-            $this->query($query, array($product_id));
+            $queryDelete = "DELETE FROM `zay_product_category` WHERE `product_id`='?' ";
+            $this->query($queryDelete, array($product_id));
             $col = count($category_ids_array);
             if ($col > 0) {
                 foreach ($category_ids_array as $value) {
@@ -202,8 +202,8 @@ class products extends \project\extension {
      */
     public function insertProductTopic($product_id, $topic_ids_array) {
         if ($product_id > 0) {
-            $query = "DELETE FROM `zay_product_topic` WHERE `product_id`='?' ";
-            $this->query($query, array($product_id));
+            $queryDelete = "DELETE FROM `zay_product_topic` WHERE `product_id`='?' ";
+            $this->query($queryDelete, array($product_id));
             $col = count($topic_ids_array);
             if ($col > 0) {
                 for ($i = 0; $i < $col; $i++) {

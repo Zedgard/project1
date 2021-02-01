@@ -146,15 +146,17 @@ if ($user->isEditor()) {
     }
 
     if (isset($_POST['userAuth']) && $_POST['userAuth'] > 0) {
+        $_SESSION['user']['other'] = 1;
         $user_id = $_POST['userAuth'];
         $data = $user->getUserInfo($user_id);
+        $_SESSION['user']['other_info'] = $_SESSION['user']['info'];
         $_SESSION['user']['info'] = $data;
         if (\project\user::isAdmin() || \project\user::isEditor()) {
             $url = '/admin/';
             $r = 1;
         }
         if (\project\user::isClient()) {
-            $url = '/office/';
+            $url = '/office/?katalog';
             $r = 1;
         }
         if ($r == 0) {

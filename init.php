@@ -48,6 +48,11 @@ $_SESSION['body_javascript'] = array();
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
 }
+// Для авторизации под другим пользователем
+if (!isset($_SESSION['user']['other'])) {
+    $_SESSION['user']['other'] = 0;
+    $_SESSION['user']['other_info'] = array();
+}
 
 /*
  * Глобальные

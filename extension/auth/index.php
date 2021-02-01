@@ -42,7 +42,7 @@ if ($_GET['set_email_true']) {
 }
 
 // Авторизация спомощью cookie
-if (isset($_COOKIE["edgard_master_cookie_token"])) {
+if ($_SESSION['user']['other'] == 0 && isset($_COOKIE["edgard_master_cookie_token"])) {
     $auth->authorization_cookie($_COOKIE["edgard_master_cookie_token"]);
 }
 
@@ -55,8 +55,9 @@ if ($user->isAdmin()) {
 if ($user->isEditor()) {
     location_href('/admin/');
 }
+
 if ($user->isClient()) {
-    location_href('/office/');
+    //location_href('/office/?katalog');
 }
 
 /*

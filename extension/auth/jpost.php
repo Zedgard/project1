@@ -54,9 +54,15 @@ if (isset($_POST['registration'])) {
  * Выход
  */
 if (isset($_POST['logout'])) {
-    $auth->unset_cookie();
-    unset($_SESSION['user']);
-    $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/', 'action_time' => '0');
+    if ($_SESSION['user']['other'] == 1) {
+        $_SESSION['user']['info'] = $_SESSION['user']['other_info'];
+        $_SESSION['user']['other'] == 0;
+        $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/admin/', 'action_time' => '0');
+    } else {
+        $auth->unset_cookie();
+        unset($_SESSION['user']);
+        $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/', 'action_time' => '0');
+    }
 }
 /*
  * Восстановление пароля

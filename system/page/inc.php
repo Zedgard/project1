@@ -66,7 +66,6 @@ class page {
             /*
              * Если страница открыта только для определенной роли то необходима авторизация
              */
-            //print_r($roles);
             $user_role = 0;
             if (count($roles) > 0) {
                 $r = array();
@@ -78,6 +77,10 @@ class page {
                         }
                     }
 
+                    // если зашел админ под учеткой пользователя он мет смотреть данные
+                    if ($user_role == 0 && $_SESSION['user']['other'] == 1) {
+                        $user_role = 1;
+                    }
                     //}
 //                    if ($_SESSION['user']['info']['role_id'] == $roles[$i]['role_id']) {
 //                        $user_role = 1;
@@ -87,8 +90,12 @@ class page {
                     $r[] = $roles[$i]['role_id'];
                 }
                 $_SESSION['page']['roles'] = $r;
+                /*
+                 * Если нет роли значит учетка не активирована
+                 */
                 if ($user_role == 0) {
                     // отправим на страницу авторизации
+                    echo 333;
                     //$page = $this->getPageInfoOrUrl('index');
                     $_SESSION['site_title'] = $_SESSION['site_title'] . ' - cтраница не найдена ';
                     $_SESSION['page'] = array();
@@ -889,7 +896,7 @@ class page {
     /**
      * Javascript на всех страницах
      * @return type
-     */ 
+     */
     public function javascript() {
         $config = new \project\config();
         ob_start();

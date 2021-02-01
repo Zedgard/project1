@@ -180,7 +180,14 @@ class user extends \project\extension {
     }
 
     static public function isClient() {
-        $role_privilege = $_SESSION['user']['info']['role_privilege'];
+        if (trim($_SESSION['user']['info']['role_privilege']) == '') {
+            if($_SESSION['user']['other'] == 1){
+                $role_privilege = 1;
+                $_SESSION['user']['info']['role_privilege'] = 1;
+            }
+        } else { 
+            $role_privilege = $_SESSION['user']['info']['role_privilege'];
+        }
         if ($role_privilege > 0 && $role_privilege < 2) {
             return true;
         }

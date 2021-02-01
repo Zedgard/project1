@@ -59,19 +59,10 @@ $p_auth = new \project\auth();
 //    echo 'Not';
 //}
 // send_emails
-/*
- * Система управления
- * 
- * Управление данными 
- * 
- * Настройка шаблона 
- * 
- * Расширения
- *  
- */
-
+//print_r($_SESSION);
 // Авторизация спомощью cookie
-if (isset($_COOKIE["edgard_master_cookie_token"])) {
+//echo 'edgard_master_cookie_token: ' . $_COOKIE["edgard_master_cookie_token"];
+if ($_SESSION['user']['other'] == 0 && isset($_COOKIE["edgard_master_cookie_token"])) {
     $p_auth->authorization_cookie($_COOKIE["edgard_master_cookie_token"]);
 }
 
