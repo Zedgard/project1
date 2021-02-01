@@ -102,6 +102,12 @@
             placeholder: "Выбирете темы",
             allowClear: true
         });
+        
+        var product_theme = $(".product_theme").select2({
+            width: "100%",
+            placeholder: "Выбирете темы",
+            allowClear: true
+        });
 
         $(".visible_products").change(function () {
             visible_products = $(this).val();
@@ -163,6 +169,25 @@
                     }
                     if (!!v && v.length > 0) {
                         products_topic.val(v).trigger("change");
+                    }
+                }
+            });
+        }
+        
+        /**
+         * Темы 
+         * @returns {undefined}
+         */
+        function getProductThemeArray(v) {
+            $(".product_theme option").remove();
+            sendPostLigth('/jpost.php?extension=category', {"getProductTheme": '1', "searchStr": ''}, function (e) {
+                var data = e['data'];
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        $(".product_theme").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                    }
+                    if (!!v && v.length > 0) {
+                        product_theme.val(v).trigger("change");
                     }
                 }
             });
@@ -285,17 +310,23 @@
                                 //products_category.val(products_category_array).trigger("change");
 
                                 // Темы
-                                products_topic_array = [];
+                                var products_topic_array = [];
                                 if (e['data']['products_topic'].length > 0) {
                                     for (var i = 0; i < e['data']['products_topic'].length; i++) {
                                         products_topic_array.push(e['data']['products_topic'][i]);
                                     }
                                 }
-                                //products_topic.val(products_topic_array).trigger("change");
+                                var products_theme_array = [];
+                                if (e['data']['products_theme'].length > 0) {
+                                    for (var i = 0; i < e['data']['products_theme'].length; i++) {
+                                        products_theme_array.push(e['data']['products_theme'][i]);
+                                    }
+                                }
 
                                 getWaresArray(products_wares_array);
                                 getTopicArray(products_topic_array);
                                 getCategoryArray(products_category_array);
+                                getProductThemeArray(products_theme_array);
 
 
                                 tinymce.get('products_desc_minimal').setContent(e['data']['desc_minimal']);
@@ -375,6 +406,7 @@
             products_wares.val([]).trigger("change");
             products_category.val([]).trigger("change");
             products_topic.val([]).trigger("change");
+            product_theme.val([]).trigger("change");
             tinymce.get('products_desc_minimal').setContent("<p></p>");
             tinymce.get('products_desc').setContent("<p></p>");
             $(".form_save_products").find(".products_sold").val("");
@@ -400,6 +432,7 @@
             var products_wares = $(".form_save_products").find(".products_wares").val();
             var products_topic = $(".form_save_products").find(".products_topic").val();
             var products_category = $(".form_save_products").find(".products_category").val();
+            var products_theme = $(".form_save_products").find(".product_theme").val();
             var products_desc_minimal = tinymce.get('products_desc_minimal').getContent();
             var products_desc = tinymce.get('products_desc').getContent();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
@@ -429,6 +462,7 @@
                         "products_wares": products_wares,
                         "products_topic": products_topic,
                         "products_category": products_category,
+                        "products_theme": products_theme,
                         "products_desc_minimal": products_desc_minimal,
                         "products_desc": products_desc,
                         "products_sold": products_sold,
@@ -455,6 +489,7 @@
             getWaresArray([]);
             getTopicArray([]);
             getCategoryArray([]);
+            getProductThemeArray([]);
         });
 
         /**

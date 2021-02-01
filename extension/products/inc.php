@@ -10,6 +10,7 @@ class products extends \project\extension {
     private $products_wares = array();
     private $products_category = array();
     private $products_topic = array();
+    private $products_theme = array();
 
     public function __construct() {
         parent::__construct();
@@ -37,6 +38,16 @@ class products extends \project\extension {
 
     /**
      * Темы
+     * @param type $products_theme
+     */
+    function setProducts_theme($products_theme) {
+        if (is_array($products_theme)) {
+            $this->products_theme = $products_theme;
+        }
+    }
+    
+    /**
+     * Темы продукта
      * @param type $products_topic
      */
     function setProducts_topic($products_topic) {
@@ -44,6 +55,7 @@ class products extends \project\extension {
             $this->products_topic = $products_topic;
         }
     }
+    
 
     /**
      * Список продуктов с реализацией поиска
@@ -93,6 +105,7 @@ class products extends \project\extension {
             $obj_product['products_wares'] = $this->getProducts_wares($obj_product['id']);
             $obj_product['products_category'] = $this->getProducts_category($obj_product['id']);
             $obj_product['products_topic'] = $this->getProducts_topic($obj_product['id']);
+            $obj_product['products_theme'] = $this->getProducts_theme($obj_product['id']);
 
             if (count($obj_product['products_category']) > 0) {
                 $category = new category();
@@ -138,6 +151,7 @@ class products extends \project\extension {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
+                $this->insertProductTheme($id, $this->products_theme);
                 return true;
             }
         } else {
@@ -150,6 +164,7 @@ class products extends \project\extension {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
+                $this->insertProductTheme($id, $this->products_theme);
                 return true;
             }
         }
@@ -213,6 +228,25 @@ class products extends \project\extension {
             }
         }
     }
+    
+    /**
+     * Привязка теме продукта
+     * @param type $product_id продукт ид
+     * @param type $theme_ids массив категорий
+     */
+    public function insertProductTheme($product_id, $theme_ids_array) {
+        if ($product_id > 0) {
+            $queryDelete = "DELETE FROM `zay_product_theme` WHERE `product_id`='?' ";
+            $this->query($queryDelete, array($product_id));
+            $col = count($theme_ids_array);
+            if ($col > 0) {
+                for ($i = 0; $i < $col; $i++) {
+                    $query = "INSERT INTO `zay_product_theme`(`product_id`, `theme_id`) VALUES ('?','?') ";
+                    $this->query($query, array($product_id, $theme_ids_array[$i]));
+                }
+            }
+        }
+    }
 
     /**
      * Список ID связанных товаров 
@@ -260,6 +294,17 @@ class products extends \project\extension {
         $querySelect = "SELECT t.product_id, GROUP_CONCAT(t.topic_id) as topic_ids FROM `zay_product_topic` t WHERE t.`product_id`='?' GROUP BY t.product_id ";
         $this->products_topic = explode(',', $this->getSelectArray($querySelect, array($product_id))[0]['topic_ids']);
         return $this->products_topic;
+    }
+    
+    /**
+     * Список ID связанных тем 
+     * @param type $product_id
+     * @return type
+     */
+    function getProducts_theme($product_id) {
+        $querySelect = "SELECT t.product_id, GROUP_CONCAT(t.theme_id) as theme_ids FROM `zay_product_theme` t WHERE t.`product_id`='?' GROUP BY t.product_id ";
+        $this->products_theme = explode(',', $this->getSelectArray($querySelect, array($product_id))[0]['theme_ids']);
+        return $this->products_theme;
     }
 
     /**
@@ -310,7 +355,7 @@ class products extends \project\extension {
      * @param type $ProductNew новый продукт
      * @return type array
      */
-    public function getProductsIndex($searchStr, $searchCategoryIdStr = '', $searchTopicIdStr = '', $ProductPromo = '', $ProductNew = '') {
+    public function getProductsIndex($searchStr, $searchCategoryIdStr = '', $searchTopicIdStr = '', $ProductPromo = '', $ProductNew = '', $product_theme = '') {
         $data = array();
         $queryArray = array();
 
@@ -351,23 +396,32 @@ class products extends \project\extension {
         if ($ProductNew > 0) {
             $queryValProductNew = 'and p.product_new > 0';
         }
+        
+        $queryValTroductTheme = '';
+        if ($product_theme > 0) {
+            $queryValTroductTheme = " and pth.theme_id = '?' ";
+            $queryArray[] = $product_theme; 
+        }
 
         $querySelect = "SELECT p2.*, 
             (SELECT GROUP_CONCAT(pw.`wares_id`) FROM `zay_product_wares` pw WHERE `product_id`=p2.`id`) as wares_ids,
             (SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p2.`id`) as category_ids,
-            (SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p2.`id`) as topic_ids
+            (SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p2.`id`) as topic_ids,
+            (SELECT GROUP_CONCAT(t.`theme_id`) FROM `zay_product_theme` t WHERE t.`product_id`=p2.`id`) as product_theme_ids
                 from `zay_product` p2 
                         where p2.id in(
                             SELECT p.id
                                 FROM `zay_product` p
                                 left join `zay_product_category` c on c.product_id=p.id
                                 left join `zay_product_topic` t on t.product_id=p.id
+                                left join `zay_product_theme` pth on pth.product_id=p.id
                                 where p.`active`='1' and p.`is_delete`='0'  
                                 {$queryValSearchStr} 
                                 {$queryValCategory} 
                                 {$queryValTopic}
                                 {$queryValPromo}
                                 {$queryValProductNew}
+                                {$queryValTroductTheme}
                             GROUP by p.id   
                         )";
 

@@ -9,6 +9,10 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="" style="padding: 1rem;background-color: #FFFFFF;position: fixed;top: 2rem;right: 5%;z-index: 9;">
+                    <span class="btn btn-primary btn_save_products">Сохранить</span>
+                </div>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
@@ -33,6 +37,13 @@
                         <div class="form-group">
                             <label for="config_code">Категории</label>
                             <select class="form-control products_category" name="states[]" multiple="multiple" style="width: 100%">
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="config_code">Тема продукта</label>
+                            <select class="form-control product_theme" name="states[]" multiple="multiple" style="width: 100%">
 
                             </select>
                         </div>
@@ -87,11 +98,11 @@
                         <?
                         include 'block_profit.php';
                         ?>
-                        
+
                         <?
                         include 'block_trailer.php';
                         ?>
-                        
+
                         <?
                         include 'block_feedback.php';
                         ?>

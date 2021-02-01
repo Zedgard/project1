@@ -31,8 +31,58 @@
             </div>
         </div>
     </div>
+    <style>
 
-    <div class="row mt-4 mr-2 pt-4 pb-4 border-radius025 product_topics">
+        .product_theme_btn{
+            width: 100%;
+            padding: 0.8rem 0;
+            text-align: center;
+            color: #FFFFFF;
+            font-size: 1rem;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+        }
+        .product_theme_btn:hover{
+            cursor: pointer;
+        }
+    </style>
+    <div class="row mt-1 mr-2 pt-3 pb-4">
+
+        <?
+        foreach ($themeArray as $value) {
+            //$colorArray[$value['id']] = randomColor();
+            $theme_color = '';
+            if (strlen($value['color']) > 0) {
+                $color = str_replace(', 0.2', '', $value['color']);
+                $theme_color = "background-color: {$color};";
+                $fontweight = '';
+                if ($_SESSION['product']['filter']['product_theme'] == $value['id']) {
+                    $fontweight = 'font-weight: bold;';
+                }
+            }
+            ?>
+            <style>
+                .product_theme_shadow<?= $value['id'] ?>{
+                    -webkit-box-shadow: 0px 6px 8px 0px <?= $value['color'] ?>;
+                    -moz-box-shadow: 0px 6px 8px 0px <?= $value['color'] ?>;
+                    box-shadow: 0px 6px 8px 0px <?= $value['color'] ?>;
+                }
+                .product_theme_shadow<?= $value['id'] ?>:hover{
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                    box-shadow: none;
+                }
+            </style>
+            <div class="mt-3 product_theme_btn product_theme_shadow<?= $value['id'] ?>" elm_id="<?= $value['id'] ?>" style="<?= $theme_color . $fontweight ?>">
+                <div><?= $value['title'] ?></div>
+            </div>
+            <?
+        }
+        ?>
+    </div>
+
+    <div class="row mt-3 mr-2 pt-4 pb-4 border-radius025 product_topics">
         <div class="col-12">
             <div class="category_list">Категории:</div>
             <div class="topics mt-2">
@@ -59,9 +109,10 @@
                         <!--
                         <a href="?productTopic=<?= $value['id'] ?>" class="itm_topic"><?= $value['title'] ?> <span>(<?= $value['product_col'] ?>)</span></a>
                         -->
-                        <label class="control outlined control-checkbox"><input type="checkbox" value="<?= $value['id'] ?>" name="check_categorys" class="check_categorys" 
-                                                                                <?= (in_array($value['id'], $_SESSION['product']['filter']['check_categorys'])) ? 'checked="checked"' : '' ?>>
-                                                                                    <?= $value['title'] ?>
+                        <label class="control outlined control-checkbox">
+                            <input type="checkbox" value="<?= $value['id'] ?>" name="check_categorys" class="check_categorys" 
+                                   <?= (in_array($value['id'], $_SESSION['product']['filter']['check_categorys'])) ? 'checked="checked"' : '' ?>>
+                                       <?= $value['title'] ?>
                                 <div class="control-indicator"></div>
                         </label>
                     </div>

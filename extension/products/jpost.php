@@ -43,6 +43,7 @@ if (isset($_POST['edit_products'])) {
     $products_title = (isset($_POST['products_title'])) ? $_POST['products_title'] : '';
     $products_wares = (isset($_POST['products_wares'])) ? $_POST['products_wares'] : '';
     $products_category = (isset($_POST['products_category'])) ? $_POST['products_category'] : '';
+    $products_theme = (isset($_POST['products_theme'])) ? $_POST['products_theme'] : '';
     $products_topic = (isset($_POST['products_topic'])) ? $_POST['products_topic'] : '';
     $products_desc_minimal = (isset($_POST['products_desc_minimal'])) ? $_POST['products_desc_minimal'] : '';
     $products_desc = (isset($_POST['products_desc'])) ? $_POST['products_desc'] : '';
@@ -56,6 +57,7 @@ if (isset($_POST['edit_products'])) {
     $pr_products->setProducts_wares($products_wares);
     $pr_products->setProducts_category($products_category);
     $pr_products->setProducts_topic($products_topic);
+    $pr_products->setProducts_theme($products_theme);
 
     if ($pr_products->insertOrUpdateProducts($products_id, $products_title, $products_desc_minimal,
                     $products_price, $products_price_promo, $products_desc, $products_sold, $images_str, $product_new, $products_active)) {
@@ -108,6 +110,9 @@ if (isset($_POST['check_categorys'])) {
     }
 }
 
+if (isset($_POST['click_product_theme'])) {
+    $_SESSION['product']['filter']['product_theme'] = $_POST['click_product_theme'];
+}
 
 /* Рейтинг */
 if (isset($_POST['product_reviews'])) {

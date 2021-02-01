@@ -24,6 +24,7 @@ $page = new \project\page();
 
 $categoryArray = $c_category->getCategoryArray('product_category', '');
 $topicArray = $c_category->getCategoryArray('product_topic', ''); // $c_topic->getTopicArray(''); 
+$themeArray = $c_category->getCategoryArray('product_theme', ''); // $c_topic->getTopicArray(''); 
 //productSearchString
 /*
  * Настройки фильтров
@@ -50,8 +51,13 @@ if (isset($_SESSION['product']['filter']['productSearchString']) && strlen($_SES
     $productSearchString = $_SESSION['product']['filter']['productSearchString'];
 }
 
+$product_theme = '0';
+if (isset($_SESSION['product']['filter']['product_theme'])) {
+    $product_theme = $_SESSION['product']['filter']['product_theme'];
+}
+
 /* Все продукты сайта с учетом фильтра */
-$productsFilterArray = $c_product->getProductsIndex($productSearchString, '', $productTopicStr, $ProductPromo, $ProductNew);
+$productsFilterArray = $c_product->getProductsIndex($productSearchString, '', $productTopicStr, $ProductPromo, $ProductNew, $product_theme);
 $productsFilterCount = count($productsFilterArray);
 
 // Для рекомендаций

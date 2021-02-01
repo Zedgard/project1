@@ -36,3 +36,10 @@ if (isset($_POST['getTopicArray'])) {
     $data = $pr_category->getCategoryArray('product_topic', $searchStr);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+// Все категорий продуктов с фильром
+if (isset($_POST['getProductTheme'])) {
+    $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
+    $data = $pr_category->getCategoryArray('product_theme', $searchStr);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
