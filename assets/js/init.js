@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//var productMenuShow = 0;
+var w = 0;
 
 $(document).ready(function () {
     /*
@@ -46,23 +48,79 @@ $(document).ready(function () {
             if (h > 600) {
                 s = 150;
             }
+
             if ($(window).scrollTop() > s) {
+                //$(".product-menu-show").show(200);
+                //$(".border-top-none").css("height", "200px");
+
                 $('.border-top-0').animate({'top': '0px'}, 500);
 
                 $(".border-top-0").css("background-color", '#FFFFFF').css('background-image', "url('/themes/site1/images/top_bg.png')");
                 $(".border-top-0").css('position', 'fixed').css('box-shadow', '0 5px 5px -5px rgba(0, 0, 0, .5');
             } else {
+                //$(".product-menu-show").hide(200);
                 $('.border-top-0').stop(true).animate({'top': '-200px'}, 500);
                 $(".border-top-0").css('position', '').css("background-color", '').css('background-image', "");
                 $(".border-top-0").css('box-shadow', '');
             }
+
+
         });
         $('#slidebox .close').bind('click', function () {
             $(this).parent().remove();
         });
 
 
-    }, 500);
+    }, 200);
+
+//    setInterval(function () {
+//        if ($(window).scrollTop() > 300) {
+//            if (productMenuShow == 0) {
+//                $(".product-menu-show").show();
+//                productMenuShow = 1;
+//            }
+//        } else {
+//            if (productMenuShow == 1) {
+//                $(".product-menu-show").hide();
+//                productMenuShow = 0;
+//            }
+//        }
+//    }, 200);
+
+//    $(".product-menu-show").click(function () {
+//        $(".product-menu-block").show("slide", {direction: "right"}, "100%");
+//    });
+//    $(".product-menu-hide").click(function () {
+//        $(".product-menu-block").show("slide", {direction: "right"}, "-600");
+//    });
+
+    /*
+     * Фильтр для мобильной версии 
+     */
+    w = $(window).width();
+    var productMenuShowAction = 0;
+    $('.product-menu-show, .product-menu-top-title').click(function () {
+        $(".product-menu-top-elements").width(w - 40);
+        //alert('width' + w + ' ' +  $('.product-menu-block').css("right"));
+
+        if (productMenuShowAction == 1)
+        {
+            productMenuShowAction = 0;
+            $('.product-menu-block').animate({"right": '-1000px'});
+
+            $('.product-menu-show i').animate({"right": '20px'});
+            $('.product-menu-show i').css("left", 'auto');
+            //alert('r: ' + $('.product-menu-show i').css("right") + ' l: '+ $('.product-menu-show i').css("left"));
+        } else
+        {
+            productMenuShowAction = 1;
+            $('.product-menu-block').animate({"right": '0px'});
+
+            $('.product-menu-show i').animate({"left": '20px'});
+            $('.product-menu-show i').css("right", 'auto');
+            //alert('r: ' + $('.product-menu-show i').css("right") + ' l: '+ $('.product-menu-show i').css("left"));
+        }
+    });
 
     initCartProductAdd();
     initCartProductRemove();

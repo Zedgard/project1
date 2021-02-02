@@ -86,6 +86,14 @@ $(document).ready(function () {
         });
     }
 
+    // отчистка фильтра
+    $(".filter_clear").unbind('click').click(function () {
+        sendPostLigth('/jpost.php?extension=products', {"filter_clear": 1}, function (e) {
+            document.location.reload();
+        });
+    });
+    
+    // Новинки
     $(".productNew").change(function () {
         var checked = 0;
         if ($(this).prop('checked')) {
@@ -96,6 +104,8 @@ $(document).ready(function () {
         });
         //$(this).prop('checked', true);
     });
+    
+    // Промо
     $(".productPromo").change(function () {
         var checked = 0;
         if ($(this).prop('checked')) {
@@ -105,6 +115,8 @@ $(document).ready(function () {
             document.location.reload();
         });
     });
+    
+    // Категория
     $(".check_categorys").change(function () {
         var checked = 0;
         var val = $(this).val();
@@ -115,6 +127,8 @@ $(document).ready(function () {
             document.location.reload();
         });
     });
+    
+    // Тема
     $(".product_theme_btn").unbind('click').click(function () {
         var val = $(this).attr("elm_id");
         sendPostLigth('/jpost.php?extension=products', {"click_product_theme": val}, function (e) {

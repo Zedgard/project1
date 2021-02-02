@@ -11,6 +11,7 @@
 <!-- Theme Base, Components and Settings background-cover -->
 <script src="/assets/css/porto/js/theme.js<?= $_SESSION['rand'] ?>"></script>
 <header id="header" class="header-body-bg background-cover">
+    <div class="border-top-none" style="display: none;"></div>
     <div class="header-body border-top-0 background-cover" style="">
 
         <div class="container"> <!-- header-container --> 

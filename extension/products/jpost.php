@@ -109,9 +109,16 @@ if (isset($_POST['check_categorys'])) {
         }
     }
 }
-
 if (isset($_POST['click_product_theme'])) {
     $_SESSION['product']['filter']['product_theme'] = $_POST['click_product_theme'];
+}
+
+if (isset($_POST['filter_clear'])) {
+    $_SESSION['product']['filter']['productSearchString'] = '';
+    $_SESSION['product']['filter']['ProductNew'] = '0';
+    $_SESSION['product']['filter']['ProductPromo'] = '0';
+    $_SESSION['product']['filter']['check_categorys'] = array();
+    $_SESSION['product']['filter']['product_theme'] = '';
 }
 
 /* Рейтинг */

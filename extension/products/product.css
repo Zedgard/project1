@@ -398,3 +398,89 @@
 /* Rating end   background-image: uri('/assets/img/products/cart_product_button_bg.png');   */
 
 /* ------------------------------------------------------------- */
+
+/* Стили для фильтров мобильной версии */
+.product-menu-show{
+    display: block;
+}
+.product-menu-show i{
+    position: fixed;
+    top: 11rem;
+    right: 20px;
+    color: #525252;
+    font-size: 2rem;
+    padding: 1.4rem;
+    background-color: #DCDCDC;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    z-index: 99999;
+}
+.product-menu-show i:active{
+    background-color: #CCCCCC;
+}
+.product-menu-hide{
+    float: right;
+    margin-top: 3rem;
+    margin-right: 3rem;
+    color: #525252;
+    font-size: 2rem;
+    padding: 1.4rem;
+    background-color: #DCDCDC;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    z-index: 999;
+}
+
+.product-menu-block{
+    display: block;
+    width: 100%;
+    position: fixed;
+    font-size: 1.6rem;
+    padding: 10px 100px;
+    border-top: 1px solid #CCCCCC;
+    top: 100px;
+    right: -1000px;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    height: 100%;
+    transition: left .2s;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+
+    z-index: 9999;
+}
+
+/* Внутренние стили */
+.product-menu-top-title{
+    font-weight: 600;
+    margin-top: 3rem;
+    font-size: 2rem;
+    color: #000000;
+}
+.product-menu-top-elements{
+    display: block;
+    width: 100%;
+    margin-top: 3rem;
+    margin-left: -5rem;
+    height: 100%;
+    overflow:hidden;
+    overflow-y: scroll;
+}
+
+.product-menu-top-clear a{
+    color: #CCCCCC;
+    font-size: 1.2rem;
+}
+.product-menu-top-clear a:hover{
+    text-decoration: underline;
+}
+.product-menu-top-category-list{
+    margin-top: 2rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+
+/* ------------------------------------------------------------- */

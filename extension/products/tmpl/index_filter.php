@@ -48,7 +48,6 @@
         }
     </style>
     <div class="row mt-1 mr-2 pt-3 pb-4">
-
         <?
         foreach ($themeArray as $value) {
             //$colorArray[$value['id']] = randomColor();
@@ -131,69 +130,174 @@
 </div>
 
 <!-- Отобразим на малых разрешениях -->
-<div class="col-lg-12 d-block d-lg-none"> 
+<div class="col-lg-12 d-block d-lg-none" style="height: 0px;"> 
 
-    <button type="button" class="btn btn-success mt-3 mb-3 w-100" data-toggle="modal" data-target="#exampleModal">Фильтры</button>
+    <button class="btn product-menu-show"><i class="fas fa-bars"></i></button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Фильтры</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+    <div class="product-menu-block">
+        <button class="btn product-menu-hide" style="display: none;"><i class="fas fa-bars"></i></button>
+        <div class="product-menu-top-title mb-2">Фильтры</div>
+        <div class="product-menu-top-elements">
+
+            <div class="product-menu-top-clear mb-3"><a href="javascript:void(0)" class="filter_clear">Очистить фильтр</a></div>
+
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="row mb-3">
+                        <div class="col-12 justify-content-end text-left">
+                            <label class="control outlined control-checkbox" style="font-size: 1.2rem;">Только новинки <input type="checkbox" name="productNew" class="productNew" <?= ($_SESSION['product']['filter']['ProductNew'] == 1) ? 'checked="checked"' : '' ?>>
+                                    <div class="control-indicator" style="margin-top: -0.1rem;"></div>
+                            </label>
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col-6 mb-3">
-                            <div class="row">
-                                <div class="col-4"><h4>Темы:</h4></div>
-                                <div class="col-8">
-                                    <div class="topics">
-                                        <?
-                                        //$colorArray = array(); $categoryArray
-                                        foreach ($topicArray as $value) {
-                                            //$colorArray[$value['id']] = randomColor();
-                                            ?>
-                                            <div class="">
-                                                <a href="?productTopic=<?= $value['id'] ?>" class="itm_topic"><?= $value['title'] ?> <span>(<?= $value['product_col'] ?>)</span></a>
-                                            </div>
+                        <div class="col-12 justify-content-end text-left">
+                            <label class="control outlined control-checkbox" style="font-size: 1.2rem;">По акции <input type="checkbox" name="productPromo" class="productPromo" <?= ($_SESSION['product']['filter']['ProductPromo'] == 1) ? 'checked="checked"' : '' ?>>
+                                    <div class="control-indicator" style="margin-top: -0.1rem;"></div>
+                            </label>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <!-- Темы для мобильной версии -->
+            <div class="row ml-2 mr-2 ">
+                <?
+                foreach ($themeArray as $value) {
+                    //$colorArray[$value['id']] = randomColor();
+                    $theme_color = '';
+                    if (strlen($value['color']) > 0) {
+                        $color = str_replace(', 0.2', '', $value['color']);
+                        $theme_color = "background-color: {$color};";
+                        $fontweight = '';
+                        if ($_SESSION['product']['filter']['product_theme'] == $value['id']) {
+                            $fontweight = 'font-weight: bold;';
+                        }
+                    }
+                    ?>
+                    <style>
+                        .product_theme_shadow<?= $value['id'] ?>{
+                            -webkit-box-shadow: 0px 6px 8px 0px <?= $value['color'] ?>;
+                            -moz-box-shadow: 0px 6px 8px 0px <?= $value['color'] ?>;
+                            box-shadow: 0px 6px 8px 0px <?= $value['color'] ?>;
+                        }
+                        .product_theme_shadow<?= $value['id'] ?>:hover{
+                            -webkit-box-shadow: none;
+                            -moz-box-shadow: none;
+                            box-shadow: none;
+                        }
+                    </style>
+                    <div class="mt-3 product_theme_btn product_theme_shadow<?= $value['id'] ?>" elm_id="<?= $value['id'] ?>" style="<?= $theme_color . $fontweight ?>">
+                        <div><?= $value['title'] ?></div>
+                    </div>
+                    <?
+                }
+                ?>
+            </div>
+
+            <div class="product-menu-top-category-list">Категории:</div>
+            <div class="topics mt-2">
+                <?
+                $topicCountAll = 0;
+                foreach ($topicArray as $value) {
+                    $topicCountAll += $value['product_col'];
+                }
+                ?>
+                <!--
+                <div class=" mt-1">
+                    <a href="./" class="itm_topic">Все товары <span>(<?= $topicCountAll ?>)</span></a>
+                </div>
+                -->
+                <?
+                //$colorArray = array(); $categoryArray
+                if (!is_array($_SESSION['product']['filter']['check_categorys'])) {
+                    $_SESSION['product']['filter']['check_categorys'] = array();
+                }
+                foreach ($topicArray as $value) {
+                    //$colorArray[$value['id']] = randomColor();
+                    ?>
+                    <div class=" mt-3">
+                        <!--
+                        <a href="?productTopic=<?= $value['id'] ?>" class="itm_topic"><?= $value['title'] ?> <span>(<?= $value['product_col'] ?>)</span></a>
+                        -->
+                        <label class="control outlined control-checkbox" style="font-size: 1.2rem;">
+                            <input type="checkbox" value="<?= $value['id'] ?>" name="check_categorys" class="check_categorys" 
+                                   <?= (in_array($value['id'], $_SESSION['product']['filter']['check_categorys'])) ? 'checked="checked"' : '' ?>>
+                                       <?= $value['title'] ?>
+                                <div class="control-indicator" style="margin-top: -0.1rem;"></div>
+                        </label>
+                    </div>
+                    <?
+                }
+                ?>
+            </div>
+            <div style="display: block;height: 200px;"></div>
+        </div>
+    </div>
+
+
+    <div style="display: none;">
+        <button type="button" class="btn btn-success mt-3 mb-3 w-100" data-toggle="modal" data-target="#productMenuModal">Фильтры</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="productMenuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Фильтры</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <div class="row">
+                                    <div class="col-4"><h4>Темы:</h4></div>
+                                    <div class="col-8">
+                                        <div class="topics">
                                             <?
-                                        }
-                                        ?>
+                                            //$colorArray = array(); $categoryArray
+                                            foreach ($topicArray as $value) {
+                                                //$colorArray[$value['id']] = randomColor();
+                                                ?>
+                                                <div class="mb-2">
+                                                    <a href="?productTopic=<?= $value['id'] ?>" class="itm_topic"><?= $value['title'] ?></a>
+                                                </div>
+                                                <?
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-6">
-                            <div class="row mt-3">
-                                <div class="col-12 justify-content-end text-left">
-                                    <label class="control outlined control-checkbox">Только новинки <input type="checkbox" name="productNew" class="productNew" <?= ($_SESSION['product']['filter']['ProductNew'] == 1) ? 'checked="checked"' : '' ?>>
-                                            <div class="control-indicator"></div>
-                                    </label>
-                                </div> 
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-12 justify-content-end text-left">
-                                    <label class="control outlined control-checkbox">По акции <input type="checkbox" name="productPromo" class="productPromo" <?= ($_SESSION['product']['filter']['ProductPromo'] == 1) ? 'checked="checked"' : '' ?>>
-                                            <div class="control-indicator"></div>
-                                    </label>
-                                </div> 
+                            <div class="col-6">
+                                <div class="row mt-3">
+                                    <div class="col-12 justify-content-end text-left">
+                                        <label class="control outlined control-checkbox">Только новинки <input type="checkbox" name="productNew" class="productNew" <?= ($_SESSION['product']['filter']['ProductNew'] == 1) ? 'checked="checked"' : '' ?>>
+                                                <div class="control-indicator"></div>
+                                        </label>
+                                    </div> 
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12 justify-content-end text-left">
+                                        <label class="control outlined control-checkbox">По акции <input type="checkbox" name="productPromo" class="productPromo" <?= ($_SESSION['product']['filter']['ProductPromo'] == 1) ? 'checked="checked"' : '' ?>>
+                                                <div class="control-indicator"></div>
+                                        </label>
+                                    </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger " data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary " data-dismiss="modal">Применить</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger " data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary " data-dismiss="modal">Применить</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 
 </div>
 <!--------- Filter block End --------->
