@@ -23,8 +23,10 @@
                         </div>
                     </div>
                     <br/>
-                    <div class="row products_arrays_data">
-
+                    <div class="row">
+                        <div class="card-deck ">
+                            <div class="row row-cols-1 row-cols-md-3 products_arrays_data"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -70,10 +72,12 @@
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
                     $(".products_arrays_data").append(
-                            '<div class="col-lg-4 mb-3 text-center">\n\
+                            '<div class="col-4-lx mb-5">\n\
                                 <a href="?wares_id=' + data[i]['id'] + '">\n\
+                                <div class="card p-4 h-100 text-center">\n\
                                 <div class="mb-3"><h3>' + data[i]['title'] + '</h3></div>\n\
-                                <div class=""><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                                <div class="mb-2"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                                </div>\n\
                                 </a>\n\
                                 </div>\n\
                                 '); // <div class="col-lg-8 mb-3">' + data[i]['descr'] + '</div>

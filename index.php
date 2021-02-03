@@ -6,9 +6,16 @@ session_start();
  * Перенаправление на https://
  */
 if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'http') {
-//    echo $_SERVER['HTTP_X_FORWARDED_PROTO'];
-//    print_r($_SERVER);
     header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true, 301);
+    exit();
+}
+/**
+ * Перенаправление без www
+ */
+$server_http = explode('.', $_SERVER['HTTP_HOST']);
+if ($server_http[0] == 'www') {
+    //echo 'https://' . $server_http[1] . '.' . $server_http[2] . $_SERVER['REQUEST_URI'];
+    header('Location: https://' . $server_http[1] . '.' . $server_http[2] . $_SERVER['REQUEST_URI'], true, 301);
     exit();
 }
 

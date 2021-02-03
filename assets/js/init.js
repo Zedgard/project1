@@ -141,7 +141,7 @@ function animateTop(val, height) {
             //console.log(val);
             val = val + 1;
         }
-    }, 10);
+    }, 200);
 
 }
 
