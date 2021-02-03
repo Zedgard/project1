@@ -1,11 +1,10 @@
 <?php
 
 $config = array(
-    'title' => $lang['users'][$_SESSION['lang']]['title'],
-    'descr' => $lang['users'][$_SESSION['lang']]['descr'],
+    'title' => 'Основные направления работы',
+    'descr' => '',
     'urls' => array(
-        $lang['statistic'][$_SESSION['lang']]['extension_admin'] => '/extension/users/admin.php',
-        $lang['statistic'][$_SESSION['lang']]['extension_index'] => '/extension/users/index.php'
+        'Основные направления работы (index.php)' => '/extension/main_line/index.php'
     ),
     'version' => '0.1'
 );

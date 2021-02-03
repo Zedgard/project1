@@ -5,4 +5,4 @@
  */
 
 
-echo "Страница users index  <br/>\n";
+include 'tmpl/index.php';
