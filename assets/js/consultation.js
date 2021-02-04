@@ -289,22 +289,23 @@ function step2() {
  * @returns {undefined}
  */
 function init_consultation_master() {
-
-    sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultation_master": 1}, function (e) {
-        consult_masters = [];
-        $(".consult_your_master").html("");
-        $(".consult_your_master").append('<option value="0">Выберите специалиста</option>');
-        if (e['data'].length > 0) {
-            for (var i = 0; i < e['data'].length; i++) {
-                consult_masters.push(e['data'][i]);
-                var select = '';
+    setTimeout(function () {
+        sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultation_master": 1}, function (e) {
+            consult_masters = [];
+            $(".consult_your_master").html("");
+            $(".consult_your_master").append('<option value="0">Выберите специалиста</option>');
+            if (e['data'].length > 0) {
+                for (var i = 0; i < e['data'].length; i++) {
+                    consult_masters.push(e['data'][i]);
+                    var select = '';
 //            if(Number(consult_your_master_select) == e['data'][i]['id']) {
 //                select = ' selected="selected" ';
 //            }
-                $(".consult_your_master").append('<option value="' + e['data'][i]['id'] + '" consult_masters_i="' + i + '" ' + select + ' >' + e['data'][i]['master_name'] + '</option>');
+                    $(".consult_your_master").append('<option value="' + e['data'][i]['id'] + '" consult_masters_i="' + i + '" ' + select + ' >' + e['data'][i]['master_name'] + '</option>');
+                }
             }
-        }
-    });
+        });
+    }, 200);
 }
 
 function send_consultation_form() {
