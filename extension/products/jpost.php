@@ -110,7 +110,19 @@ if (isset($_POST['check_categorys'])) {
     }
 }
 if (isset($_POST['click_product_theme'])) {
-    $_SESSION['product']['filter']['product_theme'] = $_POST['click_product_theme'];
+    if ($_SESSION['product']['filter']['product_theme'] == $_POST['click_product_theme']) {
+        $_SESSION['product']['filter']['product_theme'] = '';
+    } else {
+        $_SESSION['product']['filter']['product_theme'] = $_POST['click_product_theme'];
+    }
+}
+
+if (isset($_POST['category_controll'])) {
+    if ($_POST['category_controll'] > 0) {
+        $_SESSION['product']['filter']['category_controll'] = $_POST['category_controll'];
+    } else {
+        $_SESSION['product']['filter']['category_controll'] = '';
+    }
 }
 
 if (isset($_POST['filter_clear'])) {
@@ -119,6 +131,7 @@ if (isset($_POST['filter_clear'])) {
     $_SESSION['product']['filter']['ProductPromo'] = '0';
     $_SESSION['product']['filter']['check_categorys'] = array();
     $_SESSION['product']['filter']['product_theme'] = '';
+    $_SESSION['product']['filter']['category_controll'] = '';
 }
 
 /* Рейтинг */

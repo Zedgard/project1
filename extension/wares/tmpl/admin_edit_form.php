@@ -8,7 +8,7 @@
                 </div>
 
                 <div class="card-body form_save_wares">
-
+                    <button type="button" class="btn btn-primary btn_save_config" style="position: fixed;right: 3rem;top: 7rem;z-index: 999;">Сохранить</button>
                     <div class="form-group">
                         <label for="config_title">Название</label>
                         <input type="text" class="form-control wares_title" id="wares_title" placeholder="Наименование товара" required>
@@ -88,10 +88,10 @@ importWisiwyng('wares_descr');
 
 <script>
     var wares_id = '<?= $wares_id ?>';
-    
+
     var wares_categorys = '';
-    
-    
+
+
     $(document).ready(function () {
 
         wares_categorys = $(".wares_categorys").select2({
@@ -185,7 +185,7 @@ importWisiwyng('wares_descr');
                                     wares_categorys_array.push(e['data']['wares_category'][i]);
                                 }
                             }
-                            
+
                             getCategoryArray(wares_categorys_array);
 
                             /* -- images -- */

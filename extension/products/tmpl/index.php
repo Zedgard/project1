@@ -53,32 +53,15 @@
                 <!-- Sorted block -->    
                 <div class="row mt-4 mb-4">
                     <div class="col-12">
-                        <div class="row controls">
-                            <!--
-                            <div class="btn_category_controll border_radius3">
-                                <div class="control" data-filter="all">Все</div>
-                            </div>
-                            -->
+                        <div class="row controls fast_control_btn">
                             <div class="col-lg-3">
-                                <button type="button" data-filter="all" class="btn_category_controll btn_category_controll_active border_radius3 mb-2">Все</button>
+                                <button type="button" elm='0' data-filter="all" class="btn_category_controll btn_category_controll_active border_radius3 mb-2">Все</button>
                             </div>
                             <?
-                            //$colorArray = array(); $categoryArray
-                            /*
-                              <button type="button" data-filter="all">All</button>
-                              <button type="button" data-filter=".category-a">Category A</button>
-                              <button type="button" data-filter=".category-b">Category B</button>
-                              <button type="button" data-filter=".category-c">Category C</button>
-                             * <button type="button" class="control " data-filter=".category-<?= $value['id'] ?>"><?= $value['title'] ?></button>
-                             * <div class="btn_category_controll border_radius3 mb-2">
-                              <div class="control" data-filter=".category-<?= $value['id'] ?>"><?= $value['title'] ?></div>
-                              </div>
-                             */
                             foreach ($categoryArray as $value) {
-                                //$colorArray[$value['id']] = randomColor();
                                 ?>
                                 <div class="col-lg-3">
-                                    <button type="button" data-filter=".category-<?= $value['id'] ?>" class="btn_category_controll border_radius3 mb-2"><?= $value['title'] ?></button>
+                                    <button type="button" elm="<?= $value['id'] ?>" data-filter=".category-<?= $value['id'] ?>" class="btn_category_controll border_radius3 mb-2"><?= $value['title'] ?></button>
                                 </div>
                                 <?
                             }
@@ -95,23 +78,7 @@
                 <!-- product list -->
                 <div class="row container_mix row-cols-1 row-cols-md-3" data-ref="mixitup-container">
                     <?
-                    //$obj_product['products_wares'] = $this->getProducts_wares($obj_product['id']);
-                    //$obj_product['products_category'] = $this->getProducts_category($obj_product['id']);
-                    //$obj_product['products_topic'] = $this->getProducts_topic($obj_product['id']);
-                    //$i_col = 3; // колличество отображаемых
-                    //$a_col = 0; // итерация
                     for ($i = 0; $i < $productsFilterCount; $i++) {
-//                        $a_col++;
-//                        $iter_css = 'margin-left: 4.433%;';
-//                        if($a_col == 1){
-//                            $iter_css = '';
-//                        }
-//                        if($i_col == $a_col){
-//                            $a_col = 0;
-//                        }
-                        // Найдем товары
-                        //$waresInfo = $c_product->getWaresInfo($productsFilterArray[$i]['wares_ids']);
-                        // Определим категорию
                         $title_category = '';
                         $exp_category_ids = explode(',', $productsFilterArray[$i]['category_ids']);
                         $category_count = count($exp_category_ids);
@@ -136,14 +103,8 @@
                                     }
                                 }
                             }
-//                            if(strlen($category_title)>0){
-//                                $category_title = $category_title . ' ';
-//                            }
                         }
 
-                        // border: 1px solid #CCC;
-                        // category_name=" $categoryArray[$item_category_id] " data-ref="mixitup-target"
-                        // $class_category
                         $display = '';
                         if ($i > 6) {
                             $display = 'display: none;';
@@ -159,8 +120,7 @@
                                             /*
                                              * Product Images
                                              */
-                                            $image = $productsFilterArray[$i]['images_str'];//$c_product->checkImageFile($productsFilterArray[$i]['images_str']);
-                                            //echo "{$productsFilterArray[$i]['images_str']} <br/>";
+                                            $image = $productsFilterArray[$i]['images_str'];
                                             if (strlen($image) > 0) {
                                                 ?>
                                                 <div class="<?= $sclass_boot ?> align-self-center text-center w-100 <?= ($ii > 0) ? $scaleN : $scale ?>">
@@ -263,8 +223,9 @@
 
 </div>
 
-
-
 <div class="row">
     <div class="col-lg-12" style="height: 100px;"></div>
 </div>
+<script>
+    var category_controll = '<?= $_SESSION['product']['filter']['category_controll'] ?>';
+</script>

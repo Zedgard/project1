@@ -423,7 +423,8 @@ class products extends \project\extension {
                                 {$queryValProductNew}
                                 {$queryValTroductTheme}
                             GROUP by p.id   
-                        )";
+                        ) ORDER BY p2.id desc
+                        ";
 
         //echo ""; 
         //print_r($_SESSION['product']['filter']['check_categorys']);

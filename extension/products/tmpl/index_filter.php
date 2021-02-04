@@ -15,6 +15,8 @@
     </div>
     <div class="row">
         <div class="col-12">
+            <div class="product-menu-top-clear-pc mb-3"><a href="javascript:void(0)" class="filter_clear">Очистить фильтр</a></div>
+            
             <div class="row mt-1">
                 <div class="col-12 justify-content-end text-left">
                     <label class="control outlined control-checkbox" style="margin-bottom: 0;">Только новинки <input type="checkbox" name="productNew" class="productNew" <?= ($_SESSION['product']['filter']['ProductNew'] == 1) ? 'checked="checked"' : '' ?>>
