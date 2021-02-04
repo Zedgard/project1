@@ -28,7 +28,7 @@ if (isset($_GET['clear'])) {
     }
     $sqlLight->query("DELETE FROM zay_pay WHERE pay_type='wp' ");
     $sqlLight->query("UPDATE `zay_import` SET `val`='0' WHERE `code`='wp_pays'");
-    
+
     echo 'Clear OK!';
     exit();
 }
@@ -101,10 +101,6 @@ function updateOrInsertData($data, $user_id) {
             }
         }
     }
-    // Отметим что данные импортировали
-    $queryInsert = "UPDATE `zay_import` SET `val`='?' WHERE `code`='wp_pays'";
-    $sqlLight->query($queryInsert, array($user_id));
-
 }
 
 // получим данные по импорту
@@ -119,11 +115,11 @@ echo "external_code: {$user_id} <br/>\n";
 /*
  * Получим код пользователя
  */
-$queryInsertImport = "SELECT * FROM `zay_users` u where u.`id`>'?' and u.`external_code`>0 ORDER BY `id` ASC limit 1";
+$queryInsertImport = "SELECT * FROM `zay_users` u where u.`id`>'?' and u.`external_code`>0 ORDER BY `id` ASC limit 2";
 $users = $sqlLight->queryList($queryInsertImport, array($user_id));
-//print_r($obj_imports);
+//print_r($users);
 //echo "----------<br/>\n\n";
-
+//exit();
 if (count($users) > 0) {
     /*
      * Импортируем данные из другой базы
@@ -143,8 +139,9 @@ if (count($users) > 0) {
 //                . "FROM `wp_woocommerce_downloadable_product_permissions` pp "
 //                . "left join `wp_posts` wp on wp.`ID`=pp.`product_id` "
 //                . "where pp.`user_email`='{$external_email}' and wp.`ID` is not null";
-        $q = "SELECT DISTINCT
-                p.ID,
+        if (strlen(trim($value['email'])) > 0) {
+            $q = "SELECT DISTINCT
+                p.ID, 
                 p.post_status,
                 p.post_date,
                 p.post_title,
@@ -167,21 +164,29 @@ if (count($users) > 0) {
             WHERE
                 p.post_type = 'shop_order' AND p.post_status = 'wc-completed' and pm.meta_value='?'";
 
-        $wp_pays = $sqlLight->queryList($q, array($value['email']), 1);
-        //echo 'wp_pays'."<br/>\n";
-        print_r($wp_wares);
-        exit();
-        if (count($wp_pays) > 0) {
-            unset($sqlLight);
-            include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-            //exit();
+            $wp_pays = $sqlLight->queryList($q, array($value['email']), 1);
 
-            foreach ($wp_pays as $w_value) {
-                echo "----------<br/>\n";
-                updateOrInsertData($w_value, $value['id']);
-                // $w_value['product_id'], $w_value['price'], $value['id'], $w_value['access_granted']
+            //echo 'wp_pays'."<br/>\n";
+            //print_r($wp_wares);
+
+            if (count($wp_pays) > 0) {
+                unset($sqlLight);
+                include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+                //exit();
+
+                foreach ($wp_pays as $w_value) {
+                    echo "----------<br/>\n";
+                    updateOrInsertData($w_value, $value['id']);
+                    // $w_value['product_id'], $w_value['price'], $value['id'], $w_value['access_granted']
+                }
             }
         }
+        unset($sqlLight);
+        include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+        $sqlLight = new \project\sqlLight();
+        // Отметим что данные импортировали
+        $queryInsert = "UPDATE `zay_import` SET `val`='?' WHERE `code`='wp_pays'";
+        $sqlLight->query($queryInsert, array($value['id']));
     }
 }
 
