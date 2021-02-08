@@ -13,6 +13,7 @@
 
                     <div class="card-body">
                         <a href="./?content=<?= $_GET['content'] ?>" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['cancel'] ?></a>
+                        
                         <div class="form-group">
                             <label><?= $lang['pages'][$_SESSION['lang']]['content_title'] ?></label>
                             <input class="form-control" name="content_title" id="content_title" value="<?= $content['content_title'] ?>" placeholder="<?= $lang['pages'][$_SESSION['lang']]['title'] ?>..." <?= (strlen($content['content_title']) > 0) ? 'readonly="readonly"' : '' ?> type="text" required>
@@ -23,6 +24,7 @@
                                 <?= $lang['pages'][$_SESSION['lang']]['name_page_is_true'] ?>
                             </div>
                         </div>
+                        
                         <style>
                             .extension_checked_elms{
                                 clear: both;
@@ -38,14 +40,15 @@
                             <label>Выбирите расширение</label>
                             <div>
                                 <? 
+                                
                                 $checked_null = (strlen($content['extension']) == 0) ? 'checked="checked"' : '';
                                 ?>
-                                <input type="radio" name="ext_urls" value="0" class="ext_urls" <?= $checked_null ?> /> Обычные HTML <?= $checked_null ?><br/>
+                                <input type="radio" name="ext_urls" value="0" class="ext_urls"  <?= $checked_null ?> /> Обычные HTML<br/>
                                 <? for ($i = 0; $i < count($extensions); $i++): ?>
                                     <?
+                                    $checked = '';
                                     $checked = ($content['extension'] == $extensions[$i]['eu_id']) ? 'checked="checked"' : '';
                                     ?>
-
                                     <div class="extension_checked_elms">
                                         <div style="float: left;"><input type="radio" name="ext_urls" value="<?= $extensions[$i]['eu_id'] ?>" class="ext_urls" <?= $checked ?> /></div> 
                                         <div style="float: left;width: 300px;margin: 0 20px;"><?= (strlen($extensions[$i]['title']) > 0) ? $extensions[$i]['title'] : $extensions[$i]['conf']['title'] ?></div>
@@ -55,9 +58,10 @@
                             </div>
                             <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['choose_available_options'] ?></span>
                         </div>
-                        <div class="form-group content_descr_block" style="<?= (strlen($checked_null) > 0) ? 'display: block;' : 'display: none;' ?>">
+                        
+                        <div class="form-group content_descr_block" style="<?= (strlen($content['extension']) == 0) ? 'display: block;' : 'display: none;' ?>">
                             <label><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></label>
-                            <textarea id="content_descr" name="content_descr" id="content_descr" style="width: 100%;height: 140px;"><?= $content['content_descr'] ?></textarea>
+                            <textarea id="content_descr" name="content_descr" id="content_descr" style="width: 100%;min-height: 140px;"><?= $content['content_descr'] ?></textarea>
                         </div>
 
 
@@ -66,8 +70,8 @@
                             <input type="hidden" name="page_id" value="<?= ($_GET['content'] > 0) ? $_GET['content'] : 0 ?>" />
                             <input type="hidden" name="block_id" value="<?= ($_GET['block_id'] > 0) ? $_GET['block_id'] : 0 ?>" />
                             <input type="hidden" name="edit_material" value="<?= ($_GET['edit_material'] > 0) ? $_GET['edit_material'] : 0 ?>" />
-                            <button type="submit" class="btn btn-primary btn-default"><?= $lang['pages'][$_SESSION['lang']]['apply'] ?></button>
-                            <a href="./?content=<?= $_GET['content'] ?>" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['cancel'] ?></a>
+                            <a href="./?content=<?= $_GET['content'] ?>" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['back_link'] ?></a>
+                            <button type="submit" class="btn btn-primary btn-default float-right w-25"><?= $lang['pages'][$_SESSION['lang']]['apply'] ?></button>
                         </div>
 
                     </div>

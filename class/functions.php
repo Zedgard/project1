@@ -297,12 +297,15 @@ if (!function_exists('importWisiwyng')) {
                 toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
                 image_advtab: true,
                 templates: [
-                    {title: 'Test template 1', content: 'Test 1'},
-                    {title: 'Test template 2', content: 'Test 2'}
+                    {title: 'Блок Container расположение по середине', content: '<div class="container"><div class="row"><div class="col-12">Container 1</div></div></div>'},
+                    {title: 'Блок row', content: '<div class="row"><div class="col-12">row 1</div></div>'}
                 ],
                 content_css: [
+                    '/assets/css/sleek.min.css',
+                    '/assets/plugins/bootstrap/css/bootstrap.css',
+                    '/themes/site1/css/style.css',
                     '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                    '//www.tinymce.com/css/codepen.min.css'
+                    '//www.tinymce.com/css/codepen.min.css',
                 ],
                 file_browser_callback: function (field, url, type, win) {
                     tinyMCE.activeEditor.windowManager.open({

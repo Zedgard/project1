@@ -111,8 +111,9 @@ class extension {
         } else {
             $querySelect = "SELECT  e.`id`, e.`extension_url`, e.`version`, eu.`id` as eu_id, eu.`url`, eu.`title` "
                     . "FROM `zay_extension` e "
-                    . "left join `zay_extension_urls` eu on eu.extension_id=e.id ";
-            $data = $sqlLight->queryList($querySelect, array());
+                    . "left join `zay_extension_urls` eu on eu.extension_id=e.id "
+                    . "WHERE eu.url IS NOT NULL";
+            $data = $sqlLight->queryList($querySelect, array(), 0);
         }
 
         return $data;
