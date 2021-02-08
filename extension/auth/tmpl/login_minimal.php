@@ -45,9 +45,9 @@
                                 </div>
                             </div>
                             <div class="card-body p-5">
-
+ 
                                 <h4 class="text-dark mb-5">Авторизация</h4>
-                                <form id="authorization" action="/jpost.php?extension=auth" method="POST">
+                                <form id="authorization" action="/jpost.php?extension=auth&url=/shop/cart/" method="POST">
                                     <div class="row">
                                         <div class="form-group col-md-12 mb-4">
                                             <input type="login" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email" placeholder="Телефон / Эл. Почта" required />

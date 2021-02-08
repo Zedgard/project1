@@ -26,17 +26,15 @@
                     <?
                     $first = 'active';
                     $i = 0;
-                    foreach ($productData['products_wares_info'] as $value):
-                        //$array = $value['images'];
-                        ?>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="<?= $i ?>" class="<?= $first ?>"></li>
-                        <?
-                        $first = '';
-                    endforeach;
+//                    foreach ($productData['products_wares_info'] as $value):
+//                        //$array = $value['images'];
+//                        <li data-target="#carouselExampleIndicators" data-slide-to="<= $i >" class="<= $first >"></li>
+//                        $first = '';
+//                    endforeach;
                     ?>
                 </ol>
                 <div class="carousel-inner">
-                    <div style="position: absolute;margin-top: 20px;"><?= $title_category_bg ?></div>
+                    <div style="position: absolute;margin-top: 20px;display: none;"><?= $title_category_bg ?></div>
                     <?
                     if (strlen($productData['images_str']) > 0) {
                         ?>
@@ -60,6 +58,7 @@
                     }
                     ?>
                 </div>
+                <!--
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Предыдущая</span>
@@ -68,6 +67,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Следующая</span>
                 </a>
+                -->
             </div>
 
         </div>
@@ -181,7 +181,7 @@
     <div class="row mb-5">
         <div class="col-md-12">
             <h2 class="mb-3" style="font-size: 2.3rem;font-weight: 700;color: #000000;">Описание:</h2>
-            <div class="product_descr"><?= $productData['desc'] ?></div>
+            <div class="product_descr ulli"><?= $productData['desc'] ?></div>
 
 
         </div>
@@ -335,7 +335,7 @@
                                                 <div class="float-right">
                                                     <a href="javascript:void(0)" class="btn btngreen cart_product_add" product_id="<?= $productsFilterArray[$i]['id'] ?>">В корзину</a>
                                                     <div class="btn-group">
-                                                        <a href="/shop/cart/" class="btn btngreen align-self-center cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;">Продолжить</a>
+                                                        <a href="/shop/cart/" class="btn btngreen align-self-center cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;">В корзине</a>
                                                         <a href="javascript:void(0)" class="btn btn-danger cart_product_remove cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>

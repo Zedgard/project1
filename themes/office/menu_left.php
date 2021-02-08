@@ -1,23 +1,23 @@
 <div class="sidebar-scrollbar">
     <!-- sidebar menu -->
-    <ul class="nav sidebar-inner" id="sidebar-menu">
-        <li  class="has-sub">
+    <ul style="margin: 0;padding: 0;" class="nav sidebar-inner" id="sidebar-menu">
+        <li style="margin: 0;padding: 0;" class="has-sub">
             <a class="sidenav-item-link" href="/" >
                 <i class="mdi mdi-home"></i>
                 <span class="nav-text">На главную</span> 
             </a>
         </li>
-        <li  class="has-sub <?= ($_SESSION['page_url'] == 'office') ? 'active' : '' ?> expand" >
-            <a class="sidenav-item-link <?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>" href="/office/?katalog" >
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'office') ? 'active' : '' ?> expand" >
+            <a class="sidenav-item-link <?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>" href="javascript:void(0)" >
                 <i class="mdi mdi-view-dashboard-outline"></i>
                 <span class="nav-text">Каталог</span> 
             </a> 
-            <ul  class="collapse office_list_categorys <?=
+            <ul style="margin: 0;padding: 0;display: block;" class="collapse office_list_categorys <?=
             (isset($_GET['katalog'])) ? 'show' : ''
             ?>"  id="system_configs"
                  data-parent="#sidebar-menu">
-                <div class="sub-menu">
-                    <li class="<?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>">
+                <div class="sub-menu" style="display: block;">
+                    <li style="margin: 0;padding: 0;display: block;" class="<?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>">
                         <a class="sidenav-item-link" href="/office/?katalog">
                             <span class="nav-text">Все</span>
                             (<span class="katalog_elm_col_all">0</span>)
@@ -29,7 +29,7 @@
                     $categorys = $categoryArray = $c_category->getCategoryArray('product_category', '');
                     foreach ($categorys as $key => $value) {
                         ?>
-                        <li class="<?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>">
+                        <li style="margin: 0;padding: 0;" class="<?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>">
                             <a class="sidenav-item-link" href="/office/?katalog=<?= $value['id'] ?>">
                                 <span class="nav-text"><?= $value['title'] ?></span>
                                 (<span class="katalog_elm_col_<?= $value['id'] ?>">0</span>)
@@ -60,13 +60,13 @@
                 </div>
             </ul>
         </li>
-        <li  class="has-sub <?= ($_SESSION['page_url'] == 'webinars') ? 'active' : '' ?> ">
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'webinars') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="	/office/webinars/">
                 <i class="mdi mdi-message-video"></i>
                 <span class="nav-text">Вебинары</span> 
             </a> 
         </li>
-        <li  class="has-sub <?= ($_SESSION['page_url'] == 'userprofile_admin') ? 'active' : '' ?> ">
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'userprofile_admin') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="	/office/userprofile_admin/">
                 <i class="mdi mdi-calendar-today"></i>
                 <span class="nav-text">Настройки</span> 

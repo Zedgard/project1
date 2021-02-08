@@ -26,8 +26,8 @@ $(document).ready(function () {
                     max--;
                     var e = this;
                     setTimeout(function () {
-                        $(e).show(400);
-                    }, (t * 300));
+                        $(e).show(200);
+                    }, (t * 100));
                     t = t + 1;
                 }
                 if (max < 0) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
         } else {
 
         }
-    }, 1000);
+    }, 300);
 
 
     $('.carousel').carousel({
@@ -66,6 +66,13 @@ $(document).ready(function () {
         });
         $(".btn_category_controll").removeClass("btn_category_controll_active");
         $(this).addClass("btn_category_controll_active");
+    });
+    
+    $(".btn_category_controll_cart").click(function () {
+        var elm = $(this).attr('elm');
+        sendPostLigth('/jpost.php?extension=products', {"category_controll": elm}, function (e) {
+            location.href = '/shop/';
+        });
     });
     $(".waresImg").mouseover(function () {
         $(this).css("position", "sticky");
@@ -182,7 +189,7 @@ $(".product_info").each(function () {
 
 
 function init_category_controll() {
-    if (category_controll.length > 0) {
+    if (typeof(category_controll) !='undefined' && category_controll.length > 0) {
         if (Number(category_controll) > 0) {
             setTimeout(function () {
                 $(".fast_control_btn").find('button[elm="' + category_controll + '"]').click();

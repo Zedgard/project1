@@ -111,7 +111,7 @@
                         <?
                         if (strlen($wares['url_file']) > 0) {
                             ?>
-                            <a href="<?= $wares['url_file'] ?>" class="btn btn-primary">Скачать файлы</a>
+                            <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Скачать файлы</a>
                             <?
                         }
                         ?>

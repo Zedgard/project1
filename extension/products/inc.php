@@ -423,7 +423,7 @@ class products extends \project\extension {
                                 {$queryValProductNew}
                                 {$queryValTroductTheme}
                             GROUP by p.id   
-                        ) ORDER BY p2.id desc
+                        ) ORDER BY p2.product_new desc, p2.id desc
                         ";
 
         //echo ""; 

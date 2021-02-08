@@ -23,14 +23,14 @@ class free_book extends \project\extension {
          */
         $active = 1;
         if (strlen($searchStr) > 0) {
-            $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
+            $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `active`='?' and `title` like '%?%' and `is_delete`='0' ORDER BY RAND() ";
             $d = $this->getSelectArray($querySelect, array($active, $searchStr));
         } else {
             if ($active == 9) {
                 $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `is_delete`='1' order by lastdate desc";
                 $d = $this->getSelectArray($querySelect, array());
             } else {
-                $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `active`='?' and `is_delete`='0' order by id desc";
+                $querySelect = "SELECT * FROM `zay_product` WHERE price='0' and `active`='?' and `is_delete`='0' ORDER BY RAND() ";
                 $d = $this->getSelectArray($querySelect, array($active));
             }
         }

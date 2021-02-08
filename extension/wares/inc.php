@@ -361,7 +361,10 @@ class wares extends \project\extension {
                 $vals[] = $category_id;
             }
             if ($wares_id == 0) {
-                $querySelect = "SELECT DISTINCT w.* FROM `zay_pay` p "
+                $querySelect = "SELECT DISTINCT w.*, "
+                        . "pr.id as product_id, "
+                        . "pr.title as product_title "
+                        . "FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
@@ -376,7 +379,9 @@ class wares extends \project\extension {
                 $objs = $this->getSelectArray($querySelect, $vals, 0);
                 return $objs;
             } else {
-                $querySelect = "SELECT DISTINCT w.* FROM `zay_pay` p "
+                $querySelect = "SELECT DISTINCT w.*, pr.id as product_id, "
+                        . "pr.title as product_title "
+                        . "FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
@@ -436,15 +441,35 @@ class wares extends \project\extension {
      */
     public function getClientWaresCol() {
         if ($_SESSION['user']['info']['id'] > 0) {
-            $querySelect = "SELECT wcat.category_id, SUM(1) as col FROM `zay_pay` p 
-                    left join `zay_pay_products` pp on pp.`pay_id`=p.`id` 
-                    left join `zay_product` pr on pr.`id`=pp.`product_id` 
-                    left join `zay_product_wares` pw on pw.`product_id`=pr.`id` 
-                    left join zay_wares w on w.id=pw.wares_id 
-                    left join zay_wares_category wcat on wcat.wares_id=w.id 
-                    where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 
-                    and (wcat.category_id<>2 or wcat.category_id is null) 
-                    group by wcat.category_id";
+            $querySelect = "SELECT
+                                dd.category_id,
+                                COUNT(1) AS col
+                            FROM
+                                (
+                                SELECT DISTINCT
+                                    wcat.category_id,
+                                    w.id
+                                FROM
+                                    `zay_pay` p
+                                LEFT JOIN `zay_pay_products` pp ON
+                                    pp.`pay_id` = p.`id`
+                                LEFT JOIN `zay_product` pr ON
+                                    pr.`id` = pp.`product_id`
+                                LEFT JOIN `zay_product_wares` pw ON
+                                    pw.`product_id` = pr.`id`
+                                LEFT JOIN zay_wares w ON
+                                    w.id = pw.wares_id
+                                LEFT JOIN zay_wares_category wcat ON
+                                    wcat.wares_id = w.id
+                                WHERE
+                                    p.`user_id` = '?' AND p.`pay_status` = 'succeeded' AND w.`id` > 0 AND(
+                                        wcat.category_id <> 2 OR wcat.category_id IS NULL
+                                    )
+                                ORDER BY
+                                    `w`.`id` ASC
+                            ) dd
+                            GROUP BY
+                                dd.category_id";
             $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
             return $objs;
         }

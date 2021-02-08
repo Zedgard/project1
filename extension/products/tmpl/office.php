@@ -23,9 +23,11 @@
                         </div>
                     </div>
                     <br/>
-                    <div class="row">
-                        <div class="card-deck ">
-                            <div class="row row-cols-1 row-cols-md-3 products_arrays_data"></div>
+                    <div class="row row-cols-0">
+                        <div class="col-12">
+                            <div class="card-deck w-100 products_arrays_data">
+                                <div class="products_arrays_data w-100"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,6 +53,22 @@
   </div>
  */
 ?>
+<style>
+    .product_title{
+        border-top: 1px solid #CCCCCC;
+        color: #000000;
+        margin-bottom: 1rem;
+        clear: both;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+    .products_arrays_data .product_title{
+        border-top: none;
+    }
+    .wares_title{
+        font-size: 1rem;
+    }
+</style>
 <script>
     var category_id = '<?= (isset($_GET['katalog']) && strlen($_GET['katalog']) > 0) ? $_GET['katalog'] : '' ?>';
     $(document).ready(function () {
@@ -61,7 +79,7 @@
      * Настройки значения список
      */
     function getClientProducts() {
-        $(".products_arrays_data tbody tr").remove();
+        $(".products_arrays_data div").remove();
         $(".products_arrays_data").html('<div class="w-100 text-center"><div class="spinner-border text-dark" role="status"><span class="sr-only">Loading...</span></div></div>');
         sendPostLigth('/jpost.php?extension=wares', {
             "getClientProducts": '1',
@@ -71,11 +89,18 @@
             var data = e['data'];
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
-                    $(".products_arrays_data").append(
-                            '<div class="col-4-lx mb-5">\n\
+                    if (!$(".products_arrays_data").find('.product_id_' + data[i]['product_id'])[0]) {
+
+                        $(".products_arrays_data").append('<div class="product product_id_' + data[i]['product_id'] + ' w-100">\n\
+                        <div class="product_title w-100">' + data[i]['product_title'] + '</div>\n\
+                        <div class="product_elms row row-cols-2 row-cols-md-3 w-100" style="margin-right:0;padding-right:0;margin-left:0;padding-left:0;"></div>\n\
+                        </div>');
+                    }
+                    $('.products_arrays_data .product_id_' + data[i]['product_id'] + ' .product_elms').append(
+                            '<div class="row-cols-0 mb-4">\n\
                                 <a href="?wares_id=' + data[i]['id'] + '">\n\
-                                <div class="card p-4 h-100 text-center">\n\
-                                <div class="mb-3"><h3>' + data[i]['title'] + '</h3></div>\n\
+                                <div class="card p-2 h-100 text-center">\n\
+                                <div class="mb-3 wares_title h-100">' + data[i]['title'] + '</div>\n\
                                 <div class="mb-2"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
                                 </div>\n\
                                 </a>\n\

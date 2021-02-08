@@ -11,7 +11,7 @@ $auth = new \project\auth();
  * Авторизация
  */
 if (isset($_POST['authorization'])) {
-
+    $get_url = (isset($_GET['url']) && strlen($_GET['url']) > 0) ? $_GET['url'] : '';
     // галка запомни меня
     $remember_me = 0;
     if (isset($_POST['remember_me']) && $_POST['remember_me'] == 1) {
@@ -35,6 +35,11 @@ if (isset($_POST['authorization'])) {
         }
         if ($r == 0) {
             $url = '/';
+        }
+        
+        // Если передали GET url
+        if(strlen($get_url) > 0){
+            $url = $get_url;
         }
 
         $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '0');

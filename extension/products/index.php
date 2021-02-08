@@ -97,7 +97,8 @@ if (isset($_GET['product'])) {
                         $bg_category = 'background-color: ' . $categoryArray[$c2]['color'] . ';';
                         $color_category = 'color: ' . $categoryArray[$c2]['color'] . ';';
                         //$title_category[] = "{$categoryArray[$c2]['title']}";
-                        $title_category[] = "<span class=\"class_category2\" style=\"{$color_category}\">{$categoryArray[$c2]['title']}</span>";
+                        // <button type="button" elm="29" data-filter=".category-29" class="btn_category_controll border_radius3 mb-2 btn_category_controll_active mixitup-control-active">Другое</button>
+                        $title_category[] = "<span class=\"class_category2 btn_category_controll_cart \" elm=\"{$categoryArray[$c2]['id']}\" style=\"{$color_category}\">{$categoryArray[$c2]['title']}</span>";
                         $title_category_bg .= "<span class=\"class_category_lbl opacity50\" style=\"{$bg_category}{$position}\">{$categoryArray[$c2]['title']}</span>";
                     }
                 }

@@ -39,21 +39,21 @@ $(document).ready(function () {
 
 
     /*======== 3. SIDEBAR TOGGLE FOR MOBILE ========*/
-    if ($(window).width() < 768) {
-        $(document).on("click", ".sidebar-toggle", function (e) {
-            e.preventDefault();
-            var min = "sidebar-minified",
-                    min_out = "sidebar-minified-out",
-                    body = "#body";
-            $(body).hasClass(min)
-                    ? $(body)
-                    .removeClass(min)
-                    .addClass(min_out)
-                    : $(body)
-                    .addClass(min)
-                    .removeClass(min_out)
-        });
-    }
+//    if ($(window).width() < 768) {
+//        $(document).on("click", ".sidebar-toggle", function (e) {
+//            e.preventDefault();
+//            var min = "sidebar-minified",
+//                    min_out = "sidebar-minified-out",
+//                    body = "#body";
+//            $(body).hasClass(min)
+//                    ? $(body)
+//                    .removeClass(min)
+//                    .addClass(min_out)
+//                    : $(body)
+//                    .addClass(min)
+//                    .removeClass(min_out)
+//        });
+//    }
 
     /*======== 4. SIDEBAR TOGGLE FOR VARIOUS SIDEBAR LAYOUT ========*/
     var body = $("#body");

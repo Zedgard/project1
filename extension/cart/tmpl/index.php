@@ -2,6 +2,12 @@
     <h1>Корзина</h1>
     <div class="row mt-5">
         <div class="col-lg-12">
+
+            <?
+            if ($p_user->isClientId() == 0) {
+                include $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/tmpl/login_minimal.php';
+            }
+            ?>
             <div class="cart_list">
 
             </div>
@@ -56,18 +62,18 @@
                             // https://dcblog.dev/how-to-integrate-paypal-into-php
                             /*
                              * <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                <input type="hidden" name="cmd" value="_xclick">
-                                <input type="hidden" name="business" value="<?= $paypal_email ?>">
-                                <input type="hidden" name="item_name" value="<?= $title ?>">
-                                <input type="hidden" name="item_number" value="1">
-                                <input type="hidden" name="amount" value="<?= $price_total ?>">
-                                <input type="hidden" name="return" value="<?= $url_ref ?>">
-                                <input type="hidden" name="no_shipping" value="1">
-                                <input type="hidden" name="currency_code" value="RUB">
-                                <input type="hidden" name="lc" value="RU" />
-                                <input type="hidden" name="email" value="<?= $email ?>">
-                                <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
-                            </form>
+                              <input type="hidden" name="cmd" value="_xclick">
+                              <input type="hidden" name="business" value="<?= $paypal_email ?>">
+                              <input type="hidden" name="item_name" value="<?= $title ?>">
+                              <input type="hidden" name="item_number" value="1">
+                              <input type="hidden" name="amount" value="<?= $price_total ?>">
+                              <input type="hidden" name="return" value="<?= $url_ref ?>">
+                              <input type="hidden" name="no_shipping" value="1">
+                              <input type="hidden" name="currency_code" value="RUB">
+                              <input type="hidden" name="lc" value="RU" />
+                              <input type="hidden" name="email" value="<?= $email ?>">
+                              <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
+                              </form>
                              */
                             ?>
                             <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" e="<?= $email ?>">PayPal</a> 
@@ -85,7 +91,9 @@
                     </div>
                     <?
                 } else {
-                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/tmpl/login_minimal.php';
+                    ?>
+                    <div style="font-size: 2rem;border: 1px solid red;margin: 2rem 0;color: red;text-align: center;padding: 2rem 0;width: 100%;">Для оплаты войдите в личный кабинет на сайте!</div>
+                    <?
                 }
                 ?>
             </div>
