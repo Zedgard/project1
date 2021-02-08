@@ -20,16 +20,25 @@
                 .webinar_head_title{
                     text-align: left;
                     position: absolute;
-                    margin-left: 23vw;
+                    margin-left: 18vw;
                     color: #FFFFFF;
                     font-size: 2rem;
                     margin-top: 6vh;
                     z-index: 9;
                 }
+                .webinar_head_articul{
+                    text-align: left;
+                    position: absolute;
+                    margin-left: 18vw;
+                    color: #FFFFFF;
+                    font-size: 1rem;
+                    margin-top: 20vh;
+                    z-index: 9;
+                }
                 .webinar_head_file{
                     text-align: left;
                     position: absolute;
-                    margin-left: 23vw;
+                    margin-left: 18vw;
                     color: #FFFFFF;
                     font-size: 2rem;
                     margin-top: 24vh;
@@ -39,7 +48,7 @@
                     padding: 0.25rem;
                     background-color: #e3e3e3;
                     border: 1px solid #dee2e6;
-                    max-height: 36vh;
+                    max-height: 24vh;
                     max-width: 16vw;
                 }
 
@@ -94,6 +103,9 @@
                     </div>
                     <div class="webinar_head_title">
                         <?= $wares_info['title'] ?>
+                    </div>
+                    <div class="webinar_head_articul">
+                        Артикул: <span><?= $wares_info['articul'] ?></span>
                     </div>
                     <div class="webinar_head_file">
                         <?

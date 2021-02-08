@@ -37,7 +37,7 @@
             .webinar_head_title{
                 text-align: left;
                 position: absolute;
-                margin-left: 22vw;
+                margin-left: 18vw;
                 color: #FFFFFF;
                 font-size: 2rem;
                 margin-top: 6vh;
@@ -46,7 +46,7 @@
             .webinar_head_file{
                 text-align: left;
                 position: absolute;
-                margin-left: 22vw;
+                margin-left: 18vw;
                 color: #FFFFFF;
                 font-size: 2rem;
                 margin-top: 24vh;
@@ -56,7 +56,7 @@
                 padding: 0.25rem;
                 background-color: #e3e3e3;
                 border: 1px solid #dee2e6;
-                max-height: 40vh;
+                max-height: 24vh;
                 max-width: 15vw;
             }
 

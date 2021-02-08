@@ -57,30 +57,30 @@
         <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/ajax.js?v=<?= $_SESSION['rand'] ?>"></script>   
 
-        <script src="/assets/plugins/charts/Chart.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/charts/Chart.js<?= $_SESSION['rand'] ?>"></script>
 
         <!-- timepicker -->
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css?v=<?= $_SESSION['rand'] ?>" />
 
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
 
-        <script src="/assets/plugins/daterangepicker/moment.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/daterangepicker/daterangepicker2.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/daterangepicker2.js<?= $_SESSION['rand'] ?>"></script>
 
-        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/toastr/toastr.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
 
         <?
         //<script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] "></script> 139
         ?>
-        <link href="/assets/css/sleek.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet">
-        <script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/sleek.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/sortable.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+        <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/sortable.js<?= $_SESSION['rand'] ?>"></script>
     </head>
     <body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
 
@@ -157,9 +157,9 @@
                     <header class="main-header " id="header">
                         <nav class="navbar navbar-static-top navbar-expand-lg">
                             <!-- Sidebar toggle button -->
-                            <button id="sidebar-toggler" class="sidebar-toggle">
+                            <button id="sidebar-toggler" class="sidebar-toggle d-block d-lg-none">
                                 <span class="sr-only">Toggle navigation</span>
-                            </button>
+                            </button> 
                             <!-- search form -->
 
                             <div class="search-form d-none d-lg-inline-block">
@@ -417,7 +417,7 @@
         $(document).ready(function () {
             setTimeout(function () {
                 $("#sidebar-toggler").click();
-                $("#sidebar-toggler").remove();
+                //$("#sidebar-toggler").remove();
             }, 200);
         });
 

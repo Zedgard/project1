@@ -50,11 +50,13 @@ body.full-page {
 html {
     font-size: 1rem;
 }
+/*
 ol,ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
+*/
 a, a:hover, a:focus {
     outline: none;
     text-decoration: none;

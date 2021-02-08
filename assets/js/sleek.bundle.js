@@ -7245,7 +7245,6 @@
 	        body.hasClass("sidebar-fixed-offcanvas") ||
 	        body.hasClass("sidebar-static-offcanvas")
 	      ) {
-              console.log(111); 
 	        $(this)
 	          .addClass("sidebar-offcanvas-toggle")
 	          .removeClass("sidebar-toggle");
@@ -7262,24 +7261,20 @@
 	          window.isCollapsed = false;
 	        }
 	      }
-
 	      if (
 	        body.hasClass("sidebar-fixed") ||
 	        body.hasClass("sidebar-static")
 	      ) {
-        //  console.log(222);
 	        $(this)
 	          .addClass("sidebar-toggle")
 	          .removeClass("sidebar-offcanvas-toggle");
 	        if (window.isMinified === false) {
-                 //   console.log('false');
 	          body
 	            .removeClass("sidebar-collapse sidebar-minified-out")
 	            .addClass("sidebar-minified");
 	          window.isMinified = true;
 	          window.isCollapsed = false;
 	        } else {
-               //     console.log('false');
 	          body.removeClass("sidebar-minified");
 	          body.addClass("sidebar-minified-out");
 	          window.isMinified = false;
@@ -9984,18 +9979,18 @@
 
 	  /*======== 1. JEKYLL INSTANT SEARCH ========*/
 
-	  var searchInput = $('#search-input');
-	  if(searchInput.length != 0){
-	    SimpleJekyllSearch.init({
-	      searchInput: document.getElementById('search-input'),
-	      resultsContainer: document.getElementById('search-results'),
-	      dataSource: '/assets/panel/assets/data/search.json',
-	      searchResultTemplate: '<li><div class="link"><a href="{link}">{label}</a></div><div class="location">{location}</div><\/li>',
-	      noResultsText: '<li>No results found</li>',
-	      limit: 10,
-	      fuzzy: true,
-	    });
-	  }
+//	  var searchInput = $('#search-input');
+//	  if(searchInput.length != 0){
+//	    SimpleJekyllSearch.init({
+//	      searchInput: document.getElementById('search-input'),
+//	      resultsContainer: document.getElementById('search-results'),
+//	      dataSource: '/assets/panel/assets/data/search.json',
+//	      searchResultTemplate: '<li><div class="link"><a href="{link}">{label}</a></div><div class="location">{location}</div><\/li>',
+//	      noResultsText: '<li>No results found</li>',
+//	      limit: 10,
+//	      fuzzy: true,
+//	    });
+//	  }
 
 
 	  /*======== 2. SCROLLBAR CONTENT ========*/
