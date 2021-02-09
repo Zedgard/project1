@@ -1,2 +1,6 @@
-1. вывести кейс
-2. выбор несколько тем
+<?php
+
+/*
+цвет для SVG
+https://codepen.io/sosuke/pen/Pjoqqp
+*/

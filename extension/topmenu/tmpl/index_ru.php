@@ -173,6 +173,59 @@
     </div>
 </header>
 
+<style>
+    footer_menu{
+        display: flex;
+        position: fixed;
+        justify-content: space-around;
+        left: 0;
+        bottom: -20px;
+        height: 100px;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+        background-image: url(/themes/site1/images/top_bg.png);
+        box-shadow: rgba(0, 0, 0, 0.5) 0px -5px 5px -5px;
+        clear: both;
+        z-index: 9999;
+    }
+    .footer_mobile_menu_div{
+        height: 47px;
+    }
+    .footer_menu_link{
+        width: 20%;
+        height: 100%;
+        text-align: center;
+        float: left;
+
+    }
+    .footer_menu_link img {
+        width: 80%;
+        height: 100%;
+        padding: 7% 0;
+        filter: invert(65%) sepia(38%) saturate(12%) hue-rotate(322deg) brightness(98%) contrast(98%);
+    }
+
+</style>
+<footer_menu class="d-block d-lg-none footer_mobile_menu">
+    <div class="footer_mobile_menu_div">
+        <span></span>
+        <a href="/" class="footer_menu_link">
+            <img src="/assets/img/footer_links/footer_link_home.svg"/>
+        </a>
+        <a href="/?move=datetime_piker_select_title" class="footer_menu_link">
+            <img src="/assets/img/footer_links/footer_link_monthly_calendar.svg"/>
+        </a>
+        <a href="/shop/" class="footer_menu_link">
+            <img src="/assets/img/footer_links/footer_link_search.svg"/>
+        </a>
+        <a href="/shop/cart/" class="footer_menu_link">
+            <img src="/assets/img/footer_links/footer_link_shopping_cart.svg"/>
+        </a>
+        <a href="/auth/" class="footer_menu_link">
+            <img src="/assets/img/footer_links/footer_link_user.svg"/>
+        </a>
+    </div>
+</footer_menu>
 <!-- Theme Initialization Files -->
 <script src="/assets/css/porto/js/theme.init.js<?= $_SESSION['rand'] ?>"></script>
 
