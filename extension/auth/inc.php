@@ -14,11 +14,45 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/wordpress/class-phpass.php';
 
 class auth extends \project\user {
 
     public function __construct() {
         
+    }
+
+    /**
+     * Получить данные по пользователю
+     * @param type $email
+     * @param type $phone
+     * @return array
+     */
+    function get_user_login($email, $phone = '') {
+        $sqlLight = new \project\sqlLight();
+        $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active`=1";
+        $data = $sqlLight->queryList($query, array($email, $phone));
+        if (count($data)) {
+            return $data[0];
+        }
+        return array();
+    }
+
+    /**
+     * Проверка на соответствие пароля
+     * @param type $enter_password
+     * @param type $db_password
+     * @return boolean
+     */
+    function check_password($enter_password, $db_password) {
+        $pass_hash = $this->passHash($enter_password);
+        if ($pass_hash == $db_password) {
+            return true;
+        } else {
+            $wp_hasher = new \project\PasswordHash(8, TRUE);
+            //echo "{$enter_password}, {$db_password}\n";
+            return $wp_hasher->CheckPassword($enter_password, $db_password);
+        }
     }
 
     /**
@@ -32,14 +66,15 @@ class auth extends \project\user {
     public function authorization($email, $password, $set_cookie = 0) {
         global $lang;
         if (strlen($email) > 2 && strlen($password) > 2) {
-            $pass_hash = $this->passHash($password);
 
-            $sqlLight = new \project\sqlLight();
-            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active`=1";
-            $users = $sqlLight->queryList($query, array($email, $email, $pass_hash));
+//            $sqlLight = new \project\sqlLight();
+//            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active`=1";
+//            $users = $sqlLight->queryList($query, array($email, $email, $pass_hash));
+            $user = $this->get_user_login($email, $email);
 
             // Если не получилось авторизироваться проверим есть ли регистрация и не активная запись
-            if (count($users) == 0) {
+            if (!isset($user['id'])) {
+                $pass_hash = $this->passHash($password);
                 $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active`=0";
                 $find_user = $sqlLight->queryList($query, array($email, $email, $pass_hash));
                 if (count($find_user) > 0) {
@@ -51,21 +86,26 @@ class auth extends \project\user {
                 }
             }
 
-            if (count($users) > 0) {
-                // если галочку поставили то запомним куку
-                if ($set_cookie == 1) {
-                    $this->set_cookie($users[0]['id']);
+            if (isset($user['id']) && $user['id'] > 0) {
+                // Проверим на пароль
+                if ($this->check_password($password, $user['u_pass'])) {
+                    // если галочку поставили то запомним куку
+                    if ($set_cookie == 1) {
+                        $this->set_cookie($user['id']);
+                    } else {
+                        $this->unset_cookie($user['id']);
+                    }
+                    $_SESSION['user']['info'] = $user;
+                    $data = $this->getUserInfo($user['id']);
+                    $_SESSION['user']['info'] = $data;
+                    if (strlen($_SESSION['user']['info']['avatar']) == 0) {
+                        // Аватар по умолчанию
+                        $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.jpg';
+                    }
+                    return true;
                 } else {
-                    $this->unset_cookie($users[0]['id']);
+                    $_SESSION['errors'][] = 'Пароль неверный';
                 }
-                $_SESSION['user']['info'] = $users[0];
-                $data = $this->getUserInfo($users[0]['id']);
-                $_SESSION['user']['info'] = $data;
-                if (strlen($_SESSION['user']['info']['avatar']) == 0) {
-                    // Аватар по умолчанию
-                    $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.jpg';
-                }
-                return true;
             }
         } else {
             $_SESSION['errors'][] = $lang['no_input_form'];
@@ -86,9 +126,7 @@ class auth extends \project\user {
     public function register($email, $phone, $pass, $pass_r, $check_private, $active = 0) {
         global $lang;
         $error = array();
-        // если все поля введены
-        //echo 'register';
-
+        $sqlLight = new \project\sqlLight();
         if (strlen($email) > 2 && strlen($pass) > 2) {
 
             $validator = new Validator();
@@ -104,7 +142,9 @@ class auth extends \project\user {
             $phone = $this->phoneReplace($phone);
 
             if ($pass == $pass_r) {
-                $pass_hash = $this->passHash($pass);
+                //$pass_hash = $this->passHash($pass);
+                $wp_hasher = new \project\PasswordHash(8, TRUE);
+                $pass_hash = $wp_hasher->HashPassword( trim( $pass ) );
             }
 
             $activate_codeBase64 = '';
@@ -114,7 +154,7 @@ class auth extends \project\user {
                 $activate_codeBase64 = base64_encode($activate_code);
             }
 
-            $sqlLight = new \project\sqlLight();
+
 
             if (strlen($phone) == 0) { // если не передан номер телефона
                 $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1"; // and `active` = 1 // ТОлько активированых 
@@ -446,14 +486,12 @@ class auth extends \project\user {
         if ($obj['user_id'] == 0) {
             $query = "INSERT `zay_roles_users` (`role_id`,`user_id`) "
                     . "VALUES ('?','?') ";
-        } //else {
-        //$query = "UPDATE `zay_roles_users` SET `role_id`='?' "
-        //        . "WHERE `user_id`='?' ";
-        //}
-        if (strlen($query) > 0) {
-            if ($this->query($query, array($role_id, $user_id))) {
-                return true;
-            }
+        } else {
+            $query = "UPDATE `zay_roles_users` SET `role_id`='?' "
+                    . "WHERE `user_id`='?' ";
+        }
+        if ($this->query($query, array($role_id, $user_id))) {
+            return true;
         }
         return false;
     }

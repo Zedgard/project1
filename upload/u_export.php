@@ -15,12 +15,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 $sqlLight = new \project\sqlLight();
 
-/* 
+/*
  * Обнулить данные
  */
-if(isset($_GET['zay_import_clear'])){
+if (isset($_GET['zay_import_clear'])) {
     $queryInsert = "UPDATE `zay_import` SET `val`='?' WHERE `code`='wp_users'";
-    if($sqlLight->query($queryInsert, array(0))){
+    if ($sqlLight->query($queryInsert, array(0))) {
         echo 'zay_import clear OK!';
     }
     exit();
@@ -75,7 +75,7 @@ $sqlLight = new \project\sqlLight();
  * @param type $city_code
  * @param type $active_subscriber
  */
-function updateOrInsertData($email, $phone, $first_name, $last_name, $active_lastdate, $external_code, $orders, $city, $city_code, $active_subscriber) {
+function updateOrInsertData($email, $user_pass, $phone, $first_name, $last_name, $active_lastdate, $external_code, $orders, $city, $city_code, $active_subscriber) {
     if (strlen(trim($active_lastdate)) > 0) {
         $active_lastdate = date("Y-m-d H:i:s", $active_lastdate);
     } else {
@@ -89,41 +89,47 @@ function updateOrInsertData($email, $phone, $first_name, $last_name, $active_las
 
     if (count($objs) > 0 && $objs[0]['id'] > 0) { // обновим если найден пользователь
         // обновление
-        $queryUpdate = "update `zay_users` set first_name='?', last_name='?', email='?', "
+        $queryUpdate = "update `zay_users` set u_pass='?' ,first_name='?', last_name='?', email='?', "
                 . "city='?', city_code='?', phone='?', active_subscriber='?' "
                 . "where id='?' ";
-        if ($sqlLight->query($queryUpdate, array($first_name, $last_name, $email,
+        if ($sqlLight->query($queryUpdate, array($user_pass, $first_name, $last_name, $email,
                     $city, $city_code, $phone, $active_subscriber, $objs[0]['id']), $active_subscriber)) {
             echo "-- update {$objs[0]['id']} true<br/>\n";
+            $queryInsert = "UPDATE `zay_import` SET `val`='?' WHERE `code`='wp_users'";
+            $sqlLight->query($queryInsert, array($external_code), 0);
         } else {
             echo "-- update {$objs[0]['id']} false<br/>\n";
+            $sqlLight->query($queryUpdate, array($user_pass, $objs[0]['id']), 1);
+            $queryInsert = "UPDATE `zay_import` SET `error`='?' WHERE `code`='wp_users'";
+            $sqlLight->query($queryInsert, array('Ошибка ' . $external_code), 0);
+            exit();
         }
     } else { // Создание новой записи
-        $queryInsert = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, "
-                . "`u_pass`, `active`, `active_code`, "
+        $queryInsert = "INSERT INTO `zay_users`(`email`, `u_pass`, `phone`, `first_name`, `last_name`, "
+                . "`active`, `active_code`, "
                 . "`active_lastdate`, `external_code`, `orders`, `date_registered`, `city`, `city_code`, `active_subscriber`, `network`) "
                 . "VALUES ('?','?','?','?', "
                 . "'?','?','?', "
                 . "'?','?','?',NOW(),'?','?','?','?')";
         if ($sqlLight->query($queryInsert,
-                        array($email, $phone, $first_name, $last_name,
-                            '', '0', '',
+                        array($email, $user_pass, $phone, $first_name, $last_name,
+                            '1', '',
                             $active_lastdate, $external_code, '0',
                             $city, $city_code, $active_subscriber, ''), 0)) {
             echo "-- INSERT {$external_code} true<br/>\n";
+            $queryInsert = "UPDATE `zay_import` SET `val`='?' WHERE `code`='wp_users'";
+            $sqlLight->query($queryInsert, array($external_code), 0);
         } else {
             echo "-- INSERT {$external_code} false<br/>\n";
         }
     }
-    $queryInsert = "UPDATE `zay_import` SET `val`='?' WHERE `code`='wp_users'";
-    $sqlLight->query($queryInsert, array($external_code),0);
 }
 
 /*
  * Добавим или обновим все записи
  */
 foreach ($wp_users as $v) {
-    updateOrInsertData($v['user_email'], $v['billing_phone'], $v['first_name'], $v['last_name'],
+    updateOrInsertData($v['user_email'], $v['user_pass'], $v['billing_phone'], $v['first_name'], $v['last_name'],
             $v['wc_last_active'], $v['ID'], 0, $v['billing_city'],
             $v['billing_postcode'], 0);
 }

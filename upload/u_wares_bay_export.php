@@ -98,6 +98,10 @@ function updateOrInsertData($data, $user_id) {
                 }
             } else {
                 echo "-- INSERT {$wares_id} {$user_id} false<br/>\n";
+                $sqlLight->query($queryUpdate, array($user_pass, $objs[0]['id']), 1);
+                $queryInsert = "UPDATE `zay_import` SET `error`='?' WHERE `code`='wp_pays'";
+                $sqlLight->query($queryInsert, array('Ошибка ' . $user_id), 0);
+                exit();
             }
         }
     }
