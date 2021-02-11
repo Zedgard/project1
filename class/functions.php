@@ -1156,3 +1156,20 @@ if (!function_exists('init_prices')) {
     }
 
 }
+
+if (!function_exists('get_param')) {
+
+    /**
+     * Получить даннные из запроса переданные каким либо образом
+     */
+    function get_param($param_name) {
+        if (isset($_POST[$param_name])) {
+            return $_POST[$param_name];
+        }
+        if (isset($_GET[$param_name])) {
+            return $_GET[$param_name];
+        }
+        return null;
+    }
+
+}

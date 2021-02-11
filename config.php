@@ -48,6 +48,11 @@ $cfg_db_pass = 'Kopass1987'; // Niko1706
 $cfg_db_host = 'localhost';
 $cfg_db_prefix = 'zay_';
 
+
+/*
+ * Доступ к API token
+ */
+$api_token_g = '1';//'Y2tfY2NlMGMyZTBhN2QzMzVhZWM0ZDNlOTQ4YzYxZWUzNjczNGRiYWQyNTpjc181MTNkYjRjY2E3OWU3YjdkMDkyMjg0YmQ1NzIxZDYxNmUxZGU3ZmZh';
 /* 
  * Для платежей
  */
