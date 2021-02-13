@@ -73,6 +73,10 @@ if ($_SESSION['user']['other'] == 0 && isset($_COOKIE["edgard_master_cookie_toke
     $p_auth->authorization_cookie($_COOKIE["edgard_master_cookie_token"]);
 }
 
+if (isset($_COOKIE[$_SESSION['SERVER_NAME'] . '_cookie_access'])) {
+    $_SESSION['cookie_access'] = $_COOKIE[$_SESSION['SERVER_NAME'] . '_cookie_access'];
+}
+
 $user = new \project\user();
 $user->upUserRole(); // role_privilege
 

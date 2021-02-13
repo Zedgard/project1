@@ -48,6 +48,15 @@ if (isset($_POST)) {
         }
     }
 
+    /*
+     * Регистрация разрешения cookie 
+     */
+    if (isset($_POST['bottom_cookie_btn'])) {
+        $cookie_val = $_SESSION['SERVER_NAME'] . '_cookie_access';
+        setcookie($cookie_val, '1');
+        $result = array('success' => 1, 'success_text' => '', 'data' => $cookie_val);
+    }
+
     // Определим пользователя и разрешим ему отправлять запросы
     if (isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) {
         //include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/jpost.php';
@@ -73,7 +82,7 @@ if (isset($_POST)) {
         include $_SERVER['DOCUMENT_ROOT'] . '/system/extension/jpost.php';
     }
 
-    /* 
+    /*
      * Обработки
      * Если имеются ошибки!
      */
@@ -81,7 +90,7 @@ if (isset($_POST)) {
         //$result = array('success' => 0, 'errors' => array($result['success_text']));
         if (isset($result['success_text']) && strlen($result['success_text']) > 0) {
             $_SESSION['errors'] = array();
-            $_SESSION['errors'][] = $result['success_text']; 
+            $_SESSION['errors'][] = $result['success_text'];
         }
     }
     if (is_array($_SESSION['errors']) && count($_SESSION['errors']) > 0) {

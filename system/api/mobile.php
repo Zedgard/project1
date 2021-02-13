@@ -8,6 +8,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include 'metods.php';
 
+//header("Autorization: Basic Y2tfY2NlMGMyZTBhN2QzMzVhZWM0ZDNlOTQ4YzYxZWUzNjczNGRiYWQyNTpjc181MTNkYjRjY2E3OWU3YjdkMDkyMjg0YmQ1NzIxZDYxNmUxZGU3ZmZh");
+
 // Для тестирования
 if ($_SESSION['DEBUG'] == 1) {
     $token = get_param('api_token_g');
@@ -37,3 +39,5 @@ if (isset($_POST['api_token_g']) && $_POST['api_token_g'] == $api_token_g) {
 }
 
 
+//print_r(getallheaders());
+//print_r(headers_list());

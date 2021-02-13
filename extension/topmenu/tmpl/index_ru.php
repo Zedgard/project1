@@ -173,39 +173,6 @@
     </div>
 </header>
 
-<style>
-    footer_menu{
-        display: flex;
-        position: fixed;
-        justify-content: space-around;
-        left: 0;
-        bottom: -20px;
-        height: 100px;
-        width: 100%;
-        background-color: rgb(255, 255, 255);
-        background-image: url(/themes/site1/images/top_bg.png);
-        box-shadow: rgba(0, 0, 0, 0.5) 0px -5px 5px -5px;
-        clear: both;
-        z-index: 9999;
-    }
-    .footer_mobile_menu_div{
-        height: 47px;
-    }
-    .footer_menu_link{
-        width: 20%;
-        height: 100%;
-        text-align: center;
-        float: left;
-
-    }
-    .footer_menu_link img {
-        width: 80%;
-        height: 100%;
-        padding: 7% 0;
-        filter: invert(65%) sepia(38%) saturate(12%) hue-rotate(322deg) brightness(98%) contrast(98%);
-    }
-
-</style>
 <footer_menu class="d-block d-lg-none footer_mobile_menu">
     <div class="footer_mobile_menu_div">
         <span></span>
@@ -226,6 +193,19 @@
         </a>
     </div>
 </footer_menu>
+
+<? if ($_SESSION['cookie_access'] == 0): ?>
+    <div class="bottom_cookie_block">
+        <div class="bottom_cookie_text">
+            Cайт <?= $_SERVER['SERVER_NAME'] ?> использует файлы cookie и другие технологии для вашего удобства пользования сайтом, анализа использования наших товаров и услуг и повышения качества рекомендаций. <a href="/cookie/" target="_blank">Подробнее</a>
+        </div>
+        <div class="bottom_cookie_block_btn">
+            <button type="button" aria-label="" role="button" class="bottom_cookie_btn">Хорошо</button>
+        </div>
+        <div class="bottom_cookie_desktop_hide d-block d-lg-none"></div>
+    </div>
+<? endif; ?>
+
 <!-- Theme Initialization Files -->
 <script src="/assets/css/porto/js/theme.init.js<?= $_SESSION['rand'] ?>"></script>
 

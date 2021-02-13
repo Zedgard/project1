@@ -6,6 +6,15 @@
 
 define('__CMS__', 1);
 
+if (!isset($_SESSION['cookie_access'])) {
+    $_SESSION['cookie_access'] = 0;
+}
+
+if (!isset($_SESSION['SERVER_NAME'])) {
+    $ex = explode('.', $_SERVER['SERVER_NAME']);
+    $_SESSION['SERVER_NAME'] = $ex[0];
+}
+
 // Время прихода пользователя на сайт
 if (!isset($_SESSION['user_load_page_time'])) {
     $_SESSION['user_load_page_time'];
@@ -57,9 +66,10 @@ if (!isset($_SESSION['user']['other'])) {
 /*
  * Глобальные
  */
-
 $_SESSION['REFERER'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $_SERVER['REQUEST_URI'];
 $_SESSION['page'] = array();
+
+
 // Настройки сайта
 $_SESSION['config'] = array();
 

@@ -568,12 +568,15 @@ a.image{
     border-radius: 50%;
     opacity: 0;
     visibility: hidden;
+    /*
     background: -webkit-linear-gradient(90deg, #643094, #00bcd4);
     background: -webkit-gradient(linear, left top, right top, color-stop(#643094), color-stop(#00bcd4));
     background: -webkit-linear-gradient(left, #643094, #00bcd4);
     background: -o-linear-gradient(left, #643094, #00bcd4);
     background: -webkit-gradient(linear, left top, right top, from(#643094), to(#00bcd4));
     background: linear-gradient(90deg, #643094, #00bcd4);
+    */
+    background: #00d0ed;
 }
 .back-top:hover::before, .back-top:focus::before {
     opacity: 1;
@@ -4523,4 +4526,71 @@ footer .copyrights > a:focus {
     padding-top: 10px;
     padding-bottom: 10px;
     width: 90%;
+}
+
+/* Нижнее меню для телефонов */
+footer_menu{
+    display: flex;
+    position: fixed;
+    justify-content: space-around;
+    left: 0;
+    bottom: -20px;
+    height: 66px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    background-image: url(/themes/site1/images/top_bg.png);
+    box-shadow: rgba(0, 0, 0, 0.5) 0px -5px 5px -5px;
+    clear: both;
+    z-index: 9999;
+    will-change: bottom;
+}
+.footer_mobile_menu_div{
+    height: 47px;
+}
+.footer_menu_link{
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    float: left;
+
+}
+.footer_menu_link img {
+    width: 80%;
+    height: 90%;
+    margin-top: 2%;
+    padding: 12% 0;
+    filter: invert(65%) sepia(38%) saturate(12%) hue-rotate(322deg) brightness(98%) contrast(98%);
+}
+
+/* Блок с подтверждением cookie */
+.bottom_cookie_block{
+    background: rgba(0,0,0,.85);
+    color: #fff;
+    /* color: var(--badgeForegroundColor); */
+    bottom: 0;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    will-change: bottom;
+}
+.bottom_cookie_text{
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+.bottom_cookie_block_btn{
+    text-align: center;
+}
+.bottom_cookie_btn{
+    margin: 0.6rem;
+    color: #FFF;
+    background: #000;
+    border: 1px solid #FFF;
+    padding: 0.8rem 2rem;
+
+}
+.bottom_cookie_btn:hover{
+    background-color: #333232;
+}
+.bottom_cookie_desktop_hide{
+    height: 50px;
 }

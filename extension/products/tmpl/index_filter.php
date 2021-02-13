@@ -34,7 +34,6 @@
         </div>
     </div>
     <style>
-
         .product_theme_btn{
             width: 100%;
             padding: 0.8rem 0;
@@ -75,7 +74,7 @@
                     box-shadow: none;
                 }
             </style>
-            <div class="mt-3 product_theme_btn product_theme_shadow<?= $value['id'] ?>" elm_id="<?= $value['id'] ?>" style="<?= $theme_color . $fontweight ?>">
+            <div class="mt-4 product_theme_btn product_theme_shadow<?= $value['id'] ?>" elm_id="<?= $value['id'] ?>" style="<?= $theme_color . $fontweight ?>">
                 <div><?= $value['title'] ?></div>
             </div>
             <?
@@ -162,6 +161,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Темы для мобильной версии -->
             <div class="row ml-2 mr-2 ">
                 <?
