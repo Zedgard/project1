@@ -62,8 +62,13 @@ if (isset($_FILES['upload_file']) && strlen($_FILES['upload_file']['name']) > 0)
 if ($user->isClient() || $user->isEditor()) {
     //$pr_products = new \project\products();
 
-
-    $avatar = (strlen($user_data['avatar']) > 0) ? $user_data['avatar'] : '/assets/img/user/user.png';
+    $user_phone_disabled = 'disabled="disabled"';
+    $user_phone_disabled_title = 'title="Чтобы изменить номер телефона обратитесть в поддержку!"';
+    if ($user->isEditor()) {
+        $user_phone_disabled = '';
+        $user_phone_disabled_title = '';
+    }
+    $avatar = (strlen($user_data['avatar']) > 0) ? $user_data['avatar'] : '/assets/img/user/user.jpg';
     include 'tmpl/admin.php';
 } else {
     ?>

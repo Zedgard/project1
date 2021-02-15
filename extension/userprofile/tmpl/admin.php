@@ -12,14 +12,15 @@
 
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group" <?= $user_phone_disabled_title ?>>
                                         <label for="first_name">Телефон</label>
-                                        <input type="text" class="form-control user_phone" id="user_phone" placeholder="Номер телефона..." required>
+                                        <input type="text" class="form-control user_phone" id="user_phone" <?= $user_phone_disabled ?> placeholder="Номер телефона..." required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        
+                                        <label for="first_name">Email</label>
+                                        <input type="text" class="form-control user_email" id="user_email" <?= $user_phone_disabled ?> placeholder="Email..." required>
                                     </div>
                                 </div>
 
@@ -64,14 +65,20 @@
                                     <span class="switch-handle"></span>
                                 </label>
                             </div>
-                            
+
                             <div class="row mb-3">
-                                
+
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <form method="POST" enctype="multipart/form-data">
                                             <div><label for="upload_file">
-                                                    <img src="<?= $avatar ?>" class="user-image img-thumbnail avatar_img mb-1" style="width: 100px;" title="Аватар">
+                                                    <?
+                                                    if (strlen($avatar) > 0) {
+                                                        ?>
+                                                        <img src="<?= $avatar ?>" class="user-image img-thumbnail avatar_img mb-1" style="width: 100px;" title="Аватар">
+                                                        <?
+                                                    }
+                                                    ?>
                                                 </label>
                                             </div>
                                             <div class="">
@@ -83,7 +90,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        
+
                                     </div>
                                 </div>
 
@@ -121,13 +128,17 @@
         });
         sendPostLigth('/jpost.php?extension=userprofile', {"get_user_info": '1'}, function (e) {
             user_data = e['data'];
+            var avatar_img = user_data['avatar'];
             $(".user_phone").val(user_data['phone']);
+            $(".user_email").val(user_data['email']);
             $(".first_name").val(user_data['first_name']);
             $(".last_name").val(user_data['last_name']);
             $(".city").val(user_data['city']);
             $(".city_code").val(user_data['city_code']);
-            $(".avatar_img").attr("src", user_data['avatar']);
-            $(".user-image").attr("src", user_data['avatar']);
+            if (avatar_img.length > 0) {
+                $(".avatar_img").attr("src", user_data['avatar']);
+                $(".user-image").attr("src", user_data['avatar']);
+            }
             if (Number(user_data['active_subscriber']) == 1) {
                 console.log('ok');
 
@@ -147,6 +158,7 @@
     function init_btn_save_user_info() {
         $(".btn_save_user_info").unbind('click').click(function () {
             var user_phone = $(".user_phone").val();
+            var user_email = $(".user_email").val();
             var first_name = $(".first_name").val();
             var last_name = $(".last_name").val();
             var city = $(".city").val();
@@ -158,6 +170,7 @@
             sendPostLigth('/jpost.php?extension=userprofile', {
                 "save_user_info": '1',
                 "user_phone": user_phone,
+                "user_email": user_email,
                 "first_name": first_name,
                 "last_name": last_name,
                 "city": city,

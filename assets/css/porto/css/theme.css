@@ -151,11 +151,17 @@
     font-size: 0.8rem;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
+    color: #808080;
+}
+#header .header_close_club span{
+    font-size: 0.9rem;
+    text-decoration: underline;
+    font-weight: 600;
 }
 #header .header_user_auth{
     font-size: 0.9rem;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
 }
 #header .header_user_auth i{
     color: #000000;
@@ -4559,6 +4565,16 @@ html.ie #header .header-column .header-extra-info .feature-box .feature-box-info
     }
     #header .app_block_text{
         display: none;
+    }
+    #header .header_close_club{
+        font-size: 1.1rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500; 
+    }
+    #header .header_close_club span{
+        font-size: 1.2rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600; 
     }
 
 }

@@ -38,21 +38,31 @@
                     </div>
                     
                     <div class="col-lg-2 mb-2 mobile_contxt_center" style="text-align: center;">
+
                         <a href="#" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a>
                     </div>
                     -->
-                    <div class="col-lg-5 contxt_right mobile_contxt_center">
-                        <a href="#" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
-                        &nbsp;&nbsp;
-                        <!--<a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | -->
-                        <a href="/auth/" class="header_close_club" style="color: #808080;">Мой кабинет <?= (isset($_SESSION['user']['info']['id'])) ? ' : ' . $_SESSION['user']['info']['first_name'] : '' ?></a>  
-                        <? if (isset($_SESSION['user']['info']['id'])): ?>
-                            <a href="javascript:void(0)" class="btn_logout header_user_auth btn_logout"><i class="fas fa-sign-out-alt"></i></a>
-                        <? endif; ?>
-                        <br/>
-                        <!--<span class="header_user_auth"> <a href="/auth/" class="header_close_club" style="color: #808080;"> </a></span> -->
+                    <div class="col-lg-5 contxt_right">
+
+                        <div style="float: right;margin-top: 4px;">
+                            <!--<a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | -->
+                            <a href="/auth/" class="header_close_club">Мой кабинет<?= (isset($_SESSION['user']['info']['id'])) ? ': <span>' . $_SESSION['user']['info']['first_name'] : '</span>' ?></a>  
+                            <? if (isset($_SESSION['user']['info']['id'])): ?>
+                                <a href="javascript:void(0)" class="btn_logout header_user_auth btn_logout" title="Выйти из личного кабинета"><i class="fas fa-sign-out-alt"></i></a>
+                            <? endif; ?>
+                        </div>
+                        <div style="float: left;" class="d-block d-lg-none">
+                            <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
+                            <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
+                            <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
+                        </div>
+                        <div style="float: right;margin-right: 1rem;" class="d-none d-lg-block">
+                            <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
+                            <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
+                            <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
+                        </div>
+
+<!--<span class="header_user_auth"> <a href="/auth/" class="header_close_club" style="color: #808080;"> </a></span> -->
                     </div>
                 </div>
 

@@ -32,6 +32,8 @@ class theme {
             header("HTTP/1.1 404 Not Found");
             header("Status: 404 Not Found");
             global $lang;
+            include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+            $config = new \project\config();
             include DOCUMENT_ROOT . '/themes/site1/error_' . $_SESSION['lang'] . '.php';
             $html = ob_get_clean();
         }

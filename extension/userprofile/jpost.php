@@ -2,9 +2,11 @@
 
 defined('__CMS__') or die;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once 'inc.php';
 
 $userprofile = new \project\userprofile();
+$user = new \project\user();
 
 // Данные по авторезированному пользователю
 if (isset($_POST['get_user_info'])) {

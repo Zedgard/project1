@@ -4,6 +4,8 @@ namespace project;
 
 defined('__CMS__') or die;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+
 class userprofile extends \project\extension {
 
     public function __construct() {
@@ -29,12 +31,20 @@ class userprofile extends \project\extension {
      * @return boolean
      */
     public function save_user_info($user_id, $user_phone, $first_name, $last_name, $city, $city_code, $active_subscriber) {
+        $user = new \project\user();
         if ($user_id > 0) {
             $query = "UPDATE `zay_users` "
-                    . "SET `phone`='?', `first_name`='?',`last_name`='?', `city`='?',"
+                    . "SET `first_name`='?',`last_name`='?', `city`='?',"
                     . "`city_code`='?', `active_subscriber`='?' "
                     . "WHERE `id`='?' ";
-            $ret = $this->query($query, array($user_phone, $first_name, $last_name, $city, $city_code, $active_subscriber, $user_id));
+            // Телефон могут менять только редакторы
+            if ($user->isEditor()) {
+                $queryPhoneUpdate = "UPDATE `zay_users` "
+                        . "SET `phone`='?' "
+                        . "WHERE `id`='?' ";
+                $this->query($queryPhoneUpdate, array($user_phone, $user_id));
+            }
+            $ret = $this->query($query, array($first_name, $last_name, $city, $city_code, $active_subscriber, $user_id));
 
             return $ret;
         }

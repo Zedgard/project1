@@ -141,7 +141,7 @@ if (isset($_POST['delete_master_consultation_period'])) {
 }
 
 /*
- * Выбор консультанта и настьроек по нему для отправки данных на google сервис
+ * Выбор консультанта и настроек по нему для отправки данных на google сервис
  */
 if (isset($_POST['set_consultation_config'])) {
     $master_id = $_POST['set_consultation_config'];

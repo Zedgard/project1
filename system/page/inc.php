@@ -95,7 +95,7 @@ class page {
                  */
                 if ($user_role == 0) {
                     // отправим на страницу авторизации
-                    echo 333;
+                    //echo 333;
                     //$page = $this->getPageInfoOrUrl('index');
                     $_SESSION['site_title'] = $_SESSION['site_title'] . ' - cтраница не найдена ';
                     $_SESSION['page'] = array();
