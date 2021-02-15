@@ -51,6 +51,7 @@ if (isset($_POST['send_consultation_form'])) {
     $datepicker_data = $_POST['datepicker_data'];
     $timepicker_data = $_POST['timepicker_data'];
     $price = $_POST['price'];
+    $period_id = $_POST['period_id'];
     $user_id = 0;
 
     /*
@@ -92,7 +93,8 @@ if (isset($_POST['send_consultation_form'])) {
         . "<div>Цена: {$price}</div>",
         'date' => $datepicker_data,
         'time' => $timepicker_data,
-        'price' => $price
+        'price' => $price,
+        'period_id' => $period_id,
     );
     $_SESSION['consultation'] = $data_itm;
     $_SESSION['cart']['itms'][] = $data_itm;

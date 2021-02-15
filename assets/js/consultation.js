@@ -133,10 +133,12 @@ $(function () {
 
     $(".select_time_period").change(function () {
         var total_price = $(this).val();
+        var period_id = $(this).attr("period_id");
         if (total_price > 0) {
             $(".select_time_period").css("border", "");
             $(".total_price").html(total_price);
             consultation.total_price = total_price;
+            consultation.period_id = period_id;
             //consultation.total_price = total_price;
             $(".btn_step_end").removeClass('disabled');
         } else {
@@ -305,20 +307,21 @@ function init_consultation_master() {
                 }
             }
         });
-    }, 200);
+    }, 300);
 }
 
 function send_consultation_form() {
     sendPostLigth('/jpost.php?extension=cart', {
         "send_consultation_form": 1,
         "first_name": consultation.first_name,
-        "user_phone": consultation.user_phone,
+        "user_phone": consultation.user_phone, 
         "user_email": consultation.user_email,
         "your_master": consultation.your_master,
         "your_master_text": consultation.your_master_text,
         "datepicker_data": consultation.datepicker_data,
         "timepicker_data": consultation.timepicker_data,
-        "price": consultation.total_price
+        "price": consultation.total_price,
+        "period_id": consultation.period_id,
     }, function (e) {
 
     });
@@ -339,11 +342,11 @@ function init_select_time_period(master_id) {
                 period_hour = e['data'][i]['period_hour'] + ' часа ';
             } else {
                 period_hour = e['data'][i]['period_hour'] + ' час ';
-            }
-            if (e['data'][i]['period_hour'] == 0) {
+            } 
+            if (e['data'][i]['period_hour'] == 0) { 
                 period_hour = '';
             }
-            $(".select_time_period").append('<option value="' + e['data'][i]['period_price'] + '">' + period_hour + e['data'][i]['periods_minute'] + ' минут</option>');
+            $(".select_time_period").append('<option value="' + e['data'][i]['period_price'] + '" period_id="' + e['data'][i]['id'] + '">' + period_hour + e['data'][i]['periods_minute'] + ' минут</option>');
         }
     });
 }

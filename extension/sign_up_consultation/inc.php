@@ -16,6 +16,30 @@ class sign_up_consultation extends \project\extension {
         parent::__construct();
     }
 
+    /**
+     * Добавление новой консультации
+     * @param type $data
+     * @return type
+     */
+    public function add_consultation($data) {
+        $date_ex = explode('/', $data['date']);
+        $consultation_date = "{$date_ex[2]}/{$date_ex[1]}/{$date_ex[0]}";
+        $period_id = ($data['period_id'] > 0) ? $data['period_id'] : 0;
+
+        $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?'";
+        $objs = $this->getSelectArray($querySelect, array($consultation_date, $data['time']));
+        if (count($objs) == 0) {
+            $query = "INSERT INTO `zay_consultation`(`first_name`, `user_phone`, `user_email`, `pay_descr`, `consultation_date`, `consultation_time`, `period_id`) "
+                    . "VALUES ('?','?','?','?','?','?','?')";
+            //echo 'sign_up_consultation';
+
+            return $this->query($query, array($data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 0);
+        } else {
+            return true;
+        }
+        return false;
+    }
+
     /*
      * Мастера для консультаций
      */
@@ -85,7 +109,12 @@ class sign_up_consultation extends \project\extension {
     public function delete_consultation_master($id) {
         if ($id > 0) {
             $query = "DELETE FROM `zay_consultation_master` WHERE `id`='?' ";
-            return $this->query($query, array($id));
+            $ret = $this->query($query, array($id));
+            if ($ret) {
+                // Чистим периоды
+                $this->delete_consultation_period_or_master($id);
+            }
+            return $ret;
         }
         return false;
     }
@@ -133,6 +162,20 @@ class sign_up_consultation extends \project\extension {
     public function delete_consultation_period($consultation_period) {
         $query = "DELETE FROM `zay_consultation_periods` WHERE `id`='?'";
         return $this->query($query, array($consultation_period));
+    }
+
+    /**
+     * Удаление периодов по мастеру
+     * @param type $id
+     * @return boolean
+     */
+    public function delete_consultation_period_or_master($master_id) {
+        if ($master_id > 0) {
+            $queryPeriods = "DELETE FROM `zay_consultation_periods` WHERE master_id='?'";
+            // Чистим периоды
+            return $this->query($queryPeriods, array($master_id));
+        }
+        return false;
     }
 
 }

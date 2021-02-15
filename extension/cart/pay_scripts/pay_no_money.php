@@ -9,10 +9,13 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
 $products = new \project\products();
 $u = new \project\user();
+$sign_up_consultation = new \project\sign_up_consultation();
 
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "succeeded"; // Устанавливаем стандартный статус платежа

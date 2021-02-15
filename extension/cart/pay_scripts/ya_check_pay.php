@@ -12,15 +12,18 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
 
 $sqlLight = new \project\sqlLight();
 $u = new \project\user();
 $products = new \project\products();
 $config = new \project\config();
+$sign_up_consultation = new \project\sign_up_consultation();
 
 $ya_shop_id = $config->getConfigParam('ya_shop_id');
 $ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
-
+//echo "ya_shop_id: {$ya_shop_id}, ya_shop_api_key: {$ya_shop_api_key} \n";
+//echo "PAY_KEY: {$_SESSION['PAY_KEY']}\n";
 //$connection = mysqli_connect($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name) or die(mysqli_error($connection)); // Подключаемся к базе данных
 // Подключаем библиотеку Я.Кассы
 require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
@@ -38,6 +41,8 @@ if (isset($_SESSION['PAY_KEY'])) {
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending'";
     $pays = $sqlLight->queryList($query);
 }
+//print_r($pays);
+//echo "\n";
 // Получаем список платежей циклом
 foreach ($pays as $value) {
     $paymentId = $value['pay_key']; // Получаем ключ платежа
@@ -45,15 +50,15 @@ foreach ($pays as $value) {
     $pay_check = $payment->getstatus(); // Получаем статус оплаты
     $pay_paid = $payment->getPaid();
     $payment->setstatus('succeeded');
-    $pay_check = $payment->getstatus();
-    //
-    //echo "paymentId: {$paymentId} <br/>\n";
-    //echo "pay_paid: {$pay_paid} <br/>\n";
-    //echo "payment: ";
-    //print_r($payment['payment_method']->_first6);
-    //echo "<br/>\n";
-    //echo "pay_check: {$pay_check} <br/>\n";
-    //
+    //$pay_check = $payment->getstatus();
+//    echo "1111\n";
+//    //
+//    echo "paymentId: {$paymentId} <br/>\n";
+//    echo "pay_paid: {$pay_paid} <br/>\n";
+//    echo "payment: ";
+//    print_r($payment['payment_method']->_first6);
+//    echo "<br/>\n";
+//    echo "pay_check: {$pay_check} <br/>\n";
     // Если платеж прошел, то обновляем статус платежа
     //if ($pay_check == 'waiting_for_capture' or $pay_check == 'succeeded' || $pay_check == 'canceled') {
     $payment_type = $payment['payment_method']->_type;
@@ -82,7 +87,7 @@ foreach ($pays as $value) {
 
 if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && $u->isClientId() > 0) {
     // Проверяем статус оплаты
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status` = 'succeeded' and `user_id`='?' and pay_key='?' ";
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='succeeded' and `user_id`='?' and pay_key='?' ";
     $pay_succeede = $sqlLight->queryList($query, array($u->isClientId(), $_SESSION['PAY_KEY']));
     $total = $pay_succeede[0]['pay_sum'];
     $pay_id = $pay_succeede[0]['id'];
@@ -90,12 +95,15 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
         /*
          * Если установлена настройка отправим в календарь событие
          */
-        if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
-            if ($_SESSION['consultation']['your_master_id'] > 0) {
-                $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
-                $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
-                $master_token = $master['token_file_name'];
-                $master_credentials = $master['credentials_file_name'];
+        if ($_SESSION['consultation']['your_master_id'] > 0) {
+            if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
+
+                // Данные по консультанту для календаря
+                // Если календарь не используем не нужно
+//                $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
+//                $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
+//                $master_token = $master['token_file_name'];
+//                $master_credentials = $master['credentials_file_name'];
 
                 $first_name = $_SESSION['consultation']['first_name'];
                 $user_phone = $_SESSION['consultation']['user_phone'];
@@ -103,6 +111,10 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
                 $pay_descr = $_SESSION['consultation']['pay_descr'];
                 $user_date = $_SESSION['consultation']['date'];
                 $user_time = $_SESSION['consultation']['time'];
+                $period_id = $_SESSION['consultation']['period_id'];
+
+
+
                 /*
                   'your_master_id' => $your_master,
                   'first_name' => $first_name,
@@ -118,10 +130,11 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
                   'price' => $price
                  */
                 //$master_token = $master['credentials_file_name'];
-                include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
+                // В последний раз чтото не работало 403 ошибка мол превышен лимит  и не добавлялось событие
+                //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
             }
+            $sign_up_consultation->add_consultation($_SESSION['consultation']);
         }
-
         $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
     } else {
         $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');

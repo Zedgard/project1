@@ -13,10 +13,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
 
 $sqlLight = new \project\sqlLight();
 $u = new \project\user();
 $config = new \project\config();
+$sign_up_consultation = new \project\sign_up_consultation();
 
 $in_shop_id = $config->getConfigParam('in_shop_id');
 $in_secret_key = $config->getConfigParam('in_secret_key');
@@ -75,8 +77,9 @@ if ($amount == $check_amount) {
             /*
              * Если установлена настройка отправим в календарь событие
              */
-            if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
-                if ($_SESSION['consultation']['your_master_id'] > 0) {
+            if ($_SESSION['consultation']['your_master_id'] > 0) {
+                if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
+
                     $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
                     $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
                     $master_token = $master['token_file_name'];
@@ -105,6 +108,7 @@ if ($amount == $check_amount) {
                     //$master_token = $master['credentials_file_name'];
                     include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
                 }
+                $sign_up_consultation->add_consultation($_SESSION['consultation']);
             }
             $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
             $_SESSION['cart']['total'] = $total;

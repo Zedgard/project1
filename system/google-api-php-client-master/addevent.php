@@ -48,6 +48,7 @@ function getClient() {
     // The file token.json stores the user's access and refresh tokens, and is
     // created automatically when the authorization flow completes for the first
     // time.
+    //echo "consultation_token: {$_SESSION['consultation_token']}\n";
     $tokenPath = __DIR__ . '/tokens/' . $_SESSION['consultation_token']; // token.json
     if (file_exists($tokenPath)) {
         $accessToken = json_decode(file_get_contents($tokenPath), true);
@@ -98,8 +99,9 @@ $optParams = array(
 );
 $results = $service->events->listEvents($calendarId, $optParams);
 $events = $results->getItems();
-
-
+//echo "events: \n";
+//print_r($events);
+//echo "\n";
 // Refer to the PHP quickstart on how to setup the environment:
 // https://developers.google.com/calendar/quickstart/php
 // Change the scope to Google_Service_Calendar::CALENDAR and delete any stored
@@ -141,7 +143,7 @@ $event = new Google_Service_Calendar_Event(
     'description' => $pay_descr,
     'start' => array(
         'dateTime' => $start_date, //,//'2015-05-28T09:00:00-07:00',
-    //'timeZone' => 'Europe/Moscow',
+        'timeZone' => 'Europe/Moscow',
     ),
     'end' => array(
         'dateTime' => $end_date, //,//'2015-05-28T17:00:00-07:00',
@@ -167,6 +169,21 @@ $event = new Google_Service_Calendar_Event(
         )
 );
 
-$calendarId = 'primary';
-$event = $service->events->insert($calendarId, $event);
-//printf('Event created: %s\n', $event->htmlLink);
+//$calendarId = 'primary';
+echo "first_name: {$first_name} \n"
+ . "user_email: {$user_email} \n"
+ . "pay_descr: {$pay_descr}\n"
+ . "start_date: {$start_date} end_date: {$end_date}\n"
+ . "111\n";
+//var_dump($calendarId);
+//echo "\n";
+//echo "222\n";
+//var_dump($event);
+//echo "333\n";
+//echo "\n";
+try {
+    $event = $service->events->insert($calendarId, $event);
+} catch (Exception $e) {
+    echo "Error: {$e}";
+}
+printf('Event created: %s\n', $event->htmlLink);

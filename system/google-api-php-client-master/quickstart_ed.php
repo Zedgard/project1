@@ -29,7 +29,7 @@ if (php_sapi_name() != 'cli') {
  */
 function getClient()
 {
-    $k = 'credentials_ed3.json';
+    $k = 'credentials_ed.json';
     echo "credentials: {$k}\n";
     $client = new Google_Client();
     $client->setApplicationName('Google Calendar API PHP Quickstart');
