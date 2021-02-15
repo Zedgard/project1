@@ -256,7 +256,7 @@
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <!-- User image -->
                                             <li class="dropdown-header">
-                                                <!-- <img src="/assets/img/user/user.png" class="img-circle" alt="User Image" /> -->
+                                                <!-- <img src="/assets/img/user/user.jpg" class="img-circle" alt="User Image" /> -->
                                                 <div class="d-inline-block">
                                                     Добрый день!<br/>
                                                     <?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?> <small class="pt-1"><?= $_SESSION['user']['info']['email'] ?></small>

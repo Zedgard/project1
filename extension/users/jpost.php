@@ -19,7 +19,7 @@ if ($user->isEditor()) {
         if (isset($_POST['system_user_id']) && $_POST['system_user_id'] > 0) {
             $user_id = $_POST['system_user_id'];
             $_SESSION['user_edit_obj_id'] = $user_id;
-        } 
+        }
         $data = $user->getUserInfo($user_id, $page_num, $input_search_str);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
@@ -144,13 +144,19 @@ if ($user->isEditor()) {
             return $result;
         }
     }
-
+    /*
+     * Авторизация под другим пользователем
+     */
     if (isset($_POST['userAuth']) && $_POST['userAuth'] > 0) {
         $_SESSION['user']['other'] = 1;
         $user_id = $_POST['userAuth'];
         $data = $user->getUserInfo($user_id);
         $_SESSION['user']['other_info'] = $_SESSION['user']['info'];
         $_SESSION['user']['info'] = $data;
+        if (strlen($_SESSION['user']['info']['avatar']) == 0) {
+            // Аватар по умолчанию
+            $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.jpg';
+        }
         if (\project\user::isAdmin() || \project\user::isEditor()) {
             $url = '/admin/';
             $r = 1;

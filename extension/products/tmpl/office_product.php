@@ -49,7 +49,7 @@
                     background-color: #e3e3e3;
                     border: 1px solid #dee2e6;
                     max-height: 24vh;
-                    max-width: 16vw;
+                    max-width: 12vw;
                 }
 
                 .video_u_block_left{
