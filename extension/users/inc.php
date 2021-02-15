@@ -160,7 +160,8 @@ class user extends \project\extension {
     }
 
     /**
-     * Доступы
+     * Админы
+     * @return boolean
      */
     static public function isAdmin() {
         $role_privilege = $_SESSION['user']['info']['role_privilege'];
@@ -170,6 +171,10 @@ class user extends \project\extension {
         return false;
     }
 
+    /**
+     * Редакторы
+     * @return boolean
+     */
     static public function isEditor() {
         //print_r($_SESSION['user']['info']);
         $role_privilege = $_SESSION['user']['info']['role_privilege'];
@@ -179,13 +184,17 @@ class user extends \project\extension {
         return false;
     }
 
+    /**
+     * Только клиенты
+     * @return boolean
+     */
     static public function isClient() {
         if (trim($_SESSION['user']['info']['role_privilege']) == '') {
-            if($_SESSION['user']['other'] == 1){
+            if ($_SESSION['user']['other'] == 1) {
                 $role_privilege = 1;
                 $_SESSION['user']['info']['role_privilege'] = 1;
             }
-        } else { 
+        } else {
             $role_privilege = $_SESSION['user']['info']['role_privilege'];
         }
         if ($role_privilege > 0 && $role_privilege < 2) {
@@ -194,6 +203,18 @@ class user extends \project\extension {
         return false;
     }
 
+    /**
+     * Для всех
+     * @return boolean
+     */
+    static public function isAll() {
+        return true;
+    }
+
+    /**
+     * Получить ID авторизированного клиента
+     * @return int
+     */
     public function isClientId() {
         if (isset($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 0) {
             return $_SESSION['user']['info']['id'];
@@ -202,16 +223,16 @@ class user extends \project\extension {
         }
     }
 
+    /**
+     * Получить email авторизированного клиента
+     * @return string
+     */
     public function isClientEmail() {
         if (isset($_SESSION['user']['info']['email']) && strlen($_SESSION['user']['info']['email']) > 0) {
             return $_SESSION['user']['info']['email'];
         } else {
             return '';
         }
-    }
-
-    static public function isAll() {
-        return true;
     }
 
     /**
