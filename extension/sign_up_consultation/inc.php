@@ -28,12 +28,13 @@ class sign_up_consultation extends \project\extension {
 
         $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?'";
         $objs = $this->getSelectArray($querySelect, array($consultation_date, $data['time']));
+
         if (count($objs) == 0) {
-            $query = "INSERT INTO `zay_consultation`(`first_name`, `user_phone`, `user_email`, `pay_descr`, `consultation_date`, `consultation_time`, `period_id`) "
-                    . "VALUES ('?','?','?','?','?','?','?')";
+            $query = "INSERT INTO `zay_consultation`(`pay_id`, `master_id`, `first_name`, `user_phone`, `user_email`, `pay_descr`, `consultation_date`, `consultation_time`, `period_id`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?','?')";
             //echo 'sign_up_consultation';
 
-            return $this->query($query, array($data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 0);
+            return $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 1);
         } else {
             return true;
         }
@@ -177,5 +178,17 @@ class sign_up_consultation extends \project\extension {
         }
         return false;
     }
+    
+    /**
+     * Получить список купленных консультаций
+     * @param type $master_id
+     * @return type
+     */
+    public function get_master_consultations($master_id) {
+        $querySelect = "SELECT c.* FROM zay_consultation c 
+                left join zay_pay p on p.id=c.pay_id
+                where c.master_id='?' and `consultation_date`>=CURRENT_DATE and p.pay_status='succeeded'";
+        return $this->getSelectArray($querySelect, array($master_id));
+    } 
 
 }

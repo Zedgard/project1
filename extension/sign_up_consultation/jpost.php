@@ -181,3 +181,10 @@ if (isset($_POST['send_fast_consultation'])) {
         $result = array('success' => 0, 'success_text' => 'Необходимо заполнить все поля!', 'data' => $data);
     }
 }
+
+// Получить список купленных консультаций
+if(isset($_POST['get_master_consultants'])){
+    $master_id = $_POST['master_id'];
+    $data = $sign_up_consultation->get_master_consultations($master_id);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}

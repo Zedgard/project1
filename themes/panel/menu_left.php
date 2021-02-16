@@ -1,4 +1,4 @@
-<div class="sidebar-scrollbar">
+<div class="sidebar-scrollbar" style="overflow: auto;">
 
     <!-- sidebar menu -->
     <ul class="nav sidebar-inner" id="sidebar-menu" style="margin: 0;padding: 0;">

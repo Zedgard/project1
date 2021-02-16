@@ -79,11 +79,19 @@ function updateOrInsertData($data, $user_id) {
 //            . "left join `zay_pay` p on p.`id`=pp.`pay_id`"
 //            . "where pp.`product_id`='{$p}' and p.`user_id`='{$user_id}' ";
 //    $objs = $sqlLight->queryList($query);
+    
+        // Убрал ошибку при пустой дате
+        $paid_date = $data['_paid_date'];
+        if(strlen($paid_date) == 0) {
+            $paid_date = '2019-08-12 21:08:41';
+        }
+        //print_r($data);
+        //echo "col: {$col}<br/>\n";
         if ($col == 0) {
             // Создание новой записи
             $queryInsert = "INSERT INTO `zay_pay`(`pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_descr`, `confirmationUrl`, `pay_interkassa_id`, `processed`) "
-                    . "VALUES ('wp','{$user_id}','{$product_price}','{$data['_paid_date']}','{$data['_transaction_id']}','{$data['_payment_method']}','','','succeeded','{$data['_payment_method_title']}','','','1')";
-            if ($sqlLight->query($queryInsert, array(), 0)) {
+                    . "VALUES ('wp','{$user_id}','{$product_price}','{$paid_date}','{$data['_transaction_id']}','{$data['_payment_method']}','','','succeeded','{$data['_payment_method_title']}','','','1')";
+            if ($sqlLight->query($queryInsert, array(), 1)) {
                 echo "INSERT INTO `zay_pay` true <br/>\n";
                 $qq = "select max(p.id) as col from `zay_pay` p";
                 $pay_id = $sqlLight->queryList($qq)[0]['col'];
@@ -92,7 +100,7 @@ function updateOrInsertData($data, $user_id) {
 
                 // Добавим связь покупки и продукта
                 $q = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`, `creat_date`) "
-                        . "VALUES ('{$pay_id}','{$p}','{$product_price}','{$data['_paid_date']}')";
+                        . "VALUES ('{$pay_id}','{$p}','{$product_price}','{$paid_date}')";
                 if ($sqlLight->query($q, array(), 0)) {
                     echo "-- INSERT {$wares_id} {$user_id} true<br/>\n";
                 }

@@ -25,6 +25,7 @@
             </style>
             <?
             //print_r($_SESSION['cart']);
+           // print_r($_SESSION['cart']['itms']);
             ?>
             <div class="row">
                 <div class="col-md-12 top80 bottom100">
@@ -192,11 +193,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 text-left mt-3">
-                                        <a href="/pay.php?yandex=1" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
+                                        <a href="/pay.php?yandex=1" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
                                     </div>
 
                                     <div class="col-lg-3 text-left mt-3">
-                                        <a href="/pay.php?interkassa=1" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
+                                        <a href="/pay.php?interkassa=1" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
                                     </div>
                                     <div class="col-lg-3 text-left mt-3">
                                         <?
@@ -219,7 +220,7 @@
                                               </form>
                                              */
                                             ?>
-                                            <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
+                                            <a href="javascript:void(0)" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
                                             <?
                                         }
                                         ?>

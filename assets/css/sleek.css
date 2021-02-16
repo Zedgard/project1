@@ -10956,7 +10956,9 @@ div.copied {
         visibility: hidden;
         opacity: 0; } }
 .sidebar-minified .left-sidebar .sidebar-scrollbar {
-    overflow: unset !important; }
+    /* overflow: unset !important; */
+    overflow: auto;
+}
 
 /* Sidebar Minified Hover */
 @media (min-width: 768px) {
@@ -11023,7 +11025,9 @@ div.copied {
         transition: none; } }
 
 .sidebar-minified .left-sidebar:hover .sidebar-scrollbar {
-    overflow: hidden !important; }
+    /* overflow: unset !important; */
+    overflow: auto;
+}
 
 /* Sidebar Minified Not transition */
 @media (min-width: 768px) {

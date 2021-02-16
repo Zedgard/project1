@@ -49,10 +49,13 @@ if (isset($_GET['ya_payment_true'])) {
     $form_show = 1;
     ?>
     <div class="container mb-5">
-        <div class="row">
+        <div class="row pt-5 pb-5 text-center">
             <div class="col-lg-12">
-                <h3>Проверить платеж</h3>
+                <h1 class="fontbold" style="">Проверить платеж</h1>
+                <br/>
+                <hr/>
             </div>
+            
             <div class="col-lg-12 pay_result form_result pt-5 pb-5 font-size-20">
 
             </div>
@@ -77,6 +80,10 @@ if (isset($_GET['ya_payment_true'])) {
             });
             sendPostLigth('/check_pay.php', {"check_pay": 'ya'}, function (e) {
                 $(".form_result").html(e['success_text']);
+                if (e['success'] == '1') {
+                    $(".pay_check").html("Перейти в личный кабинет");
+                    $(".pay_check").attr("href", "/office/");
+                }
             });
 
             window.dataLayer = window.dataLayer || [];

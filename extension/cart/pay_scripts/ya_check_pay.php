@@ -35,22 +35,23 @@ $client->setAuth($ya_shop_id, $ya_shop_api_key);
 
 // Проверяем статус оплаты
 if (isset($_SESSION['PAY_KEY'])) {
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_key`='?'";
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_date`>=CURRENT_DATE-1 and `pay_key`='?'";
     $pays = $sqlLight->queryList($query, array($_SESSION['PAY_KEY']));
 } else {
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending'";
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
 }
 //print_r($pays);
 //echo "\n";
 // Получаем список платежей циклом
-foreach ($pays as $value) {
-    $paymentId = $value['pay_key']; // Получаем ключ платежа
-    $payment = $client->getPaymentInfo($paymentId); // Получаем информацию о платеже
-    $pay_check = $payment->getstatus(); // Получаем статус оплаты
-    $pay_paid = $payment->getPaid();
-    $payment->setstatus('succeeded');
-    //$pay_check = $payment->getstatus();
+if (count($pays) > 0) {
+    foreach ($pays as $value) {
+        $paymentId = $value['pay_key']; // Получаем ключ платежа
+        $payment = $client->getPaymentInfo($paymentId); // Получаем информацию о платеже
+        $pay_check = $payment->getstatus(); // Получаем статус оплаты
+        $pay_paid = $payment->getPaid();
+        $payment->setstatus('succeeded');
+        //$pay_check = $payment->getstatus();
 //    echo "1111\n";
 //    //
 //    echo "paymentId: {$paymentId} <br/>\n";
@@ -59,31 +60,33 @@ foreach ($pays as $value) {
 //    print_r($payment['payment_method']->_first6);
 //    echo "<br/>\n";
 //    echo "pay_check: {$pay_check} <br/>\n";
-    // Если платеж прошел, то обновляем статус платежа
-    //if ($pay_check == 'waiting_for_capture' or $pay_check == 'succeeded' || $pay_check == 'canceled') {
-    $payment_type = $payment['payment_method']->_type;
-    $payment_c = $payment['payment_method']->_first6 .
-            $payment['payment_method']->_last4 . ' ' .
-            $payment['payment_method']->_expiry_month . ' ' .
-            $payment['payment_method']->_expiry_year . ' ' .
-            $payment['payment_method']->_card_type . ' ' .
-            $payment['payment_method']->_issuer_country . ' ' .
-            $payment['payment_method']->_issuer_name;
-    $payment_bank = $payment['payment_method']->_issuer_name;
+        // Если платеж прошел, то обновляем статус платежа
+        //if ($pay_check == 'waiting_for_capture' or $pay_check == 'succeeded' || $pay_check == 'canceled') {
+        $payment_type = $payment['payment_method']->_type;
+        $payment_c = $payment['payment_method']->_first6 .
+                $payment['payment_method']->_last4 . ' ' .
+                $payment['payment_method']->_expiry_month . ' ' .
+                $payment['payment_method']->_expiry_year . ' ' .
+                $payment['payment_method']->_card_type . ' ' .
+                $payment['payment_method']->_issuer_country . ' ' .
+                $payment['payment_method']->_issuer_name;
+        $payment_bank = $payment['payment_method']->_issuer_name;
 
-    // Обновляем статус платежа
-    $query_update = "UPDATE zay_pay "
-            . "SET pay_status='?', payment_type='?', payment_c='?', payment_bank='?' "
-            . "WHERE `pay_type`='ya' and pay_key = '?'";
-    $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']));
-    if ($pay_check == 'succeeded') {
-        // Зафиксируем продажу
-        $products->setSoldAdd($product_id);
-        $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
-    } else {
-        $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
+        // Обновляем статус платежа
+        $query_update = "UPDATE zay_pay "
+                . "SET pay_status='?', payment_type='?', payment_c='?', payment_bank='?' "
+                . "WHERE `pay_type`='ya' and pay_key = '?'";
+        $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']));
+        if ($pay_check == 'succeeded') {
+            // Зафиксируем продажу
+            $products->setSoldAdd($product_id);
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
+        }
     }
 }
+
 
 if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && $u->isClientId() > 0) {
     // Проверяем статус оплаты
@@ -91,6 +94,7 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
     $pay_succeede = $sqlLight->queryList($query, array($u->isClientId(), $_SESSION['PAY_KEY']));
     $total = $pay_succeede[0]['pay_sum'];
     $pay_id = $pay_succeede[0]['id'];
+    
     if (count($pay_succeede) > 0) {
         /*
          * Если установлена настройка отправим в календарь событие
@@ -105,14 +109,14 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
 //                $master_token = $master['token_file_name'];
 //                $master_credentials = $master['credentials_file_name'];
 
-                $first_name = $_SESSION['consultation']['first_name'];
-                $user_phone = $_SESSION['consultation']['user_phone'];
-                $user_email = $_SESSION['consultation']['user_email'];
-                $pay_descr = $_SESSION['consultation']['pay_descr'];
-                $user_date = $_SESSION['consultation']['date'];
-                $user_time = $_SESSION['consultation']['time'];
-                $period_id = $_SESSION['consultation']['period_id'];
-
+//                $first_name = $_SESSION['consultation']['first_name'];
+//                $user_phone = $_SESSION['consultation']['user_phone'];
+//                $user_email = $_SESSION['consultation']['user_email'];
+//                $pay_descr = $_SESSION['consultation']['pay_descr'];
+//                $user_date = $_SESSION['consultation']['date'];
+//                $user_time = $_SESSION['consultation']['time'];
+//                $period_id = $_SESSION['consultation']['period_id'];
+//
 
 
                 /*
@@ -133,11 +137,11 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
                 // В последний раз чтото не работало 403 ошибка мол превышен лимит  и не добавлялось событие
                 //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
             }
-            $sign_up_consultation->add_consultation($_SESSION['consultation']);
+            //$sign_up_consultation->add_consultation($_SESSION['consultation']);
         }
         $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
     } else {
-        $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
+        $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');
     }
     $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
     $_SESSION['cart']['total'] = $total;

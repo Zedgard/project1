@@ -4,6 +4,9 @@ session_start();
 
 /*
  * Скрипты оплаты
+ * Для автоматической проверки платежей создайте задания CRON
+ * Yandex
+ * wget -O /dev/null https://edgardzaycev.com/check_pay.php?check_pay=ya
  */
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 
@@ -24,9 +27,9 @@ if ($price_total > 0) {
     if (isset($_GET['yandex'])) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/ya_pay.php';
     }
-    if (isset($_GET['paypal'])) {
-        //include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/ya_pay.php';
-    }
+//    if (isset($_GET['paypal'])) {
+//        //include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/ya_pay.php';
+//    }
     if (isset($_GET['interkassa'])) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_pay.php';
     }

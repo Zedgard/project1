@@ -45,7 +45,7 @@ class pay extends \project\extension {
                 . "left join `zay_users` u on u.id=p.user_id "
                 . "left join `zay_pay_type` pt on pt.pay_type_code=p.pay_type "
                 . "{$where} "
-                . "ORDER BY p.`id` DESC LIMIT ?";
+                . "ORDER BY p.`pay_date` DESC LIMIT ?";
         $data = $sqlLight->queryList($querySelect, $queryArray, 0);
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['info'] = $this->get_pay_products_info($data[$i]['id']);

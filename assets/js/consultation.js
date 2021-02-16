@@ -133,12 +133,12 @@ $(function () {
 
     $(".select_time_period").change(function () {
         var total_price = $(this).val();
-        var period_id = $(this).attr("period_id");
+        var period_id = $(".select_time_period option[value=" + total_price + "]").attr("period_id");
+        consultation.period_id = period_id;
         if (total_price > 0) {
             $(".select_time_period").css("border", "");
             $(".total_price").html(total_price);
             consultation.total_price = total_price;
-            consultation.period_id = period_id;
             //consultation.total_price = total_price;
             $(".btn_step_end").removeClass('disabled');
         } else {

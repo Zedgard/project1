@@ -1,99 +1,7 @@
+<link rel="stylesheet" href="/extension/products/office.css<?= $_SESSION['rand'] ?>">
 <div class="row">
     <div class="col-lg-12">
         <div class="card1 card-default1">
-            <style>
-                .webinar_head_bg{
-                    background: linear-gradient(140deg, #63A7D6, #0BC496);
-                    background-position: center;
-                    background-size: cover;
-                    width: 100%;
-                    height: 35vh;
-                }
-                .webinar_head_logo{
-                    text-align: center;
-                    background-color: #e3e3e3;
-                    position: absolute;
-                    margin-left: 5vw;
-                    margin-top: 6vh;
-                    z-index: 9;
-                }
-                .webinar_head_title{
-                    text-align: left;
-                    position: absolute;
-                    margin-left: 18vw;
-                    color: #FFFFFF;
-                    font-size: 2rem;
-                    margin-top: 6vh;
-                    z-index: 9;
-                }
-                .webinar_head_articul{
-                    text-align: left;
-                    position: absolute;
-                    margin-left: 18vw;
-                    color: #FFFFFF;
-                    font-size: 1rem;
-                    margin-top: 20vh;
-                    z-index: 9;
-                }
-                .webinar_head_file{
-                    text-align: left;
-                    position: absolute;
-                    margin-left: 18vw;
-                    color: #FFFFFF;
-                    font-size: 2rem;
-                    margin-top: 24vh;
-                    z-index: 9;
-                }
-                .webinar_head_logo_img{
-                    padding: 0.25rem;
-                    background-color: #e3e3e3;
-                    border: 1px solid #dee2e6;
-                    max-height: 24vh;
-                    max-width: 12vw;
-                }
-
-                .video_u_block_left{
-                    width: 300px;
-                    height: 100px;
-                    position: absolute;
-                    z-index: 9;
-                }
-                .video_u_block_right{
-                    float: right;
-                    width: 300px;
-                    height: 100px;
-                    margin-bottom: -100px;
-                    position: relative;
-                    z-index: 9;
-                }
-                .accordion .card .card-header button:after{
-                    font-size: 3rem;
-                    color: #000000;
-                }
-                .accordion .card-header .btn[aria-expanded="true"], .accordion .card-header a[aria-expanded="true"]{
-                    color: #000000;
-                }
-                .accordion .card-header .btn[aria-expanded="true"]:after, .accordion .card-header a[aria-expanded="true"]:after{
-                    color: #000000;
-                }
-                .series_block_main{
-                    width: 90%;
-                    margin: 0 auto;
-                }
-                .btn_serial_video{
-                    background-color: #C9C9C9;
-                    color: #FFFFFF;
-                }
-                .series_series_btn{
-                    text-align: left;
-                    border: 1px solid #C9C9C9;
-                    width: 100%;
-                    margin: 0 auto;
-                    font-size: 1.5rem;
-                }
-
-            </style>
-
             <div class="mb-4 webinar_head_bg">
                 <?
                 if (strlen($wares_info['images']) > 0):
@@ -110,9 +18,16 @@
                     <div class="webinar_head_file">
                         <?
                         if (strlen($wares['url_file']) > 0) {
-                            ?>
-                            <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Скачать файлы</a>
-                            <?
+                            $file_type = array_reverse(explode('.', $wares['url_file']))[0];
+                            if ($file_type == 'mp3') {
+                                ?>
+                                <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Воспроизвести <?= $file_type ?> фаил</a>
+                                <?
+                            } else {
+                                ?>
+                                <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Скачать файлы</a>
+                                <?
+                            }
                         }
                         ?>
                     </div>
