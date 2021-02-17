@@ -115,9 +115,15 @@ if ($amount == $check_amount) {
                           'price' => $price
                          */
                         //$master_token = $master['credentials_file_name'];
-                        include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
+                        //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
                     }
-                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
+                    /*
+                     * Если это консультация 
+                     */
+//                    if ($_SESSION['consultation']['your_master_id'] > 0) {
+//                        $_SESSION['consultation']['pay_id'] = $max_id;
+//                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
+//                    }
                 }
                 $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
                 $_SESSION['cart']['total'] = $total;

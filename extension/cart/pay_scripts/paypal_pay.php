@@ -12,6 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
 
 /*
   // Справка
@@ -33,16 +34,14 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
   </form>
  */
 
-
+$sign_up_consultation = new \project\sign_up_consultation();
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
 $products = new \project\products();
 $c_cart = new \project\cart();
 $p_user = new \project\user();
 
-
 $paypal_url = "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr"; // работает через curl
-
 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
 $url_ref = "{$url_ref}/pay.php?paypal=1";
@@ -129,11 +128,18 @@ if (count($pays) == 0) {
                 $products->setSoldAdd($product_id);
             }
         }
+        /*
+         * Если это консультация 
+         */
+        if ($_SESSION['consultation']['your_master_id'] > 0) {
+            $_SESSION['consultation']['pay_id'] = $max_id;
+            $sign_up_consultation->add_consultation($_SESSION['consultation']);
+        }
     }
 }
 
 
-
+$pay_email = trim($_GET['pay_email']);
 
 $post_array = array('cmd' => '_xclick',
     'business' => $paypal_email,
@@ -144,7 +150,8 @@ $post_array = array('cmd' => '_xclick',
     'no_shipping' => '1',
     'currency_code' => 'RUB',
     'lc' => 'RU',
-    'email' => 'koman1706@gmail.com');
+    'email' => $pay_email//'koman1706@gmail.com'
+    );
 foreach ($post_array as $key => $value) {
     $req .= "&{$key}={$value}";
 }

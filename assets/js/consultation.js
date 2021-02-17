@@ -291,7 +291,10 @@ function step2() {
  * @returns {undefined}
  */
 function init_consultation_master() {
-    setTimeout(function () {
+    var interval = setInterval(function () {
+        if($(".consult_your_master").find("option").length > 0){
+            clearInterval(interval);
+        }
         sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultation_master": 1}, function (e) {
             consult_masters = [];
             $(".consult_your_master").html("");
@@ -307,7 +310,7 @@ function init_consultation_master() {
                 }
             }
         });
-    }, 300);
+    }, 1000);
 }
 
 function send_consultation_form() {

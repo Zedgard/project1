@@ -220,7 +220,7 @@
                                               </form>
                                              */
                                             ?>
-                                            <a href="javascript:void(0)" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_paypal">PayPal</a>
+                                            <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" e="<?= $email ?>">PayPal</a>
                                             <?
                                         }
                                         ?>

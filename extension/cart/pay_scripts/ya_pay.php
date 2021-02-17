@@ -165,7 +165,7 @@ if (count($_SESSION['cart']['itms']) > 0) {
                 $sign_up_consultation->add_consultation($_SESSION['consultation']);
             }
             // Отправляем пользователя на страницу оплаты
-            //header('Location: ' . $confirmationUrl);
+            header('Location: ' . $confirmationUrl);
         } else {
             echo 'Ошибка операции!';
         }

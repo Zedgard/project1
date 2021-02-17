@@ -97,10 +97,10 @@ $(document).ready(function () {
         var e = $(this).attr('e');
         var pay_email = prompt("Email для платежа?", e);
         if (pay_email != null) {
-//            setTimeout(function () {
-//                //alert(onSubmit);
-//                document.location.href = '/pay.php?paypal=1';
-//            }, 500);
+            setTimeout(function () {
+                //alert(onSubmit);
+                document.location.href = '/pay.php?paypal=1&pay_email=' + pay_email;
+            }, 500);
         }
     });
 });
