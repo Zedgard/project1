@@ -185,10 +185,37 @@ class sign_up_consultation extends \project\extension {
      * @return type
      */
     public function get_master_consultations($master_id) {
-        $querySelect = "SELECT c.* FROM zay_consultation c 
+        $querySelect = "SELECT c.master_id, c.consultation_date, c.consultation_time, c.period_id 
+                FROM zay_consultation c 
                 left join zay_pay p on p.id=c.pay_id
                 where c.master_id='?' and `consultation_date`>=CURRENT_DATE and p.pay_status='succeeded'";
-        return $this->getSelectArray($querySelect, array($master_id));
+        return $this->getSelectArray($querySelect, array($master_id), 0);
+    } 
+    
+    /**
+     * Получить список купленных консультаций
+     * @param type $master_id
+     * @return type
+     */
+    public function get_master_consultations_full($master_id) {
+        $querySelect = "SELECT c.* 
+                FROM zay_consultation c 
+                left join zay_pay p on p.id=c.pay_id
+                where c.master_id='?' and `consultation_date`>=CURRENT_DATE and p.pay_status='succeeded'";
+        return $this->getSelectArray($querySelect, array($master_id), 0);
+    } 
+    
+    /**
+     * Оиформация по консультации
+     * @param type $master_id
+     * @return type
+     */
+    public function get_consultations_id($id) {
+        $querySelect = "SELECT c.* 
+                FROM zay_consultation c 
+                left join zay_pay p on p.id=c.pay_id
+                where c.id='?'";
+        return $this->getSelectArray($querySelect, array($id), 0);
     } 
 
 }

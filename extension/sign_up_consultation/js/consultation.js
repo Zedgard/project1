@@ -2,6 +2,7 @@ var errors = [];
 var consult_masters = [];
 var consultation = new Object();
 var consult_main_body = 0;
+var master_consultants = [];
 
 $(function () {
     //$('.consult_user_phone').mask('+7 (999) 999-9999');
@@ -93,9 +94,15 @@ $(function () {
         numberOfMonths: 1, // колличество отображаемых месяцев
         showButtonPanel: false,
         onSelect: function (selectedDate) {
-            //console.log("selectedDate: " + selectedDate);
-            //$(".datepicker_data").datepicker("option", "maxDate", selectedDate);
+            var consult_your_master = $('.consult_your_master').val();
+            if (consult_your_master == '0') {
+                //errors.push('consult_your_master');
+                move(".consult_user_phone");
+                $(".consult_your_master").css("border", "3px solid #FF0000");
+            }
             $(".datepicker_data").val(selectedDate);
+            //console.log(master_consultants);
+            find_master_consultants(selectedDate);
             //init_calendar_user_data(selectedDate);
             $(".datepicker").css("border", "");
         }
@@ -111,7 +118,7 @@ $(function () {
         var consult_masters_i = $('.step1 .consult_your_master option[value="' + master_id + '"]').attr("consult_masters_i");
 
         init_select_time_period(master_id);
-
+        init_get_master_consultants(master_id);
 
         if (master_id > 0) {
             $(".select_timer").html("");
@@ -122,12 +129,17 @@ $(function () {
         } else {
             $(".select_timer").html("Выберите специалиста");
         }
-        $(".btn_select_timer").click(function () {
-            $(".btn_select_timer").removeClass('active');
-            $(this).addClass('active');
-            $(".select_timer").css("border", "");
 
-            $(".timepicker_data").val($(this).html());
+        $(".btn_select_timer").click(function () {
+            console.log(!$(this).attr("disabled"));
+            if (!$(this).attr("disabled")) {
+
+                $(".btn_select_timer").removeClass('active');
+                $(this).addClass('active');
+                $(".select_timer").css("border", "");
+
+                $(".timepicker_data").val($(this).html());
+            }
         });
     });
 
@@ -292,7 +304,7 @@ function step2() {
  */
 function init_consultation_master() {
     var interval = setInterval(function () {
-        if($(".consult_your_master").find("option").length > 0){
+        if ($(".consult_your_master").find("option").length > 0) {
             clearInterval(interval);
         }
         sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultation_master": 1}, function (e) {
@@ -317,7 +329,7 @@ function send_consultation_form() {
     sendPostLigth('/jpost.php?extension=cart', {
         "send_consultation_form": 1,
         "first_name": consultation.first_name,
-        "user_phone": consultation.user_phone, 
+        "user_phone": consultation.user_phone,
         "user_email": consultation.user_email,
         "your_master": consultation.your_master,
         "your_master_text": consultation.your_master_text,
@@ -345,13 +357,44 @@ function init_select_time_period(master_id) {
                 period_hour = e['data'][i]['period_hour'] + ' часа ';
             } else {
                 period_hour = e['data'][i]['period_hour'] + ' час ';
-            } 
-            if (e['data'][i]['period_hour'] == 0) { 
+            }
+            if (e['data'][i]['period_hour'] == 0) {
                 period_hour = '';
             }
             $(".select_time_period").append('<option value="' + e['data'][i]['period_price'] + '" period_id="' + e['data'][i]['id'] + '">' + period_hour + e['data'][i]['periods_minute'] + ' минут</option>');
         }
     });
+}
+
+function init_get_master_consultants(master_id) {
+    sendPostLigth('/jpost.php?extension=sign_up_consultation', {
+        "get_master_consultants": 1,
+        "master_id": master_id,
+    }, function (e) {
+        //console.log(e['data']);
+        master_consultants = e['data'];
+    });
+}
+
+function find_master_consultants(selectedDate) {
+    console.log("selectedDate: " + selectedDate);
+    $('.select_timer').find(".disabled").addClass("btn_select_timer");
+    $('.btn_select_timer').removeClass("disabled");
+    $('.btn_select_timer').removeAttr("disabled");
+    $(".timepicker_data").val("");
+    if (master_consultants.length > 0) {
+        for (var i = 0; i < master_consultants.length; i++) {
+            var consultation_date = dateDBFormat(master_consultants[i]['consultation_date']);
+            var consultation_time = timeDBFormat(master_consultants[i]['consultation_time']);
+            console.log("consultation_date: " + consultation_date +
+                    " consultation_time: " + consultation_time);
+            if (consultation_date == selectedDate) {
+                $('.btn_select_timer[val="' + consultation_time + '"]').addClass("disabled").removeClass("btn_select_timer")
+                        .attr("disabled", "disabled");// .removeClass("btn_select_timer")
+
+            }
+        }
+    }
 }
 
 
@@ -364,4 +407,13 @@ function replasePhone(phoneStr) {
 function validateEmail(email) {
     var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return pattern.test(String(email).toLowerCase());
+}
+
+function dateDBFormat(var_date) {
+    var arr = var_date.split('-');
+    return arr[2] + '/' + arr[1] + '/' + arr[0];
+}
+function timeDBFormat(var_time) {
+    var arr = var_time.split(':');
+    return arr[0] + ':' + arr[1];
 }

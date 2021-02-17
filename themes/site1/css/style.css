@@ -36,7 +36,7 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Montserrat', 'Raleway', sans-serif;
+    font-family: 'Overpass Mono', 'Raleway', sans-serif;
     font-size: 0.8rem;
     line-height: 1.2;
     color: #3D3D3D;
@@ -60,14 +60,21 @@ ol,ul {
 a, a:hover, a:focus {
     outline: none;
     text-decoration: none;
-    color: inherit;
+    /* color: inherit; */
+}
+/* Деактивируем цвета для ссылок */
+.bread a {
+    color: inherit; 
+}
+.bread a:hover{
+    text-decoration: underline;
 }
 input:focus{
     outline: none;
 }
 
 h1,h2,h3,h4,h5,h6 {
-    margin: 0;
+    margin: 1rem 0;
 }
 h1 {
     font-size: 2.0rem;
@@ -113,7 +120,7 @@ p, .heading-title > span, .process-wrapp li > .pro-step,
 .price-table .ammount .dur, .pagination li > a, .counters .count_nums,
 .price-table .ammount h2, .price-table ul li, .webcats li a > span,
 .getin_form .form-control{
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Overpass Mono', sans-serif;
 }
 
 /*fontAwesome*/
@@ -672,6 +679,14 @@ ul.social-icons.white li a:focus{
 .btngreen, .btngreen-alt{
     background-color: #04be4e;
     color: #fff;
+}
+.btngreen-outline{
+    background-color: #FFFFFF;
+    border: 1px solid #04be4e;
+    color: #04be4e;
+}
+.btngreen-outline:hover, .btngreen-outline:focus{
+    color: #038c3a;
 }
 .btnsecondary{
     background: #FF0000;

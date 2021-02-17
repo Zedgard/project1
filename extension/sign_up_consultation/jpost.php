@@ -8,7 +8,7 @@ include_once 'inc.php';
 $sign_up_consultation = new \project\sign_up_consultation();
 
 
-if(isset($_POST['consultation_s_save'])){
+if (isset($_POST['consultation_s_save'])) {
     $_SESSION['consultation']['first_name'] = $_POST['first_name'];
     $_SESSION['consultation']['user_phone'] = $_POST['user_phone'];
     $_SESSION['consultation']['user_email'] = $_POST['user_email'];
@@ -24,6 +24,19 @@ if(isset($_POST['consultation_s_save'])){
 if (isset($_POST['get_allevents'])) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/allevents.php';
     if (count($errors) == 0 && is_array($data)) {
+        $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    } else {
+        $result = array('success' => 0, 'success_text' => $errors[0], 'data' => $data);
+    }
+}
+
+/**
+ * Получение данные по внутренним событиям
+ */
+if (isset($_POST['get_allevents_local'])) {
+    $master_id = $_SESSION['consultation_id'];
+    $data = $sign_up_consultation->get_master_consultations_full($master_id);
+    if (is_array($data)) {
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     } else {
         $result = array('success' => 0, 'success_text' => $errors[0], 'data' => $data);
@@ -183,8 +196,12 @@ if (isset($_POST['send_fast_consultation'])) {
 }
 
 // Получить список купленных консультаций
-if(isset($_POST['get_master_consultants'])){
+if (isset($_POST['get_master_consultants'])) {
     $master_id = $_POST['master_id'];
     $data = $sign_up_consultation->get_master_consultations($master_id);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+if (isset($_POST['get_consultations_id'])) {
+    $data = $sign_up_consultation->get_consultations_id($_POST['event_id']);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }

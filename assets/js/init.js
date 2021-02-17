@@ -197,16 +197,21 @@ function animateTop(val, height) {
 
 var move_start = 0;
 function move(elm, animate) {
-    if (animate.length == 0) {
+    if (typeof animate == "undefined" || animate.length == 0) {
         animate = 300;
     }
     //console.log('move: ' + elm);
     if (move_start == 0) {
         setTimeout(function () {
             //event.preventDefault();
-            var height = $(window).height();
-            var top = $(elm).offset().top - (height / 2);
-            $('body,html').animate({scrollTop: top}, animate);
+            try {
+                var height = $(window).height();
+                var top = $(elm).offset().top - (height / 2);
+                $('body,html').animate({scrollTop: top}, animate);
+            } catch (exception) {
+                console.log('move');
+            }
+
             move_start = 0;
         }, 500);
     }
@@ -320,7 +325,7 @@ function initCartArray() {
                     var html = '<div class="row">';
                     html += '<div class="col-3">';
 
-                    html += '<a href="' + imgFirst + '" class="fancybox d-none d-lg-block"><img src="' + imgFirst + '" class="w-75"/></a>';
+                    html += '<a href="' + imgFirst + '" class="fancybox d-none d-lg-block"><img src="' + imgFirst + '" class="cart_product_list_img"/></a>';
                     html += '<a href="' + imgFirst + '" class="fancybox d-lg-none"><img src="' + imgFirst + '" class="w-100"/></a>';
                     html += '</div>';
                     html += '<div class="col-6">';
@@ -328,7 +333,7 @@ function initCartArray() {
                     html += '<div class="col-12 font-weight-bold"></div>';
                     html += '</div>';
                     html += '<div class="row">';
-                    html += '<div class="col-12" style="font-size: 1.8rem;">' + e['data'][i]['title'] + '</div>';
+                    html += '<div class="col-12 cart_product_list_title">' + e['data'][i]['title'] + '</div>';
                     html += '</div>';
                     html += '</div>';
                     html += '<div class="col-3 text-right font-weight-bold" style="font-size: 1.4rem;">';
@@ -384,6 +389,11 @@ function initCartArray() {
                         });
                     }
                 }
+                if (price_promo_total > 0) {
+                    $(".cart_product_promo_block").show();
+                } else {
+                    $(".cart_product_promo_block").hide();
+                }
                 $(".total_cart").html(total);
                 $(".cart_total").html(total);
                 if (e['data'].length > 0) {
@@ -391,6 +401,9 @@ function initCartArray() {
                 } else {
                     $(".cart-info").hide();
                 }
+                // cart_list
+                move(".cart_list", 300);
+                ;
             }
         }
         if (typeof $(".fancybox")[0] != 'undefined') {

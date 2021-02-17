@@ -27,9 +27,9 @@
 
                         <div class="form-group">
                             <label>Описание</label>
-                            <textarea class="form-control event_description w-100 h-5" name="event_description" id="event_description" placeholder="Описание мероприятия..." required></textarea>
+                            <textarea class="form-control event_description w-100" style="min-height: 100px;" name="event_description" id="event_description" placeholder="Описание мероприятия..." required></textarea>
                         </div>
-                        <div class="row p-2 mt-2 mb-2 border border-gray-300">
+                        <div class="row p-2 mt-2 mb-2 border border-gray-300 event_start_and_block">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Дата начала</label>

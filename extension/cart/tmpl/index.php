@@ -2,12 +2,20 @@
     <h1>Корзина</h1>
     <div class="row mt-5">
         <div class="col-lg-12">
-
             <?
             if ($p_user->isClientId() == 0) {
                 include $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/tmpl/login_minimal.php';
             }
             ?>
+            <style>
+                .cart_product_list_img{
+                    width: 82px;
+                    height: 82px;
+                }
+                .cart_product_list_title{
+                    font-size: 1.2rem;
+                }
+            </style>
             <div class="cart_list">
 
             </div>
@@ -16,15 +24,15 @@
                 <div class="col-12 font-weight-bold">
 
                     <div class="row pb-4 pt-3">
-                        <div class="col-9">
-                            Итог:
+                        <div class="col-9" style="font-size: 1.2rem">
+                            Итого:
                         </div>
                         <div class="col-3 text-right" style="font-size: 1.4rem;">
                             <span class="cart_total init_price_val">0</span> <i class="fa fa-ruble"></i>
                         </div>
                     </div>
 
-                    <div class="row  pb-1" style="color: #808080;">
+                    <div class="row pb-1 cart_product_promo_block" style="color: #808080;">
                         <div class="col-9">
                             Скидка:
                         </div>

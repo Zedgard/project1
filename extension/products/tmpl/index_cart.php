@@ -114,7 +114,7 @@
                 </div>
             </div>
             <!-- cart button -->
-            <div class="row mb-3">
+            <div class="row ">
                 <div class="col-md-12 text-right">
                     <a href="javascript:void(0)" class="btn button btngreen textcenter cart_product_add pl-5 pr-5" product_id="<?= $productData['id'] ?>">В корзину</a>
                     <div class="btn-group">
@@ -126,7 +126,7 @@
             <!-- cart button end -->
 
             <!-- wares titles -->
-            <div class="row mb-3">
+            <div class="row mb-3 product_wares_lest_block">
                 <div class="col-md-12">
                     <h3>Товары</h3>
                     <?
@@ -164,17 +164,7 @@
                 </div>
             </div> 
 
-            <!-- Articul -->
-            <div>Артикул: 
-                <?
-                $articul = array();
-                foreach ($productData['products_wares_info'] as $value):
-                    $articul[] = $value['articul'];
-                endforeach;
-                $articul_str = implode(', ', $articul);
-                echo $articul_str;
-                ?>
-            </div>
+            
 
         </div>
     </div>

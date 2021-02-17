@@ -21,7 +21,6 @@
                     background-repeat: no-repeat;
                     font-size: 0.9rem;
                 }
-
             </style>
             <?
             //print_r($_SESSION['cart']);
@@ -249,4 +248,4 @@ include 'fast_consultation.php';
 <script>
     var consult_your_master_select = '<?= $_SESSION['consultation']['your_master'] ?>';
 </script>
-<script src="/assets/js/consultation.js<?= $_SESSION['rand'] ?>"></script>
+<script src="/extension/sign_up_consultation/js/consultation.js<?= $_SESSION['rand'] ?>"></script>

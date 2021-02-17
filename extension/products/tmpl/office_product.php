@@ -43,7 +43,7 @@
             <div style="height: 10px;"></div>
             <div class="series_block_main">
                 <div class="row mb-5 clearfix">
-                    <div class="col-12">
+                    <div class="col-12 ulli">
                         <?= $wares_info['descr'] ?>
                     </div>
                 </div>

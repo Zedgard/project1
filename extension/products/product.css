@@ -367,8 +367,14 @@
     white-space: nowrap;
 }
 .cart_product_go_card{
+    display: flex;
     padding: 1rem 1rem;
     font-weight: bold;
+}
+.cart_product_go_card i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .cart_product_remove{
     padding: 0.4rem 0.4rem;
@@ -491,6 +497,8 @@
 .btn_category_controll_cart:hover{
     cursor: pointer;
 }
-
+.product_wares_lest_block{
+    margin-top: -9rem;
+}
 
 /* ------------------------------------------------------------- */

@@ -114,6 +114,7 @@ include 'edit_consult_master.php';
     var data = [];
     var list_times;
     var master_consultation_id = 0;
+    var data_local_events = [];
     $(document).ready(function () {
         init_master();
 
@@ -157,81 +158,113 @@ include 'edit_consult_master.php';
     });
 
     function init_calendar_user_data() {
-        sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_allevents": 1}, function (e) {
-            $("#calendar").html('');
+        sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_allevents_local": 1}, function (data) {
+            data_local_events = [];
+            //data_local_events = data['data'];
+            //console.log(data_local_events);
+            for (var i = 0; i < data['data'].length; i++) {
+                var consultation_date = data['data'][i]['consultation_date'];
+                var consultation_time = data['data'][i]['consultation_time'];
+                //var datetime = new Date(consultation_date + 'T' + consultation_time);// '1995-12-17T03:24:00'
+                //console.log('datetime' + datetime);
+                data_local_events[i] =new Object({
+                    'attendees': [],
+                    'hangoutLink': null,
+                    'id':  data['data'][i]['id'],
+                    'iCalUID': data['data'][i]['id'],
+                    'description': data['data'][i]['pay_descr'],
+                    'end': consultation_date + 'T' + consultation_time + "+03:00",
+                    'start': consultation_date + 'T' + consultation_time + "+03:00",
+                    'status': "confirmed",
+                    'status_ru': "подтверждено",
+                    'summary': data['data'][i]['pay_descr'],
+                    'title': "консультация"}); //[ 'description' = data['data'][i]['pay_descr'] ]
+            }
+            
+//description: "<table><colgroup><col></colgroup><tbody><tr><td>Ирина Антошкина</td></tr><tr><td>89153987344</td></tr><tr><td></td></tr></tbody></table><table><colgroup><col></colgroup><tbody><tr><td></td></tr></tbody></table>"
+//end: "2021-02-18T05:00:00+03:00"
+//hangoutLink: null
+//iCalUID: "4jsvbdqbgb1btv72ave7a1q6js@google.com"
+//id: "4jsvbdqbgb1btv72ave7a1q6js_20210218T010000Z"
+//start: "2021-02-18T04:00:00+03:00"
+//status: "confirmed"
+//status_ru: "подтверждено"
+//summary: "консультация"
+//title: "консультация"
+            sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_allevents": 1}, function (e) {
+//                console.log(data_local_events);
+//                console.log(e['data']);
+                $("#calendar").html('');
 //                    var year = new Date().getFullYear();
 //                    var month = new Date().getMonth();
 //                    var day = new Date().getDay();
-            var to_date = new Date();
+                var to_date = new Date();
 //                    to_date.setDate(1);
 //                    console.log("year: " + year + " month: " + month);
 //                    console.log("to_date: " + to_date);
 //                    console.log('data: ' + data);
 
-            //var to_date = new Date();
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'ru',
-                themeSystem: 'bootstrap',
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                },
-                navLinks: true, // can click day/week names to navigate views
-                editable: true,
-                dayMaxEvents: true,
-                select: function (arg) {
-                    var title = prompt('Event Title:');
-                    if (title) {
-                        calendar.addEvent({
-                            title: title,
-                            start: arg.start,
-                            end: arg.end,
-                            allDay: arg.allDay
-                        })
-                    }
-                    calendar.unselect()
-                },
-
-                // THIS KEY WON'T WORK IN PRODUCTION!!!
-                // To make your own Google API key, follow the directions here:
-                // http://fullcalendar.io/docs/google_calendar/
-                googleCalendarApiKey: 'AIzaSyANZP_b-17592Im7o0o41WYvU4I-GiIBHY ',
-                // US Holidays
-                events: e['data'],
+                //var to_date = new Date();
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    locale: 'ru',
+                    themeSystem: 'bootstrap',
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    },
+                    navLinks: true, // can click day/week names to navigate views
+                    editable: true,
+                    dayMaxEvents: true,
+                    select: function (arg) {
+                        var title = prompt('Event Title:');
+                        if (title) {
+                            calendar.addEvent({
+                                title: title,
+                                start: arg.start,
+                                end: arg.end,
+                                allDay: arg.allDay
+                            })
+                        }
+                        calendar.unselect()
+                    },
+                    // THIS KEY WON'T WORK IN PRODUCTION!!!
+                    // To make your own Google API key, follow the directions here:
+                    // http://fullcalendar.io/docs/google_calendar/
+                    googleCalendarApiKey: 'AIzaSyANZP_b-17592Im7o0o41WYvU4I-GiIBHY ',
+                    // US Holidays
+                    events: data_local_events,//e['data'], //data_local_events, //e['data'],
 //                            [
-//                                {
-//                                    title: 'All Day Event 111',
-//                                    description: 'description for All Day Event',
-//                                    start: year + '-' + month + '-' + day + '+01'
-//                                },
+////                                {
+////                                    title: 'All Day Event 111',
+////                                    description: 'description for All Day Event',
+////                                    start: year + '-' + month + '-' + day + '+01'
+////                                },
 //                                {
 //                                    title: 'All Day Event  22',
 //                                    description: 'description for All Day Event',
 //                                    start: to_date
 //                                }
-//                            ], //'en.usa#koman1706@gmail.com.v.calendar.google.com', // events: 'en.usa#holiday@group.v.calendar.google.com',
+//                            ], 
+//                            //'en.usa#koman1706@gmail.com.v.calendar.google.com', // events: 'en.usa#holiday@group.v.calendar.google.com',
 
-                eventClick: function (arg) {
-                    $("#edit_event_form").modal('toggle');
-                    init_date_time_form_elements();
-                    //console.log(arg.event);
-                    //$("#edit_event_form").find(".event_summary").val(arg.event.title);
-                    $("#edit_event_form").find(".event_publicId").val(arg.event.id);
-                    get_event_data(arg.event.id);
-                    //console.log('eventClick' + arg.event.url);
-                    //opens events in a popup window
-                    //window.open(arg.event.url, 'google-calendar-event', 'width=700,height=600');
-                    //arg.jsEvent.preventDefault(); // don't navigate in main tab
-                },
-                loading: function (bool) {
-                    document.getElementById('loading').style.display =
-                            bool ? 'block' : 'none';
-                }
+                    eventClick: function (arg) {
+                        
+                         $("#edit_event_form").modal('toggle');
+                         //init_date_time_form_elements();
+                         //$("#edit_event_form").find(".event_publicId").val(arg.event.id);
+                         get_event_local_data(arg.event.id);
+                         
+                    },
+                    loading: function (bool) {
+                        document.getElementById('loading').style.display =
+                                bool ? 'block' : 'none';
+                    }
+                });
+                calendar.render();
             });
-            calendar.render();
         });
     }
     /**
@@ -390,6 +423,43 @@ include 'edit_consult_master.php';
             $("#edit_event_form").find('.date_time_end').val($("#edit_event_form").find('.timepicker_end').timepicker().val());
 
             $("#edit_event_form").find(".attendees_email").val(e['data'][0]['attendees']);
+
+            if (!!e['data'][0]['url'] && e['data'][0]['url'].length > 0) {
+                $("#edit_event_form").find(".event_url").show();
+            }
+            if (!!e['data'][0]['hangoutLink'] && e['data'][0]['hangoutLink'].length > 0) {
+                $("#edit_event_form").find(".event_url_conferens").show();
+            }
+            init_save_event();
+        });
+    }
+    
+    /**
+     * Получение данных по событию
+     * @param {type} event_id
+     * @returns {undefined}
+     */
+    function get_event_local_data(event_id) {
+        clear_event_form();
+        sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultations_id": event_id, "event_id": event_id}, function (e) {
+            $(".event_start_and_block").remove();
+            var obj_date_start = new Date(e['data'][0]['consultation_date']+'T'+e['data'][0]['consultation_time']);
+            var obj_date_end = new Date(e['data'][0]['consultation_date']+'T'+e['data'][0]['consultation_time']);
+            $("#edit_event_form").find(".event_publicId").val(event_id);
+            $("#edit_event_form").find(".event_url").attr("href", e['data'][0]['url']);
+            $("#edit_event_form").find(".event_url_conferens").attr("href", e['data'][0]['hangoutLink']);
+            $("#edit_event_form").find(".event_summary").val('Консультация ' + e['data'][0]['first_name'] + ' ' + e['data'][0]['user_phone'] );
+            $("#edit_event_form").find(".event_description").val(e['data'][0]['pay_descr']);
+
+            $("#edit_event_form").find('.date_start').datepicker("setDate", obj_date_start);
+            $("#edit_event_form").find(".timepicker_start").timepicker("setTime", obj_date_start);
+            $("#edit_event_form").find('.date_time_start').val($("#edit_event_form").find('.timepicker_start').timepicker().val());
+
+            $("#edit_event_form").find(".date_end").datepicker("setDate", obj_date_end);
+            $("#edit_event_form").find(".timepicker_end").timepicker("setTime", obj_date_end);
+            $("#edit_event_form").find('.date_time_end').val($("#edit_event_form").find('.timepicker_end').timepicker().val());
+
+            $("#edit_event_form").find(".attendees_email").val(e['data'][0]['user_email']);
 
             if (!!e['data'][0]['url'] && e['data'][0]['url'].length > 0) {
                 $("#edit_event_form").find(".event_url").show();
@@ -598,5 +668,9 @@ include 'edit_consult_master.php';
                 init_calendar_user_data();
             }
         });
+    }
+    function dateJSFormat(var_date) {
+        var arr = var_date.split('-');
+        return arr[2] + '/' + arr[1] + '/' + arr[0];
     }
 </script>

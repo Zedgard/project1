@@ -97,6 +97,7 @@
         //<script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] "></script> 139
         ?>
         <link href="/assets/css/sleek.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet">
+        
         <script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sortable.js?v=<?= $_SESSION['rand'] ?>"></script>
