@@ -63,36 +63,36 @@ if (isset($_POST['ik_co_id']) && strlen($pay_key) > 0 && $ik_co_id == $in_shop_i
                  * Если установлена настройка отправим в календарь событие
                  */
                 if ($_SESSION['consultation']['your_master_id'] > 0) {
-                    if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
-
-                        $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
-                        $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
-                        $master_token = $master['token_file_name'];
-                        $master_credentials = $master['credentials_file_name'];
-
-                        $first_name = $_SESSION['consultation']['first_name'];
-                        $user_phone = $_SESSION['consultation']['user_phone'];
-                        $user_email = $_SESSION['consultation']['user_email'];
-                        $pay_descr = $_SESSION['consultation']['pay_descr'];
-                        $user_date = $_SESSION['consultation']['date'];
-                        $user_time = $_SESSION['consultation']['time'];
-                        /*
-                          'your_master_id' => $your_master,
-                          'first_name' => $first_name,
-                          'user_phone' => $user_phone,
-                          'user_email' => $user_email,
-                          'pay_descr' => "<div>Консультация с {$first_name}</div>"
-                          . "<div>Телефон: {$user_phone}</div>"
-                          . "<div>Email: {$user_email}</div>"
-                          . "<div>Консультант: {$your_master_text}</div>"
-                          . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
-                          'date' => $datepicker_data,
-                          'time' => $timepicker_data,
-                          'price' => $price
-                         */
-                        //$master_token = $master['credentials_file_name'];
-                        //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
-                    }
+//                    if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
+//
+//                        $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
+//                        $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
+//                        $master_token = $master['token_file_name'];
+//                        $master_credentials = $master['credentials_file_name'];
+//
+//                        $first_name = $_SESSION['consultation']['first_name'];
+//                        $user_phone = $_SESSION['consultation']['user_phone'];
+//                        $user_email = $_SESSION['consultation']['user_email'];
+//                        $pay_descr = $_SESSION['consultation']['pay_descr'];
+//                        $user_date = $_SESSION['consultation']['date'];
+//                        $user_time = $_SESSION['consultation']['time'];
+//                        /*
+//                          'your_master_id' => $your_master,
+//                          'first_name' => $first_name,
+//                          'user_phone' => $user_phone,
+//                          'user_email' => $user_email,
+//                          'pay_descr' => "<div>Консультация с {$first_name}</div>"
+//                          . "<div>Телефон: {$user_phone}</div>"
+//                          . "<div>Email: {$user_email}</div>"
+//                          . "<div>Консультант: {$your_master_text}</div>"
+//                          . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
+//                          'date' => $datepicker_data,
+//                          'time' => $timepicker_data,
+//                          'price' => $price
+//                         */
+//                        //$master_token = $master['credentials_file_name'];
+//                        //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
+//                    }
                     /*
                      * Если это консультация 
                      */
