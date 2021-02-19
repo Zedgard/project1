@@ -29,13 +29,32 @@
                             <label>Описание</label>
                             <textarea class="form-control event_description w-100" style="min-height: 100px;" name="event_description" id="event_description" placeholder="Описание мероприятия..." required></textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label>Дата</label>
+                            <div class="mb-1"><input type="text" name="consultation_date" value="" class="consultation_date" /></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Время продолжительности консультации</label>
+                            <div class="mb-1"><input type="text" name="consultation_time" value="" class="consultation_time" /></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Отменить консультацию</label>
+                            <div class="mb-1">
+                                <select name="consultation_cancel" class="consultation_cancel">
+                                    <option value="0" selected="selected">Активная</option>
+                                    <option value="1">Отменить</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="row p-2 mt-2 mb-2 border border-gray-300 event_start_and_block">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Дата начала</label>
                                     <div class="mb-1"><input type="text" name="date_start" value="" class="date_start" /></div>
                                     <div class="timepicker_start"></div>
-                                    <input type="text" name="date_time_start" value="" class="date_time_start" style="display: none;" />
                                 </div>
                             </div>
                             <div class="col-md-6">

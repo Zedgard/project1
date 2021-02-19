@@ -26,7 +26,7 @@ class sign_up_consultation extends \project\extension {
         $consultation_date = "{$date_ex[2]}/{$date_ex[1]}/{$date_ex[0]}";
         $period_id = ($data['period_id'] > 0) ? $data['period_id'] : 0;
 
-        $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?'";
+        $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?' and `cancel`=0 ";
         $objs = $this->getSelectArray($querySelect, array($consultation_date, $data['time']));
 
         if (count($objs) == 0) {
@@ -39,6 +39,29 @@ class sign_up_consultation extends \project\extension {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Обновлениеданных о консультации
+     * @param type $data
+     */
+    public function update_consultation($data) {
+        $query = "UPDATE `zay_consultation` 
+                    SET `user_email`='?',
+                    `pay_descr`='?',
+                    `consultation_date`='?',
+                    `consultation_time`='?',
+                    `cancel`='?',
+                    `lastdate`=CURRENT_TIMESTAMP
+                  WHERE `id`='?'";
+        return $this->query($query, array(
+                    $data['user_email'],
+                    $data['pay_descr'],
+                    $data['consultation_date'],
+                    $data['consultation_time'],
+                    $data['consultation_cancel'],
+                    $data['consultation_id']
+                        ), 0);
     }
 
     /*
@@ -178,7 +201,7 @@ class sign_up_consultation extends \project\extension {
         }
         return false;
     }
-    
+
     /**
      * Получить список купленных консультаций
      * @param type $master_id
@@ -188,10 +211,10 @@ class sign_up_consultation extends \project\extension {
         $querySelect = "SELECT c.master_id, c.consultation_date, c.consultation_time, c.period_id 
                 FROM zay_consultation c 
                 left join zay_pay p on p.id=c.pay_id
-                where c.master_id='?' and `consultation_date`>=CURRENT_DATE and p.pay_status='succeeded'";
+                where c.master_id='?' and `consultation_date`>=CURRENT_DATE and p.pay_status='succeeded' and cancel=0 ";
         return $this->getSelectArray($querySelect, array($master_id), 0);
-    } 
-    
+    }
+
     /**
      * Получить список купленных консультаций
      * @param type $master_id
@@ -203,8 +226,8 @@ class sign_up_consultation extends \project\extension {
                 left join zay_pay p on p.id=c.pay_id
                 where c.master_id='?' and `consultation_date`>=CURRENT_DATE and p.pay_status='succeeded'";
         return $this->getSelectArray($querySelect, array($master_id), 0);
-    } 
-    
+    }
+
     /**
      * Оиформация по консультации
      * @param type $master_id
@@ -216,6 +239,6 @@ class sign_up_consultation extends \project\extension {
                 left join zay_pay p on p.id=c.pay_id
                 where c.id='?'";
         return $this->getSelectArray($querySelect, array($id), 0);
-    } 
+    }
 
 }

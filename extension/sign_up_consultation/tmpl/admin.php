@@ -115,6 +115,7 @@ include 'edit_consult_master.php';
     var list_times;
     var master_consultation_id = 0;
     var data_local_events = [];
+    var consultation_id = 0;
     $(document).ready(function () {
         init_master();
 
@@ -167,10 +168,14 @@ include 'edit_consult_master.php';
                 var consultation_time = data['data'][i]['consultation_time'];
                 //var datetime = new Date(consultation_date + 'T' + consultation_time);// '1995-12-17T03:24:00'
                 //console.log('datetime' + datetime);
-                data_local_events[i] =new Object({
+                var cancel_text = '';
+                if(data['data'][i]['cancel'] == 1 ){
+                    cancel_text = 'ОТМЕНА';
+                }
+                data_local_events[i] = new Object({
                     'attendees': [],
                     'hangoutLink': null,
-                    'id':  data['data'][i]['id'],
+                    'id': data['data'][i]['id'],
                     'iCalUID': data['data'][i]['id'],
                     'description': data['data'][i]['pay_descr'],
                     'end': consultation_date + 'T' + consultation_time + "+03:00",
@@ -178,9 +183,9 @@ include 'edit_consult_master.php';
                     'status': "confirmed",
                     'status_ru': "подтверждено",
                     'summary': data['data'][i]['pay_descr'],
-                    'title': "консультация"}); //[ 'description' = data['data'][i]['pay_descr'] ]
+                    'title': cancel_text + '|' + "консультация"}); //[ 'description' = data['data'][i]['pay_descr'] ]
             }
-            
+
 //description: "<table><colgroup><col></colgroup><tbody><tr><td>Ирина Антошкина</td></tr><tr><td>89153987344</td></tr><tr><td></td></tr></tbody></table><table><colgroup><col></colgroup><tbody><tr><td></td></tr></tbody></table>"
 //end: "2021-02-18T05:00:00+03:00"
 //hangoutLink: null
@@ -235,7 +240,7 @@ include 'edit_consult_master.php';
                     // http://fullcalendar.io/docs/google_calendar/
                     googleCalendarApiKey: 'AIzaSyANZP_b-17592Im7o0o41WYvU4I-GiIBHY ',
                     // US Holidays
-                    events: data_local_events,//e['data'], //data_local_events, //e['data'],
+                    events: data_local_events, //e['data'], //data_local_events, //e['data'],
 //                            [
 ////                                {
 ////                                    title: 'All Day Event 111',
@@ -251,12 +256,14 @@ include 'edit_consult_master.php';
 //                            //'en.usa#koman1706@gmail.com.v.calendar.google.com', // events: 'en.usa#holiday@group.v.calendar.google.com',
 
                     eventClick: function (arg) {
-                        
-                         $("#edit_event_form").modal('toggle');
-                         //init_date_time_form_elements();
-                         //$("#edit_event_form").find(".event_publicId").val(arg.event.id);
-                         get_event_local_data(arg.event.id);
-                         
+
+                        $("#edit_event_form").modal('toggle');
+                        //init_date_time_form_elements();
+                        //$("#edit_event_form").find(".event_publicId").val(arg.event.id);
+                        // Старый консультации работали через google календарь
+                        //get_event_local_data(arg.event.id);
+                        get_event_local_data_local(arg.event.id);
+
                     },
                     loading: function (bool) {
                         document.getElementById('loading').style.display =
@@ -433,7 +440,7 @@ include 'edit_consult_master.php';
             init_save_event();
         });
     }
-    
+
     /**
      * Получение данных по событию
      * @param {type} event_id
@@ -443,12 +450,12 @@ include 'edit_consult_master.php';
         clear_event_form();
         sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultations_id": event_id, "event_id": event_id}, function (e) {
             $(".event_start_and_block").remove();
-            var obj_date_start = new Date(e['data'][0]['consultation_date']+'T'+e['data'][0]['consultation_time']);
-            var obj_date_end = new Date(e['data'][0]['consultation_date']+'T'+e['data'][0]['consultation_time']);
+            var obj_date_start = new Date(e['data'][0]['consultation_date'] + 'T' + e['data'][0]['consultation_time']);
+            var obj_date_end = new Date(e['data'][0]['consultation_date'] + 'T' + e['data'][0]['consultation_time']);
             $("#edit_event_form").find(".event_publicId").val(event_id);
             $("#edit_event_form").find(".event_url").attr("href", e['data'][0]['url']);
             $("#edit_event_form").find(".event_url_conferens").attr("href", e['data'][0]['hangoutLink']);
-            $("#edit_event_form").find(".event_summary").val('Консультация ' + e['data'][0]['first_name'] + ' ' + e['data'][0]['user_phone'] );
+            $("#edit_event_form").find(".event_summary").val('Консультация ' + e['data'][0]['first_name'] + ' ' + e['data'][0]['user_phone']);
             $("#edit_event_form").find(".event_description").val(e['data'][0]['pay_descr']);
 
             $("#edit_event_form").find('.date_start').datepicker("setDate", obj_date_start);
@@ -468,6 +475,61 @@ include 'edit_consult_master.php';
                 $("#edit_event_form").find(".event_url_conferens").show();
             }
             init_save_event();
+        });
+    }
+
+    /**
+     * Получение данных по событию локальные
+     * @param {type} event_id
+     * @returns {undefined}
+     */
+    function get_event_local_data_local(event_id) {
+        clear_event_form();
+        sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_consultations_id": event_id, "event_id": event_id}, function (e) {
+            $(".event_start_and_block").remove();
+            var obj_date_start = new Date(e['data'][0]['consultation_date'] + 'T' + e['data'][0]['consultation_time']);
+            var obj_date_end = new Date(e['data'][0]['consultation_date'] + 'T' + e['data'][0]['consultation_time']);
+            consultation_id = e['data'][0]['id'];
+            
+            $("#edit_event_form").find(".event_summary").val('Консультация ' + e['data'][0]['first_name'] + ' ' + e['data'][0]['user_phone']);
+            $("#edit_event_form").find(".event_description").val(e['data'][0]['pay_descr']);
+
+            $(".attendees_email").val(e['data'][0]['user_email']);
+            $(".consultation_date").val(e['data'][0]['consultation_date']);
+            $(".consultation_time").val(e['data'][0]['consultation_time']);
+            //--- Дата начала ---------------
+            // Русифицируем
+            $.datepicker.regional['ru'] = {
+                closeText: 'Закрыть',
+                prevText: 'Пред',
+                nextText: 'След',
+                currentText: 'Сегодня',
+                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+                    'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+                dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+                dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                weekHeader: 'Нед',
+                dateFormat: 'yy-mm-dd',
+                maxDate: "+1M +10D",
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''
+            };
+            $.datepicker.setDefaults($.datepicker.regional['ru']);
+            $('.consultation_date').datepicker({
+                changeMonth: false,
+                changeYear: false,
+                numberOfMonths: 3,
+                showButtonPanel: false,
+                onSelect: function (selectedDate) {
+                    $(this).val(selectedDate);
+                }
+            });
+            init_save_event_local();
         });
     }
 
@@ -524,6 +586,34 @@ include 'edit_consult_master.php';
                 "attendees_email": attendees_email
             }, function (e) {
                 if (e['success'] == '1') {
+                    $("#edit_event_form").modal('toggle');
+                }
+            });
+        });
+    }
+
+    /**
+     * Сохранение данных по событию kjrfkmyst
+     * @returns {undefined}
+     */
+    function init_save_event_local() {
+        $(".btn_event_save").unbind('click').click(function () {
+            var pay_descr = $(".event_description").val();
+            var user_email = $(".attendees_email").val();
+            var consultation_date = $(".consultation_date").val();
+            var consultation_time = $(".consultation_time").val();
+            var consultation_cancel = $(".consultation_cancel").val();
+            sendPostLigth('/jpost.php?extension=sign_up_consultation', {
+                "update_consultation": 1,
+                "consultation_id": consultation_id,
+                "pay_descr": pay_descr,
+                "user_email": user_email,
+                "consultation_date": consultation_date,
+                "consultation_time": consultation_time,
+                "consultation_cancel": consultation_cancel
+            }, function (e) {
+                if (e['success'] == '1') {
+                    init_calendar_user_data();
                     $("#edit_event_form").modal('toggle');
                 }
             });

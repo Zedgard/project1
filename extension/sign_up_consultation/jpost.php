@@ -205,3 +205,19 @@ if (isset($_POST['get_consultations_id'])) {
     $data = $sign_up_consultation->get_consultations_id($_POST['event_id']);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+if (isset($_POST['update_consultation'])) {
+    $data['consultation_id'] = $_POST['consultation_id'];
+    $data['user_email'] = $_POST['user_email'];
+    $data['pay_descr'] = $_POST['pay_descr'];
+    $data['consultation_date'] = $_POST['consultation_date'];
+    $data['consultation_time'] = $_POST['consultation_time'];
+    $data['consultation_cancel'] = $_POST['consultation_cancel'];
+    if ($sign_up_consultation->update_consultation($data)) {
+        $result = array('success' => 1, 'success_text' => '');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
