@@ -1,6 +1,6 @@
 /*Global Styling*/
 body {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Overpass Mono', sans-serif;
     color: #a5a5a5;
 }
 
@@ -10,7 +10,7 @@ p, .heading-title > span, .process-wrapp li > .pro-step,
 .price-table .ammount .dur, .pagination li > a, .counters .count_nums,
 .price-table .ammount h2, .price-table ul li, .webcats li a > span,
 .getin_form .form-control{
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif; 
 }
 
 /* Helper Classes & Shorcodes */

@@ -677,7 +677,7 @@ filter: progid:dximagetransform.microsoft.gradient( startcolorstr="#e5e5e5", end
 }
 
 
-/* THUMBS */
+/* THUMBS */ 
 .erinyen .tp-thumb {
 opacity:1
 }
@@ -698,7 +698,7 @@ opacity:1
 .erinyen .tp-thumb-more:before {
   font-family: "revicons";
   font-size:12px;
-  color:#aaa;
+  color:#aaa; 
   color:rgba(255,255,255,0.75);
   display:block;
   line-height: 12px;
@@ -714,7 +714,7 @@ opacity:1
 }
 
 .erinyen .tp-thumb-title {
-  font-family:"Raleway";
+  font-family:"Overpass Mono";
   letter-spacing:1px;
   font-size:12px;
   color:#fff;
@@ -2494,7 +2494,7 @@ opacity:1
 }
 
 .zeus .tp-thumb-title {
-  font-family:"Raleway";
+  font-family:"Overpass Mono";
   letter-spacing:1px;
   font-size:12px;
   color:#fff;
