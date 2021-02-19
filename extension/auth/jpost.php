@@ -42,7 +42,7 @@ if (isset($_POST['authorization'])) {
             $url = $get_url;
         }
 
-        $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '0');
+        $result = array('success' => 1, 'success_text' => '', 'action' => $url, 'action_time' => '0');
     } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка авторизации', 'action_time' => '0');
     }

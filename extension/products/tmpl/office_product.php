@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/extension/products/office.css<?= $_SESSION['rand'] ?>">
+<link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
+<script src="/assets/plugins/calamansi/calamansi.min.js"></script>
 <div class="row">
     <div class="col-lg-12">
         <div class="card1 card-default1">
@@ -16,20 +18,46 @@
                         Артикул: <span><?= $wares_info['articul'] ?></span>
                     </div>
                     <div class="webinar_head_file">
-                        <?
-                        if (strlen($wares['url_file']) > 0) {
-                            $file_type = array_reverse(explode('.', $wares['url_file']))[0];
-                            if ($file_type == 'mp3') {
-                                ?>
-                                <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Воспроизвести <?= $file_type ?> фаил</a>
-                                <?
-                            } else {
-                                ?>
-                                <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Скачать файлы</a>
-                                <?
+                        <div class="mt-2">
+                            <?
+                            if (strlen($wares['url_file']) > 0) {
+                                $file_type = array_reverse(explode('.', $wares['url_file']))[0];
+                                if ($file_type == 'mp3') {
+                                    ?>
+                                    <div class="player-block float-left">
+                                        <div id="calamansi-player-1">
+                                            Загрузка плеера...
+                                        </div>
+                                    </div>
+                                    <script>
+                                        // Calamansi.autoload();
+                                        new Calamansi(document.querySelector('#calamansi-player-1'), {
+                                            skin: '/assets/plugins/calamansi/skins/basic',
+                                            playlists: {
+                                                'Classics': [
+                                                    {
+                                                        source: '<?= $wares['url_file'] ?>',
+                                                    }
+                                                ],
+                                            },
+                                            defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
+                                        });
+                                    </script>
+                                    <!--
+                                    <span id="player" class="calamansi" data-skin="path/to/skins/in-text"
+                                          data-source="<?= $wares['url_file'] ?>">Воспроизвести <?= $file_type ?> фаил</span>
+                                    -->
+                                    <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-light float-left ml-3" title="Скачать"><i class="fas fa-upload"></i></a>
+                                    <div style="clear: both;height: 1rem;"></div>
+                                    <?
+                                } else {
+                                    ?>
+                                    <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Скачать файлы</a>
+                                    <?
+                                }
                             }
-                        }
-                        ?>
+                            ?>
+                        </div>
                     </div>
                     <?
                 endif;
@@ -212,8 +240,12 @@
         </div>
     </div>
     <script>
-        var video_id = <?= $video_id ?>;
+        var video_id = '<?= $video_id ?>';
         $(document).ready(function () {
+
+            var player = new Calamansi(document.querySelector('#player'), {
+                skin: 'path/to/skins/skin-folder'
+            });
             $(".btn_video_see").click(function () {
                 video_id = $(this).attr("video_id");
             });

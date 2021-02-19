@@ -32,6 +32,7 @@
     z-index: 9;
 }
 .webinar_head_file{
+    width: 75%;
     text-align: left;
     position: absolute;
     margin-left: 18vw;
@@ -87,6 +88,16 @@
     margin: 0 auto;
     font-size: 1.5rem;
 }
+.calamansi-skin--basic{
+    height: 42px;
+    width: 50%;
+    min-height: 42px;
+}
+.player-block{
+    width: 90%;
+}
+
+
 @media (max-width: 768px) {
     .webinar_head_bg{
         height: auto;
@@ -126,6 +137,7 @@
         clear: both; 
     }
     .webinar_head_file{
+        width: 90%;
         text-align: left;
         position: static;
         margin-left: 5vw;
@@ -133,5 +145,8 @@
         font-size: 2rem;
         margin-top: 0vh;
         padding-bottom: 3vh;
+    }
+    .player-block{
+        width: 80%;
     }
 }
