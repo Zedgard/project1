@@ -11,15 +11,15 @@
 
                     <div class="row mb-3">
                         <div class="col-6">
-                            <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, типу, телефону...">
+                            <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, телефону...">
                         </div>
                         <div class="col-6 text-right">
 
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <label style="margin-top: 0.6rem;margin-right: 10px;">начало</label>
-                                <input type="text" name="from" class="form-control excel-from">
+                                <input type="text" name="from" value="<?= $_SESSION['admin_pay_filter']['excel_from'] ?>" class="form-control excel-from">
                                 <label style="margin-top: 0.6rem;margin-left: 10px;margin-right: 10px;">до</label>
-                                <input type="text" name="to" class="form-control excel-to">
+                                <input type="text" name="to" value="<?= $_SESSION['admin_pay_filter']['excel_to'] ?>" class="form-control excel-to">
                                 <a href="javascript:void(0)" class="btn btn-primary btn-export-exel" target="_blank" title="Выгрузить период в Exel *.CSV"><i class="fas fa-file-excel"></i></a>
                             </div>
                             <script>
@@ -63,8 +63,8 @@
                                         $(".excel-from").datepicker("option", "maxDate", getDate(this));
                                     });
 
-                                    $(".excel-from").datepicker("setDate", date);
-                                    $(".excel-to").datepicker("setDate", date);
+                                    $(".excel-from").datepicker("setDate", '<?= $_SESSION['admin_pay_filter']['excel_from'] ?>');
+                                    $(".excel-to").datepicker("setDate", '<?= $_SESSION['admin_pay_filter']['excel_to'] ?>');
 
                                     function getDate(element) {
                                         var date;
@@ -94,12 +94,19 @@
                                         <tr>
                                             <th class="text-center">ID</th>
                                             <th class="text-center">Клиент</th>
-                                            <th class="text-center">Тип</th>
+                                            <th class="text-center">
+                                                <select name="pay_select_type" class="pay_select_type">
+                                                    <option value="">Тип</option>
+                                                </select>
+                                            </th>
                                             <th class="text-center">Платеж</th>
                                             <th class="text-center">Дата</th>
-                                            <th class="text-center">Статус</th>
+                                            <th class="text-center">
+                                                <select name="pay_select_status" class="pay_select_status">
+                                                    <option value="">Статус</option>
+                                                </select>
+                                            </th>
                                             <th class="text-center">Товары</th>
-                                            <th class="text-center"></th>
                                         </tr>
                                     </thead>
                                     <tbody>

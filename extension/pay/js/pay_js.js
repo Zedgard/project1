@@ -2,10 +2,21 @@ var pay_num = 1;
 var pay_list_col = 0;
 var pay_list_col_true = 1;
 var search_pay_user_str = '';
+var pay_search_type = '';
+var pay_search_status = '';
+var excel_from = '';
+var excel_to = '';
 $(document).ready(function () {
+    $(".excel-from, .excel-to").change(function () {
+        excel_from = $(".excel-from").val();
+        excel_to = $(".excel-to").val();
+        init_pay_data_list();
+    });
     init_pay_data_list();
     init_get_next_page();
     init_search_pay_user();
+    init_pay_select_type();
+    init_pay_select_status();
 });
 
 /**
@@ -13,78 +24,87 @@ $(document).ready(function () {
  * @returns {undefined}
  */
 function init_pay_data_list() {
+    excel_from = $(".excel-from").val();
+    excel_to = $(".excel-to").val();
     // pay_datas_page
     sendPostLigth('/jpost.php?extension=pay', {
         "pay_data_page": pay_num,
+        "pay_search_type": pay_search_type,
+        "pay_search_status": pay_search_status,
+        "excel_from": excel_from,
+        "excel_to": excel_to,
         "search_pay_user_str": search_pay_user_str
     }, function (e) {
+        console.log(e['data']);
         $(".pay_data tbody").html("");
+        if (e['data'].length > 0) {
+            for (var i = 0; i < e['data'].length; i++) {
+                var user_title = '';
+                var user_descr = '';
+                var pay_descr = '';
+                console.log(typeof e['data'][i]['email']);
+                if (e['data'][i]['email'].length > 0) {
+                    user_title = e['data'][i]['email'];
 
-        for (var i = 0; i < e['data'].length; i++) {
-            var user_title = '';
-            var user_descr = '';
-            var pay_descr = '';
-            if (e['data'][i]['email'].length > 0) {
-                user_title = e['data'][i]['email'];
-
-                if (e['data'][i]['phone'].length > 0) {
-                    user_title = e['data'][i]['email'] + '<br/>' + e['data'][i]['phone'];
-                }
-                user_descr = e['data'][i]['first_name'] + ' ' + e['data'][i]['last_name'];
-
-                if (e['data'][i]['pay_descr'].length > 0) {
-                    pay_descr = e['data'][i]['pay_descr'];
-                }
-                if (e['data'][i]['info'].length > 0) {
-                    pay_descr = '';
-                    for (var a = 0; a < e['data'][i]['info'].length; a++) {
-                        pay_descr = pay_descr + '<div class="mb-2"><img src="' + e['data'][i]['info'][a]['images_str'] + '" style="width:60px;" />' + e['data'][i]['info'][a]['title'] + ' Цена:' + e['data'][i]['info'][a]['price'] + ' <a href="/shop/?product=' + e['data'][i]['info'][a]['id'] + '" target="_blank">>></a></div>';
+                    if (e['data'][i]['phone'].length > 0) {
+                        user_title = e['data'][i]['email'] + '<br/>' + e['data'][i]['phone'];
                     }
-                }
+                    user_descr = e['data'][i]['first_name'] + ' ' + e['data'][i]['last_name'];
 
-                var pay_status = e['data'][i]['pay_status'];
-                var border_class = '';
-                if (e['data'][i]['pay_status'] === 'succeeded') {
-                    pay_status = 'выполнено';
-                    border_class = 'table-success';
-                }
-                if (e['data'][i]['pay_status'] === 'canceled') {
-                    pay_status = 'отмененная';
-                    border_class = 'table-danger';
-                }
-                if (e['data'][i]['pay_status'] === 'pending') {
-                    pay_status = 'Незавершенная';
-                    border_class = 'table-danger';
-                }
+                    if (e['data'][i]['pay_descr'].length > 0) {
+                        pay_descr = e['data'][i]['pay_descr'];
+                    }
+                    if (e['data'][i]['info'].length > 0) {
+                        pay_descr = '';
+                        for (var a = 0; a < e['data'][i]['info'].length; a++) {
+                            pay_descr = pay_descr + '<div class="mb-2"><img src="' + e['data'][i]['info'][a]['images_str'] + '" style="width:60px;" />' + e['data'][i]['info'][a]['title'] + ' Цена:' + e['data'][i]['info'][a]['price'] + ' <a href="/shop/?product=' + e['data'][i]['info'][a]['id'] + '" target="_blank">>></a></div>';
+                        }
+                    }
+
+                    var pay_status = e['data'][i]['pay_status'];
+                    var border_class = '';
+                    if (e['data'][i]['pay_status'] === 'succeeded') {
+                        pay_status = 'выполнено';
+                        border_class = 'table-success';
+                    }
+                    if (e['data'][i]['pay_status'] === 'canceled') {
+                        pay_status = 'отмененная';
+                        border_class = 'table-danger';
+                    }
+                    if (e['data'][i]['pay_status'] === 'pending') {
+                        pay_status = 'Незавершенная';
+                        border_class = 'table-danger';
+                    }
 
 
-                var processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-danger btn-pill btn_set_processed btn-sm text-nowrap">не просмотрено</a>';
-                if (e['data'][i]['processed'] == '1') {
-                    processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-success btn-pill btn_set_processed btn-sm text-nowrap">обработано</a>';
-                }
+//                var processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-danger btn-pill btn_set_processed btn-sm text-nowrap">не просмотрено</a>';
+//                if (e['data'][i]['processed'] == '1') {
+//                    processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-success btn-pill btn_set_processed btn-sm text-nowrap">обработано</a>';
+//                }
+//                <td class="text-center">' + processed + '</td> \
 
-                $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
+                    $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
                                     <td class="text-center"><a href="javascript:void(0)" class="btn btn-link btn_pay_info_modal" objid="' + e['data'][i]['id'] + '">' + e['data'][i]['id'] + '</a></td> \
                                     <td>' + user_title + '</td> \
                                     <td class="text-center">' + e['data'][i]['pay_type_title'] + '</td> \
                                     <td class="text-center font-weight-bold">' + e['data'][i]['pay_sum'] + '</td> \
                                     <td class="text-center">' + e['data'][i]['pay_date'] + '</td> \
                                     <td class="text-center">' + pay_status + '</td> \
-                                    <td class="text-center">' + pay_descr + '</td> \
-                                    <td class="text-center">' + processed + '</td> \
+                                    <td class="text-center">' + pay_descr + '</td>\
                                     </tr>');
+                }
             }
-        }
-        if (pay_list_col_true === 1 && pay_list_col == e['data'].length) {
-            $(".get_next_page").hide();
-        } else {
-            $(".get_next_page").show();
-            pay_list_col = e['data'].length;
-        }
-        init_btn_set_processed();
-        pay_list_col_true = 1;
+            if (pay_list_col_true === 1 && pay_list_col == e['data'].length) {
+                $(".get_next_page").hide();
+            } else {
+                $(".get_next_page").show();
+                pay_list_col = e['data'].length;
+            }
+            init_btn_set_processed();
+            pay_list_col_true = 1;
 
-        init_pay_info();
+            init_pay_info();
+        }
     });
 }
 
@@ -99,6 +119,53 @@ function init_btn_set_processed() {
         sendPostLigth('/jpost.php?extension=pay', {"set_processed": objid}, function (e) {
             init_pay_data_list();
             init_not_processed_col();
+        });
+    });
+}
+
+// Получить типы операций
+function init_pay_select_type() {
+    sendPostLigth('/jpost.php?extension=pay', {"pay_select_type": 1}, function (e) {
+        $(".pay_select_type").html("<option value=\"\">Тип</option>");
+        if (e['data'].length > 0) {
+            for (var i = 0; i < e['data'].length; i++) {
+                var pay_type = e['data'][i]['pay_type'];
+                var pay_type_title = e['data'][i]['pay_type_title'];
+                if (pay_type_title.length == 0) {
+                    pay_type_title = pay_type;
+                }
+                $(".pay_select_type").append('<option value="' + pay_type + '">' + pay_type_title + '</option>');
+            }
+        }
+        $(".pay_select_type").change(function () {
+            pay_search_type = $(this).val();
+            init_pay_data_list();
+        });
+    });
+}
+
+// Получить Статусы операций
+function init_pay_select_status() {
+    sendPostLigth('/jpost.php?extension=pay', {"pay_select_status": 1}, function (e) {
+        $(".pay_select_status").html("<option value=\"\">Статус</option>");
+        if (e['data'].length > 0) {
+            for (var i = 0; i < e['data'].length; i++) {
+                var pay_status = e['data'][i]['pay_status'];
+                if (pay_status === 'succeeded') {
+                    pay_status_text = 'выполнено';
+                }
+                if (pay_status === 'canceled') {
+                    pay_status_text = 'отмененная';
+                }
+                if (pay_status === 'pending') {
+                    pay_status_text = 'Незавершенная';
+                }
+                $(".pay_select_status").append('<option value="' + pay_status + '">' + pay_status_text + '</option>');
+            }
+        }
+        $(".pay_select_status").change(function () {
+            pay_search_status = $(this).val();
+            init_pay_data_list();
         });
     });
 }

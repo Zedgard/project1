@@ -2,6 +2,7 @@
 
 namespace project;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
@@ -24,19 +25,34 @@ class pay extends \project\extension {
      * @param type $page_number
      * @return type
      */
-    public function pay_data_list($page_number, $search_pay_user_str) {
+    public function pay_data_list($page_number, $search_pay_user_str, $excel_from = '', $excel_to = '', $pay_search_type = '', $pay_search_status = '') {
         //$queryCount = "SELECT count(*) as col FROM `zay_pay`";
         //$this->pay_data_count = $this->getSelectArray($queryCount)[0]['col'];
         $sqlLight = new \project\sqlLight();
         $queryArray = array();
-        $where = "";
+        $w = array();
+        if (strlen($excel_from) > 0 && strlen($excel_to) > 0) {
+            $queryArray[] = date_sql_format($excel_from);
+            $queryArray[] = date_sql_format($excel_to);
+            $w[] = "p.pay_date BETWEEN '? 00:00:00' AND '? 23:59:59' ";
+        }
+        if (strlen($pay_search_type) > 0) {
+            $queryArray[] = $pay_search_type;
+            $w[] = "p.pay_type='?'";
+        }
+        if (strlen($pay_search_status) > 0) {
+            $queryArray[] = $pay_search_status;
+            $w[] = "p.pay_status='?'";
+        }
         if (strlen($search_pay_user_str) > 0) {
             $queryArray[] = $search_pay_user_str;
             $queryArray[] = $search_pay_user_str;
-            $queryArray[] = $search_pay_user_str;
-            $where = "WHERE (u.email like '%?%' or u.phone like '%?%' or pt.pay_type_title like '%?%') ";
+            $w[] = "(u.email like '%?%' or u.phone like '%?%') "; //pt.pay_type_title like '%?%'
         }
-
+        //print_r($w);
+        if (count($w) > 0) {
+            $where = 'WHERE ' . implode(' and ', $w);
+        }
         $queryArray[] = ($page_number * $this->page_max);
 
         $querySelect = "SELECT p.*, pt.pay_type_title, "
@@ -152,6 +168,28 @@ class pay extends \project\extension {
             // Отправляем пользователя на страницу оплаты
             //header('Location: /office/');
         }
+    }
+
+    /**
+     * Получить типы все операций
+     * @return type
+     */
+    public function get_pay_all_tipes() {
+        $sqlLight = new \project\sqlLight();
+        $query = "SELECT DISTINCT p.pay_type, pt.pay_type_title "
+                . "FROM `zay_pay` p "
+                . "left join `zay_pay_type` pt on pt.pay_type_code=p.pay_type";
+        return $sqlLight->queryList($query, array());
+    }
+
+    /**
+     * Получить типы все операций
+     * @return type
+     */
+    public function get_pay_all_status() {
+        $sqlLight = new \project\sqlLight();
+        $query = "SELECT DISTINCT `pay_status` FROM `zay_pay`";
+        return $sqlLight->queryList($query, array());
     }
 
 }
