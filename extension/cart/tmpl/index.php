@@ -53,13 +53,41 @@
                 <?
                 if ($p_user->isClientId() > 0) {
                     ?>
-                    <div class="col-lg-3 text-left mt-3">
-                        <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
+                
+                    
+                    
+                    <div class="col-lg-4 text-left mt-3">
+                        
+                        <!--Подключение библиотеки-->
+                    <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+
+                    <!--HTML-элемент, в котором будет отображаться платежная форма-->
+                    <div id="payment-form"></div>
+
+                    <script>
+                        //Инициализация виджета. Все параметры обязательные.
+                        const checkout = new window.YooMoneyCheckoutWidget({
+                            confirmation_token: 'ct-<?= $pay_key ?>', //Токен, который перед проведением оплаты нужно получить от ЮKassa
+                            return_url: '<?= $return_url ?>', //Ссылка на страницу завершения оплаты
+                            error_callback(error) {
+                                //Обработка ошибок инициализации
+                            }
+                        });
+
+                        //Отображение платежной формы в контейнере
+                        checkout.render('payment-form')
+                                //После отображения платежной формы метод render возвращает Promise (можно не использовать).
+                                .then(() => {
+                                    //Код, который нужно выполнить после отображения платежной формы.
+                                });
+                    </script>
+                       <!-- <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>-->
                     </div>
-                    <div class="col-lg-3 text-left mt-3">
+                    
+                    <div class="col-lg-4 text-left mt-3">
                         <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
                     </div>    
-                    <div class="col-lg-3 text-left mt-3">
+                    <div class="col-lg-4 text-left mt-3">
                         <?
                         if (strlen($paypal_email) == 0) {
                             ?>

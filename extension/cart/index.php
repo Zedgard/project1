@@ -202,7 +202,7 @@ if ($form_show == 0) {
     if (strlen($p_user->isClientEmail()) > 0) {
         $email = $p_user->isClientEmail();
     }
-
+    include 'ya.php';
     include 'tmpl/index.php';
 } else {
     if (count($_SESSION['cart']['itms']) > 0) {
