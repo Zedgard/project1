@@ -36,7 +36,7 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Overpass Mono', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 0.8rem;
     line-height: 1.2;
     color: #3D3D3D;
@@ -120,7 +120,7 @@ p, .heading-title > span, .process-wrapp li > .pro-step,
 .price-table .ammount .dur, .pagination li > a, .counters .count_nums,
 .price-table .ammount h2, .price-table ul li, .webcats li a > span,
 .getin_form .form-control{
-    font-family: 'Overpass Mono', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 /*fontAwesome*/
@@ -932,6 +932,9 @@ i::before,i::after{
         -o-transform: none;
         transform: none;
     }
+}
+nav{
+    font-family: 'Overpass Mono', sans-serif;
 }
 .nav-whitebg {
     background: #fff;
