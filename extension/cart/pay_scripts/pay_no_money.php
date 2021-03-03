@@ -52,7 +52,7 @@ if (count($_SESSION['cart']['itms']) > 0) {
                         . "VALUES ('?','?','?')";
                 $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
                 // Зафиксируем продажу
-                $products->setSoldAdd($product_id);
+                $products->setSoldAdd($max_id);
             }
         }
         $_SESSION['cart']['itms'] = array();

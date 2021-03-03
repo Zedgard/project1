@@ -161,7 +161,7 @@ class pay extends \project\extension {
                         . "VALUES ('?','?','?')";
                 $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
                 // Зафиксируем продажу
-                $products->setSoldAdd($product_id);
+                $products->setSoldAdd($max_id);
             }
             //echo "product_id: {$product_id}";
 //exit();

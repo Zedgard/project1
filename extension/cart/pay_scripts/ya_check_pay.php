@@ -79,7 +79,7 @@ if (count($pays) > 0) {
         $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']));
         if ($pay_check == 'succeeded') {
             // Зафиксируем продажу
-            $products->setSoldAdd($product_id);
+            $products->setSoldAdd($value['id']);
             $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
@@ -94,7 +94,7 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
     $pay_succeede = $sqlLight->queryList($query, array($u->isClientId(), $_SESSION['PAY_KEY']));
     $total = $pay_succeede[0]['pay_sum'];
     $pay_id = $pay_succeede[0]['id'];
-    
+
     if (count($pay_succeede) > 0) {
         /*
          * Если установлена настройка отправим в календарь событие
@@ -108,7 +108,6 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
 //                $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
 //                $master_token = $master['token_file_name'];
 //                $master_credentials = $master['credentials_file_name'];
-
 //                $first_name = $_SESSION['consultation']['first_name'];
 //                $user_phone = $_SESSION['consultation']['user_phone'];
 //                $user_email = $_SESSION['consultation']['user_email'];
@@ -147,5 +146,7 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
     $_SESSION['cart']['total'] = $total;
     $_SESSION['cart']['pay_id'] = $pay_id;
     $_SESSION['cart']['itms'] = array();
+    $_SESSION['PAY_KEY'] = '';
+    unset($_SESSION['PAY_KEY']);
     echo json_encode($result);
 }

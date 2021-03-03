@@ -45,7 +45,7 @@ class products extends \project\extension {
             $this->products_theme = $products_theme;
         }
     }
-    
+
     /**
      * Темы продукта
      * @param type $products_topic
@@ -55,7 +55,6 @@ class products extends \project\extension {
             $this->products_topic = $products_topic;
         }
     }
-    
 
     /**
      * Список продуктов с реализацией поиска
@@ -228,7 +227,7 @@ class products extends \project\extension {
             }
         }
     }
-    
+
     /**
      * Привязка теме продукта
      * @param type $product_id продукт ид
@@ -295,7 +294,7 @@ class products extends \project\extension {
         $this->products_topic = explode(',', $this->getSelectArray($querySelect, array($product_id))[0]['topic_ids']);
         return $this->products_topic;
     }
-    
+
     /**
      * Список ID связанных тем 
      * @param type $product_id
@@ -396,11 +395,11 @@ class products extends \project\extension {
         if ($ProductNew > 0) {
             $queryValProductNew = 'and p.product_new > 0';
         }
-        
+
         $queryValTroductTheme = '';
         if ($product_theme > 0) {
             $queryValTroductTheme = " and pth.theme_id = '?' ";
-            $queryArray[] = $product_theme; 
+            $queryArray[] = $product_theme;
         }
 
         $querySelect = "SELECT p2.*, 
@@ -484,19 +483,25 @@ class products extends \project\extension {
     }
 
     /**
-     * Зафиксировать продажу товара
-     * @param type $product_id
+     * Зафиксировать продажу товаров
+     * @param type $pay_id
      * @return boolean
      */
-    public function setSoldAdd($product_id) {
-        if ($product_id > 0) {
-            $querySelect = "select * from `zay_product` p where id='?'";
-            $obj = $this->getProductSelect($product_id);
-            if ($obj['id'] > 0) {
-                $soldCount = $obj['sold'];
-                $soldCount++;
-                $query = "UPDATE `zay_product` SET `sold`='?' WHERE `id`='?'";
-                return $this->query($query, array($soldCount, $obj['id']));
+    public function setSoldAdd($pay_id) {
+        $select = "SELECT * FROM `zay_pay_products` WHERE pay_id='?'";
+        $objs = $this->getSelectArray($select, array($pay_id));
+        if (count($objs) > 0) {
+            foreach ($objs as $value) {
+                if ($value['product_id'] > 0) {
+                    $querySelect = "select * from `zay_product` p where id='?'";
+                    $obj = $this->getProductSelect($value['product_id']);
+                    if ($obj['id'] > 0) {
+                        $soldCount = $obj['sold'];
+                        $soldCount++;
+                        $query = "UPDATE `zay_product` SET `sold`='?' WHERE `id`='?'";
+                        return $this->query($query, array($soldCount, $obj['id']));
+                    }
+                }
             }
         }
         return false;

@@ -80,7 +80,7 @@ if ($amount == $check_amount) {
         foreach ($pays as $value) {
             //echo "- {$value['id']}<br/>\n";
             $pay_id = $value['id'];
-            $query_update = "UPDATE zay_pay SET pay_status='?',  WHERE id='?' ";
+            $query_update = "UPDATE zay_pay SET pay_status='?'  WHERE id='?' ";
             if ($sqlLight->query($query_update, array($pay_check, $pay_id))) {
                 /*
                  * Если установлена настройка отправим в календарь событие
@@ -125,10 +125,15 @@ if ($amount == $check_amount) {
 //                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
 //                    }
                 }
+                
+                $products->setSoldAdd($pay_id);
+                
                 $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
                 $_SESSION['cart']['total'] = $total;
                 $_SESSION['cart']['pay_id'] = $pay_id;
                 $_SESSION['cart']['itms'] = array();
+                $_SESSION['PAY_KEY'] = '';
+                unset($_SESSION['PAY_KEY']);
                 unset($_SESSION['pay_key']);
                 goBack($url = '/shop/cart/?in_payment_true=1', $time = '0');
             } else {

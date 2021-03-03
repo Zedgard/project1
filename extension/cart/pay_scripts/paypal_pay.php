@@ -124,8 +124,8 @@ if (count($pays) == 0) {
                         . "VALUES ('?','?','?')";
                 $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
                 // Зафиксируем продажу
-                echo $product_id . "<br/>\n";
-                $products->setSoldAdd($product_id);
+//                echo $product_id . "<br/>\n";
+//                $products->setSoldAdd($product_id);
             }
         }
         /*

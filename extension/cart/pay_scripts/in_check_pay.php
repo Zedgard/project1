@@ -16,6 +16,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.ph
 
 $sqlLight = new \project\sqlLight();
 $u = new \project\user();
+$p_products = new \project\products();
 $config = new \project\config();
 $sign_up_consultation = new \project\sign_up_consultation();
 
@@ -102,12 +103,15 @@ if (isset($_POST['ik_co_id']) && strlen($pay_key) > 0 && $ik_co_id == $in_shop_i
                     }
                 }
 
+                $p_products->setSoldAdd($pay_id);
 
                 $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
                 $_SESSION['cart']['total'] = $total;
                 $_SESSION['cart']['pay_id'] = $pay_id;
                 $_SESSION['cart']['itms'] = array();
                 unset($_SESSION['pay_key']);
+                $_SESSION['PAY_KEY'] = '';
+                unset($_SESSION['PAY_KEY']);
                 goBack('/shop/cart/?in_payment_true=1', '0');
             } else {
                 echo 'Ошибка регистрации платежа! Пожалуйста сообщите администрации сайта о данный проблеме!';

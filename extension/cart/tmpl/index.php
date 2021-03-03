@@ -1,3 +1,4 @@
+<script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
 <div class="container mt-4">
     <h1>Корзина</h1>
     <div class="row mt-5">
@@ -40,9 +41,12 @@
             </div>
 
             <div class="row font-weight-bold">
-                <div class="col-9">
+                <div class="col-12">
                     Способ оплаты
                 </div>
+            </div>
+            <div class="row font-weight-bold">
+                <div class="col-12 pay_result font-bold color-black text-center pt-2 pb-4" style="display: none;"></div>
             </div>
             <div class="row">
                 <?
@@ -51,7 +55,7 @@
 
 
 
-                    <div class="col-lg-4 text-left mt-3">
+                <div class="col-lg-4 text-left mt-3" style="display: none;">
 
                         <!--Подключение библиотеки-->
                         <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
@@ -80,7 +84,8 @@
                     </div>
 
                     <div class="col-lg-4 text-left mt-3">
-                        <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
+                        
+                        <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_cloudpayments">Оплата картой</a> 
                     </div>    
                     <div class="col-lg-4 text-left mt-3">
                         <?
