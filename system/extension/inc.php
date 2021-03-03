@@ -171,7 +171,7 @@ class extension {
     public function editTableRowValue($table, $itm_id, $row, $value) {
         $sqlLight = new \project\sqlLight();
         $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'";
-        return $sqlLight->query($query, array($table, $row, $value, $itm_id));
+        return $sqlLight->query($query, array($table, $row, $value, $itm_id), 0);
     }
 
     /**

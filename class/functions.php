@@ -1173,6 +1173,20 @@ if (!function_exists('get_param')) {
     }
 
 }
+if (!function_exists('date_jquery_format')) {
+
+    /**
+     * Придадим формат дате
+     * @param type $date_str
+     * @return type
+     */
+    function date_jquery_format($date_str) {
+        $arr = explode('-', $date_str);
+        $date_new = "{$arr[2]}.{$arr[1]}.{$arr[0]}";
+        return $date_new;
+    }
+
+}
 if (!function_exists('date_sql_format')) {
 
     /**

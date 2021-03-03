@@ -318,17 +318,17 @@ class wares extends \project\extension {
         }
 
         if ($metod == "up") {
-            $q1 = "select * from `zay_wares_video_series` WHERE `position`='?'";
-            $elem1 = $this->getSelectArray($q1, array(($position)), 0)[0];
+            $q1 = "select * from `zay_wares_video_series` WHERE `id`='?'";
+            $elem1 = $this->getSelectArray($q1, array(($series_id)), 0)[0];
             $q2 = "select * from `zay_wares_video_series` WHERE `position`='?'";
-            $elem2 = $this->getSelectArray($q2, array(($position - 1)), 0)[0];
+            $elem2 = $this->getSelectArray($q2, array(($elem1['position'] - 1)), 0)[0];
         }
 
         if ($metod == "down") {
-            $q1 = "select * from `zay_wares_video_series` WHERE `position`='?'";
-            $elem1 = $this->getSelectArray($q1, array(($position)), 0)[0];
+            $q1 = "select * from `zay_wares_video_series` WHERE `id`='?'";
+            $elem1 = $this->getSelectArray($q1, array(($series_id)), 0)[0];
             $q2 = "select * from `zay_wares_video_series` WHERE `position`='?'";
-            $elem2 = $this->getSelectArray($q2, array(($position + 1)), 0)[0];
+            $elem2 = $this->getSelectArray($q2, array(($elem1['position'] + 1)), 0)[0];
         }
 
         $query = "UPDATE `zay_wares_video_series` SET `position`='?' WHERE `id`='?'";
@@ -562,6 +562,162 @@ class wares extends \project\extension {
                 }
             }
         }
+    }
+
+    /**
+     * Добавим недостающий записи в позиции материала
+     * @param type $wares_id
+     * @param type $series_id
+     * @param type $material_type
+     * @param type $material_id
+     * @param type $material_position
+     */
+    public function set_wares_material_position($wares_id, $series_id, $material_type, $material_id, $material_position = 0) {
+        $select = "SELECT * FROM `zay_wares_material_position` WHERE wares_id='?' AND series_id='?' AND material_id='?'";
+        $objs = $this->getSelectArray($query, array($wares_id, $series_id, $material_id));
+        if (count($objs) == 0) {
+            if ($material_position > 0) {
+                $position = $material_position;
+            } else {
+                $position = $this->count_wares_material_position($wares_id, $series_id) + 1;
+            }
+            $query = "INSERT INTO `zay_wares_material_position`(`wares_id`, `series_id`, `material_type`, `material_id`, `material_position`) "
+                    . "VALUES ('?','?','?','?','?')";
+            $this->query($query, array($wares_id, $series_id, $material_type, $material_id, $position), 0);
+        }
+    }
+
+    /**
+     * Колличество элементов в wares_material_position
+     * @param type $wares_id
+     * @param type $series_id
+     * @return type
+     */
+    public function count_wares_material_position($wares_id, $series_id) {
+        $select = "SELECT count(*) col FROM `zay_wares_material_position` WHERE wares_id='?' AND series_id='?'";
+        return $this->getSelectArray($query, array($wares_id, $series_id))[0];
+    }
+
+    /**
+     * Получить материалы по товару
+     * @param type $wares_id
+     * @return type
+     */
+    public function list_materials($wares_id) {
+        $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' order BY `position` asc";
+        return $this->getSelectArray($select, array($wares_id));
+    }
+
+    /**
+     * Добавление нового материала
+     * @param array $data
+     * @return type
+     */
+    public function insert_material($data) {
+        $data['position'] = $this->count_material($data['wares_id'], $data['series_id']);
+//        if ($data['position'] > 1) {
+//            $data['position'] = $data['position'] + 1;
+//        }
+        $query_insert = "INSERT INTO `zay_wares_material`(`wares_id`, `series_id`, `material_type`, `material_title`, `material_descr`, `video_youtube`, `video_time`, `audio_file`, `material_file`, `position`) "
+                . "VALUES ('?','?','?','?','?','?','?','?','?')";
+        print_r($data);
+        echo "<br/>\n";
+        return $this->query($query_insert,
+                        array(
+                            $data['wares_id'],
+                            $data['series_id'],
+                            $data['material_type'],
+                            $data['material_title'],
+                            $data['material_descr'],
+                            $data['video_youtube'],
+                            $data['video_time'],
+                            $data['audio_file'],
+                            $data['material_file'],
+                            $data['position']
+                        ), 0);
+    }
+    
+    /**
+     * Удалить материал
+     * @param type $wares_id
+     * @return type
+     */
+    public function delete_material($wares_id, $material_id) {
+        if ($wares_id > 0) {
+            $queryDelete = "DELETE FROM `zay_wares_material` WHERE wares_id='?' AND id='?' ";
+            return $this->query($queryDelete, array($wares_id, $material_id), 1);
+        }
+        return array();
+    }
+
+    /**
+     * Вернуть колличество материалов
+     * @param type $wares_id
+     * @param type $series_id
+     * @return type
+     */
+    public function count_material($wares_id, $series_id) {
+        $select = "SELECT count(*) as col FROM `zay_wares_material` WHERE `wares_id`='?' and `series_id`='?'";
+        return $this->getSelectArray($select, array($wares_id, $series_id))[0]['col'];
+    }
+
+    /**
+     * Получить название типа материала
+     * @param type $type_material код материала из DB
+     * @return string
+     */
+    public function type_material_is_name($type_material) {
+        switch ($type_material) {
+            case 'material_type_text':
+                $v = 'Текст';
+                break;
+            case 'material_type_video':
+                $v = 'Видео';
+                break;
+            case 'material_type_audio':
+                $v = 'Аудио';
+                break;
+            case 'material_type_file':
+                $v = 'Фаил';
+                break;
+            default:
+                $v = 'Не определен';
+                break;
+        }
+        return $v;
+    }
+    
+    /**
+     * Обновить позицию серии
+     * @param type $menu_id
+     * @param type $item_id
+     * @param type $position
+     * @return type
+     */
+    public function material_position_set($material_id, $series_id, $position, $metod) {
+//        if ($position <= 0) {
+//            return true;
+//        }
+
+        if ($metod == "up") {
+            $q1 = "select * from `zay_wares_material` WHERE `series_id`='?' and `id`='?'";
+            $elem1 = $this->getSelectArray($q1, array($series_id, $material_id), 0)[0];
+            $q2 = "select * from `zay_wares_material` WHERE `series_id`='?' and `position`='?'";
+            $elem2 = $this->getSelectArray($q2, array($series_id, ($elem1['position'] - 1)), 0)[0];
+        }
+            
+        if ($metod == "down") {
+            $q1 = "select * from `zay_wares_material` WHERE `series_id`='?' and `id`='?'";
+            $elem1 = $this->getSelectArray($q1, array($series_id, $material_id), 0)[0];
+            $q2 = "select * from `zay_wares_material` WHERE `series_id`='?' and `position`='?'";
+            $elem2 = $this->getSelectArray($q2, array($series_id, ($elem1['position'] + 1)), 0)[0];
+        }
+
+        $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
+        $this->query($query, array($elem2['position'], $elem1['id']), 0);
+        $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
+        $this->query($query, array($elem1['position'], $elem2['id']), 0);
+        return true;
     }
 
 }

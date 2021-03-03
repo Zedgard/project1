@@ -1,0 +1,79 @@
+.webinar_head_bg{
+    background: linear-gradient(140deg, #63A7D6, #0BC496);
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 35vh;
+}
+.webinar_head_logo{
+    text-align: center;
+    background-color: #e3e3e3;
+    position: absolute;
+    margin-left: 5vw;
+    margin-top: 6vh;
+    z-index: 9;
+}
+.webinar_head_title{
+    text-align: left;
+    position: absolute;
+    margin-left: 18vw;
+    color: #FFFFFF;
+    font-size: 2rem;
+    margin-top: 6vh;
+    z-index: 9;
+}
+.webinar_head_file{
+    text-align: left;
+    position: absolute;
+    margin-left: 18vw;
+    color: #FFFFFF;
+    font-size: 2rem;
+    margin-top: 24vh;
+    z-index: 9;
+}
+.webinar_head_logo_img{
+    padding: 0.25rem;
+    background-color: #e3e3e3;
+    border: 1px solid #dee2e6;
+    max-height: 24vh;
+    max-width: 12vw;
+}
+
+.video_u_block_left{
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    z-index: 9;
+}
+.video_u_block_right{
+    float: right;
+    width: 300px;
+    height: 100px;
+    margin-bottom: -100px;
+    position: relative;
+    z-index: 9;
+}
+.accordion .card .card-header button:after{
+    font-size: 3rem;
+}
+
+.material_info_none{
+    padding: 1%;
+    position: absolute;
+    right: 0px;
+    width: 50%;
+    background-color: #FFFFFF;
+    border: 1px solid #dee2e6;
+    display: none;
+}
+.material_info:hover .material_info_none{
+    display: block;
+    z-index: 999999;
+}
+.material_info_none:hover{
+    z-index: 99999999;
+    position: absolute;
+}
+.material_info:hover {
+    background-color: #dee2e6;
+}

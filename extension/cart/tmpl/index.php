@@ -2,11 +2,6 @@
     <h1>Корзина</h1>
     <div class="row mt-5">
         <div class="col-lg-12">
-            <?
-            if ($p_user->isClientId() == 0) {
-                include $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/tmpl/login_minimal.php';
-            }
-            ?>
             <style>
                 .cart_product_list_img{
                     width: 82px;
@@ -53,37 +48,37 @@
                 <?
                 if ($p_user->isClientId() > 0) {
                     ?>
-                
-                    
-                    
+
+
+
                     <div class="col-lg-4 text-left mt-3">
-                        
+
                         <!--Подключение библиотеки-->
-                    <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+                        <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
 
-                    <!--HTML-элемент, в котором будет отображаться платежная форма-->
-                    <div id="payment-form"></div>
+                        <!--HTML-элемент, в котором будет отображаться платежная форма-->
+                        <div id="payment-form"></div>
 
-                    <script>
-                        //Инициализация виджета. Все параметры обязательные.
-                        const checkout = new window.YooMoneyCheckoutWidget({
-                            confirmation_token: 'ct-<?= $pay_key ?>', //Токен, который перед проведением оплаты нужно получить от ЮKassa
-                            return_url: '<?= $return_url ?>', //Ссылка на страницу завершения оплаты
-                            error_callback(error) {
-                                //Обработка ошибок инициализации
-                            }
-                        });
+                        <script>
+                            //Инициализация виджета. Все параметры обязательные.
+                            const checkout = new window.YooMoneyCheckoutWidget({
+                                confirmation_token: 'ct-<?= $pay_key ?>', //Токен, который перед проведением оплаты нужно получить от ЮKassa
+                                return_url: '<?= $return_url ?>', //Ссылка на страницу завершения оплаты
+                                error_callback(error) {
+                                    //Обработка ошибок инициализации
+                                }
+                            });
 
-                        //Отображение платежной формы в контейнере
-                        checkout.render('payment-form')
-                                //После отображения платежной формы метод render возвращает Promise (можно не использовать).
-                                .then(() => {
-                                    //Код, который нужно выполнить после отображения платежной формы.
-                                });
-                    </script>
-                       <!-- <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>-->
+                            //Отображение платежной формы в контейнере
+                            checkout.render('payment-form')
+                                    //После отображения платежной формы метод render возвращает Promise (можно не использовать).
+                                    .then(() => {
+                                        //Код, который нужно выполнить после отображения платежной формы.
+                                    });
+                        </script>
+                        <!-- <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>-->
                     </div>
-                    
+
                     <div class="col-lg-4 text-left mt-3">
                         <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
                     </div>    
@@ -128,7 +123,14 @@
                     <?
                 } else {
                     ?>
+                    <div class="col-12">
+                        <?
+                        include $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/tmpl/cart_login.php';
+                        ?>
+                    </div>
+                    <!-- 
                     <div style="font-size: 2rem;border: 1px solid red;margin: 2rem 0;color: red;text-align: center;padding: 2rem 0;width: 100%;">Для оплаты войдите в личный кабинет на сайте!</div>
+                    -->
                     <?
                 }
                 ?>
@@ -138,4 +140,9 @@
             </div>
         </div>
     </div>
+    <?
+//    if ($p_user->isClientId() == 0) {
+//        include $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/tmpl/cart_login.php';
+//    }
+    ?>
 </div>

@@ -3,6 +3,7 @@
 session_start();
 defined('__CMS__') or die;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once 'inc.php';
 
 $pr_wares = new \project\wares();
@@ -80,10 +81,20 @@ if (isset($_POST['deleteWares'])) {
 
 
 
+// Редактипрование полей zay_wares_material
+if (isset($_POST['editMaterials'])) {
+    $row_db = $_POST['row_db'];
+    $obj_id = $_POST['obj_id'];
+    $val = $_POST['val'];
+    if ($pr_wares->editTableRowValue('zay_wares_material', $obj_id, $row_db, $val)) {
+        $result = array('success' => 1, 'success_text' => 'Изменено');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}
 
 
-
-// редактипрование полей video
+// Редактипрование полей video
 if (isset($_POST['editMaterial'])) {
     $row_db = $_POST['row_db'];
     $obj_id = $_POST['obj_id'];
@@ -101,7 +112,12 @@ if (isset($_POST['editMaterial'])) {
 if (isset($_POST['editSeries'])) {
     $row_db = $_POST['row_db'];
     $obj_id = $_POST['obj_id'];
-    $val = $_POST['val'];
+    $obj_format = $_POST['obj_format'];
+    $val = trim($_POST['val']);
+    if ($obj_format == 'date') {
+        $val = date_sql_format($val);
+    }
+
     if ($pr_wares->editTableRowValue('zay_wares_video_series', $obj_id, $row_db, $val)) {
         $result = array('success' => 1, 'success_text' => 'Изменено');
     } else {
@@ -117,6 +133,21 @@ if (isset($_POST['setPositionVideoSeries'])) {
     $position = $_POST['position'];
     $metod = $_POST['metod'];
     if ($pr_wares->setPositionVideoSeries($series_id, $position, $metod)) {
+        $result = array('success' => 1, 'success_text' => '');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}
+
+/**
+ * Перемещение серии
+ */
+if (isset($_POST['material_position_set'])) {
+    $material_id = $_POST['material_id'];
+    $series_id = $_POST['series_id'];
+    $position = $_POST['position'];
+    $metod = $_POST['metod'];
+    if ($pr_wares->material_position_set($material_id, $series_id, $position, $metod)) {
         $result = array('success' => 1, 'success_text' => '');
     } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');

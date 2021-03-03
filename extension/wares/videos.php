@@ -16,6 +16,7 @@ include_once 'inc.php';
 $wares = new \project\wares();
 $user = new \project\user();
 
+$errors = array();
 // Только редактор и выше может управлять видео материалами 
 if ($user->isEditor()) {
     /*
@@ -27,6 +28,48 @@ if ($user->isEditor()) {
             exit();
         } else {
             echo "Ошибка добавления видео!";
+        }
+    }
+
+    /*
+     * Добавление нового материала
+     */
+    if (isset($_GET['add_material'])) {
+        if (isset($_POST['material_type'])) {
+            if (strlen($_POST['material_type']) > 0) {
+                $data = array();
+                $data['wares_id'] = $_GET['wares_id'];
+                $data['series_id'] = (isset($_GET['series_id']) && $_GET['series_id'] > 0) ? $_GET['series_id'] : 0;
+                $data['material_type'] = trim($_POST['material_type']);
+                $data['material_title'] = '';
+                $data['material_descr'] = '';
+                $data['video_youtube'] = '';
+                $data['video_time'] = '';
+                $data['audio_file'] = '';
+                $data['material_file'] = '';
+                if ($wares->insert_material($data)) {
+                    header('Location: /extension/wares/videos.php?wares_id=' . $_GET['wares_id']);
+                    exit();
+                } else {
+                    $errors = $_SESSION['errors'];
+                }
+            } else {
+                $errors[] = 'Не задан тип материала';
+            }
+        }
+        include 'tmpl/add_material_new.php';
+        exit();
+    }
+
+    /*
+     * Удаление материала
+     */
+    if (isset($_GET['delete_material'])) {
+        if ($wares->delete_material($_GET['wares_id'], $_GET['delete_material'])) {
+            header('Location: /extension/wares/videos.php?wares_id=' . $_GET['wares_id']);
+            exit();
+        } else {
+            echo "Ошибка удаления видео!";
         }
     }
 
@@ -76,6 +119,7 @@ if ($user->isEditor()) {
         $wares_info = $wares->getWaresElem($wares_id);
         $videos = $wares->listMaterials($_GET['wares_id']);
         $series = $wares->getWaresVideoSeries($_GET['wares_id']);
+        $materials = $wares->list_materials($_GET['wares_id']);
         //print_r($wares_info);
         include __DIR__ . '/tmpl/edit_videos.php';
     }
