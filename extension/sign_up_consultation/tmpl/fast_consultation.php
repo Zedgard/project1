@@ -26,6 +26,12 @@
                         </div>
 
                     </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 fast_consultation_result">
+
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

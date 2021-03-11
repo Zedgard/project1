@@ -188,7 +188,8 @@ if (isset($_POST['send_fast_consultation'])) {
 
             $result = array('success' => 1, 'success_text' => '', 'data' => $data);
         } else {
-            $result = array('success' => 0, 'success_text' => 'Ошибка отправки запроса на консультацию!', 'data' => $data);
+            $errors = implode(' ', $_SESSION['errors']);
+            $result = array('success' => 0, 'success_text' => 'Ошибка отправки запроса на консультацию! ' . $errors, 'data' => $data);
         }
     } else {
         $result = array('success' => 0, 'success_text' => 'Необходимо заполнить все поля!', 'data' => $data);

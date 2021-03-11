@@ -161,6 +161,7 @@ $(function () {
     $(".btn_fast_consultation").unbind('click').click(function () {
         $("#form_fast_consultation_modal").modal('show');
         $(".btn_send_fast_consultation").unbind('click').click(function () {
+            $(".fast_consultation_result").removeClass("alert").removeClass("alert-success");
             var e = [];
             var fio = $(".fast_consultation_fio").val();
             var email = $(".fast_consultation_email").val();
@@ -185,7 +186,15 @@ $(function () {
             if (e.length == 0) {
                 sendPostLigth('/jpost.php?extension=sign_up_consultation', {"send_fast_consultation": 1,
                     'fio': fio, 'email': email, 'phone': phone, 'topic': topic, }, function (e) {
-
+                    if (e['success'] == '1') {
+                        $(".fast_consultation_result").addClass("alert").addClass("alert-success");
+                        $(".fast_consultation_result").html("Сообщение успешно отправлено");
+                        //alert("Сообщение успешно отправлено");
+                    } else {
+                        $(".fast_consultation_result").addClass("alert").addClass("alert-danger");
+                        //alert("Ошибка отправки сообщения");
+                        $(".fast_consultation_result").html("Ошибка! " + e['success_text']);
+                    }
                 });
             } else {
                 $(".form_save_fast_consultation").find("input").keydown(function () {

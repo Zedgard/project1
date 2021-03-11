@@ -12,8 +12,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/Exception.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/PHPMailer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/SMTP.php';
- 
-
 
 class send_emails extends \project\extension {
 
@@ -148,7 +146,11 @@ class send_emails extends \project\extension {
     }
 
     /**
-     * Отправка сообщения
+     * Отправка сообщения<br>
+     * Настроить по иструкции<br>
+     * https://www.hostinger.ru/rukovodstva/kak-ispolzovat-smtp-server#-SMTP-Google<br>
+     * Дать разрешение<br>
+     * https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4Ol_vs_Lq-qGdvCJbpcRTzlQK3LakI2iYSfeQSwNF_LoigTs-1-OAnTQiBdCXZ5cQYzgn_mpTXCIZXSpp7v7tybhg_wlw<br>
      * @param type $email_id тело сообщения
      * @param type $to_email кому отправить
      * @param type $params данные для замены
@@ -156,7 +158,7 @@ class send_emails extends \project\extension {
      */
     public function send($email_code, $to_email, $params = array()) {
         if (strlen($email_code) > 0 && strlen($to_email) > 0) {
-            
+            //echo "email_code: {$email_code} to_email: {$to_email} <br/>\n";
             $mail = new PHPMailer(false);
             $user_info = $this->get_smtp_user_info();
             $email_info = $this->get_email($email_code);
@@ -190,10 +192,15 @@ class send_emails extends \project\extension {
                     $mail->Subject = $email_info['email_subject'];
                     $mail->Body = $body;
                     //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
-                    return $mail->send();
+                    $return = $mail->send();
+                    if (!$return) {
+                        echo "{$mail->ErrorInfo} <br/>\n";
+                    }
+                    return $return;
                     //echo "Email message sent. <br/>\n";
                     //return true;
                 } catch (Exception $e) {
+                    //echo "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
                     $_SESSION['errors'][] = "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
                 }
             } else {
