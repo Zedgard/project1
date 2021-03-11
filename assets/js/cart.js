@@ -114,6 +114,23 @@ $(document).ready(function () {
             }
         });
     });
+    
+    
+    $(".btn_cart_tinkoff").unbind('click').click(function () {
+        pay_status = 0;
+        sendPostLigth('/jpost.php?extension=cart', {
+            "set_tinkoff": 1
+        }, function (e) {
+            console.log(e);
+            if (e['success'] == '1') {
+                
+            } else {
+                alert(e['errors'].toString());
+            }
+        });
+    });
+    
+    
 
     $(".btn_cart_interkassa").unbind('click').click(function () {
         // /pay.php?yandex=1

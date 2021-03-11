@@ -192,6 +192,11 @@ class sqlLight {
         $this->setCount($i);
         return $buffer;
     }
+    
+    public function queryNextId($table_name) {
+        $query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'zay_pay'";
+        return $this->queryList($query, array($table_name))[0]['AUTO_INCREMENT'];
+    }
 
     /**
      * Возвращаем html тэги

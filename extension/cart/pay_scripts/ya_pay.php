@@ -57,8 +57,9 @@ if ($p_user->isEditor()) {
     $price_total = 1;
 }
 
+$client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 if (count($_SESSION['cart']['itms']) > 0) {
-    $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
+    
 
     // Передадим ID пользователя (Создается при консультации)
     if ($client_id == 0) {

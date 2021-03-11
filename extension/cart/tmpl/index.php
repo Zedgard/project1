@@ -55,7 +55,7 @@
 
 
 
-                <div class="col-lg-4 text-left mt-3" style="display: none;">
+                    <div class="col-lg-4 text-left mt-3" style="display: none;">
 
                         <!--Подключение библиотеки-->
                         <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
@@ -84,9 +84,14 @@
                     </div>
 
                     <div class="col-lg-4 text-left mt-3">
-                        
+
                         <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_cloudpayments">Оплата картой</a> 
-                    </div>    
+                    </div>  
+
+                    <div class="col-lg-4 text-left mt-3" style="display: block;">
+                        <a href="/pay.php?tinkoff=1" class="btn button btngreen2 text-center btn_cart btn_cart_yandex" target="_blank">Оплата Tinkoff</a>
+                    </div>
+
                     <div class="col-lg-4 text-left mt-3">
                         <?
                         if (strlen($paypal_email) == 0) {
