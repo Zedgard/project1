@@ -120,7 +120,7 @@ class sqlLight {
             }
             if ($this->mysqli->query($query) === FALSE) {
                 if ($_SESSION['DEBUG'] == 1) {
-                    $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                    $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}<br/>\n{$query}<br/>\n";
                 } else {
                     $this->errArr[] = $lang['sql_query_false'];
                 }
