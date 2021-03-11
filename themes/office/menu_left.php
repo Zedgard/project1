@@ -1,21 +1,23 @@
 <div class="sidebar-scrollbar" style="overflow: auto;">
     <!-- sidebar menu -->
     <ul style="margin: 0;padding: 0;" class="nav sidebar-inner" id="sidebar-menu">
+        <!-- 
         <li style="margin: 0;padding: 0;" class="has-sub">
             <a class="sidenav-item-link" href="/" >
                 <i class="mdi mdi-home"></i>
                 <span class="nav-text">На главную</span> 
             </a>
         </li>
+        -->
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'office') ? 'active' : '' ?> expand" >
             <a class="sidenav-item-link <?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>" href="javascript:void(0)" >
-                <i class="mdi mdi-view-dashboard-outline"></i>
-                <span class="nav-text">Каталог</span> 
+                <!-- <i class="mdi mdi-view-dashboard-outline"></i> -->
+                <span class="nav-text" style="color: #FFFFFF;">Мои покупки</span> 
             </a> 
             <ul style="margin: 0;padding: 0;display: block;" class="collapse office_list_categorys <?=
             (isset($_GET['katalog'])) ? 'show' : ''
             ?>"  id="system_configs"
-                 data-parent="#sidebar-menu">
+                data-parent="#sidebar-menu">
                 <div class="sub-menu" style="display: block;">
                     <li style="margin: 0;padding: 0;display: block;" class="<?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>">
                         <a class="sidenav-item-link" href="/office/?katalog">
@@ -28,6 +30,9 @@
                     $c_category = new \project\category();
                     $categorys = $categoryArray = $c_category->getCategoryArray('product_category', '');
                     foreach ($categorys as $key => $value) {
+                        if (trim($value['title']) == 'Вебинары' || trim($value['title']) == 'Марафоны') {
+                            continue;
+                        }
                         ?>
                         <li style="margin: 0;padding: 0;" class="<?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>">
                             <a class="sidenav-item-link" href="/office/?katalog=<?= $value['id'] ?>">
@@ -38,27 +43,14 @@
                         <?
                     }
                     ?>
-                    <!--    
-                    <li class="<?= ($_SESSION['page_url'] == 'system_configs') ? 'active' : '' ?>">
-                        <a class="sidenav-item-link" href="/admin/system_configs/">
-                            <span class="nav-text">Настройки сайта</span>
-
-                        </a>
-                    </li>
-
-                    <li class="<?= ($_SESSION['page_url'] == 'config_emails') ? 'active' : '' ?>" >
-                        <a class="sidenav-item-link" href="/admin/config_emails/">
-                            <span class="nav-text">Почтовые оповещения</span>
-                        </a>
-                    </li>
-                    <li class="<?= ($_SESSION['page_url'] == 'template') ? 'active' : '' ?>" >
-                        <a class="sidenav-item-link" href="/admin/template/">
-                            <span class="nav-text">Шаблоны</span>
-                        </a>
-                    </li>
-                    -->
                 </div>
             </ul>
+        </li>
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'marathons') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="	/office/marathons/">
+                <i class="mdi mdi-message-video"></i>
+                <span class="nav-text">Марафоны</span> 
+            </a> 
         </li>
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'webinars') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="	/office/webinars/">
