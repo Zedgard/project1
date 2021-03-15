@@ -1,17 +1,28 @@
 .calamansi-skin--basic {
     width: 100%;
     box-sizing: border-box;
-    height: 56px;
+    height: 112px;
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.07);
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     align-items: center;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-top: 30px;
+    padding-left: 0px;
+    padding-right: 0px;
     border-radius: 4px;
     user-select: none;
     -webkit-user-select: none;
     background-color: #fff;
+}
+
+
+.calamansi-skin--basic .clmns--playback-time{
+    margin-top: -40px;
+    float: left;
+}
+.calamansi-skin--basic .clmns--playback-duration{
+    margin-top: -40px;
+    float: right;
 }
 .calamansi-skin--basic .clmns--slider {
     flex-grow: 1;
@@ -43,12 +54,13 @@
     flex-grow: 1;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
     margin-left: 24px;
     margin-right: 24px;
 }
 .calamansi-skin--basic .clmns--controls .clmns--slider {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: -32px;
+    margin-right: -39px;
     border-radius: 2px;
     height: 4px;
 }
@@ -64,6 +76,8 @@
     cursor: default;
 }
 .calamansi-skin--basic .clmns--volume {
+    float: right;
+    margin-top: 20px;
     position: relative;
 }
 .calamansi-skin--basic .clmns--volume .clmns--volume-btn {
@@ -112,8 +126,42 @@
 }
 
 .calamansi-skin--basic .clmns--track-links{
-    margin-left: 10px;
+    margin-top: 20px;
+    margin-right: 26px;
+    float: right;
+    margin-left: 20px;
     color: #000000;
     font-size: 1rem;
+    text-align: center;
+}
+.calamansi-skin--basic .clmns--control-resume, .calamansi-skin--basic .clmns--control-pause{
+    width: 30px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.07);
+    padding: 1rem 1rem 1rem 1rem;
 }
 
+.calamansi .clmns--control{
+    margin: 0 auto;
+    margin-top: -35px;
+    height: auto;
+    padding: 0.8rem 2rem 0.8rem 1rem;
+    box-sizing: border-box;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.07);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    .calamansi .clmns--control{
+        margin: 0 auto;
+        margin-top: -35px;
+        height: auto;
+        padding: 0.8rem 2rem 0.8rem 1rem;
+        box-sizing: border-box;
+        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.07);
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+    }
+}
