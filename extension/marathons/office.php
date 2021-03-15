@@ -19,8 +19,9 @@ if ($user->isClient() || $user->isEditor()) {
 
     if (isset($_GET['wares_id'])) {
         
-        $wares = $pr_wares->getClientWebinarsProducts($_GET['wares_id']);
-        $video_materials = $pr_wares->listClientWebinarsMaterials($wares['id']);
+        $wares = $pr_wares->getClientMarathonsProducts($_GET['wares_id']);
+        $series = $pr_wares->getWaresVideoSeries($wares['id']);
+        $materials = $pr_wares->list_materials($wares['id']);
 
         $wares_img = '';
         if (is_file($_SERVER['DOCUMENT_ROOT'] . $wares['images'])) {

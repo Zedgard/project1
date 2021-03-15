@@ -57,7 +57,21 @@ body {
     line-height: 1.5;
     color: #8a909d;
     text-align: left;
-    background-color: #f5f6fa; }
+    background-color: #FFFFFF; 
+    /* background-image: url('/assets/img/office_bg.png'); */
+}
+
+.body-office {
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #8a909d;
+    text-align: left;
+    background-color: #2c3a39; 
+    background-image: url('/assets/img/office_bg.png');
+}
 
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important; }
@@ -1259,6 +1273,10 @@ pre code {
     .offset-xxl-11 {
         margin-left: 91.66667%; } }
 
+
+.user-menu button span{
+    color: #FFFFFF;
+}
 .table {
     width: 100%;
     margin-bottom: 1rem;
@@ -1449,7 +1467,7 @@ pre code {
 
 .table .thead-dark th {
     color: #ffffff;
-    background-color: #212a39;
+    background-color: #213f48;
     border-color: #2f3c51; }
 
 .table .thead-light th {
@@ -1459,7 +1477,7 @@ pre code {
 
 .table-dark {
     color: #ffffff;
-    background-color: #212a39; }
+    background-color: #213f48; }
 .table-dark th,
 .table-dark td,
 .table-dark thead th {
@@ -10173,7 +10191,9 @@ div.copied {
     z-index: 998;
     margin-bottom: 0;
     padding: 0;
-    transition: box-shadow .2s linear; }
+    transition: box-shadow .2s linear; 
+    background-color: #213f48;
+}
 
 /* Navbar */
 .navbar {
@@ -10205,7 +10225,7 @@ div.copied {
     border: 0px;
     height: 75px;
     cursor: pointer;
-    border-right: 1px solid #e5e9f2; }
+    border-right: 1px solid #213f48; }
 .navbar .sidebar-offcanvas-toggle:before,
 .navbar .sidebar-toggle:before {
     content: "\f9a7";
@@ -10479,7 +10499,7 @@ div.copied {
 
 /*  Header Dark Version */
 .header-dark .navbar {
-    background: #212a39; }
+    background: #213f48; }
 .header-dark .navbar .sidebar-toggle {
     border-color: rgba(255, 255, 255, 0.2); }
 .header-dark .navbar .sidebar-offcanvas-toggle {
@@ -10496,18 +10516,29 @@ div.copied {
 
 /* light Header */
 .header-light .navbar {
-    background-color: #ffffff; }
+    /* background-color: #ffffff; */
+    background-color: #213f48;
+}
 .header-light .navbar .sidebar-toggle {
-    border-color: #e5e9f2; }
+    border-color: #213f48; }
 .header-light .navbar .sidebar-offcanvas-toggle {
-    border-color: #e5e9f2; }
+    border-color: #213f48; }
 .header-light .navbar .search-form .btn,
 .header-light .navbar .search-form .input-group input.form-control {
     color: #8a909d; }
 .header-light .navbar .navbar-right .navbar-nav .notifications-menu .dropdown-toggle {
     border-color: #e5e9f2; }
 .header-light .navbar .navbar-right .navbar-nav .user-menu .dropdown-toggle > span {
-    color: #1b223c; }
+    color: #1b223c; 
+    color: #FFFFFF; 
+    transition-duration: 3s;
+    transition-delay: 0s, 1s;
+
+}
+
+.header-light .navbar .navbar-right .navbar-nav .user-menu .dropdown-toggle > span:hover {
+    text-decoration: underline;
+}
 
 /*===== PAGINATION =====*/
 .pagination .page-item:first-child .page-link,
@@ -11265,10 +11296,12 @@ div.copied {
 
 /* Sidebar Bg Dark */
 .sidebar-dark .left-sidebar {
-    background-color: #212a39; }
+    /*  background-color: #213f48; */
+    background-color: #213f48;
+}
 
 .sidebar-dark .sidebar .sub-menu {
-    background: #1d2531; }
+    background: #213f48; }
 .sidebar-dark .sidebar .sub-menu > li > a {
     color: #b7c0cd; }
 .sidebar-dark .sidebar .sub-menu > li > a .nav-text {
@@ -11290,7 +11323,7 @@ div.copied {
     border-color: rgba(229, 233, 242, 0.2); }
 
 .sidebar-dark .sidebar-footer {
-    background-color: #212a39; }
+    background-color: #213f48; }
 
 /* Sidebar Light */
 .sidebar-light .left-sidebar {
@@ -11498,7 +11531,7 @@ div.copied {
 
 /* Dark Version  */
 .right-sidebar-dark .right-nav-container {
-    background-color: #212a39;
+    background-color: #213f48;
     border-left: 1px solid rgba(255, 255, 255, 0.2); }
 
 /* Right Sidebar 2 */
@@ -11509,7 +11542,7 @@ div.copied {
     display: block;
     z-index: 555555;
     position: fixed;
-    background: #212a39;
+    background: #213f48;
     border-radius: 0;
     height: 100%;
     -webkit-transform: translateX(100%);

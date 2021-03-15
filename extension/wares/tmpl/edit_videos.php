@@ -328,6 +328,7 @@
             <?
         }
         ?>
+        <div style="height: 300px;"></div> 
     </body>
 </html>
 <script>
@@ -338,24 +339,26 @@
                 var elm_type = $(this).get(0).tagName;
                 var row_db = $(this).attr('row_db');
                 var obj_id = $(this).attr('obj_id');
+                var id = $(this).attr('id');
                 var val = $(this).val();
                 //console.log('elm_type: ' + elm_type);
                 if (elm_type == 'textarea') {
                     val = $(this).html();
                 }
                 if (!!$(this).attr('init_html')) {
-                    $("." + $(this).attr('init_html')).html(val);
+                    $(this).closest(".material_info").find("." + $(this).attr('init_html')).html(val); // material_info
+                    //$("." + $(this).attr('init_html')).html(val);
                 }
                 if (!!$(this).attr('init_href')) {
-                    $("." + $(this).attr('init_href')).attr("href", val);
+                    $(this).closest(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
                 }
                 if (!!$(this).attr('init_href')) {
-                    $("." + $(this).attr('init_href')).attr("href", val);
+                    $(this).closest(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
                 }
 
                 // переинициализация аудио плеера
                 if (!!$(this).attr('init_audio')) {
-                    new Calamansi(document.querySelector('#calamansi-player-1'), {
+                    new Calamansi(document.querySelector('#' + id), {
                         skin: '/assets/plugins/calamansi/skins/basic',
                         playlists: {
                             'Classics': [
@@ -369,7 +372,7 @@
                 }
 
                 if (!!$(this).attr('init_youtube_src')) {
-                    $("." + $(this).attr('init_youtube_src')).attr("src", val + "?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0");
+                    $(this).closest(".material_info").find("." + $(this).attr('init_youtube_src')).attr("src", val + "?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0");
                 }
 
 

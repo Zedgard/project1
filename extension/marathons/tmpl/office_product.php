@@ -1,260 +1,326 @@
-<div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card card-default">
-                <style>
-                    .video_u_block_left{
-                        width: 300px;
-                        height: 100px;
-                        position: absolute;
-                        z-index: 9;
-                    }
-                    .video_u_block_right{
-                        float: right;
-                        width: 300px;
-                        height: 100px;
-                        margin-bottom: -100px;
-                        position: relative;
-                        z-index: 9;
-                    }
-                </style>
-                <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-12"><span class="float-left"><?= $wares['title'] ?></span> <span class="float-right"><?= $wares['articul'] ?></span></h2>
+<link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css<?= $_SESSION['rand'] ?>">
+<script src="/assets/plugins/calamansi/calamansi.min.js<?= $_SESSION['rand'] ?>"></script>
+<link href="/extension/marathons/css/marathons.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<div class="container-fluid">
+    <!-- Большие экраны -->
+    <div class="d-none d-lg-block">
+        <div class="row">
+            <div class="col-12" style="height: 10px;"></div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="marathons_wares_title">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default marathons_material_series_active" series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы марафона</a>
+                    </div>
+                    <div class="col-6">
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus">Бонус <i class="fas fa-lock"></i></a>
+                    </div>
                 </div>
-
-                <div class="card-body">
-
-                    <?
-                    if (strlen($wares['url_file']) > 0) {
-                        ?>
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="text-center"><img src="<?= $wares['images'] ?>" class="w-100" style="max-width: 300px;"/></div>
-                            </div>
-                            <div class="col-lg-9">
-                                <a href="<?= $wares['url_file'] ?>" class="btn btn-primary">Скачать файлы</a>
-                            </div>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-12">
                         <?
-                    }
-                    ?>
-                    <?
-                    //unset($_SESSION['wares_video_see']);
-                    //print_r($_SESSION['wares_video_see'])
-                    // <div id="accordion1" class="accordion accordion-bordered">
-                    ?>
-
-                    <?
-                    $i = 0;
-                    foreach ($video_materials as $key => $material_val) {
-                        $show = '';
-                        $expanded = 'false';
-                        $collapsed = 'collapsed';
-                        if ($i == 0) {
-                            $show = 'show';
-                            $expanded = 'true';
-                            $collapsed = '';
-                            $video_id = $material_val['id'];
+                        foreach ($series as $series_value) {
+                            if ($series_value['series_enable'] == 1) {
+                                ?>
+                                <div class="row mb-1">
+                                    <div class="col-11" style="margin: 0 auto;">
+                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-plus"></i></a>
+                                    </div>
+                                </div>
+                                <?
+                            } else {
+                                ?>
+                                <div class="row mb-1">
+                                    <div class="col-11" style="margin: 0 auto;">
+                                        <div class="marathons_not_btn marathons_btn_enable_day_lock" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-lock"></i></div>
+                                    </div>
+                                </div>
+                                <?
+                            }
                         }
-                        $i++;
                         ?>
-                        <div class="webinar_card">
-                            <h3 class="mb-3"><?= $material_val['video_title'] ?></h3>
-                            <div class="card-header" id="heading<?= $i ?>" style="display: none;">
-                                <button class="btn btn-link btn_video_see <?= $collapsed ?>" video_id="<?= $material_val['id'] ?>" data-toggle="collapse" data-target="#collapse<?= $i ?>" aria-expanded="<?= $expanded ?>" aria-controls="collapse<?= $i ?>">
-                                    <h3><?= $material_val['video_title'] ?></h3>
-                                </button>
-                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 marathons_material_list_block">
+                <div class="marathons_material_list_block_title">Общие материалы марафона</div>
+                <div class="marathons_material_lists">
+                    <?
+                    $video_i = 0;
 
-                            <div id="collapse<?= $i ?>" class="collapse <?= $show ?>" aria-labelledby="heading<?= $i ?>" data-parent="#accordion1">
-                                <div class="webinar_card-body video_see">
-
-                                    <div class="row">
+                    /*
+                     * Уроки без серии
+                     */
+                    foreach ($materials as $key => $value) {
+                        if ($value['series_id'] == '0') {
+                            $video_i++;
+                            ?>
+                            <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
+                                <div class="row mt-2 mb-2">
+                                    <div class="col-12">
                                         <?
-                                        if (strlen($material_val['video_youtube']) > 0) {
-                                            $video_youtube_ip = '';
-                                            $str_repl = str_replace('https://', '', $material_val['video_youtube']);
-                                            $video_youtube_ip = array_reverse(explode('/', $str_repl))[0];
+                                        if ($value['material_type'] == 'material_type_text') {
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
+                                        }
+                                        if ($value['material_type'] == 'material_type_audio') {
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
+                                        }
+                                        if ($value['material_type'] == 'material_type_file') {
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
+                                        }
+                                        if ($value['material_type'] == 'material_type_video') {
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                            $video_id = $value['id'];
                                             ?>
-                                            <div class="col-xxl-9">
-                                                <div class="video_u_block_left"></div>
-                                                <div class="video_u_block_right"></div>
-                                                <div id="player_youtube"></div>
-                                                <script>
-                                                    // 2. This code loads the IFrame Player API code asynchronously.
-                                                    var tag = document.createElement('script');
-
-                                                    tag.src = "https://www.youtube.com/iframe_api";
-                                                    var firstScriptTag = document.getElementsByTagName('script')[0];
-                                                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-                                                    // 3. This function creates an <iframe> (and YouTube player)
-                                                    //    after the API code downloads.
-                                                    var player;
-
-                                                    var playerConfig = {}, // Define the player config here
-                                                            queue = {// To queue a function and invoke when player is ready
-                                                                content: null,
-                                                                push: function (fn) {
-                                                                    this.content = fn;
-                                                                },
-                                                                pop: function () {
-                                                                    this.content.call();
-                                                                    this.content = null;
-                                                                }
-                                                            },
-                                                            player;
-
-                                                    function onYouTubeIframeAPIReady() {
-                                                        player = new YT.Player('player_youtube', {
-                                                            height: '415',
-                                                            width: '100%',
-                                                            videoId: '<?= $video_youtube_ip ?>',
-                                                            playerVars: {'autoplay': 1,
-                                                                'mute': 1,
-                                                                'loop': 1, 'iv_load_policy': 0,
-                                                                'rel': 0,
-                                                                'modestbranding': 1,
-                                                                'disablekb': 1,
-                                                                'showinfo': 0,
-                                                                'iv_load_policy': 3,
-                                                                wmode: "opaque"},
-                                                            events: {
-                                                                'onReady': onPlayerReady,
-                                                                'onStateChange': onPlayerStateChange
-                                                            }
-                                                        });
-                                                    }
-
-                                                    // 4. The API will call this function when the video player is ready.
-                                                    function onPlayerReady(event) {
-
-                                                       // $("#player_youtube").find('.ytp-contextmenu').remove();
-
-                                                       
-                                                        //                                                        event.target.setVolume(100);
-                                                        //
-                                                        //                                                        setTimeout(function () {
-                                                        //                                                            $(popup).css('display', 'none');
-                                                        //                                                        }, 500);
-                                                        //                                                        console.log(event.target);
-                                                        //                                                        console.log($(event.target)[0].o);
-                                                        //                                                        setTimeout(function () {
-                                                        //                                                            if (event.target.isMuted()) {
-                                                        //                                                                event.target.unMute();
-                                                        //                                                                console.log('isMuted');
-                                                        //                                                            }
-                                                        //                                                        }, 1000);
-                                                        //                                                        setInterval(function () {
-                                                        //                                                            $('.ytp-contextmenu').remove();
-                                                        //                                                        }, 500);
-                                                    }
-
-                                                    // Helper function to check if the player is ready
-                                                    function isPlayerReady(player) {
-                                                        return player && typeof player.playVideo === 'function';
-                                                    }
-
-                                                    // Instead of calling player.playVideo() directly, 
-                                                    // using this function to play the video. 
-                                                    // If the player is not ready, queue player.playVideo() and invoke it when the player is ready
-                                                    function playVideo(player) {
-                                                        isPlayerReady(player) ? player.playVideo() : queue.push(function () {
-                                                            player.playVideo();
-                                                        });
-                                                    }
-
-                                                    // 5. The API calls this function when the player's state changes.
-                                                    //    The function indicates that when playing a video (state=1),
-                                                    //    the player should play for six seconds and then stop.
-                                                    var done = false;
-                                                    function onPlayerStateChange(event) {
-                                                        if (event.data == YT.PlayerState.PLAYING && !done) {
-                                                            setTimeout(stopVideo, 6000);
-                                                            done = true;
-                                                        }
-                                                    }
-                                                    function stopVideo() {
-                                                        player.stopVideo();
-                                                    }
-                                                </script>
+                                            <script>
+                                                var see_video_id = <?= $video_id ?>;
+                                                $(document).ready(function () {
 
 
-                                            </div>
-                                            <div class="col-xxl-3">
-                                                <?
-                                                /*
-                                                  <iframe width="100%" height="415"
-                                                  src="<?= $material_val['video_youtube'] ?>?autoplay=1&mute=1&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0" frameborder="0" allow="autoplay" allowfullscreen oncontextmenu="return false;">
-                                                  </iframe>
-                                                 */
-                                                $chat->chat_show();
-                                                ?>
-                                            </div>
-                                            <?
-                                            /*
-                                             * <iframe class="video_see" width="100%" height="415" allowfullscreen
-                                              src="<?= $material_val['video_youtube'] ?>?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0">
-                                              </iframe>
-                                             */
-                                            // https://www.youtube.com/watch?v=hPXX4vzw0kk&feature=youtu.be
-                                            // ?controls=1&disablekb=0&iv_load_policy=0&mute=0&loop=1&enablejsapi=0&autoplay=0&modestbranding=0&rel=0&showinfo=0
-                                        } else {
-                                            ?>
-                                            <video class="d-block w-100" video_id="<?= $material_val['id'] ?>" data-holder-rendered="true" preload="auto" controlsList="nodownload" controls loop>
-                                                <source src="<?= $material_val['video_mp4'] ?>" type="video/mp4">
-                                                <source src="<?= $material_val['video_ogv'] ?>" type="video/webm"> 
-                                                <source src="<?= $material_val['video_webm'] ?>" type="video/ogg">
-                                                Your browser does not support the video tag.
-                                            </video>
+            //                                                    $(".content").removeClass("content");
+            //                                                    $(".btn_video_see").click(function () {
+            //                                                        video_id = $(this).attr("video_id");
+            //                                                    });
+
+                                                    $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
+                                                        console.log("material_video_youtube mouseenter");
+                                                        // waresVideoSee
+                                                        //var video_id = $(this).attr("video_id");
+                                                        sendPostLigth('/jpost.php?extension=wares',
+                                                                {"waresVideoSee": see_video_id},
+                                                                function (e) {
+                                                                });
+                                                    });
+
+                                                    // После загрузки сворачиваем меню 
+            //                                                    setTimeout(function () {
+            //                                                        $("#sidebar-toggler").click();
+            //                                                    }, 2000);
+                                                });
+                                            </script>
                                             <?
                                         }
                                         ?>
                                     </div>
-                                    <div class="mt-3"><?= $material_val['video_descr'] ?></div>
                                 </div>
                             </div>
-                        </div>
-
-                        <?
+                            <?
+                        }
                     }
-                    // </div>
+
+                    foreach ($series as $series_value) {
+                        if ($series_value['series_enable'] == 1) {
+                            foreach ($materials as $key => $value) {
+                                if ($value['series_id'] == $series_value['id']) {
+                                    $video_i++;
+                                    ?>
+                                    <div class="material_info series_<?= $value['series_id'] ?>" style="display: none;">
+                                        <div class="row mt-2 mb-2">
+                                            <div class="col-12">
+                                                <?
+                                                if ($value['material_type'] == 'material_type_text') {
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_audio') {
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_file') {
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_video') {
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                                    $video_id = $value['id'];
+                                                    echo "video_id: {$video_id}<br/>\n";
+                                                    ?>
+                                                    <script>
+                                                        var see_video_id = <?= $video_id ?>;
+                                                        $(document).ready(function () {
+
+
+                    //                                                    $(".content").removeClass("content");
+                    //                                                    $(".btn_video_see").click(function () {
+                    //                                                        video_id = $(this).attr("video_id");
+                    //                                                    });
+
+                                                            $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
+                                                                console.log("material_video_youtube mouseenter");
+                                                                // waresVideoSee
+                                                                //var video_id = $(this).attr("video_id");
+                                                                sendPostLigth('/jpost.php?extension=wares',
+                                                                        {"waresVideoSee": see_video_id},
+                                                                        function (e) {
+                                                                        });
+                                                            });
+
+                                                            // После загрузки сворачиваем меню 
+                    //                                                    setTimeout(function () {
+                    //                                                        $("#sidebar-toggler").click();
+                    //                                                    }, 2000);
+                                                        });
+                                                    </script>
+                                                    <?
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?
+                                }
+                            }
+                        }
+                    }
                     ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
+
+    <!------------------------------------ Мобильная версия ---------------------------------------------->
+    <div class="d-lg-none">
+        <div class="row">
+            <div class="col-12" style="height: 10px;"></div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="marathons_wares_title">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default marathons_material_series_active" series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы марафона</a>
+                    </div>
+                </div>
+                <div class="col-12 mb-3 material_info series_0 marathons_material_list_block" style="display: block;">
+                    <div class="marathons_material_list_block_title">Общие материалы марафона</div>
+                    <div class="marathons_material_lists">
+                        <?
+                        $video_i = 0;
+
+                        /*
+                         * Уроки без серии
+                         */
+                        foreach ($materials as $key => $value) {
+                            if ($value['series_id'] == '0') {
+                                $video_i++;
+                                ?>
+                                <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
+                                    <div class="row mt-2 mb-2">
+                                        <div class="col-12">
+                                            <?
+                                            if ($value['material_type'] == 'material_type_text') {
+                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
+                                            }
+                                            if ($value['material_type'] == 'material_type_audio') {
+                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
+                                            }
+                                            if ($value['material_type'] == 'material_type_file') {
+                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
+                                            }
+                                            if ($value['material_type'] == 'material_type_video') {
+                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus">Бонус <i class="fas fa-lock"></i></a>
+                    </div>
                 </div>
 
-                <div class="form-footer p-4  border-top ">
-                    <a href="./" class="btn btn-secondary">назад</a>
-                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <?
+                        foreach ($series as $series_value) {
+                            if ($series_value['series_enable'] == 1) {
+                                ?>
+                                <div class="row mb-1">
+                                    <div class="col-12" style="margin: 0 auto;">
+                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-plus"></i></a>
+                                    </div>
+                                </div>
+                                <?
+                            } else {
+                                ?>
+                                <div class="row mb-1">
+                                    <div class="col-12" style="margin: 0 auto;">
+                                        <div class="marathons_not_btn marathons_btn_enable_day_lock" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-lock"></i></div>
+                                    </div>
+                                </div>
+                                <?
+                            }
+                            ?>
+                            <div class="row">
+                                <div class="col-12">
+                                    <?
+                                    if ($series_value['series_enable'] == 1) {
+                                        foreach ($materials as $key => $value) {
+                                            if ($value['series_id'] == $series_value['id']) {
+                                                $video_i++;
+                                                ?>
+                                                <div class="mb-3 marathons_material_list_block material_info series_<?= $value['series_id'] ?>" style="display: none;">
+                                                    <div class="row mt-2 mb-2">
+                                                        <div class="col-12">
+                                                            <?
+                                                            if ($value['material_type'] == 'material_type_text') {
+                                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
+                                                            }
+                                                            if ($value['material_type'] == 'material_type_audio') {
+                                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
+                                                            }
+                                                            if ($value['material_type'] == 'material_type_file') {
+                                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
+                                                            }
+                                                            if ($value['material_type'] == 'material_type_video') {
+                                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <?
+                        }
+                        ?>
 
-            </div> 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 <script>
-    var video_id = <?= $video_id ?>;
-    $(document).ready(function () {
-
-
-        $(".content").removeClass("content");
-        $(".btn_video_see").click(function () {
-            video_id = $(this).attr("video_id");
-        });
-
-        $(".video_see").mouseenter(function () {
-            // waresVideoSee
-            //var video_id = $(this).attr("video_id");
-            sendPostLigth('/jpost.php?extension=wares',
-                    {"waresVideoSee": video_id},
-                    function (e) {
-                    });
-        });
-
-        // После загрузки сворачиваем меню 
-        setTimeout(function () {
-            $("#sidebar-toggler").click();
-        }, 2000);
+    $(".marathons_material_series_btn").unbind('click').click(function () {
+        $(".material_info").hide();
+        $(".marathons_material_series_btn").removeClass("marathons_material_series_active");
+        $('.marathons_material_series_btn').removeAttr('style');
+        var o = this;
+        var title = $(o).html();
+        var series_id = $(o).attr("series_id");
+        $(o).addClass("marathons_material_series_active");
+        $(o).css("background-color", "#ffffff");
+        $(o).css("color", "#000000");
+        if (series_id > 0) {
+            $(".marathons_material_list_block_title").html("Список материалов «" + title.replace(/<\/?[^>]+(>|$)/g, "") + "»");
+        } else {
+            $(".marathons_material_list_block_title").html("Общие материалы марафона");
+        }
+        $(".series_" + series_id).show(200);
     });
+
 </script>

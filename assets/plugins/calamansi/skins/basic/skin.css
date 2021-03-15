@@ -111,3 +111,9 @@
     display: block;
 }
 
+.calamansi-skin--basic .clmns--track-links{
+    margin-left: 10px;
+    color: #000000;
+    font-size: 1rem;
+}
+

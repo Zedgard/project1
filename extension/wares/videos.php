@@ -117,7 +117,7 @@ if ($user->isEditor()) {
     if (isset($_GET['wares_id'])) {
         $wares_id = $_GET['wares_id'];
         $wares_info = $wares->getWaresElem($wares_id);
-        $videos = $wares->listMaterials($_GET['wares_id']);
+        //$videos = $wares->listMaterials($_GET['wares_id']);
         $series = $wares->getWaresVideoSeries($_GET['wares_id']);
         $materials = $wares->list_materials($_GET['wares_id']);
         //print_r($wares_info);

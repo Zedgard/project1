@@ -102,7 +102,7 @@
         <script src="/assets/js/sleek.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sortable.js?v=<?= $_SESSION['rand'] ?>"></script>
     </head>
-    <body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+    <body class="header-fixed sidebar-fixed sidebar-dark header-light body-office" id="body">
 
         <script>
             NProgress.configure({showSpinner: false});
@@ -388,7 +388,7 @@
 
                     </div>
 
-                    <footer class="footer mt-auto">
+                    <footer class="footer mt-auto d-none">
                         <div class="copyright bg-white">
                             <p>
                                 &copy; <span id="copy-year"></span> Copyright 

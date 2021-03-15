@@ -166,6 +166,10 @@ if (isset($_POST['getClientWebinarsProducts'])) {
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
+if (isset($_POST['getClientMarathonsProducts'])) {
+    $data = $pr_wares->getClientMarathonsProducts();
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
 
 if (isset($_POST['waresVideoSee'])) {
     if ($_POST['waresVideoSee'] > 0) {

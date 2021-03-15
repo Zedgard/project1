@@ -4,7 +4,7 @@
             <div class="card card-default">
 
                 <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6">Список вебинаров</h2>
+                    <h2 class="col-lg-6">Марафоны</h2>
                 </div>
 
                 <div class="card-body">
@@ -42,26 +42,26 @@
 ?>
 <script>
     $(document).ready(function () {
-        getClientWebinarProducts();
+        getClientMarathonsProducts();
     });
 
     /*
      * Настройки значения список
      */
-    function getClientWebinarProducts() {
+    function getClientMarathonsProducts() {
         $(".webinar_products_arrays_data tbody tr").remove();
         $(".webinar_products_arrays_data").html('<div class="w-100 text-center"><div class="spinner-border text-dark" role="status"><span class="sr-only">Loading...</span></div></div>');
-        sendPostLigth('/jpost.php?extension=wares', {"getClientWebinarsProducts": '1'}, function (e) {
+        sendPostLigth('/jpost.php?extension=wares', {"getClientMarathonsProducts": '1'}, function (e) {
             $(".webinar_products_arrays_data").html("");
             var data = e['data'];
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
                     $(".webinar_products_arrays_data").append(
-                            '<div class="col-lg-4 mb-3">\n\
-                                <div class="mb-3"><h3><a href="?wares_id=' + data[i]['id'] + '">' + data[i]['title'] + '</a></h3></div>\n\
+                            '<div class="col-lg-4 mb-3 pt-4 pb-4" style="border: 1px solid #e5e9f2;"><a href="?wares_id=' + data[i]['id'] + '">\n\
+                                <div class="mb-3 text-center"><h3>' + data[i]['title'] + '</h3></div>\n\
                                 <div class="text-center"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
                                 </div>\n\
-                                <div class="col-lg-8 mb-3">' + data[i]['descr'] + '</div>');
+                                <div class="col-lg-8 mb-3">' + data[i]['descr'] + '</a></div>');
                     $(".webinar_products_arrays_data").append('<div class="col-lg-12 mb-2"><hr/></div>');
 //                    $(".webinar_products_arrays_data tbody").append(
 //                            '<tr elm_id="' + data[i]['id'] + '"> \n\

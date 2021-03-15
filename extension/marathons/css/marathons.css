@@ -1,0 +1,117 @@
+.marathons_wares_title{
+    font-size: 1.2rem;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 1rem 0;
+    text-transform: uppercase;
+}
+.marathons_btn{
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    color: #FFFFFF;
+    padding: 1rem 0;
+    font-size: 1rem;
+}
+.marathons_btn:hover{
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+.marathons_btn i{
+    font-size: 1.8rem;
+    float: right;
+    margin-right: 1rem;
+    margin-top: -0.1rem;
+    opacity: 0.6;
+}
+
+.marathons_not_btn{
+    text-align: center;
+    display: block;
+    color: #FFFFFF;
+    padding: 1rem 0;
+    font-size: 1rem;
+}
+.marathons_not_btn i{
+    font-size: 1.8rem;
+    float: right;
+    margin-right: 1rem;
+    margin-top: -0.1rem;
+    opacity: 0.6;
+}
+.marathons_btn_green {
+    width: 100%;
+    background-color: #52BE80;
+    color: #FFFFFF;
+    text-transform: uppercase;
+
+}
+.marathons_btn_green:hover{
+    background-color: #7DCEA0;
+}
+.marathons_btn_brown{
+    width: 100%;
+    background-color: #EB984E;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+.marathons_btn_brown:hover{
+    background-color: #F0B27A;
+}
+
+.marathons_btn_enable_day_green {
+    font-weight: bold;
+    width: 100%;
+    background-color: #52BE80;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+.marathons_btn_enable_day_green:hover{
+    background-color: #7DCEA0;
+}
+.marathons_btn_enable_day_lock {
+    font-weight: bold;
+    width: 100%;
+    background-color: #636363;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+.marathons_material_series_active{
+
+}
+
+/* Материалы */
+.marathons_material_list_block{
+    background-color: #FFFFFF;
+    padding: 1rem;
+}
+.marathons_material_list_block_title{
+    font-size: 1rem;
+    text-align: center;
+    color: #000000;
+    text-transform: uppercase;
+}
+.player-block{
+    width: 100%;
+}
+.audio_file{
+    float: right;
+    padding: 1rem;
+    height: 56px;
+}
+
+.video_u_block_left{
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    z-index: 9;
+}
+.video_u_block_right{
+    float: right;
+    width: 300px;
+    height: 100px;
+    margin-bottom: -100px;
+    position: relative;
+    z-index: 9;
+}
