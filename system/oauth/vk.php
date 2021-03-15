@@ -3,7 +3,7 @@
 session_start();
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
@@ -12,21 +12,26 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 $p_user = new \project\user();
 $p_auth = new \project\auth();
 
-//$vk_client_id = $vk_client_id; // ID приложения
-//$vk_client_secret = $vk_client_secret; // Защищённый ключ
-$redirect_uri = 'https://edgardzaycev.com/vk.php?s_login=273456781'; // Адрес сайта
+$redirect_uri = 'https://edgardzaycev.com/auth/?oauth=vk'; // Адрес сайта
 
-$url = 'http://oauth.vk.com/authorize'; // Ссылка для авторизации на стороне ВК
+if (!isset($_GET['oauth']) && !isset($_GET['code'])) {
+    
+    $url = 'http://oauth.vk.com/authorize'; // Ссылка для авторизации на стороне ВК
+    //echo "vk_client_id: {$vk_client_id}<br/>\n";
+    //echo "vk_client_secret: {$vk_client_secret}<br/>\n";
 
-$params = ['client_id' => $vk_client_id,
-    'redirect_uri' => $redirect_uri,
-    'scope' => 'email',
-    'response_type' => 'code']; // Массив данных, который нужно передать для ВК содержит ИД приложения код, ссылку для редиректа и запрос code для дальнейшей авторизации токеном
-if (empty($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 0) {
-    location_href('/auth/');
-    echo "Вы уже авторизованы";
-} else {
-    echo $link = '<p><a href="' . $url . '?' . urldecode(http_build_query($params)) . '">Аутентификация через ВКонтакте</a></p>';
+    $params = ['client_id' => $vk_client_id,
+        'redirect_uri' => $redirect_uri,
+        'scope' => 'email',
+        'response_type' => 'code']; // Массив данных, который нужно передать для ВК содержит ИД приложения код, ссылку для редиректа и запрос code для дальнейшей авторизации токеном
+
+    $vk_link = '';
+    if (empty($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 0) {
+        
+    } else {
+        $vk_link = $url . '?' . urldecode(http_build_query($params));
+//'<p><a href="' . $url . '?' . urldecode(http_build_query($params)) . '">Аутентификация через ВКонтакте</a></p>';
+    }
 }
 
 if (isset($_GET['code'])) {
@@ -35,11 +40,11 @@ if (isset($_GET['code'])) {
         'client_id' => $vk_client_id,
         'client_secret' => $vk_client_secret,
         'code' => $_GET['code'],
-        'scope' => 'email',
         'redirect_uri' => $redirect_uri
     ];
-
+    //print_r($params);
     $token = json_decode(file_get_contents('https://oauth.vk.com/access_token' . '?' . urldecode(http_build_query($params))), true);
+    
 
     if (isset($token['access_token'])) {
 
@@ -49,8 +54,10 @@ if (isset($_GET['code'])) {
             'fields' => 'uid,contacts,first_name,last_name,screen_name,sex,bdate,photo_big',
             'access_token' => $token['access_token'],
             'v' => '5.101'];
-
+    
         $userInfo = json_decode(file_get_contents('https://api.vk.com/method/users.get' . '?' . urldecode(http_build_query($params))), true);
+        //echo "userInfo:<br/>\n";
+
         if (isset($userInfo['response'][0]['id'])) {
 
             $userInfo['response'][0]['email'] = $token['email'];
@@ -58,7 +65,7 @@ if (isset($_GET['code'])) {
             $result = true;
         }
     }
-
+    
     if ($result) {
 //        print_r($userInfo);
 //        echo "ID пользователя: " . $userInfo['id'] . '<br />';
@@ -75,7 +82,7 @@ if (isset($_GET['code'])) {
         $first_name = $userInfo['first_name'];
         $uid = $userInfo['id'];
         // проверка на секрет
-        if ($uid > 0 && $_GET['s_login'] == '273456781') {
+        if ($uid > 0) {
             //$phone = $this->phoneReplace($phone);
             //echo "first_name: {$phone}<br/>\n";
 
@@ -131,5 +138,3 @@ if (isset($_GET['code'])) {
     var_dump($result);
     location_href('/auth/');
 }
-
-//$_SESSION['id'] = $userInfo['id'];

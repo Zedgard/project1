@@ -47,6 +47,14 @@ if ($_SESSION['user']['other'] == 0 && isset($_COOKIE["edgard_master_cookie_toke
 }
 
 /*
+ * Авторизация через свои API
+ *   */
+if(isset($_GET['oauth'])){
+    if($_GET['oauth'] == 'vk'){
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
+    }
+}
+/*
  * Редирект в зависимости от роли
  */
 if ($user->isAdmin()) {
@@ -65,8 +73,11 @@ if ($user->isClient()) {
  */
 //echo $auth->password_generate();
 //print_r($_SESSION['user']['info']);
-//print_r($_POST);
+
 if (isset($_GET['s_login'])) {
+   // print_r($_POST);
+    //print_r($_REQUEST);
+   // exit();
     if (isset($_POST['token']) && strlen($_POST['token']) > 0) {
         if ($auth->uLogin_auth_registred($_POST['token'])) {
             location_href('/auth/');
@@ -79,6 +90,6 @@ if (isset($_GET['s_login'])) {
     }
 }
 
-
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
 // Отображаем фоорму
 include 'tmpl/login.php';

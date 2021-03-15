@@ -49,6 +49,10 @@ $cfg_db_host = 'localhost';
 $cfg_db_prefix = 'zay_';
 
 
+/* API VK */
+$vk_client_id = 7791892; // ID приложения
+$vk_client_secret = 'AoPw553vjpLulChtsB3m'; // Защищённый ключ 
+ 
 /*
  * Доступ к API token
  */

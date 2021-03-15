@@ -12,7 +12,7 @@ $union_elm_id = mt_rand(100000, 999999) . $value['id'];
     //document.querySelector('#calamansi-player-<?= $union_elm_id ?>')
     new Calamansi( 
             document.querySelector('#calamansi-player-<?= $union_elm_id ?>'), {
-        skin: '/assets/plugins/calamansi/skins/basic_download',
+        skin: '/assets/plugins/calamansi/skins/basic_download2',
         playlists: {
             'Classics': [
                 {
