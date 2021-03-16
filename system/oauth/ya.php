@@ -12,76 +12,90 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 $p_user = new \project\user();
 $p_auth = new \project\auth();
 
-$redirect_uri = 'https://edgardzaycev.com/auth/?oauth=vk'; // Адрес сайта
+$redirect_uri = 'https://edgardzaycev.com/auth/?oauth=ya'; // Адрес сайта
+//$ya_client_id = '2364a38f027c4ae284253c2c2e8791b2'; // ID приложения
+//$ya_client_secret = 'ed4e37ffd59b4bbbbc9515972285cf20'; // Защищённый ключ 
 
-
-if (!isset($_GET['oauth']) && !isset($_GET['code'])) {
-
-    $url = 'http://oauth.vk.com/authorize'; // Ссылка для авторизации на стороне ВК
-    //echo "vk_client_id: {$vk_client_id}<br/>\n";
-    //echo "vk_client_secret: {$vk_client_secret}<br/>\n";
-
-    $params = ['client_id' => $vk_client_id,
+if (!isset($_GET['oauth']) && empty($_GET['code'])) {
+    $params = array(
+        'client_id' => $ya_client_id,
         'redirect_uri' => $redirect_uri,
-        'scope' => 'email',
-        'response_type' => 'code']; // Массив данных, который нужно передать для ВК содержит ИД приложения код, ссылку для редиректа и запрос code для дальнейшей авторизации токеном
+        'response_type' => 'code',
+        'state' => '123'
+    );
 
-    $vk_link = '';
+    $ya_link = '';
     if (empty($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 0) {
         
     } else {
-        $vk_link = $url . '?' . urldecode(http_build_query($params));
-        //'<p><a href="' . $url . '?' . urldecode(http_build_query($params)) . '">Аутентификация через ВКонтакте</a></p>';
+        $ya_link = 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query($params));
     }
 }
 
-if (isset($_GET['oauth']) && $_GET['oauth'] = 'vk') {
-    if (isset($_GET['code'])) {
+if (isset($_GET['oauth']) && $_GET['oauth'] = 'ya') {
+    if (!empty($_GET['code'])) {
         $result = false;
-        $params = [
-            'client_id' => $vk_client_id,
-            'client_secret' => $vk_client_secret,
+        // Отправляем код для получения токена (POST-запрос).
+        $params = array(
+            'grant_type' => 'authorization_code',
             'code' => $_GET['code'],
-            'redirect_uri' => $redirect_uri
-        ];
-        $token = json_decode(file_get_contents('https://oauth.vk.com/access_token' . '?' . urldecode(http_build_query($params))), true);
+            'client_id' => $ya_client_id,
+            'client_secret' => $ya_client_secret,
+        );
 
+        $ch = curl_init('https://oauth.yandex.ru/token');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $data = curl_exec($ch);
+        curl_close($ch);
 
-        if (isset($token['access_token'])) {
-            $params = [
-                'uids' => $token['user_id'],
-                'fields' => 'uid,contacts,first_name,last_name,screen_name,sex,bdate,photo_big',
-                'access_token' => $token['access_token'],
-                'v' => '5.101'];
+        $data = json_decode($data, true);
+        if (!empty($data['access_token'])) {
+            // Токен получили, получаем данные пользователя.
+            $ch = curl_init('https://login.yandex.ru/info');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, array('format' => 'json'));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: OAuth ' . $data['access_token']));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            $info = curl_exec($ch);
+            curl_close($ch);
 
-            $userInfo = json_decode(file_get_contents('https://api.vk.com/method/users.get' . '?' . urldecode(http_build_query($params))), true);
-            if (isset($userInfo['response'][0]['id'])) {
+            $info = json_decode($info, true);
+            /*
+             * Array ( 
+             * [id] => 42411884 
+             * [login] => resko1987 
+             * [client_id] => 2364a38f027c4ae284253c2c2e8791b2 
+             * [display_name] => resko1987 
+             * [real_name] => Виктор Караваев 
+             * [first_name] => Виктор 
+             * [last_name] => Караваев 
+             * [sex] => male 
+             * [default_email] => resko1987@yandex.ru 
+             * [emails] => 
+             * 		Array ( 
+             * 			[0] => resko1987@yandex.ru 
+             * 		) 
+             * [psuid] => 1.AAb5Eg.P3Sn3R4IBh3oKRecsxl8HQ.i8f2g4gzPlorvG-nTihNQw )
+             */
+            //echo "email: {$info['default_email']}<br/>\n";
+            print_r($info);
 
-                $userInfo['response'][0]['email'] = $token['email'];
-                $userInfo = $userInfo['response'][0];
-                $result = true;
-            }
-        }
-
-        if ($result) {
-//        print_r($userInfo);
-//        echo "ID пользователя: " . $userInfo['id'] . '<br />';
-//        echo "Имя пользователя: " . $userInfo['first_name'] . '<br />';
-//        echo "email: " . $userInfo['email'] . '<br />';
-//        echo "Ссылка на профиль: " . $userInfo['screen_name'] . '<br />';
-//        echo "Пол: " . $userInfo['sex'] . '<br />';
-//        echo "День Рождения: " . $userInfo['bdate'] . '<br />';
-//        echo '<img src="' . $userInfo['photo_big'] . '" />';
-//        echo "<br />";
-
-            $email = $userInfo['email'];
+            $email = $info['default_email'];
             //$phone = (isset($json_s['phone']) || strlen($json_s['phone']) > 0) ? $json_s['phone'] : '';
-            $first_name = $userInfo['first_name'];
-            $uid = $userInfo['id'];
+            $first_name = $info['first_name'];
+            $uid = $info['id'];
+
+            //echo "uid: {$uid}<br/>\n";
             // проверка на секрет
             if ($uid > 0) {
                 //$phone = $this->phoneReplace($phone);
-                //echo "first_name: {$phone}<br/>\n";
+
 
                 $sqlLight = new \project\sqlLight();
                 if (strlen($phone) == 0) {
@@ -133,7 +147,13 @@ if (isset($_GET['oauth']) && $_GET['oauth'] = 'vk') {
                 $_SESSION['errors'][] = 'Нет учетных данных';
             }
         }
-        //var_dump($result);
-        location_href('/auth/');
+        //print_r($_SESSION['errors']);
+        //print_r($_SESSION['user']['info']);
+        //exit();
+        if ($result) {
+            location_href('/auth/');
+        }else {
+                $_SESSION['errors'][] = 'Ошибка авторизации';
+            }
     }
 }

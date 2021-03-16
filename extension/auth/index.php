@@ -65,7 +65,7 @@ if ($user->isEditor()) {
 }
 
 if ($user->isClient()) {
-    //location_href('/office/?katalog');
+    location_href('/office/?katalog');
 }
 
 /*
@@ -90,6 +90,7 @@ if (isset($_GET['s_login'])) {
     }
 }
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/ya.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
 // Отображаем фоорму
 include 'tmpl/login.php';

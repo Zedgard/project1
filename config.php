@@ -53,6 +53,9 @@ $cfg_db_prefix = 'zay_';
 $vk_client_id = 7791892; // ID приложения
 $vk_client_secret = 'AoPw553vjpLulChtsB3m'; // Защищённый ключ 
  
+$ya_client_id = '2364a38f027c4ae284253c2c2e8791b2'; // ID приложения
+$ya_client_secret = 'ed4e37ffd59b4bbbbc9515972285cf20'; // Защищённый ключ 
+ 
 /*
  * Доступ к API token
  */
