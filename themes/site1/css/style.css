@@ -796,6 +796,20 @@ ul.social-icons.white li a:focus{
     background-color: #3a7f89;
 }
 
+.btngreen3, .btngreen3:hover, .btngreen3:focus{
+    color: #fff;
+    background-color: #3a7f89;
+}
+.btngreen3:hover, .btngreen3:focus{
+}
+
+.btngreen4, .btngreen4:hover, .btngreen4:focus{
+    color: #000000;
+    background-color: #e3e3e3;
+}
+.btngreen4:hover, .btngreen4:focus{
+}
+
 /* transitions common*/
 a, *::before, *::after,img, span, input, button,
 .navbar, .fixedmenu, .tp-bullet, .owl-dot, .owl-prev, .owl-next{
@@ -4612,8 +4626,8 @@ footer .copyrights > a:focus {
 }
 .btn_cart{
     font-weight: bold;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
     width: 90%;
 }
 
@@ -4682,4 +4696,8 @@ footer_menu{
 }
 .bottom_cookie_desktop_hide{
     height: 50px;
+}
+.block_cart_other{
+    padding: 2rem 0;
+    background-color: #e8e8e8;
 }

@@ -18,7 +18,6 @@ $c_cart = new \project\cart();
 $p_user = new \project\user();
 $auth = new \project\auth();
 
-
 /*
  * Добавления товара в корзину
  */
@@ -67,6 +66,7 @@ if (isset($_GET['ya_payment_true'])) {
     </div>
     <script>
         $(document).ready(function () {
+            
             $(".pay_check").click(function () {
                 $(".form_result").html("");
                 sendPostLigth('/check_pay.php', {"check_pay": 'ya'}, function (e) {
@@ -78,6 +78,7 @@ if (isset($_GET['ya_payment_true'])) {
                     }
                 });
             });
+            
             sendPostLigth('/check_pay.php', {"check_pay": 'ya'}, function (e) {
                 $(".form_result").html(e['success_text']);
                 if (e['success'] == '1') {
@@ -108,9 +109,9 @@ if (isset($_GET['ya_payment_true'])) {
                         'checkout': {
                             'actionField': {'step': 1},
                             'products': [{
-                                    "name": product_info_title, // например, https://prnt.sc/un4kvj 
-                                    "price": product_info_price, // например, https://prnt.sc/un4kvj 
-                                    "quantity": 1 // Количество, например, https://prnt.sc/un4kvj 
+                                    "name": product_info_title, 
+                                    "price": product_info_price, 
+                                    "quantity": 1 
                                 },
                                 {
                                     "name": product_info_title,
@@ -125,6 +126,7 @@ if (isset($_GET['ya_payment_true'])) {
                     'gtm-ee-event-non-interaction': 'False',
                 });
             }
+            
         });
     </script>
     <?
@@ -168,7 +170,7 @@ if (isset($_GET['in_payment_true'])) {
 
 if ($form_show == 0) {
     /**
-     * Подготови данные для PayPal
+     * Подготолви данные для PayPal
      */
     $url_ref = $config->getConfigParam('pay_site_url_ref');
     $url_ref = "{$url_ref}/pay.php?pay_payment_true=1";

@@ -1,5 +1,4 @@
 <?php
-
 defined('__CMS__') or die;
 
 session_start();
@@ -414,4 +413,10 @@ if (isset($_POST['check_cloudpayments'])) {
         unset($_SESSION['PAY_AMOUNT']);
         //echo json_encode($result);
     }
+}
+
+if (isset($_POST['get_cart_other'])) {
+    include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/ya.php';
+    //$html = inc($_SERVER['DOCUMENT_ROOT'] . '/extension/cart/ya_block.php');
+    $result = array('success' => 1, 'pay_key' => $pay_key, 'return_url' => $return_url);
 }

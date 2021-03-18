@@ -1,4 +1,5 @@
 <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
+<script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
 <div class="container mt-4">
     <h1>Корзина</h1>
     <div class="row mt-5">
@@ -41,58 +42,31 @@
             </div>
 
             <div class="row font-weight-bold">
-                <div class="col-12">
+                <div class="col-12 font-size-16">
                     Способ оплаты
                 </div>
             </div>
             <div class="row font-weight-bold">
                 <div class="col-12 pay_result font-bold color-black text-center pt-2 pb-4" style="display: none;"></div>
             </div>
-            <div class="row">
-                <?
-                if ($p_user->isClientId() > 0) {
-                    ?>
-
-
-
-                    <div class="col-lg-4 text-left mt-3" style="display: none;">
-
-                        <!--Подключение библиотеки-->
-                        <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
-
-                        <!--HTML-элемент, в котором будет отображаться платежная форма-->
-                        <div id="payment-form"></div>
-
-                        <script>
-                            //Инициализация виджета. Все параметры обязательные.
-                            const checkout = new window.YooMoneyCheckoutWidget({
-                                confirmation_token: 'ct-<?= $pay_key ?>', //Токен, который перед проведением оплаты нужно получить от ЮKassa
-                                return_url: '<?= $return_url ?>', //Ссылка на страницу завершения оплаты
-                                error_callback(error) {
-                                    //Обработка ошибок инициализации
-                                }
-                            });
-
-                            //Отображение платежной формы в контейнере
-                            checkout.render('payment-form')
-                                    //После отображения платежной формы метод render возвращает Promise (можно не использовать).
-                                    .then(() => {
-                                        //Код, который нужно выполнить после отображения платежной формы.
-                                    });
-                        </script>
-                        <!-- <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>-->
-                    </div>
-
+            <?
+            if ($p_user->isClientId() > 0) {
+                ?>
+                <div class="row justify-content-md-center">
                     <div class="col-lg-4 text-left mt-3">
-
-                        <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_cloudpayments">Оплата картой</a> 
-                    </div>  
+                        <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_cloudpayments">Картой</a> 
+                    </div> 
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-lg-4 text-left mt-3" style="display: block;">
+                        <a href="/pay.php?tinkoff=1" class="btn button btngreen4 text-center btn_cart btn_cart_yandex" target="_blank">Карротй через Тинькофф</a>
+                    </div>
 
                     <div class="col-lg-4 text-left mt-3" style="display: block;">
-                        <a href="/pay.php?tinkoff=1" class="btn button btngreen2 text-center btn_cart btn_cart_yandex" target="_blank">Оплата Tinkoff</a>
+                        <a href="javascript:void(0)" class="btn button btngreen3 text-center btn_cart btn_cart_other">Другой способ</a>
                     </div>
 
-                    <div class="col-lg-4 text-left mt-3">
+                    <div class="col-lg-4 text-left mt-3" style="display: none;">
                         <?
                         if (strlen($paypal_email) == 0) {
                             ?>
@@ -127,7 +101,7 @@
                         }
                         ?>
                     </div>
-                    <div class="col-lg-3 text-left mt-3">
+                    <div class="col-lg-3 text-left mt-3" style="display: none;">
 
                     </div>
                     <?
@@ -141,10 +115,18 @@
                     <!-- 
                     <div style="font-size: 2rem;border: 1px solid red;margin: 2rem 0;color: red;text-align: center;padding: 2rem 0;width: 100%;">Для оплаты войдите в личный кабинет на сайте!</div>
                     -->
+
+
                     <?
                 }
                 ?>
             </div>
+            <div class="row mt-5">
+                <div class="col-12 block_cart_other" style="display: none;">
+                    
+                </div>
+            </div>
+
             <div class="row mt-5">
 
             </div>

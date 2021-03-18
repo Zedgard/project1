@@ -237,7 +237,6 @@ if (!function_exists('inc')) {
     function inc($filename, $obj = null) {
         if (is_file($filename)) {
             ob_start();
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/admin/load.php';
             include $filename;
             return ob_get_clean();
         }
