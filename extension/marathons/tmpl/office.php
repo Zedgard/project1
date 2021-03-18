@@ -1,3 +1,24 @@
+<link rel="stylesheet" href="/extension/products/product.css<?= $_SESSION['rand'] ?>">
+<style>
+    .product_title{
+        border-top: 1px solid #CCCCCC;
+        color: #000000;
+        margin-bottom: 1rem;
+        clear: both;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+    .products_arrays_data .product_title{
+        border-top: none;
+    }
+    .wares_title{
+        margin-top: 1rem;
+        font-size: 1rem;
+        color: #000000;
+        text-transform: uppercase;
+        text-align: left;
+    }
+</style>
 <div>
     <div class="row">
         <div class="col-lg-12">
@@ -14,7 +35,7 @@
                         </div>
                     </div>
                     <br/>
-                    <div class="row webinar_products_arrays_data">
+                    <div class="row container_mix webinar_products_arrays_data">
 
                     </div>
                 </div>
@@ -56,13 +77,17 @@
             var data = e['data'];
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
+                    var wcc_color = data[i]['wcc_color'];
+                    var wares_cat_name = '<span class="class_category" style="color: ' + wcc_color + ';">' + data[i]['wcc_title'] + '</span>';
                     $(".webinar_products_arrays_data").append(
-                            '<div class="col-lg-4 mb-3 pt-4 pb-4" style="border: 1px solid #e5e9f2;"><a href="?wares_id=' + data[i]['id'] + '">\n\
-                                <div class="mb-3 text-center"><h3>' + data[i]['title'] + '</h3></div>\n\
-                                <div class="text-center"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                            '<div class="col-lg-3 mb-3 pt-4 pb-4 product_info item" style="border: 1px solid #e5e9f2;">\n\
+                                <a href="?wares_id=' + data[i]['id'] + '">\n\
+                                <div class="mb-2 text-center"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                                <div class="mb-3 wares_title text-center"><span class="">' + data[i]['title'] + '</span></div>\n\
                                 </div>\n\
-                                <div class="col-lg-8 mb-3">' + data[i]['descr'] + '</a></div>');
-                    $(".webinar_products_arrays_data").append('<div class="col-lg-12 mb-2"><hr/></div>');
+                                </a>\n\
+                                </div>');
+                    //$(".webinar_products_arrays_data").append('<div class="col-lg-12 mb-2"><hr/></div>');
 //                    $(".webinar_products_arrays_data tbody").append(
 //                            '<tr elm_id="' + data[i]['id'] + '"> \n\
 //                                <td>\n\

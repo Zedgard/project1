@@ -1,5 +1,24 @@
+<link rel="stylesheet" href="/extension/products/product.css<?= $_SESSION['rand'] ?>">
+<style>
+    .product_title{
+        border-top: 1px solid #CCCCCC;
+        color: #000000;
+        margin-bottom: 1rem;
+        clear: both;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+    .products_arrays_data .product_title{
+        border-top: none;
+    }
+    .wares_title{
+        font-size: 0.9rem;
+        color: #000000;
+        text-align: left;
+    }
+</style>
 <div>
-    <div class="row">
+    <div class="row" style="display: none;">
         <div class="col-lg-12">
             <div class="card card-default">
                 <div class="card-body">
@@ -13,7 +32,7 @@
             <div class="card card-default">
 
                 <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6">Список продуктов</h2>
+                    <h2 class="col-lg-6">Покупки</h2>
                 </div>
 
                 <div class="card-body">
@@ -53,22 +72,7 @@
   </div>
  */
 ?>
-<style>
-    .product_title{
-        border-top: 1px solid #CCCCCC;
-        color: #000000;
-        margin-bottom: 1rem;
-        clear: both;
-        font-size: 1.4rem;
-        font-weight: 600;
-    }
-    .products_arrays_data .product_title{
-        border-top: none;
-    }
-    .wares_title{
-        font-size: 1rem;
-    }
-</style>
+
 <script>
     var category_id = '<?= (isset($_GET['katalog']) && strlen($_GET['katalog']) > 0) ? $_GET['katalog'] : '' ?>';
     $(document).ready(function () {
@@ -93,15 +97,18 @@
 
                         $(".products_arrays_data").append('<div class="product product_id_' + data[i]['product_id'] + ' w-100">\n\
                         <div class="product_title w-100">' + data[i]['product_title'] + '</div>\n\
-                        <div class="product_elms row row-cols-2 row-cols-md-3 w-100" style="margin-right:0;padding-right:0;margin-left:0;padding-left:0;"></div>\n\
+                        <div class="product_elms row row-cols-2 row-cols-md-4 w-100" style="margin-right:0;padding-right:0;margin-left:0;padding-left:0;"></div>\n\
                         </div>');
                     }
+                    var wcc_color = data[i]['wcc_color'];
+                    var wares_cat_name = '<span class="class_category" style="color: ' + wcc_color + ';">' + data[i]['wcc_title'] + '</span>';
                     $('.products_arrays_data .product_id_' + data[i]['product_id'] + ' .product_elms').append(
-                            '<div class="row-cols-0 mb-4">\n\
+                            '<div class="product_info container_mix row-cols-0 mb-4">\n\
                                 <a href="?wares_id=' + data[i]['id'] + '">\n\
-                                <div class="card p-2 h-100 text-center">\n\
-                                <div class="mb-3 wares_title h-100">' + data[i]['title'] + '</div>\n\
+                                <div class="card item p-4 p-2 h-100 text-center">\n\
+                                <span class="class_category_lbl opacity50" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['wcc_title'] + '</span>\n\
                                 <div class="mb-2"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                                <div class="mb-3 wares_title h-100">' + wares_cat_name + ' <span class="">' + data[i]['title'] + '</span></div>\n\
                                 </div>\n\
                                 </a>\n\
                                 </div>\n\

@@ -72,7 +72,7 @@
                                                 </div> 
                                                 <div class="col-md-6 text-right">
                                                     <p><a class="text-blue re_password_link" href="javascript:void(0)">Забыли пароль?</a></p>
-                                                </div> 
+                                                </div>  
 
 
                                             </div>
@@ -84,9 +84,9 @@
                                             <div class="mb-4 text-center">
                                                 <div style="font-size: 0.8rem;margin-bottom: 0.2rem;">авторизация с помощью</div>
 
-                                                <script src="//ulogin.ru/js/ulogin.js<?= $_SESSION['rand'] ?>"></script>
-                                                <div id="uLogin993aba3c" data-ulogin="display=panel;fields=first_name,last_name,email;theme=flat;providers=google,vkontakte,odnoklassniki,mailru,facebook;hidden=yandex,twitter,livejournal,openid,lastfm,linkedin,liveid,soundcloud,steam,flickr,uid,youtube,webmoney,foursquare,tumblr,googleplus,vimeo,wargaming,instagram;redirect_uri=https%3A%2F%2Fwww.edgardzaycev.com%2Fauth%2F%3Fs_login%3D273456781"></div>
-
+                                                <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
+                                                <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
+                                                    
                                             </div>
                                             <div class="text-right" style="margin-top: 3rem;font-size: 1rem;">
                                                 Нет учетной записи <a class="text-blue" href="/auth/?registrations">Регистрация</a>
