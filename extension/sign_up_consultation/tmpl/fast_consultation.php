@@ -15,7 +15,7 @@
                             <input type="text" class="form-control fast_consultation_fio" placeholder="Имя" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control fast_consultation_email" placeholder="Адес электронной почты" required>
+                            <input type="text" class="form-control fast_consultation_email" placeholder="Адрес электронной почты" required>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control fast_consultation_name_phone" placeholder="Телефон" required>

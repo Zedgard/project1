@@ -71,6 +71,8 @@ class user extends \project\extension {
 //                    . "left join `zay_roles_users` ru on ru.user_id=u.id "
 //                    . "left join `zay_roles` r on r.id=ru.role_id ";
             $data = $this->getSelectArray($select, $where_array, 0);
+            //  echo "{$select}";
+            // $data = array();        
         }
         return $data;
     }

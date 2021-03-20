@@ -85,7 +85,9 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                                     $(obj).find('.form_result').append(result['success_text']);
                                 }
                             }
-                            $(obj).find('.form_result').show(200);
+                            if(result['success_text'].length > 0 || (!!result['errors'] && result['errors'].length > 0)){
+                                $(obj).find('.form_result').show(200);
+                            }
                             // Выполнить втроенную функцию
                             func(result);
                             // Выполнить переадресацию
