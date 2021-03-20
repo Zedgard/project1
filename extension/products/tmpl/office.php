@@ -107,7 +107,7 @@
                                 <a href="?wares_id=' + data[i]['id'] + '">\n\
                                 <div class="card item p-4 p-2 h-100 text-center">\n\
                                 <span class="class_category_lbl opacity50" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['wcc_title'] + '</span>\n\
-                                <div class="mb-2"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
+                                <div class="mb-2"><img src="' + data[i]['images'] + '" style="max-width: 100%;max-height: 160px;"/></div>\n\
                                 <div class="mb-3 wares_title h-100">' + wares_cat_name + ' <span class="">' + data[i]['title'] + '</span></div>\n\
                                 </div>\n\
                                 </a>\n\

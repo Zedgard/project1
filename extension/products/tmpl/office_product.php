@@ -4,35 +4,97 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card1 card-default1">
-            <div class="mb-4 webinar_head_bg">
+            <div class="mb-4">
+                <div class="row webinar_head_bg pt-3 pb-3">
+                    <div class="col-md-3">
+                        <div class="webinar_head_logo2 mb-2 text-center">
+                            <img src="<?= $wares_info['images'] ?>" class="webinar_head_logo_img mt-2"/>    
+                        </div>
+                    </div>
+                    <div class="col-md-9 p-5">
+                        <div class="webinar_head_title2 mb-4">
+                            <div class="h2"><?= $wares_info['title'] ?></div>
+                        </div>
+                        <div class="webinar_head_file2 mb-3">
+                            <div>
+                                <?
+                                if (strlen($wares['url_file']) > 0) {
+                                    $file_type = array_reverse(explode('.', $wares['url_file']))[0];
+                                    if ($file_type == 'mp3') {
+                                        ?>
+
+                                        <div class="player-block float-left">
+                                            <div id="calamansi-player-<?= $wares['id'] ?>">
+                                                Загрузка плеера... 
+                                            </div>
+                                        </div>
+                                        <script>
+                                            Calamansi.autoload();
+                                            // document.getElementById('full-demo-player')
+                                            //document.querySelector('#calamansi-player-<?= $wares['id'] ?>')
+                                            new Calamansi(
+                                                    document.querySelector('#calamansi-player-<?= $wares['id'] ?>'), {
+                                                skin: '/assets/plugins/calamansi/skins/basic_download2',
+                                                playlists: {
+                                                    'Classics': [
+                                                        {
+                                                            source: '<?= $wares['url_file'] ?>',
+                                                        }
+                                                    ],
+                                                },
+                                                defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
+                                            });
+                                            //player.destroy();
+                                        </script>
+                                        <div style="clear: both;height: 1rem;"></div>
+                                        <?
+                                    } else {
+                                        ?>
+                                        <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-primary">Скачать файлы</a>
+                                        <?
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <div class="webinar_head_articul">
+                            Артикул: <span><?= $wares_info['articul'] ?></span>
+                        </div>
+                    </div>
+                </div>
+
                 <?
                 if (strlen($wares_info['images']) > 0):
                     ?>
-                    <div class="webinar_head_logo">
+                    <div class="webinar_head_logo" style="display: none;">
                         <img src="<?= $wares_info['images'] ?>" class="webinar_head_logo_img"/>    
                     </div>
-                    <div class="webinar_head_title">
+                    <div class="webinar_head_title" style="display: none;">
                         <?= $wares_info['title'] ?>
                     </div>
-                    <div class="webinar_head_articul">
+                    <div class="webinar_head_articul" style="display: none;">
                         Артикул: <span><?= $wares_info['articul'] ?></span>
                     </div>
-                    <div class="webinar_head_file">
+                    <div class="webinar_head_file" style="display: none;">
                         <div class="mt-2">
                             <?
                             if (strlen($wares['url_file']) > 0) {
                                 $file_type = array_reverse(explode('.', $wares['url_file']))[0];
                                 if ($file_type == 'mp3') {
                                     ?>
+
                                     <div class="player-block float-left">
-                                        <div id="calamansi-player-1">
-                                            Загрузка плеера...
+                                        <div id="calamansi-player-<?= $wares['id'] ?>">
+                                            Загрузка плеера... 
                                         </div>
                                     </div>
                                     <script>
-                                        // Calamansi.autoload();
-                                        new Calamansi(document.querySelector('#calamansi-player-1'), {
-                                            skin: '/assets/plugins/calamansi/skins/basic',
+                                        Calamansi.autoload();
+                                        // document.getElementById('full-demo-player')
+                                        //document.querySelector('#calamansi-player-<?= $wares['id'] ?>')
+                                        new Calamansi(
+                                                document.querySelector('#calamansi-player-<?= $wares['id'] ?>'), {
+                                            skin: '/assets/plugins/calamansi/skins/basic_download2',
                                             playlists: {
                                                 'Classics': [
                                                     {
@@ -42,12 +104,8 @@
                                             },
                                             defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
                                         });
+                                        //player.destroy();
                                     </script>
-                                    <!--
-                                    <span id="player" class="calamansi" data-skin="path/to/skins/in-text"
-                                          data-source="<?= $wares['url_file'] ?>">Воспроизвести <?= $file_type ?> фаил</span>
-                                    -->
-                                    <a href="<?= $wares['url_file'] ?>" target="_blank" class="btn btn-light float-left ml-3" title="Скачать"><i class="fas fa-upload"></i></a>
                                     <div style="clear: both;height: 1rem;"></div>
                                     <?
                                 } else {
@@ -71,7 +129,7 @@
             <div style="height: 10px;"></div>
             <div class="series_block_main">
                 <div class="row mb-5 clearfix">
-                    <div class="col-12 ulli">
+                    <div class="col-12 wares_info_descr ulli">
                         <?= $wares_info['descr'] ?>
                     </div>
                 </div>

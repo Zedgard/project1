@@ -89,14 +89,14 @@ include 'form_edit_item.php';
                     <span><a href="javascript:void(0)" elem="' + data[i]['id'] + '" position="' + position + '" class="btn btn-outline-dark btn-sm position_down"><i class="mdi mdi-chevron-down"></i></a></span>\n\
                     &nbsp;&nbsp;&nbsp; <a href="' + data[i]['link'] + '" class="mr-2" target="_blank">' + data[i]['title'] + '</a> | <span class="ml-2">' + data[i]['link'] + '</span> \n\
                     </div>');
-            init_set_position(data[i]['id'], position);
+
             item_datas.push(data[i]);
             if (data[i]['parent_items'].length > 0) {
                 append_menu_items(data[i]['parent_items']);
             }
             position++;
         }
-
+        init_set_position(0, 0);
     }
 
 
@@ -197,7 +197,9 @@ include 'form_edit_item.php';
                                 "delete_item": elem
                             },
                             function (e) {
-                                if (e['success'] == '0') {
+                                if (e['success'] == '1') {
+                                    init_form_list_items();
+                                } else {
                                     alert("Ошибка удаления");
                                 }
                             });
@@ -248,23 +250,32 @@ include 'form_edit_item.php';
                 });
     }
 
+    /**
+     * Меняет позиции 
+     
+     * @param {type} item_id
+     * @param {type} position
+     * @param {type} metod
+     * @returns {undefined} */
     function init_set_position(item_id, position, metod) {
         if (metod == undefined) {
             metod = 0;
         } else {
             metod = 1;
         }
-        sendPostLigth('/jpost.php?extension=menu',
-                {
-                    "set_position": position,
-                    "item_id": item_id,
-                    "menu_id": menu_items
-                },
-                function (e) {
-                    if (metod == 1) {
-                        init_form_list_items();
-                    }
-                });
+        if (item_id > 0) {
+            sendPostLigth('/jpost.php?extension=menu',
+                    {
+                        "set_position": position,
+                        "item_id": item_id,
+                        "menu_id": menu_items
+                    },
+                    function (e) {
+                        if (metod == 1) {
+                            init_form_list_items();
+                        }
+                    });
+        }
         $(".position_up").unbind('click').click(function () {
             var elem = $(this).attr("elem");
             var position = Number($(this).attr("position")) - 1;

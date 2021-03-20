@@ -107,3 +107,12 @@ if (isset($_POST['set_position'])) {
         
     }
 }
+
+// Удаление элемента меню
+if(isset($_POST['delete_item'])){
+    if($items->delete_menu_item($_POST['delete_item'])){
+        $result = array('success' => 1, 'success_text' => 'Выполнено');
+    }else{
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}

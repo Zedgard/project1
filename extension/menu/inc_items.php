@@ -26,6 +26,7 @@ class menu_item extends \project\extension {
             $data = $this->getSelectArray($querySelect, array($menu_id));
             if (count($data) > 0) {
                 for ($i = 0; $i < count($data); $i++) {
+                    $this->set_position($menu_id, $data[$i]['id'], $i);
                     $data[$i]['parent_items'] = $this->menu_items_parent_list($menu_id, $data[$i]['id']);
                 }
             }
@@ -150,7 +151,7 @@ class menu_item extends \project\extension {
     public function index_menu_items_list($menu_id) {
         $buffer = array();
         if ($menu_id > 0) {
-            $querySelect = "SELECT * FROM `zay_menu_items` it "
+            $querySelect = "SELECT it.* FROM `zay_menu_items` it "
                     . "left join zay_roles r on r.id=it.role "
                     . "WHERE it.`menu_id`='?' and it.`parent_id`='0' order by it.`position` ASC";
             $data = $this->getSelectArray($querySelect, array($menu_id));
@@ -163,8 +164,8 @@ class menu_item extends \project\extension {
                 for ($i = 0; $i < count($data); $i++) {
                     if ($data[$i]['role_privilege']==0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
                         $buffer[] = '<li class="dropdown">';
-                        $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '">' . $data[$i]['title'] . '</a>';
-                        $buffer[] = $this->index_menu_items_parent_list($menu_id, $data[$i]['id']);
+                        $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '" elm="' . $data[$i]['id'] . '">' . $data[$i]['title'] . '</a>';
+                        $buffer[] = $this->index_menu_items_parent_list($data[$i]['menu_id'], $data[$i]['id']);
                         $buffer[] = '</li>';
                     }
                 }
@@ -182,7 +183,8 @@ class menu_item extends \project\extension {
         $buffer = array();
         if ($menu_id > 0) {
             $querySelect = "SELECT * FROM `zay_menu_items` it WHERE it.`menu_id`='?' and it.`parent_id`='?' order by it.`position` ASC";
-            $data = $this->getSelectArray($querySelect, array($menu_id, $parent_id));
+            $data = $this->getSelectArray($querySelect, array($menu_id, $parent_id), 0);
+            //echo count($data);
             if (count($data) > 0) {
                 for ($i = 0; $i < count($data); $i++) {
                     if ($data[$i]['role_privilege']==0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
