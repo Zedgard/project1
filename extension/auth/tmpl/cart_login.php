@@ -48,8 +48,11 @@
                     <div class="mb-4 text-right">
                         <div style="font-size: 0.8rem;margin: 0.3rem;">авторизация с помощью</div>
 
+                        <a href="<?= $google_link ?>"><img src="/assets/img/ui-icons/google_32.png"/></a>
                         <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
                         <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
+                        <a href="<?= $facebook_link ?>"><img src="/assets/img/ui-icons/facebook_32.png"/></a>
+
 
                     </div>
                 </div>
