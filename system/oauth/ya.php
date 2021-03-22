@@ -12,14 +12,14 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 $p_user = new \project\user();
 $p_auth = new \project\auth();
 
-$redirect_uri = 'https://edgardzaycev.com/auth/?oauth=ya'; // Адрес сайта
+$redirect_uri_ya = 'https://edgardzaycev.com/auth/?oauth=ya'; // Адрес сайта
 //$ya_client_id = '2364a38f027c4ae284253c2c2e8791b2'; // ID приложения
 //$ya_client_secret = 'ed4e37ffd59b4bbbbc9515972285cf20'; // Защищённый ключ 
 
 if (!isset($_GET['oauth']) && empty($_GET['code'])) {
     $params = array(
         'client_id' => $ya_client_id,
-        'redirect_uri' => $redirect_uri,
+        'redirect_uri' => $redirect_uri_ya,
         'response_type' => 'code',
         'state' => '123'
     );

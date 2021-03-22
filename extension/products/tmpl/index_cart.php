@@ -45,16 +45,18 @@
                         $first = '';
                     } else {
                         $first = 'active';
-                        foreach ($productData['products_wares_info'] as $value):
-                            if (strlen($value['images']) > 0) {
-                                ?>
-                                <div class="carousel-item text-center <?= $first ?>">
-                                    <a href="<?= $value['images'] ?>" class="fancybox"><img class="d-block w-100" style="background-color: #CCCCCC;" src="<?= $value['images'] ?>" ></a>
-                                </div>
-                                <?
-                                $first = '';
+                        if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
+                            foreach ($productData['products_wares_info'] as $value) {
+                                if (strlen($value['images']) > 0) {
+                                    ?>
+                                    <div class="carousel-item text-center <?= $first ?>">
+                                        <a href="<?= $value['images'] ?>" class="fancybox"><img class="d-block w-100" style="background-color: #CCCCCC;" src="<?= $value['images'] ?>" ></a>
+                                    </div>
+                                    <?
+                                    $first = '';
+                                }
                             }
-                        endforeach;
+                        }
                     }
                     ?>
                 </div>
@@ -130,13 +132,15 @@
                 <div class="col-md-12">
                     <h3>Товары</h3>
                     <?
-                    foreach ($productData['products_wares_info'] as $value):
-                        ?>
-                        <div class="mb-2 ml-3">
-                            <i class="psmark"></i><?= $value['title'] ?>
-                        </div>
-                        <?
-                    endforeach;
+                    if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
+                        foreach ($productData['products_wares_info'] as $value) {
+                            ?>
+                            <div class="mb-2 ml-3">
+                                <i class="psmark"></i><?= $value['title'] ?>
+                            </div>
+                            <?
+                        }
+                    }
                     ?>
                 </div>
             </div>
@@ -164,7 +168,7 @@
                 </div>
             </div> 
 
-            
+
 
         </div>
     </div>
@@ -270,7 +274,7 @@
                                             /*
                                              * Product Images
                                              */
-                                            $image = $productsFilterArray[$i]['images_str'];//$c_product->checkImageFile($productsFilterArray[$i]['images_str']);
+                                            $image = $productsFilterArray[$i]['images_str']; //$c_product->checkImageFile($productsFilterArray[$i]['images_str']);
                                             if (strlen($image) > 0) {
                                                 ?>
                                                 <div class="<?= $sclass_boot ?> align-self-center text-center w-100 <?= ($ii > 0) ? $scaleN : $scale ?>">

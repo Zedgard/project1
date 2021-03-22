@@ -44,7 +44,7 @@ if (isset($_POST['authorization'])) {
 
         $result = array('success' => 1, 'success_text' => '', 'action' => $url, 'action_time' => '0');
     } else {
-        $result = array('success' => 0, 'success_text' => 'Ошибка авторизации', 'action_time' => '0');
+        $result = array('success' => 0, 'success_text' => '', 'action_time' => '0');
     }
 }
 /*
@@ -52,22 +52,24 @@ if (isset($_POST['authorization'])) {
  */
 if (isset($_POST['registration'])) {
     if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
-        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес', 'action' => '/auth/');
+        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес', 'action' => '/auth/', 'action_time' => '20');
     }
 }
 /*
  * Выход
  */
 if (isset($_POST['logout'])) {
-    if ($_SESSION['user']['other'] == 1) {
+    if ($_SESSION['user']['other'] == 1 && isset($_SESSION['user']['other_info'])) {
         $_SESSION['user']['info'] = $_SESSION['user']['other_info'];
-        $_SESSION['user']['other'] == 0;
+        $_SESSION['user']['other'] = 0;
         $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/admin/', 'action_time' => '0');
     } else {
         $auth->unset_cookie();
         unset($_SESSION['user']);
+        unset($_SESSION['user']['other_info']);
         $result = array('success' => 1, 'success_text' => 'Вышли из системы', 'action' => '/', 'action_time' => '0');
     }
+    //print_r($_SESSION['user']);
 }
 /*
  * Восстановление пароля

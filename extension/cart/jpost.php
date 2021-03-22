@@ -278,7 +278,8 @@ if (isset($_POST['set_cloudpayments'])) {
                         . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
                 if ($sqlLight->query($queryPay, array(($max_id), 'cp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, ''), 0)) {
                     foreach ($_SESSION['cart']['itms'] as $key => $value) {
-                        $product_id = $max_id;
+                        //$product_id = $max_id;
+                        $product_id = $value['id'];
                         $data_array['pay_id'] = $product_id;
                         if ($product_id > 0) {
                             if ($value['price_promo'] > 0) {

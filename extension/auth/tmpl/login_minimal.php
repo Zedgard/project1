@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="card-body p-5">
- 
+
                                 <h4 class="text-dark mb-5">Авторизация</h4>
                                 <form id="authorization" action="/jpost.php?extension=auth&url=/shop/cart/" method="POST">
                                     <div class="row">
@@ -84,9 +84,11 @@
                                             <div class="mb-4 text-center">
                                                 <div style="font-size: 0.8rem;margin-bottom: 0.2rem;">авторизация с помощью</div>
 
+                                                <a href="<?= $google_link ?>"><img src="/assets/img/ui-icons/google_32.png"/></a>
                                                 <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
                                                 <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
-                                                    
+                                                <a href="<?= $facebook_link ?>"><img src="/assets/img/ui-icons/facebook_32.png"/></a>
+
                                             </div>
                                             <div class="text-right" style="margin-top: 3rem;font-size: 1rem;">
                                                 Нет учетной записи <a class="text-blue" href="/auth/?registrations">Регистрация</a>

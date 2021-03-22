@@ -54,7 +54,7 @@ if (isset($_GET['ya_payment_true'])) {
                 <br/>
                 <hr/>
             </div>
-            
+
             <div class="col-lg-12 pay_result form_result pt-5 pb-5 font-size-20">
 
             </div>
@@ -66,7 +66,7 @@ if (isset($_GET['ya_payment_true'])) {
     </div>
     <script>
         $(document).ready(function () {
-            
+
             $(".pay_check").click(function () {
                 $(".form_result").html("");
                 sendPostLigth('/check_pay.php', {"check_pay": 'ya'}, function (e) {
@@ -78,7 +78,7 @@ if (isset($_GET['ya_payment_true'])) {
                     }
                 });
             });
-            
+
             sendPostLigth('/check_pay.php', {"check_pay": 'ya'}, function (e) {
                 $(".form_result").html(e['success_text']);
                 if (e['success'] == '1') {
@@ -109,9 +109,9 @@ if (isset($_GET['ya_payment_true'])) {
                         'checkout': {
                             'actionField': {'step': 1},
                             'products': [{
-                                    "name": product_info_title, 
-                                    "price": product_info_price, 
-                                    "quantity": 1 
+                                    "name": product_info_title,
+                                    "price": product_info_price,
+                                    "quantity": 1
                                 },
                                 {
                                     "name": product_info_title,
@@ -126,7 +126,7 @@ if (isset($_GET['ya_payment_true'])) {
                     'gtm-ee-event-non-interaction': 'False',
                 });
             }
-            
+
         });
     </script>
     <?
@@ -204,7 +204,12 @@ if ($form_show == 0) {
     if (strlen($p_user->isClientEmail()) > 0) {
         $email = $p_user->isClientEmail();
     }
-    //include 'ya.php';
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/ya.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/facebook.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/google.php';
+    
     include 'tmpl/index.php';
 } else {
     if (count($_SESSION['cart']['itms']) > 0) {

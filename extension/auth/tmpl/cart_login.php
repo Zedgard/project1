@@ -30,7 +30,7 @@
                 <div class="fl_title">Ваши данные</div>
                 <div class="fl_info">
                     <div>Для заказа товаров требуется регистрация</div>
-                    <div>Если вы уже зарегистрированы, войдите в сою учетную запись</div>
+                    <div>Если вы уже зарегистрированы, войдите в свою учетную запись</div>
                 </div>
                 <div style="height: 35px;"></div>
                 <div class="fl_input_title">Контактный телефон*</div>
@@ -48,9 +48,12 @@
                     <div class="mb-4 text-right">
                         <div style="font-size: 0.8rem;margin: 0.3rem;">авторизация с помощью</div>
 
+                        <a href="<?= $google_link ?>"><img src="/assets/img/ui-icons/google_32.png"/></a>
                         <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
                         <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
-                        
+                        <a href="<?= $facebook_link ?>"><img src="/assets/img/ui-icons/facebook_32.png"/></a>
+
+
                     </div>
                 </div>
                 <div class="fl_input_title">Пароль*</div>
@@ -66,6 +69,10 @@
                         Я согласен с условиями и положениями
                     </label>
                 </div>
+                <div class="form_result" style="display: none;">
+
+                </div>
+                <input type="hidden" name="registration" />  
                 <button type="submit" class="btn btn-lg btn-primary btn-block mt-4 mb-4" style="margin-left: 1rem;">Отправить</button>
             </div>
         </div>
@@ -117,7 +124,7 @@
 
                                 <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
                                 <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
-                                
+
                             </div>
                             <div class="text-right" style="margin-top: 3rem;font-size: 1rem;">
                                 Нет учетной записи <a class="text-blue" href="./">Регистрация</a>

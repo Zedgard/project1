@@ -66,11 +66,13 @@ class auth extends \project\user {
     public function authorization($email, $password, $set_cookie = 0) {
         global $lang;
         if (strlen($email) > 2 && strlen($password) > 2) {
-
-//            $sqlLight = new \project\sqlLight();
+            $sqlLight = new \project\sqlLight();
 //            $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and u.`u_pass`='?' and `active`=1";
 //            $users = $sqlLight->queryList($query, array($email, $email, $pass_hash));
             $user = $this->get_user_login($email, $email);
+//            if(count($user) == 0){
+//                $_SESSION['errors'][] = 'Пользователь не зарегистрирован';
+//            }
 
             // Если не получилось авторизироваться проверим есть ли регистрация и не активная запись
             if (!isset($user['id'])) {
@@ -81,7 +83,8 @@ class auth extends \project\user {
                     $_SESSION['errors'][] = 'Учетная запиь не активирована!';
                     return false;
                 } else {
-                    $_SESSION['errors'][] = 'Не найдена учетная запись, пожалуйста зарегистируйтесь в системе!';
+                    $_SESSION['errors'][] = 'Не найдена учетная запись, пожалуйста зарегистируйтесь в системе!<br/>'
+                            . '<a class="text-blue" href="/auth/?registrations">Регистрация</a>';
                     return false;
                 }
             }

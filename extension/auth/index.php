@@ -92,5 +92,8 @@ if (isset($_GET['s_login'])) {
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/ya.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
-// Отображаем фоорму
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/facebook.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/google.php';
+
+// Отображаем форму
 include 'tmpl/login.php';
