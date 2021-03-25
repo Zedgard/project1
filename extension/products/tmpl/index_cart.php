@@ -127,21 +127,25 @@
             </div>
             <!-- cart button end -->
 
-            <!-- wares titles -->
+            <!-- wares titles --> 
             <div class="row mb-3 product_wares_lest_block">
                 <div class="col-md-12">
-                    <h3>Товары</h3>
-                    <?
-                    if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
-                        foreach ($productData['products_wares_info'] as $value) {
-                            ?>
-                            <div class="mb-2 ml-3">
-                                <i class="psmark"></i><?= $value['title'] ?>
-                            </div>
-                            <?
+                    <span class="product_wares_hover">
+                        <span class="product_wares product_wares_border">Содержание товара</span> <i class="fas fa-question-circle product_wares" style="padding-top: 0.5rem;padding-left: 10px;position: absolute;"></i>
+                    </span>
+                    <div class="box_shadow product_wares_show" opacity="0">
+                        <?
+                        if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
+                            foreach ($productData['products_wares_info'] as $value) {
+                                ?>
+                                <div class="mb-2 ml-3">
+                                    <i class="psmark"></i><?= $value['title'] ?>
+                                </div>
+                                <?
+                            }
                         }
-                    }
-                    ?>
+                        ?>
+                    </div>
                 </div>
             </div>
             <!-- wares titles end  -->

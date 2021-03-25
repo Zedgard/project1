@@ -37,7 +37,7 @@ if (!$user->isEditor()) {
                     <p><a href="items/products.html" target="iframe_a">Продукты</a></p>
                     <p><a href="items/wares.html" target="iframe_a">Товары</a></p>
                     <p>Сайт</p> 
-                    <p><a href="items/pages.html" target="iframe_a">Страницы</a></p>
+                    <p><a href="items/pages.html" target="iframe_a" style="font-weight: bold;">Страницы сайта</a></p>
                     <p><a href="items/menu.html" target="iframe_a">Меню</a></p>
                     <p><a href="items/users.html" target="iframe_a">Пользователи</a></p>
                     <p><a href="items/themes.html" target="iframe_a">Шаблоны</a></p>
