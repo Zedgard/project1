@@ -3,7 +3,7 @@
     var products_id = "<?= $productData['id'] ?>";
 </script>
 <div class="container-fluid">
-    <div product_id="<?= $productData['id'] ?>" class="row productElm product_info">
+    <div product_id="<?= $productData['id'] ?>" class="row mb-3 productElm product_info">
         <div class="col-md-5 mb-4">
 
             <!-- carousel -->
@@ -84,7 +84,7 @@
                 <?
             }
             ?>
-            <div class="mb-5">
+            <div class="mb-3">
                 <div class="mb-1">Поделиться в соцсетях</div>
                 <?
                 // Использовал сервис
@@ -94,13 +94,27 @@
                 <div class="ya-share2" data-curtain data-shape="round" data-services="vkontakte,facebook,odnoklassniki,telegram,viber,whatsapp"></div>
             </div>
 
-
             <!-- Price  -->
             <div class="row mb-3">
-                <div class="col-md-4 text-left">
-
+                <div class="col-md-6 text-left">
+                    <span class="product_wares_hover">
+                        <span class="product_wares product_wares_border">Содержание товара</span> <i class="fas fa-question-circle product_wares" style="padding-top: 0.5rem;padding-left: 10px;"></i>
+                    </span>
+                    <div class="box_shadow product_wares_show" opacity="0">
+                        <?
+                        if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
+                            foreach ($productData['products_wares_info'] as $value) {
+                                ?>
+                                <div class="mb-2 ml-3">
+                                    <i class="psmark"></i><?= $value['title'] ?>
+                                </div>
+                                <?
+                            }
+                        }
+                        ?>
+                    </div>
                 </div>
-                <div class="col-md-8 text-right">
+                <div class="col-md-6 text-right">
                     <? if ($productData['price_promo'] > 0): ?>
                         <div style="clear: both;">
                             <div class="product_old_price float-right"><?= $productData['price'] ?></div>
@@ -127,23 +141,7 @@
             </div>
             <!-- cart button end -->
 
-            <!-- wares titles -->
-            <div class="row mb-3 product_wares_lest_block">
-                <div class="col-md-12">
-                    <h3>Товары</h3>
-                    <?
-                    if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
-                        foreach ($productData['products_wares_info'] as $value) {
-                            ?>
-                            <div class="mb-2 ml-3">
-                                <i class="psmark"></i><?= $value['title'] ?>
-                            </div>
-                            <?
-                        }
-                    }
-                    ?>
-                </div>
-            </div>
+
             <!-- wares titles end  -->
 
             <div class="row mt-3" style="display: none;">
@@ -176,8 +174,6 @@
         <div class="col-md-12">
             <h2 class="mb-3" style="font-size: 2.3rem;font-weight: 700;color: #000000;">Описание:</h2>
             <div class="product_descr ulli"><?= $productData['desc'] ?></div>
-
-
         </div>
     </div>
 

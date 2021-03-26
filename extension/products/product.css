@@ -370,7 +370,7 @@
 .cart_product_go_card{
     display: flex;
     padding: 1rem 1rem;
-    font-weight: bold;
+    font-weight: bold; 
 }
 .cart_product_go_card i{
     display: flex;
@@ -380,6 +380,44 @@
 .cart_product_remove{
     padding: 0.4rem 0.4rem;
 }
+.box_shadow{
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.2);
+}
+.product_wares_border{
+    border-bottom: 2px dashed #418e99;
+}
+.product_wares{  
+    font-size: 1.4rem;
+    color: #418e99;
+}
+.product_wares:hover{
+    cursor: pointer; 
+}
+.product_wares_show{
+    width: 75%;
+    padding: 1.2rem;
+    background-color: #FFFFFF;
+    margin-top: 0.3rem; 
+    visibility: hidden;
+    position: absolute;
+    z-index: 99;
+    opacity: 0;
+    -webkit-transition: all 0.3s linear;;
+    -moz-transition: all 0.3s linear;;
+    -o-transition: all 0.3s linear;;
+    transition: all 0.3s linear;
+}
+.product_wares_hover:hover + .product_wares_show{
+    opacity: 1;
+    visibility: visible;
+}
+.product_wares_show:hover{
+    opacity: 1;
+    visibility: visible;
+}
+
 
 /* Корректировка для мобильной версии */
 @media (max-width: 768px) {
@@ -392,7 +430,7 @@
     }
     .cart_product_add{
         font-size: 1.4rem;
-        padding: 0.8rem 2.2rem;
+        padding: 0.8rem 1.6rem;
     }
     .cart_product_go_card{
         font-size: 1.3rem;
@@ -497,9 +535,6 @@
 }
 .btn_category_controll_cart:hover{
     cursor: pointer;
-}
-.product_wares_lest_block{
-    margin-top: -9rem;
 }
 
 /* ------------------------------------------------------------- */
