@@ -388,18 +388,18 @@
 .product_wares_border{
     border-bottom: 2px dashed #418e99;
 }
-.product_wares{
-    font-size: 2rem;
+.product_wares{  
+    font-size: 1.4rem;
     color: #418e99;
 }
 .product_wares:hover{
-    cursor: pointer;
+    cursor: pointer; 
 }
 .product_wares_show{
     width: 75%;
     padding: 1.2rem;
     background-color: #FFFFFF;
-    margin-top: 0.3rem;
+    margin-top: 0.3rem; 
     visibility: hidden;
     position: absolute;
     z-index: 99;
@@ -430,7 +430,7 @@
     }
     .cart_product_add{
         font-size: 1.4rem;
-        padding: 0.8rem 2.2rem;
+        padding: 0.8rem 1.6rem;
     }
     .cart_product_go_card{
         font-size: 1.3rem;
@@ -535,9 +535,6 @@
 }
 .btn_category_controll_cart:hover{
     cursor: pointer;
-}
-.product_wares_lest_block{
-    margin-top: -9rem;
 }
 
 /* ------------------------------------------------------------- */
