@@ -12,7 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 $p_user = new \project\user();
 $p_auth = new \project\auth();
 
-$redirect_uri = 'https://edgardzaycev.com/auth/?oauth=vk'; // Адрес сайта
+$redirect_uri_vk = 'https://edgardzaycev.com/auth/?oauth=vk'; // Адрес сайта
 
 
 if (!isset($_GET['oauth']) && !isset($_GET['code'])) {
@@ -22,7 +22,7 @@ if (!isset($_GET['oauth']) && !isset($_GET['code'])) {
     //echo "vk_client_secret: {$vk_client_secret}<br/>\n";
 
     $params = ['client_id' => $vk_client_id,
-        'redirect_uri' => $redirect_uri,
+        'redirect_uri' => $redirect_uri_vk,
         'scope' => 'email',
         'response_type' => 'code']; // Массив данных, который нужно передать для ВК содержит ИД приложения код, ссылку для редиректа и запрос code для дальнейшей авторизации токеном
 
@@ -42,7 +42,7 @@ if (isset($_GET['oauth']) && $_GET['oauth'] = 'vk') {
             'client_id' => $vk_client_id,
             'client_secret' => $vk_client_secret,
             'code' => $_GET['code'],
-            'redirect_uri' => $redirect_uri
+            'redirect_uri' => $redirect_uri_vk
         ];
         $token = json_decode(file_get_contents('https://oauth.vk.com/access_token' . '?' . urldecode(http_build_query($params))), true);
 

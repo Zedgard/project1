@@ -56,6 +56,12 @@ $vk_client_secret = 'AoPw553vjpLulChtsB3m'; // Защищённый ключ
 $ya_client_id = '2364a38f027c4ae284253c2c2e8791b2'; // ID приложения
 $ya_client_secret = 'ed4e37ffd59b4bbbbc9515972285cf20'; // Защищённый ключ 
  
+$facebook_client_id = '289482655951459';
+$facebook_client_secret = '8a629cd6c0fab1e17c615940f4c13444';
+
+$google_client_id = '192067625288-l5aoj65vau2r80vq47e38br6jrnk9h3u.apps.googleusercontent.com';
+$google_client_secret = 'dGjJcbX7dxTpCjPdotC3u6Rx';
+
 /*
  * Доступ к API token
  */

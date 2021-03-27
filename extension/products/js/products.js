@@ -12,7 +12,7 @@ $.fn.isInViewport = function () {
 
 $(document).ready(function () {
 
-
+    
 
     setInterval(function () {
         var filter = $(".btn_category_controll_active").attr("data-filter");

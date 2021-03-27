@@ -6,6 +6,7 @@
 //var productMenuShow = 0;
 var w = 0;
 var site_scrollY = 0;
+
 $(document).ready(function () {
     /*
      * Остановка видео
