@@ -41,9 +41,9 @@ $(document).ready(function () {
     }, 300);
 
 
-    $('.carousel').carousel({
-        interval: 2000
-    })
+//    $('.carousel').carousel({
+//        interval: 2000
+//    })
 
     $("img.lazyload").lazyload();
     /*

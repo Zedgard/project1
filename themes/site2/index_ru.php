@@ -125,7 +125,7 @@
 
         <!--Bootstrap Core-->
         <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/bootstrap5/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--to view items on reach-->
         <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
@@ -160,10 +160,6 @@
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
 
-        <!--Revolution SLider-->
-        <script src="/themes/site1/js/revolution/jquery.themepunch.tools.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/jquery.themepunch.revolution.min.js<?= $_SESSION['rand'] ?>"></script>
-        <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
         <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
