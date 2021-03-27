@@ -56,9 +56,9 @@
     <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">
 
         <?= $config->getConfigParam('site_development') ?>
-
+  
         <?= $_SESSION['message']['text'] ?>
-
+ 
         <!--PreLoader-->
         <!--
         <div class="loader">

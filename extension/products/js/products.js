@@ -12,7 +12,7 @@ $.fn.isInViewport = function () {
 
 $(document).ready(function () {
 
-
+    
 
     setInterval(function () {
         var filter = $(".btn_category_controll_active").attr("data-filter");
@@ -41,9 +41,9 @@ $(document).ready(function () {
     }, 300);
 
 
-    $('.carousel').carousel({
-        interval: 2000
-    })
+//    $('.carousel').carousel({
+//        interval: 2000
+//    })
 
     $("img.lazyload").lazyload();
     /*
