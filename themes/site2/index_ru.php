@@ -56,7 +56,7 @@
         <script src="/assets/js/cart.js<?= $_SESSION['rand'] ?>"></script> 
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
     </head>  
-    <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">11111111111111111
+    <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">
         <?
         /*
         <!-- Google Tag Manager (noscript) -->
