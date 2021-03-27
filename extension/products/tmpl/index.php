@@ -10,11 +10,11 @@
 <div class="row">
     <div class="col-lg-12" style="background-color: #DEDEDE;height: 66px;"></div>
 </div>
-<div class="container" style="margin-top: -70px;">
-    <div class="row">
+<div class="container">
+    <div class="row" style="margin-top: -70px;">
         <div class="col-lg-2"></div>
         <div class="col-lg-10 p-3">
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <input type="text" value="<?= $_SESSION['product']['filter']['productSearchString'] ?>" class="form-control productSearchString" placeholder="Я ищу..." aria-label="Я ищу..." aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-light " type="button"><i class="fa fa-search"></i></button>
@@ -24,30 +24,29 @@
         </div>
     </div>
 
-    <div class="row mt-3 mb-3 bread">
+    <!-- мобильный вид -->
+    <div class="row mt-2 mb-1 bread d-block d-xl-none">
+        <div class="col-12">
+            <?= $page->bread_get() ?>
+        </div>
+    </div>
+    <!-- десктоп вид -->
+    <div class="row mt-2 mb-1 bread d-none d-xl-block" style="margin-left: -2.8rem;">
         <div class="col-12">
             <?= $page->bread_get() ?>
         </div>
     </div>
 
     <div class="row">
-
-        <?
-        /*
-         * Отображаем филтры
-         */
-        if (!isset($_GET['product'])) {
-            include_once 'index_filter.php';
-        }
-        ?>
-
-
-
         <?
         /*
          * Список продуктов
          */
         if (!isset($_GET['product'])) {
+            /*
+             * Отображаем филтры
+             */
+            include_once 'index_filter.php';
             ?>
             <div class="col-lg-10">
                 <!-- Sorted block -->    
@@ -71,8 +70,6 @@
                 </div>
 
                 <!-- Sorted block end -->    
-
-
 
 
                 <!-- product list -->
@@ -130,10 +127,11 @@
                                                 </div>    
                                                 <?
                                             } else {
+                                                $image = '/assets/img/no_tovar_bg.jpg';
                                                 ?>
                                                 <div class="<?= $sclass_boot ?> align-self-center  text-center w-100 <?= ($ii > 0) ? $scaleN : $scale ?>">
                                                     <a href="<?= urlRequestAddLink('product=' . $productsFilterArray[$i]['id']) ?>">
-                                                        <img data-src="/assets/img/no_tovar_bg.jpg" src="/assets/img/no_tovar_bg.jpg" class="lazyload waresListImagesStyle1" title="<?= $productsFilterArray[$i]['title'] ?>" />
+                                                        <img data-src="<?= $image ?>" src="/assets/img/no_tovar_bg.jpg" class="lazyload waresListImagesStyle1" title="<?= $productsFilterArray[$i]['title'] ?>" />
                                                     </a>
                                                 </div>
                                                 <?
@@ -142,16 +140,25 @@
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col-mb-12">
-                                                <? if ($productsFilterArray[$i]['price_promo'] > 0): ?>
+                                                <?
+                                                $product_price = 0;
+                                                if ($productsFilterArray[$i]['price_promo'] > 0) {
+                                                    $product_price = $productsFilterArray[$i]['price_promo'];
+                                                    ?>
                                                     <div style="clear: both;">
-                                                        <span class="init_price_val product_info_price" style="color:#FF0000;"><?= $productsFilterArray[$i]['price_promo'] ?></span>
+                                                        <span class="init_price_val product_info_price" style="color:#FF0000;"><?= $product_price ?></span>
                                                         <span class="wares_old_price" style="margin-left: 16px;"><span class="init_price_val"><?= $productsFilterArray[$i]['price'] ?></span> <i class="fa fa-ruble"></i></span>
                                                     </div>
-                                                <? else: ?>
+                                                    <?
+                                                } else {
+                                                    $product_price = $productsFilterArray[$i]['price'];
+                                                    ?>
                                                     <div style="clear: both;">
-                                                        <span class="init_price_val product_info_price"><?= $productsFilterArray[$i]['price'] ?></span> <i class="fa fa-ruble"></i>
+                                                        <span class="init_price_val product_info_price"><?= $product_price ?></span> <i class="fa fa-ruble"></i>
                                                     </div>
-                                                <? endif; ?>
+                                                    <?
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="row mt-1">
@@ -178,7 +185,7 @@
                                           </div>
                                           </div>
                                          */
-                                        ?>
+                                        ?> 
                                         <div class="row bd-highlight cart_product_button_bg">
                                             <div class="col-12">
                                                 <? if ($productsFilterArray[$i]['product_new'] == '1'): ?>
@@ -188,7 +195,10 @@
                                                         </svg>
                                                     </div>
                                                 <? endif; ?>
-                                                <div class="float-right">
+                                                <div class="float-right btn_product_list">
+                                                    <input type="hidden" name="product_title" class="info_product_title" value="<?= $productsFilterArray[$i]['title'] ?>" />
+                                                    <input type="hidden" name="product_title" class="info_product_price" value="<?= $product_price ?>" />
+                                                    <input type="hidden" name="product_title" class="info_product_img" value="<?= $image ?>" />
                                                     <a href="javascript:void(0)" class="btn btngreen cart_product_add" product_id="<?= $productsFilterArray[$i]['id'] ?>">В корзину</a>
                                                     <div class="btn-group">
                                                         <a href="/shop/cart/" class="btn btngreen-outline align-self-center cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;">В корзине</a>
@@ -226,6 +236,8 @@
 <div class="row">
     <div class="col-lg-12" style="height: 100px;"></div>
 </div>
+
+
 <script>
     var category_controll = '<?= $_SESSION['product']['filter']['category_controll'] ?>';
 </script>

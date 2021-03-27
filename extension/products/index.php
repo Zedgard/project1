@@ -119,6 +119,7 @@ if (isset($_GET['product'])) {
 //}
 
 include 'tmpl/index.php';
+include 'tmpl/go_cart_modal.php';
 
 if (isset($_GET['cart_clear'])) {
     $_SESSION['cart']['itms'] = array();

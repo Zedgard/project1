@@ -380,6 +380,9 @@
 .cart_product_remove{
     padding: 0.4rem 0.4rem;
 }
+.close{
+    font-size: 3rem;
+}
 
 /* Корректировка для мобильной версии */
 @media (max-width: 768px) {
@@ -420,7 +423,7 @@
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    z-index: 99999;
+    z-index: 99;
 }
 .product-menu-show i:active{
     background-color: #CCCCCC;

@@ -200,7 +200,6 @@ function move(elm, animate) {
     if (typeof animate == "undefined" || animate.length == 0) {
         animate = 300;
     }
-    //console.log('move: ' + elm);
     if (move_start == 0) {
         setTimeout(function () {
             //event.preventDefault();
@@ -209,7 +208,6 @@ function move(elm, animate) {
                 var top = $(elm).offset().top - (height / 2);
                 $('body,html').animate({scrollTop: top}, animate);
             } catch (exception) {
-                console.log('move');
             }
 
             move_start = 0;
@@ -474,6 +472,10 @@ function initCartCount() {
 function initCartProductAdd() {
     $(".cart_product_add").unbind('click').click(function () {
         var cart_product_id = $(this).attr('product_id');
+        // Информаия по товару
+        var cart_product_title = $(this).closest(".btn_product_list").find(".info_product_title").val();
+        var cart_product_img = $(this).closest(".btn_product_list").find(".info_product_img").val();
+
         var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");
         var product_info_title = $.trim(o.find(".product_info_title").html());
         var product_info_price = $.trim(o.find(".product_info_price").html());
@@ -504,11 +506,35 @@ function initCartProductAdd() {
         sendPostLigth('/jpost.php?extension=cart', {"cart_product_add": 1, "cart_product_id": cart_product_id}, function (e) {
             //$(".cart_product_add").html("");
             //initCartCount();
+            open_cart_modal(cart_product_title, cart_product_img);
             initCartArray();
         });
     }
     );
 }
+
+/* 
+ * Модальное окно
+ */
+function open_cart_modal(title, img) {
+    console.log('title: ' + title);
+    console.log('img: ' + img);
+    $("#go_cart_modal").find(".info_product_title").html(title);
+    //$("#go_cart_modal").find(".info_product_price").html(price);
+    $("#go_cart_modal").find(".info_product_img").attr("src", img);
+   
+    $("#go_cart_modal").modal('show');
+
+    /*
+     * Модальное окно кнопка закрыть 
+     */
+    $(".close_cart_modal").unbind('click').click(function () {
+        $("#go_cart_modal").modal('hide');
+    });
+}
+
+
+
 /* Удаление с корзины */
 function initCartProductRemove() {
     $(".cart_product_remove").unbind('click').click(function () {
