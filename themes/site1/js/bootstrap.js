@@ -6,7 +6,7 @@
  * Bootstrap v3.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under the MIT license
- */
+ */ 
 
 if (typeof jQuery === 'undefined') {
   throw new Error('Bootstrap\'s JavaScript requires jQuery')

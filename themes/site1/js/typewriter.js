@@ -5,7 +5,7 @@
  * Website: https://safi.me.uk
  * Version: 1.0.0
  */
-
+ 
 (function(){(function(){for(var a=0,c=["ms","moz","webkit","o"],b=0;b<c.length&&!window.requestAnimationFrame;++b)window.requestAnimationFrame=window[c[b]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[c[b]+"CancelAnimationFrame"]||window[c[b]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(c,b){var f=(new Date).getTime(),d=Math.max(0,16-(f-a)),e=window.setTimeout(function(){c(f+d)},d);a=f+d;return e});window.cancelAnimationFrame||(window.cancelAnimationFrame=
 function(a){clearTimeout(a)})})();window.Typewriter=function(a,c){this._settings={cursorAnimationPaused:!1,opacityIncreasing:!1,currentOpacity:1,delayedQue:[],delayItemsCount:0,eventQue:[],calledEvents:[],eventRunning:!1,timeout:!1,delayExecution:!1,fps:.06,typingFrameCount:0,stringToTypeHTMLArray:[],currentTypedCharacters:[],typing:!1,usedIDs:[],charAmountToDelete:!1,userOptions:{},eventLoopRerun:0};if(!a)return console.error("Please choose an DOM element so that type writer can display itself.");
 if("object"!==typeof c)return console.error("Typewriter only accepts the options as an object.");this._settings.userOptions=c;this.default_options={strings:!1,cursorClassName:"typewriter-cursor",cursor:"|",animateCursor:!0,blinkSpeed:50,typingSpeed:"natural",deleteSpeed:"natural",charSpanClassName:"typewriter-char",wrapperClassName:"typewriter-wrapper",loop:!1,autoStart:!1,devMode:!1};this.options=this._setupOptions(c);this.el=a;this._setupTypwriterWrapper();this._startCursorAnimation();!0===this.options.autoStart&&

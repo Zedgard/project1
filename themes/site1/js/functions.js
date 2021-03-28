@@ -4,7 +4,7 @@ jQuery(window).on("load", function () {
     jQuery(".loader").fadeOut(800);
 
 });
-
+ 
 
 jQuery(function ($) {
     "use strict";
@@ -545,7 +545,8 @@ jQuery(function ($) {
     $(".fancybox").fancybox();
 
 
-   
+    /* ------ Revolution Slider ------ */
+
 
     /* Промо время */
 //
