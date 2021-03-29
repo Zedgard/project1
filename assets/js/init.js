@@ -143,6 +143,22 @@ $(document).ready(function () {
 //        $(".product-menu-block").show("slide", {direction: "right"}, "-600");
 //    });
 
+
+    /*
+     * WOW effect 
+     * 
+     */
+    wow = new WOW(
+            {
+                boxClass: 'wow', // default
+                animateClass: 'animated', // default
+                offset: 0, // default
+                mobile: true, // default
+                live: true        // default
+            }
+    )
+    wow.init();
+
     /*
      * Фильтр для мобильной версии 
      */
@@ -523,7 +539,7 @@ function open_cart_modal(title, img) {
     $("#go_cart_modal").find(".info_product_title").html(title);
     //$("#go_cart_modal").find(".info_product_price").html(price);
     $("#go_cart_modal").find(".info_product_img").attr("src", img);
-   
+
     $("#go_cart_modal").modal('show');
 
     /*

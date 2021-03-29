@@ -2,7 +2,7 @@
 Plugin Name: 	Count To
 Written by: 	Matt Huggins - https://github.com/mhuggins/jquery-countTo
 */
-
+ 
 (function ($) {
 	$.fn.countTo = function (options) {
 		options = options || {};

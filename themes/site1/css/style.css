@@ -3345,6 +3345,20 @@ iframe  {
     -webkit-text-fill-color: transparent;
     color: #00bcd4;
 }
+
+.scroll-block {overflow-y: scroll;}
+.scroll-block::-webkit-scrollbar-track {border-radius: 4px;}
+.scroll-block::-webkit-scrollbar {width: 6px;}
+.scroll-block::-webkit-scrollbar-thumb {border-radius: 4px;background: #f0f2f5;}
+.scroll-block:hover::-webkit-scrollbar-thumb {background: #6a7d9b;}
+.testimonial-wrapp2{
+    height: 240px;
+    overflow-y: scroll;
+}
+
+.testimonial-wrapp{
+    height: 450px;
+}
 .testimonial-wrapp, 
 .testimonial-wrapp .testimonial-text,
 .testimonial-wrapp .testimonial-photo,
