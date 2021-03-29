@@ -58,6 +58,7 @@
         <script src="/assets/js/ajax.js?v=<?= $_SESSION['rand'] ?>"></script>   
 
         <script src="/assets/plugins/charts/Chart.js?v=<?= $_SESSION['rand'] ?>"></script>
+        
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
 
