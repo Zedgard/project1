@@ -10,7 +10,7 @@ session_start();
 
 //$user = new \project\user();
 //if ($user->isAdmin() || isEditor()) {
-
+echo 111;
 
 // // Optional exec path settings (Default is called with command name only)
 // define('ELFINDER_TAR_PATH',      '/PATH/TO/tar');
