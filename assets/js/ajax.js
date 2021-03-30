@@ -55,7 +55,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             var metod = 0;
                             if (result['success'] == 1) {
                                 $('.form_result').removeClass("alert-danger");
-                                $('.form_result').addClass("alert").addClass("alert-success");
+                                //$('.form_result').addClass("alert").addClass("alert-success");
                                 $('.form_result').append(result['success_text']);
                                 metod = 1;
                             }
@@ -103,10 +103,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                                         window.location.href = result['action'];
                                     }
                                 }
-
-
                             }
-
                             // Добавить кнопку закрыть
                             //$('.form_result').append('<button type="button" class="close"'
                             //        + ' data-dismiss="alert" aria-label="Close">'
@@ -121,14 +118,8 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                 }, 200);
             });
         };
-
         return this.each(make);
-
     };
-
-
-
-
 })(jQuery);
 
 

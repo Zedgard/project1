@@ -54,7 +54,7 @@
                 ?>
                 <div class="row justify-content-md-center">
                     <div class="col-lg-4 text-left mt-3">
-                        <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_cloudpayments">Картой</a> 
+                        <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart_big btn_cart_cloudpayments">Картой</a> 
                     </div> 
                 </div>
                 <div class="row justify-content-md-center">
