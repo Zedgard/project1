@@ -33,3 +33,4 @@ $productsFilterCount = count($productsFilterArray);
 
 
 include 'tmpl/index_promo.php';
+include 'tmpl/go_cart_modal.php';

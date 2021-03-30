@@ -536,6 +536,10 @@ function initCartProductAdd() {
 function open_cart_modal(title, img) {
     console.log('title: ' + title);
     console.log('img: ' + img);
+    if (typeof title == "undefined" || typeof img == "undefined") {
+        console.log('Not data open_cart_modal');
+        return 1;
+    }
     $("#go_cart_modal").find(".info_product_title").html(title);
     //$("#go_cart_modal").find(".info_product_price").html(price);
     $("#go_cart_modal").find(".info_product_img").attr("src", img);

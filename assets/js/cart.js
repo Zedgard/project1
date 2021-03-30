@@ -230,8 +230,11 @@ $(document).ready(function () {
     });
 
     $(".btn_cart_other").unbind('click').click(function () {
-        $(".block_cart_other").html('<div id="payment-form"></div>');
+        var preloader ='<div class="pay_preloader"><div class="spinner-border text-center" role="status"><span class="sr-only">Loading...</span></div></div>';
+        $(".block_cart_other").html('<div id="payment-form">' + preloader + '</div>');
         pay_status = 0;
+        $(".block_cart_other").show(200);
+        $(".pay_preloader").show(200);
         sendPostLigth('/jpost.php?extension=cart', {
             "get_cart_other": 1
         }, function (e) {
@@ -252,7 +255,8 @@ $(document).ready(function () {
                     //После отображения платежной формы метод render возвращает Promise (можно не использовать).
                     .then(() => {
                         //Код, который нужно выполнить после отображения платежной формы.
-                        $(".block_cart_other").show(200)
+                        //$(".block_cart_other").show(200);
+                        $(".pay_preloader").hide(200);
                     });
 
             ;
