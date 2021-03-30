@@ -72,13 +72,13 @@
 
         <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script> 
 
         <?
         //<script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] "></script> 139
         ?>
         <!--WOw animations-->
-        <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
         
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
