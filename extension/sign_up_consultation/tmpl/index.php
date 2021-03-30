@@ -24,7 +24,7 @@
             </style>
             <?
             //print_r($_SESSION['cart']);
-           // print_r($_SESSION['cart']['itms']);
+            // print_r($_SESSION['cart']['itms']);
             ?>
             <div class="row">
                 <div class="col-md-12 top80 bottom100">
@@ -53,7 +53,16 @@
                                             </div>
                                             <div class="top50 text-left">
                                                 <select name="consult_your_master" class="consult_form_input consult_your_master w-100 fontfize150" >
-
+                                                    <option value="0">Выберите специалиста</option>
+                                                    <?
+                                                    $consultation_masters_i = 0;
+                                                    foreach ($consultation_masters as $value) {
+                                                        ?>
+                                                        <option value="<?= $value['id'] ?>" consult_masters_i="<?= $consultation_masters_i ?>"><?= $value['master_name'] ?></option>
+                                                        <?
+                                                        $consultation_masters_i++;
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
