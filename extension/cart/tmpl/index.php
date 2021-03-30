@@ -59,11 +59,11 @@
                 </div>
                 <div class="row justify-content-md-center">
                     <div class="col-lg-4 text-left mt-3" style="display: block;">
-                        <a href="/pay.php?tinkoff=1" class="btn button btngreen4 text-center btn_cart btn_cart_yandex" target="_blank">Карротй через Тинькофф</a>
+                        <a href="/pay.php?tinkoff=1" class="btn button btngreen4 text-center btn_cart btn_cart_yandex" target="_blank">Картой через Тинькофф</a>
                     </div>
 
                     <div class="col-lg-4 text-left mt-3" style="display: block;">
-                        <a href="javascript:void(0)" class="btn button btngreen3 text-center btn_cart btn_cart_other">Другой способ</a>
+                        <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_other">Другой способ</a>
                     </div>
 
                     <div class="col-lg-4 text-left mt-3" style="display: none;">
