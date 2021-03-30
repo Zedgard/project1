@@ -2059,6 +2059,13 @@ nav{
 /*Page Headers */
 /*-------------------------------*/
 
+.btn_cart_cloudpayments{
+    padding: 2rem;
+}
+.pay_preloader{
+    padding: 5rem;
+    text-align: center;
+}
 
 /*-------------------------------*/
 /* Work Process */
