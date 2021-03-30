@@ -4652,6 +4652,13 @@ footer .copyrights > a:focus {
     width: 90%;
 }
 
+.btn_cart_big{
+    font-weight: bold;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width: 100%;
+}
+
 /* Нижнее меню для телефонов */
 footer_menu{
     display: flex;
