@@ -10,11 +10,11 @@
         </li>
         -->
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'office') ? 'active' : '' ?> expand" >
-            <a class="sidenav-item-link <?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>" href="javascript:void(0)" >
-                <!-- <i class="mdi mdi-view-dashboard-outline"></i> -->
-                <span class="nav-text" style="color: #FFFFFF;">Мои покупки</span> 
+            <a class="sidenav-item-link <?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>" href="/office/?katalog">
+                <i class="mdi mdi-basket"></i>
+                <span class="nav-text">Мои покупки</span> 
             </a> 
-            <ul style="margin: 0;padding: 0;display: block;" class="collapse office_list_categorys <?=
+            <ul style="margin: 0;padding: 0;display: none;" class="collapse office_list_categorys <?=
             (isset($_GET['katalog'])) ? 'show' : ''
             ?>"  id="system_configs"
                 data-parent="#sidebar-menu">

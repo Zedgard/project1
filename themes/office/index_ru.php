@@ -145,7 +145,8 @@
                     <div id="sidebar" class="sidebar ">
                         <!-- Aplication Brand -->
                         <div class="app-brand">
-                            <a href="/admin/" title="<?= $_SESSION['page']['page_title'] ?>">
+                            <a href="/" title="<?= $_SESSION['page']['page_title'] ?>">
+                                <!--
                                 <svg
                                     class="brand-icon"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -163,6 +164,7 @@
                                 <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
                                 </g>
                                 </svg>
+                                -->
                                 <span class="brand-name text-truncate">Личный кабинет</span>
                             </a>
                         </div>
@@ -252,7 +254,7 @@
                                     <!-- User Account -->
                                     <li class="dropdown user-menu">
                                         <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                            <? if (strlen($_SESSION['user']['info']['avatar']) > 0): ?>
+                                            <? if (strlen($_SESSION['user']['info']['avatar'] && is_file($_SERVER['DOCUMENT_ROOT'] . $_SESSION['user']['info']['avatar'])) > 0): ?>
                                                 <img src="<?= $_SESSION['user']['info']['avatar'] ?>" class="user-image" alt="User Image" />
                                             <? endif; ?>
                                             <span class="d-none d-lg-inline-block"><?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?></span>
@@ -321,7 +323,7 @@
 
 
                     <div class="content-wrapper">
-                        <div class="content1">						 
+                        <div class="content1" style="margin-top: -3px;">						 
 
                             <?= $_SESSION['page']['block_center'] ?>
 
