@@ -547,5 +547,23 @@
 .product_wares_lest_block{
     margin-top: -9rem;
 }
-
+/*
+Для офиса
+*/
+.product_title{
+        border-top: 1px solid #CCCCCC;
+        color: #000000;
+        margin-bottom: 1rem;
+        clear: both;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+    .products_arrays_data .product_title{
+        border-top: none;
+    }
+    .wares_title{
+        font-size: 0.9rem;
+        color: #000000;
+        text-align: left;
+    }
 /* ------------------------------------------------------------- */

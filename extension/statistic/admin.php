@@ -14,6 +14,7 @@ if ($user->isEditor()) {
     include 'lang.php';
 
     include 'tmpl/admin.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/pay/tmpl/info.php';
 } else {
     ?>
     <div>Нет доступа для просмотра данной страницы</div>

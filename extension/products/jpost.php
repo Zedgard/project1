@@ -10,11 +10,12 @@ $pr_products = new \project\products();
 if (isset($_POST['getProductsArray'])) {
     $searchStr = (isset($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
     $active = (isset($_POST['visible_products'])) ? $_POST['visible_products'] : '1';
+    $product_edit = (isset($_POST['product_edit'])) ? $_POST['product_edit'] : '0';
 
     $_SESSION['product']['searchStr'] = $searchStr;
     $_SESSION['product']['active'] = $active;
 
-    $data = $pr_products->getProductsArray($active, $searchStr);
+    $data = $pr_products->getProductsArray($active, $searchStr, $product_edit);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 

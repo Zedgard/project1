@@ -292,9 +292,9 @@ if (!function_exists('importWisiwyng')) {
                     'insertdatetime media nonbreaking save table contextmenu directionality',
                     'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
                 ],
-                toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
-                image_advtab: true,
+                toolbar1: 'undo redo | pageembed template | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert link image media',
+                toolbar2: 'formatselect fontselect fontsizeselect | removeformat | pagebreak | charmap | forecolor backcolor emoticons | codesample | preview fullscreen |',
+                image_advtab: true,  
                 templates: [
                     {title: 'Блок Container расположение по середине', content: '<div class="container"><div class="row"><div class="col-12">Container 1</div></div></div>'},
                     {title: 'Блок row', content: '<div class="row"><div class="col-12">row 1</div></div>'}
@@ -342,23 +342,23 @@ if (!function_exists('importWisiwyng')) {
                 }
             });
 
-//            function elfinder_browser(callback, value, meta) {
-//                tinyMCE.activeEditor.windowManager.open({
-//                    file: "/system/elfinder/elfinder.php", //"/system/elfinder/php/connector.minimal.php?cmd=open&target=l1_aW1hZ2U&init=1&tree=1&_=1617026792779",
-//                    title: 'elFinder',
-//                    width: 800,
-//                    height: 600,
-//                    resizable: true,
-//                    inline: true,
-//                    close_previous: false,
-//                    popup_css: false
-//                }, {
-//                    my_insert: function (url) {
-//                        console.log('ggg');
-//                        //callback(url);
-//                    }
-//                });
-//            }
+            //            function elfinder_browser(callback, value, meta) {
+            //                tinyMCE.activeEditor.windowManager.open({
+            //                    file: "/system/elfinder/elfinder.php", //"/system/elfinder/php/connector.minimal.php?cmd=open&target=l1_aW1hZ2U&init=1&tree=1&_=1617026792779",
+            //                    title: 'elFinder',
+            //                    width: 800,
+            //                    height: 600,
+            //                    resizable: true,
+            //                    inline: true,
+            //                    close_previous: false,
+            //                    popup_css: false
+            //                }, {
+            //                    my_insert: function (url) {
+            //                        console.log('ggg');
+            //                        //callback(url);
+            //                    }
+            //                });
+            //            }
 
             //            function openKCFinder(field, url, type, win) {
             //                tinyMCE.activeEditor.windowManager.open({
@@ -449,12 +449,26 @@ if (!function_exists('urlRequestAddLink')) {
                 $url .= '&' . $urlValueStr;
             }
         } else {
-            //echo 222;
             $url = $_SERVER['REQUEST_URI'] . '?' . $urlValueStr;
         }
 
-        //echo "g: {$reqUrl} c:" . count($reqUrlExp) . "<br/>";
         return $url;
+    }
+
+}
+
+if (!function_exists('urlRequestAddLinkArray')) {
+
+    /**
+     * Получить правильную ссылку из массива ссылок
+     * @param type $urls array Массив ссылок
+     * @return string
+     */
+    function urlRequestAddLinkArray($urls = array()) {
+        if (count($urls) > 0) {
+            return $url = '?' . implode('&', $urls);
+        }
+        return '';
     }
 
 }
@@ -1231,6 +1245,34 @@ if (!function_exists('date_sql_format')) {
         $arr = explode('.', $date_str);
         $date_new = "{$arr[2]}-{$arr[1]}-{$arr[0]}";
         return $date_new;
+    }
+
+}
+
+if (!function_exists('fast_mysql_select_data')) {
+
+    /**
+     * Быстрое извлечение данных из базы без создания класса<br/>
+     * Только для внутренних запросов так как нет ограничений
+     * @param string $query
+     * @return type
+     */
+    function fast_mysql_select_data($query) {
+        include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+        $data = array();
+        $conn = new mysqli($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } else {
+            if ($result = mysqli_query($conn, $query)) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $data[] = $row;
+                }
+                mysqli_free_result($result);
+            }
+            mysqli_close($conn);
+        }
+        return $data;
     }
 
 }

@@ -58,23 +58,30 @@ class products extends \project\extension {
 
     /**
      * Список продуктов с реализацией поиска
-     * @param string $searchStr
-     * @return array
+     * @param type $active Статус товара
+     * @param type $searchStr Строка поиска
+     * @param type $id Только этот продукт
+     * @return type
      */
-    public function getProductsArray($active, $searchStr) {
-        if (strlen($searchStr) > 0) {
-            $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
-            $data = $this->getSelectArray($querySelect, array($active, $searchStr));
+    public function getProductsArray($active, $searchStr, $id = 0) {
+        if ($id > 0) {
+            $querySelect = "SELECT * FROM `zay_product` WHERE `id`='?' order by id desc ";
+            $data = $this->getSelectArray($querySelect, array($id));
         } else {
-            if ($active == 9) {
-                $querySelect = "SELECT * FROM `zay_product` WHERE `is_delete`='1' order by lastdate desc";
-                $data = $this->getSelectArray($querySelect, array());
+            if (strlen($searchStr) > 0) {
+                $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
+                $data = $this->getSelectArray($querySelect, array($active, $searchStr));
             } else {
-                $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `is_delete`='0' order by id desc";
-                $data = $this->getSelectArray($querySelect, array($active));
+                if ($active == 9) {
+                    $querySelect = "SELECT * FROM `zay_product` WHERE `is_delete`='1' order by lastdate desc";
+                    $data = $this->getSelectArray($querySelect, array());
+                } else {
+                    $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `is_delete`='0' order by id desc";
+                    $data = $this->getSelectArray($querySelect, array($active));
+                }
             }
         }
-
+        
         for ($i = 0; $i < count($data); $i++) {
             //$value['images_str'];
             $image = $data[$i]['images_str']; //$this->checkImageFile($value['images_str']);
@@ -86,6 +93,7 @@ class products extends \project\extension {
             }
             $data[$i]['wares_info'] = $this->getProducts_waresInfo($data[$i]['id']);
         }
+
         return $data;
     }
 

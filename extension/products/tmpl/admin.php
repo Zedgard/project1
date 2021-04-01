@@ -214,7 +214,8 @@
                     {
                         "getProductsArray": '1',
                         "searchStr": searchStr,
-                        "visible_products": visible_products
+                        "visible_products": visible_products,
+                        "product_edit": product_edit
                     }, function (e) {
                 $(".products_arrays_data tbody tr").remove();
                 var data = e['data'];
