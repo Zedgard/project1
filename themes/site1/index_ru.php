@@ -9,7 +9,9 @@
         <link href="/favicon.ico<?= $_SESSION['rand'] ?>" rel="icon">
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
         <meta name="interkassa-verification" content="777d8a842d5f8a07fe433d7f9e9537fd" />
-
+        <meta name="robots" content="noindex, nofollow">
+        <?= $_SESSION['noindex'] ?>
+        
         <!-- SLEEK CSS -->
         <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.min.css<?= $_SESSION['rand'] ?>" />
         <link rel="stylesheet" href="/themes/site1/css/plugins.css<?= $_SESSION['rand'] ?>">

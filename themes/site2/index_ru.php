@@ -8,23 +8,24 @@
         <meta name="description" content="<?= $_SESSION['page']['info']['description'] ?>" />
         <link href="/favicon.ico<?= $_SESSION['rand'] ?>" rel="icon">
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
-        
+        <?= $_SESSION['noindex'] ?>
+
         <?php
         /*
-        <!-- Google Tag Manager -->
-        <script>(function (w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({'gtm.start':
-                            new Date().getTime(), event: 'gtm.js'});
-                var f = d.getElementsByTagName(s)[0],
-                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-                j.async = true;
-                j.src =
-                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-                f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', 'GTM-NVPSKXJ');</script>
-        <!-- End Google Tag Manager -->
-        */
+          <!-- Google Tag Manager -->
+          <script>(function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({'gtm.start':
+          new Date().getTime(), event: 'gtm.js'});
+          var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+          })(window, document, 'script', 'dataLayer', 'GTM-NVPSKXJ');</script>
+          <!-- End Google Tag Manager -->
+         */
         ?>
         <!-- SLEEK CSS -->
         <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" />
@@ -59,10 +60,10 @@
     <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">
         <?
         /*
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NVPSKXJ"
-                          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
+          <!-- Google Tag Manager (noscript) -->
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NVPSKXJ"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+          <!-- End Google Tag Manager (noscript) -->
          */
         ?>        
         <?= $config->getConfigParam('site_development1') ?>
@@ -95,18 +96,18 @@
 
         <?= $_SESSION['page']['block_top'] ?>
 
-<!--
-        <div class="row">
-            <div class="col-12 mt-5 mb-5"></div>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-4 mb-5"></div>
-        </div>
-        <div class="row mt-5 mb-5 d-block d-lg-none"> 
-            <div class="col-12 mt-5 mb-5"></div>
-        </div>
--->
-        
+        <!--
+                <div class="row">
+                    <div class="col-12 mt-5 mb-5"></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4 mb-5"></div>
+                </div>
+                <div class="row mt-5 mb-5 d-block d-lg-none"> 
+                    <div class="col-12 mt-5 mb-5"></div>
+                </div>
+        -->
+
 
         <?= $_SESSION['page']['block_center'] ?>
 

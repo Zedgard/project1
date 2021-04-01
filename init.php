@@ -28,6 +28,7 @@ if (!isset($_SESSION['user'])) {
 // Ошибки которые произошли в системе
 $_SESSION['url'] = array();
 $_SESSION['page_url'] = '';
+
 // Работать без кеша
 $_SESSION['rand'] = '?v=' . rand();
 

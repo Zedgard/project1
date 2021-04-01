@@ -35,14 +35,13 @@ function init_pay_data_list() {
         "excel_to": excel_to,
         "search_pay_user_str": search_pay_user_str
     }, function (e) {
-        console.log(e['data']);
         $(".pay_data tbody").html("");
-        if (e['data'].length > 0) {
+        if (e['data'].length > 0) { 
             for (var i = 0; i < e['data'].length; i++) {
                 var user_title = '';
                 var user_descr = '';
                 var pay_descr = '';
-                console.log(typeof e['data'][i]['email']);
+                //console.log(typeof e['data'][i]['email']);
                 if (e['data'][i]['email'].length > 0) {
                     user_title = e['data'][i]['email'];
 
@@ -192,6 +191,7 @@ function init_search_pay_user() {
 
 function init_pay_info() {
     $(".btn_pay_info_modal").click(function () {
+        console.log('init_pay_info');
         $('#form_pay_info_modal').modal('toggle');
         var objid = $(this).attr('objid');
         $(".pay_info_data").html("");
@@ -223,7 +223,7 @@ function init_pay_info() {
             $(".pay_info_data_products").html("");
             for (var i = 0; i < e['data_products'].length; i++) {
                 $(".pay_info_data_products").append("<tr><td><img src=\"" + e['data_products'][i]['images_str'] + "\" class=\"w-100\"/></td><td><div class=\"mb-3\"><a href=\"/shop/?product=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Просмотреть</a></div>\n\
-<div class=\"mb-3\"><a href=\"/admin/products/?product_edit=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Редактировать</a></div></td></tr>")
+                <div class=\"mb-3\"><a href=\"/admin/catalog/?product_edit=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Редактировать</a></div></td></tr>")
             }
         });
     });

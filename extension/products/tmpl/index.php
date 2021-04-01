@@ -1,10 +1,3 @@
-<?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
 <link rel="stylesheet" href="/extension/products/product.css<?= $_SESSION['rand'] ?>">
 
 <div class="row">
@@ -44,7 +37,7 @@
          */
         if (!isset($_GET['product'])) {
             /*
-             * Отображаем филтры
+             * Отображаем фильтры
              */
             include_once 'index_filter.php';
             ?>
@@ -68,7 +61,19 @@
                         </div>
                     </div>
                 </div>
-
+                <script>
+                    $(document).ready(function () {
+                        var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
+                        if (!!containerEl) {
+                            console.log('containerEl');
+                            var mixer = mixitup(containerEl, {
+                                selectors: {
+                                    target: '[data-ref~="mixitup-target"]'
+                                }
+                            });
+                        }
+                    });
+                </script>
                 <!-- Sorted block end -->    
 
 
@@ -114,29 +119,27 @@
                                         <?= $title_category ?>
                                         <div class="row waresListImages">
                                             <?
+                                            /*  Блок рекомендованные товары ссылка */
+                                            $recomend_links = array();
+                                            if (isset($_GET['productTopic']) && $_GET['productTopic'] > 0) {
+                                                $recomend_links[] = "productTopic={$_GET['productTopic']}"; //urlRequestAddLinkArray($_GET['productTopic']);
+                                            }
+                                            $recomend_links[] = "product={$productsFilterArray[$i]['id']}";
+
                                             /*
                                              * Product Images
                                              */
                                             $image = $productsFilterArray[$i]['images_str'];
-                                            if (strlen($image) > 0) {
-                                                ?>
-                                                <div class="<?= $sclass_boot ?> align-self-center text-center w-100 <?= ($ii > 0) ? $scaleN : $scale ?>">
-                                                    <a href="<?= urlRequestAddLink('product=' . $productsFilterArray[$i]['id']) ?>">
-                                                        <img data-src="<?= $productsFilterArray[$i]['images_str'] ?>" src="/assets/img/no_tovar_bg.jpg" class="lazyload waresImg waresListImagesStyle1" title="<?= $productsFilterArray[$i]['title'] ?>" />
-                                                    </a>
-                                                </div>    
-                                                <?
-                                            } else {
+                                            if (strlen($image) == 0) {
                                                 $image = '/assets/img/no_tovar_bg.jpg';
-                                                ?>
-                                                <div class="<?= $sclass_boot ?> align-self-center  text-center w-100 <?= ($ii > 0) ? $scaleN : $scale ?>">
-                                                    <a href="<?= urlRequestAddLink('product=' . $productsFilterArray[$i]['id']) ?>">
-                                                        <img data-src="<?= $image ?>" src="/assets/img/no_tovar_bg.jpg" class="lazyload waresListImagesStyle1" title="<?= $productsFilterArray[$i]['title'] ?>" />
-                                                    </a>
-                                                </div>
-                                                <?
                                             }
                                             ?>
+                                            <div class="<?= $sclass_boot ?> align-self-center text-center w-100 <?= ($ii > 0) ? $scaleN : $scale ?>">
+                                                <a href="/shop/<?= urlRequestAddLinkArray($recomend_links) ?>">
+                                                    <img data-src="<?= $image ?>" src="/assets/img/no_tovar_bg.jpg" class="lazyload waresImg waresListImagesStyle1" title="<?= $productsFilterArray[$i]['title'] ?>" />
+                                                </a>
+                                                <?= urlRequestAddLinkArray($recomend_links) ?>
+                                            </div>    
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col-mb-12">
@@ -164,7 +167,7 @@
                                         <div class="row mt-1">
                                             <div class="col-mb-12">
                                                 <div class="cart_product_title_block">
-                                                    <a href="<?= urlRequestAddLink('product=' . $productsFilterArray[$i]['id']) ?>" class="product_links product_info_title">
+                                                    <a href="/shop/<?= urlRequestAddLinkArray($recomend_links) ?>" class="product_links product_info_title">
                                                         <?= $category_title ?>&nbsp;&nbsp;<span class="cart_product_title"><?= mb_strimwidth($productsFilterArray[$i]['title'], 0, 100, "...") ?></span>
                                                     </a>
                                                 </div>
@@ -226,7 +229,13 @@
              * Карточка товара
              */
         } else {
-            include_once 'index_cart.php';
+            // Если товар деактивировали
+            if (intval($productData['active']) > 0) {
+                include_once 'index_cart.php';
+            } else {
+                include_once 'index_cart_not_active.php';
+                include 'recommend.php';
+            }
         }
         ?>
     </div>

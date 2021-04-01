@@ -2,6 +2,11 @@
 
 session_start();
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+
 /**
  * Перенаправление на https://
  */
@@ -26,25 +31,16 @@ if (basename(__FILE__, '.php') == 'index') {
     }
 }
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-
-//unset($_SESSION);// = array();
 /*
  * Кэширование 
  */
-$cache = 1;
+include_once 'system/init_cache.php';
 
-if ($cache == 1) {
-    opcache_reset();
-    include_once 'cache.php';
-}
 //print_r($_SESSION['user']['info']);
 if (isset($_GET['ya_payment_true'])) {
     $_SESSION['cart']['itms'] = array();
 }
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
 
 //include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/inc.php';
 //include_once $_SERVER['DOCUMENT_ROOT'] . '/class/validator.php';
@@ -59,6 +55,21 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 $send_emails = new \project\send_emails();
 $p_auth = new \project\auth();
 
+// DEBUG
+$_SESSION['DEBUG'] = 0;
+$noindex_file = 'system/DEBUG.php';
+if (is_file($noindex_file)) {
+    $_SESSION['DEBUG'] = inc($noindex_file);
+}
+
+// Откючаем индексирование сайта NOINDEX
+$noindex_file = 'system/noindex.php';
+$_SESSION['noindex'] = '';
+if ($_SESSION['DEBUG'] == 1 && is_file($noindex_file)) {
+    $_SESSION['noindex'] = inc($noindex_file);
+}
+
+// '<meta name="robots" content="noindex, nofollow">';
 //if($send_emails->send(1,'resko1987@mail.ru', array('user_password'=>12345) )){
 //    echo 'Ok'; 
 //}

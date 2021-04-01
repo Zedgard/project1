@@ -46,8 +46,9 @@
                     <? if (!isset($_GET['registrations'])): ?>
                         <div class="col-xl-5 col-lg-6 col-md-10 offset-md-3">
                             <div class="card">
-                                <div class="card-header bg-primary">
+                                <div class="card-header bg-primary" style="background-color: #d49600;display: none;">
                                     <div class="app-brand">
+                                        <!--
                                         <a href="/">
                                             <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="30" height="33"
                                                  viewBox="0 0 30 33">
@@ -58,11 +59,12 @@
                                             </svg>
                                             <span class="brand-name"><?= $_SESSION['site_name'] ?></span>
                                         </a>
+                                        -->
                                     </div>
                                 </div>
                                 <div class="card-body p-5">
 
-                                    <h4 class="text-dark mb-5">Авторизация</h4>
+                                    <h4 class="text-dark mb-5" style="font-size: 2rem;text-align: center;">Авторизация</h4>
                                     <form id="authorization" action="/jpost.php?extension=auth" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">
@@ -122,22 +124,9 @@
                     <? if (isset($_GET['registrations'])): ?>
                         <div class="col-xl-5 col-lg-6 col-md-10 offset-md-3">
                             <div class="card">
-                                <div class="card-header bg-primary">
-                                    <div class="app-brand">
-                                        <a href="/">
-                                            <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="30"
-                                                 height="33" viewBox="0 0 30 33">
-                                                <g fill="none" fill-rule="evenodd">
-                                                    <path class="logo-fill-blue" fill="#7DBCFF" d="M0 4v25l8 4V0zM22 4v25l8 4V0z" />
-                                                    <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z" />
-                                                </g>
-                                            </svg>
-                                            <span class="brand-name"><?= $_SESSION['site_name'] ?></span>
-                                        </a>
-                                    </div>
-                                </div>
+                                
                                 <div class="card-body p-5">
-                                    <h4 class="text-dark mb-5">Регистрация</h4>
+                                    <h4 class="text-dark mb-5" style="font-size: 2rem;text-align: center;">Регистрация</h4>
                                     <form id="registration" action="/jpost.php?extension=auth" method="POST">
                                         <div class="row">
                                             <div class="form-group col-md-12 mb-4">

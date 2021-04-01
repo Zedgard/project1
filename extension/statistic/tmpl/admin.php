@@ -51,4 +51,4 @@
 </div>
 
 
-<script src="/extension/pay/js/pay_js.js"></script>
+<script src="/extension/pay/js/pay_js.js<?= $_SESSION['rand'] ?>"></script>

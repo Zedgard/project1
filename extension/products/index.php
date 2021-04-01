@@ -111,7 +111,7 @@ if (isset($_GET['product'])) {
         //echo 'bread_get: ' . $page->bread_get() . "<br/>\n";
         //echo 'url_href: ' .$_SESSION['url_href']; 
     }
-}
+} 
 
 //foreach ($productsFilterArray as $value) {
 //print_r($value);

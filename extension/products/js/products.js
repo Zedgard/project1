@@ -15,6 +15,7 @@ $(document).ready(function () {
     
 
     setInterval(function () {
+        //console.log('btn_category_controll_active');
         var filter = $(".btn_category_controll_active").attr("data-filter");
         if ($(".product_load_next").isInViewport() && filter == 'all') {
             var i = 0;
@@ -38,7 +39,7 @@ $(document).ready(function () {
         } else {
 
         }
-    }, 300);
+    }, 500);
 
 
 //    $('.carousel').carousel({
@@ -50,14 +51,7 @@ $(document).ready(function () {
      * Актив\ация фильтра каталога
      * @type Element
      */
-    var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
-    if (!!containerEl) {
-        var mixer = mixitup(containerEl, {
-            selectors: {
-                target: '[data-ref~="mixitup-target"]'
-            }
-        });
-    }
+    
 
     $(".btn_category_controll").click(function () {
         var elm = $(this).attr('elm');
