@@ -8,7 +8,7 @@
         <meta name="description" content="<?= $_SESSION['page']['info']['description'] ?>" />
         <link href="/favicon.ico<?= $_SESSION['rand'] ?>" rel="icon">
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
-        <?= $_SESSION['noindex'] ?>
+        <?= $_SESSION['noindex'] ?> 
 
         <?php
         /*
