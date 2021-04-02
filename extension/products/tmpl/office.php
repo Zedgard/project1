@@ -60,7 +60,7 @@
         </div>
     </div>
 </div>
-
+ 
 <script src="/assets/plugins/mixitup/mixitup.min.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/extension/products/js/office.js<?= $_SESSION['rand'] ?>"></script>

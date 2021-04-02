@@ -8,7 +8,7 @@
 <div class="mb-3">
     <div class="mb-3 clearfix">
         <a href="javascript:void(0)" class="btn btn-secondary float-left w-25 btn_block_trailer">НАСТРОЙКА "Блок трейлер продукта"</a>
-        <input type="checkbox" name="block_trailer" value="1" class="form-control float-left w-25 block_checked block_trailer_checked" block_type="block_trailer" title="Отобразить блок" /> 
+        <input type="checkbox" name="block_trailer" value="1" class="form-check-input float-left ml-lg-3 block_checked block_trailer_checked" block_type="block_trailer" title="Отобразить блок" /> 
     </div>
     <div class="clearfix block_trailer" style="display: none;">
         <div class="row">

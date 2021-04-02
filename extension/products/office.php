@@ -17,7 +17,9 @@ $c_topic = new \project\topic();
 $pr_wares = new \project\wares();
 $user = new \project\user();
 
-$categorys = $categoryArray = $c_category->getCategoryArray('product_category', '');
+
+//$categorys = $categoryArray = $c_category->getCategoryArray('product_category', '');
+$categoryArray = $c_category->getCategoryUserArray();
 
 if ($user->isClient() || $user->isEditor()) {
     // для клиентов

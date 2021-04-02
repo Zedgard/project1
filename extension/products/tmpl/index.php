@@ -138,7 +138,6 @@
                                                 <a href="/shop/<?= urlRequestAddLinkArray($recomend_links) ?>">
                                                     <img data-src="<?= $image ?>" src="/assets/img/no_tovar_bg.jpg" class="lazyload waresImg waresListImagesStyle1" title="<?= $productsFilterArray[$i]['title'] ?>" />
                                                 </a>
-                                                <?= urlRequestAddLinkArray($recomend_links) ?>
                                             </div>    
                                         </div>
                                         <div class="row mt-2">

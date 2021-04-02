@@ -8,7 +8,7 @@
 <div class="mb-3">
     <div class="mb-3 clearfix">
         <a href="javascript:void(0)" class="btn btn-secondary float-left w-25 btn_block_feedback">НАСТРОЙКА "Блок отзывы счастливых людей"</a>
-        <input type="checkbox" name="block_feedback" value="1" class="form-control float-left w-25 block_checked block_feedback_checked" block_type="block_feedback" title="Отобразить блок" /> 
+        <input type="checkbox" name="block_feedback" value="1" class="form-check-input float-left ml-lg-3 block_checked block_feedback_checked" block_type="block_feedback" title="Отобразить блок" /> 
     </div>
     <div class="clearfix block_feedback" style="display: none;">
         <div class="row">

@@ -33,14 +33,6 @@
         <!-- FAVICON -->
         <link href="/assets/img/favicon.png" rel="shortcut icon" />
 
-        <!--
-          HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-        -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js<?= $_SESSION['rand'] ?>"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js<?= $_SESSION['rand'] ?>"></script>
-        <![endif]-->
         <script src="/assets/plugins/nprogress/nprogress.js<?= $_SESSION['rand'] ?>"></script>
 
 
@@ -80,6 +72,7 @@
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
 
+        
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
