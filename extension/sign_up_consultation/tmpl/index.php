@@ -24,7 +24,7 @@
             </style>
             <?
             //print_r($_SESSION['cart']);
-           // print_r($_SESSION['cart']['itms']);
+            // print_r($_SESSION['cart']['itms']);
             ?>
             <div class="row">
                 <div class="col-md-12 top80 bottom100">
@@ -180,7 +180,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalSmallTitle">Оплата</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -191,42 +191,49 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 text-left mt-3">
-                                        <a href="/pay.php?yandex=1" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
-                                    </div>
 
-                                    <div class="col-lg-3 text-left mt-3">
-                                        <a href="/pay.php?interkassa=1" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
-                                    </div>
-                                    <div class="col-lg-3 text-left mt-3">
-                                        <?
-                                        if (strlen($paypal_email) == 0) {
-                                            ?>
-                                            <a href="javascript:alert('Недоступен')" class="btn button btngreen2 text-center btn_cart">PayPal</a>
+                                    <?
+                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/tmpl/pay_metods.php';
+                                    ?>
+
+                                    <div style="display: none;">
+                                        <div class="col-lg-3 text-left mt-3">
+                                            <a href="/pay.php?yandex=1" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
+                                        </div>
+
+                                        <div class="col-lg-3 text-left mt-3">
+                                            <a href="/pay.php?interkassa=1" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_interkassa">InterKassa</a> 
+                                        </div>
+                                        <div class="col-lg-3 text-left mt-3">
                                             <?
-                                        } else {
-                                            /*
-                                             * <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                              <input type="hidden" name="cmd" value="_xclick">
-                                              <input type="hidden" name="business" value="<?= $paypal_email ?>">
-                                              <input type="hidden" name="item_name" value="<?= $title ?>">
-                                              <input type="hidden" name="item_number" value="1">
-                                              <input type="hidden" name="amount" value="<?= $price_total ?>">
-                                              <input type="hidden" name="return" value="<?= $url_ref ?>">
-                                              <input type="hidden" name="no_shipping" value="1">
-                                              <input type="hidden" name="email" value="<?= $email ?>">
-                                              <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
-                                              </form>
-                                             */
+                                            if (strlen($paypal_email) == 0) {
+                                                ?>
+                                                <a href="javascript:alert('Недоступен')" class="btn button btngreen2 text-center btn_cart">PayPal</a>
+                                                <?
+                                            } else {
+                                                /*
+                                                 * <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                                  <input type="hidden" name="cmd" value="_xclick">
+                                                  <input type="hidden" name="business" value="<?= $paypal_email ?>">
+                                                  <input type="hidden" name="item_name" value="<?= $title ?>">
+                                                  <input type="hidden" name="item_number" value="1">
+                                                  <input type="hidden" name="amount" value="<?= $price_total ?>">
+                                                  <input type="hidden" name="return" value="<?= $url_ref ?>">
+                                                  <input type="hidden" name="no_shipping" value="1">
+                                                  <input type="hidden" name="email" value="<?= $email ?>">
+                                                  <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
+                                                  </form>
+                                                 */
+                                                ?>
+                                                <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" e="<?= $email ?>">PayPal</a>
+                                                <?
+                                            }
                                             ?>
-                                            <a href="javascript:void(0)" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" e="<?= $email ?>">PayPal</a>
-                                            <?
-                                        }
-                                        ?>
 
-                                    </div>
-                                    <div class="col-lg-3 text-left mt-3">
+                                        </div>
+                                        <div class="col-lg-3 text-left mt-3">
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>

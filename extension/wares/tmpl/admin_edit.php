@@ -17,7 +17,7 @@
 
                 <div class="form-group">
                     <label for="config_code">Категории</label>
-                    <select class="form-control wares_categorys" name="states[]" multiple="multiple" style="width: 100%">
+                    <select class="form-select wares_categorys" name="states[]" multiple="multiple" style="width: 100%">
 
                     </select> 
                 </div>
