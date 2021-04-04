@@ -120,6 +120,7 @@ if ($user->isEditor()) {
         //$videos = $wares->listMaterials($_GET['wares_id']);
         $series = $wares->getWaresVideoSeries($_GET['wares_id']);
         $materials = $wares->list_materials($_GET['wares_id']);
+        
         //print_r($wares_info);
         include __DIR__ . '/tmpl/edit_videos.php';
     }

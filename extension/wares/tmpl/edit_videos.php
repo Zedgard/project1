@@ -26,27 +26,66 @@
     <body class="header-fixed sidebar-fixed sidebar-dark header-light">
 
         <div class="mb-4 webinar_head_bg">
-            <?
-            if (strlen($wares_info['images']) > 0):
-                ?>
-                <div class="webinar_head_logo">
-                    <img src="<?= $wares_info['images'] ?>" class="webinar_head_logo_img"/>    
+            <div class="row webinar_head_bg pt-3 pb-3">
+                <div class="col-md-3">
+                    <div class="webinar_head_logo2 mb-2 text-center">
+                        <img src="<?= $wares_info['images'] ?>" class="webinar_head_logo_img mt-2"/>    
+                    </div>
                 </div>
-                <div class="webinar_head_title">
-                    <?= $wares_info['title'] ?>
+                <div class="col-md-9 p-5">
+                    <div class="webinar_head_title2 mb-4" style="display: none;">
+                        <div class="h2"><?= $wares_info['title'] ?></div>
+                    </div>
+                    <div class="webinar_head_file2 mb-3">
+                        <div>
+                            <?
+                            if (strlen($wares_info['url_file']) > 0) {
+                                $file_type = array_reverse(explode('.', $wares_info['url_file']))[0];
+                                if ($file_type == 'mp3') {
+                                    ?>
+
+                                    <div class="player-block float-left">
+                                        <div id="calamansi-player-<?= $wares_info['id'] ?>">
+                                            Загрузка плеера... 
+                                        </div>
+                                    </div>
+                                    <script>
+                                        Calamansi.autoload();
+                                        // document.getElementById('full-demo-player')
+                                        //document.querySelector('#calamansi-player-<?= $wares_info['id'] ?>')
+                                        new Calamansi(
+                                                document.querySelector('#calamansi-player-<?= $wares_info['id'] ?>'), {
+                                            skin: '/assets/plugins/calamansi/skins/basic_download2',
+                                            playlists: {
+                                                'Classics': [
+                                                    {
+                                                        source: '<?= $wares_info['url_file'] ?>',
+                                                    }
+                                                ],
+                                            },
+                                            defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
+                                        });
+                                        //player.destroy();
+                                    </script>
+                                    <div style="clear: both;height: 1rem;"></div>
+                                    <?
+                                } else {
+                                    ?>
+                                    <a href="<?= $wares_info['url_file'] ?>" target="_blank" class="btn btn-primary">Скачать файлы</a>
+                                    <?
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="webinar_head_articul mb-3">
+                        Артикул: <span><?= $wares_info['articul'] ?></span>
+                    </div>
+                    <div class="wares_info_descr ulli">
+                        <?= $wares_info['descr'] ?>
+                    </div>
                 </div>
-                <div class="webinar_head_file">
-                    <?
-                    if (strlen($wares_info['url_file']) > 0) {
-                        ?>
-                        <a href="<?= $wares_info['url_file'] ?>" class="btn btn-primary">Скачать файлы</a>
-                        <?
-                    }
-                    ?>
-                </div>
-                <?
-            endif;
-            ?>
+            </div>
         </div>
         <br/>
 
@@ -59,9 +98,6 @@
                             <!-- <a href="?wares_id=<?= $wares_id ?>&add_video=1" class="btn btn-primary float-left">Добавить видео материал</a> -->
                             <a href="?wares_id=<?= $wares_id ?>&add_material=1" class="btn btn-primary float-left">Добавить материал</a> 
                             <a href="?wares_id=<?= $wares_id ?>&add_series=1" class="btn btn-primary float-right">Новая серия</a>
-                        </div>
-                        <div class="mb-2 clearfix">
-                            <?= $wares_info['descr'] ?>
                         </div>
                     </div>
                 </div>

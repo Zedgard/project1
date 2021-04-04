@@ -294,7 +294,7 @@ if (!function_exists('importWisiwyng')) {
                 ],
                 toolbar1: 'undo redo | pageembed template | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert link image media',
                 toolbar2: 'formatselect fontselect fontsizeselect | removeformat | pagebreak | charmap | forecolor backcolor emoticons | codesample | preview fullscreen |',
-                image_advtab: true,  
+                image_advtab: true,
                 templates: [
                     {title: 'Блок Container расположение по середине', content: '<div class="container"><div class="row"><div class="col-12">Container 1</div></div></div>'},
                     {title: 'Блок row', content: '<div class="row"><div class="col-12">row 1</div></div>'}
@@ -321,61 +321,19 @@ if (!function_exists('importWisiwyng')) {
                         }
                     });
                 },
-                //                file_browser_callback: function (field, url, type, win) {
-                //                    tinyMCE.activeEditor.windowManager.open({ 
-                //                        file: '/system/elfinder/php/connector.minimal.php',
-                //                        title: 'elFinder',
-                //                        width: 800,
-                //                        height: 600,
-                //                        inline: true,
-                //                        close_previous: false
-                //                    }, {
-                //                        window: win,
-                //                        input: field
-                //                    });
-                //                    return false;
-                //                },
                 init_instance_callback: function (editor) {
-                    //editor.setContent(__YOUR_CONTENT__);
                     // признак готовности
                     tinymce_init = 1;
+                },
+                setup: function (ed) {
+                    ed.on('keyup', function (e) {
+//                        console.log('the event object ', e);
+//                        console.log('the editor object ', ed);
+//                        console.log('the content ', ed.getContent());
+                    });
                 }
             });
 
-            //            function elfinder_browser(callback, value, meta) {
-            //                tinyMCE.activeEditor.windowManager.open({
-            //                    file: "/system/elfinder/elfinder.php", //"/system/elfinder/php/connector.minimal.php?cmd=open&target=l1_aW1hZ2U&init=1&tree=1&_=1617026792779",
-            //                    title: 'elFinder',
-            //                    width: 800,
-            //                    height: 600,
-            //                    resizable: true,
-            //                    inline: true,
-            //                    close_previous: false,
-            //                    popup_css: false
-            //                }, {
-            //                    my_insert: function (url) {
-            //                        console.log('ggg');
-            //                        //callback(url);
-            //                    }
-            //                });
-            //            }
-
-            //            function openKCFinder(field, url, type, win) {
-            //                tinyMCE.activeEditor.windowManager.open({
-            //                    file: '/system/elfinder/php/connector.minimal.php',
-            //                    title: 'elFinder',
-            //                    width: 800,
-            //                    height: 600,
-            //                    resizable: true,
-            //                    inline: true,
-            //                    close_previous: false,
-            //                    popup_css: false
-            //                }, {
-            //                    window: win,
-            //                    input: field
-            //                });
-            //                return false;
-            //            }
             $(document).on('focusin', function (e) {
                 if ($(e.target).closest(".mce-window").length)
                     e.stopImmediatePropagation();
