@@ -1,11 +1,10 @@
 <?php
 
 $config = array(
-    'title' => 'Записаться на консультацию',
-    'descr' => 'Форма Записаться на консультацию',
+    'title' => 'Записаться на консультацию новая форма',
+    'descr' => 'Форма Записаться на консультацию новая форма',
     'urls' => array(
-        'Записаться на консультацию admin.php' => '/extension/sign_up_consultation/admin.php',
-        'Записаться на консультацию index.php' => '/extension/sign_up_consultation/index.php'
+        'Записаться на консультацию NEW index.php' => '/extension/consultation/index.php'
     ),
     'version' => '0.1'
 );

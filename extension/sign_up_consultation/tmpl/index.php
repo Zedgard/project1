@@ -191,11 +191,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
-
-                                    <?
-                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/tmpl/pay_metods.php';
-                                    ?>
-
+                                    <div class="col-12">
+                                        <?
+                                        include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/tmpl/pay_metods.php';
+                                        ?>
+                                    </div>
                                     <div style="display: none;">
                                         <div class="col-lg-3 text-left mt-3">
                                             <a href="/pay.php?yandex=1" target="_blank" class="btn button btngreen2 text-center btn_cart btn_cart_yandex">Картой</a>
