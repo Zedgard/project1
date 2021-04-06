@@ -153,7 +153,8 @@
     margin: 0 auto;
 }
 #modal_consultation_pay .btn_consultation_pay_block{
-    max-width: 420px;
+    max-width: 100%;
+    margin: 0 auto;
 }
 .block_consultation_pay_agreement{
     font-size: 0.6rem;

@@ -1,9 +1,12 @@
 <!-- true alert -->
 <div class="modal fade" id="modal_consultation_pay" tabindex="-1" role="dialog" aria-labelledby="modal_consultation_pay" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">Онлайн-консультация</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: #FFFFFF;">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="mb-2 text-center">Добрый человек, проверь <strong>внимательно все детали</strong> заказа</div>
@@ -44,7 +47,7 @@
                 <?
                 if ($_SESSION['user']['info']['id'] > 0) {
                     ?>
-                    <div class="row btn_consultation_pay_block mb-2" style="display: none;">
+                    <div class="btn_consultation_pay_block mb-3" style="display: none;">
                         <div class="col-12">
                             <?
                             include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/tmpl/pay_metods.php';
@@ -56,7 +59,7 @@
                     <?
                 } else {
                     ?>
-                    <div class="row btn_consultation_pay_block mb-2" style="display: none;">
+                    <div class="btn_consultation_pay_block mb-3" style="display: none;">
                         Не авторезирован!
                     </div>
                     <?
