@@ -174,7 +174,7 @@
                     </div>
                 </div>
 
-                <!-- true alert -->
+                <!-- pay consultation -->
                 <div class="modal fade" id="consultation_send" tabindex="-1" role="dialog" aria-labelledby="consultation_send" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                         <div class="modal-content">

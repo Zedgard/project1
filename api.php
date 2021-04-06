@@ -4,10 +4,7 @@
  * Апи для взаимодействия с внешних систем
  */
 
-
 session_start();
-
-
 
 include_once 'init.php';
 include_once 'config.php';
@@ -74,9 +71,9 @@ if (isset($_GET['API_CODE']) && PRIVATE_CODE == $_GET['API_CODE']) {
         $result = array('success' => 0, 'errors' => 'Ошибка code_integration');
         include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
         $auth = new \project\auth();
-        
+
         if (isset($_GET['code_integration']) && isset($_GET['user_email']) &&
-                strlen($_GET['code_integration'])>0 && strlen($_GET['user_email'])>0) {
+                strlen($_GET['code_integration']) > 0 && strlen($_GET['user_email']) > 0) {
 
             if ($auth->set_code_integration($_GET['user_email'], $_GET['code_integration'])) {
                 $result = array('success' => 1, 'success_text' => 'OK');

@@ -1,4 +1,5 @@
 <?php
+
 defined('__CMS__') or die;
 
 session_start();
@@ -98,6 +99,18 @@ if (isset($_POST['send_consultation_form'])) {
     );
     $_SESSION['consultation'] = $data_itm;
     $_SESSION['cart']['itms'][] = $data_itm;
+}
+
+// Добавление новой консультации
+if (isset($_POST['send_consultation_pay'])) {
+    /*
+     * Сдесь сделать авторизацию если клиент зарегистрирован
+     * иначе регистрируем
+     */
+    $_SESSION['consultation_user_phone'] = trim($_POST['consultation_user_phone']);
+    $_SESSION['consultation_user_email'] = trim($_POST['consultation_user_email']);
+    $_SESSION['consultation_user_pass'] = trim($_POST['consultation_user_pass']);
+    $result = array('success' => 0, 'success_text' => 'Ошибка! Разработка!');
 }
 
 // Удаление из корзины

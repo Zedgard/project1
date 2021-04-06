@@ -669,6 +669,7 @@ ul.social-icons.white li a:focus{
     */
     overflow: hidden;
 }
+
 .square-layout .button {
     -webkit-border-radius: 0;
     border-radius: 0;
@@ -1276,6 +1277,9 @@ nav{
     opacity: 0.4;
 }
 
+.modal .btn-close{
+    font-size: 2rem;
+}
 /*side clode btn*/
 .side-menu .btn-close {
     height: 33px;
@@ -4051,8 +4055,13 @@ textarea:-ms-input-placeholder {
     font-weight: bold;
     margin-left: 22rem;
 }
-
+.button_lg {
+    padding: 1rem;
+}
 @media (max-width: 792px) {
+    .button_lg {
+        padding: 1.4rem;
+    }
     .error_page_edgard404_line {
         text-align: center;
         margin-left: 10rem;

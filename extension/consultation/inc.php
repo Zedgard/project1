@@ -39,6 +39,7 @@ class Calendar {
 					<th>Вс</th>
 				</tr>';
 
+
         $day_week = date('N', mktime(0, 0, 0, $month, 1, $year));
         $day_week--;
 
@@ -68,11 +69,20 @@ class Calendar {
             if ($max_day <= 0) {
                 $class = 'last';
             }
-            
+
             if ($day_week == 6 || $day_week == 5) {
                 $class = 'last';
             }
-            
+
+            // Форматирование
+            $month_format = $month;
+            if (strlen($month) == 1) {
+                $month_format = '0' . $month;
+            }
+            $day_format = $day;
+            if (strlen($day) == 1) {
+                $day_format = '0' . $day;
+            }
 
 
             // События
@@ -110,9 +120,9 @@ class Calendar {
                 }
                 $out .= '</td>';
             } else {
-                $out .= '<td class="calendar-day ' . $class . '"><div><span>' . $day . ' ' . $days_week_counter . '</span></div></td>';
+                $out .= '<td class="calendar-day ' . $class . '" date="' . $day_format . '.' . $month_format . '.' . $year . '"><div><span>' . $day . ' ' . $days_week_counter . '</span></div></td>';
             }
-            
+
             if ($day_week == 6) {
                 $out .= '</tr>';
                 if (($days_counter + 1) != $days_month) {

@@ -175,11 +175,17 @@
 
         <div id="carouselEdgardCaptions" class="carousel slide carousel-fade" data-ride="carousel" >
             <ol class="carousel-indicators">
-                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
-                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="1" aria-label="Slide 2"></li>
-                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="2" aria-label="Slide 3"></li>
+                <?
+                /*
+                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></li> 
+                 */
+                ?>
+                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" aria-label="Slide 2"></li>
+                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="1" class="active" aria-label="Slide 3"></li>
             </ol>
             <div class="carousel-inner">
+                <?
+                /*
                 <div class="carousel-item carousel-item-next carousel-item-left" data-interval="50000">
                     <!--
                     <object width="100%" class="d-block w-100 video">
@@ -203,6 +209,8 @@
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                     </div>
                 </div>
+                 */
+                        ?>
                 <div class="carousel-item" data-interval="50000">
                     <!--
                     <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>

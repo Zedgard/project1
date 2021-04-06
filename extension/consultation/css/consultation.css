@@ -62,7 +62,7 @@
     border: 3px solid #FFFFFF;
 }
 .calendar-day div span {
-    margin-top: 0.8rem;
+    margin-top: 0.6rem;
     display: block;
 }
 .calendar-day.calendar_day_active:hover div {
@@ -108,4 +108,56 @@
     border-bottom-color: #fff;
     border-width: 9px;
     margin-left: 0;
+}
+.consultant_periods td{
+    font-size: 1.6rem;
+    vertical-align: middle;
+}
+#modal_consultation_pay .modal-header{
+    color: #FFFFFF;
+    text-transform: uppercase;
+    background-color: #0aaeeb;
+}
+#modal_consultation_pay .modal-title{
+    margin: 0 auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#modal_consultation_pay .block_consultation_pay_info{
+    padding: 2rem;
+    margin: 0 auto;
+    background-color: #e3e3e3;
+    border: 2px solid #70c3e6;
+    text-align: center;
+    max-width: 420px;
+}
+#modal_consultation_pay .consultation_period, 
+#modal_consultation_pay .consultation_date{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+#modal_consultation_pay .block_consultation_pay_info .block_consultation_pay_info_title{
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #0883bd;
+}
+#modal_consultation_pay .block_consultation_pay_info .block_consultation_pay_info_body{
+    font-size: 1rem;
+}
+#modal_consultation_pay .block_consultation_user_info{
+    background-color: #ededed;
+    padding: 1rem;
+    width: 350px;
+    margin: 0 auto;
+}
+#modal_consultation_pay .btn_consultation_pay_block{
+    max-width: 420px;
+}
+.block_consultation_pay_agreement{
+    font-size: 0.6rem;
+    width: 300px;
+    margin: 10px auto;
+    text-align: justify;
 }

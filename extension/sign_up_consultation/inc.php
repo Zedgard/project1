@@ -229,7 +229,7 @@ class sign_up_consultation extends \project\extension {
     }
 
     /**
-     * Оиформация по консультации
+     * Информация по консультации
      * @param type $master_id
      * @return type
      */
@@ -239,6 +239,39 @@ class sign_up_consultation extends \project\extension {
                 left join zay_pay p on p.id=c.pay_id
                 where c.id='?'";
         return $this->getSelectArray($querySelect, array($id), 0);
+    }
+
+    /**
+     * Данные о периодах консультанта
+     * @param type $master_id
+     * @return type
+     */
+    public function get_consultation_times($master_id) {
+        $return_data = array();
+        $querySelect = "SELECT
+                    m.*,
+                    ( 
+                    SELECT p.period_price FROM 
+                       zay_consultation_periods p 
+                    WHERE p.master_id = m.id AND p.period_hour = 1 
+                    ) AS period_price
+                FROM
+                    zay_consultation_master m
+                WHERE 
+                    m.id = 1";
+        $data = $this->getSelectArray($querySelect, array($master_id), 0);
+        if (count($data) > 0) {
+            $ex = explode(',', $data[0]['list_times']);
+
+            foreach ($ex as $value) {
+                $timestamp = strtotime($value) + 60 * 60;
+                $time = date('H:i', $timestamp);
+                $data[0]['period_time'] = $value . ' - ' . $time;
+
+                $return_data[] = $data[0]; 
+            }
+        }
+        return $return_data;
     }
 
 }
