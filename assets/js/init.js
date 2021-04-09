@@ -559,6 +559,7 @@ function open_cart_modal(title, img) {
 /* Удаление с корзины */
 function initCartProductRemove() {
     $(".cart_product_remove").unbind('click').click(function () {
+        var btn_o = this;
         var cart_product_id = $(this).attr('product_id');
 
         var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");

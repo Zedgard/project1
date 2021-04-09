@@ -172,11 +172,13 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
                     // Отправляем пользователя на страницу оплаты
                     //header('Location: ' . $confirmationUrl);
                 } else {
-                    echo 'Ошибка операции!';
+                    $_SESSION['errors'][] = 'Ошибка операции!';
                 }
             } else {
-                echo "<div>Ошибка операции!</div>";
+                $_SESSION['errors'][] = "<div>Ошибка операции!</div>";
             }
         }
     }
+} else {
+    $_SESSION['errors'][] = 'Нет товаров к покупке!';
 }

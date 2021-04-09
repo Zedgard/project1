@@ -101,17 +101,52 @@ if (isset($_POST['send_consultation_form'])) {
     $_SESSION['cart']['itms'][] = $data_itm;
 }
 
-// Добавление новой консультации
-if (isset($_POST['send_consultation_pay'])) {
-    /*
-     * Сдесь сделать авторизацию если клиент зарегистрирован
-     * иначе регистрируем
-     */
-    $_SESSION['consultation_user_phone'] = trim($_POST['consultation_user_phone']);
-    $_SESSION['consultation_user_email'] = trim($_POST['consultation_user_email']);
-    $_SESSION['consultation_user_pass'] = trim($_POST['consultation_user_pass']);
-    $result = array('success' => 0, 'success_text' => 'Ошибка! Разработка!');
+
+// Добавление в корзину
+if (isset($_POST['add_other_consultation_cart'])) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+    $sign_up_consultation = new \project\sign_up_consultation();
+    $product_period_id = trim($_POST['product_period_id']);
+    $consultation_user_fio = trim($_POST['consultation_user_fio']);
+    $consultation_date = $_POST['consultation_date'];
+    $consultation_period = $_POST['consultation_period'];
+
+    $_SESSION['cart']['itms'] = array();
+
+    $data = $sign_up_consultation->get_consultation_on_period_info($product_period_id);
+
+    $product_descr = "<div>Консультация с {$data['master_name']}</div>"
+            . "<div>Имя клиента: {$_SESSION['user']['info']['first_name']}</div>"
+            . "<div>Телефон: {$_SESSION['user']['info']['phone']}</div>"
+            . "<div>Email: {$_SESSION['user']['info']['email']}</div>"
+            . "<div>Консультант: {$data['master_name']}</div>"
+            . "<div>Дата и время: {$consultation_date} {$consultation_period}</div>"
+            . "<div>Цена: {$data['period_price']}</div>";
+    $product_price = trim($data['period_price']);
+
+    if (isset($_SESSION['user']['info']) && $_SESSION['user']['info']['id'] > 0) {
+        $data_itm = array(
+            'id' => 0,
+            'images_str' => '',
+            'title' => 'Онлайн консультация c ' . $data['master_name'],
+            'user_id' => $_SESSION['user']['info']['id'],
+            'first_name' => $_SESSION['user']['info']['first_name'],
+            'user_phone' => $_SESSION['user']['info']['phone'],
+            'user_email' => $_SESSION['user']['info']['email'],
+            'pay_descr' => $product_descr,
+            'price' => $product_price
+        );
+
+        if ($consultation_find_basket == 0) {
+            $_SESSION['consultation'] = $data_itm;
+            $_SESSION['cart']['itms'][] = $data_itm;
+        }
+        $result = array('success' => 1, 'success_text' => '');
+    } else {
+        $errors[] = 'Не определен пользователь!';
+    }
 }
+
 
 // Удаление из корзины
 if (isset($_POST['cart_product_remove'])) {
@@ -120,6 +155,16 @@ if (isset($_POST['cart_product_remove'])) {
     if ($product_id > 0) {
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
             if ($product_id == $value['id']) {
+                //unset($_SESSION['cart']['itms'][$key]);
+            } else {
+                $new_arr[] = $_SESSION['cart']['itms'][$key];
+            }
+        }
+        $_SESSION['cart']['itms'] = $new_arr;
+        init_prices();
+    } else {
+        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+            if (0 == $value['id']) {
                 //unset($_SESSION['cart']['itms'][$key]);
             } else {
                 $new_arr[] = $_SESSION['cart']['itms'][$key];
@@ -137,6 +182,7 @@ if (isset($_POST['cart_product_get_array'])) {
             if (strlen($value['pay_descr']) == 0) {
                 $arr[] = $value;
             }
+            $arr[] = $value;
             //    echo "itms: {$_SESSION['cart']['itms'][$key]}\n";
             //$_SESSION['cart']['itms'][$key]['product_info'] = $pr_products->getProductElem($_SESSION['cart']['itms'][$key]);
             //print_r($pr_products->getProductElem($_SESSION['cart']['itms'][$key]));
@@ -220,24 +266,24 @@ if (isset($_POST['set_cloudpayments'])) {
     $_SESSION['errors'] = array();
     $price_total = 0;
 
-    foreach ($_SESSION['cart']['itms'] as $key => $value) {
-        $email = $value['user_email'];
-        if ($value['price_promo'] > 0) {
-            $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
+    if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+            $email = $value['user_email'];
+            if ($value['price_promo'] > 0) {
+                $price = $value['price_promo'];
+            } else {
+                $price = $value['price'];
+            }
+            $price_total += $price;
         }
-        $price_total += $price;
-    }
-    /**
-     * Заглушка для админов покупка за 1 рубль
-     */
-    if ($p_user->isEditor()) {
-        $price_total = 1;
-    }
+        /**
+         * Заглушка для админов покупка за 1 рубль
+         */
+        if ($p_user->isEditor()) {
+            $price_total = 1;
+        }
 
 
-    if (count($_SESSION['cart']['itms']) > 0) {
         $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
         // Передадим ID пользователя (Создается при консультации)

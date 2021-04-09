@@ -1,5 +1,9 @@
 var pay_status = 0;
 $(document).ready(function () {
+    init_pay();
+});
+
+function init_pay() {
     $(".btn_cart_yandex").unbind('click').click(function () {
         // /pay.php?yandex=1
         console.log(cart_itms);
@@ -50,10 +54,10 @@ $(document).ready(function () {
 
     $(".btn_cart_cloudpayments").unbind('click').click(function () {
         pay_status = 0;
+        console.log('btn_cart_cloudpayments');
         sendPostLigth('/jpost.php?extension=cart', {
             "set_cloudpayments": 1
         }, function (e) {
-            console.log(e);
             if (e['success'] == '1') {
                 console.log('pay');
                 this.pay = function () {
@@ -230,7 +234,7 @@ $(document).ready(function () {
     });
 
     $(".btn_cart_other").unbind('click').click(function () {
-        var preloader ='<div class="pay_preloader"><div class="spinner-border text-center" role="status"><span class="sr-only">Loading...</span></div></div>';
+        var preloader = '<div class="pay_preloader"><div class="spinner-border text-center" role="status"><span class="sr-only">Loading...</span></div></div>';
         $(".block_cart_other").html('<div id="payment-form">' + preloader + '</div>');
         pay_status = 0;
         $(".block_cart_other").show(200);
@@ -238,29 +242,33 @@ $(document).ready(function () {
         sendPostLigth('/jpost.php?extension=cart', {
             "get_cart_other": 1
         }, function (e) {
+            if (e['success'] == '1') {
+                var pay_key = e['pay_key'];
+                var return_url = e['return_url'];
+                //Инициализация виджета. Все параметры обязательные.
+                const checkout = new window.YooMoneyCheckoutWidget({
+                    confirmation_token: 'ct-' + pay_key,
+                    return_url: return_url,
+                    error_callback(error) {
+                        //Обработка ошибок инициализации
+                    }
+                });
 
-            var pay_key = e['pay_key'];
-            var return_url = e['return_url'];
-            //Инициализация виджета. Все параметры обязательные.
-            const checkout = new window.YooMoneyCheckoutWidget({
-                confirmation_token: 'ct-' + pay_key,
-                return_url: return_url,
-                error_callback(error) {
-                    //Обработка ошибок инициализации
-                }
-            });
+                //Отображение платежной формы в контейнере
+                checkout.render('payment-form')
+                        //После отображения платежной формы метод render возвращает Promise (можно не использовать).
+                        .then(() => {
+                            //Код, который нужно выполнить после отображения платежной формы.
+                            //$(".block_cart_other").show(200);
+                            $(".pay_preloader").hide(200);
+                        });
 
-            //Отображение платежной формы в контейнере
-            checkout.render('payment-form')
-                    //После отображения платежной формы метод render возвращает Promise (можно не использовать).
-                    .then(() => {
-                        //Код, который нужно выполнить после отображения платежной формы.
-                        //$(".block_cart_other").show(200);
-                        $(".pay_preloader").hide(200);
-                    });
-
-            ;
+                ;
+            } else {
+                alert(e['errors'].toString());
+                $(".pay_preloader").hide(200);
+                $(".block_cart_other").hide(200);
+            }
         });
     });
-
-});
+}

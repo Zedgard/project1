@@ -58,3 +58,6 @@
     <div class="col-lg-3 text-left mt-3" style="display: none;">
     </div>
 </div>
+<script>
+    init_pay();
+</script>

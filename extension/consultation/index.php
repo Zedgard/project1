@@ -9,10 +9,12 @@ include_once 'inc.php';
 
 $calendar = Calendar::getMonth(date('n'), date('Y'), $events);
 
-$consultation_phone == '';
-$consultation_email == '';
-$consultation_pass == 1;
+$consultation_fio = '';
+$consultation_phone = '';
+$consultation_email = '';
+$consultation_pass = 1;
 if ($_SESSION['user']['info']['id'] > 0) {
+    $consultation_fio = $_SESSION['user']['info']['first_name'];
     $consultation_phone = $_SESSION['user']['info']['phone'];
     $consultation_email = $_SESSION['user']['info']['email'];
     $consultation_pass = 0;

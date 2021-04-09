@@ -1544,6 +1544,11 @@ nav{
     display: block;
 }
 
+.pays_list_line_block a{
+    text-align: center;
+    margin: 0 auto;
+}
+
 
 @media (max-width: 1366px) {
     .center-brand .sidemenu_btn {

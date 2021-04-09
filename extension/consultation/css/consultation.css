@@ -162,3 +162,10 @@
     margin: 10px auto;
     text-align: justify;
 }
+.consultation_price_block{
+    font-size: 1.6rem;
+}
+.consultation_price_block span{
+    font-size: 2rem;
+    font-weight: bold;
+}

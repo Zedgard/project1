@@ -7,7 +7,14 @@ session_start();
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 //include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php'; не подключаем а то токен не будет работать
+
+/*
+ * Кэширование 
+ */
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/init_cache.php';
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 

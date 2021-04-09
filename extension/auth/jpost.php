@@ -11,6 +11,7 @@ $auth = new \project\auth();
  * Авторизация
  */
 if (isset($_POST['authorization'])) {
+    $data = array();
     $get_url = (isset($_GET['url']) && strlen($_GET['url']) > 0) ? $_GET['url'] : '';
     // галка запомни меня
     $remember_me = 0;
@@ -36,15 +37,25 @@ if (isset($_POST['authorization'])) {
         if ($r == 0) {
             $url = '/';
         }
-        
+
         // Если передали GET url
-        if(strlen($get_url) > 0){
+        if (strlen($get_url) > 0) {
             $url = $get_url;
         }
 
-        $result = array('success' => 1, 'success_text' => '', 'action' => $url, 'action_time' => '0');
+        // Вернем некоторые данные
+        $data['email'] = $_SESSION['user']['info']['email'];
+        $data['first_name'] = $_SESSION['user']['info']['first_name'];
+        $data['last_name'] = $_SESSION['user']['info']['last_name'];
+        $data['avatar'] = $_SESSION['user']['info']['avatar'];
+        // Не куда не перенаправляем
+        if ($get_url == 'none') {
+            $result = array('success' => 1, 'success_text' => '', 'action_time' => '0', 'data' => $data);
+        } else {
+            $result = array('success' => 1, 'success_text' => '', 'action' => $url, 'action_time' => '0', 'data' => $data);
+        }
     } else {
-        $result = array('success' => 0, 'success_text' => '', 'action_time' => '0');
+        $result = array('success' => 0, 'success_text' => '', 'action_time' => '0', 'data' => $data);
     }
 }
 /*
@@ -90,5 +101,74 @@ if (isset($_POST['re_password_go'])) {
         $result = array('success' => 1, 'success_text' => 'Выполнено', 'action' => '/auth/', 'action_time' => '0');
     } else {
         $result = array('success' => 0, 'success_text' => '');
+    }
+}
+
+
+// Проверить есть ли учетка пользователя, если есть то авторизируем пользователя
+if (isset($_POST['check_user'])) {
+    /*
+     * Сдесь сделать авторизацию если клиент зарегистрирован
+     * иначе регистрируем
+     */
+    // Определим пользователя и разрешим ему отправлять запросы
+    if (isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) {
+        $_SESSION['consultation_user_fio'] = trim($_POST['consultation_user_fio']);
+        $_SESSION['consultation_user_phone'] = trim($_POST['consultation_user_phone']);
+        $_SESSION['consultation_user_email'] = trim($_POST['consultation_user_email']);
+        $_SESSION['consultation_user_pass'] = trim($_POST['consultation_user_pass']);
+
+        $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
+        if ($user['id'] > 0) {
+            $_SESSION['consultation_user_fio'] = $user['first_name'];
+            $_SESSION['consultation_user_phone'] = $user['phone'];
+            $_SESSION['consultation_user_email'] = $user['email'];
+            $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
+
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Не авторизован');
+        }
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Tokken error!');
+    }
+}
+
+// Проверить есть ли учетка пользователя, если есть то авторизируем или зарегистрируем пользователя
+if (isset($_POST['check_and_register_user'])) {
+    // Определим пользователя и разрешим ему отправлять запросы
+    if (isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) {
+        $_SESSION['consultation_user_fio'] = trim($_POST['consultation_user_fio']);
+        $_SESSION['consultation_user_phone'] = trim($_POST['consultation_user_phone']);
+        $_SESSION['consultation_user_email'] = trim($_POST['consultation_user_email']);
+        $_SESSION['consultation_user_pass'] = trim($_POST['consultation_user_pass']);
+
+        $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
+        if ($user['id'] > 0) {
+            $_SESSION['consultation_user_fio'] = $user['first_name'];
+            $_SESSION['consultation_user_phone'] = $user['phone'];
+            $_SESSION['consultation_user_email'] = $user['email'];
+            $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
+
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            if ($auth->register($_POST['consultation_user_email'], $_POST['consultation_user_phone'], $_POST['consultation_user_pass'], $_POST['consultation_user_pass'],
+                            1, 1)) {
+                $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
+                if ($user['id'] > 0) {
+                    $_SESSION['consultation_user_fio'] = $user['first_name'];
+                    $_SESSION['consultation_user_phone'] = $user['phone'];
+                    $_SESSION['consultation_user_email'] = $user['email'];
+                    $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
+                    $result = array('success' => 1, 'success_text' => '');
+                } else {
+                    $result = array('success' => 0, 'success_text' => 'Нет такой учетки извините, необходимо зарегистрироваться!');
+                }
+            } else {
+                $result = array('success' => 0, 'success_text' => 'Ошибка регистрации!');
+            }
+        }
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Token error!');
     }
 }
