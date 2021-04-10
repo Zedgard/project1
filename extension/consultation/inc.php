@@ -9,6 +9,13 @@ class Calendar {
      * Вывод календаря на один месяц.
      */
     public static function getMonth($month, $year, $events = array()) {
+        if (!isset($_SESSION['calendar']['max_day'])) {
+            $_SESSION['calendar']['max_day'] = 30;
+        }
+        if (!isset($_SESSION['calendar']['month_show'])) {
+            $_SESSION['calendar']['max_show'] = 1;
+        }
+
         $months = array(
             1 => 'Январь',
             2 => 'Февраль',
@@ -24,9 +31,14 @@ class Calendar {
             12 => 'Декабрь'
         );
 
+        $display = 'block';
+        if ($_SESSION['calendar']['max_show'] < 1) {
+            $display = 'none';
+        }
+        $_SESSION['calendar']['max_show']--;
         $month = intval($month);
         $out = '
-		<div class="calendar-item">
+		<div class="calendar-item mb-3" style="display: ' . $display . ';">
 			<div class="calendar-head">' . $months[$month] . ' ' . $year . '</div>
 			<table>
 				<tr>
@@ -55,18 +67,17 @@ class Calendar {
         $days_month = date('t', mktime(0, 0, 0, $month, 1, $year));
 
         /* За сколько дней можно записаться */
-        $max_day = 30;
         for ($day = 1; $day <= $days_month; $day++) {
 
             if (date('j.n.Y') == $day . '.' . $month . '.' . $year) {
-                $class = 'today';
+                $class = 'calendar_day_active today';
             } elseif (time() > strtotime($day . '.' . $month . '.' . $year)) {
                 $class = 'last';
             } else {
                 $class = 'calendar_day_active';
-                $max_day--;
+                $_SESSION['calendar']['max_day']--;
             }
-            if ($max_day <= 0) {
+            if ($_SESSION['calendar']['max_day'] <= 0) {
                 $class = 'last';
             }
 
@@ -140,32 +151,48 @@ class Calendar {
     }
 
     /**
-     * Вывод календаря на несколько месяцев.
+     * Добавление месяца
+     * @param type $date
+     * @return type
      */
-    public static function getInterval($start, $end, $events = array()) {
-        $curent = explode('.', $start);
+    public static function add_month($date, $n = 1) {
+        $d = new DateTime($date);
+        $d->modify('+' . $n . ' months');
+
+        return $d->format("d.m.Y");
+    }
+
+    /**
+     * Вывод календаря на несколько месяцев.
+     * @param type $startDate Дата начала
+     * @param type $month колличество выводимых месяцев
+     * @param type $events события
+     * @return string возвращает отрисованный календарь
+     */
+    public static function getInterval($startDate, $month, $events = array()) {
+        $curent = explode('.', $startDate);
         $curent[0] = intval($curent[0]);
 
-        $end = explode('.', $end);
-        $end[0] = intval($end[0]);
+        $date_new = self::add_month($startDate, $month);
+        $end = explode('.', $date_new);
 
         $begin = true;
         $out = '<div class="calendar-wrp">';
         do {
-            $out .= self::getMonth($curent[0], $curent[1], $events);
+            $out .= self::getMonth($curent[1], $curent[2], $events);
 
-            if ($curent[0] == $end[0] && $curent[1] == $end[1]) {
+            if ($curent[1] == $end[1]) {
                 $begin = false;
             }
 
-            $curent[0]++;
+            $curent[1]++;
             if ($curent[0] == 13) {
                 $curent[0] = 1;
                 $curent[1]++;
             }
         } while ($begin == true);
 
-        $out .= '<div class="">';
+        $out .= '</div>';
         return $out;
     }
 

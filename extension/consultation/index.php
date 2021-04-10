@@ -6,8 +6,10 @@ include_once 'inc.php';
 //	'16'    => 'Заплатить ипотеку',
 //	'08.04' => 'День защитника Отечества'
 //);
-
-$calendar = Calendar::getMonth(date('n'), date('Y'), $events);
+$_SESSION['calendar']['max_day'] = 40;
+$events = array();
+//$calendar = Calendar::getMonth(date('n'), date('Y'), $events);
+$calendar = Calendar::getInterval(date("d.m.Y"), 1, $events);
 
 $consultation_fio = '';
 $consultation_phone = '';

@@ -169,3 +169,6 @@
     font-size: 2rem;
     font-weight: bold;
 }
+.btn_consultation_pay_text{
+    text-transform: uppercase;
+}

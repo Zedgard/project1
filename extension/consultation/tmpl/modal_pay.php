@@ -47,6 +47,7 @@
                         ?>
                         <div class="text-center">
                             <input type="button" value="Оплатить" class="btn btn-success btn_consultation_pay_show" />
+                            <div class="btn_consultation_pay_text">Выбери способ оплаты ниже:</div>
                         </div>
                     </form>
                 </div>
