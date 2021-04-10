@@ -148,16 +148,18 @@ $(document).ready(function () {
      * WOW effect 
      * 
      */
-    wow = new WOW(
-            {
-                boxClass: 'wow', // default
-                animateClass: 'animated', // default
-                offset: 0, // default
-                mobile: true, // default
-                live: true        // default
-            }
-    )
-    wow.init();
+    if (typeof WOW !== "undefined") {
+        wow = new WOW(
+                {
+                    boxClass: 'wow', // default
+                    animateClass: 'animated', // default
+                    offset: 0, // default
+                    mobile: true, // default
+                    live: true        // default
+                }
+        )
+        wow.init();
+    }
 
     /*
      * Фильтр для мобильной версии 

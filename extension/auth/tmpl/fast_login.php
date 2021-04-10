@@ -162,7 +162,7 @@
             if (result['success'] == '1') {
                 var h = '';
                 h += '<div class="mb-2">Зравствуйте, ' + result['data']['first_name'] + ' ' + result['data']['last_name'] + '</div>';
-                h += '<div class="mb-2">Можете продолжить покупку под своей учетной записью</div>';
+                h += '<div class="mb-2">Можете продолжить под своей учетной записью</div>';
 
                 $(".cart_fast_login .card-body").html(h);
             } else {
