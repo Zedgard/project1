@@ -10,7 +10,7 @@
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
         <meta name="interkassa-verification" content="777d8a842d5f8a07fe433d7f9e9537fd" />
         <?= $_SESSION['noindex'] ?>
-        
+
         <!-- SLEEK CSS -->
         <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.min.css<?= $_SESSION['rand'] ?>" />
         <link rel="stylesheet" href="/themes/site1/css/plugins.css<?= $_SESSION['rand'] ?>">
@@ -94,90 +94,12 @@
         <!--Main Slider-->
         <!--     
         -->
-        <style>
-            .carousel {
-                height: 40rem !important;
-                overflow: hidden;
-            }
-            .carousel-inner {
-                overflow: visible;
-            }
-            .carousel-inner img {
-                left: 50%;
-                width: 100%;
-                max-width: none !important;
-                min-height: 60rem;
-                min-width: 100%;
-                position: absolute;
-                top: 20rem;
-                transform: translate(-50%,-50%);
-            }
-            .carousel-inner video {
-                left: 50%;
-                width: 100%;
-                max-width: none !important;
-                min-height: 40rem;
-                min-width: 100%;
-                position: absolute;
-                top: 10rem;
-                transform: translate(-50%,-50%);
-            }
-            .carousel-inner .video {
-                left: 50%;
-                width: 100%;
-                max-width: none !important;
-                min-height: 30rem;
-                min-width: 100%;
-                position: absolute;
-                top: 30rem;
-                transform: translate(-50%,-50%);
-            }
-            @media (max-width: 682px) {
-
-                .carousel {
-                    height: 40rem !important;
-                    overflow: hidden;
-                }
-                .carousel-inner img {
-                    left: 50%;
-                    width: 180%;
-                    max-width: none !important;
-                    min-height: 36rem;
-                    min-width: 180%;
-                    position: absolute;
-                    top: 16rem;
-                    transform: translate(-50%,-50%);
-                }
-                .carousel-inner video {
-                    left: 50%;
-                    width: 185%;
-                    max-width: none !important;
-                    min-height: 50rem;
-                    min-width: 185%;
-                    position: absolute;
-                    top: 17rem;
-                    transform: translate(-50%,-50%);
-                }
-                .carousel-inner .video {
-                    left: 60%;
-                    width: 130%;
-                    max-width: none !important;
-                    min-height: 60rem;
-                    min-width: 130%;
-                    position: absolute;
-                    top: 20rem;
-                    transform: translate(-50%,-50%);
-                }
-
-            }
-        </style>
-
-
+        <link rel="stylesheet" href="/themes/site1/css/carousel.css<?= $_SESSION['rand'] ?>">
         <div id="carouselEdgardCaptions" class="carousel slide carousel-fade" data-ride="carousel" >
             <ol class="carousel-indicators">
                 <?
                 /*
-                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></li> 
+                  <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></li>
                  */
                 ?>
                 <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" aria-label="Slide 2"></li>
@@ -186,31 +108,31 @@
             <div class="carousel-inner">
                 <?
                 /*
-                <div class="carousel-item carousel-item-next carousel-item-left" data-interval="50000">
-                    <!--
-                    <object width="100%" class="d-block w-100 video">
-                        <param name="movie" value="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&autoplay=1&modestbranding=0&rel=0&showinfo=0"/>
-                        <param name="allowFullScreen" value="true"/>
-                        <param name="allowscriptaccess" value="always"/>
-                        <embed width="100%" height="360" src="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&&autoplay=1&modestbranding=0&rel=0&showinfo=0" class="youtube-player" type="text/html" allowscriptaccess="always" allowfullscreen="true"/>
-                    </object>
-                    -->
-                    <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>
-                        <source src="/themes/site1/video/video-slide.mp4" type="video/mp4">
-                        <source src="/themes/site1/video/video-slide.webm" type="video/webm"> 
-                        <source src="/themes/site1/video/video-slide.ogv" type="video/ogg">
-                        Your browser does not support the video tag.
-                    </video>
-                    <!--
-                    <img class="d-block w-100" data-src="/themes/site1/images/transparent.png" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
-                    -->
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </div>
-                </div>
+                  <div class="carousel-item carousel-item-next carousel-item-left" data-interval="50000">
+                  <!--
+                  <object width="100%" class="d-block w-100 video">
+                  <param name="movie" value="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&autoplay=1&modestbranding=0&rel=0&showinfo=0"/>
+                  <param name="allowFullScreen" value="true"/>
+                  <param name="allowscriptaccess" value="always"/>
+                  <embed width="100%" height="360" src="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&&autoplay=1&modestbranding=0&rel=0&showinfo=0" class="youtube-player" type="text/html" allowscriptaccess="always" allowfullscreen="true"/>
+                  </object>
+                  -->
+                  <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>
+                  <source src="/themes/site1/video/video-slide.mp4" type="video/mp4">
+                  <source src="/themes/site1/video/video-slide.webm" type="video/webm">
+                  <source src="/themes/site1/video/video-slide.ogv" type="video/ogg">
+                  Your browser does not support the video tag.
+                  </video>
+                  <!--
+                  <img class="d-block w-100" data-src="/themes/site1/images/transparent.png" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
+                  -->
+                  <div class="carousel-caption d-none d-md-block">
+                  <h5>First slide label</h5>
+                  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  </div>
+                  </div>
                  */
-                        ?>
+                ?>
                 <div class="carousel-item" data-interval="50000">
                     <!--
                     <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>

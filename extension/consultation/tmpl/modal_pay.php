@@ -12,14 +12,32 @@
                 <div class="mb-2 text-center">Добрый человек, проверь <strong>внимательно все детали</strong> заказа</div>
                 <div class="block_consultation_pay_info mb-4">
                     <div class="block_consultation_pay_info_title mb-2">онлайн-консультация</div>
-                    <div class="block_consultation_pay_info_body mb-3">
-                        <span class="consultation_date"></span> с <span class="consultation_period"></span> <span style="font-size: 1.2rem;">(МСК)</span>
-                    </div>
+                    <table class="block_consultation_pay_info_table text-center" style="margin: 0 auto;width: 220px;">
+                        <tr>
+                            <td>
+                                <i class="far fa-calendar-alt"></i>
+                            </td>
+                            <td>
+                                <span class="consultation_date"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="far fa-clock"></i>
+                            </td>
+                            <td>
+                                <span class="consultation_period"></span> <span style="font-size: 1.2rem;">(МСК)</span>
+                            </td>
+                        </tr>
+                    </table>
+                    
                     <div class="consultation_price_block">
-                        <span class="consultation_price"></span>Р
+                        <span class="consultation_price"></span>&#8381;
                     </div>
                 </div>
                 <div class="text-center mb-3" style="color: #595959;font-size: 1.2rem;">Твои данные</div>
+                <div class="consultation_price_block_user_info">Если ты <b>новый пользователь</b>, система автоматически тебя зарегистрирует</div>
+                <div class="consultation_price_block_user_info mb-4">Если у тебя <b>есть аккаунт</b> -автоматически войдешь</div>
                 <div class="block_consultation_user_info mb-2">
                     <form>
                         <div class="form-group">

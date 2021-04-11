@@ -18,8 +18,7 @@ $(document).ready(function () {
         this.play();
         $(this).css("background-color", "black");
     });
-
-
+ 
     initCartArray();
     //initCartCount();
     init_price_val();
@@ -639,7 +638,7 @@ function init_btn_send_message() {
 
 
 function init_office_list_categorys_col() {
-    if (!!$(".office_list_categorys")) {
+    if (typeof $(".office_list_categorys")[0] !== "undefined") {
         sendPostLigth('/jpost.php?extension=wares', {
             "init_office_list_categorys_col": 1
         }, function (e) {
@@ -660,7 +659,7 @@ function init_office_list_categorys_col() {
 }
 
 function init_bottom_cookie_btn() {
-    if (!!$(".bottom_cookie_btn")) {
+    if (typeof $(".bottom_cookie_btn")[0] !== "undefined") {
         $(".bottom_cookie_btn").unbind('click').click(function () {
             sendPostLigth('/jpost.php', {
                 "bottom_cookie_btn": 1
@@ -673,4 +672,46 @@ function init_bottom_cookie_btn() {
         });
 
     }
+}
+
+// возвращает куки с указанным name,
+// или undefined, если ничего не найдено
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+
+// Пример использования:
+//setCookie('user', 'John', {secure: true, 'max-age': 3600});
+function setCookie(name, value, options = {}) {
+
+    options = {
+        path: '/'
+    };
+
+    if (options.expires instanceof Date) {
+        options.expires = options.expires.toUTCString();
+    }
+
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+    for (let optionKey in options) {
+        updatedCookie += "; " + optionKey;
+        let optionValue = options[optionKey];
+        if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+}
+
+// Удаление 
+function deleteCookie(name) {
+    setCookie(name, "", {
+        'max-age': -1
+    });
 }

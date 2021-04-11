@@ -11,6 +11,7 @@ $auth = new \project\auth();
  * Авторизация
  */
 if (isset($_POST['authorization'])) {
+
     $data = array();
     $get_url = (isset($_GET['url']) && strlen($_GET['url']) > 0) ? $_GET['url'] : '';
     // галка запомни меня

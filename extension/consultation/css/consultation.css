@@ -125,7 +125,7 @@
 }
 
 #modal_consultation_pay .block_consultation_pay_info{
-    padding: 2rem;
+    padding: 1.1rem;
     margin: 0 auto;
     background-color: #e3e3e3;
     border: 2px solid #70c3e6;
@@ -141,15 +141,19 @@
     font-size: 1.2rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: #0883bd;
+    color: #207f9b;
 }
 #modal_consultation_pay .block_consultation_pay_info .block_consultation_pay_info_body{
+    font-size: 1rem;
+}
+.block_consultation_pay_info_table i{
+    color: #999;
     font-size: 1rem;
 }
 #modal_consultation_pay .block_consultation_user_info{
     background-color: #ededed;
     padding: 1rem;
-    width: 350px;
+    max-width: 350px;
     margin: 0 auto;
 }
 #modal_consultation_pay .btn_consultation_pay_block{
@@ -162,7 +166,11 @@
     margin: 10px auto;
     text-align: justify;
 }
+.consultation_price{
+    color: #207f9b;
+}
 .consultation_price_block{
+    margin-top: 10px;
     font-size: 1.6rem;
 }
 .consultation_price_block span{
@@ -171,4 +179,15 @@
 }
 .btn_consultation_pay_text{
     text-transform: uppercase;
+}
+.consultation_price_block_user_info{
+    margin: 0 auto;
+    font-size: 0.8rem;
+    margin: 0 auto;
+    font-size: 0.8rem;
+    max-width: 450px;
+    text-align: center;
+}
+.consultation_price_block_user_info b{
+    color: #207f9b;
 }

@@ -24,7 +24,7 @@
     }
 </style>
 
-<form id="registration" class="show_form_registration" action="/jpost.php?extension=auth" method="POST" style="display: block;">
+<form id="registration" class="show_form_registration" action="/jpost.php?extension=auth" method="POST" style="display: none;">
     <div class="card cart_fast_login">
         <div class="card-body p-5">
 
@@ -88,7 +88,7 @@
 </form>
 
 <!-- Блок Авторизация -->
-<div class="col-lg-12 show_form_auth" style="display: none;">
+<div class="col-lg-12 show_form_auth" style="display: block;">
     <div class="card cart_fast_login">
         <div class="card-body p-5">
 

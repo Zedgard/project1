@@ -8,7 +8,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 $user = new \project\user();
-
+//setcookie('test2', 'gggg');
+//print_r($_COOKIE);
 if (!$user->isEditor()) {
     ?>
     <!-- SLEEK CSS -->
@@ -64,6 +65,7 @@ if (!$user->isEditor()) {
     <!-- Theme Base, Components and Settings background-cover -->
     <script src="/assets/css/porto/js/theme.js<?= $_SESSION['rand'] ?>"></script>
     <?php
+        
     include $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/tmpl/fast_login.php';
     //header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
     //location_href('/');
