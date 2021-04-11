@@ -1,0 +1,193 @@
+.calendar-item {
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    font: 14px/1.2 Arial, sans-serif;
+}
+.calendar-head {
+    text-align: center;
+    padding: 5px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    background-color: #0073AA !important;
+}
+.calendar-item table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.calendar-item th {
+    font-size: 1rem;
+    padding: 6px 7px;
+    text-align: center;
+    color: #888;
+    font-weight: normal;
+}
+.calendar-item td {
+    font-size: 1.2rem;
+    padding: 3vh 0;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.calendar-item tr th:nth-child(6), .calendar-item tr th:nth-child(7),
+.calendar-item tr td:nth-child(6), .calendar-item tr td:nth-child(7)  {
+    color: #e65a5a;
+}	
+.calendar-day.last {
+    background-color: #f1f1f1;
+    color: #999 !important;
+}	
+.calendar-day.last div {
+    border: 3px solid #f1f1f1;
+}
+.calendar-day.today {
+    color: #000000;
+    background-color: #ffe2ad;
+    font-weight: bold;
+}
+.calendar-day.today div{
+    border: 3px solid #ffe2ad;
+}
+.calendar-day.calendar_day_active:hover {
+    cursor: pointer;
+}
+.calendar-day div {
+    display: block;
+    margin: 0 auto;
+    height: 3rem;
+    width: 3rem;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    border: 3px solid #FFFFFF;
+}
+.calendar-day div span {
+    margin-top: 0.6rem;
+    display: block;
+}
+.calendar-day.calendar_day_active:hover div {
+    border: 3px solid #0073AA;
+}
+
+.calendar-day.active {
+}
+.calendar-day.active div {
+    color: #FFFFFF;
+    border: 3px solid #0073AA;
+    background-color: #0073AA;
+    font-weight: bold; 
+}
+.calendar-day.event {
+    /* background: #ffe2ad; */
+    position: relative;
+    cursor: pointer;
+}
+.calendar-day.event:hover .calendar-popup {
+    display: block;
+}
+.calendar-popup {
+    display: none;
+    position: absolute;
+    top: 9vh;
+    left: 0;
+    min-width: 200px;
+    padding: 15px;
+    background: #fff;
+    text-align: left;
+    font-size: 13px;
+    z-index: 100;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    color: #000;
+}
+.calendar-popup:before {
+    content: ""; 
+    border: solid transparent;
+    position: absolute;    
+    left: 8px;    
+    bottom: 100%;
+    border-bottom-color: #fff;
+    border-width: 9px;
+    margin-left: 0;
+}
+.consultant_periods td{
+    font-size: 1.6rem;
+    vertical-align: middle;
+}
+#modal_consultation_pay .modal-header{
+    color: #FFFFFF;
+    text-transform: uppercase;
+    background-color: #0aaeeb;
+}
+#modal_consultation_pay .modal-title{
+    margin: 0 auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#modal_consultation_pay .block_consultation_pay_info{
+    padding: 1.1rem;
+    margin: 0 auto;
+    background-color: #e3e3e3;
+    border: 2px solid #70c3e6;
+    text-align: center;
+    max-width: 420px;
+}
+#modal_consultation_pay .consultation_period, 
+#modal_consultation_pay .consultation_date{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+#modal_consultation_pay .block_consultation_pay_info .block_consultation_pay_info_title{
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #207f9b;
+}
+#modal_consultation_pay .block_consultation_pay_info .block_consultation_pay_info_body{
+    font-size: 1rem;
+}
+.block_consultation_pay_info_table i{
+    color: #999;
+    font-size: 1rem;
+}
+#modal_consultation_pay .block_consultation_user_info{
+    background-color: #ededed;
+    padding: 1rem;
+    max-width: 350px;
+    margin: 0 auto;
+}
+#modal_consultation_pay .btn_consultation_pay_block{
+    max-width: 100%;
+    margin: 0 auto;
+}
+.block_consultation_pay_agreement{
+    font-size: 0.6rem;
+    width: 300px;
+    margin: 10px auto;
+    text-align: justify;
+}
+.consultation_price{
+    color: #207f9b;
+}
+.consultation_price_block{
+    margin-top: 10px;
+    font-size: 1.6rem;
+}
+.consultation_price_block span{
+    font-size: 2rem;
+    font-weight: bold;
+}
+.btn_consultation_pay_text{
+    text-transform: uppercase;
+}
+.consultation_price_block_user_info{
+    margin: 0 auto;
+    font-size: 0.8rem;
+    margin: 0 auto;
+    font-size: 0.8rem;
+    max-width: 450px;
+    text-align: center;
+}
+.consultation_price_block_user_info b{
+    color: #207f9b;
+}

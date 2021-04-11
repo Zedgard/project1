@@ -8,6 +8,7 @@ defined('__CMS__') or die;
  * Авторизация пользователя
  */
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/validator.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
@@ -73,7 +74,6 @@ class auth extends \project\user {
 //            if(count($user) == 0){
 //                $_SESSION['errors'][] = 'Пользователь не зарегистрирован';
 //            }
-
             // Если не получилось авторизироваться проверим есть ли регистрация и не активная запись
             if (!isset($user['id'])) {
                 $pass_hash = $this->passHash($password);
@@ -147,7 +147,7 @@ class auth extends \project\user {
             if ($pass == $pass_r) {
                 //$pass_hash = $this->passHash($pass);
                 $wp_hasher = new \project\PasswordHash(8, TRUE);
-                $pass_hash = $wp_hasher->HashPassword( trim( $pass ) );
+                $pass_hash = $wp_hasher->HashPassword(trim($pass));
             }
 
             $activate_codeBase64 = '';
@@ -277,6 +277,24 @@ class auth extends \project\user {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Поиск пользователя по почте или телефону
+     * @param type $email почта
+     * @param type $phone телефон
+     * @return type array
+     */
+    function find_user_email_and_phone_data($email, $phone) {
+        $data = array();
+        $str1 = trim($email);
+        $str2 = trim($phone);
+        if (strlen($str1) > 0 || strlen($str2) > 0) {
+            $select = "SELECT u.* FROM `zay_users` u "
+                    . "WHERE (u.email='?' or u.phone='?') and u.active='1'";
+            $data = $this->getSelectArray($select, array($str1, $str2), 0)[0];
+        }
+        return $data;
     }
 
     /**

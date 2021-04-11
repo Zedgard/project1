@@ -18,8 +18,7 @@ $(document).ready(function () {
         this.play();
         $(this).css("background-color", "black");
     });
-
-
+ 
     initCartArray();
     //initCartCount();
     init_price_val();
@@ -148,16 +147,18 @@ $(document).ready(function () {
      * WOW effect 
      * 
      */
-    wow = new WOW(
-            {
-                boxClass: 'wow', // default
-                animateClass: 'animated', // default
-                offset: 0, // default
-                mobile: true, // default
-                live: true        // default
-            }
-    )
-    wow.init();
+    if (typeof WOW !== "undefined") {
+        wow = new WOW(
+                {
+                    boxClass: 'wow', // default
+                    animateClass: 'animated', // default
+                    offset: 0, // default
+                    mobile: true, // default
+                    live: true        // default
+                }
+        )
+        wow.init();
+    }
 
     /*
      * Фильтр для мобильной версии 
@@ -559,6 +560,7 @@ function open_cart_modal(title, img) {
 /* Удаление с корзины */
 function initCartProductRemove() {
     $(".cart_product_remove").unbind('click').click(function () {
+        var btn_o = this;
         var cart_product_id = $(this).attr('product_id');
 
         var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");
@@ -636,7 +638,7 @@ function init_btn_send_message() {
 
 
 function init_office_list_categorys_col() {
-    if (!!$(".office_list_categorys")) {
+    if (typeof $(".office_list_categorys")[0] !== "undefined") {
         sendPostLigth('/jpost.php?extension=wares', {
             "init_office_list_categorys_col": 1
         }, function (e) {
@@ -657,7 +659,7 @@ function init_office_list_categorys_col() {
 }
 
 function init_bottom_cookie_btn() {
-    if (!!$(".bottom_cookie_btn")) {
+    if (typeof $(".bottom_cookie_btn")[0] !== "undefined") {
         $(".bottom_cookie_btn").unbind('click').click(function () {
             sendPostLigth('/jpost.php', {
                 "bottom_cookie_btn": 1
@@ -670,4 +672,46 @@ function init_bottom_cookie_btn() {
         });
 
     }
+}
+
+// возвращает куки с указанным name,
+// или undefined, если ничего не найдено
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+
+// Пример использования:
+//setCookie('user', 'John', {secure: true, 'max-age': 3600});
+function setCookie(name, value, options = {}) {
+
+    options = {
+        path: '/'
+    };
+
+    if (options.expires instanceof Date) {
+        options.expires = options.expires.toUTCString();
+    }
+
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+    for (let optionKey in options) {
+        updatedCookie += "; " + optionKey;
+        let optionValue = options[optionKey];
+        if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+}
+
+// Удаление 
+function deleteCookie(name) {
+    setCookie(name, "", {
+        'max-age': -1
+    });
 }

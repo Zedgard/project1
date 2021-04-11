@@ -229,7 +229,7 @@ class sign_up_consultation extends \project\extension {
     }
 
     /**
-     * Оиформация по консультации
+     * Информация по консультации
      * @param type $master_id
      * @return type
      */
@@ -239,6 +239,54 @@ class sign_up_consultation extends \project\extension {
                 left join zay_pay p on p.id=c.pay_id
                 where c.id='?'";
         return $this->getSelectArray($querySelect, array($id), 0);
+    }
+
+    /**
+     * Данные о периодах консультанта
+     * @param type $master_id
+     * @return type
+     */
+    public function get_consultation_times($master_id = 1) {
+        $return_data = array();
+        $querySelect = "SELECT
+                            p.id, m.master_name, m.list_times, p.period_price, p.period_hour, p.periods_minute
+                        FROM
+                        zay_consultation_periods p
+                           left join zay_consultation_master m on p.master_id=m.id
+                        WHERE
+                            m.id = '?'";
+        $data = $this->getSelectArray($querySelect, array($master_id), 0);
+        if (count($data) > 0) {
+            $ex = explode(',', $data[0]['list_times']);
+
+            foreach ($ex as $value) {
+                $timestamp = strtotime($value) + 60 * 60;
+                $time = date('H:i', $timestamp);
+                $data[0]['period_time'] = $value . ' - ' . $time;
+
+                $return_data[] = $data[0];
+            }
+        }
+        return $return_data;
+    }
+
+    /**
+     * Данные консультации по периоду
+     * @param type $period_id
+     * @return type
+     */
+    public function get_consultation_on_period_info($period_id) {
+        $data = array();
+        $querySelect = "SELECT
+                            p.id, m.master_name, m.list_times, p.period_price, p.period_hour, p.periods_minute
+                        FROM
+                        zay_consultation_periods p
+                           left join zay_consultation_master m on p.master_id=m.id
+                        WHERE
+                            p.id = '?'";
+        $data = $this->getSelectArray($querySelect, array($period_id), 0)[0];
+
+        return $data;
     }
 
 }

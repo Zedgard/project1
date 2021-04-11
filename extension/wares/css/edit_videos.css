@@ -3,7 +3,6 @@
     background-position: center;
     background-size: cover;
     width: 100%;
-    height: 35vh;
 }
 .webinar_head_logo{
     text-align: center;
@@ -35,7 +34,6 @@
     padding: 0.25rem;
     background-color: #e3e3e3;
     border: 1px solid #dee2e6;
-    max-height: 24vh;
     max-width: 12vw;
 }
 
@@ -61,7 +59,7 @@
     padding: 1%;
     position: absolute;
     right: 0px;
-    width: 50%;
+    width: 70%;
     background-color: #FFFFFF;
     border: 1px solid #dee2e6;
     display: none;

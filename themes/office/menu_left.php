@@ -58,6 +58,12 @@
                 <span class="nav-text">Вебинары</span> 
             </a> 
         </li>
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'shopping') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="	/office/shopping/">
+                <i class="mdi mdi-cart"></i>
+                <span class="nav-text">Покупки</span> 
+            </a> 
+        </li>
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'userprofile_admin') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="	/office/userprofile_admin/">
                 <i class="mdi mdi-calendar-today"></i>

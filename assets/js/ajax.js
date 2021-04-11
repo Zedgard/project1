@@ -3,6 +3,7 @@
  */
 var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets/img/ajax_load_2.svg" style="width: 40px;" /></center></div>';
 (function ($) {
+    setCookie('site_user_ajax_access', '1', {secure: true, 'max-age': 3600});
 
     /**
      * Отправка формы с серилизацией данные из нее
@@ -85,7 +86,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                                     $(obj).find('.form_result').append(result['success_text']);
                                 }
                             }
-                            if(result['success_text'].length > 0 || (!!result['errors'] && result['errors'].length > 0)){
+                            if (typeof result['success_text'] === "undefined" || (!!result['errors'] && result['errors'].length > 0)) {
                                 $(obj).find('.form_result').show(200);
                             }
                             // Выполнить втроенную функцию

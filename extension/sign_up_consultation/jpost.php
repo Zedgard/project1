@@ -202,6 +202,8 @@ if (isset($_POST['get_master_consultants'])) {
     $data = $sign_up_consultation->get_master_consultations($master_id);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+// Информация по консультации
 if (isset($_POST['get_consultations_id'])) {
     $data = $sign_up_consultation->get_consultations_id($_POST['event_id']);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
@@ -220,5 +222,12 @@ if (isset($_POST['update_consultation'])) {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
     }
 
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+// Получить список купленных консультаций
+if (isset($_POST['get_master_consultant_period'])) {
+    $master_id = $_POST['master_id'];
+    $data = $sign_up_consultation->get_consultation_times($master_id);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }

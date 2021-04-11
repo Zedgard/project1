@@ -5,14 +5,26 @@
     <div class="col-lg-12">
         <div class="card1 card-default1">
             <div class="mb-4">
-                <div class="row webinar_head_bg pt-3 pb-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="office_block_top_main">
+                            <div class="office_block_top_left">
+                                <a href="/office/?katalog" class="office_link_back">
+                                    <i class="fas fa-arrow-left"></i>
+                                </a>
+                            </div>
+                            <div class="webinar_head_title2"><?= $wares_info['title'] ?></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row webinar_head_bg pt-3 pb-3" style="margin-top: 60px;">
                     <div class="col-md-3">
                         <div class="webinar_head_logo2 mb-2 text-center">
                             <img src="<?= $wares_info['images'] ?>" class="webinar_head_logo_img mt-2"/>    
                         </div>
                     </div>
                     <div class="col-md-9 p-5">
-                        <div class="webinar_head_title2 mb-4">
+                        <div class="webinar_head_title2 mb-4" style="display: none;">
                             <div class="h2"><?= $wares_info['title'] ?></div>
                         </div>
                         <div class="webinar_head_file2 mb-3">
@@ -57,8 +69,11 @@
                                 ?>
                             </div>
                         </div>
-                        <div class="webinar_head_articul">
+                        <div class="webinar_head_articul mb-3">
                             Артикул: <span><?= $wares_info['articul'] ?></span>
+                        </div>
+                        <div class="wares_info_descr ulli">
+                            <?= $wares_info['descr'] ?>
                         </div>
                     </div>
                 </div>
@@ -126,14 +141,6 @@
                 <h2 class="col-lg-12"><span class="float-left"><?= $wares['title'] ?></span> <span class="float-right"><?= $wares['articul'] ?></span></h2>
             </div>
 
-            <div style="height: 10px;"></div>
-            <div class="series_block_main">
-                <div class="row mb-5 clearfix">
-                    <div class="col-12 wares_info_descr ulli">
-                        <?= $wares_info['descr'] ?>
-                    </div>
-                </div>
-            </div>
             <div class="series_block_main">
                 <?
                 /*
