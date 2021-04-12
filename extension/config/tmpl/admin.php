@@ -33,7 +33,7 @@
                                                     <tr>
                                                         <th>Код</th>
                                                         <th>Наименование</th>
-                                                        <th>Описание</th>
+                                                        <th>Значение</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -140,11 +140,20 @@
         , function (e) {
             var data = e['data'];
             for (var i = 0; i < data.length; i++) {
+                var config_type = data[i]['config_type'];
+                var config_val = data[i]['config_val'];
+                if (config_type === "checkbox") {
+                    var checked = '';
+                    if (data[i]['config_val'] == "1") {
+                        checked = 'checked="checked"';
+                    }
+                    config_val = '<input type="checkbox" name="config_val" class="form-check-input" value="1" ' + checked + ' disabled="disabled" />';
+                }
                 $(".config_arrays_data" + category_id + " tbody").append(
-                        '<tr elm_id="' + data[i]['id'] + '"> \n\
+                        '<tr elm_id="' + data[i]['id'] + '" title="' + data[i]['config_descr'] + '"> \n\
                                 <td>' + data[i]['config_code'] + '</td>\n\
                                 <td>' + data[i]['config_title'] + '</td>\n\
-                                <td>' + data[i]['config_descr'] + '</td>\n\
+                                <td>' + config_val + '</td>\n\
                                 <td style="text-align: center;white-space: nowrap;">\n\
                                     <a href="javascript:void(0)" class="btn btn-sm btn-primary btn_config_edit" title="Редактировать"><i class="mdi mdi-pencil"></i></a>\n\
                                     <a href="javascript:void(0)" class="btn btn-sm btn-danger btn_config_delete" title="Удалить"><i class="mdi mdi-delete"></i></a> \n\

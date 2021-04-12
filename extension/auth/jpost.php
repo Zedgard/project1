@@ -173,3 +173,9 @@ if (isset($_POST['check_and_register_user'])) {
         $result = array('success' => 0, 'success_text' => 'Token error!');
     }
 }
+
+// серверное время 
+if (isset($_POST['get_real_time'])) {
+    $date_time = date("Y-m-d") . 'T' . date("H:i:s");// . '00';
+    $result = array('success' => 1, 'success_text' => '', 'data' => $date_time);
+}

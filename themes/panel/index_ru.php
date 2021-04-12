@@ -218,11 +218,14 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <!--
+
                                     <li class="right-sidebar-in right-sidebar-2-menu">
+                                        Серверное время: <span class="real_time"></span>
+                                    </li>
+                                    <li class="right-sidebar-in right-sidebar-2-menu" style="display: none;">
                                         <i class="mdi mdi-settings mdi-spin"></i>
                                     </li>
-                                    -->
+
                                     <!-- User Account -->
                                     <li class="dropdown user-menu">
                                         <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
