@@ -219,7 +219,7 @@
                                         </ul>
                                     </li>
 
-                                    <li class="right-sidebar-in right-sidebar-2-menu">
+                                    <li class="right-sidebar-2-menu">
                                         Серверное время: <span class="real_time"></span>
                                     </li>
                                     <li class="right-sidebar-in right-sidebar-2-menu" style="display: none;">
