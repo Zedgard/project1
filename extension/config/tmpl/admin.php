@@ -44,38 +44,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
-
-
                             <?
-                            /*
-                              <div class="card">
-                              <div class="card-header" id="heading1">
-                              <button class="btn btn-link collapsed btn_category" category_id="<?= $value['id'] ?>" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse">
-                              <?= $value['title'] ?>
-                              </button>
-                              </div>
-                              <div id="collapse1" class="collapse" aria-labelledby="heading" data-parent="#accordion">
-                              <div class="card-body card-default w-100">
-                              <table class="table table-bordered table-striped config_arrays_data<?= $value['id'] ?>">
-                              <thead>
-                              <tr>
-                              <th>Код</th>
-                              <th>Наименование</th>
-                              <th>Описание</th>
-                              <th></th>
-                              </tr>
-                              </thead>
-                              <tbody>
-
-                              </tbody>
-                              </table>
-                              </div>
-                              </div>
-                              </div>
-                             */
                         }
                         ?>
                     </div>
@@ -386,5 +356,4 @@
             }
         });
     }
-
 </script>

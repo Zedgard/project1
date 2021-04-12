@@ -12,6 +12,9 @@
     color: #FFFFFF;
     background-color: #0073AA !important;
 }
+.calendar-wrp tbody{
+    background-color: #FFFFFF;
+}
 .calendar-item table {
     border-collapse: collapse;
     width: 100%;
@@ -33,6 +36,7 @@
 .calendar-item tr td:nth-child(6), .calendar-item tr td:nth-child(7)  {
     color: #e65a5a;
 }	
+
 .calendar-day.last {
     background-color: #f1f1f1;
     color: #999 !important;
