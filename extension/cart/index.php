@@ -11,8 +11,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+                        
 include_once 'inc.php';
 
+$config = new \project\config();
 $p_products = new \project\products();
 $c_cart = new \project\cart();
 $p_user = new \project\user();

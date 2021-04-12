@@ -165,6 +165,7 @@ blockquote.blockquote::before{
     color: #FFF;
 }
 .sign_up_consultation_back{
+    padding: 1rem 0;
     background-image: url('/assets/img/sign_up_consultation.svg');
     background-position: center center;
     -webkit-background-size: cover;

@@ -193,6 +193,12 @@ $(document).ready(function () {
     initCartProductAdd();
     initCartProductRemove();
 
+
+    $('.accordion').accordion({
+
+        heightStyle: 'content'
+
+    });
 });
 var animateTopVal = 0;
 function animateTop(val, height) {

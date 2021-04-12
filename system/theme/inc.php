@@ -50,7 +50,7 @@ class theme {
                 //print_r($_SESSION['page']);
                 //echo "<br/>\n";
             }
-            
+
             global $lang;
             include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
             $config = new \project\config();
@@ -98,27 +98,27 @@ class theme {
         }
 
         if (count($block_extension) > 0 && $block_see > 0) {
-            $html_extension = array();
-            foreach ($block_extension as $key => $value) {
-                $elems = array();
-                if (strlen($value['extension']) == 0) {
+            foreach ($block_extension as $value) {
+                $content = '';
+                if (strlen($value['extension']) == 0 || $value['extension'] == 'T') {
                     // Обычный контент
-                    $elems[] = $value['content_descr'];
+                    $content = $value['content_descr'];
                 } else {
+                    $html_extension = array();
                     $ext_url = $value['url'];
                     //echo "ext_url: {$ext_url} <br/>\n";
                     if (is_file(DOCUMENT_ROOT . $ext_url)) {
                         ob_start();
-                        include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
-                        $config = new \project\config();
+//                        include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+//                        $config = new \project\config();
                         include DOCUMENT_ROOT . $ext_url;
                         $html_extension[] = ob_get_clean();
                     } else {
                         $html_extension[] = $lang['not_find_extension'];
                     }
-                    $elems[] = implode("\n", $html_extension);
+                    $content = implode("\n", $html_extension);
                 }
-                $_SESSION['page'][$block_code] = implode("\n", $elems);
+                $_SESSION['page'][$block_code] = $_SESSION['page'][$block_code] . $content;
             }
         }
     }
