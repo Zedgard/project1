@@ -55,10 +55,9 @@
         <link href="/assets/plugins/select2/css/select2.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
         <script src="/assets/plugins/select2/js/select2.min.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/ajax.js?v=<?= $_SESSION['rand'] ?>"></script>   
 
         <script src="/assets/plugins/charts/Chart.js?v=<?= $_SESSION['rand'] ?>"></script>
-        
+
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
 
@@ -95,12 +94,11 @@
         <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
-
+        <script type="text/javascript" src="/assets/js/ajax.js?v=<?= $_SESSION['rand'] ?>"></script>   
         <?
         //<script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] "></script> 139
         ?>
         <link href="/assets/css/sleek.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet">
-        
         <script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js?v=<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sortable.js?v=<?= $_SESSION['rand'] ?>"></script>

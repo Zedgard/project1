@@ -47,7 +47,6 @@
         <link href="/assets/plugins/select2/css/select2.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
         <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
 
         <script src="/assets/plugins/charts/Chart.js<?= $_SESSION['rand'] ?>"></script>
 
@@ -65,14 +64,14 @@
         <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script> 
-
+        <script type="text/javascript" src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
         <?
         //<script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] "></script> 139
         ?>
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
 
-        
+
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
@@ -227,7 +226,7 @@
                                     <!-- User Account -->
                                     <li class="dropdown user-menu">
                                         <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                            <? if (strlen($_SESSION['user']['info']['avatar']) > 0 && is_file($_SERVER['DOCUMENT_ROOT']. $_SESSION['user']['info']['avatar'])): ?>
+                                            <? if (strlen($_SESSION['user']['info']['avatar']) > 0 && is_file($_SERVER['DOCUMENT_ROOT'] . $_SESSION['user']['info']['avatar'])): ?>
                                                 <img src="<?= $_SESSION['user']['info']['avatar'] ?>" class="user-image" alt="User Image" />
                                             <? endif; ?>
                                             <span class="d-none d-lg-inline-block"><?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?></span>
