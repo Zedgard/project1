@@ -37,7 +37,7 @@
                 </div>
                 <div class="text-center mb-3" style="color: #595959;font-size: 1.2rem;">Твои данные</div>
                 <div class="consultation_price_block_user_info">Если ты <b>новый пользователь</b>, система автоматически тебя зарегистрирует</div>
-                <div class="consultation_price_block_user_info mb-4">Если у тебя <b>есть аккаунт</b> -автоматически войдешь</div>
+                <div class="consultation_price_block_user_info mb-4">Если у тебя <b>есть аккаунт</b> - автоматически войдешь</div>
                 <div class="block_consultation_user_info mb-2">
                     <form>
                         <div class="form-group">

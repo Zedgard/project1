@@ -36,7 +36,7 @@ function init_pay_data_list() {
         "search_pay_user_str": search_pay_user_str
     }, function (e) {
         $(".pay_data tbody").html("");
-        if (e['data'].length > 0) { 
+        if (e['data'].length > 0) {
             for (var i = 0; i < e['data'].length; i++) {
                 var user_title = '';
                 var user_descr = '';

@@ -4,11 +4,11 @@
             <div class="card card-default">
 
                 <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6">Покупки</h2> 
+                    <h2 class="col-lg-6">Покупки </h2>
                 </div>
 
                 <div class="card-body">
-
+                    
                     <div class="row mb-3">
                         <div class="col-6">
                             <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, телефону...">
@@ -24,7 +24,6 @@
                             </div>
                             <script>
                                 $(function () {
-
                                     $.datepicker.setDefaults(
                                             {
                                                 closeText: 'Закрыть',
@@ -75,12 +74,12 @@
                                         }
                                         return date;
                                     }
-                                    
+
                                     $(".btn-export-exel").unbind('hover').hover(function () {
                                         var from = $(".excel-from").val();
                                         var to = $(".excel-to").val();
                                         //alert("from: " + from + " to: " + to);
-                                        $(this).attr("href","/upload/site_export_pay.php?from=" + from + "&to=" + to);
+                                        $(this).attr("href", "/upload/site_export_pay.php?from=" + from + "&to=" + to);
                                     });
                                 });
                             </script>

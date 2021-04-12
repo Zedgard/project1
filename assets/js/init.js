@@ -18,7 +18,7 @@ $(document).ready(function () {
         this.play();
         $(this).css("background-color", "black");
     });
- 
+
     initCartArray();
     //initCartCount();
     init_price_val();
@@ -28,6 +28,8 @@ $(document).ready(function () {
     init_btn_send_message();
     init_office_list_categorys_col();
     init_bottom_cookie_btn();
+
+    init_real_time();
 
 //    $("#menu").on("click", "a", function (event) {
 //        event.preventDefault();
@@ -714,4 +716,47 @@ function deleteCookie(name) {
     setCookie(name, "", {
         'max-age': -1
     });
+}
+
+/**
+ * Текущее время на сайте
+ * @returns {undefined}
+ */
+function init_real_time() {
+
+    function time_format_str(val) {
+        var text = String((val.toString().length === 2) ? val : '0' + val.toString());
+        return text;
+    }
+
+    function server_time() {
+        sendPostLigth('/jpost.php?extension=auth', {"get_real_time": 1}, function (e) {
+            if (e['data'].length > 0) {
+                var date = new Date(e['data']);
+                var seconds = date.getSeconds();
+
+                var hours_str = (date.getHours().toString().length === 2) ? date.getHours() : '0' + date.getHours().toString();
+                var minutes_str = (date.getMinutes().toString().length === 2) ? date.getMinutes() : '0' + date.getMinutes().toString();
+                var seconds_str = (date.getSeconds().toString().length === 2) ? date.getSeconds() : '0' + date.getSeconds().toString();
+                $(".real_time").html((hours_str + ":" + minutes_str + ":" + seconds_str));
+                setInterval(function () {
+                    seconds++;
+                    date.setSeconds(seconds);
+                    var hours_str = time_format_str(date.getHours());
+                    var minutes_str = time_format_str(date.getMinutes());
+                    var seconds_str = time_format_str(date.getSeconds());
+                    $(".real_time").html((hours_str + ":" + minutes_str + ":" + seconds_str));
+                    if (seconds === 60) {
+                        seconds = 0;
+                    }
+                }, 1000);
+            } else {
+                $(".real_time").html('---');
+            }
+        });
+    }
+//    var time = setInterval(function () {
+//        server_time();
+//    }, 60000);
+    server_time();
 }
