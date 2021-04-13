@@ -39,15 +39,18 @@ if (isset($_POST['get_roles_page_id']) && $_POST['get_roles_page_id'] > 0) {
 if (isset($_POST['edit_material'])) {
     $id = $_POST['edit_material'];
     $content_descr = '';
-    if($_POST['ext_urls'] == ''){
+    if ($_POST['ext_urls'] == '') {
         $content_descr = $_POST['content_descr'];
     }
-    if($_POST['ext_urls'] == "T"){
+    if ($_POST['ext_urls'] == "T") {
         $content_descr = $_POST['content_descr_text'];
     }
+    if ($id == 0) {
+        $action = './?content=' . $_POST['page_id'];
+    }
     if ($p->contentEdit($id, $_POST['content_title'], $_POST['page_id'], $_POST['block_id'], $content_descr, $_POST['ext_urls'])) {
-        $result = array('success' => 1, 'success_text' => $lang['pages'][$_SESSION['lang']]['success']//, 'action' => './?content=' . $_POST['page_id']
-                );
+        $result = array('success' => 1, 'success_text' => $lang['pages'][$_SESSION['lang']]['success'], 'action' => $action
+        );
         $_SESSION['message'][] = $lang['pages'][$_SESSION['lang']]['success'];
     } else {
         $_SESSION['errors'][] = $lang['pages'][$_SESSION['lang']]['error'];

@@ -40,9 +40,10 @@
                             <label>Выбирите расширение</label>
                             <div>
                                 <?
+                                $checked_text_null = ($content['extension'] == 'T') ? 'checked="checked"' : '';
                                 $checked_null = (strlen($content['extension']) == 0) ? 'checked="checked"' : '';
                                 ?>
-                                <input type="radio" name="ext_urls" value="T" class="ext_urls"  <?= $checked_null ?> /> Просто текст<br/>
+                                <input type="radio" name="ext_urls" value="T" class="ext_urls"  <?= $checked_text_null ?> /> Просто текст<br/>
                                 <input type="radio" name="ext_urls" value="0" class="ext_urls"  <?= $checked_null ?> /> Обычные HTML<br/>
                                 <? for ($i = 0; $i < count($extensions); $i++): ?>
                                     <?
@@ -66,7 +67,7 @@
 
                         <div class="form-group content_descr_text_block" style="<?= ($content['extension'] == 'T') ? 'display: block;' : 'display: none;' ?>">
                             <label><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></label>
-                            <textarea id="content_descr_text" name="content_descr_text" style="width: 100%;min-height: 140px;"><?= $content['content_descr'] ?></textarea>
+                            <textarea id="content_descr_text" name="content_descr_text" style="width: 100%;min-height: 400px;"><?= $content['content_descr'] ?></textarea>
                         </div>
 
 
