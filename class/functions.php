@@ -1155,7 +1155,7 @@ if (!function_exists('init_prices')) {
                 } else {
                     $price = $value['price'];
                 }
-                $_SESSION['cart']['prices'][] = $price;
+                $_SESSION['cart']['itms'][$key]['prices'] = $price;
             }
         }
     }

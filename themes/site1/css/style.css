@@ -30,6 +30,9 @@
 
 /*Table Of Contents ends */
 
+.btn-group > .btn-group:not(:first-child), .btn-group > .btn:not(:first-child){
+    margin-left: 0px;
+}
 
 /*Global Styling*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Overpass Mono:200,300,400,500,600,700,800');

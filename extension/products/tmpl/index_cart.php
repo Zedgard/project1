@@ -80,7 +80,7 @@
             <?
             if ($p_user->isEditor()) {
                 ?>
-                <div class="text-right"><a href="/admin/catalog/?product_edit=<?= $productData['id'] ?>" target="_blank" class="btn btn-link">Редактировать товар</a></div>
+                <div class="text-end"><a href="/admin/catalog/?product_edit=<?= $productData['id'] ?>" target="_blank" class="btn btn-link">Редактировать товар</a></div>
                 <?
             }
             ?>
@@ -114,7 +114,7 @@
                         ?>
                     </div>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-6 text-end">
                     <? if ($productData['price_promo'] > 0): ?>
                         <div style="clear: both;">
                             <div class="product_old_price float-right"><?= $productData['price'] ?></div>
@@ -131,7 +131,7 @@
             </div>
             <!-- cart button -->
             <div class="row ">
-                <div class="col-md-12 text-right">
+                <div class="col-md-12 text-end">
                     <a href="javascript:void(0)" class="btn button btngreen textcenter cart_product_add pl-5 pr-5" product_id="<?= $productData['id'] ?>">В корзину</a>
                     <div class="btn-group">
                         <a href="/shop/cart/" class="btn button btngreen textcenter cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;">Перейти в корзину</a>
