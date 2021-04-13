@@ -35,8 +35,9 @@ if (isset($_POST['cart_product_add'])) {
         }
         // Зарегистрируем товары
         $obj = $pr_products->getProductElem($product_id);
+        //print_r($obj);
         $_SESSION['cart']['itms'][] = $obj;
-        init_prices();
+        //init_prices();
     }
 }
 
@@ -176,13 +177,13 @@ if (isset($_POST['cart_product_remove'])) {
 }
 
 if (isset($_POST['cart_product_get_array'])) {
-    $arr = array();
+    $data = array();
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            if (strlen($value['pay_descr']) == 0) {
-                $arr[] = $value;
-            }
-            $arr[] = $value;
+//            if (strlen($value['pay_descr']) == 0) {
+//                $data[] = $value;
+//            }
+            $data[] = $value;
             //    echo "itms: {$_SESSION['cart']['itms'][$key]}\n";
             //$_SESSION['cart']['itms'][$key]['product_info'] = $pr_products->getProductElem($_SESSION['cart']['itms'][$key]);
             //print_r($pr_products->getProductElem($_SESSION['cart']['itms'][$key]));
@@ -190,7 +191,7 @@ if (isset($_POST['cart_product_get_array'])) {
         }
     }
     // $_SESSION['cart']['itms']
-    $result = array('success' => 1, 'success_text' => '', 'data' => $arr);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
 if (isset($_POST['cart_product_get_count'])) {

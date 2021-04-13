@@ -21,6 +21,7 @@ $c_cart = new \project\cart();
 $p_user = new \project\user();
 $auth = new \project\auth();
 
+//echo "col: " . count($_SESSION['cart']['itms']) . "<br/>\n";
 /*
  * Добавления товара в корзину
  */
