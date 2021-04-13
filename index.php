@@ -2,6 +2,10 @@
 
 session_start();
 
+// Время и память скрипта
+$start = microtime(true);
+$memory = memory_get_usage();
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
@@ -114,3 +118,32 @@ if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php')) {
 
 $_SESSION['errors'] = array();
 $_SESSION['message'] = array();
+
+/**
+ * Данные о производительности
+ */
+if ($user->isEditor()) {
+    $memory = memory_get_usage() - $memory;
+    $time = microtime(true) - $start;
+
+// Подсчет среднего времени.
+    $f = fopen('time.log', 'a');
+    fwrite($f, $time . PHP_EOL);
+    fclose($f);
+    $log = file('time.log');
+    $time = round(array_sum($log) / count($log), 3);
+
+// Перевод в КБ, МБ.
+    $i = 0;
+    while (floor($memory / 1024) > 0) {
+        $i++;
+        $memory /= 1024;
+    }
+
+    $name = array('байт', 'КБ', 'МБ');
+    $memory = round($memory, 2) . ' ' . $name[$i];
+
+    $memory = memory_get_usage() - $memory;
+
+    echo $time . ' сек. / ' . $memory;
+}
