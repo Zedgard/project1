@@ -40,6 +40,17 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="login_instagram">Instagram login</label>
+                                        <input type="text" class="form-control login_instagram " id="login_instagram " placeholder="Instagram login..." required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-lg-6">
@@ -133,6 +144,7 @@
             $(".user_email").val(user_data['email']);
             $(".first_name").val(user_data['first_name']);
             $(".last_name").val(user_data['last_name']);
+            $(".login_instagram").val(user_data['login_instagram']);
             $(".city").val(user_data['city']);
             $(".city_code").val(user_data['city_code']);
             if (avatar_img.length > 0) {
@@ -161,6 +173,7 @@
             var user_email = $(".user_email").val();
             var first_name = $(".first_name").val();
             var last_name = $(".last_name").val();
+            var login_instagram = $(".login_instagram").val();
             var city = $(".city").val();
             var city_code = $(".city_code").val();
             var active_subscriber = 0;
@@ -173,6 +186,7 @@
                 "user_email": user_email,
                 "first_name": first_name,
                 "last_name": last_name,
+                "login_instagram": login_instagram,
                 "city": city,
                 "city_code": city_code,
                 "active_subscriber": active_subscriber

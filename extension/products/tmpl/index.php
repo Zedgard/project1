@@ -8,7 +8,8 @@
         <div class="col-lg-2"></div>
         <div class="col-lg-10 p-3">
             <div class="input-group">
-                <input type="text" value="<?= $_SESSION['product']['filter']['productSearchString'] ?>" class="form-control productSearchString" placeholder="Я ищу..." aria-label="Я ищу..." aria-describedby="basic-addon2">
+                <input type="text" value="<?= $_SESSION['product']['filter']['productSearchString'] ?>" class="form-control productSearchString" placeholder="Я ищу..." aria-label="Я ищу..." aria-describedby="basic-addon2"
+                       style="height: 38px;border-radius: 0px;border: 0px solid #FFF;">
                 <div class="input-group-append">
                     <button class="btn btn-light " type="button"><i class="fa fa-search"></i></button>
                 </div>
@@ -23,8 +24,8 @@
             <?= $page->bread_get() ?>
         </div>
     </div>
-    <!-- десктоп вид -->
-    <div class="row mt-2 mb-1 bread d-none d-xl-block" style="margin-left: -2.8rem;">
+    <!-- десктоп вид  style="margin-left: -2.8rem;" -->
+    <div class="row mt-2 mb-1 bread d-none d-xl-block" >
         <div class="col-12">
             <?= $page->bread_get() ?>
         </div>
