@@ -162,62 +162,64 @@
                                 <div class="card-body">
                                     <?
                                     $i = 0;
-                                    foreach ($video_materials as $key => $material_val) {
-                                        $show = '';
-                                        $expanded = 'false';
-                                        $collapsed = 'collapsed';
+                                    if (is_array($video_materials) && count($video_materials) > 0) {
+                                        foreach ($video_materials as $key => $material_val) {
+                                            $show = '';
+                                            $expanded = 'false';
+                                            $collapsed = 'collapsed';
 //                                        if ($i == 0) {
 //                                            $show = 'show';
 //                                            $expanded = 'true';
 //                                            $collapsed = '';
 //                                            $video_id = $material_val['id'];
 //                                        }
-                                        $i++;
-                                        ?>
-                                        <div class="card1">
-                                            <div class="card-header1" id="heading<?= $i ?>">
-                                                <button class="btn btn-link series_series_btn btn_video_see <?= $collapsed ?>" video_id="<?= $material_val['id'] ?>" data-toggle="collapse" data-target="#collapse<?= $i ?>" aria-expanded="<?= $expanded ?>" aria-controls="collapse<?= $i ?>">
-                                                    <span class="float-left"><i class="far fa-play-circle"></i></span> <span class="ml-3 float-left"><?= $material_val['video_title'] ?></span> <span class="float-right"><?= $material_val['video_time'] ?></span>
-                                                </button>
-                                            </div>
+                                            $i++;
+                                            ?>
+                                            <div class="card1">
+                                                <div class="card-header1" id="heading<?= $i ?>">
+                                                    <button class="btn btn-link series_series_btn btn_video_see <?= $collapsed ?>" video_id="<?= $material_val['id'] ?>" data-toggle="collapse" data-target="#collapse<?= $i ?>" aria-expanded="<?= $expanded ?>" aria-controls="collapse<?= $i ?>">
+                                                        <span class="float-left"><i class="far fa-play-circle"></i></span> <span class="ml-3 float-left"><?= $material_val['video_title'] ?></span> <span class="float-right"><?= $material_val['video_time'] ?></span>
+                                                    </button>
+                                                </div>
 
-                                            <div id="collapse<?= $i ?>" class="collapse <?= $show ?>" aria-labelledby="heading<?= $i ?>" data-parent="#accordion1">
-                                                <div class="card-body1 video_see">
-                                                    <div class="mt-3 mb-3"><?= $material_val['video_descr'] ?></div>
-                                                    <div>
-                                                        <?
-                                                        if (strlen($material_val['video_youtube']) > 0) {
-                                                            ?>
-                                                            <div class="video_u_block_left"></div>
-                                                            <div class="video_u_block_right"></div>
-                                                            <iframe width="100%" height="415" allowfullscreen
-                                                                    src="<?= $material_val['video_youtube'] ?>?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0">
-                                                            </iframe>
+                                                <div id="collapse<?= $i ?>" class="collapse <?= $show ?>" aria-labelledby="heading<?= $i ?>" data-parent="#accordion1">
+                                                    <div class="card-body1 video_see">
+                                                        <div class="mt-3 mb-3"><?= $material_val['video_descr'] ?></div>
+                                                        <div>
+                                                            <?
+                                                            if (strlen($material_val['video_youtube']) > 0) {
+                                                                ?>
+                                                                <div class="video_u_block_left"></div>
+                                                                <div class="video_u_block_right"></div>
+                                                                <iframe width="100%" height="415" allowfullscreen
+                                                                        src="<?= $material_val['video_youtube'] ?>?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0">
+                                                                </iframe>
 
-                                                            <?
-                                                            /*
-                                                             * <iframe class="video_see" width="100%" height="415" allowfullscreen
-                                                              src="<?= $material_val['video_youtube'] ?>?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0">
-                                                              </iframe>
-                                                             */
-                                                            // https://www.youtube.com/watch?v=hPXX4vzw0kk&feature=youtu.be
-                                                            // ?controls=1&disablekb=0&iv_load_policy=0&mute=0&loop=1&enablejsapi=0&autoplay=0&modestbranding=0&rel=0&showinfo=0
-                                                        } else {
+                                                                <?
+                                                                /*
+                                                                 * <iframe class="video_see" width="100%" height="415" allowfullscreen
+                                                                  src="<?= $material_val['video_youtube'] ?>?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0">
+                                                                  </iframe>
+                                                                 */
+                                                                // https://www.youtube.com/watch?v=hPXX4vzw0kk&feature=youtu.be
+                                                                // ?controls=1&disablekb=0&iv_load_policy=0&mute=0&loop=1&enablejsapi=0&autoplay=0&modestbranding=0&rel=0&showinfo=0
+                                                            } else {
+                                                                ?>
+                                                                <video class="d-block w-100" video_id="<?= $material_val['id'] ?>" data-holder-rendered="true" preload="auto" controlsList="nodownload" controls loop>
+                                                                    <source src="<?= $material_val['video_mp4'] ?>" type="video/mp4">
+                                                                    <source src="<?= $material_val['video_ogv'] ?>" type="video/webm"> 
+                                                                    <source src="<?= $material_val['video_webm'] ?>" type="video/ogg">
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                                <?
+                                                            }
                                                             ?>
-                                                            <video class="d-block w-100" video_id="<?= $material_val['id'] ?>" data-holder-rendered="true" preload="auto" controlsList="nodownload" controls loop>
-                                                                <source src="<?= $material_val['video_mp4'] ?>" type="video/mp4">
-                                                                <source src="<?= $material_val['video_ogv'] ?>" type="video/webm"> 
-                                                                <source src="<?= $material_val['video_webm'] ?>" type="video/ogg">
-                                                                Your browser does not support the video tag.
-                                                            </video>
-                                                            <?
-                                                        }
-                                                        ?>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <?
+                                            <?
+                                        }
                                     }
                                     ?>
                                 </div>

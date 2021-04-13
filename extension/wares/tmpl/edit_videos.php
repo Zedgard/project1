@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" dir="ltr">
     <head>
+        <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://www.youtube.com">
         <!-- GOOGLE FONTS -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
         <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
@@ -13,11 +14,13 @@
         <link href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
         <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js<?= $_SESSION['rand'] ?>"></script>
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+        
 
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
         <link rel="stylesheet" href="/extension/products/office.css<?= $_SESSION['rand'] ?>">
         <link href="/extension/wares/css/edit_videos.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
@@ -120,7 +123,28 @@
                             if ($value['series_id'] == '0') {
                                 $video_i++;
                                 ?>
-                                <div class="material_info">
+                                <div class="material_tr">
+                                    <div class="material_info">
+                                        <hr/>
+                                        <div class="row mt-2 mb-2">
+                                            <div class="col-12">
+                                                <?
+                                                if ($value['material_type'] == 'material_type_text') {
+                                                    include 'material_type_text.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_audio') {
+                                                    include 'material_type_audio.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_file') {
+                                                    include 'material_type_file.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_video') {
+                                                    include 'material_type_video.php';
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row mt-2 mb-2 material_info_none">
                                         <div class="col-12">
                                             <div class="float-left" style="color: #000000;font-size: 1.5rem;margin-top: 0.3rem;"><?= $wares->type_material_is_name($value['material_type']) ?></div> 
@@ -165,25 +189,6 @@
                                                 include 'edit_material_type_video.php';
                                             }
                                             // https://www.youtube.com/embed/hPXX4vzw0kk
-                                            ?>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div class="row mt-2 mb-2">
-                                        <div class="col-12">
-                                            <?
-                                            if ($value['material_type'] == 'material_type_text') {
-                                                include 'material_type_text.php';
-                                            }
-                                            if ($value['material_type'] == 'material_type_audio') {
-                                                include 'material_type_audio.php';
-                                            }
-                                            if ($value['material_type'] == 'material_type_file') {
-                                                include 'material_type_file.php';
-                                            }
-                                            if ($value['material_type'] == 'material_type_video') {
-                                                include 'material_type_video.php';
-                                            }
                                             ?>
                                         </div>
                                     </div>
@@ -369,6 +374,9 @@
 </html>
 <script>
     $(document).ready(function () {
+        $(".material_info").unbind('click').click(function () {
+            $(this).closest(".material_tr").find(".material_info_none").toggle(200);
+        });
 
         $(".form-control-material").change(function () {
             if (!!$(this).attr('row_db') && !!$(this).attr('obj_id')) {
@@ -377,19 +385,19 @@
                 var obj_id = $(this).attr('obj_id');
                 var id = $(this).attr('id');
                 var val = $(this).val();
-                //console.log('elm_type: ' + elm_type);
+                console.log('elm_type: ' + elm_type);
                 if (elm_type == 'textarea') {
                     val = $(this).html();
                 }
                 if (!!$(this).attr('init_html')) {
-                    $(this).closest(".material_info").find("." + $(this).attr('init_html')).html(val); // material_info
+                    $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_html')).html(val); // material_info
                     //$("." + $(this).attr('init_html')).html(val);
                 }
                 if (!!$(this).attr('init_href')) {
-                    $(this).closest(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
+                    $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
                 }
                 if (!!$(this).attr('init_href')) {
-                    $(this).closest(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
+                    $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
                 }
 
                 // переинициализация аудио плеера
@@ -408,7 +416,7 @@
                 }
 
                 if (!!$(this).attr('init_youtube_src')) {
-                    $(this).closest(".material_info").find("." + $(this).attr('init_youtube_src')).attr("src", val + "?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0");
+                    $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_youtube_src')).attr("src", val + "?autoplay=0&mute=0&loop=1&iv_load_policy=0&rel=0&modestbranding=1&disablekb=1&showinfo=0&iv_load_policy=3&allowfullscreen=0");
                 }
 
 

@@ -39,12 +39,13 @@ if (isset($_POST['get_roles_page_id']) && $_POST['get_roles_page_id'] > 0) {
 if (isset($_POST['edit_material'])) {
     $id = $_POST['edit_material'];
     $content_descr = '';
-    if ($_POST['ext_urls'] == '') {
+    if ($_POST['ext_urls'] == '0') {
         $content_descr = $_POST['content_descr'];
     }
     if ($_POST['ext_urls'] == "T") {
         $content_descr = $_POST['content_descr_text'];
     }
+
     if ($id == 0) {
         $action = './?content=' . $_POST['page_id'];
     }
