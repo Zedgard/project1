@@ -52,7 +52,6 @@ if (count($pays) > 0) {
         $pay_paid = $payment->getPaid();
         $payment->setstatus('succeeded');
         //$pay_check = $payment->getstatus();
-//    echo "1111\n";
 //    //
 //    echo "paymentId: {$paymentId} <br/>\n";
 //    echo "pay_paid: {$pay_paid} <br/>\n";

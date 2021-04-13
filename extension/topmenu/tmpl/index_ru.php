@@ -51,12 +51,12 @@
                                 <a href="javascript:void(0)" class="btn_logout header_user_auth btn_logout" title="Выйти из личного кабинета"><i class="fas fa-sign-out-alt"></i></a>
                             <? endif; ?>
                         </div>
-                        <div style="float: left;" class="d-block d-lg-none">
+                        <div style="float: left;" class="soc_links d-block d-lg-none">
                             <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
                         </div>
-                        <div style="float: right;margin-right: 1rem;" class="d-none d-lg-block">
+                        <div style="float: right;margin-right: 1rem;" class="soc_links d-none d-lg-block">
                             <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
