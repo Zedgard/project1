@@ -1331,6 +1331,15 @@ nav{
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
+header .soc_links a i{
+    width: 2.4rem;
+    text-align: center;
+}
+
+.gradient_bg_2{
+    background: rgb(107,221,120);
+    background: linear-gradient(135deg, rgba(107,221,120,1) 0%, rgba(99,167,214,1) 100%);
+}
 
 /*side open btn*/
 .sidemenu_btn {

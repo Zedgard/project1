@@ -22,10 +22,8 @@
               crossorigin="anonymous">
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
-
-
+        <link rel="stylesheet" href="/themes/site1/css/style.css<?= $_SESSION['rand'] ?>">
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
-
 
         <!-- Web Fonts  -->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,800;1,900&display=swap" rel="stylesheet">
@@ -35,7 +33,6 @@
         <!-- bootstrap CSS -->
         <link rel="stylesheet" href="/assets/plugins/bootstrap5/css/bootstrap.min.css<?= $_SESSION['rand'] ?>">
 
-        <link rel="stylesheet" href="/themes/site1/css/style.css<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/assets/plugins/animate/animate.css<?= $_SESSION['rand'] ?>">
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -178,339 +175,62 @@
 
 
 
-        <section id="funfacts" class="padding_top fact-iconic gradient_bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 col-sm-12 margin_bottom text-md-left text-center wow fadeInLeft" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInLeft;">
-                        <h3 class="bottom25" style="font-size: 36px;">Опыт нашей команды в цифрах</h3>
-                        <p class="title">Наша команда высококвалифицированных профессионалов широко зарекомендовала себя за десять лет работы.</p>
-                    </div>
-                    <div class="col-md-7 col-sm-12 text-center">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom  wow fadeInRight" data-wow-delay="400ms" style="visibility: visible; animation-delay: 400ms; animation-name: fadeInRight;text-align: center;">
-                                <div class="img-icon bottom15">
-                                    <!--<i class="fa fa-smile-o"></i>--> 
-                                    <img src="/assets/img/mental-health.svg" style="width: 60px;"/>
-
-                                </div>
-                                <p class="title">более</p>
-                                <div class="counters">
-                                    <span class="count_nums" data-to="900" data-speed="3000">900</span> <i class="fa fa-plus"></i>
-                                </div>
-                                <p class="title">Консультаций в год</p>
-                            </div>
-                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom wow fadeInRight" data-wow-delay="350ms" style="visibility: visible; animation-delay: 350ms; animation-name: fadeInRight;">
-                                <div class="img-icon bottom15">
-                                    <!-- <i class="fa fa-language"> </i>-->
-                                    <img src="/assets/img/positive-thinking.svg" style="width: 60px;"/>
-                                </div>
-                                <p class="title">более</p>
-                                <div class="counters">
-                                    <span class="count_nums" data-to="20000" data-speed="2500">20000</span> <i class="fa fa-plus"></i>
-                                </div>
-                                <p class="title">Счастливых клиентов</p>
-                            </div>
-                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom wow fadeInRight" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInRight;">
-                                <div class="img-icon bottom15">
-                                    <!--<i class="fa fa-desktop"></i>-->
-                                    <img src="/assets/img/award.svg" style="width: 60px;"/>
-                                </div>
-                                <p class="title">более</p>
-                                <div class="counters">
-                                    <span class="count_nums" data-to="7" data-speed="3000">7</span> <i class="fa fa-plus"></i>
-                                </div>
-                                <p class="title">Книг и более 20 статей написано</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-
-
-
-        <!-- Testimonials -->
-        <section id="our-testimonial" class="padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 text-center">
-                        <div class="heading-title bottom30 wow fadeInUp" data-wow-delay="300ms">
-                            <h2 class="TestimonialsTitle">Отзывы счастливых людей</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div id="testimonial-slider" class="owl-carousel">
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-58-47.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Виктория Сборовская</h4>
-                                    <small class="defaultcolor" style="display: none;">Бизнес-вумен</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-58-50.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5 " style="display: none;">Адам Сендлер</h4>
-                                    <small class="defaultcolor" style="display: none;">Менеджер</small>
-                                </div>
-                            </div>
-                            <div class="item h-100 d-inline-block">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-58-53.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-58-56.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Виктория Сборовская</h4>
-                                    <small class="defaultcolor" style="display: none;">Бизнес-вумен</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-58-59.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Адам Сендлер</h4>
-                                    <small class="defaultcolor" style="display: none;">Менеджер</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-01.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-03.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Виктория Сборовская</h4>
-                                    <small class="defaultcolor" style="display: none;">Бизнес-вумен</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-05.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Адам Сендлер</h4>
-                                    <small class="defaultcolor" style="display: none;">Менеджер</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-08.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-10.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-14.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-16.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-18.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-26_11-59-20.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-28_16-05-53.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-28_16-06-14.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-wrapp">
-                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
-                                    <div class="testimonial-text">
-                                        <p class="testimonial-wrapp2 scroll-block">
-                                            <img src="/assets/files/image/comments/photo_2021-03-28_16-06-18.jpg"/>
-                                        </p>
-                                    </div>
-                                    <h4 class="darkcolor mt-5" style="display: none;">Людмила Казакова</h4>
-                                    <small class="defaultcolor" style="display: none;">Счастливая жена</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--Testimonials Ends-->
-
         <?
         include 'footer_' . $_SESSION['lang'] . '.php'
         ?>
 
-        <!--Bootstrap Core-->
-        <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/bootstrap5/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
 
-        <!--to view items on reach-->
-        <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Equal-Heights-->
-        <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Owl Slider-->
-        <script src="/themes/site1/js/owl.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--number counters-->
-        <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Parallax Background-->
-        <script src="/themes/site1/js/parallaxie.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Cubefolio Gallery-->
-        <script src="/themes/site1/js/jquery.cubeportfolio.min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--FancyBox popup-->
-        <script src="/themes/site1/js/jquery.fancybox.min.js<?= $_SESSION['rand'] ?>"></script>       
-
-        <!-- Video Background-->
-        <script src="/themes/site1/js/jquery.background-video.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--TypeWriter-->
-        <script src="/themes/site1/js/typewriter.js<?= $_SESSION['rand'] ?>"></script> 
-
-        <!--Particles-->
-        <script src="/themes/site1/js/particles.min.js<?= $_SESSION['rand'] ?>"></script>            
-
-        <!--WOw animations-->
-        <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
-        <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Google Map API-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
-        <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>	
-        <?
-        foreach ($_SESSION['body_javascript'] as $js) {
-            echo $js . "\n";
-        }
-        ?>
     </body>
+    <!--Bootstrap Core-->
+    <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/bootstrap5/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--to view items on reach-->
+    <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Equal-Heights-->
+    <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Owl Slider-->
+    <script src="/themes/site1/js/owl.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--number counters-->
+    <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Parallax Background-->
+    <script src="/themes/site1/js/parallaxie.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Cubefolio Gallery-->
+    <script src="/themes/site1/js/jquery.cubeportfolio.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--FancyBox popup-->
+    <script src="/themes/site1/js/jquery.fancybox.min.js<?= $_SESSION['rand'] ?>"></script>       
+
+    <!-- Video Background-->
+    <script src="/themes/site1/js/jquery.background-video.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--TypeWriter-->
+    <script src="/themes/site1/js/typewriter.js<?= $_SESSION['rand'] ?>"></script> 
+
+    <!--Particles-->
+    <script src="/themes/site1/js/particles.min.js<?= $_SESSION['rand'] ?>"></script>            
+
+    <!--WOw animations-->
+    <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+    <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Google Map API-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
+    <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>	
+    <?
+    foreach ($_SESSION['body_javascript'] as $js) {
+        echo $js . "\n";
+    }
+    ?>
 </html>

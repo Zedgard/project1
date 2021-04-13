@@ -8,36 +8,32 @@
         <meta name="description" content="<?= $_SESSION['page']['info']['description'] ?>" />
         <link href="/favicon.ico<?= $_SESSION['rand'] ?>" rel="icon">
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
-        <?= $_SESSION['noindex'] ?> 
+        <meta name="interkassa-verification" content="777d8a842d5f8a07fe433d7f9e9537fd" />
+        <?= $_SESSION['noindex'] ?>
 
-        <?php
-        /*
-          <!-- Google Tag Manager -->
-          <script>(function (w, d, s, l, i) {
-          w[l] = w[l] || [];
-          w[l].push({'gtm.start':
-          new Date().getTime(), event: 'gtm.js'});
-          var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-          j.async = true;
-          j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-          f.parentNode.insertBefore(j, f);
-          })(window, document, 'script', 'dataLayer', 'GTM-NVPSKXJ');</script>
-          <!-- End Google Tag Manager -->
-         */
-        ?>
         <!-- SLEEK CSS -->
-        <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" />
+        <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.min.css<?= $_SESSION['rand'] ?>" />
         <link rel="stylesheet" href="/themes/site1/css/plugins.css<?= $_SESSION['rand'] ?>">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css<?= $_SESSION['rand'] ?>" 
               integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
               crossorigin="anonymous">
 
-        <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/themes/site1/css/style.css<?= $_SESSION['rand'] ?>">
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        
+        <!-- Web Fonts  -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet">
+        
+        <!-- bootstrap CSS -->
+        <link rel="stylesheet" href="/assets/plugins/bootstrap5/css/bootstrap.min.css<?= $_SESSION['rand'] ?>">
+        
+        <link rel="stylesheet" href="/assets/plugins/animate/animate.css<?= $_SESSION['rand'] ?>">
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="/assets/plugins/jquery/jquery.js<?= $_SESSION['rand'] ?>"></script>

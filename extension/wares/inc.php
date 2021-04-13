@@ -127,33 +127,7 @@ class wares extends \project\extension {
                 return true;
             }
         }
-        /*
-         * INSERT INTO `zay_wares` (
-         * `title`, 
-         * `descr`, 
-         * `url_file`, 
-         * `col`, 
-         * `ex_code`, 
-         * `articul`, 
-         * `images`,
-         * `active`, 
-         * `is_delete`, 
-         * `creat_date`, 
-         * `lastdate`
-         * ) VALUES (
-         * 'www',
-         * '<p>&nbsp;1111</p>',
-         * '',
-         * '1',
-         * '53335',
-         * 'A-53335',
-         * '',
-         * '1', 
-         * (DATE_ADD(NOW(), INTERVAL 7 HOUR)), 
-         * (DATE_ADD(NOW(), INTERVAL 7 HOUR)) 
-         * )
-         * 
-         */
+
         return false;
     }
 
