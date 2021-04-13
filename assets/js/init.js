@@ -194,7 +194,7 @@ $(document).ready(function () {
     initCartProductRemove();
 
 
-    $('.accordion').accordion({
+    $('.jaccordion').accordion({
 
         heightStyle: 'content'
 

@@ -175,21 +175,25 @@ class Calendar {
 
         $date_new = self::add_month($startDate, $month);
         $end = explode('.', $date_new);
-
+ 
+        //echo "{$curent[0]} {$curent[2]} || {$curent[1]} == {$end[1]}<br/>\n";
         $begin = true;
         $out = '<div class="calendar-wrp">';
+        $m = (int)$curent[1];
+        $y = (int)$curent[2];
+        $end_m = (int)$end[1];
         do {
-            $out .= self::getMonth($curent[1], $curent[2], $events);
+            $out .= self::getMonth($m, $y, $events);
 
-            if ($curent[1] == $end[1]) {
+            if ($m == $end_m) {
                 $begin = false;
             }
 
-            $curent[1]++;
-            if ($curent[0] == 13) {
-                $curent[0] = 1;
-                $curent[1]++;
-            }
+            $m++;
+//            if ($curent[0] == 13) {
+//                $curent[0] = 1;
+//                $m++;
+//            }
         } while ($begin == true);
 
         $out .= '</div>';
