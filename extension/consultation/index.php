@@ -23,3 +23,5 @@ if ($_SESSION['user']['info']['id'] > 0) {
 }
 include 'tmpl/index.php';
 include 'tmpl/modal_pay.php';
+
+//include 'tmpl/info_down.php';
