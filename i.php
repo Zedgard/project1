@@ -67,11 +67,22 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/wordpress/class-phpass.php';
             function onYouTubeIframeAPIReady() {
                 player = new YT.Player('player', {
                     height: '360',
-                    width: '640',
+                    width: '50%',
                     videoId: 'hPXX4vzw0kk',
+                    playerVars: {
+                        enablejsapi: 1,
+                        disablekb: 1,
+                        controls: 0,
+                        iv_load_policy: 3,
+                        loop: 1,
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0,
+                        origin = 1
+                    },
                     events: {
                         'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
+                        //'onStateChange': onPlayerStateChange
                     }
                 });
             }
@@ -79,6 +90,10 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/wordpress/class-phpass.php';
             // 4. The API will call this function when the video player is ready.
             function onPlayerReady(event) {
                 event.target.playVideo();
+                var d = event.target.getDuration();
+                var o = event.target.getIframe();
+                console.log('D: ' + d);
+                console.log(o);
             }
 
             // 5. The API calls this function when the player's state changes.

@@ -69,7 +69,7 @@
     z-index: 99;
 }
 .material_info_none:hover{
-    z-index: 9999999;
+    z-index: 999;
     position: absolute;
 }
 .material_info:hover {

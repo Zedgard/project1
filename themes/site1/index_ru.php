@@ -46,6 +46,7 @@
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css<?= $_SESSION['rand'] ?>" />
+        <link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 
         <script type="text/javascript" src="/assets/plugins/mixitup/mixitup.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
@@ -224,6 +225,8 @@
     <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
     <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
     <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="//vjs.zencdn.net/7.10.2/video.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 
     <!--Google Map API-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
