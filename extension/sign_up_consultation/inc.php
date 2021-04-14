@@ -9,6 +9,7 @@ defined('__CMS__') or die;
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
 class sign_up_consultation extends \project\extension {
 
@@ -22,8 +23,12 @@ class sign_up_consultation extends \project\extension {
      * @return type
      */
     public function add_consultation($data) {
-        $date_ex = explode('/', $data['date']);
-        $consultation_date = "{$date_ex[2]}/{$date_ex[1]}/{$date_ex[0]}";
+        if (isset($data['consultation_date']) && strlen($data['consultation_date']) > 0) {
+            $consultation_date = $data['consultation_date'];
+        } else {
+            $date_ex = explode('/', $data['date']);
+            $consultation_date = "{$date_ex[2]}/{$date_ex[1]}/{$date_ex[0]}";
+        }
         $period_id = ($data['period_id'] > 0) ? $data['period_id'] : 0;
 
         $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?' and `cancel`=0 ";
@@ -34,9 +39,9 @@ class sign_up_consultation extends \project\extension {
                     . "VALUES ('?','?','?','?','?','?','?','?','?')";
             //echo 'sign_up_consultation';
 
-            return $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 1);
+            return $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 0);
         } else {
-            return true;
+            $_SESSION['errors'][] = 'Уже есть запись на эту дату!';
         }
         return false;
     }
@@ -48,6 +53,9 @@ class sign_up_consultation extends \project\extension {
     public function update_consultation($data) {
         $query = "UPDATE `zay_consultation` 
                     SET `user_email`='?',
+                    `first_name`='?',
+                    `user_phone`='?',
+                    `master_id`='?',
                     `pay_descr`='?',
                     `consultation_date`='?',
                     `consultation_time`='?',
@@ -56,6 +64,9 @@ class sign_up_consultation extends \project\extension {
                   WHERE `id`='?'";
         return $this->query($query, array(
                     $data['user_email'],
+                    $data['first_name'],
+                    $data['user_phone'],
+                    $data['your_master_id'],
                     $data['pay_descr'],
                     $data['consultation_date'],
                     $data['consultation_time'],
@@ -166,15 +177,16 @@ class sign_up_consultation extends \project\extension {
      * @param type $period_price
      * @return type
      */
-    public function edit_consultation_period($consultation_period, $master_id, $period_hour, $periods_minute, $period_price) {
+    public function edit_consultation_period($consultation_period, $master_id, $period_time, $period_hour, $periods_minute, $period_price, $period_active) {
         if ($consultation_period > 0) {
-            $query = "UPDATE `zay_consultation_periods` SET `master_id`='?',`period_hour`='?',`periods_minute`='?',`period_price`='?' "
+            $query = "UPDATE `zay_consultation_periods` SET `master_id`='?',`period_time`='?', "
+                    . "`period_hour`='?',`periods_minute`='?',`period_price`='?', `period_active`='?' "
                     . "WHERE `id`='?'";
-            return $this->query($query, array($master_id, $period_hour, $periods_minute, $period_price, $consultation_period));
+            return $this->query($query, array($master_id, $period_time, $period_hour, $periods_minute, $period_price, $period_active, $consultation_period));
         } else {
-            $query = "INSERT INTO `zay_consultation_periods` (`master_id`, `period_hour`, `periods_minute`, `period_price`) "
-                    . "VALUES ('?','?','?','?')";
-            return $this->query($query, array($master_id, $period_hour, $periods_minute, $period_price));
+            $query = "INSERT INTO `zay_consultation_periods` (`master_id`, `period_time`, `period_hour`, `periods_minute`, `period_price`, `period_active`) "
+                    . "VALUES ('?','?','?','?','?','?')";
+            return $this->query($query, array($master_id, '00:00:00', $period_hour, $periods_minute, $period_price, '1'));
         }
     }
 
@@ -224,7 +236,17 @@ class sign_up_consultation extends \project\extension {
         $querySelect = "SELECT c.* 
                 FROM zay_consultation c 
                 left join zay_pay p on p.id=c.pay_id
-                where c.master_id='?' and `consultation_date`>=CURRENT_DATE and p.pay_status='succeeded'";
+                where c.master_id='?' and (`consultation_date`>=CURRENT_DATE and p.pay_status='succeeded') or c.pay_id='0'";
+        return $this->getSelectArray($querySelect, array($master_id), 0);
+    }
+
+    /**
+     * Получить список консультаций
+     * @param type $master_id
+     * @return type
+     */
+    public function get_master_consultations_all($master_id) {
+        $querySelect = "SELECT c.*  FROM zay_consultation c where c.master_id='?' ";
         return $this->getSelectArray($querySelect, array($master_id), 0);
     }
 
@@ -246,28 +268,19 @@ class sign_up_consultation extends \project\extension {
      * @param type $master_id
      * @return type
      */
-    public function get_consultation_times($master_id = 1) {
-        $return_data = array();
-        $querySelect = "SELECT
-                            p.id, m.master_name, m.list_times, p.period_price, p.period_hour, p.periods_minute
-                        FROM
-                        zay_consultation_periods p
-                           left join zay_consultation_master m on p.master_id=m.id
-                        WHERE
-                            m.id = '?'";
-        $data = $this->getSelectArray($querySelect, array($master_id), 0);
-        if (count($data) > 0) {
-            $ex = explode(',', $data[0]['list_times']);
-
-            foreach ($ex as $value) {
-                $timestamp = strtotime($value) + 60 * 60;
-                $time = date('H:i', $timestamp);
-                $data[0]['period_time'] = $value . ' - ' . $time;
-
-                $return_data[] = $data[0];
-            }
-        }
-        return $return_data;
+    public function get_consultation_times($master_id = 1, $day = '') {
+        $day_sql = date_sql_format($day);
+        $querySelect = "SELECT p.*,
+                                (
+                                SELECT count(*) FROM zay_consultation c WHERE
+                                    c.master_id = p.master_id AND c.consultation_date = '?' AND c.consultation_time = p.period_time
+                                ) AS is_pay
+                            FROM
+                                zay_consultation_periods p
+                            WHERE
+                                p.master_id = '?'";
+        $data = $this->getSelectArray($querySelect, array($day_sql, $master_id), 0);
+        return $data;
     }
 
     /**
@@ -287,6 +300,62 @@ class sign_up_consultation extends \project\extension {
         $data = $this->getSelectArray($querySelect, array($period_id), 0)[0];
 
         return $data;
+    }
+
+    public function set_consultation_times($master_id, $times = array()) {
+
+        print_r($times);
+        if (is_array($times)) {
+            $querySelect = "SELECT * FROM zay_consultation_times t WHERE t.master_id='?' ";
+            $data = $this->getSelectArray($querySelect, array($master_id), 0);
+
+            echo "count: " . count($times) . " >= " . count($data) . "<br/>\n";
+            $a = array();
+            if (count($times) >= count($data)) {
+                echo "1<br/>\n";
+                for ($i = 0; $i < count($times); $i++) {
+                    //$times[$i]['insert'] = 1;
+                    $a[$i]['value'] = $times[$i];
+                    $a[$i]['insert'] = 1;
+                    $a[$i]['del'] = 0;
+                    if (count($data) > 0) {
+                        foreach ($data as $v) {
+                            if ($times[$i] == substr($v['vtime'], 0, 5)) {
+                                $a[$i]['insert'] = 0;
+                                $a[$i]['del'] = 0;
+                            }
+                        }
+                    }
+                }
+            } else {
+                echo "2<br/>\n";
+                for ($i = 0; $i < count($data); $i++) {
+                    //$times[$i]['insert'] = 1;
+                    $a[$i]['value'] = $data[$i]['vtime'];
+                    $a[$i]['insert'] = 0;
+                    $a[$i]['del'] = 1;
+                    if (count($times) > 0) {
+                        foreach ($times as $v) {
+                            $a[$i]['insert'] = 1;
+                            if (substr($data[$i]['vtime'], 0, 5) == $v) {
+                                $a[$i]['insert'] = 0;
+                                $a[$i]['del'] = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //print_r($a);
+        foreach ($a as $value) {
+            echo "<br/>\n";
+            print_r($value);
+            if ($value['insert'] == 1) {
+                $query_insert = "INSERT INTO `zay_consultation_times` (`master_id`, `vtime`, `active`) VALUES ('?','?','?')";
+                //$this->query($query_insert, array($master_id, $value['value'], 1));
+            }
+        }
+        return false;
     }
 
 }

@@ -17,11 +17,6 @@
                             <input class="form-control master_name" name="master_name" id="master_name" value="" placeholder="ФИО отображается..."  type="text" required>
                         </div>
 
-                        <div class="form-group">
-                            <label>Доступное время </label>
-                            <select class="form-control list_times" name="list_times[]" multiple="multiple" style="width: 100%"></select>
-                        </div>
-
                         <div class="form-group edit_periods">
                             <label>Периоды </label>
                             <div class="row">

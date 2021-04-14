@@ -191,6 +191,7 @@
                         //print_r($series);
                         foreach ($series as $series_value) {
                             ?>
+                            <hr/>
                             <div class="h3"><?= $series_value['title'] ?></div>
                             <?
                             if ($series_value['series_enable'] == 1) {

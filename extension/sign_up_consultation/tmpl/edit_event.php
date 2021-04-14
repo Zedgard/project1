@@ -22,8 +22,32 @@
                         </div>
                         <div class="form-group">
                             <label>Название</label>
-                            <input class="form-control event_summary" name="event_summary" id="event_summary" value="" placeholder="Название мероприятия..."  type="text" required>
+                            <input class="form-control event_summary" name="event_summary" id="event_summary" value="" placeholder="Название мероприятия..."  type="text" readonly="readonly">
                         </div>
+                        <div class="form-group">
+                            <label>Имя</label>
+                            <input class="form-control first_name" name="first_name" id="first_name" value="" placeholder="Имя..."  type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Телефон</label>
+                            <input class="form-control user_phone" name="user_phone" id="user_phone" value="" placeholder="Телефон..."  type="text" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Консультант</label>
+                            <div class="mb-1">
+                                <select name="consultation_master_id" class="consultation_master_id">
+                                    <?
+                                    foreach ($consultation_masters as $value) {
+                                        ?>
+                                    <option value="<?= $value['id'] ?>"><?= $value['master_name'] ?></option>
+                                        <?
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <label>Описание</label>
