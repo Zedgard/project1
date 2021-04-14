@@ -17,11 +17,22 @@ $(".calendar_day_active").unbind("click").click(function () {
         consultation_date_click = consultation_date;
         $(".new_tr").remove();
         $(o).closest("tr").after('<tr class="new_tr"><td colspan="7" class="consultant_periods"><div class="spinner-border" role="status"><span class="sr-only">Загрузка...</span></div></td></tr>');
-        sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_master_consultant_period": 1, "master_id": 1}, function (e) {
+        sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_master_consultant_period": 1, "master_id": 1, 'day': consultation_date}, function (e) {
             if (e['success'] == '1') {
                 $(".consultant_periods").html('<table class="table table-striped"><tbody></tbody></table>');
                 for (var i = 0; i < e['data'].length; i++) {
-                    $(".consultant_periods").find("tbody").append('<tr><td><i class="far fa-clock"></i> ' + e['data'][i]['period_time'] + '</td><td><a href="javascript:void(0)" class="btn button button_lg btngreen textcenter btn_consultation_pay" price="' + e['data'][i]['period_price'] + '" period_text="' + e['data'][i]['period_time'] + '" elm_id="' + e['data'][i]['id'] + '">Оплатить</a></td></tr>');
+                    var active = 0;
+                    var elm_class = 'btn button btn-secondary button_lg textcenter';
+                    var alert = 'onClick="alert(\'Время занято!\')"';
+                    console.log(111);
+                    if(e['data'][i]['period_active'] == "1" && e['data'][i]['is_pay'] == "0"){
+                        active = 1;
+                        alert = '';
+                        elm_class = 'btn button button_lg btngreen textcenter btn_consultation_pay';
+                    }
+                    $(".consultant_periods").find("tbody").append('<tr><td><i class="far fa-clock"></i> ' + e['data'][i]['period_time'] + '</td>\n\
+                        <td><a href="javascript:void(0)" class="' + elm_class + '" price="' + e['data'][i]['period_price'] + '" period_text="' + e['data'][i]['period_time'] + '" elm_id="' + e['data'][i]['id'] + '" ' + alert + '>Оплатить</a></td>\n\
+                        </tr>');
                 }
                 setTimeout(init_btn_consultation_pay(), 1000);
             } else {

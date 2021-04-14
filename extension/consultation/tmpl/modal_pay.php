@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <div class="modal-title">Онлайн-консультация</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="color: #FFFFFF;">&times;</span>
+                    <span aria-hidden="true" style="color: #FFFFFF;display: none;">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="block_consultation_pay_agreement"">
-                    <input type="checkbox" class="form-check-input" name="consultation_pay_agreement" checked="checked"> <strong>Оплачивая консультацию, я принимаю следующие условия:</strong>
+                    <input type="checkbox" class="form-check-input" name="consultation_pay_agreement" disabled="disabled" checked="checked"> <strong>Оплачивая консультацию, я принимаю следующие условия:</strong>
                     оплаченное время <strong>НЕ переносится</strong> на другую дату и времяжденьги за 
                     оплаченное время <strong>НЕ озвращаются;</strong>ответственность за мою готовность
                     быть в доступе на телефоне полностьюлежит на мне
