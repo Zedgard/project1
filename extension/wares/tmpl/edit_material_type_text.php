@@ -71,6 +71,8 @@
                     var obj_id = $("#material_<?= $value['id'] ?>").attr('obj_id');
                     var id = $("#material_<?= $value['id'] ?>").attr('id');
                     var val = ed.getContent();
+                    console.log(val);
+                    $("#material_<?= $value['id'] ?>").closest(".material_tr").find(".material_descr").html(val);
                     //$("#material_<?= $value['id'] ?>").html(ed.getContent());
                     $("#material_<?= $value['id'] ?>").closest(".material_info").find("." + $("#material_<?= $value['id'] ?>").attr('init_html')).html(val); // material_info
 

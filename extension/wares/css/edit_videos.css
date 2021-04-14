@@ -65,11 +65,11 @@
     display: none;
 }
 .material_info:hover .material_info_none{
-    display: block;
-    z-index: 999999;
+    /* display: block; */
+    z-index: 99;
 }
 .material_info_none:hover{
-    z-index: 99999999;
+    z-index: 999;
     position: absolute;
 }
 .material_info:hover {
