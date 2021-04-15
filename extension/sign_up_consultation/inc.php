@@ -39,7 +39,26 @@ class sign_up_consultation extends \project\extension {
                     . "VALUES ('?','?','?','?','?','?','?','?','?')";
             //echo 'sign_up_consultation';
 
-            return $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 0);
+            $return = $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 0);
+            // Отправим письмо оповещение
+            if ($return) {
+                $period_str = '';
+                if ($period_id > 0) {
+                    $periods = $this->get_master_consultation_periods($data['your_master_id'], $period_id);
+                    if (count($periods) > 0) {
+                        $period_str = $periods[0]['period_hour'] . ':' . $periods[0]['periods_minute'] . ' цена: ' . $periods[0]['period_price'];
+                    }
+                }
+
+                $send_emails = new \project\send_emails();
+                $config = new \project\config();
+                $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
+                $send_emails->send('consultation', $link_ed_mailto, array(
+                    'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
+                    'fio' => $data['first_name'], 'email' => $data['user_email'], 'phone' => $data['user_phone'], 'descr' => $data['pay_descr'], 'date' => $consultation_date, 'time' => $data['time'], 'period' => $period_str));
+            }
+
+            return $return;
         } else {
             $_SESSION['errors'][] = 'Уже есть запись на эту дату!';
         }
@@ -163,9 +182,14 @@ class sign_up_consultation extends \project\extension {
      * @param type $master_id
      * @return typeПолучить список периодав и цен
      */
-    public function get_master_consultation_periods($master_id) {
-        $querySelect = "SELECT * FROM `zay_consultation_periods` cp where cp.`master_id`='?' ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
-        return $this->getSelectArray($querySelect, array($master_id));
+    public function get_master_consultation_periods($master_id, $periods_id = 0) {
+        if ($periods_id == 0) {
+            $querySelect = "SELECT * FROM `zay_consultation_periods` cp where cp.`master_id`='?' ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
+            return $this->getSelectArray($querySelect, array($master_id));
+        } else {
+            $querySelect = "SELECT * FROM `zay_consultation_periods` cp where cp.`master_id`='?' and cp.id='?' ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
+            return $this->getSelectArray($querySelect, array($master_id, $periods_id));
+        }
     }
 
     /**
@@ -333,7 +357,7 @@ class sign_up_consultation extends \project\extension {
             }
         }
     }
-    
+
     /**
      * Удаление периода исключения
      * @param type $rejection_id
