@@ -25,7 +25,7 @@ $(".calendar_day_active").unbind("click").click(function () {
                     var elm_class = 'btn button btn-secondary button_lg textcenter';
                     var alert = 'onClick="alert(\'Время занято!\')"';
                     console.log(111);
-                    if(e['data'][i]['period_active'] == "1" && e['data'][i]['is_pay'] == "0"){
+                    if(e['data'][i]['period_active'] == "1" && e['data'][i]['is_pay'] == "0" && e['data'][i]['rejection_day'] == "0" && e['data'][i]['rejection_period'] == "0"){
                         active = 1;
                         alert = '';
                         elm_class = 'btn button button_lg btngreen textcenter btn_consultation_pay';

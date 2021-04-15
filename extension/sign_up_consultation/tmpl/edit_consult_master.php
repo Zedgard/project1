@@ -27,6 +27,17 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="form-group edit_periods">
+                            <label>Исключения</label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <?
+                                    include 'edit_master_consultation_rejection.php';
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label>Фаил token <span style="font-size: 0.6rem;">(настраивает разработчик, для работы с календарем)</span></label>

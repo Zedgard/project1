@@ -248,3 +248,33 @@ if (isset($_POST['get_master_consultant_period'])) {
     $data = $sign_up_consultation->get_consultation_times($master_id, $day);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+// получим список исключений для консультанта
+if (isset($_POST['get_master_consultation_rejections'])) {
+    $master_id = $_POST['master_id'];
+    $data = $sign_up_consultation->get_master_consultation_rejections($master_id);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+// Добавление исключающего дня
+if (isset($_POST['edit_master_consultation_rejection'])) {
+    $data['id'] = $_POST['elm_id'];
+    $data['master_id'] = $_POST['master_id'];
+    $data['rejection_day'] = $_POST['rejection_day'];
+    $data['rejection_period'] = $_POST['rejection_period'];
+    $sign_up_consultation->set_master_consultant_rejection($data);
+}
+
+/*
+ * Удаление исключающего дня
+ */
+if (isset($_POST['delete_master_consultation_rejection'])) {
+    $consultation_rejection_id = $_POST['delete_master_consultation_rejection'];
+    if ($consultation_rejection_id > 0) {
+        if ($sign_up_consultation->delete_consultation_rejection($consultation_rejection_id)) {
+            $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+        }
+    } else {
+        $result = array('success' => 0, 'success_text' => '', 'data' => $data);
+    }
+}

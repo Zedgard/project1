@@ -11,6 +11,7 @@
                     <th>Минуты</th>
                     <th>Стоимость</th>
                     <th>Статус</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="master_consultation_periods">
@@ -33,14 +34,12 @@
     var master_consultation_periods = [];
     function init_master_consultation_periods(master_id) {
         master_consultation_id = master_id;
-        //console.log("master_id: " + master_id);
         if (master_id > 0) {
             $(".add_master_consultation_period").removeClass('disabled');
-            $(".master_consultation_periods").html('');
 
             sendPostLigth('/jpost.php?extension=sign_up_consultation', {
                 "get_master_consultation_periods": 1,
-                "master_id": master_id,
+                "master_id": master_consultation_id
             }, function (e) {
                 $(".master_consultation_periods").html("");
                 master_consultation_periods = [];
@@ -57,11 +56,16 @@
                             <td><input type="text" name="m_c_p__periods_minute" class="form-control m_c_p_periods_minute" value="' + e['data'][i]['periods_minute'] + '" obj_i="' + i + '" /></td>\n\
                             <td><input type="text" name="m_c_p__period_price" class="form-control m_c_p_period_price" value="' + e['data'][i]['period_price'] + '" obj_i="' + i + '" /></td>\n\
                             <td><input type="checkbox" name="m_c_p_period_active" class="form-check-input ml-3 m_c_p_period_active" value="1" obj_i="' + i + '" ' + period_active_checked + ' style="margin-top: 12px;" /></td>\n\
+                            <td><a href="javascript:void(0)" class="btn btn-sm btn-danger mt-2 btn_delete_consultation_period" obj_i="' + i + '" title="Удалить"><i class="mdi mdi-delete"></i></a></td>\n\
                     </tr>');
                 }
 
                 init_add_master_consultation_period();
                 init_actions_master_consultation_period();
+                setTimeout(function () {
+                    init_select_periods_list();
+                }, 500);
+
             });
 
         } else {
@@ -127,6 +131,18 @@
         });
     }
 
+
+    function init_select_periods_list() {
+        if (!!$(".periods_list")) {
+            $(".periods_list").html("");
+            $(".periods_list").append('<option value="0">Все</option>');
+            if (master_consultation_periods.length > 0) {
+                for (var i = 0; i < master_consultation_periods.length; i++) {
+                    $(".periods_list").append('<option value="' + master_consultation_periods[i]['id'] + '">"' + master_consultation_periods[i]['period_time'] + '"</option>');
+                }
+            }
+        }
+    }
 
 </script>
 

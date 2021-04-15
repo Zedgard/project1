@@ -674,6 +674,7 @@ include 'edit_consult_master.php';
                 var list_times_array = masters[obj_i]['list_times'].split(',');
                 init_list_times(list_times_array);
                 init_master_consultation_periods(masters[obj_i]['id']);
+                init_master_consultation_rejection(masters[obj_i]['id']);
                 save_btn_master_init();
             });
 
