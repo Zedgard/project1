@@ -274,12 +274,14 @@ class sign_up_consultation extends \project\extension {
                                 (
                                 SELECT count(*) FROM zay_consultation c WHERE
                                     c.master_id = p.master_id AND c.consultation_date = '?' AND c.consultation_time = p.period_time
-                                ) AS is_pay
+                                ) AS is_pay,
+(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_period=0 and cr.rejection_day='?') as rejection_day,
+(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_period=p.id and cr.rejection_day='?') as rejection_period
                             FROM
                                 zay_consultation_periods p
                             WHERE
                                 p.master_id = '?'";
-        $data = $this->getSelectArray($querySelect, array($day_sql, $master_id), 0);
+        $data = $this->getSelectArray($querySelect, array($day_sql, $day_sql, $day_sql, $master_id), 0);
         return $data;
     }
 
@@ -302,60 +304,44 @@ class sign_up_consultation extends \project\extension {
         return $data;
     }
 
-    public function set_consultation_times($master_id, $times = array()) {
+    /**
+     * Получить исключения
+     * @param type $master_id
+     * @return type
+     */
+    public function get_master_consultation_rejections($master_id) {
+        $query = "SELECT * FROM `zay_consultation_rejection` WHERE `master_id`='?'";
+        return $this->getSelectArray($query, array($master_id));
+    }
 
-        print_r($times);
-        if (is_array($times)) {
-            $querySelect = "SELECT * FROM zay_consultation_times t WHERE t.master_id='?' ";
-            $data = $this->getSelectArray($querySelect, array($master_id), 0);
-
-            echo "count: " . count($times) . " >= " . count($data) . "<br/>\n";
-            $a = array();
-            if (count($times) >= count($data)) {
-                echo "1<br/>\n";
-                for ($i = 0; $i < count($times); $i++) {
-                    //$times[$i]['insert'] = 1;
-                    $a[$i]['value'] = $times[$i];
-                    $a[$i]['insert'] = 1;
-                    $a[$i]['del'] = 0;
-                    if (count($data) > 0) {
-                        foreach ($data as $v) {
-                            if ($times[$i] == substr($v['vtime'], 0, 5)) {
-                                $a[$i]['insert'] = 0;
-                                $a[$i]['del'] = 0;
-                            }
-                        }
-                    }
-                }
+    /**
+     * Добавление исключения
+     * @param type $data
+     * @return type
+     */
+    public function set_master_consultant_rejection($data) {
+        if (is_array($data)) {
+            if ($data['id'] > 0) {
+                $query = "UPDATE `zay_consultation_rejection` SET `master_id`='?',`rejection_day`='?',`rejection_period`='?' "
+                        . "WHERE `id`='?'";
+                return $this->query($query, array($data['master_id'], $data['rejection_day'], $data['rejection_period'], $data['id']));
             } else {
-                echo "2<br/>\n";
-                for ($i = 0; $i < count($data); $i++) {
-                    //$times[$i]['insert'] = 1;
-                    $a[$i]['value'] = $data[$i]['vtime'];
-                    $a[$i]['insert'] = 0;
-                    $a[$i]['del'] = 1;
-                    if (count($times) > 0) {
-                        foreach ($times as $v) {
-                            $a[$i]['insert'] = 1;
-                            if (substr($data[$i]['vtime'], 0, 5) == $v) {
-                                $a[$i]['insert'] = 0;
-                                $a[$i]['del'] = 0;
-                            }
-                        }
-                    }
-                }
+                $data['rejection_day'] = date("Y-m-d");
+                $query = "INSERT INTO `zay_consultation_rejection`(`master_id`, `rejection_day`, `rejection_period`) "
+                        . "VALUES ('?','?','?')";
+                return $this->query($query, array($data['master_id'], $data['rejection_day'], $data['rejection_period']), 0);
             }
         }
-        //print_r($a);
-        foreach ($a as $value) {
-            echo "<br/>\n";
-            print_r($value);
-            if ($value['insert'] == 1) {
-                $query_insert = "INSERT INTO `zay_consultation_times` (`master_id`, `vtime`, `active`) VALUES ('?','?','?')";
-                //$this->query($query_insert, array($master_id, $value['value'], 1));
-            }
-        }
-        return false;
+    }
+    
+    /**
+     * Удаление периода исключения
+     * @param type $rejection_id
+     * @return type
+     */
+    public function delete_consultation_rejection($rejection_id) {
+        $query = "DELETE FROM `zay_consultation_rejection` WHERE `id`='?'";
+        return $this->query($query, array($rejection_id));
     }
 
 }
