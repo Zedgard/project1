@@ -162,6 +162,7 @@ class send_emails extends \project\extension {
             $mail = new PHPMailer(false);
             $user_info = $this->get_smtp_user_info();
             $email_info = $this->get_email($email_code);
+            echo "user_info: {$user_info}<br/>\n";
             //echo "send_email: {$email_info['email_send']} <br/>\n";
             if ($email_info['email_send'] > 0) {
                 // $email_info['email_body_file'] ;
@@ -170,21 +171,22 @@ class send_emails extends \project\extension {
                 try {
                     // Server settings
                     $mail->SMTPDebug = SMTP::DEBUG_OFF; //DEBUG_SERVER; // for detailed debug output
-                    $mail->isSMTP();
+                    //$mail->isSMTP();
                     $mail->CharSet = "UTF-8";
-                    $mail->Host = 'smtp.gmail.com';
-                    //$mail->Host = 'smtp.agenstvnet.ru';
-                    $mail->SMTPAuth = true;
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
+                    //$mail->Host = 'smtp.gmail.com';
+                    //$mail->Host = 'smtp.edgardzaycev.com';
+                    //$mail->SMTPAuth = true;
+                    $mail->SMTPDebug = 0;
+                    //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    //$mail->Port = 587; // google
                     //$mail->Port = 465;
 
-                    $mail->Username = $user_info['user_email']; // YOUR gmail email
-                    $mail->Password = $user_info['user_password']; // YOUR gmail password
+                    //$mail->Username = $user_info['user_email']; // YOUR gmail email
+                    //$mail->Password = $user_info['user_password']; // YOUR gmail password
                     //$mail->Username = 'admin@agenstvnet.ru'; // YOUR gmail email
                     //$mail->Password = 'Kopass1987'; // YOUR gmail password
                     // Sender and recipient settings
-                    $mail->setFrom($to_email, $email_info['email_subject']); // samodinskaya1611@mail.ru
+                    $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // samodinskaya1611@mail.ru
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
                     // Setting the email content
@@ -194,6 +196,7 @@ class send_emails extends \project\extension {
                     //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
                     $return = $mail->send();
                     if (!$return) {
+                        $_SESSION['errors'][] = $mail->ErrorInfo;
                         echo "{$mail->ErrorInfo} <br/>\n";
                     }
                     return $return;

@@ -9,6 +9,7 @@ defined('__CMS__') or die;
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
 class sign_up_consultation extends \project\extension {
@@ -23,23 +24,21 @@ class sign_up_consultation extends \project\extension {
      * @return type
      */
     public function add_consultation($data) {
-        if (isset($data['consultation_date']) && strlen($data['consultation_date']) > 0) {
-            $consultation_date = $data['consultation_date'];
-        } else {
-            $date_ex = explode('/', $data['date']);
-            $consultation_date = "{$date_ex[2]}/{$date_ex[1]}/{$date_ex[0]}";
-        }
         $period_id = ($data['period_id'] > 0) ? $data['period_id'] : 0;
 
-        $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?' and `cancel`=0 ";
-        $objs = $this->getSelectArray($querySelect, array($consultation_date, $data['time']));
+        if (!isset($_SESSION['consultation'])) {
+            $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?' and `cancel`=0 ";
+            $objs = $this->getSelectArray($querySelect, array($consultation_date, $data['time']));
+            if (count($objs) == 0) {
+                $_SESSION['errors'][] = 'Уже есть запись на эту дату!';
+            }
+        }
 
-        if (count($objs) == 0) {
+        if (count($_SESSION['errors']) == 0) {
             $query = "INSERT INTO `zay_consultation`(`pay_id`, `master_id`, `first_name`, `user_phone`, `user_email`, `pay_descr`, `consultation_date`, `consultation_time`, `period_id`) "
                     . "VALUES ('?','?','?','?','?','?','?','?','?')";
-            //echo 'sign_up_consultation';
 
-            $return = $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $consultation_date, $data['time'], $period_id), 0);
+            $return = $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $data['date'], $data['time'], $period_id), 0);
             // Отправим письмо оповещение
             if ($return) {
                 $period_str = '';
@@ -53,14 +52,23 @@ class sign_up_consultation extends \project\extension {
                 $send_emails = new \project\send_emails();
                 $config = new \project\config();
                 $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
-                $send_emails->send('consultation', $link_ed_mailto, array(
+                $send_emails->send(
+                        'consultation',
+                        $link_ed_mailto, array(
                     'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
-                    'fio' => $data['first_name'], 'email' => $data['user_email'], 'phone' => $data['user_phone'], 'descr' => $data['pay_descr'], 'date' => $consultation_date, 'time' => $data['time'], 'period' => $period_str));
+                    'fio' => $data['first_name'],
+                    'email' => $data['user_email'],
+                    'phone' => $data['user_phone'],
+                    'descr' => $data['pay_descr'],
+                    'date' => $data['date'],
+                    'time' => $data['time'],
+                    'period' => $period_str
+                        )
+                );
+                unset($_SESSION['consultation']);
             }
 
             return $return;
-        } else {
-            $_SESSION['errors'][] = 'Уже есть запись на эту дату!';
         }
         return false;
     }
@@ -165,12 +173,67 @@ class sign_up_consultation extends \project\extension {
             $query = "DELETE FROM `zay_consultation_master` WHERE `id`='?' ";
             $ret = $this->query($query, array($id));
             if ($ret) {
-                // Чистим периоды
+// Чистим периоды
                 $this->delete_consultation_period_or_master($id);
             }
             return $ret;
         }
         return false;
+    }
+
+    /**
+     * Добавление консультации в корзину<br/>в едином формате
+     * @param type $user_id
+     * @param type $first_name
+     * @param type $user_phone
+     * @param type $user_email
+     * @param type $master_id
+     * @param type $day
+     * @param type $time
+     * @param type $price
+     * @param type $period_id
+     */
+    public function set_cart_consultation($user_id, $first_name, $user_phone, $user_email, $master_id, $day, $time, $price = 0, $period_id = 0) {
+        $sign_up_consultation = new \project\sign_up_consultation();
+
+        $master_name = '';
+        if ($master_id > 0) {
+            $master_data = $sign_up_consultation->get_consultation_master($master_id);
+            $master_name = $master_data[0]['master_name'];
+        }
+        $c_price = $price;
+        if ($period_id > 0) {
+            $period_data = $sign_up_consultation->get_consultation_on_period_info($period_id);
+            if ($period_data['period_price'] > 0) {
+                $master_name = $period_data['master_name'];
+                $c_price = $period_data['period_price'];
+            }
+        }
+
+// Описание
+        $descr = "<div>Консультация с {$first_name}</div>"
+                . "<div>Телефон: {$user_phone}</div>"
+                . "<div>Email: {$user_email}</div>"
+                . "<div>Консультант: {$master_name}</div>"
+                . "<div>Дата и время: {$day} {$time}</div>"
+                . "<div>Цена: {$price}</div>";
+
+// Массив данных
+        $data_itm = array(
+            'id' => 0,
+            'your_master_id' => $master_id,
+            'user_id' => $user_id,
+            'first_name' => $first_name,
+            'user_phone' => $user_phone,
+            'user_email' => $user_email,
+            'pay_descr' => $descr,
+            'date' => date_sql_format($day),
+            'time' => $time,
+            'price' => $c_price,
+            'period_id' => $period_id,
+        );
+        $_SESSION['consultation'] = $data_itm;
+        $_SESSION['cart']['itms'][] = $data_itm;
     }
 
     /*
@@ -232,7 +295,7 @@ class sign_up_consultation extends \project\extension {
     public function delete_consultation_period_or_master($master_id) {
         if ($master_id > 0) {
             $queryPeriods = "DELETE FROM `zay_consultation_periods` WHERE master_id='?'";
-            // Чистим периоды
+// Чистим периоды
             return $this->query($queryPeriods, array($master_id));
         }
         return false;
@@ -317,7 +380,7 @@ class sign_up_consultation extends \project\extension {
     public function get_consultation_on_period_info($period_id) {
         $data = array();
         $querySelect = "SELECT
-                            p.id, m.master_name, m.list_times, p.period_price, p.period_hour, p.periods_minute
+                            p.id, m.id as master_id, m.master_name, m.list_times, p.period_price, p.period_hour, p.periods_minute
                         FROM
                         zay_consultation_periods p
                            left join zay_consultation_master m on p.master_id=m.id

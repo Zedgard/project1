@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Tinkoff 
  * Проверим статусы платежей и зафиксируем успешность проведения платежа
@@ -65,6 +66,14 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
                     . "WHERE `pay_type`='tk' and id='?'";
             $sqlLight->query($query_update, array($pay_check, $value['id']));
             if ($pay_check == 'succeeded') {
+                /*
+                 * Если это консультация 
+                 */
+                if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
+                    $_SESSION['consultation']['pay_id'] = $pay_id;
+                    $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
+                }
                 // Зафиксируем продажу
                 $products->setSoldAdd($value['id']);
                 $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
@@ -74,57 +83,59 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
         }
     }
 } else {
-
-
-
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`!='succeeded' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
     if (count($pays) > 0) {
         foreach ($pays as $value) {
-            ?>
-            <div class="article">
-                <?php
-                $params = [
-                    'PaymentId' => $value['pay_key'],
-                ];
+            $params = [
+                'PaymentId' => $value['pay_key'],
+            ];
 
-                $api->getState($params);
+            $api->getState($params);
 
-                if ($api->status == 'CONFIRMED') {
-                    $pay_check = 'succeeded';
-                } else {
-                    $pay_check = 'pending';
+            if ($api->status == 'CONFIRMED') {
+                $pay_check = 'succeeded';
+            } else {
+                $pay_check = 'pending';
+            }
+
+            // Обновляем статус платежа
+            $query_update = "UPDATE zay_pay "
+                    . "SET pay_status='?' "
+                    . "WHERE `pay_type`='tk' and id='?'";
+            $sqlLight->query($query_update, array($pay_check, $value['id']));
+            if ($pay_check == 'succeeded') {
+                /*
+                 * Если это консультация 
+                 */
+                if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
+                    $_SESSION['consultation']['pay_id'] = $pay_id;
+                    $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
                 }
-
-                // Обновляем статус платежа
-                $query_update = "UPDATE zay_pay "
-                        . "SET pay_status='?' "
-                        . "WHERE `pay_type`='tk' and id='?'";
-                $sqlLight->query($query_update, array($pay_check, $value['id']));
-                if ($pay_check == 'succeeded') {
-                    // Зафиксируем продажу
-                    $products->setSoldAdd($value['id']);
-                    $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
-                } else {
-                    $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
-                }
-                ?>
-                <p><span class="highlight">Response</span>: <?= $api->response ?></p>
-                <?php if ($api->error) : ?>
-                    <p><span class="error"><?= $api->error ?></span></p>
-                <?php else: ?>
-                    <p><span class="highlight">Status</span>: <?= $api->status ?></p>
-                    <p><span class="highlight">PaymentId</span>: <?= $api->paymentId ?></p>
-                    <p><span class="highlight">OrderId</span>: <?= $api->orderId ?></p>
-                <?php endif; ?>
-            </div>
-            <?
+                // Зафиксируем продажу
+                $products->setSoldAdd($value['id']);
+                $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
+            } else {
+                $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
+            }
+//                if ($api->error){ 
+//                echo '<p><span class="error">' .$api->error. '</span></p>';
+//                }
+            /*
+             * <p><span class="highlight">Response</span>: <?= $api->response ?></p>
+              <p><span class="highlight">Status</span>: <?= $api->status ?></p>
+              <p><span class="highlight">PaymentId</span>: <?= $api->paymentId ?></p>
+              <p><span class="highlight">OrderId</span>: <?= $api->orderId ?></p>
+             */
+            
             $paymentId = $value['pay_key']; // Получаем ключ платежа
             if ($_GET['Success'] == 'true') {
                 $pay_check = 'succeeded';
             }
         }
     }
+    header('Location: ' . '/shop/cart/?in_payment_true=1');
     exit();
 }
 /*
@@ -156,46 +167,12 @@ if (isset($_GET['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION
 
     if (count($pay_succeede) > 0) {
         /*
-         * Если установлена настройка отправим в календарь событие
+         * Если это консультация 
          */
-        if ($_SESSION['consultation']['your_master_id'] > 0) {
-            if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
-
-                // Данные по консультанту для календаря
-                // Если календарь не используем не нужно
-//                $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
-//                $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
-//                $master_token = $master['token_file_name'];
-//                $master_credentials = $master['credentials_file_name'];
-//                $first_name = $_SESSION['consultation']['first_name'];
-//                $user_phone = $_SESSION['consultation']['user_phone'];
-//                $user_email = $_SESSION['consultation']['user_email'];
-//                $pay_descr = $_SESSION['consultation']['pay_descr'];
-//                $user_date = $_SESSION['consultation']['date'];
-//                $user_time = $_SESSION['consultation']['time'];
-//                $period_id = $_SESSION['consultation']['period_id'];
-//
-
-
-                /*
-                  'your_master_id' => $your_master,
-                  'first_name' => $first_name,
-                  'user_phone' => $user_phone,
-                  'user_email' => $user_email,
-                  'pay_descr' => "<div>Консультация с {$first_name}</div>"
-                  . "<div>Телефон: {$user_phone}</div>"
-                  . "<div>Email: {$user_email}</div>"
-                  . "<div>Консультант: {$your_master_text}</div>"
-                  . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
-                  'date' => $datepicker_data,
-                  'time' => $timepicker_data,
-                  'price' => $price
-                 */
-                //$master_token = $master['credentials_file_name'];
-                // В последний раз чтото не работало 403 ошибка мол превышен лимит  и не добавлялось событие
-                //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
-            }
-            //$sign_up_consultation->add_consultation($_SESSION['consultation']);
+        if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
+            $_SESSION['consultation']['pay_id'] = $pay_id;
+            $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+            $sign_up_consultation->add_consultation($_SESSION['consultation']);
         }
         $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
     } else {

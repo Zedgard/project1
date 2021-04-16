@@ -77,6 +77,14 @@ if (count($pays) > 0) {
                 . "WHERE `pay_type`='ya' and pay_key = '?'";
         $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']));
         if ($pay_check == 'succeeded') {
+            /*
+             * Если это консультация 
+             */
+            if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
+                $_SESSION['consultation']['pay_id'] = $pay_id;
+                $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+                $sign_up_consultation->add_consultation($_SESSION['consultation']);
+            }
             // Зафиксируем продажу
             $products->setSoldAdd($value['id']);
             $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
@@ -98,11 +106,10 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
         /*
          * Если установлена настройка отправим в календарь событие
          */
-        if ($_SESSION['consultation']['your_master_id'] > 0) {
-            if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
-
-                // Данные по консультанту для календаря
-                // Если календарь не используем не нужно
+        //if ($_SESSION['consultation']['your_master_id'] > 0) {
+        //    if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
+        // Данные по консультанту для календаря
+        // Если календарь не используем не нужно
 //                $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
 //                $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
 //                $master_token = $master['token_file_name'];
@@ -117,25 +124,33 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
 //
 
 
-                /*
-                  'your_master_id' => $your_master,
-                  'first_name' => $first_name,
-                  'user_phone' => $user_phone,
-                  'user_email' => $user_email,
-                  'pay_descr' => "<div>Консультация с {$first_name}</div>"
-                  . "<div>Телефон: {$user_phone}</div>"
-                  . "<div>Email: {$user_email}</div>"
-                  . "<div>Консультант: {$your_master_text}</div>"
-                  . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
-                  'date' => $datepicker_data,
-                  'time' => $timepicker_data,
-                  'price' => $price
-                 */
-                //$master_token = $master['credentials_file_name'];
-                // В последний раз чтото не работало 403 ошибка мол превышен лимит  и не добавлялось событие
-                //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
-            }
-            //$sign_up_consultation->add_consultation($_SESSION['consultation']);
+        /*
+          'your_master_id' => $your_master,
+          'first_name' => $first_name,
+          'user_phone' => $user_phone,
+          'user_email' => $user_email,
+          'pay_descr' => "<div>Консультация с {$first_name}</div>"
+          . "<div>Телефон: {$user_phone}</div>"
+          . "<div>Email: {$user_email}</div>"
+          . "<div>Консультант: {$your_master_text}</div>"
+          . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
+          'date' => $datepicker_data,
+          'time' => $timepicker_data,
+          'price' => $price
+         */
+        //$master_token = $master['credentials_file_name'];
+        // В последний раз чтото не работало 403 ошибка мол превышен лимит  и не добавлялось событие
+        //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
+        //   }
+        //$sign_up_consultation->add_consultation($_SESSION['consultation']);
+        //}
+        /*
+         * Если это консультация 
+         */
+        if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
+            $_SESSION['consultation']['pay_id'] = $pay_id;
+            $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+            $sign_up_consultation->add_consultation($_SESSION['consultation']);
         }
         $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
     } else {
