@@ -147,18 +147,18 @@ class sign_up_consultation extends \project\extension {
      * @param type $credentials_file_name
      * @return boolean
      */
-    public function edit_consultation_master($id, $master_name, $token_file_name, $credentials_file_name, $list_times) {
+    public function edit_consultation_master($id, $master_name, $token_file_name, $credentials_file_name) {
         if ($id > 0) {
             $masters = $this->get_consultation_master();
             $count_masters = count($masters) + 1;
             $query = "UPDATE `zay_consultation_master` "
-                    . "SET `master_name`='?',`token_file_name`='?',`credentials_file_name`='?', `list_times`='?', `position`='?' "
+                    . "SET `master_name`='?',`token_file_name`='?',`credentials_file_name`='?', `position`='?' "
                     . "WHERE `id`='?' ";
-            return $this->query($query, array($master_name, $token_file_name, $credentials_file_name, $list_times, $count_masters, $id));
+            return $this->query($query, array($master_name, $token_file_name, $credentials_file_name, $count_masters, $id));
         } else {
-            $query = "INSERT INTO `zay_consultation_master`(`master_name`, `token_file_name`, `credentials_file_name`, `list_times`, `position`) "
+            $query = "INSERT INTO `zay_consultation_master`(`master_name`, `token_file_name`, `credentials_file_name`, `position`) "
                     . "VALUES ('?','?','?','?')";
-            return $this->query($query, array($master_name, $token_file_name, $credentials_file_name, $list_times, $count_masters));
+            return $this->query($query, array($master_name, $token_file_name, $credentials_file_name, $count_masters));
         }
         return false;
     }
