@@ -44,7 +44,7 @@ if (isset($_POST['cart_product_add'])) {
 // Добавление в корзину консультации
 if (isset($_POST['send_consultation_form'])) {
     unset($_SESSION['consultation']);
-    $_SESSION['cart']['itms'] = array();
+    //$_SESSION['cart']['itms'] = array();
     $first_name = $_POST['first_name'];
     $user_phone = $_POST['user_phone'];
     $user_email = $_POST['user_email'];
@@ -78,35 +78,27 @@ if (isset($_POST['send_consultation_form'])) {
     } else {
         $user_id = $users[0]['id'];
     }
-    // -------------------------------------------------------------------------
 
-    $data_itm = array(
-        'id' => 0,
-        'your_master_id' => $your_master,
-        'user_id' => $user_id,
-        'first_name' => $first_name,
-        'user_phone' => $user_phone,
-        'user_email' => $user_email,
-        'pay_descr' => "<div>Консультация с {$first_name}</div>"
-        . "<div>Телефон: {$user_phone}</div>"
-        . "<div>Email: {$user_email}</div>"
-        . "<div>Консультант: {$your_master_text}</div>"
-        . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>"
-        . "<div>Цена: {$price}</div>",
-        'date' => $datepicker_data,
-        'time' => $timepicker_data,
-        'price' => $price,
-        'period_id' => $period_id,
+    // положим в корзину
+    $sign_up_consultation->set_cart_consultation(
+            $user_id,
+            $first_name,
+            $user_phone,
+            $user_email,
+            $your_master,
+            $datepicker_data,
+            $timepicker_data,
+            $price,
+            $period_id
     );
-    $_SESSION['consultation'] = $data_itm;
-    $_SESSION['cart']['itms'][] = $data_itm;
 }
-
 
 // Добавление в корзину
 if (isset($_POST['add_other_consultation_cart'])) {
+    unset($_SESSION['consultation']);
     include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
     $sign_up_consultation = new \project\sign_up_consultation();
+
     $product_period_id = trim($_POST['product_period_id']);
     $consultation_user_fio = trim($_POST['consultation_user_fio']);
     $consultation_date = $_POST['consultation_date'];
@@ -116,32 +108,22 @@ if (isset($_POST['add_other_consultation_cart'])) {
 
     $data = $sign_up_consultation->get_consultation_on_period_info($product_period_id);
 
-    $product_descr = "<div>Консультация с {$data['master_name']}</div>"
-            . "<div>Имя клиента: {$_SESSION['user']['info']['first_name']}</div>"
-            . "<div>Телефон: {$_SESSION['user']['info']['phone']}</div>"
-            . "<div>Email: {$_SESSION['user']['info']['email']}</div>"
-            . "<div>Консультант: {$data['master_name']}</div>"
-            . "<div>Дата и время: {$consultation_date} {$consultation_period}</div>"
-            . "<div>Цена: {$data['period_price']}</div>";
     $product_price = trim($data['period_price']);
 
     if (isset($_SESSION['user']['info']) && $_SESSION['user']['info']['id'] > 0) {
-        $data_itm = array(
-            'id' => 0,
-            'images_str' => '',
-            'title' => 'Онлайн консультация c ' . $data['master_name'],
-            'user_id' => $_SESSION['user']['info']['id'],
-            'first_name' => $_SESSION['user']['info']['first_name'],
-            'user_phone' => $_SESSION['user']['info']['phone'],
-            'user_email' => $_SESSION['user']['info']['email'],
-            'pay_descr' => $product_descr,
-            'price' => $product_price
+        // положим в корзину
+        $sign_up_consultation->set_cart_consultation(
+                $_SESSION['user']['info']['id'],
+                $_SESSION['user']['info']['first_name'],
+                $_SESSION['user']['info']['phone'],
+                $_SESSION['user']['info']['email'],
+                $data['master_id'],
+                $consultation_date,
+                $consultation_period,
+                $data['period_price'],
+                $product_period_id
         );
 
-        if ($consultation_find_basket == 0) {
-            $_SESSION['consultation'] = $data_itm;
-            $_SESSION['cart']['itms'][] = $data_itm;
-        }
         $result = array('success' => 1, 'success_text' => '');
     } else {
         $errors[] = 'Не определен пользователь!';
@@ -357,12 +339,12 @@ if (isset($_POST['set_cloudpayments'])) {
                     /*
                      * Если это консультация 
                      */
-                    if ($_SESSION['consultation']['your_master_id'] > 0) {
-                        $_SESSION['consultation']['pay_id'] = $max_id;
-                        $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
-                    }
-                    $data_array['pay_descr'] = 'Покупка товара';
+//                    if ($_SESSION['consultation']['your_master_id'] > 0) {
+//                        $_SESSION['consultation']['pay_id'] = $max_id;
+//                        $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+//                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
+//                    }
+                    //$data_array['pay_descr'] = 'Покупка товара';
                     // Отправляем пользователя на страницу оплаты
                     //header('Location: ' . $confirmationUrl);
                     $result = array('success' => 1, 'success_text' => '', 'data' => $data_array);
@@ -457,9 +439,17 @@ if (isset($_POST['check_cloudpayments'])) {
                 . "WHERE `pay_type`='cp' and pay_key='?' and id='?' ";
 
         if ($sqlLight->query($query_update, array($pay_check, $_SESSION['PAY_AMOUNT'], 'CloudPayments', '', '', $_SESSION['PAY_KEY'], $pay_id), 0) && $pay_check == 'succeeded') {
+            /*
+             * Если это консультация 
+             */
+            if ($_SESSION['consultation']['your_master_id'] > 0) {
+                $_SESSION['consultation']['pay_id'] = $pay_id;
+                $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+                $sign_up_consultation->add_consultation($_SESSION['consultation']);
+            }
             // Зафиксируем продажу
             $products->setSoldAdd($pay_id);
-            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен 2');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');
         }
