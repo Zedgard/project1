@@ -215,6 +215,7 @@
             var wares_ex_code = $(".form_save_wares").find(".wares_ex_code").val();
             var wares_articul = $(".form_save_wares").find(".wares_articul").val();
             var wares_col = $(".form_save_wares").find(".wares_col").val();
+            var club_month_period = $(".form_save_wares").find(".club_month_period").val();
             var wares_descr = tinymce.get('wares_descr').getContent();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
             //var wares_active = $(".form_save_wares").find(".wares_active").val();
@@ -231,6 +232,7 @@
                         "wares_ex_code": wares_ex_code,
                         "wares_articul": wares_articul,
                         "wares_col": wares_col,
+                        "club_month_period": club_month_period,
                         "wares_descr": wares_descr,
                         //"wares_active": wares_active,
                         "wares_images": images_str.toString()},

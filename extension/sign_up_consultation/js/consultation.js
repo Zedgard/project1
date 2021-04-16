@@ -10,7 +10,7 @@ $(function () {
     //consult_main_body = $(".consult_main_body").height();
     //$(".consult_main_body").height(consult_main_body);
     // Следующий шаг
-    $(".btn_next_step").click(function () {
+    $(".btn_next_step").click(function () { 
 
         var step_next = Number($(this).attr("step"));
         var step_last = step_next - 1;

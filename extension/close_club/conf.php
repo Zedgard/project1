@@ -1,10 +1,12 @@
 <?php
 
 $config = array(
-    'title' => 'Настройки сайта',
-    'descr' => 'Разные настройки сайта',
+    'title' => 'Закрытый клуб',
+    'descr' => 'Закрытый клуб',
     'urls' => array(
-        'Настройки сайта админка (admin.php)' => '/extension/config/admin.php'
+        'Закрытый клуб (admin.php)' => '/extension/close_club/admin.php',
+        'Закрытый клуб (index.php)' => '/extension/close_club/index.php',
+        'Закрытый клуб (office.php)' => '/extension/close_club/office.php'
     ),
     'version' => '0.1'
 );

@@ -96,9 +96,7 @@
         <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/ajax.js?v=<?= $_SESSION['rand'] ?>"></script>   
-        <?
-        //<script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] "></script> 139
-        ?>
+
         <script type="text/javascript" src="/assets/plugins/mixitup/mixitup.js<?= $_SESSION['rand'] ?>"></script>
         <link href="/assets/css/sleek.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] ?>"></script>
@@ -142,7 +140,7 @@
               =====================================
                 -->
                 <aside class="left-sidebar bg-sidebar">
-                    <div id="sidebar" class="sidebar ">
+                    <div id="sidebar" class="sidebar">
                         <!-- Aplication Brand -->
                         <div class="app-brand">
                             <a href="/" title="<?= $_SESSION['page']['page_title'] ?>">

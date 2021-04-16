@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" style="color: #FFFFFF;display: none;">&times;</span>
                 </button>
-            </div>
+            </div> 
             <div class="modal-body">
                 <div class="mb-2 text-center">Добрый человек, проверь <strong>внимательно все детали</strong> заказа</div>
                 <div class="block_consultation_pay_info mb-4">

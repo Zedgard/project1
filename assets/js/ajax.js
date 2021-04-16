@@ -12,11 +12,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
      */
     $.fn.sendPost = function (func) {
         //console.log("sendPost init");
-
-
-
         var make = function () {
-
             // реализация работы метода с отдельным элементом страницы
             var obj = this;
             $(this).submit(function (e) {
@@ -55,9 +51,10 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             $('.form_result').html("");
                             var metod = 0;
                             if (result['success'] == 1) {
+                                $('.form_result').show();
                                 $('.form_result').removeClass("alert-danger");
-                                //$('.form_result').addClass("alert").addClass("alert-success");
-                                $('.form_result').append(result['success_text']);
+                                $('.form_result').addClass("alert").addClass("alert-success");
+                                $('.form_result').html(result['success_text']);
                                 metod = 1;
                             }
                             if (result['success'] == 0) {
@@ -133,8 +130,6 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
  * @returns {ajaxL#5.$.fn@call;each}
  */
 function sendPostLigth(url, data, func) {
-    //console.log("sendPostLigth init");
-
     // реализация работы метода с отдельным элементом страницы
     //var obj = this;
     $('.form_result').html("");
@@ -157,6 +152,9 @@ function sendPostLigth(url, data, func) {
 
                     }
                     if (!!$('.form_result')) {
+                        $('.form_result').show();
+                        $('.form_result').removeClass("alert-danger");
+                        $('.form_result').addClass("alert").addClass("alert-success");
                         $('.form_result').append('<div>' + result['success_text'] + '</div>');
                     }
                 }
@@ -202,7 +200,9 @@ function sendPostLigth(url, data, func) {
                 }, (action_time * 1000));
 
             }
-
+            setTimeout(function () {
+                $('.form_result').hide();
+            }, 20000);
         }
     });
 

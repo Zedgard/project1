@@ -9,7 +9,7 @@
         outline: none;
         font-size: 1.2rem;
         font-weight: 600;
-        border: 1px solid #ddd;
+        border: 1px solid #ddd; 
         border-radius: 0px;
         position: relative;
     }
