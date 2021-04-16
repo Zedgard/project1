@@ -160,7 +160,7 @@
                                                 </p> 
                                             </div>
                                         </div>
-                                        <input type="hidden" name="registration" />  
+                                        <input type="hidden" name="registration" value="1" />  
                                     </form>
 
                                 </div>

@@ -63,8 +63,12 @@ if (isset($_POST['authorization'])) {
  * Регистрация
  */
 if (isset($_POST['registration'])) {
-    if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
-        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес', 'action' => '/auth/', 'action_time' => '20');
+    if ($_POST['check_indicator'] != '1') {
+        $result = array('success' => 0, 'success_text' => 'Вы не поставили галочку (Я согласен с условиями и положениями)!');
+    } else {
+        if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
+            $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес', 'action' => '/auth/', 'action_time' => '20');
+        }
     }
 }
 /*
@@ -144,29 +148,36 @@ if (isset($_POST['check_and_register_user'])) {
         $_SESSION['consultation_user_email'] = trim($_POST['consultation_user_email']);
         $_SESSION['consultation_user_pass'] = trim($_POST['consultation_user_pass']);
 
-        $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
-        if ($user['id'] > 0) {
-            $_SESSION['consultation_user_fio'] = $user['first_name'];
-            $_SESSION['consultation_user_phone'] = $user['phone'];
-            $_SESSION['consultation_user_email'] = $user['email'];
-            $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
-
-            $result = array('success' => 1, 'success_text' => '');
+        if (strlen($_SESSION['consultation_user_phone']) == 0) {
+            $_SESSION['errors'][] = 'Не введен номер телефона!';
+            $result = array('success' => 0, 'success_text' => '');
         } else {
-            if ($auth->register($_POST['consultation_user_email'], $_POST['consultation_user_phone'], $_POST['consultation_user_pass'], $_POST['consultation_user_pass'],
-                            1, 1)) {
-                $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
-                if ($user['id'] > 0) {
-                    $_SESSION['consultation_user_fio'] = $user['first_name'];
+            $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
+            if ($user['id'] > 0) {
+                $_SESSION['consultation_user_fio'] = $user['first_name'];
+                if (strlen($user['phone']) > 0) {
                     $_SESSION['consultation_user_phone'] = $user['phone'];
-                    $_SESSION['consultation_user_email'] = $user['email'];
-                    $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
-                    $result = array('success' => 1, 'success_text' => '');
-                } else {
-                    $result = array('success' => 0, 'success_text' => 'Нет такой учетки извините, необходимо зарегистрироваться!');
                 }
+                //$_SESSION['consultation_user_email'] = $user['email'];
+                $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
+
+                $result = array('success' => 1, 'success_text' => '');
             } else {
-                $result = array('success' => 0, 'success_text' => 'Ошибка регистрации!');
+                if ($auth->register($_POST['consultation_user_email'], $_POST['consultation_user_phone'], $_POST['consultation_user_pass'], $_POST['consultation_user_pass'],
+                                1, 1)) {
+                    $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
+                    if ($user['id'] > 0) {
+                        $_SESSION['consultation_user_fio'] = $user['first_name'];
+                        //$_SESSION['consultation_user_phone'] = $user['phone'];
+                        $_SESSION['consultation_user_email'] = $user['email'];
+                        $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
+                        $result = array('success' => 1, 'success_text' => '');
+                    } else {
+                        $result = array('success' => 0, 'success_text' => 'Нет такой учетки извините, необходимо зарегистрироваться!');
+                    }
+                } else {
+                    $result = array('success' => 0, 'success_text' => 'Ошибка регистрации!');
+                }
             }
         }
     } else {
@@ -176,6 +187,6 @@ if (isset($_POST['check_and_register_user'])) {
 
 // серверное время 
 if (isset($_POST['get_real_time'])) {
-    $date_time = date("Y-m-d") . 'T' . date("H:i:s");// . '00';
+    $date_time = date("Y-m-d") . 'T' . date("H:i:s"); // . '00';
     $result = array('success' => 1, 'success_text' => '', 'data' => $date_time);
 }

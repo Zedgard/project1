@@ -65,23 +65,38 @@ class products extends \project\extension {
      */
     public function getProductsArray($active, $searchStr, $id = 0) {
         if ($id > 0) {
-            $querySelect = "SELECT * FROM `zay_product` WHERE `id`='?' order by id desc ";
+            $querySelect = "SELECT p.* FROM zay_product p "
+                    . "left join zay_product_wares pw on pw.product_id=p.id "
+                    . "left loin zay_wares w on w.id=pw.wares_id "
+                    . "WHERE `id`='?' "
+                    . "and w.club_month_period='0' "
+                    . "order by id desc ";
             $data = $this->getSelectArray($querySelect, array($id));
         } else {
             if (strlen($searchStr) > 0) {
-                $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
+                $querySelect = "SELECT p.* FROM zay_product p "
+                        . "left join zay_product_wares pw on pw.product_id=p.id "
+                        . "left loin zay_wares w on w.id=pw.wares_id "
+                        . "WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' "
+                        . "and w.club_month_period='0' "
+                        . "order by id desc ";
                 $data = $this->getSelectArray($querySelect, array($active, $searchStr));
             } else {
                 if ($active == 9) {
-                    $querySelect = "SELECT * FROM `zay_product` WHERE `is_delete`='1' order by lastdate desc";
+                    $querySelect = "SELECT p.* FROM zay_product p "
+                            . "left join zay_product_wares pw on pw.product_id=p.id "
+                            . "left loin zay_wares w on w.id=pw.wares_id "
+                            . "WHERE `is_delete`='1' "
+                            . "and w.club_month_period='0' "
+                            . "order by lastdate desc";
                     $data = $this->getSelectArray($querySelect, array());
                 } else {
-                    $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `is_delete`='0' order by id desc";
+                    $querySelect = "SELECT p.* FROM zay_product p WHERE `active`='?' and `is_delete`='0' order by id desc";
                     $data = $this->getSelectArray($querySelect, array($active));
                 }
             }
         }
-        
+
         for ($i = 0; $i < count($data); $i++) {
             //$value['images_str'];
             $image = $data[$i]['images_str']; //$this->checkImageFile($value['images_str']);
@@ -95,6 +110,19 @@ class products extends \project\extension {
         }
 
         return $data;
+    }
+
+    /**
+     * Список продуктов закрытого клуба
+     * @return type
+     */
+    public function getProductsClubArray() {
+        $querySelect = "SELECT p.*, w.club_month_period FROM zay_product p "
+                . "left join zay_product_wares pw on pw.product_id=p.id "
+                . "left join zay_wares w on w.id=pw.wares_id "
+                . "WHERE w.club_month_period>0 "
+                . "order by p.title desc";
+        return $this->getSelectArray($querySelect, array());
     }
 
     /**
@@ -417,12 +445,14 @@ class products extends \project\extension {
             (SELECT GROUP_CONCAT(t.`theme_id`) FROM `zay_product_theme` t WHERE t.`product_id`=p2.`id`) as product_theme_ids
                 from `zay_product` p2 
                         where p2.id in(
-                            SELECT p.id
+                            SELECT distinct p.id
                                 FROM `zay_product` p
-                                left join `zay_product_category` c on c.product_id=p.id
-                                left join `zay_product_topic` t on t.product_id=p.id
-                                left join `zay_product_theme` pth on pth.product_id=p.id
-                                where p.`active`='1' and p.`is_delete`='0'  
+                                left join zay_product_category c on c.product_id=p.id
+                                left join zay_product_topic t on t.product_id=p.id
+                                left join zay_product_theme pth on pth.product_id=p.id
+                                left join zay_product_wares pww on pww.product_id=p.id
+                                left join zay_wares ww on ww.id=pww.wares_id 
+                                where p.active='1' and p.is_delete='0' and ww.club_month_period='0'   
                                 {$queryValSearchStr} 
                                 {$queryValCategory} 
                                 {$queryValTopic}

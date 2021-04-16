@@ -162,7 +162,7 @@ class send_emails extends \project\extension {
             $mail = new PHPMailer(false);
             $user_info = $this->get_smtp_user_info();
             $email_info = $this->get_email($email_code);
-            echo "user_info: {$user_info}<br/>\n";
+            //echo "user_info: {$user_info}<br/>\n";
             //echo "send_email: {$email_info['email_send']} <br/>\n";
             if ($email_info['email_send'] > 0) {
                 // $email_info['email_body_file'] ;

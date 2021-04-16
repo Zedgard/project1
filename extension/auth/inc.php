@@ -138,7 +138,7 @@ class auth extends \project\user {
             }
 
             if ($check_private != 1) {
-                $error[] = $lang['check_positions'];
+                $error[] = 'Необходимо согласиться с условиями!';
                 return false;
             }
 

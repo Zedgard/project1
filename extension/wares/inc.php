@@ -67,6 +67,15 @@ class wares extends \project\extension {
         //    $querySelect = "SELECT * FROM `zay_wares` where `is_delete`='0'";
         //   return $this->getSelectArray($querySelect, array());
     }
+    
+    /**
+     * Получим список товаров по закрытому клубу
+     * @return type
+     */
+    public function getWaresClubArray() {
+        $querySelect = "SELECT * FROM zay_wares w WHERE w.club_month_period>0 order by w.title desc ";
+        return $this->getSelectArray($querySelect, array(), 0);
+    }
 
     /**
      * Данные по товару
@@ -103,26 +112,26 @@ class wares extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active) {
+    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $club_month_period, $ex_code, $articul, $wares_images, $active) {
         if (strlen($col) == 0) {
             $col = 0;
         }
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
-                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `ex_code`='?', `articul`='?', `images`='?', `active`='?', "
+                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', `ex_code`='?', `articul`='?', `images`='?', `active`='?', "
                     . "is_delete='0', "
                     . "`lastdate`=NOW() "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active, $id), 0)) {
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, $ex_code, $articul, $wares_images, $active, $id), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
             }
         } else {
             $query = "INSERT INTO `zay_wares` "
-                    . "(`title`, `descr`, `url_file`, `col`, `ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
+                    . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, `ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active), 0)) {
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, $ex_code, $articul, $wares_images, $active), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
             }

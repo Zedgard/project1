@@ -4,7 +4,7 @@ var consultation_price = '';
 var consultation_elm_id = 0;
 
 var consultation_date_click = '';
-
+ 
 $(".calendar_day_active").unbind("click").click(function () {
     var o = this;
     $(".calendar_day_active").removeClass("active");
@@ -75,7 +75,7 @@ function init_btn_consultation_pay() {
             }
 
             var errors = [];
-            if (user_phone.length < 2) {
+            if (user_phone.length < 4) {
                 errors.push('Поле "Телефон" не заполнен!');
             }
             if (user_email.length < 2) {

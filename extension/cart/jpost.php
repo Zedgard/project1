@@ -10,6 +10,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
 include_once 'inc.php';
 
 $pr_cart = new \project\cart();
@@ -391,6 +392,7 @@ if (isset($_POST['check_cloudpayments'])) {
     $products = new \project\products();
     $config = new \project\config();
     $sign_up_consultation = new \project\sign_up_consultation();
+    $close_club = new \project\close_club();
 
     $CloudPayments_id = $config->getConfigParam('CloudPayments');
 
@@ -438,6 +440,11 @@ if (isset($_POST['check_cloudpayments'])) {
                 . "SET pay_status='?', pay_sum='?', payment_type='?', payment_c='?', payment_bank='?' "
                 . "WHERE `pay_type`='cp' and pay_key='?' and id='?' ";
 
+        // Зафиксируем покупку по закрытому клубу
+        if($pay_check == 'succeeded'){
+            $close_club->register_ispay_club_month_period($pay_id);
+        }
+        
         if ($sqlLight->query($query_update, array($pay_check, $_SESSION['PAY_AMOUNT'], 'CloudPayments', '', '', $_SESSION['PAY_KEY'], $pay_id), 0) && $pay_check == 'succeeded') {
             /*
              * Если это консультация 

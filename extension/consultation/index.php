@@ -11,7 +11,7 @@ $events = array();
 //$calendar = Calendar::getMonth(date('n'), date('Y'), $events);
 $calendar = Calendar::getInterval(date("d.m.Y"), 1, $events);
 
-$consultation_fio = '';
+$consultation_fio = ''; 
 $consultation_phone = '';
 $consultation_email = '';
 $consultation_pass = 1;

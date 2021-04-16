@@ -7,7 +7,7 @@
                     <?= $calendar ?>
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
 </div>
 <script src="/extension/consultation/js/consultation.js<?= $_SESSION['rand'] ?>"></script>

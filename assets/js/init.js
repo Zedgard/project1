@@ -498,6 +498,10 @@ function initCartCount() {
 function initCartProductAdd() {
     $(".cart_product_add").unbind('click').click(function () {
         var cart_product_id = $(this).attr('product_id');
+        var go_url = '';
+        if (!!$(this).attr('go_url')) {
+            go_url = $(this).attr('go_url');
+        }
         // Информаия по товару
         var cart_product_title = $(this).closest(".btn_product_list").find(".info_product_title").val();
         var cart_product_img = $(this).closest(".btn_product_list").find(".info_product_img").val();
@@ -534,6 +538,9 @@ function initCartProductAdd() {
             //initCartCount();
             open_cart_modal(cart_product_title, cart_product_img);
             initCartArray();
+            if (go_url.length > 0) {
+                window.location.href = go_url;
+            }
         });
     }
     );
