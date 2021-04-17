@@ -192,6 +192,7 @@ if ($api->error) {
     $pay_status = "pending"; // Устанавливаем стандартный статус платежа
     $pay_key = $api->paymentId;
     $_SESSION['PAY_KEY'] = $pay_key;
+    $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
 
     // Сохраняем данные платежа в базу
     $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "

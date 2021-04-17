@@ -50,7 +50,6 @@ $api = new TinkoffMerchantAPI(
 //echo "POST: ";
 //print_r($_POST);
 if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
-    echo 1111;
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_date`>=CURRENT_DATE-1 and `pay_key`='?'";
     $pays = $sqlLight->queryList($query, array($_SESSION['PAY_KEY']), 0);
     if (count($pays) > 0) {
@@ -90,9 +89,9 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             }
         }
     }
+    header('Location: ' . '/shop/cart/?in_payment_true=1');
     exit();
 } else {
-    echo 2222;
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`!='succeeded' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
     if (count($pays) > 0) {
@@ -141,7 +140,7 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             }
         }
     }
-    //header('Location: ' . '/shop/cart/?in_payment_true=1');
+    header('Location: ' . '/shop/cart/?in_payment_true=2');
     exit();
 }
 /*
