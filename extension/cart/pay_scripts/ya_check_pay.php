@@ -13,7 +13,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
 
+$pr_cart = new \project\cart();
 $sqlLight = new \project\sqlLight();
 $u = new \project\user();
 $products = new \project\products();
@@ -77,14 +79,10 @@ if (count($pays) > 0) {
                 . "WHERE `pay_type`='ya' and pay_key = '?'";
         $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']));
         if ($pay_check == 'succeeded') {
-            /*
-             * Если это консультация 
-             */
-            if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
-                $_SESSION['consultation']['pay_id'] = $pay_id;
-                $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                $sign_up_consultation->add_consultation($_SESSION['consultation']);
-            }
+
+            // Зарегистрируем покупку
+            $pr_cart->register_pay($pay_id);
+
             // Зафиксируем продажу
             $products->setSoldAdd($value['id']);
             $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
@@ -144,14 +142,9 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
         //   }
         //$sign_up_consultation->add_consultation($_SESSION['consultation']);
         //}
-        /*
-         * Если это консультация 
-         */
-        if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
-            $_SESSION['consultation']['pay_id'] = $pay_id;
-            $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-            $sign_up_consultation->add_consultation($_SESSION['consultation']);
-        }
+        // Зарегистрируем покупку
+        $pr_cart->register_pay($pay_id);
+
         $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
     } else {
         $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');

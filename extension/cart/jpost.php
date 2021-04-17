@@ -112,10 +112,14 @@ if (isset($_POST['add_other_consultation_cart'])) {
     $product_price = trim($data['period_price']);
 
     if (isset($_SESSION['user']['info']) && $_SESSION['user']['info']['id'] > 0) {
+
+        if (strlen(trim($consultation_user_fio)) == 0) {
+            $consultation_user_fio = $_SESSION['user']['info']['first_name'];
+        }
         // положим в корзину
         $sign_up_consultation->set_cart_consultation(
                 $_SESSION['user']['info']['id'],
-                $_SESSION['user']['info']['first_name'],
+                $consultation_user_fio,
                 $_SESSION['user']['info']['phone'],
                 $_SESSION['user']['info']['email'],
                 $data['master_id'],
@@ -266,7 +270,6 @@ if (isset($_POST['set_cloudpayments'])) {
         if ($p_user->isEditor()) {
             $price_total = 1;
         }
-
 
         $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
@@ -440,23 +443,14 @@ if (isset($_POST['check_cloudpayments'])) {
                 . "SET pay_status='?', pay_sum='?', payment_type='?', payment_c='?', payment_bank='?' "
                 . "WHERE `pay_type`='cp' and pay_key='?' and id='?' ";
 
-        // Зафиксируем покупку по закрытому клубу
-        if($pay_check == 'succeeded'){
-            $close_club->register_ispay_club_month_period($pay_id);
-        }
-        
         if ($sqlLight->query($query_update, array($pay_check, $_SESSION['PAY_AMOUNT'], 'CloudPayments', '', '', $_SESSION['PAY_KEY'], $pay_id), 0) && $pay_check == 'succeeded') {
-            /*
-             * Если это консультация 
-             */
-            if ($_SESSION['consultation']['your_master_id'] > 0) {
-                $_SESSION['consultation']['pay_id'] = $pay_id;
-                $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                $sign_up_consultation->add_consultation($_SESSION['consultation']);
-            }
+
+            // Зарегистрируем покупку
+            $pr_cart->register_pay($pay_id);
+
             // Зафиксируем продажу
             $products->setSoldAdd($pay_id);
-            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен 2');
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');
         }

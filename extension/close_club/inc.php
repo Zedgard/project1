@@ -55,8 +55,8 @@ class close_club extends \project\extension {
         $query = "select w.club_month_period, p.user_id "
                 . "from zay_pay p "
                 . "left join zay_pay_products pp on pp.pay_id=p.id "
-                . "left join zay_product p on p.id=pp.product_id "
-                . "left join zay_product_wares pw on pw.product_id=p.id "
+                . "left join zay_product pr on pr.id=pp.product_id "
+                . "left join zay_product_wares pw on pw.product_id=pr.id "
                 . "left join zay_wares w on w.id=pw.wares_id "
                 . "WHERE p.id='?' and club_month_period>0";
         $data = $this->getSelectArray($query, array($pay_id));
@@ -76,8 +76,9 @@ class close_club extends \project\extension {
                 $queryInsertClub = "INSERT INTO `zay_close_club`(`user_id`, `period_month`, `lastdate`) VALUES ('?','?',NOW())";
                 return $this->getSelectArray($queryInsertClub, array($data[0]['user_id'], $club_month_period));
             }
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**

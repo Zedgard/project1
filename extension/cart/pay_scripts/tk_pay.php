@@ -128,6 +128,7 @@ foreach ($_SESSION['cart']['itms'] as $key => $value) {
 if ($p_user->isEditor()) {
     $price_total = 1;
 }
+$price_total = 1;
 
 $amount = $price_total * 100;
 
@@ -144,10 +145,10 @@ $_SESSION['PAY_KEY'] = $pay_key;
 
 $max_id = $sqlLight->queryNextId('zay_pay');
 
-if(strlen($max_id)==0){
-    echo "max_id: {$max_id}";
-    exit();
-}
+//if(strlen($max_id)==0){
+//    echo "max_id: {$max_id}";
+//    exit();
+//}
 
 $params = [
     'OrderId' => $max_id,
@@ -211,10 +212,10 @@ if ($api->error) {
         /*
          * Если это консультация 
          */
-        if ($_SESSION['consultation']['your_master_id'] > 0) {
-            $_SESSION['consultation']['pay_id'] = $max_id;
-            $sign_up_consultation->add_consultation($_SESSION['consultation']);
-        }
+//        if ($_SESSION['consultation']['your_master_id'] > 0) {
+//            $_SESSION['consultation']['pay_id'] = $max_id;
+//            $sign_up_consultation->add_consultation($_SESSION['consultation']);
+//        }
         // Отправляем пользователя на страницу оплаты
         header('Location: ' . $api->paymentUrl);
     } else {

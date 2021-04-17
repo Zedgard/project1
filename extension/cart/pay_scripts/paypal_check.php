@@ -7,18 +7,20 @@ session_start();
  * and open the template in the editor.
  * [ik_co_id] => 5f5dfdf8f3f7ad5888515cd6 [ik_inv_id] => 244440086 [ik_inv_st] => success [ik_pm_no] => 1 ) 
  */
-include $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
 
 $sqlLight = new \project\sqlLight();
 $u = new \project\user();
 $config = new \project\config();
 $sign_up_consultation = new \project\sign_up_consultation();
+$close_club = new \project\close_club();
 
 $in_shop_id = $config->getConfigParam('in_shop_id');
 $in_secret_key = $config->getConfigParam('in_secret_key');
@@ -72,7 +74,7 @@ if ($amount == $check_amount) {
         $pays = $sqlLight->queryList($query, array($pay_key));
     } else {
         $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
-        $pays = $sqlLight->queryList($query, array($pay_key), 1);
+        $pays = $sqlLight->queryList($query, array(), 0);
     }
 //    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
 //    $pays = $sqlLight->queryList($query, array($pay_key), 1);
@@ -85,49 +87,59 @@ if ($amount == $check_amount) {
                 /*
                  * Если установлена настройка отправим в календарь событие
                  */
-                if ($_SESSION['consultation']['your_master_id'] > 0) {
-                    if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
+                //if ($_SESSION['consultation']['your_master_id'] > 0) {
+                //    if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
+//                        $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
+//                        $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
+//                        $master_token = $master['token_file_name'];
+//                        $master_credentials = $master['credentials_file_name'];
+//
+//                        $first_name = $_SESSION['consultation']['first_name'];
+//                        $user_phone = $_SESSION['consultation']['user_phone'];
+//                        $user_email = $_SESSION['consultation']['user_email'];
+//                        $pay_descr = $_SESSION['consultation']['pay_descr'];
+//                        $user_date = $_SESSION['consultation']['date'];
+//                        $user_time = $_SESSION['consultation']['time'];
 
-                        $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
-                        $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
-                        $master_token = $master['token_file_name'];
-                        $master_credentials = $master['credentials_file_name'];
-
-                        $first_name = $_SESSION['consultation']['first_name'];
-                        $user_phone = $_SESSION['consultation']['user_phone'];
-                        $user_email = $_SESSION['consultation']['user_email'];
-                        $pay_descr = $_SESSION['consultation']['pay_descr'];
-                        $user_date = $_SESSION['consultation']['date'];
-                        $user_time = $_SESSION['consultation']['time'];
-
-                        /*
-                          'your_master_id' => $your_master,
-                          'first_name' => $first_name,
-                          'user_phone' => $user_phone,
-                          'user_email' => $user_email,
-                          'pay_descr' => "<div>Консультация с {$first_name}</div>"
-                          . "<div>Телефон: {$user_phone}</div>"
-                          . "<div>Email: {$user_email}</div>"
-                          . "<div>Консультант: {$your_master_text}</div>"
-                          . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
-                          'date' => $datepicker_data,
-                          'time' => $timepicker_data,
-                          'price' => $price
-                         */
-                        //$master_token = $master['credentials_file_name'];
-                        //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
-                    }
-                    /*
-                     * Если это консультация 
-                     */
+                /*
+                  'your_master_id' => $your_master,
+                  'first_name' => $first_name,
+                  'user_phone' => $user_phone,
+                  'user_email' => $user_email,
+                  'pay_descr' => "<div>Консультация с {$first_name}</div>"
+                  . "<div>Телефон: {$user_phone}</div>"
+                  . "<div>Email: {$user_email}</div>"
+                  . "<div>Консультант: {$your_master_text}</div>"
+                  . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
+                  'date' => $datepicker_data,
+                  'time' => $timepicker_data,
+                  'price' => $price
+                 */
+                //$master_token = $master['credentials_file_name'];
+                //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
+                //   }
+                /*
+                 * Если это консультация 
+                 */
 //                    if ($_SESSION['consultation']['your_master_id'] > 0) {
 //                        $_SESSION['consultation']['pay_id'] = $max_id;
 //                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
 //                    }
+                //}
+
+                /*
+                 * Если это консультация 
+                 */
+                if ($_SESSION['consultation']['your_master_id'] > 0) {
+                    $_SESSION['consultation']['pay_id'] = $pay_id;
+                    $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
                 }
                 
+                $close_club->register_ispay_club_month_period($pay_id);
+
                 $products->setSoldAdd($pay_id);
-                
+
                 $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
                 $_SESSION['cart']['total'] = $total;
                 $_SESSION['cart']['pay_id'] = $pay_id;

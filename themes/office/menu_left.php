@@ -64,7 +64,7 @@
                 <span class="nav-text">Покупки</span> 
             </a> 
         </li>
-        <li style="margin: 0;padding: 0;display: none;" class="has-sub <?= ($_SESSION['page_url'] == 'club') ? 'active' : '' ?> ">
+        <li style="margin: 0;padding: 0;display: block;" class="has-sub <?= ($_SESSION['page_url'] == 'club') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/office/club/">
                 <i class="mdi mdi-cloud-alert"></i>
                 <span class="nav-text">Закрытый<br/>КЛУБ</span> 

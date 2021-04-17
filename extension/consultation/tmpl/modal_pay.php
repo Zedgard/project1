@@ -42,7 +42,7 @@
                     <form>
                         <div class="form-group">
                             <label>Имя</label>
-                            <input type="hidden" name="consultation_user_fio" value="<?= (strlen($_SESSION['consultation_user_fio']) > 0) ? $_SESSION['consultation_user_fio'] : $consultation_fio ?>" class="form-control" />
+                            <input type="hidden" name="consultation_user_fio_h" value="<?= (strlen($_SESSION['consultation_user_fio']) > 0) ? $_SESSION['consultation_user_fio'] : $consultation_fio ?>" class="form-control" />
                             <input type="text" name="consultation_user_fio" value="<?= (strlen($_SESSION['consultation_user_fio']) > 0) ? $_SESSION['consultation_user_fio'] : $consultation_fio ?>" class="form-control" />
                         </div>
                         <div class="form-group">

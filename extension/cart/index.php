@@ -216,7 +216,7 @@ if ($form_show == 0) {
     
     include 'tmpl/index.php';
 } else {
-    if (count($_SESSION['cart']['itms']) > 0) {
+    if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
         $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
     }
     /*

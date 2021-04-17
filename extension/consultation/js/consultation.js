@@ -4,7 +4,7 @@ var consultation_price = '';
 var consultation_elm_id = 0;
 
 var consultation_date_click = '';
- 
+
 $(".calendar_day_active").unbind("click").click(function () {
     var o = this;
     $(".calendar_day_active").removeClass("active");
@@ -25,7 +25,7 @@ $(".calendar_day_active").unbind("click").click(function () {
                     var elm_class = 'btn button btn-secondary button_lg textcenter';
                     var alert = 'onClick="alert(\'Время занято!\')"';
                     console.log(111);
-                    if(e['data'][i]['period_active'] == "1" && e['data'][i]['is_pay'] == "0" && e['data'][i]['rejection_day'] == "0" && e['data'][i]['rejection_period'] == "0"){
+                    if (e['data'][i]['period_active'] == "1" && e['data'][i]['is_pay'] == "0" && e['data'][i]['rejection_day'] == "0" && e['data'][i]['rejection_period'] == "0") {
                         active = 1;
                         alert = '';
                         elm_class = 'btn button button_lg btngreen textcenter btn_consultation_pay';
@@ -41,7 +41,7 @@ $(".calendar_day_active").unbind("click").click(function () {
             }
         });
     }
-    
+
 
 
 });
@@ -63,8 +63,6 @@ function init_btn_consultation_pay() {
     }
     if (!!$(".btn_consultation_pay_show")) {
         $(".btn_consultation_pay_show").unbind('click').click(function () {
-            $(".btn_consultation_pay_text").show();
-            $(".btn_consultation_pay_show").hide();
             var user_fio = $(".block_consultation_user_info").find('[name="consultation_user_fio"]').val();
             var user_phone = $(".block_consultation_user_info").find('[name="consultation_user_phone"]').val();
             var user_email = $(".block_consultation_user_info").find('[name="consultation_user_email"]').val();
@@ -75,6 +73,10 @@ function init_btn_consultation_pay() {
             }
 
             var errors = [];
+            if (user_fio.length < 2) {
+                console.log('user_fio: ' + user_fio + ' || ' + user_fio.length);
+                errors.push('Поле "Имя" не заполнено!');
+            }
             if (user_phone.length < 4) {
                 errors.push('Поле "Телефон" не заполнен!');
             }
@@ -85,6 +87,8 @@ function init_btn_consultation_pay() {
                 errors.push('Необходимо согласиться с условиями для предоставления консультации!');
             }
             if (errors.length === 0) {
+                $(".btn_consultation_pay_text").show();
+                $(".btn_consultation_pay_show").hide();
 
                 sendPostLigth('/jpost.php?extension=auth', {
                     "check_and_register_user": 1,
