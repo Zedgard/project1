@@ -378,10 +378,10 @@ class sign_up_consultation extends \project\extension {
     public function get_consultation_times($master_id = 1, $day = '') {
         $day_sql = date_sql_format($day);
         $querySelect = "SELECT p.*,
-                                (
-                                SELECT count(*) FROM zay_consultation c WHERE
-                                    c.master_id = p.master_id AND c.consultation_date = '?' AND c.consultation_time = p.period_time
-                                ) AS is_pay,
+(SELECT count(*) FROM zay_consultation c 
+left join zay_pay pp on pp.id=c.pay_id 
+WHERE c.master_id = p.master_id AND c.consultation_date = '?' AND c.consultation_time = p.period_time
+and pp.pay_status='succeeded') AS is_pay,
 (select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_period=0 and cr.rejection_day='?') as rejection_day,
 (select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_period=p.id and cr.rejection_day='?') as rejection_period
                             FROM
