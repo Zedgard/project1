@@ -43,6 +43,7 @@ if (isset($_SESSION['PAY_KEY'])) {
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
 }
+
 //print_r($pays);
 //echo "\n";
 // Получаем список платежей циклом
