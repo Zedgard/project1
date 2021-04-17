@@ -74,6 +74,26 @@ class sign_up_consultation extends \project\extension {
     }
 
     /**
+     * Проверить возможность записи на консультацию
+     * @param type $date
+     * @param type $time
+     * @return boolean
+     */
+    public function consultation_check($date, $time) {
+        $querySelect = "SELECT * FROM zay_consultation cn "
+                . "left join zay_pay p on p.id=cn.pay_id "
+                . "WHERE cn.consultation_date='?' AND cn.consultation_time='?' and cn.cancel=0 "
+                . "and p.pay_status='succeeded' ";
+        $objs = $this->getSelectArray($querySelect, array($date, $time));
+        if (count($objs) > 0) {
+            $_SESSION['errors'][] = 'Уже есть запись на эту дату!';
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * Обновлениеданных о консультации
      * @param type $data
      */
@@ -380,7 +400,7 @@ class sign_up_consultation extends \project\extension {
     public function get_consultation_on_period_info($period_id) {
         $data = array();
         $querySelect = "SELECT
-                            p.id, m.id as master_id, m.master_name, m.list_times, p.period_price, p.period_hour, p.periods_minute
+                            p.id, m.id as master_id, m.master_name, m.list_times, p.period_price, p.period_time, p.period_hour, p.periods_minute
                         FROM
                         zay_consultation_periods p
                            left join zay_consultation_master m on p.master_id=m.id

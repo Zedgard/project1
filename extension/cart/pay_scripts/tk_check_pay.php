@@ -56,7 +56,7 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
     if (count($pays) > 0) {
         foreach ($pays as $value) {
             $paymentId = $value['pay_key']; // Получаем ключ платежа
-            $pay_id = $value['pay_key'];
+            $pay_id = $value['id'];
 
             $params = [
                 'PaymentId' => $value['pay_key'],

@@ -109,29 +109,34 @@ if (isset($_POST['add_other_consultation_cart'])) {
 
     $data = $sign_up_consultation->get_consultation_on_period_info($product_period_id);
 
+    // Проверка на занятый день
+    $sign_up_consultation->consultation_check($consultation_date, $data['period_time']);
+
     $product_price = trim($data['period_price']);
 
-    if (isset($_SESSION['user']['info']) && $_SESSION['user']['info']['id'] > 0) {
+    if (count($_SESSION['errors']) == 0) {
+        if (isset($_SESSION['user']['info']) && $_SESSION['user']['info']['id'] > 0) {
 
-        if (strlen(trim($consultation_user_fio)) == 0) {
-            $consultation_user_fio = $_SESSION['user']['info']['first_name'];
+            if (strlen(trim($consultation_user_fio)) == 0) {
+                $consultation_user_fio = $_SESSION['user']['info']['first_name'];
+            }
+            // положим в корзину
+            $sign_up_consultation->set_cart_consultation(
+                    $_SESSION['user']['info']['id'],
+                    $consultation_user_fio,
+                    $_SESSION['user']['info']['phone'],
+                    $_SESSION['user']['info']['email'],
+                    $data['master_id'],
+                    $consultation_date,
+                    $data['period_time'],
+                    $data['period_price'],
+                    $product_period_id
+            );
+
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            $errors[] = 'Не определен пользователь!';
         }
-        // положим в корзину
-        $sign_up_consultation->set_cart_consultation(
-                $_SESSION['user']['info']['id'],
-                $consultation_user_fio,
-                $_SESSION['user']['info']['phone'],
-                $_SESSION['user']['info']['email'],
-                $data['master_id'],
-                $consultation_date,
-                $consultation_period,
-                $data['period_price'],
-                $product_period_id
-        );
-
-        $result = array('success' => 1, 'success_text' => '');
-    } else {
-        $errors[] = 'Не определен пользователь!';
     }
 }
 
@@ -340,7 +345,7 @@ if (isset($_POST['set_cloudpayments'])) {
                             //$products->setSoldAdd($product_id);
                         }
                     }
-                    
+
                     // Отправляем пользователя на страницу оплаты
                     //header('Location: ' . $confirmationUrl);
                     $result = array('success' => 1, 'success_text' => '', 'data' => $data_array);
