@@ -13,11 +13,13 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
 
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
 $products = new \project\products();
 $sign_up_consultation = new \project\sign_up_consultation();
+$pr_cart = new \project\cart();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
@@ -205,8 +207,6 @@ if ($api->error) {
                 $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
                         . "VALUES ('?','?','?')";
                 $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-                // Зафиксируем продажу
-                //$products->setSoldAdd($product_id);
             }
         }
         /*
