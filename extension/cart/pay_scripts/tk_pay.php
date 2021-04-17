@@ -130,7 +130,6 @@ foreach ($_SESSION['cart']['itms'] as $key => $value) {
 if ($p_user->isEditor()) {
     $price_total = 1;
 }
-$price_total = 1;
 
 $amount = $price_total * 100;
 
