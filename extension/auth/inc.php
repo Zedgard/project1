@@ -117,6 +117,19 @@ class auth extends \project\user {
     }
 
     /**
+     * Обновим данные пользователя
+     * @param type $user_id
+     * @param type $row
+     * @param type $val
+     * @return type
+     */
+    public function user_update_row($user_id, $row, $val) {
+        $sqlLight = new \project\sqlLight();
+        $query = "UPDATE `zay_users` SET `{$row}`='?' WHERE `id`='?'";
+        return $sqlLight->query($query, array($val, $user_id));
+    }
+
+    /**
      * Регистрация нового пользователя
      * @global \project\type $lang
      * @param type $email
@@ -190,7 +203,7 @@ class auth extends \project\user {
                     $query_update = "UPDATE `zay_users` SET `phone`='?',`first_name`='?',`last_name`='?',`u_pass`='?', "
                             . "`active`='?',`active_code`='?',`active_lastdate`=NOW() "
                             . "WHERE `id`='?' ";
-                    
+
                     // Если ввели новый телефон то обновим его
                     $phone_up = $find_user[0]['phone'];
                     if (strlen(trim($phone)) > 0) {

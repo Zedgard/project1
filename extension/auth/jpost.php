@@ -154,22 +154,19 @@ if (isset($_POST['check_and_register_user'])) {
         } else {
             $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
             if ($user['id'] > 0) {
-                $_SESSION['consultation_user_fio'] = $user['first_name'];
-                if (strlen($user['phone']) > 0) {
-                    $_SESSION['consultation_user_phone'] = $user['phone'];
-                }
-                //$_SESSION['consultation_user_email'] = $user['email'];
+                // Обновим данные
+                $auth->user_update_row($user['id'], 'phone', $_SESSION['consultation_user_phone']);
+                $auth->user_update_row($user['id'], 'first_name', $_SESSION['consultation_user_fio']);
                 $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
-
                 $result = array('success' => 1, 'success_text' => '');
             } else {
                 if ($auth->register($_POST['consultation_user_email'], $_POST['consultation_user_phone'], $_POST['consultation_user_pass'], $_POST['consultation_user_pass'],
                                 1, 1)) {
                     $user = $auth->find_user_email_and_phone_data($_SESSION['consultation_user_email'], $_SESSION['consultation_user_phone']);
                     if ($user['id'] > 0) {
-                        $_SESSION['consultation_user_fio'] = $user['first_name'];
-                        //$_SESSION['consultation_user_phone'] = $user['phone'];
-                        $_SESSION['consultation_user_email'] = $user['email'];
+                        // Обновим данные
+                        $auth->user_update_row($user['id'], 'phone', $_SESSION['consultation_user_phone']);
+                        $auth->user_update_row($user['id'], 'first_name', $_SESSION['consultation_user_fio']);
                         $_SESSION['user']['info'] = $auth->getUserInfo($user['id']);
                         $result = array('success' => 1, 'success_text' => '');
                     } else {
