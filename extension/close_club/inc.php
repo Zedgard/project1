@@ -58,7 +58,7 @@ class close_club extends \project\extension {
                 . "left join zay_product pr on pr.id=pp.product_id "
                 . "left join zay_product_wares pw on pw.product_id=pr.id "
                 . "left join zay_wares w on w.id=pw.wares_id "
-                . "WHERE p.id='?' and club_month_period>0";
+                . "WHERE p.id='?' and p.pay_status='succeeded' and club_month_period>0";
         $data = $this->getSelectArray($query, array($pay_id));
         if (count($data) > 0 && $data[0]['user_id'] > 0) {
             $club_month_period = $data[0]['club_month_period'];

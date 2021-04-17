@@ -340,15 +340,7 @@ if (isset($_POST['set_cloudpayments'])) {
                             //$products->setSoldAdd($product_id);
                         }
                     }
-                    /*
-                     * Если это консультация 
-                     */
-//                    if ($_SESSION['consultation']['your_master_id'] > 0) {
-//                        $_SESSION['consultation']['pay_id'] = $max_id;
-//                        $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-//                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
-//                    }
-                    //$data_array['pay_descr'] = 'Покупка товара';
+                    
                     // Отправляем пользователя на страницу оплаты
                     //header('Location: ' . $confirmationUrl);
                     $result = array('success' => 1, 'success_text' => '', 'data' => $data_array);

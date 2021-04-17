@@ -43,12 +43,20 @@ $api = new TinkoffMerchantAPI(
 );
 
 // Проверяем статус оплаты
+echo "PAY_KEY: {$_SESSION['PAY_KEY']}<br/>\n";
+echo "get: ";
+print_r($_GET);
+echo "<br/>\n";
+echo "POST: ";
+print_r($_POST);
 if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
+    echo 1;
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_date`>=CURRENT_DATE-1 and `pay_key`='?'";
     $pays = $sqlLight->queryList($query, array($_SESSION['PAY_KEY']), 0);
     if (count($pays) > 0) {
         foreach ($pays as $value) {
             $paymentId = $value['pay_key']; // Получаем ключ платежа
+            $pay_id = $value['pay_key'];
 
             $params = [
                 'PaymentId' => $value['pay_key'],
@@ -71,16 +79,8 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             $sqlLight->query($query_update, array($pay_check, $value['id']));
             if ($pay_check == 'succeeded') {
 
-                /*
-                 * Если это консультация 
-                 */
-                if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
-                    $_SESSION['consultation']['pay_id'] = $pay_id;
-                    $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
-                }
-
-                $close_club->register_ispay_club_month_period($pay_id);
+                // Зарегистрируем покупку
+                $pr_cart->register_pay($pay_id);
 
                 // Зафиксируем продажу
                 $products->setSoldAdd($value['id']);
@@ -90,7 +90,9 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             }
         }
     }
+    exit();
 } else {
+    echo 2;
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`!='succeeded' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
     if (count($pays) > 0) {
@@ -139,7 +141,7 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             }
         }
     }
-    header('Location: ' . '/shop/cart/?in_payment_true=1');
+    //header('Location: ' . '/shop/cart/?in_payment_true=1');
     exit();
 }
 /*
@@ -162,30 +164,30 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
 // Получаем список платежей циклом
 
 
-if (isset($_GET['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && $u->isClientId() > 0 && isset($_GET['Success']) && $_GET['Success'] == 'true') {
-    // Проверяем статус оплаты
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`='succeeded' and `user_id`='?' and pay_key='?' ";
-    $pay_succeede = $sqlLight->queryList($query, array($u->isClientId(), $_SESSION['PAY_KEY']), 1);
-    $total = $pay_succeede[0]['pay_sum'];
-    $pay_id = $pay_succeede[0]['id'];
-
-    if (count($pay_succeede) > 0) {
-        // Зарегистрируем покупку
-        $pr_cart->register_pay($pay_id);
-        
-        $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
-    } else {
-        $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');
-    }
-    $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
-    $_SESSION['cart']['total'] = $total;
-    $_SESSION['cart']['pay_id'] = $pay_id;
-    $_SESSION['cart']['itms'] = array();
-    $_SESSION['PAY_KEY'] = '';
-    unset($_SESSION['PAY_KEY']);
-    echo json_encode($result);
-    //goBack('/shop/cart/?in_payment_true=1', '0');
-    header('Location: ' . '/shop/cart/?in_payment_true=1');
-    exit();
-}
+//if (isset($_GET['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && $u->isClientId() > 0 && isset($_GET['Success']) && $_GET['Success'] == 'true') {
+//    // Проверяем статус оплаты
+//    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`='succeeded' and `user_id`='?' and pay_key='?' ";
+//    $pay_succeede = $sqlLight->queryList($query, array($u->isClientId(), $_SESSION['PAY_KEY']), 1);
+//    $total = $pay_succeede[0]['pay_sum'];
+//    $pay_id = $pay_succeede[0]['id'];
+//
+//    if (count($pay_succeede) > 0) {
+//        // Зарегистрируем покупку
+//        $pr_cart->register_pay($pay_id);
+//        
+//        $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
+//    } else {
+//        $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');
+//    }
+//    $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
+//    $_SESSION['cart']['total'] = $total;
+//    $_SESSION['cart']['pay_id'] = $pay_id;
+//    $_SESSION['cart']['itms'] = array();
+//    $_SESSION['PAY_KEY'] = '';
+//    unset($_SESSION['PAY_KEY']);
+//    echo json_encode($result);
+//    //goBack('/shop/cart/?in_payment_true=1', '0');
+//    header('Location: ' . '/shop/cart/?in_payment_true=1');
+//    exit();
+//}
 header('Location: ' . '/');
