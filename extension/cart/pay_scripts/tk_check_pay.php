@@ -43,14 +43,14 @@ $api = new TinkoffMerchantAPI(
 );
 
 // Проверяем статус оплаты
-echo "PAY_KEY: {$_SESSION['PAY_KEY']}<br/>\n";
-echo "get: ";
-print_r($_GET);
-echo "<br/>\n";
-echo "POST: ";
-print_r($_POST);
+//echo "PAY_KEY: {$_SESSION['PAY_KEY']}<br/>\n";
+//echo "get: ";
+//print_r($_GET);
+//echo "<br/>\n";
+//echo "POST: ";
+//print_r($_POST);
 if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
-    echo 1;
+    echo 1111;
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_date`>=CURRENT_DATE-1 and `pay_key`='?'";
     $pays = $sqlLight->queryList($query, array($_SESSION['PAY_KEY']), 0);
     if (count($pays) > 0) {
@@ -92,7 +92,7 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
     }
     exit();
 } else {
-    echo 2;
+    echo 2222;
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`!='succeeded' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
     if (count($pays) > 0) {
