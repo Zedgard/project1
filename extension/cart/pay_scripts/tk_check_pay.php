@@ -15,12 +15,16 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
 
+$pr_cart = new \project\cart();
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
 $u = new \project\user();
 $products = new \project\products();
 $sign_up_consultation = new \project\sign_up_consultation();
+$close_club = new \project\close_club();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
@@ -66,6 +70,7 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
                     . "WHERE `pay_type`='tk' and id='?'";
             $sqlLight->query($query_update, array($pay_check, $value['id']));
             if ($pay_check == 'succeeded') {
+
                 /*
                  * Если это консультация 
                  */
@@ -74,6 +79,9 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
                     $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
                     $sign_up_consultation->add_consultation($_SESSION['consultation']);
                 }
+
+                $close_club->register_ispay_club_month_period($pay_id);
+
                 // Зафиксируем продажу
                 $products->setSoldAdd($value['id']);
                 $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
@@ -105,14 +113,10 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
                     . "WHERE `pay_type`='tk' and id='?'";
             $sqlLight->query($query_update, array($pay_check, $value['id']));
             if ($pay_check == 'succeeded') {
-                /*
-                 * Если это консультация 
-                 */
-                if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
-                    $_SESSION['consultation']['pay_id'] = $pay_id;
-                    $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
-                }
+
+                // Зарегистрируем покупку
+                $pr_cart->register_pay($pay_id);
+
                 // Зафиксируем продажу
                 $products->setSoldAdd($value['id']);
                 $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
@@ -128,7 +132,7 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
               <p><span class="highlight">PaymentId</span>: <?= $api->paymentId ?></p>
               <p><span class="highlight">OrderId</span>: <?= $api->orderId ?></p>
              */
-            
+
             $paymentId = $value['pay_key']; // Получаем ключ платежа
             if ($_GET['Success'] == 'true') {
                 $pay_check = 'succeeded';
@@ -166,14 +170,9 @@ if (isset($_GET['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION
     $pay_id = $pay_succeede[0]['id'];
 
     if (count($pay_succeede) > 0) {
-        /*
-         * Если это консультация 
-         */
-        if (isset($_SESSION['consultation']) && $_SESSION['consultation']['your_master_id'] > 0) {
-            $_SESSION['consultation']['pay_id'] = $pay_id;
-            $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-            $sign_up_consultation->add_consultation($_SESSION['consultation']);
-        }
+        // Зарегистрируем покупку
+        $pr_cart->register_pay($pay_id);
+        
         $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
     } else {
         $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');

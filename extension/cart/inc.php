@@ -4,6 +4,15 @@ namespace project;
 
 defined('__CMS__') or die;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
+
 class cart extends \project\extension {
 
     public function __construct() {
@@ -25,6 +34,24 @@ class cart extends \project\extension {
                 . "where p.user_id='?' and p.pay_status='succeeded' ORDER BY p.pay_date DESC";
         $data = $this->getSelectArray($query, array($_SESSION['user']['info']['id']), 0);
         return $data;
+    }
+
+    /**
+     * Регистрация покупки
+     * @param type $pay_id
+     */
+    public function register_pay($pay_id) {
+        $sign_up_consultation = new \project\sign_up_consultation();
+        $close_club = new \project\close_club();
+        /*
+         * Если это консультация 
+         */
+        if (isset($_SESSION['consultation']['your_master_id']) && $_SESSION['consultation']['your_master_id'] > 0) {
+            $_SESSION['consultation']['pay_id'] = $pay_id;
+            $sign_up_consultation->add_consultation($_SESSION['consultation']);
+        }
+        // Зафиксируем покупку по закрытому клубу
+        $close_club->register_ispay_club_month_period($pay_id);
     }
 
 }
