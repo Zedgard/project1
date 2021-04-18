@@ -17,8 +17,6 @@
                         <?
                         foreach ($categorys as $value) {
                             ?>
-
-
                             <div id="accordion3" class="accordion accordion-bordered ">
                                 <div class="card">
                                     <div class="card-header" id="heading3">
@@ -28,19 +26,21 @@
                                     </div>
                                     <div id="collapse<?= $value['id'] ?>" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
                                         <div class="card-body card-default w-100">
-                                            <table class="table table-bordered table-striped config_arrays_data<?= $value['id'] ?>">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Код</th>
-                                                        <th>Наименование</th>
-                                                        <th>Значение</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                            <div class="table-responsive-lg">
+                                                <table class="table table-bordered table-striped config_arrays_data<?= $value['id'] ?>">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Код</th>
+                                                            <th>Наименование</th>
+                                                            <th>Значение</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
 
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -49,8 +49,6 @@
                         }
                         ?>
                     </div>
-
-
 
                 </div>
 

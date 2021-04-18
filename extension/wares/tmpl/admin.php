@@ -32,22 +32,24 @@
                     <br/>
                     <div class="row">
                         <div class="col-12">
-                            <table class="table table-striped table-bordered wares_arrays_data" style="width:100%;background-color: #FFFFFF;">
-                                <thead>
-                                    <tr>
-                                        <th style="text-align: center;">id</th>
-                                        <th>Наименование</th>
-                                        <!--<th style="text-align: center;">Код</th>-->
-                                        <th style="text-align: center;">Артикул</th>
-                                        <th style="text-align: center;">Колличество</th>
-                                        <th style="text-align: center;">Отображение</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <div class="table-responsive-lg">
+                                <table class="table table-striped table-bordered wares_arrays_data" style="width:100%;background-color: #FFFFFF;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;">id</th>
+                                            <th>Наименование</th>
+                                            <!--<th style="text-align: center;">Код</th>-->
+                                            <th style="text-align: center;">Артикул</th>
+                                            <th style="text-align: center;">Колличество</th>
+                                            <th style="text-align: center;">Отображение</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +94,7 @@
          */
         function getWaresArray(str, visible) {
             searchStr = str;
-            
+
             sendPostLigth('/jpost.php?extension=wares', {"getWaresArray": '1', "searchStr": searchStr, "visible": visible}, function (e) {
                 var data = e['data'];
                 $(".wares_arrays_data tbody tr").remove();
