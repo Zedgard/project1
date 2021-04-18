@@ -1,10 +1,11 @@
 <?php
 
 $config = array(
-    'title' => 'Записаться на консультацию новая форма',
-    'descr' => 'Форма Записаться на консультацию новая форма',
+    'title' => 'Упраление промо',
+    'descr' => 'Упраление промо',
     'urls' => array(
-        'Записаться на консультацию NEW index.php' => '/extension/consultation/index.php'
+        'Упраление Промо (admin.php)' => '/extension/promo/admin.php',
+        'Упраление Промо (index.php)' => '/extension/promo/index.php'
     ),
     'version' => '0.1'
 );

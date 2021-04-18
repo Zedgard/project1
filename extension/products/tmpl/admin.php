@@ -44,23 +44,25 @@
                     <br/>
                     <div class="row">
                         <div class="col-12">
-                            <table class="table table-striped table-bordered products_arrays_data" style="width:100%;background-color: #FFFFFF;">
-                                <thead>
-                                    <tr>
-                                        <th style="text-align: center;">id</th>
-                                        <th style="text-align: center;"></th>
-                                        <th>Наименование</th>
-                                        <th style="text-align: center;">Товары</th>
-                                        <th style="text-align: center;">Цена</th>
-                                        <th style="text-align: center;">Продажи</th>
-                                        <th style="text-align: center;">Отображение</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <div class="table-responsive-lg">
+                                <table class="table table-striped table-bordered products_arrays_data" style="width:100%;background-color: #FFFFFF;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;">id</th>
+                                            <th style="text-align: center;"></th>
+                                            <th>Наименование</th>
+                                            <th style="text-align: center;">Товары</th>
+                                            <th style="text-align: center;">Цена</th>
+                                            <th style="text-align: center;">Продажи</th>
+                                            <th style="text-align: center;">Отображение</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -102,7 +104,7 @@
             placeholder: "Выбирете темы",
             allowClear: true
         });
-        
+
         var product_theme = $(".product_theme").select2({
             width: "100%",
             placeholder: "Выбирете темы",
@@ -173,7 +175,7 @@
                 }
             });
         }
-        
+
         /**
          * Темы 
          * @returns {undefined}

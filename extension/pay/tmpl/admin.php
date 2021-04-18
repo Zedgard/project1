@@ -8,10 +8,13 @@
                 </div>
 
                 <div class="card-body">
-                    
+
                     <div class="row mb-3">
                         <div class="col-6">
-                            <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, телефону...">
+                            <div class="btn-group">
+                                <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, телефону...">
+                                <input type="button" class="btn btn-outline-secondary" value="Поиск" />
+                            </div>
                         </div>
                         <div class="col-6 text-right">
 

@@ -37,7 +37,13 @@
                 <span class="nav-text">Товары</span> 
             </a>
         </li>
-
+        
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'promo') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/admin/promo/">
+                <i class="mdi mdi-alpha-p-circle-outline"></i>
+                <span class="nav-text">Промо</span> 
+            </a>
+        </li>
 
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'pages') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/admin/pages/">
