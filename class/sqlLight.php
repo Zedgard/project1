@@ -166,33 +166,38 @@ class sqlLight {
             //$_SESSION['errors'][] = $query;
         }
         /* Select запросы возвращают результирующий набор */
-        if ($result = $this->mysqli->query($query)) {
-            $this->count = $result->num_rows;
-            while ($row = $result->fetch_array($this->MYSQLI_TYPE)) {
-                $bufferRow = array();
-                $i++;
-                foreach ($row as $key => $value) {
-                    if ($this->htmlspecialchars_true == 1) {
-                        $bufferRow[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
-                    } else {
-                        $bufferRow[$key] = $value;
+        try {
+            if ($result = $this->mysqli->query($query)) {
+                $this->count = $result->num_rows;
+                while ($row = $result->fetch_array($this->MYSQLI_TYPE)) {
+                    $bufferRow = array();
+                    $i++;
+                    foreach ($row as $key => $value) {
+                        if ($this->htmlspecialchars_true == 1) {
+                            $bufferRow[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
+                        } else {
+                            $bufferRow[$key] = $value;
+                        }
                     }
+                    $buffer[] = $bufferRow;
                 }
-                $buffer[] = $bufferRow;
-            }
-        } else {
-            if ($_SESSION['DEBUG'] == 1) {
-                echo "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                $result->free();
             } else {
-                echo $lang['sql_query_commit_false'];
+                if ($_SESSION['DEBUG'] == 1) {
+                    //echo "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                    $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                } else {
+                    echo $lang['sql_query_commit_false'];
+                }
             }
+        } catch (Exception $exc) {
+            $_SESSION['errors'][] = $exc->getTraceAsString();
         }
 
-        $result->free();
         $this->setCount($i);
         return $buffer;
     }
-    
+
     public function queryNextId($table_name) {
         $query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'zay_pay'";
         return $this->queryList($query, array($table_name))[0]['AUTO_INCREMENT'];
@@ -215,7 +220,7 @@ class sqlLight {
     public function setSpecialcharsHtml($str) {
         return htmlspecialchars($str, ENT_QUOTES);
     }
-    
+
     // MYSQLI_ASSOC вернуть без нумераций
     public function setMysqliAssos() {
         $this->MYSQLI_TYPE = MYSQLI_ASSOC;
