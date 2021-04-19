@@ -12,6 +12,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 
 class extension {
 
+    private $MysqliAssos = 0;
+
     public function __construct() {
         $this->init();
     }
@@ -86,14 +88,14 @@ class extension {
                 $items = $sqlLight->queryList($select_exts, array($value), 0);
                 //echo "----<br/>\n";
                 if (count($items) == 0) {
-                    
+
                     $queryInsert = "INSERT INTO `zay_extension_urls`(`extension_id`, `title`, `url`) "
                             . "VALUES ('?','?','?')";
                     $sqlLight->query($queryInsert, array($extension_id, $key, $value));
                 } else {
                     //if (strlen($key) == 0 || strlen($value) == 0) {
                     //    echo "-- {$key} {$value} id: {$items[0]['id']}<br/>\n";
-                   // }
+                    // }
                     $queryInsert = "UPDATE zay_extension_urls eu set "
                             . "eu.title='?', eu.url='?' "
                             . "where eu.id='?' ";
@@ -155,6 +157,9 @@ class extension {
 
     public function getSelectArray($querySelect, $queryValues = array(), $see = 0) {
         $sqlLight = new \project\sqlLight();
+        if ($this->MysqliAssos == 1) {
+            $sqlLight->setMysqliAssos();
+        }
         $data = $sqlLight->queryList($querySelect, $queryValues, $see);
         return $data;
     }
@@ -168,6 +173,10 @@ class extension {
         $sqlLight = new \project\sqlLight();
         $s = "UPDATE ? set ?='?' WHERE id='?' ";
         return $sqlLight->query($s, array($table, $row, $val, $elm_id));
+    }
+
+    public function setMysqliAssos() {
+        $this->MysqliAssos = 1;
     }
 
     /**

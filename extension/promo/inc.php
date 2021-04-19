@@ -23,10 +23,10 @@ class promo extends \project\extension {
      */
     public function promos_get_array($find_str) {
         if (strlen(trim($find_str)) > 0) {
-            $query = "SELECT * FROM zay_promo p WHERE (p.code like '%?%' or p.title like '%?%') and p.date_start>=NOW()";
+            $query = "SELECT * FROM zay_promo p WHERE (p.code like '%?%' or p.title like '%?%') and p.date_end>=DATE_FORMAT(NOW(),'%y-%m-%d')";
             return $this->getSelectArray($query, array($find_str, $find_str));
         } else {
-            $query = "SELECT * FROM zay_promo p WHERE p.date_start>=NOW()";
+            $query = "SELECT * FROM zay_promo p WHERE p.date_end>=DATE_FORMAT(NOW(),'%y-%m-%d')";
             return $this->getSelectArray($query, array());
         }
     }

@@ -38,23 +38,32 @@
                     <label for="config_code">Количество</label>
                     <input type="text" class="form-control wares_col" id="wares_col" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Количество товара в наличии..." required>
                 </div>
-                <div class="form-group">
-                    <label for="club_month_period">Колличество месяцев для доступа закрытому клубу</label>
-                    <select id="club_month_period" name="club_month_period" class="form-control club_month_period">
-                        <option value="0">Не предосавлено</option>
-                        <option value="1">1 месяц</option>
-                        <option value="2">2 месяц</option>
-                        <option value="3">3 месяц</option>
-                        <option value="4">4 месяц</option>
-                        <option value="5">5 месяц</option>
-                        <option value="6">6 месяц</option>
-                        <option value="7">7 месяц</option>
-                        <option value="8">8 месяц</option>
-                        <option value="9">9 месяц</option>
-                        <option value="10">10 месяц</option>
-                        <option value="11">11 месяц</option>
-                        <option value="12">12 месяц</option>
-                    </select>
+
+                <div style="padding: 1%;background-color: #f7f7f7;">
+                    <h3>Закрытый клуб</h3>
+                    <div class="form-group">
+                        <label for="club_month_period">Колличество месяцев для доступа к закрытому клубу</label>
+                        <select id="club_month_period" name="club_month_period" class="form-control club_month_period">
+                            <option value="0">Не предосавлено</option>
+                            <option value="1">1 месяц</option>
+                            <option value="2">2 месяц</option>
+                            <option value="3">3 месяц</option>
+                            <option value="4">4 месяц</option>
+                            <option value="5">5 месяц</option>
+                            <option value="6">6 месяц</option>
+                            <option value="7">7 месяц</option>
+                            <option value="8">8 месяц</option>
+                            <option value="9">9 месяц</option>
+                            <option value="10">10 месяц</option>
+                            <option value="11">11 месяц</option>
+                            <option value="12">12 месяц</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="config_code">Количество дней заморозки</label>
+                        <input type="text" class="form-control club_freeze_day" id="wares_col" value="0" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Количество дней заморозки..." required>
+                    </div>
                 </div>
 
                 <div class="form-group">
