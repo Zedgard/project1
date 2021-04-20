@@ -26,6 +26,9 @@ if ($user->isClient() || $user->isEditor()) {
     if (isset($_GET['wares_id'])) {
         $wares_info = $pr_wares->getWaresElem($_GET['wares_id']);
         $wares = $pr_wares->getClientProducts($_GET['wares_id']);
+        if(!isset($wares['id'])){
+            location_href('/nofound/');
+        }
         //$video_materials = $pr_wares->listClientMaterials($wares['id']);
         //$video_materials = $pr_wares->listClientWebinarsMaterials($wares['id']);
         $series = $pr_wares->getWaresVideoSeries($_GET['wares_id']);

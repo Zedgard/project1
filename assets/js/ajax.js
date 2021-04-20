@@ -247,9 +247,9 @@ $(document).ready(function () {
                     },
                     function (e) {
                         if (e['success'] == '1') {
-                            console.log('sortable OK');
+                            //console.log('sortable OK');
                         } else {
-                            alert('Ошибка сохранения!');
+                            alert('Ошибка сортировки!');
                         }
                     });
         }

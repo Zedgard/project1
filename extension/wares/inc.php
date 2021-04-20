@@ -648,7 +648,7 @@ class wares extends \project\extension {
 //            $i++;
 //        }
         $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' order BY `position` asc";
-        $data = $this->getSelectArray($select, array($wares_id));
+        $data = $this->getSelectArray($select, array($wares_id), 0);
         return $data;
     }
 
