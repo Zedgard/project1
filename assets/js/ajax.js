@@ -212,7 +212,7 @@ function sendPostLigth(url, data, func) {
  * отправить запрос с задержкой
  * $(".search_wares").delayKeyup(function () {}, 700);
  */
-(function ($) {
+$(document).ready(function () { 
     $.fn.delayKeyup = function (callback, ms) {
         var timer = 0;
         $(this).keyup(function () {
@@ -221,4 +221,38 @@ function sendPostLigth(url, data, func) {
         });
         return $(this);
     };
-})(jQuery);
+
+    /*
+     * Сортировка
+     */
+    $('.sortable-ul').sortable({
+        update: function (event, ui) {
+            var ajax_url = $(this).attr("ajax-url");
+            var ajax_metod = $(this).attr("ajax-metod");
+            var db_table = $(this).attr("db-table");
+            var db_row = $(this).attr("db-row");
+            var elms = $(this).find("li");
+            var ids = [];
+            for (var i = 0; i < elms.length; i++) {
+                if (typeof $(elms[i]).attr("sortable-elm-id") !== 'undefined') {
+                    ids.push($(elms[i]).attr("sortable-elm-id"));
+                }
+            }
+            sendPostLigth(ajax_url,
+                    {
+                        "ajax_metod": ajax_metod,
+                        "db_table": db_table,
+                        "db_row": db_row,
+                        "ids": ids
+                    },
+                    function (e) {
+                        if (e['success'] == '1') {
+                            //console.log('sortable OK');
+                        } else {
+                            alert('Ошибка сортировки!');
+                        }
+                    });
+        }
+    });
+
+});

@@ -13639,3 +13639,7 @@ html[dir="rtl"] .github-link svg {
 .real_time{
     font-size: 1rem;
 }
+
+.sortable-ul li{
+    list-style: none;
+}

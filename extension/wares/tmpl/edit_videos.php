@@ -113,10 +113,9 @@
             <div class="col-12">
                 <div class="card card-default">
                     <div class="card-body">
-                        <ul class="sortable-ul">
+                        <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="wares_material" db-row="position">
                             <?
                             $video_i = 0;
-
                             /*
                              * Уроки без серии
                              */
@@ -125,13 +124,14 @@
                                     $video_i++;
                                     $union_elm_id = mt_rand(100000, 999999) . $value['id'];
                                     ?>
-                                    <li>
-                                        <i class="handle"></i> 
-                                        <div class="material_tr">
+                                    <li class="handle" sortable-elm-id="<?= $value['id'] ?>">
+                                        <div class="material_tr" data-bs-toggle="tooltip" data-bs-placement="top" title="Двойной клик откроет редактирование блока">
                                             <div class="material_info">
-                                                <hr/>
                                                 <div class="row mt-2 mb-2">
-                                                    <div class="col-12">
+                                                    <div class="col-1 text-center">
+                                                        <i class="mdi mdi-arrow-all" style="font-size: 3rem;"></i>
+                                                    </div>
+                                                    <div class="col-11">
                                                         <?
                                                         if ($value['material_type'] == 'material_type_text') {
                                                             include 'material_type_text.php';
@@ -168,14 +168,6 @@
                                                         }
                                                         ?>   
                                                     </select>
-                                                    <div style="width: 100px;margin-left: 320px;margin-top: 6px;position: absolute;">
-                                                        <span title="Переместить вверх">
-                                                            <a href="javascript:void(0)" material_id="<?= $value['id'] ?>" series_id="<?= $series_value['id'] ?>" position="<?= $value['position'] ?>" metod="up" class="btn btn-outline-dark btn-sm material_position_up"><i class="mdi mdi-chevron-up"></i></a>
-                                                        </span>
-                                                        <span title="Переместить вниз">
-                                                            <a href="javascript:void(0)" material_id="<?= $value['id'] ?>" series_id="<?= $series_value['id'] ?>" position="<?= $value['position'] ?>" metod="down" class="btn btn-outline-dark btn-sm material_position_down"><i class="mdi mdi-chevron-down"></i></a>
-                                                        </span>
-                                                    </div>
                                                     <a href="?wares_id=<?= $wares_id ?>&delete_material=<?= $value['id'] ?>" class="btn btn-danger btn-sm float-right">Удалить</a>
                                                 </div>
                                                 <div class="col-12 mt-5">
@@ -289,85 +281,81 @@
 
                     <div id="collapse<?= $series_value['id'] ?>" class="collapse" aria-labelledby="heading<?= $series_value['id'] ?>" data-parent="#accordion<?= $series_value['id'] ?>" style="">
                         <div class="card-body">
-                            <?
-                            foreach ($materials as $key => $value) {
-                                if ($value['series_id'] == $series_value['id']) {
-                                    $video_i++;
-                                    $union_elm_id = mt_rand(100000, 999999) . $value['id'];
-                                    ?>
-                                    <div class="material_tr">
-                                        <div class="material_info">
-                                            <div class="row mt-2 mb-2">
-                                                <div class="col-12">
-                                                    <?
-                                                    if ($value['material_type'] == 'material_type_text') {
-                                                        include 'material_type_text.php';
-                                                    }
-                                                    if ($value['material_type'] == 'material_type_audio') {
-                                                        include 'material_type_audio.php';
-                                                    }
-                                                    if ($value['material_type'] == 'material_type_file') {
-                                                        include 'material_type_file.php';
-                                                    }
-                                                    if ($value['material_type'] == 'material_type_video') {
-                                                        include 'material_type_video.php';
-                                                    }
-                                                    ?>
+                            <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="wares_material" db-row="position">    
+                                <?
+                                foreach ($materials as $key => $value) {
+                                    if ($value['series_id'] == $series_value['id']) {
+                                        $video_i++;
+                                        $union_elm_id = mt_rand(100000, 999999) . $value['id'];
+                                        ?>
+                                        <li class="handle" sortable-elm-id="<?= $value['id'] ?>">
+                                            <div class="material_tr">
+                                                <div class="material_info">
+                                                    <div class="row mt-2 mb-2">
+                                                        <div class="col-12">
+                                                            <?
+                                                            if ($value['material_type'] == 'material_type_text') {
+                                                                include 'material_type_text.php';
+                                                            }
+                                                            if ($value['material_type'] == 'material_type_audio') {
+                                                                include 'material_type_audio.php';
+                                                            }
+                                                            if ($value['material_type'] == 'material_type_file') {
+                                                                include 'material_type_file.php';
+                                                            }
+                                                            if ($value['material_type'] == 'material_type_video') {
+                                                                include 'material_type_video.php';
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-2 mb-2 material_info_none">
-                                            <div class="col-12">
-                                                <div class="float-left" style="color: #000000;font-size: 1.5rem;margin-top: 0.3rem;"><?= $wares->type_material_is_name($value['material_type']) ?></div> 
-                                                <select name="series" class="form-control form-control-material float-left" style="max-width: 200px;margin-left: 100px;position: absolute;" 
-                                                        row_db="series_id" 
-                                                        obj_id="<?= $value['id'] ?>" >
-                                                    <option value="0">Серия...</option>
-                                                    <?
-                                                    foreach ($series as $series_option_value) {
-                                                        $series_selected = '';
-                                                        if ($value['series_id'] == $series_option_value['id']) {
-                                                            $series_selected = 'selected="selected"';
-                                                        }
-                                                        ?>
-                                                        <option value="<?= $series_option_value['id'] ?>" <?= $series_selected ?>><?= $series_option_value['title'] ?></option>
+                                                <div class="row mt-2 mb-2 material_info_none">
+                                                    <div class="col-12">
+                                                        <div class="float-left" style="color: #000000;font-size: 1.5rem;margin-top: 0.3rem;"><?= $wares->type_material_is_name($value['material_type']) ?></div> 
+                                                        <select name="series" class="form-control form-control-material float-left" style="max-width: 200px;margin-left: 100px;position: absolute;" 
+                                                                row_db="series_id" 
+                                                                obj_id="<?= $value['id'] ?>" >
+                                                            <option value="0">Серия...</option>
+                                                            <?
+                                                            foreach ($series as $series_option_value) {
+                                                                $series_selected = '';
+                                                                if ($value['series_id'] == $series_option_value['id']) {
+                                                                    $series_selected = 'selected="selected"';
+                                                                }
+                                                                ?>
+                                                                <option value="<?= $series_option_value['id'] ?>" <?= $series_selected ?>><?= $series_option_value['title'] ?></option>
+                                                                <?
+                                                            }
+                                                            ?>   
+                                                        </select>
+                                                        <a href="?wares_id=<?= $wares_id ?>&delete_material=<?= $value['id'] ?>" class="btn btn-danger btn-sm float-right">Удалить</a>
+                                                    </div>
+                                                    <div class="col-12 mt-5">
                                                         <?
-                                                    }
-                                                    ?>   
-                                                </select>
-                                                <div style="width: 100px;margin-left: 320px;margin-top: 6px;position: absolute;">
-                                                    <span title="Переместить вверх">
-                                                        <a href="javascript:void(0)" material_id="<?= $value['id'] ?>" series_id="<?= $series_value['id'] ?>" position="<?= $value['position'] ?>" metod="up" class="btn btn-outline-dark btn-sm material_position_up"><i class="mdi mdi-chevron-up"></i></a>
-                                                    </span>
-                                                    <span title="Переместить вниз">
-                                                        <a href="javascript:void(0)" material_id="<?= $value['id'] ?>" series_id="<?= $series_value['id'] ?>" position="<?= $value['position'] ?>" metod="down" class="btn btn-outline-dark btn-sm material_position_down"><i class="mdi mdi-chevron-down"></i></a>
-                                                    </span>
+                                                        if ($value['material_type'] == 'material_type_text') {
+                                                            include 'edit_material_type_text.php';
+                                                        }
+                                                        if ($value['material_type'] == 'material_type_audio') {
+                                                            include 'edit_material_type_audio.php';
+                                                        }
+                                                        if ($value['material_type'] == 'material_type_file') {
+                                                            include 'edit_material_type_file.php';
+                                                        }
+                                                        if ($value['material_type'] == 'material_type_video') {
+                                                            include 'edit_material_type_video.php';
+                                                        }
+                                                        // https://www.youtube.com/embed/hPXX4vzw0kk
+                                                        ?>
+                                                    </div>
                                                 </div>
-                                                <a href="?wares_id=<?= $wares_id ?>&delete_material=<?= $value['id'] ?>" class="btn btn-danger btn-sm float-right">Удалить</a>
                                             </div>
-                                            <div class="col-12 mt-5">
-                                                <?
-                                                if ($value['material_type'] == 'material_type_text') {
-                                                    include 'edit_material_type_text.php';
-                                                }
-                                                if ($value['material_type'] == 'material_type_audio') {
-                                                    include 'edit_material_type_audio.php';
-                                                }
-                                                if ($value['material_type'] == 'material_type_file') {
-                                                    include 'edit_material_type_file.php';
-                                                }
-                                                if ($value['material_type'] == 'material_type_video') {
-                                                    include 'edit_material_type_video.php';
-                                                }
-                                                // https://www.youtube.com/embed/hPXX4vzw0kk
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?
-                                }
-                            }
-                            ?>
+
+                                            <?
+                                        }
+                                    }
+                                    ?>
+                            </ul>
                         </div>
                     </div>
 
@@ -384,14 +372,7 @@
     <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
     <script>
                             $(document).ready(function () {
-
-                                $('.sortable-ul').sortable({
-                                    handle: '.handle'
-                                });
-
-
-                                $(".material_info").unbind('click').click(function () {
-                                    console.log('material_info');
+                                $(".material_info").unbind('click').dblclick(function () {
                                     $(this).closest(".material_tr").find(".material_info_none").toggle(200);
                                 });
 
@@ -402,7 +383,7 @@
                                         var obj_id = $(this).attr('obj_id');
                                         var id = $(this).attr('id');
                                         var val = $(this).val();
-                                        console.log('elm_type: ' + elm_type);
+                                        //console.log('elm_type: ' + elm_type);
                                         if (elm_type == 'textarea') {
                                             val = $(this).html();
                                         }
@@ -417,10 +398,9 @@
                                             $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
                                         }
 
-                                        console.log('#calamansi-player-' + id);
+                                        //console.log('#calamansi-player-' + id);
                                         // переинициализация аудио плеера
                                         if (!!$(this).attr('init_audio')) {
-                                            console.log('Calamansi');
                                             new Calamansi(document.querySelector('#calamansi-player-' + id), {
                                                 skin: '/assets/plugins/calamansi/skins/basic_download2',
                                                 playlists: {
@@ -432,7 +412,6 @@
                                                 },
                                                 defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png'
                                             });
-                                            console.log('start');
                                         }
 
                                         if (!!$(this).attr('init_youtube_src')) {
