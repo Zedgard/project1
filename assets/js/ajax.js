@@ -53,7 +53,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             if (result['success'] == 1) {
                                 $('.form_result').show();
                                 $('.form_result').removeClass("alert-danger");
-                                $('.form_result').addClass("alert").addClass("alert-success");
+                                //$('.form_result').addClass("alert").addClass("alert-success");
                                 $('.form_result').html(result['success_text']);
                                 metod = 1;
                             }
@@ -154,7 +154,7 @@ function sendPostLigth(url, data, func) {
                     if (!!$('.form_result')) {
                         $('.form_result').show();
                         $('.form_result').removeClass("alert-danger");
-                        $('.form_result').addClass("alert").addClass("alert-success");
+                        //$('.form_result').addClass("alert").addClass("alert-success");
                         $('.form_result').append('<div>' + result['success_text'] + '</div>');
                     }
                 }

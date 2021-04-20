@@ -14,6 +14,8 @@ $close_club = new \project\close_club();
 $c_products = new \project\products();
 
 if ($c_user->isClient() || $c_user->isEditor()) {
+    $close_club_info = $close_club->get_club_user_info($_SESSION['user']['info']['id']);
+    //print_r($close_club_info);
     $waresClub = $c_products->getProductsClubArray();
     include 'tmpl/office.php';
 }

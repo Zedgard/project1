@@ -296,13 +296,13 @@ class auth extends \project\user {
         $error = array();
         $sqlLight = new \project\sqlLight();
 
-        $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active` = '1' ";
+        $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`='1' ";
         $users = $sqlLight->queryList($query, array($email));
         if ($sqlLight->getCount() > 0) {
             return true;
         }
 
-        $query = "SELECT * FROM `zay_users` u WHERE u.`phone`='?' `active` = 1";
+        $query = "SELECT * FROM `zay_users` u WHERE u.`phone`='?' `active`='1'";
         $users = $sqlLight->queryList($query, array($phone));
         if ($sqlLight->getCount() > 0) {
             return true;
