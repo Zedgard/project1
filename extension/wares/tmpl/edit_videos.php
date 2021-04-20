@@ -113,7 +113,7 @@
             <div class="col-12">
                 <div class="card card-default">
                     <div class="card-body">
-                        <ul class="sortable-ul">
+                        <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="wares_material" db-row="position">
                             <?
                             $video_i = 0;
 
@@ -125,13 +125,14 @@
                                     $video_i++;
                                     $union_elm_id = mt_rand(100000, 999999) . $value['id'];
                                     ?>
-                                    <li>
-                                        <i class="handle"></i> 
-                                        <div class="material_tr">
+                                    <li class="handle" sortable-elm-id="<?= $value['id'] ?>">
+                                        <div class="material_tr" data-bs-toggle="tooltip" data-bs-placement="top" title="Двойной клик откроет редактирование блока">
                                             <div class="material_info">
-                                                <hr/>
                                                 <div class="row mt-2 mb-2">
-                                                    <div class="col-12">
+                                                    <div class="col-1 text-center">
+                                                        <i class="mdi mdi-arrow-all" style="font-size: 3rem;"></i>
+                                                    </div>
+                                                    <div class="col-11">
                                                         <?
                                                         if ($value['material_type'] == 'material_type_text') {
                                                             include 'material_type_text.php';
@@ -384,13 +385,9 @@
     <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
     <script>
                             $(document).ready(function () {
+                                
 
-                                $('.sortable-ul').sortable({
-                                    handle: '.handle'
-                                });
-
-
-                                $(".material_info").unbind('click').click(function () {
+                                $(".material_info").unbind('click').dblclick(function () {
                                     console.log('material_info');
                                     $(this).closest(".material_tr").find(".material_info_none").toggle(200);
                                 });

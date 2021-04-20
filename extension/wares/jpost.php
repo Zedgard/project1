@@ -8,6 +8,9 @@ include_once 'inc.php';
 
 $pr_wares = new \project\wares();
 
+$result = array('success' => 0, 'success_text' => 'Ошибка!');
+
+
 // Все товары с фильром
 if (isset($_POST['getWaresArray'])) {
     $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
@@ -48,7 +51,7 @@ if (isset($_POST['edit_wares'])) {
     $wares_articul = (isset($_POST['wares_articul'])) ? $_POST['wares_articul'] : '';
     $wares_col = (isset($_POST['wares_col'])) ? $_POST['wares_col'] : '';
     $club_month_period = $_POST['club_month_period'];
-    $club_freeze_day = (isset($_POST['club_freeze_day']) && $_POST['club_freeze_day'] > 0)?$_POST['club_freeze_day'] : 0;
+    $club_freeze_day = (isset($_POST['club_freeze_day']) && $_POST['club_freeze_day'] > 0) ? $_POST['club_freeze_day'] : 0;
     $wares_descr = (isset($_POST['wares_descr'])) ? $_POST['wares_descr'] : '';
     $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
     $wares_active = (isset($_POST['wares_active'])) ? $_POST['wares_active'] : '1';
@@ -186,4 +189,18 @@ if (isset($_POST['waresVideoSee'])) {
 if (isset($_POST['init_office_list_categorys_col'])) {
     $data = $pr_wares->getClientWaresCol();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+if (isset($_POST['ajax_metod'])) {
+    // Сортировка материалов
+    if ($_POST['ajax_metod'] == 'material_update_positions') {
+        $result = array('success' => 1, 'success_text' => '');
+        if (count($_POST['ids']) > 0) {
+            $i = 0;
+            foreach ($_POST['ids'] as $value) {
+                $pr_wares->material_position_update($value, $i);
+                $i++;
+            }
+        }
+    }
 }
