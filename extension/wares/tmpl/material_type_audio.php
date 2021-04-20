@@ -1,6 +1,3 @@
-<?
-$union_elm_id = mt_rand(100000, 999999) . $value['id'];
-?>
 <div class="player-block float-left">
     <div id="calamansi-player-<?= $union_elm_id ?>">
         Загрузка плеера... 
@@ -8,19 +5,17 @@ $union_elm_id = mt_rand(100000, 999999) . $value['id'];
 </div>
 <script>
     Calamansi.autoload();
-   // document.getElementById('full-demo-player')
-    //document.querySelector('#calamansi-player-<?= $union_elm_id ?>')
     new Calamansi( 
             document.querySelector('#calamansi-player-<?= $union_elm_id ?>'), {
         skin: '/assets/plugins/calamansi/skins/basic_download2',
         playlists: {
             'Classics': [
                 {
-                    source: '<?= $value['audio_file'] ?>',
+                    source: '<?= $value['audio_file'] ?>'
                 }
             ],
         },
-        defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
+        defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png'
     });
 
     //player.destroy();

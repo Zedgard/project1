@@ -640,8 +640,16 @@ class wares extends \project\extension {
      * @return type
      */
     public function list_materials($wares_id) {
+//        $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' order BY `position` asc";
+//        $materials = $this->getSelectArray($select, array($wares_id));
+//        $i = 0;
+//        foreach ($materials as $value) {
+//            $this->material_position_update($value['id'], $i);
+//            $i++;
+//        }
         $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' order BY `position` asc";
-        return $this->getSelectArray($select, array($wares_id));
+        $data = $this->getSelectArray($select, array($wares_id));
+        return $data;
     }
 
     /**
@@ -734,6 +742,11 @@ class wares extends \project\extension {
 //        if ($position <= 0) {
 //            return true;
 //        }
+        if ($series_id > 0) {
+            
+        } else {
+            $series_id = 0;
+        }
 
         if ($metod == "up") {
             $q1 = "select * from `zay_wares_material` WHERE `series_id`='?' and `id`='?'";
@@ -750,10 +763,21 @@ class wares extends \project\extension {
         }
 
         $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
-        $this->query($query, array($elem2['position'], $elem1['id']), 0);
+        $this->query($query, array($elem2['position'], $elem1['id']), 1);
         $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
-        $this->query($query, array($elem1['position'], $elem2['id']), 0);
+        $this->query($query, array($elem1['position'], $elem2['id']), 1);
         return true;
+    }
+
+    /**
+     * обновить позицию материала
+     * @param type $material_id
+     * @param type $position_val
+     * @return type
+     */
+    public function material_position_update($material_id, $position_val) {
+        $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
+        return $this->query($query, array($position_val, $material_id), 0);
     }
 
 }

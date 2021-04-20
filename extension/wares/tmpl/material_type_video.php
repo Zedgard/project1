@@ -14,7 +14,7 @@
         $(document).ready(function () {
             var options = {};
             var player = videojs('video_<?= $value['id'] ?>', options, function onPlayerReady() {
-                this.play();
+                //this.play();
                 this.on('ended', function () {
                 });
             });

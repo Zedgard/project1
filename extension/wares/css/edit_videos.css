@@ -57,9 +57,9 @@
 
 .material_info_none{
     padding: 1%;
-    position: absolute;
+    position: static;
     right: 0px;
-    width: 70%;
+    width: 100%;
     background-color: #FFFFFF;
     border: 1px solid #dee2e6;
     display: none;
@@ -70,7 +70,6 @@
 }
 .material_info_none:hover{
     z-index: 999;
-    position: absolute;
 }
 .material_info:hover {
     background-color: #dee2e6;

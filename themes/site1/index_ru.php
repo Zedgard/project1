@@ -52,6 +52,7 @@
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/cart.js<?= $_SESSION['rand'] ?>"></script>  
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
+        <?= $config->getConfigParam('yandex_metrika') ?>
     </head>  
     <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">
 
@@ -236,4 +237,5 @@
         echo $js . "\n";
     }
     ?>
+    
 </html>
