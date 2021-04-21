@@ -51,7 +51,7 @@ $array = array(
             "price" => 10000
         )
     ),
-    "orderNumber" => "2",
+    "orderNumber" => "3",
     "demoFlow" => "sms"
 );
 $url = 'https://forma.tinkoff.ru/api/partners/v2/orders/create-demo';
