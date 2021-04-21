@@ -25,6 +25,7 @@
             class="TINKOFF_BTN_YELLOW TINKOFF_SIZE_L"
             onclick="tinkoff.createDemo(
                             {
+                                orderNumber: '1',
                                 sum: 15000,
                                 items: [{name: 'iphone 11', price: 10000, quantity: 1}, {name: 'Чехол', price: 5000, quantity: 1}],
                                 demoFlow: 'sms',
