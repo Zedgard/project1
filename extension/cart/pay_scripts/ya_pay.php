@@ -161,10 +161,10 @@ if (count($_SESSION['cart']['itms']) > 0) {
             /*
              * Если это консультация 
              */
-            if ($_SESSION['consultation']['your_master_id'] > 0) {
-                $_SESSION['consultation']['pay_id'] = $max_id;
-                $sign_up_consultation->add_consultation($_SESSION['consultation']);
-            }
+//            if ($_SESSION['consultation']['your_master_id'] > 0) {
+//                $_SESSION['consultation']['pay_id'] = $max_id;
+//                $sign_up_consultation->add_consultation($_SESSION['consultation']);
+//            }
             // Отправляем пользователя на страницу оплаты
             header('Location: ' . $confirmationUrl);
         } else {

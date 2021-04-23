@@ -1,3 +1,11 @@
+<?
+session_start();
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+?>
 <!DOCTYPE html>
 <html lang="ru" dir="ltr">
     <head>
@@ -40,6 +48,45 @@
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
     </head>  
     <body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+        <?
+        include 'extension/topmenu/index.php';
+        ?> 
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <div class="card text-center mt-5 mb-5">
+                        <div class="card-header">
+                            <?= $_SESSION['page_error_title'] ?>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-12">
+                                    <?
+                                    if (count($_SESSION['page_errors']) > 0) {
+                                        foreach ($_SESSION['page_errors'] as $value) {
+                                            ?>
+                                            <div class="alert alert-danger" role="alert">
+                                                <?= $value ?>
+                                            </div>
+                                            <?
+                                        }
+                                        $_SESSION['page_errors'] = array();
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="card-footer">
+                            <?= linkBack() ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+
 
     </body>
 </html>

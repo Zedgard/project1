@@ -23,7 +23,7 @@ class sqlLight {
     private $htmlspecialchars_true = 1;
     /* @var $mysqli new mysqli */
     private $mysqli;
-    private $MYSQLI_TYPE = MYSQLI_BOTH; // MYSQLI_ASSOC
+    private $MYSQLI_TYPE = MYSQLI_ASSOC ; // MYSQLI_BOTH MYSQLI_ASSOC
 
     public function __construct() {
         $this->conect();

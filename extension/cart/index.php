@@ -46,7 +46,7 @@ if (isset($_GET['go_cart'])) {
     }
     goBack('/shop/cart/', 0);
 }
-
+//print_r($_SESSION['cart']['itms']);
 $form_show = 0;
 if (isset($_GET['ya_payment_true'])) {
     $form_show = 1;
@@ -158,6 +158,42 @@ if (isset($_GET['in_payment_true'])) {
                                     </div>
                                     <div class="col-lg-12">
                                         <a href="/office/" class="btn btn-primary">Перейти в личный кабинет</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+    <?
+}
+
+if (isset($_GET['in_payment_cancel'])) {
+    $form_show = 1;
+    ?>
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="card text-center mt-5 mb-5">
+                    <!--
+                    <div class="card-header">
+                        
+                    </div>
+                    -->
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-lg-12 mb-5 mt-3">
+                                        <h2>Заявка отменена</h2>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <a href="/cart/" class="btn btn-primary">Перейти в корзину</a>
                                     </div>
 
                                 </div>

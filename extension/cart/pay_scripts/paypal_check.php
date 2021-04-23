@@ -138,7 +138,12 @@ if ($amount == $check_amount) {
                 
                 $close_club->register_ispay_club_month_period($pay_id);
 
-                $products->setSoldAdd($pay_id);
+                // Зафиксируем продажу
+                $query_products = "select * from zay_pay_products WHERE pay_id='?'";
+                $products_data = $sqlLight->queryList($query_products, array($pay_id));
+                foreach ($products_data as $v) {
+                    $products->setSoldAdd($v['product_id']);
+                }
 
                 $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
                 $_SESSION['cart']['total'] = $total;

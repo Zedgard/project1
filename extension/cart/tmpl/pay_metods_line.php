@@ -5,14 +5,24 @@
         <a href="javascript:void(0)" class="btn button btngreen text-center btn_cart_big btn_cart_cloudpayments">Картой</a> 
     </div>
     <div class="row mb-3">
-        <a href="/pay.php?tinkoff=1" class="btn button btngreen4 text-center btn_cart btn_cart_yandex" target="_blank">Картой через Тинькофф</a>
+        <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_tinkoff" target="_blank">Картой через Тинькофф</a>
     </div>
     <div class="row mb-3">
         <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_other">Другой способ</a>
     </div>
-    <div class="row mb-3">
-        <div class="col-12 block_cart_other" style="display: none;">
+    <div class="row mt-3 block_cart_other" style="display: none;">
+        <div class="col-12">
 
+        </div>
+    </div>
+    <div style="display: none;">
+        <div class="row mb-3">
+            <a href="/cart/" class="TINKOFF_BTN_YELLOW btn_cart_credit" style="max-width: 400px;margin: 0 auto;">Взять в рассрочку</a>
+        </div>
+    </div>
+    <div>
+        <div class="row mb-3">
+            <a href="javascript:void(0)" class="btn button btngreen4 TINKOFF_BTN_YELLOW btn_cart_credit" style="max-width: 400px;margin: 0 auto;">Взять в рассрочку</a>
         </div>
     </div>
 </div>

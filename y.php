@@ -4,6 +4,13 @@
         <link href="/assets/plugins/video/css/videojs.css?v=<?= rand() ?>" rel="stylesheet">
     </head>
     <body oncontextmenu="return false;">
+
+        <a href="<?= $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' .$_SERVER['SERVER_NAME'] ?>"><?= $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' .$_SERVER['SERVER_NAME'] ?></a>
+        <br/><br/>
+        <?
+        print_r($_SERVER);
+        ?>
+
         <video
             id="vid1"
             class="video-js vjs-default-skin h-100"
@@ -28,6 +35,5 @@
                 });
             });
         </script>
-    </script>
-</body>
+    </body>
 </html>
