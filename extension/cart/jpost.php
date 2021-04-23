@@ -446,7 +446,11 @@ if (isset($_POST['check_cloudpayments'])) {
             $pr_cart->register_pay($pay_id);
 
             // Зафиксируем продажу
-            $products->setSoldAdd($pay_id);
+            $query_products = "select * from zay_pay_products WHERE pay_id='?'";
+            $products_data = $sqlLight->queryList($query_products, array($pay_id));
+            foreach ($products_data as $v) {
+                $products->setSoldAdd($v['product_id']);
+            }
             $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');

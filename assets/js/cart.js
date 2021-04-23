@@ -3,58 +3,70 @@ $(document).ready(function () {
     init_pay();
 });
 
+function fn_dataLayer() {
+    window.dataLayer = window.dataLayer || [];
+    for (var i = 0; i < cart_itms.length; i++) {
+        var isPromo = 0;
+        var product_price = 0;
+        if (typeof cart_itms[i]['price_promo'] != 'undefined' && cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0) {
+            isPromo = 1;
+        }
+        if (isPromo == 1) {
+            product_price = cart_itms[i]['price_promo'];
+        } else {
+            product_price = cart_itms[i]['price'];
+        }
+        var product_info_title = $.trim(cart_itms[i]['title']);
+        var product_info_price = product_price;
+        //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
+        dataLayer.push({
+            'ecommerce': {
+                'currencyCode': 'UAH',
+                'coupon': 'none', // Должен подтягиваться код купона при успешной реализации 
+                'checkout': {
+                    'actionField': {'step': 1},
+                    'products': [{
+                            "name": product_info_title,
+                            "price": product_info_price,
+                            "quantity": 1
+                        },
+                        {
+                            "name": product_info_title,
+                            "price": product_info_price,
+                            "quantity": 1
+                        }]
+                }
+            },
+            'event': 'gtm-ee-event',
+            'gtm-ee-event-category': 'Enhanced Ecommerce',
+            'gtm-ee-event-action': 'Checkout Step 1',
+            'gtm-ee-event-non-interaction': 'False'
+        });
+    }
+}
+
 function init_pay() {
     $(".btn_cart_yandex").unbind('click').click(function () {
         // /pay.php?yandex=1
-        console.log(cart_itms);
-        window.dataLayer = window.dataLayer || [];
-        for (var i = 0; i < cart_itms.length; i++) {
-            var isPromo = 0;
-            var product_price = 0;
-            if (cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0) {
-                isPromo = 1;
-            }
-            if (isPromo == 1) {
-                product_price = cart_itms[i]['price_promo'];
-            } else {
-                product_price = cart_itms[i]['price'];
-            }
-            var product_info_title = $.trim(cart_itms[i]['title']);
-            var product_info_price = product_price;
-            //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
-            dataLayer.push({
-                'ecommerce': {
-                    'currencyCode': 'UAH',
-                    'coupon': 'none', // Должен подтягиваться код купона при успешной реализации 
-                    'checkout': {
-                        'actionField': {'step': 1},
-                        'products': [{
-                                "name": product_info_title,
-                                "price": product_info_price,
-                                "quantity": 1
-                            },
-                            {
-                                "name": product_info_title,
-                                "price": product_info_price,
-                                "quantity": 1
-                            }]
-                    }
-                },
-                'event': 'gtm-ee-event',
-                'gtm-ee-event-category': 'Enhanced Ecommerce',
-                'gtm-ee-event-action': 'Checkout Step 1',
-                'gtm-ee-event-non-interaction': 'False',
-            });
-        }
+        fn_dataLayer();
         // Пока это убираем
 //        setTimeout(function () {
 //            document.location.href = '/pay.php?yandex=1';
 //        }, 500);
     });
 
+    // Тинькоф обычная оплата
+    $(".btn_cart_tinkoff").unbind('click').click(function () {
+        fn_dataLayer();
+        window.location.href = '/pay.php?tinkoff=1';
+    });
+
+
+
     $(".btn_cart_cloudpayments").unbind('click').click(function () {
         pay_status = 0;
-        console.log('btn_cart_cloudpayments');
+        //console.log('btn_cart_cloudpayments');
+        fn_dataLayer();
         sendPostLigth('/jpost.php?extension=cart', {
             "set_cloudpayments": 1
         }, function (e) {
@@ -121,6 +133,7 @@ function init_pay() {
 
 
     $(".btn_cart_tinkoff").unbind('click').click(function () {
+        fn_dataLayer();
         pay_status = 0;
         sendPostLigth('/jpost.php?extension=cart', {
             "set_tinkoff": 1
@@ -139,45 +152,7 @@ function init_pay() {
     $(".btn_cart_interkassa").unbind('click').click(function () {
         // /pay.php?yandex=1
         //console.log(cart_itms);
-        window.dataLayer = window.dataLayer || [];
-        for (var i = 0; i < cart_itms.length; i++) {
-            var isPromo = 0;
-            var product_price = 0;
-            if (cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0) {
-                isPromo = 1;
-            }
-            if (isPromo == 1) {
-                product_price = cart_itms[i]['price_promo'];
-            } else {
-                product_price = cart_itms[i]['price'];
-            }
-            var product_info_title = $.trim(cart_itms[i]['title']);
-            var product_info_price = product_price;
-            //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
-            dataLayer.push({
-                'ecommerce': {
-                    'currencyCode': 'UAH',
-                    'coupon': 'none', // Должен подтягиваться код купона при успешной реализации 
-                    'checkout': {
-                        'actionField': {'step': 1},
-                        'products': [{
-                                "name": product_info_title,
-                                "price": product_info_price,
-                                "quantity": 1
-                            },
-                            {
-                                "name": product_info_title,
-                                "price": product_info_price,
-                                "quantity": 1
-                            }]
-                    }
-                },
-                'event': 'gtm-ee-event',
-                'gtm-ee-event-category': 'Enhanced Ecommerce',
-                'gtm-ee-event-action': 'Checkout Step 1',
-                'gtm-ee-event-non-interaction': 'False',
-            });
-        }
+        fn_dataLayer();
         setTimeout(function () {
             document.location.href = '/pay.php?interkassa=1';
         }, 500);
@@ -188,44 +163,7 @@ function init_pay() {
         var e = $(this).attr('e');
         var pay_email = prompt("Email для платежа?", e);
         if (pay_email != null) {
-            for (var i = 0; i < cart_itms.length; i++) {
-                var isPromo = 0;
-                var product_price = 0;
-                if (cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0) {
-                    isPromo = 1;
-                }
-                if (isPromo == 1) {
-                    product_price = cart_itms[i]['price_promo'];
-                } else {
-                    product_price = cart_itms[i]['price'];
-                }
-                var product_info_title = $.trim(cart_itms[i]['title']);
-                var product_info_price = product_price;
-                //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
-                dataLayer.push({
-                    'ecommerce': {
-                        'currencyCode': 'UAH',
-                        'coupon': 'none', // Должен подтягиваться код купона при успешной реализации 
-                        'checkout': {
-                            'actionField': {'step': 1},
-                            'products': [{
-                                    "name": product_info_title,
-                                    "price": product_info_price,
-                                    "quantity": 1
-                                },
-                                {
-                                    "name": product_info_title,
-                                    "price": product_info_price,
-                                    "quantity": 1
-                                }]
-                        }
-                    },
-                    'event': 'gtm-ee-event',
-                    'gtm-ee-event-category': 'Enhanced Ecommerce',
-                    'gtm-ee-event-action': 'Checkout Step 1',
-                    'gtm-ee-event-non-interaction': 'False',
-                });
-            }
+            fn_dataLayer();
             setTimeout(function () {
                 //alert(onSubmit);
                 document.location.href = '/pay.php?paypal=1&pay_email=' + pay_email;
@@ -239,6 +177,8 @@ function init_pay() {
         pay_status = 0;
         $(".block_cart_other").show(200);
         $(".pay_preloader").show(200);
+
+        fn_dataLayer();
         sendPostLigth('/jpost.php?extension=cart', {
             "get_cart_other": 1
         }, function (e) {
@@ -270,5 +210,10 @@ function init_pay() {
                 $(".block_cart_other").hide(200);
             }
         });
+    });
+
+    $(".btn_cart_credit").unbind('click').click(function () {
+        fn_dataLayer();
+        window.location.href = '/tinkoff_credit_pay.php';
     });
 }

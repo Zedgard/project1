@@ -82,7 +82,11 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
                 $pr_cart->register_pay($pay_id);
 
                 // Зафиксируем продажу
-                $products->setSoldAdd($value['id']);
+                $query_products = "select * from zay_pay_products WHERE pay_id='?'";
+                $products_data = $sqlLight->queryList($query_products, array($value['id']));
+                foreach ($products_data as $v) {
+                    $products->setSoldAdd($v['product_id']);
+                }
                 $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
             } else {
                 $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
@@ -119,7 +123,11 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
                 $pr_cart->register_pay($pay_id);
 
                 // Зафиксируем продажу
-                $products->setSoldAdd($value['id']);
+                $query_products = "select * from zay_pay_products WHERE pay_id='?'";
+                $products_data = $sqlLight->queryList($query_products, array($value['id']));
+                foreach ($products_data as $v) {
+                    $products->setSoldAdd($v['product_id']);
+                }
                 $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
             } else {
                 $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
@@ -161,8 +169,6 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
 //print_r($pays);
 //echo "\n";
 // Получаем список платежей циклом
-
-
 //if (isset($_GET['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && $u->isClientId() > 0 && isset($_GET['Success']) && $_GET['Success'] == 'true') {
 //    // Проверяем статус оплаты
 //    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`='succeeded' and `user_id`='?' and pay_key='?' ";

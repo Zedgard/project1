@@ -33,7 +33,12 @@ $_SESSION['page_url'] = '';
 $_SESSION['rand'] = '?v=' . rand();
 
 // Ошибки которые произошли в системе
-$_SESSION['errors'] = array();
+if (!isset($_SESSION['page_errors'])) {
+    $_SESSION['page_errors'] = array();
+}
+if (!isset($_SESSION['errors'])) {
+    $_SESSION['errors'] = array();
+}
 
 // Сообщения сайта (Отображаются на странице сайта или всплывают)
 /*

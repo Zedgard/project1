@@ -210,12 +210,22 @@ function init_pay_info() {
                 pay_status = 'Незавершенная';
                 border_class = 'table-danger';
             }
+            var credit_type = '';
+            var pay_credit = 0;
+            if (e['data']['pay_credit'] > 0) {
+                credit_type = '( Кредитный )';
+                pay_credit = e['data']['pay_credit'];
+            }
+
             $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + "</td></tr>");
             $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
             $(".pay_info_data").append("<tr><td>Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
             $(".pay_info_data").append("<tr><td>Статус платежа</td><td class=\"border_class\">" + pay_status + "</td></tr>");
             $(".pay_info_data").append("<tr><td>Сумма</td><td>" + e['data']['pay_sum'] + " руб</td></tr>");
-            $(".pay_info_data").append("<tr><td>Тип</td><td>" + e['data']['pay_type_title'] + "</td></tr>");
+            $(".pay_info_data").append("<tr><td>Тип</td><td>" + e['data']['pay_type_title'] + " " + credit_type + "</td></tr>");
+            if (pay_credit > 0) {
+                $(".pay_info_data").append('<tr><td>Ссылка на проверку оплаты</td><td><a href="' + e['data']['confirmationUrl'] + '" target="_blank">' + e['data']['confirmationUrl'] + '</a></td></tr>');
+            }
             $(".pay_info_data").append("<tr><td>Пользователь</td><td>" + e['data_user']['first_name'] + " " + e['data_user']['last_name'] + "<br/>\n\
                 " + e['data_user']['email'] + "<br/>\n\
                 " + e['data_user']['phone'] + "<br/>\n\

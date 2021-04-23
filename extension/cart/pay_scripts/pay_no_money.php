@@ -10,24 +10,27 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
 
+$pr_cart = new \project\cart();
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
 $products = new \project\products();
 $u = new \project\user();
 $sign_up_consultation = new \project\sign_up_consultation();
+$close_club = new \project\close_club();
 
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "succeeded"; // Устанавливаем стандартный статус платежа
 
 if (count($_SESSION['cart']['itms']) > 0) {
     $client_id = ($u->isClientId() > 0) ? $u->isClientId() : 0;
-    
+
     // Передадим ID пользователя (Создается при консультации)
     if ($client_id == 0) {
         $client_id = $_SESSION['cart']['itms'][0]['user_id'];
     }
-    
+
     $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
     if (strlen($pay_descr) > 0) {
         $_SESSION['consultation'] = $_SESSION['cart']['itms'][0];
@@ -51,10 +54,19 @@ if (count($_SESSION['cart']['itms']) > 0) {
                 $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
                         . "VALUES ('?','?','?')";
                 $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-                // Зафиксируем продажу
-                $products->setSoldAdd($max_id);
             }
         }
+
+        // Зарегистрируем покупку
+        $pr_cart->register_pay($max_id);
+
+        // Зафиксируем продажу
+        $query_products = "select * from zay_pay_products WHERE pay_id='?'";
+        $products_data = $sqlLight->queryList($query_products, array($max_id));
+        foreach ($products_data as $v) {
+            $products->setSoldAdd($v['product_id']);
+        }
+
         $_SESSION['cart']['itms'] = array();
         // Отправляем пользователя на страницу оплаты
         header('Location: /office/');

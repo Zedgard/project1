@@ -438,7 +438,7 @@ if (!function_exists('linkBack')) {
      * Прейти на адрес через 3 сек.
      */
     function linkBack() {
-        echo "<a href=\"javascript:history.go(-1)\" mce_href=\"javascript:history.go(-1)\" class=\"btn\"><i class=\"icon-arrow-left\"></i> назад</a>";
+        echo "<a href=\"javascript:history.go(-1)\" mce_href=\"javascript:history.go(-1)\" class=\"btn btn-link\"><i class=\"icon-arrow-left\"></i> назад</a>";
     }
 
 }

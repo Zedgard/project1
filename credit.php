@@ -16,7 +16,9 @@
                             {name: 'iPhone 11', price: 10000, quantity: 1},
                             {name: 'Чехол', price: 5000, quantity: 1}
                         ],
-                        sum: 15000
+                        sum: 15000,
+                        orderNumber: '20',
+                        webhookURL: 'https://dev.edgardzaycev.com/credit_post.php?constants=HUK&orderId='
                     })"
             ></button>
 
@@ -38,6 +40,9 @@
             >Оплатить частями</button>
     </body>
     <script>
+    tinkoff.methods.on(function() {
+    console.log('ggggg');
+});
         tinkoff.methods.on(tinkoff.constants.SUCCESS, onMessage);
         tinkoff.methods.on(tinkoff.constants.REJECT, onMessage);
         tinkoff.methods.on(tinkoff.constants.CANCEL, onMessage);
