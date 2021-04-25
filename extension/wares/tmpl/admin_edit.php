@@ -60,7 +60,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label for="config_code">Количество дней заморозки</label>
                         <input type="text" class="form-control club_freeze_day" id="wares_col" value="0" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Количество дней заморозки..." required>
                     </div>

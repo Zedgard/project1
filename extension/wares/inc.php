@@ -84,7 +84,7 @@ class wares extends \project\extension {
      */
     public function getWaresElem($id) {
         if ($id > 0) {
-            $querySelect = "SELECT w.*, cat.id as category_id, cat.title as category_title, cat.color FROM zay_wares w "
+            $querySelect = "SELECT w.*, cat.id as category_id, cat.title as category_title, cat.color as category_color FROM zay_wares w "
                     . "left join zay_wares_category wc on wc.wares_id=w.id "
                     . "left join zay_category cat on cat.id=wc.category_id "
                     . "WHERE w.id='?' ";

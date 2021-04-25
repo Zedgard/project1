@@ -11,13 +11,13 @@ $(document).ready(function () {
     /*
      * Остановка видео
      */
-    $(".carousel-video").on("mouseover", function () {
-        this.pause();
-    });
-    $(".carousel-video").on("mouseleave", function () {
-        this.play();
-        $(this).css("background-color", "black");
-    });
+//    $(".carousel-video").on("mouseover", function () {
+//        this.pause();
+//    });
+//    $(".carousel-video").on("mouseleave", function () {
+//        this.play();
+//        $(this).css("background-color", "black");
+//    });
 
     initCartArray();
     //initCartCount();
