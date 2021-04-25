@@ -11,6 +11,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+
 include_once 'inc.php';
 
 $wares = new \project\wares();
@@ -115,5 +117,6 @@ if ($user->isEditor()) {
 
         //print_r($wares_info);
         include __DIR__ . '/tmpl/edit_videos.php';
+        initELFinderSelectFile('material_file');
     }
 }

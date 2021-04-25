@@ -380,7 +380,7 @@
                                         $(this).closest(".material_tr").find(".material_info_none").toggle(200);
                                     });
 
-                                    $(".form-control-material").keyup(function () {
+                                    $(".form-control-material").on('keyup change focus', function () {
                                         if (!!$(this).attr('row_db') && !!$(this).attr('obj_id')) {
                                             var elm_type = $(this).get(0).tagName;
                                             var row_db = $(this).attr('row_db');
@@ -398,10 +398,6 @@
                                             if (!!$(this).attr('init_href')) {
                                                 $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
                                             }
-                                            if (!!$(this).attr('init_href')) {
-                                                $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_href')).attr("href", val);
-                                            }
-
                                             //console.log('#calamansi-player-' + id);
                                             // переинициализация аудио плеера
                                             if (!!$(this).attr('init_audio')) {
@@ -548,7 +544,7 @@
                                                     document.location.reload();
                                                 });
                                     });
-
+                                    
                                     $(".material_position_up,.material_position_down").unbind('click').click(function () {
                                         var material_id = $(this).attr("material_id");
                                         var series_id = $(this).attr("series_id");
