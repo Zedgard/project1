@@ -12,7 +12,7 @@
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'office') ? 'active' : '' ?> expand" >
             <a class="sidenav-item-link <?= ($_GET['katalog'] == $value['id']) ? 'active' : '' ?>" href="/office/?katalog">
                 <i class="mdi mdi-basket"></i>
-                <span class="nav-text">Мои покупки</span> 
+                <span class="nav-text">Мои товары</span> 
             </a> 
             <ul style="margin: 0;padding: 0;display: none;" class="collapse office_list_categorys <?=
             (isset($_GET['katalog'])) ? 'show' : ''
