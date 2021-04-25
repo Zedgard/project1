@@ -145,5 +145,5 @@ if ($user->isEditor()) {
 
     $memory = memory_get_usage() - $memory;
 
-    echo $time . ' сек. / ' . $memory;
+    echo '<span class="system_memory">' . $time . ' сек. / ' . $memory . '</span>';
 }
