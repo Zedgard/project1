@@ -179,6 +179,11 @@ class extension {
         $this->MysqliAssos = 1;
     }
 
+    public function queryNextId($table_name) {
+        $sqlLight = new \project\sqlLight();
+        return $sqlLight->queryNextId($table_name);
+    }
+
     /**
      * Возвращаем html тэги
      * @param type $str

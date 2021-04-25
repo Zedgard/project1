@@ -327,9 +327,9 @@ if (!function_exists('importWisiwyng')) {
                 },
                 setup: function (ed) {
                     ed.on('keyup', function (e) {
-//                        console.log('the event object ', e);
-//                        console.log('the editor object ', ed);
-//                        console.log('the content ', ed.getContent());
+        //                        console.log('the event object ', e);
+        //                        console.log('the editor object ', ed);
+        //                        console.log('the content ', ed.getContent());
                     });
                 }
             });
@@ -760,29 +760,7 @@ if (!function_exists('initELFinderSelectFile')) {
                                         getFileCallback: function (file) { // editor callback
                                             //console.log(file.url); // pass selected file path to TinyMCE
                                             $(obj).val(file.url);
-
-                                            // сохраниение поля
-                                            console.log('row_dbrow_dbrow_db');
-                                            if (!!$(obj).attr('row_db') && !!$(obj).attr('obj_id')) {
-                                                var row_db = $(obj).attr('row_db');
-                                                var obj_id = $(obj).attr('obj_id');
-                                                var val = $(obj).val();
-                                                console.log('sendPostLigth');
-                                                sendPostLigth('/jpost.php?extension=<?= $extensionUrl ?>',
-                                                        {
-                                                            "<?= $editParam ?>": 1,
-                                                            "row_db": row_db,
-                                                            "obj_id": obj_id,
-                                                            "val": val
-                                                        },
-                                                        function (e) {
-                                                            if (e['success'] == '1') {
-
-                                                            } else {
-                                                                alert('Ошибка сохранения!');
-                                                            }
-                                                        });
-                                            }
+                                            $(obj).focus();
                                             $('#elfinder').elfinder('destroy');
                                             $('#form_elfinder_modal').hide(200);
 

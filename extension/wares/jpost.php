@@ -56,13 +56,13 @@ if (isset($_POST['edit_wares'])) {
     $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
     $wares_active = (isset($_POST['wares_active'])) ? $_POST['wares_active'] : '1';
     $wares_images = (isset($_POST['wares_images'])) ? $_POST['wares_images'] : '';
-    $wares_category = (isset($_POST['wares_categorys'])) ? $_POST['wares_categorys'] : '';
+    $wares_categorys = (isset($_POST['wares_categorys'])) ? $_POST['wares_categorys'] : '';
 
     if (!is_numeric($wares_ex_code)) {
         $_SESSION['errors'][] = 'Код товара не число!';
     }
 
-    $pr_wares->setWaresCategory($wares_category);
+    $pr_wares->setWaresCategory($wares_categorys);
 
     if (count($_SESSION['errors']) == 0) {
         if ($pr_wares->insertOrUpdateWares($wares_id, $wares_title, $wares_descr, $wares_url_file, $wares_col, $club_month_period, $club_freeze_day, $wares_ex_code, $wares_articul, $wares_images, $wares_active)) {

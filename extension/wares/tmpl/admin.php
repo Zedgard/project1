@@ -214,6 +214,7 @@
         $(".btn_save_config").click(function () {
             var wares_id = $(".form_save_wares").find(".wares_id").val();
             var wares_title = $(".form_save_wares").find(".wares_title").val();
+            var wares_categorys = $(".form_save_wares").find(".wares_categorys").val();
             var wares_ex_code = $(".form_save_wares").find(".wares_ex_code").val();
             var wares_articul = $(".form_save_wares").find(".wares_articul").val();
             var wares_col = $(".form_save_wares").find(".wares_col").val();
@@ -232,6 +233,7 @@
             sendPostLigth('/jpost.php?extension=wares',
                     {"edit_wares": wares_id,
                         "wares_title": wares_title,
+                        "wares_categorys": wares_categorys,
                         "wares_ex_code": wares_ex_code,
                         "wares_articul": wares_articul,
                         "wares_col": wares_col,
