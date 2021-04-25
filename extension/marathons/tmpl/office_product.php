@@ -56,6 +56,7 @@
                     foreach ($materials as $key => $value) {
                         if ($value['series_id'] == '0') {
                             $video_i++;
+                            $union_elm_id = mt_rand(100000, 999999) . $value['id'];
                             ?>
                             <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
                                 <div class="row mt-2 mb-2">
@@ -115,6 +116,7 @@
                             foreach ($materials as $key => $value) {
                                 if ($value['series_id'] == $series_value['id']) {
                                     $video_i++;
+                                    $union_elm_id = mt_rand(100000, 999999) . $value['id'];
                                     ?>
                                     <div class="material_info series_<?= $value['series_id'] ?>" style="display: none;">
                                         <div class="row mt-2 mb-2">
@@ -132,7 +134,7 @@
                                                 if ($value['material_type'] == 'material_type_video') {
                                                     include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
                                                     $video_id = $value['id'];
-                                                    echo "video_id: {$video_id}<br/>\n";
+                                                    //echo "video_id: {$video_id}<br/>\n";
                                                     ?>
                                                     <script>
                                                         var see_video_id = <?= $video_id ?>;

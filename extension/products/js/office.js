@@ -19,7 +19,7 @@ function getClientProducts() {
                     // Основной продукт
                     $(".products_arrays_data").append('<div class="product product_id_' + data[i]['product_id'] + ' mixitup-container category-' + data[i]['pcat_category_id'] + ' w-100" \n\
                         data-ref="mixitup-target" style="display: block;">\n\
-                        <div class="product_title w-100">' + data[i]['product_title'] + '</div>\n\
+                        <div class="product_title w-100 mt-3 ml-0 ml-lg-3">' + data[i]['product_title'] + '</div>\n\
                         <div class="product_elms row row-cols-2 row-cols-md-4 w-100" style="margin-right:0;padding-right:0;margin-left:0;padding-left:0;"></div>\n\
                         </div>');
                 }
@@ -27,7 +27,7 @@ function getClientProducts() {
                 var wares_cat_name = '<span class="class_category" style="color: ' + wcc_color + ';">' + data[i]['wcc_title'] + '</span>';
                 // Товары продукта
                 $('.products_arrays_data .product_id_' + data[i]['product_id'] + ' .product_elms').append(
-                        '<div class="product_info row-cols-0 mb-4">\n\
+                        '<div class="product_info row-cols-0 mb-0 mb-lg-4">\n\
                                 <a href="?wares_id=' + data[i]['id'] + '">\n\
                                 <div class="card item p-4 p-2 h-100 text-center">\n\
                                 <span class="class_category_lbl opacity50" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['wcc_title'] + '</span>\n\

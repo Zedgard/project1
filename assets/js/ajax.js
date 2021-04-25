@@ -212,7 +212,7 @@ function sendPostLigth(url, data, func) {
  * отправить запрос с задержкой
  * $(".search_wares").delayKeyup(function () {}, 700);
  */
-$(document).ready(function () { 
+$(document).ready(function () {
     $.fn.delayKeyup = function (callback, ms) {
         var timer = 0;
         $(this).keyup(function () {
@@ -222,10 +222,19 @@ $(document).ready(function () {
         return $(this);
     };
 
-    /*
-     * Сортировка
-     */
-    $('.sortable-ul').sortable({
+    site_sortable('.sortable-ul');
+
+});
+
+/*
+ * Сортировка
+ */
+function site_sortable(elem, func) {
+    if (elem.length == 0) {
+        elem = '.sortable-ul';
+    }
+    $(elem).sortable({
+        handle: '.handle',
         update: function (event, ui) {
             var ajax_url = $(this).attr("ajax-url");
             var ajax_metod = $(this).attr("ajax-metod");
@@ -252,7 +261,9 @@ $(document).ready(function () {
                             alert('Ошибка сортировки!');
                         }
                     });
+            if(typeof func != 'undefined'){
+                func(this); 
+            }             
         }
     });
-
-});
+}

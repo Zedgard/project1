@@ -65,7 +65,7 @@ class products extends \project\extension {
      */
     public function getProductsArray($active, $searchStr, $id = 0) {
         if ($id > 0) {
-            $querySelect = "SELECT p.* FROM zay_product p "
+            $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
                     . "left join zay_product_wares pw on pw.product_id=p.id "
                     . "left join zay_wares w on w.id=pw.wares_id "
                     . "WHERE p.id='?' "
@@ -73,7 +73,7 @@ class products extends \project\extension {
             $data = $this->getSelectArray($querySelect, array($id), 0);
         } else {
             if (strlen($searchStr) > 0) {
-                $querySelect = "SELECT p.* FROM zay_product p "
+                $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
                         . "left join zay_product_wares pw on pw.product_id=p.id "
                         . "left join zay_wares w on w.id=pw.wares_id "
                         . "WHERE p.active='?' AND p.title LIKE '%?%' AND p.is_delete='0' "
@@ -81,14 +81,14 @@ class products extends \project\extension {
                 $data = $this->getSelectArray($querySelect, array($active, $searchStr), 0);
             } else {
                 if ($active == 9) {
-                    $querySelect = "SELECT p.* FROM zay_product p "
+                    $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
                             . "left join zay_product_wares pw on pw.product_id=p.id "
                             . "left join zay_wares w on w.id=pw.wares_id "
                             . "WHERE p.is_delete='1' "
                             . "order by p.lastdate desc";
                     $data = $this->getSelectArray($querySelect, array());
                 } else {
-                    $querySelect = "SELECT p.* FROM zay_product p "
+                    $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
                             . "left join zay_product_wares pw on pw.product_id=p.id "
                             . "left join zay_wares w on w.id=pw.wares_id "
                             . "WHERE p.active='?' and p.is_delete='0' order by id desc";
