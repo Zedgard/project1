@@ -132,6 +132,7 @@ class wares extends \project\extension {
                 return true;
             }
         } else {
+            $id = $this->queryNextId('zay_wares');
             $query = "INSERT INTO `zay_wares` "
                     . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, `club_freeze_day`, "
                     . "`ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "

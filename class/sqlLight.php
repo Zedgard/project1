@@ -23,7 +23,7 @@ class sqlLight {
     private $htmlspecialchars_true = 1;
     /* @var $mysqli new mysqli */
     private $mysqli;
-    private $MYSQLI_TYPE = MYSQLI_ASSOC ; // MYSQLI_BOTH MYSQLI_ASSOC
+    private $MYSQLI_TYPE = MYSQLI_ASSOC; // MYSQLI_BOTH MYSQLI_ASSOC
 
     public function __construct() {
         $this->conect();
@@ -199,8 +199,9 @@ class sqlLight {
     }
 
     public function queryNextId($table_name) {
-        $query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'zay_pay'";
-        return $this->queryList($query, array($table_name))[0]['AUTO_INCREMENT'];
+        global $cfg_db_name;
+        $query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE TABLE_SCHEMA='?' AND table_name = '?'";
+        return $this->queryList($query, array($cfg_db_name, $table_name))[0]['AUTO_INCREMENT'];
     }
 
     /**
