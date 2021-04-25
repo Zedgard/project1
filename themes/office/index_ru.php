@@ -33,14 +33,7 @@
         <!-- FAVICON -->
         <link href="/assets/img/favicon.png" rel="shortcut icon" />
 
-        <!--
-          HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-        -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <![endif]-->
+
         <script src="/assets/plugins/nprogress/nprogress.js?v=<?= $_SESSION['rand'] ?>"></script>
 
 
@@ -177,7 +170,7 @@
 
                 <div class="page-wrapper">
                     <!-- Header -->
-                    <header class="main-header " id="header">
+                    <header class="main-header" id="header">
                         <nav class="navbar navbar-static-top navbar-expand-lg">
                             <!-- Sidebar toggle button -->
                             <button id="sidebar-toggler" class="sidebar-toggle">
@@ -315,19 +308,13 @@
                                 </ul>
                             </div>
                         </nav>
-
-
                     </header>
 
 
                     <div class="content-wrapper">
                         <div class="content1" style="margin-top: -3px;">						 
-
                             <?= $_SESSION['page']['block_center'] ?>
-
                         </div>
-
-
                         <div class="right-sidebar-2" style="display: none;">
                             <div class="right-sidebar-container-2">
                                 <div class="slim-scroll-right-sidebar-2">
@@ -386,9 +373,7 @@
 
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
 
                     <footer class="footer mt-auto d-none">
@@ -429,6 +414,6 @@
         ?>
 
     </body>
-    <script src="//vjs.zencdn.net/7.10.2/video.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
     <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 </html>

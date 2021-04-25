@@ -147,7 +147,7 @@
                     //                                                    });
 
                                                             $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
-                                                                console.log("material_video_youtube mouseenter");
+                                                                        //console.log("material_video_youtube mouseenter");
                                                                 // waresVideoSee
                                                                 //var video_id = $(this).attr("video_id");
                                                                 sendPostLigth('/jpost.php?extension=wares',
@@ -206,6 +206,7 @@
                         foreach ($materials as $key => $value) {
                             if ($value['series_id'] == '0') {
                                 $video_i++;
+                                $union_elm_id = mt_rand(100000, 999999) . $value['id'];
                                 ?>
                                 <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
                                     <div class="row mt-2 mb-2">
@@ -268,6 +269,7 @@
                                         foreach ($materials as $key => $value) {
                                             if ($value['series_id'] == $series_value['id']) {
                                                 $video_i++;
+                                                $union_elm_id = mt_rand(100000, 999999) . $value['id'];
                                                 ?>
                                                 <div class="mb-3 marathons_material_list_block material_info series_<?= $value['series_id'] ?>" style="display: none;">
                                                     <div class="row mt-2 mb-2">

@@ -6,7 +6,7 @@
         <a href="/office/?katalog" class="office_link_back">
             <i class="fas fa-arrow-left"></i>
         </a>
-        <div><?= $wares_info['category_title'] ?></div>
+        <div class="ml-3" style="float: left;font-size: 1.4rem;padding: 0.8rem 0;color: <?= $wares_info['category_color'] ?>;"><?= $wares_info['category_title'] ?></div>
     </div>
 </div>
 <div class="container-fluid" style="background-color: #FFFFFF;">
@@ -14,14 +14,16 @@
         <div class="col-12">
             <div class="row webinar_head_bg pt-3 pb-3">
                 <div class="col-md-3 mb-3">
-                    <div class="webinar_head_title" style="display: block;">
-                        <?= $wares_info['title'] ?>
-                    </div>
                     <div class="webinar_head_logo2 mb-2 text-center">
                         <img src="<?= $wares_info['images'] ?>" class="webinar_head_logo_img mt-2"/>    
                     </div>
                 </div>
                 <div class="col-md-9 mb-3">
+                    <div class="mb-3">
+                        <div class="webinar_head_title" style="display: block;">
+                            <?= $wares_info['title'] ?>
+                        </div>
+                    </div>
                     <div class="webinar_head_file2 mb-2">
                         <div>
                             <?
@@ -39,8 +41,7 @@
                                         Calamansi.autoload();
                                         // document.getElementById('full-demo-player')
                                         //document.querySelector('#calamansi-player-<?= $wares['id'] ?>')
-                                        new Calamansi(
-                                                document.querySelector('#calamansi-player-<?= $wares['id'] ?>'), {
+                                        new Calamansi(document.querySelector('#calamansi-player-<?= $wares['id'] ?>'), {
                                             skin: '/assets/plugins/calamansi/skins/basic_download2',
                                             playlists: {
                                                 'Classics': [
@@ -92,18 +93,14 @@
                             $file_type = array_reverse(explode('.', $wares['url_file']))[0];
                             if ($file_type == 'mp3') {
                                 ?>
-
                                 <div class="player-block float-left">
-                                    <div id="calamansi-player-<?= $wares['id'] ?>">
+                                    <div id="calamansi-player-<?= $wares['id'] ?>2">
                                         Загрузка плеера... 
                                     </div>
                                 </div>
                                 <script>
                                     Calamansi.autoload();
-                                    // document.getElementById('full-demo-player')
-                                    //document.querySelector('#calamansi-player-<?= $wares['id'] ?>')
-                                    new Calamansi(
-                                            document.querySelector('#calamansi-player-<?= $wares['id'] ?>'), {
+                                    new Calamansi(document.querySelector('#calamansi-player-<?= $wares['id'] ?>2'), {
                                         skin: '/assets/plugins/calamansi/skins/basic_download2',
                                         playlists: {
                                             'Classics': [
@@ -141,108 +138,113 @@
                 /*
                  * Уроки без серии
                  */
-                foreach ($materials as $key => $value) {
-                    if ($value['series_id'] == '0') {
-                        $video_i++;
-                        $union_elm_id = mt_rand(100000, 999999) . $value['id'];
-                        ?>
-                        <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
-                            <div class="row mt-2 mb-2">
-                                <div class="col-12">
-                                    <?
-                                    if ($value['material_type'] == 'material_type_text') {
-                                        include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
-                                    }
-                                    if ($value['material_type'] == 'material_type_audio') {
-                                        include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
-                                    }
-                                    if ($value['material_type'] == 'material_type_file') {
-                                        include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
-                                    }
-                                    if ($value['material_type'] == 'material_type_video') {
-
-                                        include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
-                                        $video_id = $value['id'];
-                                        ?>
-                                        <script>
-                                            var see_video_id = <?= $video_id ?>;
-                                            $(document).ready(function () {
-                                                $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
-                                                    console.log("material_video_youtube mouseenter");
-                                                    sendPostLigth('/jpost.php?extension=wares',
-                                                            {"waresVideoSee": see_video_id},
-                                                            function (e) {
-                                                            });
-                                                });
-                                            });
-                                        </script>
+                if (count($materials) > 0) {
+                    foreach ($materials as $key => $value) {
+                        if ($value['series_id'] == '0') {
+                            $video_i++;
+                            $union_elm_id = mt_rand(100000, 999999) . $value['id'];
+                            ?>
+                            <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
+                                <div class="row mt-2 mb-2">
+                                    <div class="col-12">
                                         <?
-                                    }
-                                    ?>
+                                        if ($value['material_type'] == 'material_type_text') {
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
+                                        }
+                                        if ($value['material_type'] == 'material_type_audio') {
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
+                                        }
+                                        if ($value['material_type'] == 'material_type_file') {
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
+                                        }
+                                        if ($value['material_type'] == 'material_type_video') {
+
+                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                            $video_id = $value['id'];
+                                            ?>
+                                            <script>
+                                                var see_video_id = <?= $video_id ?>;
+                                                $(document).ready(function () {
+                                                    $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
+                                                        console.log("material_video_youtube mouseenter");
+                                                        sendPostLigth('/jpost.php?extension=wares',
+                                                                {"waresVideoSee": see_video_id},
+                                                                function (e) {
+                                                                });
+                                                    });
+                                                });
+                                            </script>
+                                            <?
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <?
+                            <?
+                        }
                     }
                 }
 
                 //print_r($series);
-                foreach ($series as $series_value) {
-                    ?>
-                    <hr/>
-                    <div class="h3"><?= $series_value['title'] ?></div>
-                    <?
-                    if ($series_value['series_enable'] == 1) {
-                        foreach ($materials as $key => $value) {
-                            if ($value['series_id'] == $series_value['id']) {
-                                $video_i++;
-                                $union_elm_id = mt_rand(100000, 999999) . $value['id'];
-                                ?>
-                                <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
-                                    <div class="row mt-2 mb-2">
-                                        <div class="col-12">
-                                            <?
-                                            if ($value['material_type'] == 'material_type_text') {
-                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
-                                            }
-                                            if ($value['material_type'] == 'material_type_audio') {
-                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
-                                            }
-                                            if ($value['material_type'] == 'material_type_file') {
-                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
-                                            }
-                                            if ($value['material_type'] == 'material_type_video') {
-
-                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
-                                                $video_id = $value['id'];
-                                                ?>
-                                                <script>
-                                                    var see_video_id = <?= $video_id ?>;
-                                                    $(document).ready(function () {
-                                                        $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
-                                                            console.log("material_video_youtube mouseenter");
-                                                            sendPostLigth('/jpost.php?extension=wares',
-                                                                    {"waresVideoSee": see_video_id},
-                                                                    function (e) {
-                                                                    });
-                                                        });
-                                                    });
-                                                </script>
+                if (count($series) > 0) {
+                    foreach ($series as $series_value) {
+                        ?>
+                        <hr/>
+                        <div class="h3"><?= $series_value['title'] ?></div>
+                        <?
+                        if ($series_value['series_enable'] == 1) {
+                            foreach ($materials as $key => $value) {
+                                if ($value['series_id'] == $series_value['id']) {
+                                    $video_i++;
+                                    $union_elm_id = mt_rand(100000, 999999) . $value['id'];
+                                    ?>
+                                    <div class="material_info series_<?= $value['series_id'] ?>" style="display: block;">
+                                        <div class="row mt-2 mb-2">
+                                            <div class="col-12">
                                                 <?
-                                            }
-                                            ?>
+                                                if ($value['material_type'] == 'material_type_text') {
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_text.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_audio') {
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_audio.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_file') {
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
+                                                }
+                                                if ($value['material_type'] == 'material_type_video') {
+
+                                                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                                    $video_id = $value['id'];
+                                                    ?>
+                                                    <script>
+                                                        var see_video_id = <?= $video_id ?>;
+                                                        $(document).ready(function () {
+                                                            $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
+                                                                console.log("material_video_youtube mouseenter");
+                                                                sendPostLigth('/jpost.php?extension=wares',
+                                                                        {"waresVideoSee": see_video_id},
+                                                                        function (e) {
+                                                                        });
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <?
+                                                }
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <?
+                                    <?
+                                }
                             }
                         }
+                        ?>
+
+                        <?
                     }
-                    ?>
-                </div>
-                <?
-            }
-            ?>
+                }
+                ?>
+            </div>
         </div>
     </div>
 
@@ -251,9 +253,9 @@
     var video_id = '<?= $video_id ?>';
     $(document).ready(function () {
 
-        var player = new Calamansi(document.querySelector('#player'), {
-            skin: 'path/to/skins/skin-folder'
-        });
+//        var player = new Calamansi(document.querySelector('#player'), {
+//            skin: 'path/to/skins/skin-folder'
+//        });
         $(".btn_video_see").click(function () {
             video_id = $(this).attr("video_id");
         });

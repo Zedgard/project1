@@ -91,7 +91,7 @@ function init_btn_consultation_pay() {
 
                 sendPostLigth('/jpost.php?extension=auth', {
                     "check_and_register_user": 1,
-                    "consultation_user_fio": user_fio,
+                    "consultation_user_fio": user_fio, 
                     "consultation_user_phone": user_phone,
                     "consultation_user_email": user_email,
                     "consultation_user_pass": user_pass
