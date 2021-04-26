@@ -532,18 +532,19 @@ function initCartProductAdd() {
             'gtm-ee-event-non-interaction': 'False',
         });
 
-
         sendPostLigth('/jpost.php?extension=cart', {"cart_product_add": 1, "cart_product_id": cart_product_id}, function (e) {
-            //$(".cart_product_add").html("");
-            //initCartCount();
-            open_cart_modal(cart_product_title, cart_product_img);
-            initCartArray();
-            if (go_url.length > 0) {
-                window.location.href = go_url;
+            if (e['success'] == 1) {
+                open_cart_modal(cart_product_title, cart_product_img);
+                initCartArray();
+                if (go_url.length > 0) {
+                    window.location.href = go_url;
+                }
+            } else {
+                alert(e['errors'].toString());
             }
+
         });
-    }
-    );
+    });
 }
 
 /* 

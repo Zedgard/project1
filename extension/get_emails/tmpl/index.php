@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row pt-2 pb-2">
             <div class="col-lg-6">
-                <span class="get_emails_text1">ПОДПИШИСЬ НА РАССЫЛКУ</span>
+                <span class="get_emails_text1 mb-1">ПОДПИШИСЬ НА РАССЫЛКУ</span>
                 <span class="get_emails_text2">и раньше других узнавай о выгодных предложениях</span>
             </div>
             <div class="col-lg-6" style="margin-top: 0.5rem;margin-bottom: 0.4rem;">

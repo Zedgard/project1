@@ -35,10 +35,15 @@ if (isset($_POST['cart_product_add'])) {
             $_SESSION['cart']['itms'] = $new_arr;
         }
         // Зарегистрируем товары
-        $obj = $pr_products->getProductElem($product_id);
-        //print_r($obj);
-        $_SESSION['cart']['itms'][] = $obj;
-        //init_prices();
+        $data = $pr_products->getProductElem($product_id);
+        if (count($data) > 0) {
+            $obj = $pr_products->getProductElem($product_id);
+            $_SESSION['cart']['itms'][] = $obj;
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            $_SESSION['errors'][] = 'Данные товар больше не продается!';
+            $result = array('success' => 0, 'success_text' => '');
+        }
     }
 }
 

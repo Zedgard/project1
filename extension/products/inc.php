@@ -131,28 +131,33 @@ class products extends \project\extension {
      * @return array
      */
     public function getProductElem($id) {
+        $data = array();
         if ($id > 0) {
             $querySelect = "SELECT p.*,"
                     . "(SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p.`id`) as category_ids, "
                     . "(SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p.`id`) as topic_ids "
-                    . "FROM `zay_product` p WHERE id='?' ";
-            $obj_product = $this->getSelectArray($querySelect, array($id))[0];
-            $obj_product['products_wares'] = $this->getProducts_wares($obj_product['id']);
-            $obj_product['products_category'] = $this->getProducts_category($obj_product['id']);
-            $obj_product['products_topic'] = $this->getProducts_topic($obj_product['id']);
-            $obj_product['products_theme'] = $this->getProducts_theme($obj_product['id']);
+                    . "FROM `zay_product` p WHERE p.id='?' and p.active='1' and p.is_delete='0'"
+                    . "";
+            $obj_product = $this->getSelectArray($querySelect, array($id));
+            if (count($obj_product) > 0) {
+                $obj_product[0]['products_wares'] = $this->getProducts_wares($obj_product[0]['id']);
+                $obj_product[0]['products_category'] = $this->getProducts_category($obj_product[0]['id']);
+                $obj_product[0]['products_topic'] = $this->getProducts_topic($obj_product[0]['id']);
+                $obj_product[0]['products_theme'] = $this->getProducts_theme($obj_product[0]['id']);
 
-            if (count($obj_product['products_category']) > 0) {
-                $category = new category();
-                foreach ($obj_product['products_category'] as $key => $value) {
-                    $obj_product['products_category_list'][] = $category->getCategoryElem($value)[0]['title'];
+                if (count($obj_product[0]['products_category']) > 0) {
+                    $category = new category();
+                    foreach ($obj_product[0]['products_category'] as $key => $value) {
+                        $obj_product[0]['products_category_list'][] = $category->getCategoryElem($value)[0]['title'];
+                    }
                 }
-            }
 
-            $obj_product['products_wares_info'] = $this->getProducts_waresInfo($obj_product['id']);
-            return $obj_product;
+                $obj_product[0]['products_wares_info'] = $this->getProducts_waresInfo($obj_product[0]['id']);
+                $data = $obj_product[0];
+            }
+            return $data;
         }
-        return array();
+        return $data;
     }
 
     /**
