@@ -36,32 +36,6 @@
                         <input type="text" class="form-control wares_col" id="wares_col" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Количество товара в наличии..." required>
                     </div>
 
-                    <div style="padding: 1%;background-color: #f7f7f7;">
-                        <h3>Закрытый клуб</h3>
-                        <div class="form-group">
-                            <label for="club_month_period">Колличество месяцев для доступа к закрытому клубу</label>
-                            <select id="club_month_period" name="club_month_period" class="form-control club_month_period">
-                                <option value="0">Не предосавлено</option>
-                                <option value="1">1 месяц</option>
-                                <option value="2">2 месяц</option>
-                                <option value="3">3 месяц</option>
-                                <option value="4">4 месяц</option>
-                                <option value="5">5 месяц</option>
-                                <option value="6">6 месяц</option>
-                                <option value="7">7 месяц</option>
-                                <option value="8">8 месяц</option>
-                                <option value="9">9 месяц</option>
-                                <option value="10">10 месяц</option>
-                                <option value="11">11 месяц</option>
-                                <option value="12">12 месяц</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="config_code">Количество дней заморозки</label>
-                            <input type="text" class="form-control club_freeze_day" id="wares_col" value="0" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Количество дней заморозки..." required>
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <label for="wares_descr">Подробное описание</label>
                         <textarea name="wares_descr" id="wares_descr" class="form-control wares_descr" placeholder="Текст описания" style="width: 100%;height: 100px;"></textarea>
@@ -90,7 +64,27 @@
                     importELFinder(1);
                     ?>
 
-
+                    <div class="mb-3" style="padding: 1%;background-color: #f7f7f7;">
+                        <h3>Закрытый клуб</h3>
+                        <div class="form-group">
+                            <label for="club_month_period">Колличество месяцев для доступа к закрытому клубу</label>
+                            <select id="club_month_period" name="club_month_period" class="form-control club_month_period">
+                                <option value="0">Не предосавлено</option>
+                                <option value="1">1 месяц</option>
+                                <option value="2">2 месяц</option>
+                                <option value="3">3 месяц</option>
+                                <option value="4">4 месяц</option>
+                                <option value="5">5 месяц</option>
+                                <option value="6">6 месяц</option>
+                                <option value="7">7 месяц</option>
+                                <option value="8">8 месяц</option>
+                                <option value="9">9 месяц</option>
+                                <option value="10">10 месяц</option>
+                                <option value="11">11 месяц</option>
+                                <option value="12">12 месяц</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <input type="hidden" name="wares_id" class="wares_id" id="wares_id" value="0" />
                     <!--<button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Закрыть</button>-->
@@ -133,7 +127,6 @@ importWisiwyng('wares_descr');
             var wares_articul = $(".wares_articul").val();
             var wares_col = $(".wares_col").val();
             var club_month_period = $(".club_month_period").val();
-            var club_freeze_day = $(".club_freeze_day").val();
             var wares_descr = tinymce.get('wares_descr').getContent();
             var wares_url_file = $(".wares_url_file").val();
             var categorys = $(".wares_categorys").val();
@@ -157,7 +150,6 @@ importWisiwyng('wares_descr');
                         "wares_articul": wares_articul,
                         "wares_col": wares_col,
                         "club_month_period": club_month_period,
-                        "club_freeze_day": club_freeze_day,
                         "wares_descr": wares_descr,
                         "wares_url_file": wares_url_file,
                         "wares_active": wares_active,
@@ -192,7 +184,6 @@ importWisiwyng('wares_descr');
                             $(".wares_url_file").val(e['data']['url_file']);
                             //console.log("club_month_period: " + e['data']['club_month_period']);
                             $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
-                            $(".club_freeze_day").val(e['data']['club_freeze_day']);
 
                             var interval = setInterval(function () {
                                 if (tinymce_init == 1) {
@@ -249,7 +240,6 @@ importWisiwyng('wares_descr');
                                 tinymce.get('wares_descr').setContent(e['data']['descr']);
                                 $(".wares_col").val(e['data']['col']);
                                 $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
-                                $(".club_freeze_day").val(e['data']['club_freeze_day']);
                                 
                                 if (e['data']['active'] > 0) {
                                     if (!$(".wares_active").is(':checked')) {

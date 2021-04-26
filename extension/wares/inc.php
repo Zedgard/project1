@@ -115,18 +115,18 @@ class wares extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $club_month_period, $club_freeze_day, $ex_code, $articul, $wares_images, $active) {
+    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $club_month_period, $ex_code, $articul, $wares_images, $active) {
         if (strlen($col) == 0) {
             $col = 0;
         }
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
-                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', `club_freeze_day`='?', "
+                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', "
                     . "`ex_code`='?', `articul`='?', `images`='?', `active`='?', "
                     . "is_delete='0', "
                     . "`lastdate`=NOW() "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, $club_freeze_day,
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period,
                         $ex_code, $articul, $wares_images, $active, $id), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
@@ -134,11 +134,11 @@ class wares extends \project\extension {
         } else {
             $id = $this->queryNextId('zay_wares');
             $query = "INSERT INTO `zay_wares` "
-                    . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, `club_freeze_day`, "
+                    . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, "
                     . "`ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, $club_freeze_day,
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, 
                         $ex_code, $articul, $wares_images, $active), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
