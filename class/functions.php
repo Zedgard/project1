@@ -539,10 +539,10 @@ if (!function_exists('importELFinder')) {
         <script src="/system/elfinder/js/elfinder.min.js?v=<?= rand() ?>"></script>
         <!-- Extra contents editors (OPTIONAL) -->
         <script src="/system/elfinder/js/extras/editors.default.js?v=<?= rand() ?>"></script>
-        <script>
-            function get_html_images_block(v, i) {
+        <script> 
+            function get_html_images_block(v, i) { 
                 let html = '<div class="image_elm image_id_' + i + '">\n\
-                            <img src="' + v + '" class="image_elm_img" style="width: 50%;margin: 0 auto;display: block;"/>\n\
+                            <img src="' + v + '" class="image_elm_img" style="width: 50%;max-width: 200px;margin: 0 auto;display: block;"/>\n\
                             <div style="clear: both;height: 20px;width: 100%;">&nbsp;</div>\n\
                             <div>\n\
                                 <input type="text" name="image_obj_value" value="' + v + '" class="form-control image_obj_value" style="width: 80%;float: left;">\n\

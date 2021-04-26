@@ -27,6 +27,7 @@
                                 include 'admin_edit.php';
                                 importWisiwyng('products_desc_minimal', 150);
                                 importWisiwyng('products_desc', 300);
+                                importWisiwyng('product_content', 150);
                                 ?>
                             <? endif; ?>
                             <select name="visible" class="form-control w-25 float-left ml-2 visible_products">
@@ -336,6 +337,7 @@
                                 tinymce.get('products_desc').setContent(e['data']['desc']);
 
                                 $(".form_save_products").find(".products_sold").val(e['data']['sold']);
+                                $(".form_save_products").find(".product_content").val(e['data']['product_content']);
 
                                 // active
                                 if (e['data']['active'] > 0) {
@@ -440,6 +442,7 @@
             var products_desc = tinymce.get('products_desc').getContent();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
             var products_sold = $(".form_save_products").find(".products_sold").val();
+            var product_content = tinymce.get('product_content').getContent(); 
             // checked
             var products_active = '0';
             if ($(".form_save_products").find(".products_active").prop("checked")) {
@@ -473,6 +476,7 @@
                         "products_price": products_price,
                         "products_price_promo": products_price_promo,
                         "product_new": product_new,
+                        "product_content": product_content,
                         "images_str": images_str.toString()},
                     function (e) {
                         if (e['success'] == '1') {
