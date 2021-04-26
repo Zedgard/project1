@@ -37,8 +37,7 @@ if (isset($_POST['cart_product_add'])) {
         // Зарегистрируем товары
         $data = $pr_products->getProductElem($product_id);
         if (count($data) > 0) {
-            $obj = $pr_products->getProductElem($product_id);
-            $_SESSION['cart']['itms'][] = $obj;
+            $_SESSION['cart']['itms'][] = $data;
             $result = array('success' => 1, 'success_text' => '');
         } else {
             $_SESSION['errors'][] = 'Данные товар больше не продается!';

@@ -102,13 +102,17 @@
                     </span>
                     <div class="box_shadow product_wares_show" opacity="0">
                         <?
-                        if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
-                            foreach ($productData['products_wares_info'] as $value) {
-                                ?>
-                                <div class="mb-2 ml-3">
-                                    <i class="psmark"></i><?= $value['title'] ?>
-                                </div>
-                                <?
+                        if (strlen($productData['product_content']) > 0) {
+                            echo $productData['product_content'];
+                        } else {
+                            if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
+                                foreach ($productData['products_wares_info'] as $value) {
+                                    ?>
+                                    <div class="mb-2 ml-3">
+                                        <i class="psmark"></i><?= $value['title'] ?>
+                                    </div>
+                                    <?
+                                }
                             }
                         }
                         ?>

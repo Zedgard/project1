@@ -128,16 +128,23 @@ class products extends \project\extension {
     /**
      * Данные по продукту
      * @param type $id
-     * @return array
+     * @param type $all Даже удаленные и неактивные
+     * @return type
      */
-    public function getProductElem($id) {
+    public function getProductElem($id, $all = 0) {
         $data = array();
         if ($id > 0) {
-            $querySelect = "SELECT p.*,"
-                    . "(SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p.`id`) as category_ids, "
-                    . "(SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p.`id`) as topic_ids "
-                    . "FROM `zay_product` p WHERE p.id='?' and p.active='1' and p.is_delete='0'"
-                    . "";
+            if ($all == 1) {
+                $querySelect = "SELECT p.*,"
+                        . "(SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p.`id`) as category_ids, "
+                        . "(SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p.`id`) as topic_ids "
+                        . "FROM `zay_product` p WHERE p.id='?' ";
+            } else {
+                $querySelect = "SELECT p.*,"
+                        . "(SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p.`id`) as category_ids, "
+                        . "(SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p.`id`) as topic_ids "
+                        . "FROM `zay_product` p WHERE p.id='?' and p.active='1' and p.is_delete='0'";
+            }
             $obj_product = $this->getSelectArray($querySelect, array($id));
             if (count($obj_product) > 0) {
                 $obj_product[0]['products_wares'] = $this->getProducts_wares($obj_product[0]['id']);
@@ -181,13 +188,13 @@ class products extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active = 1) {
+    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active = 1) {
         if ($id > 0) {
             $query = "UPDATE `zay_product` "
-                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', "
+                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', `product_content`='?', "
                     . "`images_str`='?', `product_new`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active, $id), 0)) {
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active, $id), 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -196,9 +203,9 @@ class products extends \project\extension {
             }
         } else {
 
-            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `desc`, `sold`, `images_str`, `product_new`, `active`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active))) {
+            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `desc`, `sold`, `product_content`, `images_str`, `product_new`, `active`, `lastdate`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active))) {
                 $querySelect = "SELECT MAX(p.id) as id FROM `zay_product` p ";
                 $id = $this->getSelectArray($querySelect)[0]['id'];
                 $this->insertProductWares($id, $this->products_wares);

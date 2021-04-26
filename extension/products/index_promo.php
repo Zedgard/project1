@@ -32,7 +32,5 @@ $querySelect = "SELECT ip.id as ip_id, ip.position as position, p.* "
 $productsFilterArray = $c_product->getSelectArray($querySelect, array());
 $productsFilterCount = count($productsFilterArray);
 
-
-
 include 'tmpl/index_promo.php';
 include 'tmpl/go_cart_modal.php';
