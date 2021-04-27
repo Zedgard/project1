@@ -12,6 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 
 class extension {
 
+    public $db_prefix;
     private $MysqliAssos = 0;
 
     public function __construct() {
@@ -27,6 +28,7 @@ class extension {
             $_SESSION['extension_init'] = 0;
         if ($_SESSION['extension_init'] == 0) {
             $sqlLight = new \project\sqlLight();
+            $this->db_prefix = $sqlLight->db_prefix;
             include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
             // Получим список доступных расширений

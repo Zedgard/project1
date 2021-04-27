@@ -32,7 +32,7 @@ class sqlLight {
     public function conect() {
 
         global $lang;
-        global $cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name;
+        global $cfg_db_prefix, $cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name;
         //include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
         $this->db_prefix = $cfg_db_prefix;
 

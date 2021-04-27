@@ -327,9 +327,9 @@ if (!function_exists('importWisiwyng')) {
                 },
                 setup: function (ed) {
                     ed.on('keyup', function (e) {
-        //                        console.log('the event object ', e);
-        //                        console.log('the editor object ', ed);
-        //                        console.log('the content ', ed.getContent());
+                        //                        console.log('the event object ', e);
+                        //                        console.log('the editor object ', ed);
+                        //                        console.log('the content ', ed.getContent());
                     });
                 }
             });
@@ -539,8 +539,8 @@ if (!function_exists('importELFinder')) {
         <script src="/system/elfinder/js/elfinder.min.js?v=<?= rand() ?>"></script>
         <!-- Extra contents editors (OPTIONAL) -->
         <script src="/system/elfinder/js/extras/editors.default.js?v=<?= rand() ?>"></script>
-        <script> 
-            function get_html_images_block(v, i) { 
+        <script>
+            function get_html_images_block(v, i) {
                 let html = '<div class="image_elm image_id_' + i + '">\n\
                             <img src="' + v + '" class="image_elm_img" style="width: 50%;max-width: 200px;margin: 0 auto;display: block;"/>\n\
                             <div style="clear: both;height: 20px;width: 100%;">&nbsp;</div>\n\
@@ -724,6 +724,7 @@ if (!function_exists('initELFinderSelectFile')) {
         <!-- Extra contents editors (OPTIONAL) -->
         <script src="/system/elfinder/js/extras/editors.default.js?v=<?= rand() ?>"></script>
         <script>
+            var focus_element_file_manager = '';
             $(document).ready(function () {
                 $(".elfinder_model").draggable();
                 //$(".block_images").append('<br/><div class="btn btn-primary"><i class="mdi mdi-image-plus" style="font-size: 30px;"></i></div>');
@@ -737,6 +738,7 @@ if (!function_exists('initELFinderSelectFile')) {
                 init_elfinder();
                 $('.close_elfinder_modal').click(function () {
                     $('#form_elfinder_modal').hide(200);
+                    $(focus_element_file_manager).focus();
                 });
 
                 var col = $(".image_elm").length;
@@ -749,6 +751,7 @@ if (!function_exists('initELFinderSelectFile')) {
             function init_elfinder() {
                 $(".<?= $elm_class ?>").unbind('click').click(function () {
                     obj = this;
+                    focus_element_file_manager = this;
                     $('#form_elfinder_modal').show(200);
                     $('#elfinder').elfinder(
                             // 1st Arg - options

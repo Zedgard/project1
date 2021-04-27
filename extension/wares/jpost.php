@@ -193,11 +193,13 @@ if (isset($_POST['init_office_list_categorys_col'])) {
 if (isset($_POST['ajax_metod'])) {
     // Сортировка материалов
     if ($_POST['ajax_metod'] == 'material_update_positions') {
+        $db_table = trim($_POST['db_table']);
+        $db_row = trim($_POST['db_row']);
         $result = array('success' => 1, 'success_text' => '');
         if (count($_POST['ids']) > 0) {
             $i = 0;
             foreach ($_POST['ids'] as $value) {
-                $pr_wares->material_position_update($value, $i);
+                $pr_wares->material_position_update($db_table, $db_row, $value, $i);
                 $i++;
             }
         }
