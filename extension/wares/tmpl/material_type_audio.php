@@ -15,8 +15,16 @@
                 }
             ]
         },
+
         defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png'
-    });   
+    });
+    player_<?= $union_elm_id ?>.on('initialized', function (player) {
+        if ('<?= $value['audio_file_download_true'] ?>' === '1') {
+            $("#calamansi-player-<?= $union_elm_id ?>").find(".clmns--track-links").hide();
+        } else {
+            $("#calamansi-player-<?= $union_elm_id ?>").find(".clmns--track-links").show();
+        }
+    });
 </script>
 
 <div style="clear: both;height: 1rem;"></div>

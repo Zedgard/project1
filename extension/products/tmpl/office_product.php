@@ -166,7 +166,7 @@
                                                 var see_video_id = <?= $video_id ?>;
                                                 $(document).ready(function () {
                                                     $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
-                                                        console.log("material_video_youtube mouseenter");
+                                                        //console.log("material_video_youtube mouseenter");
                                                         sendPostLigth('/jpost.php?extension=wares',
                                                                 {"waresVideoSee": see_video_id},
                                                                 function (e) {
@@ -220,7 +220,7 @@
                                                         var see_video_id = <?= $video_id ?>;
                                                         $(document).ready(function () {
                                                             $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
-                                                                console.log("material_video_youtube mouseenter");
+                                                                //console.log("material_video_youtube mouseenter");
                                                                 sendPostLigth('/jpost.php?extension=wares',
                                                                         {"waresVideoSee": see_video_id},
                                                                         function (e) {

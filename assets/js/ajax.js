@@ -129,7 +129,11 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
  * @param {type} func
  * @returns {ajaxL#5.$.fn@call;each}
  */
-function sendPostLigth(url, data, func) {
+function sendPostLigth(url, data, func, async) {
+    async = true;
+    if (typeof async != 'undefined') {
+        async = false;
+    }
     // реализация работы метода с отдельным элементом страницы
     //var obj = this;
     $('.form_result').html("");
@@ -137,6 +141,7 @@ function sendPostLigth(url, data, func) {
     $.ajax({
         url: url,
         type: 'POST',
+        async: async,
         dataType: 'json',
         data: data,
         success: function (result) {
@@ -261,9 +266,9 @@ function site_sortable(elem, func) {
                             alert('Ошибка сортировки!');
                         }
                     });
-            if(typeof func != 'undefined'){
-                func(this); 
-            }             
+            if (typeof func != 'undefined') {
+                func(this);
+            }
         }
     });
 }

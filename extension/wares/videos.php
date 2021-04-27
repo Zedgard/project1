@@ -11,7 +11,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
 include_once 'inc.php';
 
@@ -119,4 +118,6 @@ if ($user->isEditor()) {
         include __DIR__ . '/tmpl/edit_videos.php';
         initELFinderSelectFile('material_file');
     }
+} else {
+    goBack('/auth/', 3);
 }
