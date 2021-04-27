@@ -129,11 +129,12 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
  * @param {type} func
  * @returns {ajaxL#5.$.fn@call;each}
  */
-function sendPostLigth(url, data, func, async) {
-    async = true;
-    if (typeof async != 'undefined') {
+function sendPostLigth(url, data, func, val_async) {
+    var async = true;
+    if (typeof val_async !== 'undefined' && val_async == '1') {
         async = false;
     }
+    //console.log('val_async: ' + val_async + 'async: ' + async);
     // реализация работы метода с отдельным элементом страницы
     //var obj = this;
     $('.form_result').html("");

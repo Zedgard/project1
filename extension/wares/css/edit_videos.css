@@ -64,6 +64,9 @@
     border: 1px solid #dee2e6;
     display: none;
 }
+.material_info{
+    min-height: 40px;
+}
 .material_info:hover .material_info_none{
     /* display: block; */
     z-index: 99;

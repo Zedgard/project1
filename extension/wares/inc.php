@@ -138,7 +138,7 @@ class wares extends \project\extension {
                     . "`ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
                     . "VALUES ('?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, 
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period,
                         $ex_code, $articul, $wares_images, $active), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
@@ -779,9 +779,9 @@ class wares extends \project\extension {
      * @param type $position_val
      * @return type
      */
-    public function material_position_update($material_id, $position_val) {
-        $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
-        return $this->query($query, array($position_val, $material_id), 0);
+    public function material_position_update($db_table, $db_row, $material_id, $position_val) {
+        $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'";
+        return $this->query($query, array($this->db_prefix . $db_table, $db_row, $position_val, $material_id), 0);
     }
 
 }
