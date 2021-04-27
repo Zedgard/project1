@@ -18,7 +18,7 @@ if ($user->isClient() || $user->isEditor()) {
     // для клиентов
 
     if (isset($_GET['wares_id'])) {
-        
+
         $wares = $pr_wares->getClientMarathonsProducts($_GET['wares_id']);
         $series = $pr_wares->getWaresVideoSeries($wares['id']);
         $materials = $pr_wares->list_materials($wares['id']);
@@ -33,9 +33,18 @@ if ($user->isClient() || $user->isEditor()) {
         //$r = $chat->chat_get_messages();
         //print_r($wares_info);
 
-        
+        foreach ($series as $series_value) {
+            if ($series_value['series_enable'] == 1) {
+                $bonus_btn_style = 'display:none;';
+                if (mb_strtoupper($series_value['title']) == 'БОНУС') {
+                    $bonus_btn_style = 'display:block;';
+                }
+            }
+        }
+
+
         include 'tmpl/office_product.php';
     } else {
         include 'tmpl/office.php';
     }
-}
+}    

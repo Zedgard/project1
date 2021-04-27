@@ -15,7 +15,7 @@
                         <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default marathons_material_series_active" series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы марафона</a>
                     </div>
                     <div class="col-6">
-                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus">Бонус <i class="fas fa-lock"></i></a>
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus" style="<?= $bonus_btn_style ?>">Бонус <i class="fas fa-lock"></i></a>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -23,10 +23,14 @@
                         <?
                         foreach ($series as $series_value) {
                             if ($series_value['series_enable'] == 1) {
+                                if (mb_strtoupper($series_value['title']) == 'БОНУС') {
+                                    $bonus_class = 'marathons_material_bonus_block';
+                                    $bonus_style = 'display:none;';
+                                }
                                 ?>
                                 <div class="row mb-1">
                                     <div class="col-11" style="margin: 0 auto;">
-                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-plus"></i></a>
+                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn <?= $bonus_class ?>" style="<?= $bonus_style ?>" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?> <?= $g ?><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                                 <?
@@ -226,7 +230,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-12">
-                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus">Бонус <i class="fas fa-lock"></i></a>
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus" style="<?= $bonus_btn_style ?>">Бонус <i class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
@@ -235,10 +239,14 @@
                         <?
                         foreach ($series as $series_value) {
                             if ($series_value['series_enable'] == 1) {
+                                if (mb_strtoupper($series_value['title']) == 'БОНУС') {
+                                    $bonus_class = 'marathons_material_bonus_block';
+                                    $bonus_style = 'display:none;';
+                                }
                                 ?>
                                 <div class="row mb-1">
                                     <div class="col-12" style="margin: 0 auto;">
-                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-plus"></i></a>
+                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn <?= $bonus_class ?>" style="<?= $bonus_style ?>" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                                 <?
@@ -349,6 +357,10 @@
             $(o).find(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
             $(".series_" + series_id).show(100);
         }
+    });
+
+    $(".marathons_material_bonus").unbind('click').click(function () {
+        $(".marathons_material_bonus_block").click();
     });
 
 </script>

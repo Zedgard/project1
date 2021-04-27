@@ -3,7 +3,7 @@
     <input type="text" 
            name="video_material_<?= $value['video_youtube'] ?>" 
            value="<?= $value['video_youtube'] ?>" 
-           id="video_material_<?= $value['id'] ?>" 
+           id="<?= $union_elm_id ?>" 
            class="form-control form-control-material h-5" 
            row_db="video_youtube" obj_id="<?= $value['id'] ?>" 
            init_youtube_src="material_video_youtube"

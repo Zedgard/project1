@@ -12,7 +12,7 @@ $(document).ready(function () {
             var val = $(this).val();
             
             var asinc = '0';
-            //console.log('elm_type: ' + elm_type);
+            console.log('elm_type: ' + elm_type);
             if (elm_type == 'textarea') {
                 val = $(this).html();
             }
@@ -58,11 +58,12 @@ $(document).ready(function () {
 
             // Обработка видео    
             if (!!$(this).attr('init_youtube_src')) {
+                console.log('init_youtube_src');
                 $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_youtube_src')).attr("data-setup", '{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "' + val + '"}] }');
                 var options = {};
-                var player = videojs('video_' + obj_id, options, function onPlayerReady() {
+                var player = videojs('video_' + id, options, function onPlayerReady() {
                     // In this context, `this` is the player that was created by Video.js.
-                    this.play();
+                    //this.play();
                     // How about an event listener?
                     this.on('ended', function () {
                     });
