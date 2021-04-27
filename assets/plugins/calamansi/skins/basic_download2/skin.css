@@ -78,6 +78,7 @@
 .calamansi-skin--basic .clmns--volume {
     float: right;
     margin-top: 20px;
+    margin-right: 26px;
     position: relative;
 }
 .calamansi-skin--basic .clmns--volume .clmns--volume-btn {
@@ -127,9 +128,9 @@
 
 .calamansi-skin--basic .clmns--track-links{
     margin-top: 20px;
-    margin-right: 26px;
+    margin-right: 19px;
     float: right;
-    margin-left: 20px;
+    margin-left: 0px;
     color: #000000;
     font-size: 1rem;
     text-align: center;

@@ -25,5 +25,5 @@ if ($user->isEditor()) {
     ?>
     <div>Нет доступа для просмотра данной страницы</div>
     <?
-    goBack('/admin/', 3);
+    goBack('/auth/', 3);
 }
