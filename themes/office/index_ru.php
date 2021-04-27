@@ -64,6 +64,8 @@
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/daterangepicker2.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
         <script>
             jQuery(document).ready(function () {
                 if (!!$("input[name='dateRange']")[0]) {
@@ -414,6 +416,4 @@
         ?>
 
     </body>
-    <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 </html>

@@ -76,29 +76,15 @@
                                             $video_id = $value['id'];
                                             ?>
                                             <script>
-                                                var see_video_id = <?= $video_id ?>;
+                                                var see_video_id_<?= $video_id ?> = '<?= $video_id ?>';
                                                 $(document).ready(function () {
-
-
-            //                                                    $(".content").removeClass("content");
-            //                                                    $(".btn_video_see").click(function () {
-            //                                                        video_id = $(this).attr("video_id");
-            //                                                    });
-
                                                     $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
-                                                        console.log("material_video_youtube mouseenter");
-                                                        // waresVideoSee
-                                                        //var video_id = $(this).attr("video_id");
+                                                        //console.log("material_video_youtube mouseenter");
                                                         sendPostLigth('/jpost.php?extension=wares',
-                                                                {"waresVideoSee": see_video_id},
+                                                                {"waresVideoSee": see_video_id_<?= $video_id ?>},
                                                                 function (e) {
                                                                 });
                                                     });
-
-                                                    // После загрузки сворачиваем меню 
-            //                                                    setTimeout(function () {
-            //                                                        $("#sidebar-toggler").click();
-            //                                                    }, 2000);
                                                 });
                                             </script>
                                             <?
@@ -110,7 +96,9 @@
                             <?
                         }
                     }
-
+                    /*
+                     * Уроки в Серии
+                     */
                     foreach ($series as $series_value) {
                         if ($series_value['series_enable'] == 1) {
                             foreach ($materials as $key => $value) {
@@ -137,29 +125,15 @@
                                                     //echo "video_id: {$video_id}<br/>\n";
                                                     ?>
                                                     <script>
-                                                        var see_video_id = <?= $video_id ?>;
+                                                        var see_video_id_<?= $video_id ?> = '<?= $video_id ?>';
                                                         $(document).ready(function () {
-
-
-                    //                                                    $(".content").removeClass("content");
-                    //                                                    $(".btn_video_see").click(function () {
-                    //                                                        video_id = $(this).attr("video_id");
-                    //                                                    });
-
                                                             $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
-                                                                        //console.log("material_video_youtube mouseenter");
-                                                                // waresVideoSee
-                                                                //var video_id = $(this).attr("video_id");
+                                                                //console.log("material_video_youtube mouseenter");
                                                                 sendPostLigth('/jpost.php?extension=wares',
-                                                                        {"waresVideoSee": see_video_id},
+                                                                        {"waresVideoSee": see_video_id_<?= $video_id ?>},
                                                                         function (e) {
                                                                         });
                                                             });
-
-                                                            // После загрузки сворачиваем меню 
-                    //                                                    setTimeout(function () {
-                    //                                                        $("#sidebar-toggler").click();
-                    //                                                    }, 2000);
                                                         });
                                                     </script>
                                                     <?
@@ -223,6 +197,22 @@
                                             }
                                             if ($value['material_type'] == 'material_type_video') {
                                                 include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                                $video_id = $value['id'];
+                                                //echo "video_id: {$video_id}<br/>\n";
+                                                ?>
+                                                <script>
+                                                    var see_video_id_<?= $video_id ?> = '<?= $video_id ?>';
+                                                    $(document).ready(function () {
+                                                        $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
+                                                            //console.log("material_video_youtube mouseenter");
+                                                            sendPostLigth('/jpost.php?extension=wares',
+                                                                    {"waresVideoSee": see_video_id_<?= $video_id ?>},
+                                                                    function (e) {
+                                                                    });
+                                                        });
+                                                    });
+                                                </script>
+                                                <?
                                             }
                                             ?>
                                         </div>
@@ -286,6 +276,22 @@
                                                             }
                                                             if ($value['material_type'] == 'material_type_video') {
                                                                 include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                                                $video_id = $value['id'];
+                                                                //echo "video_id: {$video_id}<br/>\n";
+                                                                ?>
+                                                                <script>
+                                                                    var see_video_id_<?= $video_id ?> = '<?= $video_id ?>';
+                                                                    $(document).ready(function () {
+                                                                        $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
+                                                                            //console.log("material_video_youtube mouseenter");
+                                                                            sendPostLigth('/jpost.php?extension=wares',
+                                                                                    {"waresVideoSee": see_video_id_<?= $video_id ?>},
+                                                                                    function (e) {
+                                                                                    });
+                                                                        });
+                                                                    });
+                                                                </script>
+                                                                <?
                                                             }
                                                             ?>
                                                         </div>
@@ -310,12 +316,18 @@
 </div>
 <script>
     $(".marathons_material_series_btn").unbind('click').click(function () {
-        $(".material_info").hide();
-        $(".marathons_material_series_btn").removeClass("marathons_material_series_active");
-        $('.marathons_material_series_btn').removeAttr('style');
         var o = this;
         var title = $(o).html();
         var series_id = $(o).attr("series_id");
+        var hide = 0;
+        if ($(".series_" + series_id + "").css("display") == 'block') {
+            hide = 1;
+        }
+
+        $(".marathons_material_series_btn").removeClass("marathons_material_series_active");
+        $('.marathons_material_series_btn').removeAttr('style');
+
+
         $(o).addClass("marathons_material_series_active");
         $(o).css("background-color", "#ffffff");
         $(o).css("color", "#000000");
@@ -324,7 +336,19 @@
         } else {
             $(".marathons_material_list_block_title").html("Общие материалы марафона");
         }
-        $(".series_" + series_id).show(200);
+        if (hide === 1) {
+            $(".marathons_material_list_block").hide(100);
+            $(".series_" + series_id).hide(100);
+            $('.marathons_material_series_btn').find(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
+            $(".marathons_material_series_btn").removeClass("marathons_material_series_active");
+            $('.marathons_material_series_btn').removeAttr('style');
+        } else {
+            $(".marathons_material_list_block").show(100);
+            $(".material_info:visible").hide();
+            $('.marathons_material_series_btn').find(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
+            $(o).find(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
+            $(".series_" + series_id).show(100);
+        }
     });
 
 </script>

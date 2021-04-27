@@ -48,19 +48,6 @@
         </div>
     </div>
 </div>
-<?
-/*
-  <div class="col-12">
-  <div class="table-responsive-md">
-  <table class="table table-striped table-bordered webinar_products_arrays_data" style="width:100%;background-color: #FFFFFF;">
-  <tbody>
-
-  </tbody>
-  </table>
-  </div>
-  </div>
- */
-?>
 <script>
     $(document).ready(function () {
         getClientMarathonsProducts();
