@@ -2,6 +2,11 @@
  * Отправка данных из формы
  */
 var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets/img/ajax_load_2.svg" style="width: 40px;" /></center></div>';
+var ajax_load_true = 0;
+setTimeout(function () {
+    ajax_load_true = 1;
+}, 2000);
+
 (function ($) {
     setCookie('site_user_ajax_access', '1', {secure: true, 'max-age': 3600});
 
@@ -51,10 +56,8 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             $('.form_result').html("");
                             var metod = 0;
                             if (result['success'] == 1) {
-                                $('.form_result').show();
-                                $('.form_result').removeClass("alert-danger");
-                                //$('.form_result').addClass("alert").addClass("alert-success");
                                 $('.form_result').html(result['success_text']);
+                                $('.form_result').removeClass("alert-danger");
                                 metod = 1;
                             }
                             if (result['success'] == 0) {
@@ -106,7 +109,9 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             //$('.form_result').append('<button type="button" class="close"'
                             //        + ' data-dismiss="alert" aria-label="Close">'
                             //        + '<span aria-hidden="true">×</span></button>');
-
+                            if (result['success_text'].length > 0) {
+                                $('.form_result').show();
+                            }
                             // Скроем ответы серез 20 сек.
                             setTimeout(function () {
                                 $('.form_result').hide();
@@ -138,7 +143,9 @@ function sendPostLigth(url, data, func, val_async) {
     // реализация работы метода с отдельным элементом страницы
     //var obj = this;
     $('.form_result').html("");
-    $('.form_result').after(ajax_load);
+    if (ajax_load_true > 0) {
+        $('.form_result').after(ajax_load);
+    }
     $.ajax({
         url: url,
         type: 'POST',
@@ -155,17 +162,16 @@ function sendPostLigth(url, data, func, val_async) {
                 if (!!result['success_text'] && result['success_text'].length > 0) {
                     if (typeof toastr !== 'undefined') {
                         toastr.success(result['success_text'], 'Выполнено');
-
                     }
                     if (!!$('.form_result')) {
-                        $('.form_result').show();
+                        $('.form_result').append('<div>' + result['success_text'] + '</div>');
                         $('.form_result').removeClass("alert-danger");
                         //$('.form_result').addClass("alert").addClass("alert-success");
-                        $('.form_result').append('<div>' + result['success_text'] + '</div>');
                     }
                 }
                 metod = 1;
             }
+            // Отобразим ошибки
             if (result['success'] == 0) {
                 if (typeof result['errors'] !== 'undefined' && result['errors'].length > 0) {
                     for (var i = 0; i < result['errors'].length; i++) {
@@ -205,6 +211,10 @@ function sendPostLigth(url, data, func, val_async) {
                     window.location.href = result['action'];
                 }, (action_time * 1000));
 
+            }
+            // Отобразим если есть сообщение
+            if (result['success_text'].length > 0) {
+                $('.form_result').show();
             }
             setTimeout(function () {
                 $('.form_result').hide();
