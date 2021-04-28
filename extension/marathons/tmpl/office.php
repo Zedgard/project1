@@ -74,17 +74,6 @@
                                 </div>\n\
                                 </a>\n\
                                 </div>');
-                    //$(".webinar_products_arrays_data").append('<div class="col-lg-12 mb-2"><hr/></div>');
-//                    $(".webinar_products_arrays_data tbody").append(
-//                            '<tr elm_id="' + data[i]['id'] + '"> \n\
-//                                <td>\n\
-//                                <div class="mb-3"><a href="?wares_id=' + data[i]['id'] + '">' + data[i]['title'] + '</a></div>\n\
-//                                <div class="mb-3 text-center"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
-//                                </td>\n\
-//                                <td><div>' + data[i]['descr'] + '</div>\n\
-//                                </td>\n\
-//                            </tr>');
-                    //  <div class="text-right"><a href="?product_id=' + data[i]['id'] + '" class="p-2 bd-highlight btn btn-primary">Перейти</a></div>\n\
                 }
             } else {
                 $(".webinar_products_arrays_data").html("Нет записей");

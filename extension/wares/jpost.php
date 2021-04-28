@@ -184,6 +184,23 @@ if (isset($_POST['waresVideoSee'])) {
     $result = array('success' => 1, 'success_text' => '');
 }
 
+if (isset($_POST['waresVideoSeriesSee'])) {
+    $data = array('bonus_open' => '0');
+    if ($_POST['waresVideoSeriesSee'] > 0) {
+        if ($pr_wares->insertWaresVideoSeriesSee($_POST['waresVideoSeriesSee'])) {
+            
+        }
+        if (isset($_POST['wares_id'])) {
+            $wares_id = $_POST['wares_id'];
+            if ($pr_wares->getWaresSeriesSeeBonusOpen($wares_id, $_SESSION['user']['info']['id'])) {
+                $data = array('bonus_open' => '1');
+            }
+        }
+    }
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+
 // Купленные колличество товаров в категориях
 if (isset($_POST['init_office_list_categorys_col'])) {
     $data = $pr_wares->getClientWaresCol();

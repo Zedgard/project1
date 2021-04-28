@@ -36,12 +36,25 @@ if ($user->isClient() || $user->isEditor()) {
         foreach ($series as $series_value) {
             if ($series_value['series_enable'] == 1) {
                 $bonus_btn_style = 'display:none;';
+                $bonus_material_id = '0';
+                $bonus_lock_content = '<i class="fas fa-lock"></i>';
+                $bonus_lock = 1;
                 if (mb_strtoupper($series_value['title']) == 'БОНУС') {
                     $bonus_btn_style = 'display:block;';
+                    $bonus_material_id = $series_value['id'];
+                    //$bonus_lock_content = '<i class="fas fa-lock"></i>';
+                    if ($pr_wares->getWaresSeriesSeeBonusOpen($_GET['wares_id'], $_SESSION['user']['info']['id'])) {
+                        $bonus_lock = 0;
+                        $bonus_lock_content = '';
+                    }
                 }
             }
         }
 
+//        print_r($_SESSION['wares_video_see']);
+//        echo "<br/>\n";
+//        echo 'in_array: ';
+//        echo (in_array(12, $_SESSION['wares_video_see'])) ? 'true' : 'false';
 
         include 'tmpl/office_product.php';
     } else {
