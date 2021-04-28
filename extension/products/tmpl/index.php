@@ -25,7 +25,7 @@
         </div>
     </div>
     <!-- десктоп вид  style="margin-left: -2.8rem;" -->
-    <div class="row mt-2 mb-1 bread d-none d-xl-block" >
+    <div class="row mt-2 mb-2 bread d-none d-xl-block" >
         <div class="col-12">
             <?= $page->bread_get() ?>
         </div>
