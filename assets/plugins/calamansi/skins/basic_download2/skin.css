@@ -151,6 +151,7 @@
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {

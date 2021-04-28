@@ -535,9 +535,9 @@ class wares extends \project\extension {
             $_SESSION['wares_video_see'][] = $wares_video_id;
             $count_see = 0;
             $querySelect = "select * from `zay_wares_video_see` wvs where wvs.`wares_video_id`='?' and wvs.`user_id`='?' ";
-            $wares_video_see = $this->getSelectArray($querySelect, array($wares_video_id, $_SESSION['user']['info']['id']), 1);
+            $wares_video_see = $this->getSelectArray($querySelect, array($wares_video_id, $_SESSION['user']['info']['id']), 0);
             if (count($wares_video_see) > 0) {
-                $count_see = $wares_video_see['count_see'];
+                $count_see = $wares_video_see[0]['count_see'];
             }
             $count_see++;
             $query = "INSERT INTO `zay_wares_video_see` (`wares_video_id`, `user_id`, `count_see`) "
@@ -561,7 +561,7 @@ class wares extends \project\extension {
                 $wares_video_see = $this->getSelectArray($querySelect, array($wares_video_id), 1);
             }
             // колличество просмотров по пользователю
-            if ($wares_video_id = 0 && $user_id > 0) {
+            if ($wares_video_id == 0 && $user_id > 0) {
                 $querySelect = "select * from `zay_wares_video_see` wvs where wvs.`user_id`='?' ";
                 $wares_video_see = $this->getSelectArray($querySelect, array($user_id), 1);
             }
@@ -572,6 +572,83 @@ class wares extends \project\extension {
             }
         }
         return 0;
+    }
+
+    /**
+     * Зафиксировать просмотр серии 
+     * @param type $series_id
+     * @return boolean
+     */
+    public function insertWaresVideoSeriesSee($series_id) {
+        $t = 0;
+        if (!isset($_SESSION['wares_serie_see'])) {
+            $_SESSION['wares_video_see'][] = $series_id;
+            $t = 1;
+        } else {
+            if (!in_array($series_id, $_SESSION['wares_serie_see'])) {
+                $t = 1;
+            }
+        }
+        if ($t == 1) {
+            $_SESSION['wares_serie_see'][] = $series_id;
+            $count_see = 0;
+            $querySelect = "SELECT * FROM zay_wares_video_series_see wvs where wvs.series_id='?' and wvs.user_id='?' ";
+            $data = $this->getSelectArray($querySelect, array($series_id, $_SESSION['user']['info']['id']), 0);
+            if (count($data) > 0) {
+                $count_see = $data[0]['count_see'];
+            }
+            $count_see++;
+            $query = "INSERT INTO `zay_wares_video_series_see` (`series_id`, `user_id`, `count_see`) "
+                    . "VALUES ('?','?','?')";
+            return $this->query($query, array($series_id, $_SESSION['user']['info']['id'], $count_see));
+        }
+        return true;
+    }
+
+    /**
+     * Получить данные по колличеству просмотров видео
+     * @param type $series_id
+     * @param int $user_id
+     * @return int
+     */
+    public function getWaresSeriesSee($series_id = 0, $user_id = 0) {
+        if ($user_id > 0) {
+            // колличество просмотров по видео
+            if ($series_id > 0 && $user_id = 0) {
+                $querySelect = "select * from `zay_wares_video_series_see` wvs where wvs.series_id='?' ";
+                $wares_video_see = $this->getSelectArray($querySelect, array($series_id), 1);
+            }
+            // колличество просмотров по пользователю
+            if ($series_id == 0 && $user_id > 0) {
+                $querySelect = "select * from `zay_wares_video_series_see` wvs where wvs.user_id='?' ";
+                $wares_video_see = $this->getSelectArray($querySelect, array($user_id), 1);
+            }
+            // колличество просмотров конкретного видео пользователем
+            if ($series_id > 0 && $user_id > 0) {
+                $querySelect = "select * from `zay_wares_video_series_see` wvs where wvs.series_id='?' and wvs.user_id='?' ";
+                $wares_video_see = $this->getSelectArray($querySelect, array($series_id, $user_id), 1);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Получить доступ к бонусу только после просмотра всех материалов
+     * @param type $wares_id
+     * @param type $user_id
+     * @return boolean
+     */
+    public function getWaresSeriesSeeBonusOpen($wares_id, $user_id) {
+        $query = "SELECT wvs.*, if((select wvss.count_see from zay_wares_video_series_see wvss where wvss.user_id='?' and wvss.series_id=wvs.id)>0, 1,0) as series_see
+                        FROM zay_wares_video_series wvs 
+                        WHERE wvs.wares_id='?' AND wvs.title NOT LIKE 'Бонус'";
+        $data = $this->getSelectArray($query, array($user_id, $wares_id), 0);
+        foreach ($data as $value) {
+            if ($value['series_see'] == '0') {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

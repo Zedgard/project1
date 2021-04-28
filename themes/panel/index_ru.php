@@ -77,6 +77,8 @@
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sortable.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
     </head>
     <body class="header-fixed sidebar-fixed sidebar-dark header-light body-office" id="body">
 
@@ -414,8 +416,6 @@
         ?>
 
     </body>
-    <script src="//vjs.zencdn.net/7.10.2/video.min.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
     <script>
         $(document).ready(function () {
             setTimeout(function () {

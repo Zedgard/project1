@@ -387,7 +387,7 @@
         </div>
     </body>
 
-    <script src="//vjs.zencdn.net/7.10.2/video.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
     <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
     <script src="/extension/wares/js/edit_videos.js<?= $_SESSION['rand'] ?>"></script>
 </html>

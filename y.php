@@ -21,7 +21,7 @@
             >
         </video>
         <script src="/assets/plugins/jquery/jquery.js?v=<?= rand() ?>"></script>
-        <script src="//vjs.zencdn.net/7.10.2/video.js"></script>
+        <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/video/Youtube.js?v=<?= rand() ?>"></script>
         <script>
             $(document).ready(function () {
