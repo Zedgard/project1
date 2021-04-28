@@ -29,7 +29,7 @@ $(".calendar_day_active").unbind("click").click(function () {
                         alert = '';
                         elm_class = 'btn button button_lg btngreen textcenter btn_consultation_pay';
                     }
-                    $(".consultant_periods").find("tbody").append('<tr><td><i class="far fa-clock"></i> ' + e['data'][i]['period_time'] + '</td>\n\
+                    $(".consultant_periods").find("tbody").append('<tr><td><i class="far fa-clock"></i> ' + e['data'][i]['period_time'].substr(0, 5) + '<span class="consultant_period_span_msk">МСК</span></td>\n\
                         <td><a href="javascript:void(0)" class="' + elm_class + '" price="' + e['data'][i]['period_price'] + '" period_text="' + e['data'][i]['period_time'] + '" elm_id="' + e['data'][i]['id'] + '" ' + alert + '>Оплатить</a></td>\n\
                         </tr>');
                 }

@@ -195,3 +195,9 @@
 .consultation_price_block_user_info b{
     color: #207f9b;
 }
+.consultant_period_span_msk{
+    margin-top: 0px;
+    font-size: 0.8rem;
+    position: absolute;
+    margin-left: 4px;
+}
