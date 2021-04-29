@@ -40,6 +40,9 @@ if (!isset($_SESSION['errors'])) {
     $_SESSION['errors'] = array();
 }
 
+if (!isset($_SESSION['promos'])) {
+    $_SESSION['promos'] = array();
+}
 // Сообщения сайта (Отображаются на странице сайта или всплывают)
 /*
  * примеры подсветки

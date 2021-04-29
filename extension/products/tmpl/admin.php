@@ -90,25 +90,25 @@
         /*======== MULTIPLE SELECT ========*/
         var products_wares = $(".products_wares").select2({
             width: "style",
-            placeholder: "Выбирете товары",
+            placeholder: "Выберите товары",
             allowClear: true
         });
 
         products_category = $(".products_category").select2({
             width: "100%",
-            placeholder: "Выбирете категории",
+            placeholder: "Выберите категории",
             allowClear: true
         });
 
         var products_topic = $(".products_topic").select2({
             width: "100%",
-            placeholder: "Выбирете темы",
+            placeholder: "Выберите темы",
             allowClear: true
         });
 
         var product_theme = $(".product_theme").select2({
             width: "100%",
-            placeholder: "Выбирете темы",
+            placeholder: "Выберите темы",
             allowClear: true
         });
 

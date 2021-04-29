@@ -383,8 +383,8 @@ blockquote.blockquote::before{
     position: absolute;
     content: "";
     width: 100%;
-    height: 95%;
-    transform: rotate(-4deg);
+    height: 0.8rem;
+    transform: rotate(-7deg);
 }
 
 .cart_product_remove:hover{
@@ -3011,7 +3011,41 @@ header .soc_links a i{
     -webkit-background-size: cover;
     background-size: cover;
 }
+.list_promos{
+    border-top: 1px solid #CCCCCC;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+.list_promos .item_promo{
+    width: 100%;
+    padding: 1rem;
+}
 
+.list_promos .item_promo:hover{
+    background-color: #f3f3f3;
+    cursor: pointer;
+}
+.list_promos .list_promo_title{
+    font-size: 1.2rem;
+}
+.list_promos .list_promo_code{
+    margin-left: 2%;
+}
+.list_promos .list_promo_price{
+    float: right;
+    font-size: 1.2rem;
+    margin-right: 2%;
+    margin-top: -0.1rem;
+}
+.list_promos .list_promo_delete{
+    float: right;
+    font-size: 1.4rem;
+    margin-top: -0.2rem;
+}
+.list_promos .list_promo_delete:hover{
+    float: right;
+    transform: rotate(180deg);
+}
 
 .TINKOFF_BTN_YELLOW {
     background-color: #ffdd2d;
