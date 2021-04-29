@@ -33,6 +33,7 @@
                                 <th>Дата начала</th>
                                 <th>Дата окончания</th>
                                 <th>Скидка</th>
+                                <th>Объединение</th>
                                 <th>Статус</th>
                                 <th></th>
                                 <th></th>
@@ -49,6 +50,10 @@
                                 if ($value['percent'] > 0) {
                                     $promo = $value['percent'] . '%';
                                 }
+                                $alliance = 'Запрещено';
+                                if ($value['alliance'] == 1) {
+                                    $alliance = 'Разрешено';
+                                }
                                 ?>
                                 <tr>
                                     <td class="text-center"><?= $value['id'] ?></td>
@@ -57,6 +62,7 @@
                                     <td class="text-center"><?= $value['date_start'] ?></td>
                                     <td class="text-center"><?= $value['date_end'] ?></td>
                                     <td class="text-center"><?= $promo ?></td>
+                                    <td class="text-center"><?= $alliance ?></td>
                                     <td class="text-center"><?= $status ?></td>
                                     <td class="text-center">
                                         <a href="?edit=<?= $value['id'] ?>" class="btn btn-sm btn-primary"><i class="mdi mdi-pencil"></i></a>

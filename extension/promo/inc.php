@@ -23,10 +23,10 @@ class promo extends \project\extension {
      */
     public function promos_get_array($find_str) {
         if (strlen(trim($find_str)) > 0) {
-            $query = "SELECT * FROM zay_promo p WHERE (p.code like '%?%' or p.title like '%?%') and p.date_end>=DATE_FORMAT(NOW(),'%y-%m-%d')";
+            $query = "SELECT * FROM zay_promo p WHERE (p.code like '%?%' or p.title like '%?%') and ADDDATE(p.date_end, INTERVAL 30 DAY)>=DATE_FORMAT(NOW(),'%y-%m-%d')";
             return $this->getSelectArray($query, array($find_str, $find_str));
         } else {
-            $query = "SELECT * FROM zay_promo p WHERE p.date_end>=DATE_FORMAT(NOW(),'%y-%m-%d')";
+            $query = "SELECT * FROM zay_promo p WHERE ADDDATE(p.date_end, INTERVAL 30 DAY)>=DATE_FORMAT(NOW(),'%y-%m-%d')";
             return $this->getSelectArray($query, array());
         }
     }
@@ -38,9 +38,23 @@ class promo extends \project\extension {
      */
     public function promo_get_id($id) {
         $data = array();
-        $query = "SELECT * FROM zay_promo p WHERE p.id='?'";
+        $query = "SELECT p.*, "
+                . "(select GROUP_CONCAT(pp.product_id) from zay_promo_products pp WHERE pp.promo_id=p.id) as product_ids "
+                . "FROM zay_promo p WHERE p.id='?'";
         $data = $this->getSelectArray($query, array($id))[0];
         return $data;
+    }
+
+    /**
+     * Получить данные по промо через код
+     * @param type $id
+     * @return type
+     */
+    public function promo_get_code($code) {
+        $query = "SELECT p.*, "
+                . "(select GROUP_CONCAT(pp.product_id) from zay_promo_products pp WHERE pp.promo_id=p.id) as product_ids "
+                . "FROM zay_promo p WHERE p.code='?' AND p.status='1' AND p.date_start<=DATE_FORMAT(NOW(),'%y-%m-%d') AND p.date_end>DATE_FORMAT(NOW(),'%y-%m-%d')";
+        return $this->getSelectArray($query, array($code), 0);
     }
 
     /**
@@ -50,31 +64,42 @@ class promo extends \project\extension {
      * @return type
      */
     public function promo_update($id, $data) {
+        $return = false;
         if ($id > 0) {
-            $query = "UPDATE `zay_promo` SET `code`='?',`title`='?',`date_start`='?',`date_end`='?',`status`='?',`amount`='?',`percent`='?' WHERE `id`='?'";
-            return $this->query($query, array(
-                        $data['code'],
-                        $data['title'],
-                        $data['date_start'],
-                        $data['date_end'],
-                        $data['status'],
-                        $data['amount'],
-                        $data['percent'],
-                        $id)
+            $query = "UPDATE `zay_promo` SET `code`='?',`title`='?',`date_start`='?',"
+                    . "`date_end`='?',`status`='?',`amount`='?',`percent`='?', `alliance`='?' "
+                    . "WHERE `id`='?'";
+            $return = $this->query($query, array(
+                $data['code'],
+                $data['title'],
+                $data['date_start'],
+                $data['date_end'],
+                $data['status'],
+                $data['amount'],
+                $data['percent'],
+                $data['promo_alliance'],
+                $id), 0
             );
         } else {
-            $query = "INSERT INTO `zay_promo`(`code`, `title`, `date_start`, `date_end`, `status`, `amount`, `percent`) "
-                    . "VALUES ('?','?','?','?','?','?','?')";
-            return $this->query($query, array(
-                        $data['code'],
-                        $data['title'],
-                        $data['date_start'],
-                        $data['date_end'],
-                        $data['status'],
-                        $data['amount'],
-                        $data['percent'])
+            $id = $this->queryNextId('zay_promo');
+            $query = "INSERT INTO `zay_promo`(`code`, `title`, `date_start`, `date_end`, `status`, `amount`, `percent`, `alliance`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?')";
+            $return = $this->query($query, array(
+                $data['code'],
+                $data['title'],
+                $data['date_start'],
+                $data['date_end'],
+                $data['status'],
+                $data['amount'],
+                $data['percent'],
+                $data['promo_alliance'])
             );
         }
+
+        if ($return) {
+            $this->insert_promo_products($id, $data['promo_products']);
+        }
+        return $return;
     }
 
     /**
@@ -85,10 +110,41 @@ class promo extends \project\extension {
      */
     public function promo_delete($id) {
         if ($id > 0) {
+            $queryDelete = "DELETE FROM `zay_promo_products` WHERE `promo_id`='?' ";
+            $this->query($queryDelete, array($id));
             $query = "DELETE FROM `zay_promo` WHERE `id`='?'";
             return $this->query($query, array($id));
         }
         return false;
+    }
+
+    /**
+     * Привязка товаров учавствующих в промо
+     * @param type $product_id продукт ид
+     * @param type $wares_ids массив категорий
+     */
+    public function insert_promo_products($promo_id, $product_ids) {
+        if ($promo_id > 0) {
+            $queryDelete = "DELETE FROM `zay_promo_products` WHERE `promo_id`='?' ";
+            $this->query($queryDelete, array($promo_id));
+            $col = count($product_ids);
+            if ($col > 0) {
+                for ($i = 0; $i < $col; $i++) {
+                    $query = "INSERT INTO `zay_promo_products`(`promo_id`, `product_id`) VALUES ('?','?') ";
+                    $this->query($query, array($promo_id, $product_ids[$i]));
+                }
+            }
+        }
+    }
+
+    /**
+     * Получим продукты данного промо
+     * @param type $promo_id
+     * @return type
+     */
+    public function get_promo_products($promo_id) {
+        $query = "SELECT * FROM `zay_promo_products` WHERE `promo_id`='?'";
+        return $this->getSelectArray($query, array($promo_id));
     }
 
 }

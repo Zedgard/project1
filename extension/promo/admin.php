@@ -43,10 +43,12 @@ if ($c_user->isEditor()) {
             $data['amount'] = $_POST['promo_amount'];
             $data['percent'] = $_POST['promo_percent'];
             $data['status'] = ($_POST['promo_status'] > 0) ? $_POST['promo_status'] : 0;
+            $data['promo_alliance'] = ($_POST['promo_alliance'] > 0) ? $_POST['promo_alliance'] : 0;
+            $data['promo_products'] = $_POST['promo_products'];
             if ($c_promo->promo_update($_POST['promo_id'], $data)) {
                 location_href('/admin/promo/');
             } else {
-                $_SESSION['errors'][] = 'Ошибка сохранения';
+                $_SESSION['page_errors'][] = 'Ошибка сохранения';
             }
         }
 
@@ -54,6 +56,8 @@ if ($c_user->isEditor()) {
         if ($_GET['edit'] > 0) {
             $promo_data = $c_promo->promo_get_id($_GET['edit']);
         }
+        
+        
         include 'tmpl/edit_promo.php';
     }
 } else {

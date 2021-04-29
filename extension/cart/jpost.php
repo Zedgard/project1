@@ -174,12 +174,86 @@ if (isset($_POST['cart_product_remove'])) {
 
 if (isset($_POST['cart_product_get_array'])) {
     $data = array();
+    $promo_array = array();
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
+            $alliance = 1;
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        //echo "-: {$v['alliance']} \n";
+                        // Возможность объединять скидки
+                        if ($v['alliance'] == 0) {
+                            $alliance = 0;
+                        }
+                    }
+                }
+            }
+            //echo "alliance: {$alliance} \n";
 //            if (strlen($value['pay_descr']) == 0) {
 //                $data[] = $value;
 //            }
-            $data[] = $value;
+            //echo "cart title: {$value['title']} \n";
+            /*
+             * Работа с промо
+             */
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        //echo "title: {$v['title']} \n";
+                        // Изначальная цена
+                        $price = (int) $value['price'];
+
+
+                        // Если естьусловие по товарно
+                        if (strlen($v['product_ids']) > 0) {
+                            $ex = explode(',', $v['product_ids']);
+                            foreach ($ex as $product_id) {
+                                if ($value['id'] == $product_id) {
+                                    if ($v['amount'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                        } else {
+                                            $value['price_promo'] = ($price - $v['amount']);
+                                        }
+                                        //echo "1 price_promo: {$value['price_promo']} - " . ($price - $v['amount']) . "\n";
+                                    }
+                                    if ($v['percent'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                        } else {
+                                            $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                        }
+                                        //echo "2 price_promo: {$value['price_promo']} - " . ($price - (($v['percent'] / 100) * $price)) . "\n";
+                                    }
+                                }
+                            }
+                        } else { // Общее условие по купону
+                            if ($v['amount'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                } else {
+                                    $value['price_promo'] = ($price - $v['amount']);
+                                }
+                            }
+                            if ($v['percent'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                } else {
+                                    $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                }
+                            }
+                        }
+
+                        // Добавим для фиксации чтобы не объединять промо
+//                        if (!in_array($value['id'], $promo_array)) {
+//                            $promo_array[] = $value['id'];
+//                        }
+                    }
+                }
+            }
+            $data[] = $value; //$_SESSION['cart']['itms'][$key];
+            //echo "price_promo: {$value['price_promo']} \n";
             //    echo "itms: {$_SESSION['cart']['itms'][$key]}\n";
             //$_SESSION['cart']['itms'][$key]['product_info'] = $pr_products->getProductElem($_SESSION['cart']['itms'][$key]);
             //print_r($pr_products->getProductElem($_SESSION['cart']['itms'][$key]));
@@ -187,6 +261,7 @@ if (isset($_POST['cart_product_get_array'])) {
         }
     }
     // $_SESSION['cart']['itms']
+    //print_r($data);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 

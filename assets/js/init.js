@@ -28,8 +28,9 @@ $(document).ready(function () {
     init_btn_send_message();
     init_office_list_categorys_col();
     init_bottom_cookie_btn();
-
+    init_promo_input();
     init_real_time();
+    get_promos('0');
 
 //    $("#menu").on("click", "a", function (event) {
 //        event.preventDefault();
@@ -200,6 +201,8 @@ $(document).ready(function () {
 
     });
 });
+
+
 var animateTopVal = 0;
 function animateTop(val, height) {
     if (animateTopVal === 0) {
@@ -281,6 +284,9 @@ function initCartArray() {
                         price = Number(e['data'][i]['price_promo']);
 
                     }
+
+
+
                     var imgFirst = '/themes/site1/images/gallery-box1.jpg';
                     //console.log("g: " + e['data'][i]['images_str']);
 
@@ -426,7 +432,8 @@ function initCartArray() {
                     $(".cart-info").hide();
                 }
                 // cart_list
-                move(".cart_list", 300);
+                //move(".cart_list", 300);
+
                 ;
             }
         }
@@ -437,6 +444,73 @@ function initCartArray() {
         init_price_val();
     });
 }
+//if (typeof promos === 'undefined') {
+//    var promos = [];
+//}
+/**
+ * Промо
+ * @returns {undefined}
+ */
+function init_promo_input() {
+    $(".input_promo_code").keyup(function () {
+        var v = $(this).val();
+        get_promos(v);
+
+    });
+    get_promos('0');
+}
+
+function get_promos(code) {
+    sendPostLigth('/jpost.php?extension=promo', {"getCodePromos": code}, function (e) {
+        $(".list_promos div").remove();
+        if (e['success'] == '1') {
+            initCartArray();
+            //console.log(e['data']);
+            if (e['data'].length > 0) {
+                $(".list_promos").append('<div class="mb-3" style="font-size:1.5rem;">Список купонов:</div>');
+                //console.log(e['data'].length);
+                for (var i = 0; i < e['data'].length; i++) {
+                    var price = e['data'][i]['amount'] + 'р.';
+                    if (e['data'][i]['percent'] > 0) {
+                        price = e['data'][i]['percent'] + '%';
+                    }
+                    $(".list_promos").append('<div class="item_promo">\n\
+                            <span class="list_promo_title">' + e['data'][i]['title'] + '</span> \n\
+                            <span class="list_promo_code ml-3">' + e['data'][i]['code'] + '</span> \n\
+                            <span class="list_promo_delete ml-3" promo_delete_code="' + e['data'][i]['code'] + '"><i class="fas fa-times"></i></span>\n\
+                            <span class="list_promo_price ml-3">' + price + '</span>\n\
+                    </div>');
+                }
+            }
+        }
+        init_delete_promo();
+    });
+}
+
+function init_delete_promo() {
+    $(".list_promo_delete").unbind('click').click(function () {
+        var v = $(this).attr("promo_delete_code");
+        sendPostLigth('/jpost.php?extension=promo', {"deleteCodePromo": v}, function (e) {
+            get_promos('0');
+        });
+    });
+}
+
+//function get_promo_price(product_id, price) {
+//    if (promos.length > 0) {
+//        for (var i = 0; i < promos.length; i++) {
+//            if (promos[i]['product_ids'].length > 0) {
+//                var ex = promos[i]['product_ids'].split(',');
+//                for (var ii = 0; ii < ex.length; ii++) {
+//                    if (ex[ii] == product_id) {
+//                        amount
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
 
 /**
  * Выход из системы
