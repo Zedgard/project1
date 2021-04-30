@@ -50,7 +50,7 @@ if (isset($_POST['edit_wares'])) {
     $wares_ex_code = (isset($_POST['wares_ex_code'])) ? $_POST['wares_ex_code'] : '';
     $wares_articul = (isset($_POST['wares_articul'])) ? $_POST['wares_articul'] : '';
     $wares_col = (isset($_POST['wares_col'])) ? $_POST['wares_col'] : '';
-    $club_month_period = $_POST['club_month_period'];
+    $club_month_period = (isset($_POST['club_month_period'])) ? $_POST['club_month_period'] : '0';
     $wares_descr = (isset($_POST['wares_descr'])) ? $_POST['wares_descr'] : '';
     $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
     $wares_active = (isset($_POST['wares_active'])) ? $_POST['wares_active'] : '1';
@@ -64,7 +64,17 @@ if (isset($_POST['edit_wares'])) {
     $pr_wares->setWaresCategory($wares_categorys);
 
     if (count($_SESSION['errors']) == 0) {
-        if ($pr_wares->insertOrUpdateWares($wares_id, $wares_title, $wares_descr, $wares_url_file, $wares_col, $club_month_period, $wares_ex_code, $wares_articul, $wares_images, $wares_active)) {
+        if ($pr_wares->insertOrUpdateWares(
+                        $wares_id,
+                        $wares_title,
+                        $wares_descr,
+                        $wares_url_file,
+                        $wares_col,
+                        $club_month_period,
+                        $wares_ex_code,
+                        $wares_articul,
+                        $wares_images,
+                        $wares_active)) {
             $result = array('success' => 1, 'success_text' => 'Выполнено');
         } else {
             $result = array('success' => 0, 'success_text' => 'Ошибка!');
