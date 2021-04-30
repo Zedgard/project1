@@ -150,7 +150,10 @@ class send_emails extends \project\extension {
      * Настроить по иструкции<br>
      * https://www.hostinger.ru/rukovodstva/kak-ispolzovat-smtp-server#-SMTP-Google<br>
      * Дать разрешение<br>
-     * https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4Ol_vs_Lq-qGdvCJbpcRTzlQK3LakI2iYSfeQSwNF_LoigTs-1-OAnTQiBdCXZ5cQYzgn_mpTXCIZXSpp7v7tybhg_wlw<br>
+     * https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4Ol_vs_Lq-qGdvCJbpcRTzlQK3LakI2iYSfeQSwNF_LoigTs-1-OAnTQiBdCXZ5cQYzgn_mpTXCIZXSpp7v7tybhg_wlw <br>
+     * https://accounts.google.com/DisplayUnlockCaptcha <br/>
+     * Генератор mdkim чтобы письма в спам не падали
+     * https://dmarcly.com/tools/dkim-record-generator
      * @param type $email_id тело сообщения
      * @param type $to_email кому отправить
      * @param type $params данные для замены
@@ -169,33 +172,45 @@ class send_emails extends \project\extension {
                 $body = $this->file_get_html($email_info['email_body_file'], $params); //echo $body;
                 //echo "body: {$body}<br/>\n";
                 try {
-                    // Server settings
-                    $mail->SMTPDebug = SMTP::DEBUG_OFF; //DEBUG_SERVER; // for detailed debug output
-                    $mail->isSMTP();
-                    $mail->CharSet = "UTF-8";
-                    $mail->Host = 'smtp.gmail.com';
-                    //$mail->Host = 'smtp.edgardzaycev.com';
-                    $mail->SMTPAuth = true;
-                    $mail->SMTPDebug = 1;
-                    //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587; // google
-                    //$mail->Port = 993;
+                    //mail('koman1706@gmail.com','Тема','Сообщение 1');
+                    // Для отправки HTML-письма должен быть установлен заголовок Content-type
+                    $headers = 'MIME-Version: 1.0' . "\r\n";
+                    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-                    $mail->Username = $user_info['user_email']; // YOUR gmail email
-                    $mail->Password = $user_info['user_password']; // YOUR gmail password    info@edgardzaycev.com L2f6lernBsFZ
-                    $mail->SMTPSecure = 'tls';    
-                    //$mail->Username = 'admin@agenstvnet.ru'; // YOUR gmail email
-                    //$mail->Password = 'Kopass1987'; // YOUR gmail password
-                    // Sender and recipient settings
-                    $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // samodinskaya1611@mail.ru
-                    $mail->addAddress($to_email, $email_info['email_subject']);
-                    $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
-                    // Setting the email content
-                    $mail->IsHTML(true);
-                    $mail->Subject = $email_info['email_subject'];
-                    $mail->Body = $body;
-                    //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
-                    $return = $mail->send();
+                    // Дополнительные заголовки
+                    //$headers .= "To: <{$to_email}>\r\n";
+                    $headers .= "From: <{$email_info['email_reply_to']}>\r\n";
+                    //$headers[] = 'Cc: birthdayarchive@example.com';
+                    //$headers[] = 'Bcc: birthdaycheck@example.com';
+                    // Отправляем
+                    $return = mail($to_email, $email_info['email_subject'], $body, $headers);
+
+
+                    // Server settings Не работает
+//                    $mail->SMTPDebug = SMTP::DEBUG_OFF; //DEBUG_SERVER; // for detailed debug output
+//                    //$mail->isSMTP();
+//                    $mail->CharSet = "UTF-8";
+//                    //$mail->Host = 'smtp.gmail.com';
+//                    $mail->Host = 'mail.edgardzaycev.com';
+//                    $mail->SMTPAuth = true;
+//                    //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+//                    $mail->Port = 587; // google
+//                    $mail->SMTPDebug = 0;
+//                    //$mail->SMTPSecure = 'tls';  
+//                    //$mail->Port = 465;
+//                    //echo "u: {$user_info['user_email']} p: {$user_info['user_password']} \n";
+//                    $mail->Username = 'info@edgardzaycev.com';//$user_info['user_email']; // YOUR gmail email
+//                    $mail->Password = '';//$user_info['user_password']; // YOUR gmail password    info@edgardzaycev.com L2f6lernBsFZ
+//                    // Sender and recipient settings
+//                    $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // samodinskaya1611@mail.ru
+//                    $mail->addAddress($to_email, $email_info['email_subject']);
+//                    $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
+//                    // Setting the email content
+//                    $mail->IsHTML(true);
+//                    $mail->Subject = $email_info['email_subject'];
+//                    $mail->Body = $body;
+//                    //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
+//                    $return = $mail->send();
                     if (!$return) {
                         $_SESSION['errors'][] = $mail->ErrorInfo;
                         echo "{$mail->ErrorInfo} <br/>\n";

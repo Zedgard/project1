@@ -333,85 +333,85 @@ class auth extends \project\user {
      * @param type $token
      * @return boolean
      */
-    public function uLogin_auth_registred($token) {
-        $host = 'www.edgardzaycev.com'; //$_SERVER['HTTP_HOST'];
-        $token_url = 'https://ulogin.ru/token.php?token=' . $token . '&host=' . $host;
-        // получим с сервера
-        //echo "token_url: {$token_url}";
-        $request = curl_init($token_url);
-        curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
-        $result = curl_exec($request);
-        $json_s = json_decode($result, true);
-        // отобразить для просмотра
-        //print_r($json_s);
-        // данные 
-        $verified_email = $json_s['verified_email'];
-        $email = $json_s['email'];
-        $phone = (isset($json_s['phone']) || strlen($json_s['phone']) > 0) ? $json_s['phone'] : '';
-        $first_name = $json_s['first_name'];
-        $last_name = $json_s['last_name'];
-        $first_name = $json_s['first_name'];
-        $uid = $json_s['uid'];
-        // json
-        $network = $json_s['network'];
-        //$identity = $json_s['identity'];
-        // проверка на секрет
-        //print_r($json_s);
-        if ($verified_email == '1' && $uid > 0 && $_GET['s_login'] == '273456781') {
-            $phone = $this->phoneReplace($phone);
-            //echo "first_name: {$phone}<br/>\n";
-
-            $sqlLight = new \project\sqlLight();
-            if (strlen($phone) == 0) {
-                $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=0";
-                $user_not_activate = $sqlLight->queryList($query, array($email), 0);
-                if (count($user_not_activate) > 0) {
-                    $_SESSION['errors'][] = 'Активируйте учетную запись<br/>письмо уже выслано на электронный адрес ( ' . $email . ' ) ';
-                    return false;
-                } else {
-                    $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1";
-                    $users = $sqlLight->queryList($query, array($email), 0);
-                }
-            } else {
-                $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active`=1";
-                $users = $sqlLight->queryList($query, array($email, $phone), 0);
-            }
-
-            //print_r($users);
-
-            if (count($users) > 0) {
-                $_SESSION['user']['info'] = $users[0];
-                $data = $this->getUserInfo($users[0]['id']);
-                //print_r($data);
-                $_SESSION['user']['info'] = $data;
-                return true;
-            } else {
-                $password = $this->password_generate();
-                /*
-                 * Нужно еще отправлять пароль пользователю на почту !!!!!!!!!!!!!
-                 */
-                $send_emails = new \project\send_emails();
-                //$send_emails->send('new_password', $email, array('user_password' => $password));
-                // Процесс регистрации
-                if ($this->register($email, $phone, $password, $password, 1, 1)) {
-                    $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active` = 1";
-                    $users = $sqlLight->queryList($query, array($email, $phone), 0);
-                    if (count($users) > 0) {
-                        $_SESSION['user']['info'] = $users[0];
-                        $this->insertRole($users[0]['id'], 3);
-                        $data = $this->getUserInfo($users[0]['id']);
-                        //print_r($data);
-                        $_SESSION['user']['info'] = $data;
-                        return true;
-                    }
-                } else {
-                    $_SESSION['errors'][] = 'Ошибка авторизации';
-                }
-            }
-        }
-
-        return false;
-    }
+//    public function uLogin_auth_registred($token) {
+//        $host = 'www.edgardzaycev.com'; //$_SERVER['HTTP_HOST'];
+//        $token_url = 'https://ulogin.ru/token.php?token=' . $token . '&host=' . $host;
+//        // получим с сервера
+//        //echo "token_url: {$token_url}";
+//        $request = curl_init($token_url);
+//        curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
+//        $result = curl_exec($request);
+//        $json_s = json_decode($result, true);
+//        // отобразить для просмотра
+//        //print_r($json_s);
+//        // данные 
+//        $verified_email = $json_s['verified_email'];
+//        $email = $json_s['email'];
+//        $phone = (isset($json_s['phone']) || strlen($json_s['phone']) > 0) ? $json_s['phone'] : '';
+//        $first_name = $json_s['first_name'];
+//        $last_name = $json_s['last_name'];
+//        $first_name = $json_s['first_name'];
+//        $uid = $json_s['uid'];
+//        // json
+//        $network = $json_s['network'];
+//        //$identity = $json_s['identity'];
+//        // проверка на секрет
+//        //print_r($json_s);
+//        if ($verified_email == '1' && $uid > 0 && $_GET['s_login'] == '273456781') {
+//            $phone = $this->phoneReplace($phone);
+//            //echo "first_name: {$phone}<br/>\n";
+//
+//            $sqlLight = new \project\sqlLight();
+//            if (strlen($phone) == 0) {
+//                $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=0";
+//                $user_not_activate = $sqlLight->queryList($query, array($email), 0);
+//                if (count($user_not_activate) > 0) {
+//                    $_SESSION['errors'][] = 'Активируйте учетную запись<br/>письмо уже выслано на электронный адрес ( ' . $email . ' ) ';
+//                    return false;
+//                } else {
+//                    $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1";
+//                    $users = $sqlLight->queryList($query, array($email), 0);
+//                }
+//            } else {
+//                $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active`=1";
+//                $users = $sqlLight->queryList($query, array($email, $phone), 0);
+//            }
+//
+//            //print_r($users);
+//
+//            if (count($users) > 0) {
+//                $_SESSION['user']['info'] = $users[0];
+//                $data = $this->getUserInfo($users[0]['id']);
+//                //print_r($data);
+//                $_SESSION['user']['info'] = $data;
+//                return true;
+//            } else {
+//                $password = $this->password_generate();
+//                /*
+//                 * Нужно еще отправлять пароль пользователю на почту !!!!!!!!!!!!!
+//                 */
+//                $send_emails = new \project\send_emails();
+//                //$send_emails->send('new_password', $email, array('user_password' => $password));
+//                // Процесс регистрации
+//                if ($this->register($email, $phone, $password, $password, 1, 1)) {
+//                    $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active` = 1";
+//                    $users = $sqlLight->queryList($query, array($email, $phone), 0);
+//                    if (count($users) > 0) {
+//                        $_SESSION['user']['info'] = $users[0];
+//                        $this->insertRole($users[0]['id'], 3);
+//                        $data = $this->getUserInfo($users[0]['id']);
+//                        //print_r($data);
+//                        $_SESSION['user']['info'] = $data;
+//                        return true;
+//                    }
+//                } else {
+//                    $_SESSION['errors'][] = 'Ошибка авторизации';
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
 
     public function emailValid($email) {
         $validator = new Validator();
