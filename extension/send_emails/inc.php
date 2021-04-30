@@ -176,13 +176,14 @@ class send_emails extends \project\extension {
                     //$mail->Host = 'smtp.gmail.com';
                     //$mail->Host = 'smtp.edgardzaycev.com';
                     //$mail->SMTPAuth = true;
-                    $mail->SMTPDebug = 0;
+                    //$mail->SMTPDebug = 1;
                     //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     //$mail->Port = 587; // google
-                    //$mail->Port = 465;
+                    //$mail->Port = 993;
 
                     //$mail->Username = $user_info['user_email']; // YOUR gmail email
                     //$mail->Password = $user_info['user_password']; // YOUR gmail password
+                    //$mail->SMTPSecure = 'tls';    
                     //$mail->Username = 'admin@agenstvnet.ru'; // YOUR gmail email
                     //$mail->Password = 'Kopass1987'; // YOUR gmail password
                     // Sender and recipient settings

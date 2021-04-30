@@ -213,7 +213,7 @@ function sendPostLigth(url, data, func, val_async) {
 
             }
             // Отобразим если есть сообщение
-            if (result['success_text'].length > 0) {
+            if (typeof result['success_text'] != "undefined" && result['success_text'].length > 0) {
                 $('.form_result').show();
             }
             setTimeout(function () {

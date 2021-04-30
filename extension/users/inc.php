@@ -27,6 +27,7 @@ class user extends \project\extension {
      */
     public function getUserInfo($id = 0, $page_num = 1, $input_search_str = '') {
         $col = ($page_num * $this->page_max);
+        $data = array();
 
         if ($id > 0) {
             $select = "SELECT u.*, ru.`role_id`, ru.`user_id`, r.role_name as role_name, r.role_privilege as role_privilege, "
