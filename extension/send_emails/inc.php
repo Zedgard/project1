@@ -171,19 +171,19 @@ class send_emails extends \project\extension {
                 try {
                     // Server settings
                     $mail->SMTPDebug = SMTP::DEBUG_OFF; //DEBUG_SERVER; // for detailed debug output
-                    //$mail->isSMTP();
+                    $mail->isSMTP();
                     $mail->CharSet = "UTF-8";
-                    //$mail->Host = 'smtp.gmail.com';
+                    $mail->Host = 'smtp.gmail.com';
                     //$mail->Host = 'smtp.edgardzaycev.com';
-                    //$mail->SMTPAuth = true;
-                    //$mail->SMTPDebug = 1;
+                    $mail->SMTPAuth = true;
+                    $mail->SMTPDebug = 1;
                     //$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    //$mail->Port = 587; // google
+                    $mail->Port = 587; // google
                     //$mail->Port = 993;
 
-                    //$mail->Username = $user_info['user_email']; // YOUR gmail email
-                    //$mail->Password = $user_info['user_password']; // YOUR gmail password
-                    //$mail->SMTPSecure = 'tls';    
+                    $mail->Username = $user_info['user_email']; // YOUR gmail email
+                    $mail->Password = $user_info['user_password']; // YOUR gmail password    info@edgardzaycev.com L2f6lernBsFZ
+                    $mail->SMTPSecure = 'tls';    
                     //$mail->Username = 'admin@agenstvnet.ru'; // YOUR gmail email
                     //$mail->Password = 'Kopass1987'; // YOUR gmail password
                     // Sender and recipient settings

@@ -84,7 +84,7 @@
             <div class="modal-footer">
                 <input type="hidden" name="wares_id" class="wares_id" id="wares_id" value="0" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary btn_save_config">Сохранить</button>
+                <button type="button" class="btn btn-primary btn_save_wares">Сохранить</button>
             </div>
         </div>
     </div>

@@ -211,12 +211,13 @@
             $(".form_save_wares").find(".wares_id").val("0");
         }
 
-        $(".btn_save_config").click(function () {
+        $(".btn_save_wares").click(function () {
             var wares_id = $(".form_save_wares").find(".wares_id").val();
             var wares_title = $(".form_save_wares").find(".wares_title").val();
             var wares_categorys = $(".form_save_wares").find(".wares_categorys").val();
             var wares_ex_code = $(".form_save_wares").find(".wares_ex_code").val();
             var wares_articul = $(".form_save_wares").find(".wares_articul").val();
+            var club_month_period = $(".form_save_wares").find(".club_month_period").val();
             var wares_col = $(".form_save_wares").find(".wares_col").val();
             var wares_descr = tinymce.get('wares_descr').getContent();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
@@ -227,7 +228,6 @@
             for (var i = 0; i < images_col; i++) {
                 images_str.push($($(".form_save_wares").find('.image_elm')[i]).find(".image_obj_value").val());
             }
-
             sendPostLigth('/jpost.php?extension=wares',
                     {"edit_wares": wares_id,
                         "wares_title": wares_title,
@@ -240,7 +240,7 @@
                         //"wares_active": wares_active,
                         "wares_images": images_str.toString()},
                     function (e) {
-                        if (e['success'] == '1') {
+                        if (e['success'] == 1) {
                             //$(".form_save_wares").find('data-dismiss="modal"').click();
                             $('#form_edit_wares_modal').modal('hide');
                             getWaresArray(searchStr, visible_wares);
