@@ -23,8 +23,9 @@ if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'http') {
  */
 $server_http = explode('.', $_SERVER['HTTP_HOST']);
 if ($server_http[0] == 'www') {
-    //echo 'https://' . $server_http[1] . '.' . $server_http[2] . $_SERVER['REQUEST_URI'];
-    header('Location: https://' . $server_http[1] . '.' . $server_http[2] . $_SERVER['REQUEST_URI'], true, 301);
+    //print_r($server_http);
+    //echo 'https://' . $server_http[1] . '.' . $server_http[2] . '.' . $server_http[3] . $_SERVER['REQUEST_URI'];
+    header('Location: https://' . $server_http[1] . '.' . $server_http[2] . '.' . $server_http[3] . $_SERVER['REQUEST_URI'], true, 301);
     exit();
 }
 

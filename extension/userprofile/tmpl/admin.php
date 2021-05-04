@@ -23,7 +23,6 @@
                                         <input type="text" class="form-control user_email" id="user_email" <?= $user_phone_disabled ?> placeholder="Email..." required>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="row">
@@ -44,7 +43,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="login_instagram">Instagram login</label>
+                                        <label for="login_instagram">Ник в инстаграм</label>
                                         <input type="text" class="form-control login_instagram " id="login_instagram " placeholder="Instagram login..." required>
                                     </div>
                                 </div>

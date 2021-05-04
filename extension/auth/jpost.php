@@ -2,6 +2,7 @@
 
 defined('__CMS__') or die;
 
+session_start();
 include 'inc.php';
 include 'lang.php';
 
@@ -63,13 +64,16 @@ if (isset($_POST['authorization'])) {
  * Регистрация
  */
 if (isset($_POST['registration'])) {
-    if ($_POST['check_indicator'] != '1') {
-        $result = array('success' => 0, 'success_text' => 'Вы не поставили галочку (Я согласен с условиями и положениями)!');
+//    if ($_POST['check_indicator'] != '1') {
+//        $result = array('success' => 0, 'success_text' => 'Вы не поставили галочку (Я согласен с условиями и положениями)!');
+//    } else {
+    if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
+        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес ( ' . $_POST['email'] . ' )');// , 'action' => '/auth/', 'action_time' => '20'
     } else {
-        if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
-            $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес', 'action' => '/auth/', 'action_time' => '20');
-        }
+        //print_r($_SESSION['errors']);
+        //$result = array('success' => 0, 'success_text' => 'Ошибка регистрации, напишите администрации!');
     }
+    //}
 }
 /*
  * Выход

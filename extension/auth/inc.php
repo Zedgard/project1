@@ -2,6 +2,8 @@
 
 namespace project;
 
+session_start();
+
 defined('__CMS__') or die;
 
 /*
@@ -152,7 +154,6 @@ class auth extends \project\user {
 
             if ($check_private != 1) {
                 $error[] = 'Необходимо согласиться с условиями!';
-                return false;
             }
 
             $phone = $this->phoneReplace($phone);
@@ -170,8 +171,6 @@ class auth extends \project\user {
                 $activate_codeBase64 = base64_encode($activate_code);
             }
 
-
-
             if (strlen($phone) == 0) { // если не передан номер телефона
                 $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1"; // and `active` = 1 // ТОлько активированых 
                 $users = $sqlLight->queryList($query, array($email));
@@ -187,8 +186,8 @@ class auth extends \project\user {
             $query_find_user = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=0";
             $find_user = $sqlLight->queryList($query_find_user, array($email));
 
-            if (count($find_user) == 0) {
-                if (count($error) == 0) {
+            if (count($error) == 0) {
+                if (count($find_user) == 0) {
                     $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
                             . "VALUES ('?','?','','','?','?','?', NOW() )";
                     if ($sqlLight->query($query, array($email, $phone, $pass_hash, $active, $activate_code), 0)) {
@@ -199,29 +198,31 @@ class auth extends \project\user {
                     } else {
                         $error[] = $lang['auth'][$_SESSION['lang']]['error_register_form'];
                     }
-                } else {
-                    $query_update = "UPDATE `zay_users` SET `phone`='?',`first_name`='?',`last_name`='?',`u_pass`='?', "
-                            . "`active`='?',`active_code`='?',`active_lastdate`=NOW() "
-                            . "WHERE `id`='?' ";
-
-                    // Если ввели новый телефон то обновим его
-                    $phone_up = $find_user[0]['phone'];
-                    if (strlen(trim($phone)) > 0) {
-                        $phone_up = $phone;
-                    }
-                    if ($sqlLight->query($query_update, array($phone_up, $pass_hash, $active, $activate_code), 0)) {
-                        if (strlen($activate_codeBase64) > 0) {
-                            $this->sendActivateEmail($email, $activate_codeBase64);
-                        }
-                        return true;
-                    }
                 }
+            } else {
+//                $query_update = "UPDATE `zay_users` SET `phone`='?',`first_name`='?',`last_name`='?',`u_pass`='?', "
+//                        . "`active`='?',`active_code`='?',`active_lastdate`=NOW() "
+//                        . "WHERE `id`='?' ";
+//
+//                // Если ввели новый телефон то обновим его
+//                $phone_up = $find_user[0]['phone'];
+//                if (strlen(trim($phone)) > 0) {
+//                    $phone_up = trim($phone);
+//                }
+//                if ($sqlLight->query($query_update, array($phone_up, $pass_hash, $active, $activate_code), 0)) {
+//                    if (strlen($activate_codeBase64) > 0) {
+//                        $this->sendActivateEmail($email, $activate_codeBase64);
+//                    }
+//                    return true;
+//                }
             }
         } else {
-            $error[] = $lang['no_input_form'];
+            $error[] = 'Не заполнены поля!';
         }
 
+        //print_r($error);
         if (count($error) > 0) {
+
             $_SESSION['errors'] = $error;
         }
         return false;
@@ -470,16 +471,15 @@ class auth extends \project\user {
      * @param type $email
      * @return boolean
      */
-    public function sendActivateEmail($email, $activate_code) {
+    public function sendActivateEmail($email, $activate_code, $email_format_code = '') {
         global $lang;
         $send_emails = new \project\send_emails();
         $config = new \project\config();
-        $link_ed_mailto = $config->getConfigParam('link_ed_mailto'); //'hello@edgardzaitsev.com';
-        if (strlen($config->getConfigParam('link_ed_mailto')) > 0) {
-            $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
-        }
-        $from_name = str_replace(' ', '_', $lang['site_author_name']);
-
+//        $link_ed_mailto = $config->getConfigParam('link_ed_mailto'); //'hello@edgardzaitsev.com';
+//        if (strlen($config->getConfigParam('link_ed_mailto')) > 0) {
+//            $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
+//        }
+//        $from_name = str_replace(' ', '_', $lang['site_author_name']);
         // получи фаил шаблона письма
 //        $email_body = $this->fileTmpl('mailActivateAccount', $email);
 //        // заменим тэги
@@ -492,7 +492,11 @@ class auth extends \project\user {
 //        if ($mail->send($email, "{$lang['text_activate_account']} {$_SERVER['SERVER_NAME']}", $email_body)) {
 //            return true;
 //        }
-        if ($send_emails->send('mail_activate_account', $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'activate_code' => "/?activation=" . $activate_code))) {
+        $format_code = 'register_new_user';
+        if (strlen($email_format_code) > 0) {
+            $format_code = $email_format_code;
+        }
+        if ($send_emails->send($format_code, $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'activate_code' => "/?activation=" . $activate_code))) {
             return true;
         }
         return false;
@@ -511,17 +515,20 @@ class auth extends \project\user {
 
         $query = "SELECT * FROM `zay_users` u WHERE `active_code`='?' ";
         $users = $sqlLight->queryList($query, array($code));
-        if ($sqlLight->getCount() > 0) {
+        if (count($users) > 0) {
             $queryUpdate = "UPDATE `zay_users` SET `active`='1', `active_code`='' "
                     . "WHERE `id`='?' and `active_code`='?' ";
             if ($sqlLight->query($queryUpdate, array($users[0]['id'], $code))) {
                 // присвоим роль
                 $this->insertRole($users[0]['id'], 3);
+
+                //Авторизируем сразу
+                $data = $this->getUserInfo($users[0]['id']);
+                $_SESSION['user']['info'] = $data;
                 return true;
-            } else {
-                return false;
             }
         }
+        return false;
     }
 
     /**
