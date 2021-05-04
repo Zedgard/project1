@@ -831,6 +831,7 @@ class page {
             <?
             exit();
         }
+        $_SESSION['message']['text'] = '';
     }
 
     /*

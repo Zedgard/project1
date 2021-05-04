@@ -27,9 +27,9 @@ class userprofile extends \project\extension {
      */
     public function save_user_info($user_id, $data) {
         $user = new \project\user();
-        print_r($data);
+        //print_r($data);
         
-        echo "login_instagram: {$data['login_instagram']}<br/>\n";
+        //echo "login_instagram: {$data['login_instagram']}<br/>\n";
         
         if ($user_id > 0) {
             $query = "UPDATE `zay_users` "
@@ -52,7 +52,7 @@ class userprofile extends \project\extension {
                         $data['city_code'],
                         $data['active_subscriber'],
                         $data['login_instagram'],
-                        $user_id), 1
+                        $user_id), 0
             );
 
             return $ret;

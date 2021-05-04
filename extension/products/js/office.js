@@ -52,7 +52,7 @@ function getClientProducts() {
                 }
             }, 500);
         } else {
-            $(".products_arrays_data").html("Нет записей");
+            $(".products_arrays_data").html('<div class="w-100 text-center">Нет записей</div>');
         }
     });
 }

@@ -136,7 +136,7 @@ if ($user->isEditor()) {
             $query = "UPDATE `zay_users` SET `active_code`='?' "
                     . "WHERE `id`='?' ";
             $user->query($query, array($activate_code, $user_id));
-            if ($auth->sendActivateEmail($obj['email'], $activate_codeBase64)) {
+            if ($auth->sendActivateEmail($obj['email'], $activate_codeBase64, 'mail_activate_account')) {
                 $result = array('success' => 1, 'success_text' => 'Сообщение отправлено');
             } else {
                 $result = array('success' => 0, 'success_text' => 'Ошибка!');
