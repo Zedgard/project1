@@ -25,7 +25,11 @@ $server_http = explode('.', $_SERVER['HTTP_HOST']);
 if ($server_http[0] == 'www') {
     //print_r($server_http);
     //echo 'https://' . $server_http[1] . '.' . $server_http[2] . '.' . $server_http[3] . $_SERVER['REQUEST_URI'];
-    header('Location: https://' . $server_http[1] . '.' . $server_http[2] . '.' . $server_http[3] . $_SERVER['REQUEST_URI'], true, 301);
+    $href_add_1 = '';
+    if (isset($server_http[3]) && strlen($server_http[3]) > 0) {
+        $href_add_1 = '.' . $server_http[3];
+    }
+    header('Location: https://' . $server_http[1] . '.' . $server_http[2] . $href_add_1 . $_SERVER['REQUEST_URI'], true, 301);
     exit();
 }
 
