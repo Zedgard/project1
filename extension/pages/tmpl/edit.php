@@ -1,50 +1,49 @@
-<div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card card-default">
-                <form id="page_edit" action="/jpost.php?extension=pages" method="POST">
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-default">
+            <form id="page_edit" action="/jpost.php?extension=pages" method="POST">
 
-                    <div class="card-header card-header-border-bottom">
-                        <h2><?= $lang['pages'][$_SESSION['lang']]['editing'] ?></h2>
+                <div class="card-header card-header-border-bottom">
+                    <h2><?= $lang['pages'][$_SESSION['lang']]['editing'] ?></h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label><?= $lang['pages'][$_SESSION['lang']]['title_page'] ?></label>
+                        <input class="form-control" name="page_title" id="page_title" value="<?= $obj['page_title'] ?>" placeholder="<?= $lang['pages'][$_SESSION['lang']]['title'] ?>..."  type="text" required>
+                        <div class="valid-feedback">
+                            <?= $lang['pages'][$_SESSION['lang']]['accepted'] ?>
+                        </div>
+                        <div class="invalid-feedback">
+                            <?= $lang['pages'][$_SESSION['lang']]['name_page_is_true'] ?>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label><?= $lang['pages'][$_SESSION['lang']]['title_page'] ?></label>
-                            <input class="form-control" name="page_title" id="page_title" value="<?= $obj['page_title'] ?>" placeholder="<?= $lang['pages'][$_SESSION['lang']]['title'] ?>..."  type="text" required>
-                            <div class="valid-feedback">
-                                <?= $lang['pages'][$_SESSION['lang']]['accepted'] ?>
-                            </div>
-                            <div class="invalid-feedback">
-                                <?= $lang['pages'][$_SESSION['lang']]['name_page_is_true'] ?>
-                            </div>
+                    <div class="form-group">
+                        <label><?= $lang['pages'][$_SESSION['lang']]['link_to_page'] ?></label>
+                        <input class="form-control" name="url" id="url" value="<?= $obj['url'] ?>" 
+                               onkeyup="this.value = this.value.replace(/[^a-z_+]/, '')"
+                               placeholder="<?= $lang['pages'][$_SESSION['lang']]['internet_address'] ?>..." <?= (strlen($obj['url']) > 0) ? 'readonly="readonly"' : '' ?> type="text" required>
+                        <div class="valid-feedback">
+                            <?= $lang['pages'][$_SESSION['lang']]['accepted'] ?>
                         </div>
-                        <div class="form-group">
-                            <label><?= $lang['pages'][$_SESSION['lang']]['link_to_page'] ?></label>
-                            <input class="form-control" name="url" id="url" value="<?= $obj['url'] ?>" 
-                                   onkeyup="this.value = this.value.replace(/[^a-z_+]/, '')"
-                                   placeholder="<?= $lang['pages'][$_SESSION['lang']]['internet_address'] ?>..." <?= (strlen($obj['url']) > 0) ? 'readonly="readonly"' : '' ?> type="text" required>
-                            <div class="valid-feedback">
-                                <?= $lang['pages'][$_SESSION['lang']]['accepted'] ?>
-                            </div>
-                            <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['must_be_lowercase_only_in_latin'] ?></span>
+                        <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['must_be_lowercase_only_in_latin'] ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Описание страницы</label>
+                        <input class="form-control" name="description" id="description" value="<?= $obj['description'] ?>" 
+                               placeholder="description" type="text">
+                        <div class="valid-feedback">
+                            Описание страницы тег description
                         </div>
-                        <div class="form-group">
-                            <label>Описание страницы</label>
-                            <input class="form-control" name="description" id="description" value="<?= $obj['description'] ?>" 
-                                   placeholder="description" type="text">
-                            <div class="valid-feedback">
-                                Описание страницы тег description
-                            </div>
-                            <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['must_be_lowercase_only_in_latin'] ?></span>
-                        </div>
+                        <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['must_be_lowercase_only_in_latin'] ?></span>
+                    </div>
 
-                        <div class="form-group">
-                            <label>Наследование</label>
-                            <select class="form-control select_higter w-100" id="higter" name="higter">
+                    <div class="form-group">
+                        <label>Наследование</label>
+                        <select class="form-control select_higter w-100" id="higter" name="higter">
 
-                            </select>
-                            <input type="hidden" name="higter_val" class="higter_val" value="<?= ($obj['higter'] > 0) ? $obj['higter'] : 0 ?>" 
-                        </div>
+                        </select>
+                        <input type="hidden" name="higter_val" class="higter_val" value="<?= ($obj['higter'] > 0) ? $obj['higter'] : 0 ?>" 
+                               </div>
 
                         <div class="form-group">
                             <label><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></label>
@@ -86,10 +85,10 @@
                         </div>
 
                     </div>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
 <script>

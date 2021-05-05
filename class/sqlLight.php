@@ -154,14 +154,14 @@ class sqlLight {
         // Защитим от инъекций
 
         if (count($values) > 0) {
-            foreach ($values as $value) {
-                $value = $this->mysqli->real_escape_string($value);
-                $query = $this->str_replace_once('?', $value, $query);
+            foreach ($values as $v) {
+                $v = $this->mysqli->real_escape_string($v);
+                $query = $this->str_replace_once('?', $v, $query);
             }
         }
 
         if ($see != 0) {
-            echo 'query: ' . $query . "<br/>\n";
+        echo "query: {$query} <br/>\n";
         } else {
             //$_SESSION['errors'][] = $query;
         }

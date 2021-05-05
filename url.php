@@ -40,6 +40,7 @@ $_SESSION['body_javascript'][] = $page->javascript();
 $page->showMessage();
 //array_reverse($_SESSION['url']);
 $pageArray = $page->init();
+//echo $_SESSION['site_title'];
 //echo "site_title: {$_SESSION['site_title']}<br/>\n";
 //print_r($pageArray);
 //echo "<br/>\n";
