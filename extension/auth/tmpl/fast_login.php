@@ -110,6 +110,11 @@
                     </div>
                     <div class="form-group col-md-12 ">
                         <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Пароль" required />
+                        <label class="control control-checkbox mt-2 float-right" style="font-size: 0.8rem;">
+                            <input type="checkbox" class="form-check-input password-checkbox">
+                            <div class="control-indicator"></div>
+                            <span class="">Показать пароль</span>
+                        </label>
                         <div class="valid-feedback">
                             принято!
                         </div>
