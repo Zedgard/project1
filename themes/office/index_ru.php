@@ -29,6 +29,7 @@
 
         <!-- SLEEK CSS -->
         <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" />
+        <link rel="stylesheet" href="/assets/css/edit.css<?= $_SESSION['rand'] ?>">
 
         <!-- FAVICON -->
         <link href="/assets/img/favicon.png" rel="shortcut icon" />
@@ -134,7 +135,7 @@
               ——— LEFT SIDEBAR WITH FOOTER
               =====================================
                 -->
-                <aside class="left-sidebar bg-sidebar">
+                <aside class="left-sidebar bg-sidebar" style="z-index: 2000;">
                     <div id="sidebar" class="sidebar">
                         <!-- Aplication Brand -->
                         <div class="app-brand">

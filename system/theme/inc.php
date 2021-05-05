@@ -73,12 +73,11 @@ class theme {
         $sqlLight = new \project\sqlLight();
         $p = new \project\page();
         $roles = $p->blok_select_roles_list($block_id);
-        $querySelect = "SELECT pbc.content_title, pbc.content_descr, pbc.extension, 
-            eu.url
-          FROM `zay_page_block_contents` pbc 
-          left join `zay_extension_urls` eu on eu.id=pbc.extension
-          where pbc.page_id=? and pbc.block_id=?
-          ORDER BY pbc.`sort` ASC ";
+        $querySelect = "SELECT pbc.id as material_id, pbc.content_title, pbc.content_descr, pbc.extension, eu.url
+                FROM zay_page_block_contents pbc 
+                left join zay_extension_urls eu on eu.id=pbc.extension
+                where pbc.page_id=? and pbc.block_id=?
+                ORDER BY pbc.sort ASC ";
 
         $block_extension = $sqlLight->queryList($querySelect, array($page_id, $block_id));
         $_SESSION['page'][$block_code] = '';
@@ -102,7 +101,13 @@ class theme {
                 $content = '';
                 if (strlen($value['extension']) == 0 || $value['extension'] == 'T') {
                     // Обычный контент
-                    $content = $value['content_descr'];
+                    //$content = "page_id: {$page_id} | block_id: {$block_id} | material_id: {$value['material_id']} | ext_url: {$ext_url}<br/>\n";
+                    $content = '';
+                    if ($_SESSION['user']['info']['role_privilege'] > 7) {
+                        $content .= '<div class="btn btn-sm btn-link admin_edit_block" title="Редактировать материал"><a href="/admin/pages/?content=' . $page_id . '&block_id=' . $block_id . '&edit_material=' . $value['material_id'] . '" target="_blank"><i class="fas fa-file-signature"></i> ред.</a></div>';
+                    }
+                    $content .= $value['content_descr'];
+                    //echo "page_id: {$page_id} | block_id: {$value['id']} | ext_url: {$ext_url}<br/>\n";
                 } else {
                     $html_extension = array();
                     $ext_url = $value['url'];
@@ -111,12 +116,17 @@ class theme {
                         ob_start();
 //                        include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 //                        $config = new \project\config();
+                        //echo "page_id: {$page_id} | block_id: {$block_id} | material_id: {$value['material_id']} | ext_url: {$ext_url}<br/>\n";
                         include DOCUMENT_ROOT . $ext_url;
                         $html_extension[] = ob_get_clean();
                     } else {
                         $html_extension[] = $lang['not_find_extension'];
                     }
-                    $content = implode("\n", $html_extension);
+                    $content = '';
+                    if ($_SESSION['user']['info']['role_privilege'] > 7) {
+                        $content .= '<div class="btn btn-sm btn-link admin_edit_block" title="Редактировать материал"><a href="/admin/pages/?content=' . $page_id . '&block_id=' . $block_id . '&edit_material=' . $value['material_id'] . '" target="_blank"><i class="fas fa-file-signature"></i> ред.</a></div>';
+                    }
+                    $content .= implode("\n", $html_extension);
                 }
                 $_SESSION['page'][$block_code] = $_SESSION['page'][$block_code] . $content;
             }
@@ -147,7 +157,7 @@ class theme {
      */
     public function getPagesBlocks() {
         $sqlLight = new \project\sqlLight();
-        $querySelect = "SELECT * FROM `zay_pages_blocks`";
+        $querySelect = "SELECT * FROM zay_pages_blocks pb";
 
         return $sqlLight->queryList($querySelect, array());
     }

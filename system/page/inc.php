@@ -633,16 +633,16 @@ class page {
      */
     public function contentsListArray($page_id) {
         $sqlLight = new \project\sqlLight();
-        $querySelect = "SELECT * FROM `zay_page_block_contents` "
-                . "where page_id='?' "
-                . "ORDER BY `zay_page_block_contents`.`sort` ASC ";
+        $querySelect = "SELECT * FROM zay_page_block_contents pbc 
+                        where pbc.page_id='?' 
+                        ORDER BY pbc.sort ASC ";
 
         return $sqlLight->queryList($querySelect, array($page_id));
     }
 
     public function pageBlockContentsListArray($id) {
         $sqlLight = new \project\sqlLight();
-        $querySelect = "SELECT * FROM `zay_page_block_contents` where id='?' ";
+        $querySelect = "SELECT * FROM zay_page_block_contents pbc where pbc.id='?' ";
         return $sqlLight->queryList($querySelect, array($id), 0);
     }
 
@@ -654,7 +654,7 @@ class page {
      */
     public function contentSorted($content_id, $sort) {
         $sqlLight = new \project\sqlLight();
-        $query = "UPDATE `zay_page_block_contents` SET `sort`='?' WHERE `id`='?'";
+        $query = "UPDATE zay_page_block_contents pbc SET pbc.sort='?' WHERE pbc.id='?'";
         return $sqlLight->query($query, array($sort, $content_id));
     }
 
@@ -675,19 +675,19 @@ class page {
             $extension = '';
         }
         if ($id > 0) {
-            $query = "UPDATE `zay_page_block_contents` SET "
-                    . "`content_descr`='?', `extension`='?' "
-                    . "WHERE `id`='?' ";
-            return $sqlLight->query($query, array($content_descr, $extension, $id), 0);
+            $query = "UPDATE zay_page_block_contents pbc 
+                        SET pbc.content_descr='?', pbc.extension='?' 
+                        WHERE pbc.id='?' ";
+            return $sqlLight->query($query, array($content_descr, $extension, $id));
         } else {
-            $querySelect = "SELECT * FROM `zay_page_block_contents` WHERE content_title='?'";
+            $querySelect = "SELECT * FROM zay_page_block_contents pbc WHERE pbc.content_title='?'";
             $content = $sqlLight->queryList($querySelect, array($content_title));
 
             if (count($content) > 0) {
                 $_SESSION['errors'][] = 'Материал с таким наименованием уже существует';
             }
             if (count($_SESSION['errors']) == 0) {
-                $query = "INSERT INTO `zay_page_block_contents`(`content_title`, `page_id`, `block_id`, `content_descr`, `extension`, `sort`) "
+                $query = "INSERT INTO zay_page_block_contents (`content_title`, `page_id`, `block_id`, `content_descr`, `extension`, `sort`) "
                         . "VALUES ('?','?','?','?','?','0') ";
                 return $sqlLight->query($query, array($content_title, $page_id, $block_id, $content_descr, $extension), 0);
             }

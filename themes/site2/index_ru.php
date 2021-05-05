@@ -33,6 +33,7 @@
         <!-- bootstrap CSS -->
         <link rel="stylesheet" href="/assets/plugins/bootstrap5/css/bootstrap.min.css<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/themes/site1/css/style.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/edit.css<?= $_SESSION['rand'] ?>">
 
         <link rel="stylesheet" href="/assets/plugins/animate/animate.css<?= $_SESSION['rand'] ?>">
 
