@@ -172,8 +172,6 @@
     <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
     <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
 
-    <!--Google Map API-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
     <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>	
     <?
     foreach ($_SESSION['body_javascript'] as $js) {
