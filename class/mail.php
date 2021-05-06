@@ -57,7 +57,6 @@ class Mail {
     }
 
     /* Метод отправки письма */
-
     public function send($to, $subject, $message) {
         $from = "=?utf-8?B?" . base64_encode($this->from_name) . "?=" . " <" . $this->from . ">"; // Кодируем обратный адрес (во избежание проблем с кодировкой)
         $headers = "From: " . $from . "\r\nReply-To: " . $from . "\r\nContent-type: " . $this->type . "; charset=" . $this->encoding . "\r\n"; // Устанавливаем необходимые заголовки письма

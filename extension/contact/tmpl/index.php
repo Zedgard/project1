@@ -79,7 +79,6 @@
                                 </div>
                             </div>
 
-
                         </div>
                     </div>
 
@@ -136,8 +135,7 @@
                 </div>
             </div>
 
-
-
         </div>
     </div>
 </div>
+<script src="/extension/contact/js/contact.js<?= $_SESSION['rand'] ?>"></script>

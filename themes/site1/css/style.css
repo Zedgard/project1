@@ -2930,7 +2930,7 @@ header .soc_links a i{
     content: "";
     height: 3px;
     width: 50px;
-    background: #000000;
+    /* background: #000000; */
     display: block;
     margin-top: 15px;
 }

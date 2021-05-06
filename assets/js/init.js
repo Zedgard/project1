@@ -25,7 +25,6 @@ $(document).ready(function () {
     init_logout();
     init_not_processed_col();
     init_get_emails_col();
-    init_btn_send_message();
     init_office_list_categorys_col();
     init_bottom_cookie_btn();
     init_promo_input();
@@ -697,43 +696,6 @@ function initCartProductRemove() {
             $('.cart_product_go_card[product_id="' + cart_product_id + '"]').hide();
         });
     });
-}
-
-function init_btn_send_message() {
-    if (!!$(".btn_send_user_message")) {
-        $(".form_send_user_message").find(".user_email").keyup(function () {
-            $(".form_send_user_message").find(".user_email").css("border-color", "");
-        });
-        $(".form_send_user_message").find(".user_message").keyup(function () {
-            $(".form_send_user_message").find(".user_message").css("border-color", "");
-        });
-        $(".btn_send_user_message").click(function () {
-            var user_fio = $(".form_send_user_message").find(".user_fio").val();
-            var user_email = $(".form_send_user_message").find(".user_email").val();
-            var user_subject = $(".form_send_user_message").find(".user_subject").val();
-            var user_message = $(".form_send_user_message").find(".user_message").val();
-            if (user_email.length > 2 && user_message.length > 10) {
-                sendPostLigth('/jpost.php?extension=cart', {
-                    "user_send_message": 1,
-                    "user_fio": user_fio,
-                    "user_email": user_email,
-                    "user_subject": user_subject,
-                    "user_message": user_message,
-                }, function (e) {
-
-                });
-            } else {
-                if (user_email.length <= 2) {
-                    $(".form_send_user_message").find(".user_email").css("border-color", "#ff0000");
-                }
-                if (user_message.length <= 10) {
-                    $(".form_send_user_message").find(".user_message").css("border-color", "#ff0000");
-                }
-                alert('Не заполнены поля!');
-            }
-
-        });
-    }
 }
 
 
