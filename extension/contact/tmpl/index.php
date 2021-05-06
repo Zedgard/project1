@@ -87,49 +87,51 @@
         </div>
         <div class="col-lg-6">
 
-            <div class="row mb-4">
-                <div class="col-lg-12">
-                    <div>
-                        <button class="btn btn-secondary btn-lg w-100" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button text-start" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" 
+                                aria-expanded="true" aria-controls="collapseOne"
+                                style="line-height: 1.3rem;">
                             Оплата прошла, а письма со ссылкой нет.<br/>
-                            Куда обычно отправляется заказ?	
+                            Куда обычно отправляется заказ?
                         </button>
-                    </div>
-                    <div class="collapse show" id="collapseExample1">
-                        <div class="card card-body" style="margin-top: -8px;z-index: -1;">
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
                             <p>На электронный адрес, указанный при оформлении заказа, сразу после оплаты, автоматически, отправляется письмо со ссылками. Если вы не получили такое письмо, то:</p>
                             <p><span class="">1.</span> Проверьте все папки вашей электронной почты, возможно письмо попало в папку СПАМ.</p>
                             <p><span class="">2.</span> Все ваши заказы и ссылки на загрузку хранятся в вашем личном кабинете, с которого вы в любое время можете загрузить свой заказ. Войти в свой личный кабинет можно <a href="/auth/">здесь</a>.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-lg-12">
-                    <div>
-                        <button class="btn btn-secondary btn-lg w-100" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">         
-                            Сайт запрашивает авторизацию, где взять логин и пароль?							
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button text-start collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" 
+                                aria-expanded="false" aria-controls="collapseTwo"
+                                style="line-height: 1.3rem;">
+                            Сайт запрашивает авторизацию, где взять логин и пароль?
                         </button>
-                    </div>
-                    <div class="collapse" id="collapseExample2">
-                        <div class="card card-body" style="margin-top: -8px;z-index: -1;">
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
                             <p>Регистрация происходит автоматически, при оформлении первого заказа и на Ваш электронный адрес приходит письмо с логином и паролем для входа в личный кабинет. Если вы не смогли найти это письмо, то запросите новый пароль <a href="/auth/">здесь</a>.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-lg-12">
-                    <div>
-                        <button class="btn btn-secondary btn-lg w-100" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
-                            Ввожу логин и пароль, при авторизации, а меня выкидывает на главную страницу. Что я делаю не так?						
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button text-start collapsed" type="button" data-bs-toggle="collapse" 
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
+                                style="line-height: 1.3rem;">
+                            Ввожу логин и пароль, при авторизации, а меня выкидывает<br/> 
+                            на главную страницу. Что я делаю не так?
                         </button>
-                    </div>
-                    <div class="collapse" id="collapseExample3">
-                        <div class="card card-body" style="margin-top: -8px;z-index: -1;">
-                            <p>Если у вас похожая ситуация, значит вы вводите логин и пароль с ошибкой. Введите корректные учетные данные. Вы можете сбросить автоматический пароль и создать свой собственный, легкий пароль <a href="/auth/">здесь</a>.</p>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <p>Если у вас похожая ситуация, значит вы вводите логин и пароль с ошибкой. Введите корректные учетные данные. Вы можете сбросить автоматический пароль и создать свой собственный, легкий пароль <a href="/auth/">здесь</a>.</p> 
                         </div>
                     </div>
                 </div>
@@ -137,5 +139,6 @@
 
         </div>
     </div>
+
 </div>
 <script src="/extension/contact/js/contact.js<?= $_SESSION['rand'] ?>"></script>
