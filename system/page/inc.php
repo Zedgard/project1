@@ -55,66 +55,90 @@ class page {
 
         // информация о странице
         $page = $this->getPageInfoOrUrl($page_url);
+        //print_r($page);
 
         //echo "\n page: {$page['id']} \n";
+        // Если существует страница
+        if (isset($page['id']) && $page['id'] > 0) {
+            //$r = array();
+            // Роли страницы
+            $queryRole = "SELECT * FROM zay_pages_roles pr 
+                                left join zay_roles r on r.id=pr.role_id 
+                                WHERE pr.page_id='?'";
+            $roles = $sqlLight->queryList($queryRole, array($page['id']), 0);
 
-        if ($page['id'] > 0) {
-            $queryRole = "SELECT * FROM `zay_pages_roles` pr "
-                    . "left join `zay_roles` r on r.id=pr.role_id "
-                    . "WHERE page_id='?' ";
-            $roles = $sqlLight->queryList($queryRole, array($page['id']));
             /*
              * Если страница открыта только для определенной роли то необходима авторизация
              */
-            $user_role = 0;
+            //print_r($roles);
+            //exit();
+            $page_show = 0;
             if (count($roles) > 0) {
-                $r = array();
-                //for ($i = 0; $i < $role_count; $i++) {
-                if (count($_SESSION['user']) > 0) {
-                    foreach ($roles as $key => $value) {
-                        if ($block_see == 0 && $_SESSION['user']['info']['role_privilege'] >= $value['role_privilege']) {
-                            $user_role = 1;
+                // Зафиксируем роли страницы
+                foreach ($roles as $v) {
+                    $_SESSION['page']['roles'][] = $v;
+                }
+
+                //print_r($_SESSION['user']['info']);
+                //echo "<br/>";
+                //Если авторизированный пользователь 
+                if (isset($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 0) {
+                    foreach ($roles as $value) {
+                        if ($_SESSION['user']['info']['role_privilege'] >= $value['role_privilege']) {
+                            $page_show = 1;
+                            break;
                         }
                     }
 
                     // если зашел админ под учеткой пользователя он мет смотреть данные
-                    if ($user_role == 0 && $_SESSION['user']['other'] == 1) {
-                        $user_role = 1;
+                    if ($page_show == 0 && $_SESSION['user']['other'] == 1) {
+                        $page_show = 1;
                     }
-                    //}
-//                    if ($_SESSION['user']['info']['role_id'] == $roles[$i]['role_id']) {
-//                        $user_role = 1;
-//                    }
+                    foreach ($roles as $v) {
+                        if ($v['role_privilege'] == 0) {
+                            $page_show = 1;
+                        }
+                    }
                 } else {
-                    $user_role = 2;
-                    $r[] = $roles[$i]['role_id'];
-                }
-                $_SESSION['page']['roles'] = $r;
-                /*
-                 * Если нет роли значит учетка не активирована
-                 */
-                if ($user_role == 0) {
-                    // отправим на страницу авторизации
-                    //echo 333;
-                    //$page = $this->getPageInfoOrUrl('index');
-                    $_SESSION['site_title'] = $_SESSION['site_title'] . ' - cтраница не найдена ';
-                    $_SESSION['page'] = array();
+                    //echo 111;
+                    // Поишем роль общедоступную
+                    foreach ($roles as $v) {
+                        if ($v['role_privilege'] == 0) {
+                            $page_show = 1;
+                        }
+                        if ($v['role_privilege'] > 7) {
+                            $page_show = 2;
+                        }
+                    }
                 }
             } else { // Если не назначены права
-                $user_role = 1;
+                $page_show = 1;
             }
 
-            //echo "|{$user_role}| \n";
-            if ($user_role == 2) {
+            //echo "p: {$_SESSION['page_url']} |{$page_show}| \n";
+            //exit();
+            if ($page_show == 2) {
                 $page = $this->getPageInfoOrUrl('auth');
-                //print_r($page);
                 location_href('/auth/');
             }
-            if ($user_role == 1) {
+
+            /*
+             * Если нет роли значит учетка не активирована
+             */
+            if ($page_show == 0) {
+                // отправим на страницу авторизации
+                //$page = $this->getPageInfoOrUrl('index');
+                $_SESSION['site_title'] = $_SESSION['site_title'] . ' - cтраница не найдена ';
+                $_SESSION['page'] = array();
+            }
+
+            if ($page_show == 1) {
                 $_SESSION['page']['info'] = $page;
                 $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
+                //echo $_SESSION['site_title'];
             }
         } else {
+            // Не существует такой страницы
             $_SESSION['site_title'] = $_SESSION['site_title'] . ' - cтраница не найдена ';
             $_SESSION['page'] = array();
         }
@@ -609,16 +633,16 @@ class page {
      */
     public function contentsListArray($page_id) {
         $sqlLight = new \project\sqlLight();
-        $querySelect = "SELECT * FROM `zay_page_block_contents` "
-                . "where page_id='?' "
-                . "ORDER BY `zay_page_block_contents`.`sort` ASC ";
+        $querySelect = "SELECT * FROM zay_page_block_contents pbc 
+                        where pbc.page_id='?' 
+                        ORDER BY pbc.sort ASC ";
 
         return $sqlLight->queryList($querySelect, array($page_id));
     }
 
     public function pageBlockContentsListArray($id) {
         $sqlLight = new \project\sqlLight();
-        $querySelect = "SELECT * FROM `zay_page_block_contents` where id='?' ";
+        $querySelect = "SELECT * FROM zay_page_block_contents pbc where pbc.id='?' ";
         return $sqlLight->queryList($querySelect, array($id), 0);
     }
 
@@ -630,7 +654,7 @@ class page {
      */
     public function contentSorted($content_id, $sort) {
         $sqlLight = new \project\sqlLight();
-        $query = "UPDATE `zay_page_block_contents` SET `sort`='?' WHERE `id`='?'";
+        $query = "UPDATE zay_page_block_contents pbc SET pbc.sort='?' WHERE pbc.id='?'";
         return $sqlLight->query($query, array($sort, $content_id));
     }
 
@@ -651,19 +675,19 @@ class page {
             $extension = '';
         }
         if ($id > 0) {
-            $query = "UPDATE `zay_page_block_contents` SET "
-                    . "`content_descr`='?', `extension`='?' "
-                    . "WHERE `id`='?' ";
-            return $sqlLight->query($query, array($content_descr, $extension, $id), 0);
+            $query = "UPDATE zay_page_block_contents pbc 
+                        SET pbc.content_descr='?', pbc.extension='?' 
+                        WHERE pbc.id='?' ";
+            return $sqlLight->query($query, array($content_descr, $extension, $id));
         } else {
-            $querySelect = "SELECT * FROM `zay_page_block_contents` WHERE content_title='?'";
+            $querySelect = "SELECT * FROM zay_page_block_contents pbc WHERE pbc.content_title='?'";
             $content = $sqlLight->queryList($querySelect, array($content_title));
 
             if (count($content) > 0) {
                 $_SESSION['errors'][] = 'Материал с таким наименованием уже существует';
             }
             if (count($_SESSION['errors']) == 0) {
-                $query = "INSERT INTO `zay_page_block_contents`(`content_title`, `page_id`, `block_id`, `content_descr`, `extension`, `sort`) "
+                $query = "INSERT INTO zay_page_block_contents (`content_title`, `page_id`, `block_id`, `content_descr`, `extension`, `sort`) "
                         . "VALUES ('?','?','?','?','?','0') ";
                 return $sqlLight->query($query, array($content_title, $page_id, $block_id, $content_descr, $extension), 0);
             }

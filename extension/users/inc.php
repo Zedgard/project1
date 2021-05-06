@@ -247,6 +247,7 @@ class user extends \project\extension {
     public function sendEmail($to_email, $subject, $file_name, $arrayReplaseText) {
         global $lang;
         $config = new \project\config();
+        $send_emails = new \project\send_emails();
         $validator = new Validator();
         $error = array();
 
@@ -274,9 +275,18 @@ class user extends \project\extension {
             $mail->setType('text/html');
             $mail->setFromName($link_ed_mailto); // Устанавливаем имя в обратном адресе
             //var_dump($mail->send($to_email, $subject, $email_body));
-            if ($mail->send($to_email, $subject, $email_body)) {
+            if ($send_emails->send('message_default', $to_email,
+                            array(
+                                'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
+                                'subject' => $subject,
+                                'message' => $email_body,
+                            )
+                    )) {
                 return true;
             }
+//            if ($mail->send($to_email, $subject, $email_body)) {
+//                return true;
+//            }
         }
         return false;
     }

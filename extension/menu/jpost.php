@@ -99,20 +99,36 @@ if (isset($_POST['edit_item'])) {
     }
 }
 // Обновить позицию
-if (isset($_POST['set_position'])) {
-    $item_id = $_POST['item_id'];
-    $menu_id = $_POST['menu_id'];
-    $position = $_POST['set_position'];
-    if ($items->set_position($menu_id, $item_id, $position)) {
-        
+//if (isset($_POST['set_position'])) {
+//    $item_id = $_POST['item_id'];
+//    $menu_id = $_POST['menu_id'];
+//    $position = $_POST['set_position'];
+//    if ($items->set_position($menu_id, $item_id, $position)) {
+//        
+//    }
+//}
+// Обновить позицию
+if (isset($_POST['ajax_metod'])) {
+    // Сортировка 
+    if ($_POST['ajax_metod'] == 'update_position') {
+        $db_table = trim($_POST['db_table']);
+        $db_row = trim($_POST['db_row']);
+        $result = array('success' => 1, 'success_text' => '');
+        if (count($_POST['ids']) > 0) {
+            $i = 0;
+            foreach ($_POST['ids'] as $value) {
+                $items->position_update($db_table, $db_row, $value, $i);
+                $i++;
+            }
+        }
     }
 }
 
 // Удаление элемента меню
-if(isset($_POST['delete_item'])){
-    if($items->delete_menu_item($_POST['delete_item'])){
+if (isset($_POST['delete_item'])) {
+    if ($items->delete_menu_item($_POST['delete_item'])) {
         $result = array('success' => 1, 'success_text' => 'Выполнено');
-    }else{
+    } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
     }
 }

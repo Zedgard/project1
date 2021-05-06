@@ -3,13 +3,13 @@
     <!-- Home Link -->
     <a href="/"  target="_blank" class="github-link" title="Главная страница">
         <svg width="70" height="70" viewBox="0 0 250 250" aria-hidden="true">
-            <defs>
-                <linearGradient id="grad1" x1="0%" y1="75%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#896def;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#482271;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <path d="M 0,0 L115,115 L115,115 L142,142 L250,250 L250,0 Z" fill="url(#grad1)"></path>
+        <defs>
+        <linearGradient id="grad1" x1="0%" y1="75%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#896def;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#482271;stop-opacity:1" />
+        </linearGradient>
+        </defs>
+        <path d="M 0,0 L115,115 L115,115 L142,142 L250,250 L250,0 Z" fill="url(#grad1)"></path>
         </svg>
         <i class="mdi mdi-home"></i>
     </a>
@@ -75,26 +75,31 @@
                                             </div>
                                             <div class="form-group col-md-12 ">
                                                 <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Пароль" required />
+                                                <label class="control control-checkbox mt-2 float-right" style="font-size: 0.8rem;">
+                                                    <input type="checkbox" class="form-check-input password-checkbox">
+                                                    <div class="control-indicator"></div>
+                                                    <span class="">Показать пароль</span>
+                                                </label>
                                                 <div class="valid-feedback">
                                                     принято!
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="control control-checkbox">
-                                                        <input type="checkbox" id="remember_me" name="remember_me" value="1" />
-                                                        <div class="control-indicator"></div>
-                                                        Запомни меня
-                                                    </label>
-                                                </div> 
-                                                <div class="col-md-6 text-right">
-                                                    <p><a class="text-blue re_password_link" href="javascript:void(0)">Забыли пароль?</a></p>
-                                                </div> 
-                                                    
-                                                   
+                                                    <div class="col-md-6">
+                                                        <label class="control control-checkbox">
+                                                            <input type="checkbox" id="remember_me" name="remember_me" value="1" />
+                                                            <div class="control-indicator"></div>
+                                                            Запомни меня
+                                                        </label>
+                                                    </div> 
+                                                    <div class="col-md-6 text-right">
+                                                        <p><a class="text-blue re_password_link" href="javascript:void(0)">Забыли пароль?</a></p>
+                                                    </div> 
+
+
                                                 </div>
-                                                
+
                                                 <div class="form_result" style="display: none;">
 
                                                 </div>
@@ -106,7 +111,7 @@
                                                     <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
                                                     <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
                                                     <a href="<?= $facebook_link ?>"><img src="/assets/img/ui-icons/facebook_32.png"/></a>
-                                                    
+
                                                 </div>
                                                 <div class="text-right" style="margin-top: 3rem;font-size: 1rem;">
                                                     Нет учетной записи <a class="text-blue" href="/auth/?registrations">Регистрация</a>
@@ -124,7 +129,7 @@
                     <? if (isset($_GET['registrations'])): ?>
                         <div class="col-xl-5 col-lg-6 col-md-10 offset-md-3">
                             <div class="card">
-                                
+
                                 <div class="card-body p-5">
                                     <h4 class="text-dark mb-5" style="font-size: 2rem;text-align: center;">Регистрация</h4>
                                     <form id="registration" action="/jpost.php?extension=auth" method="POST">

@@ -29,6 +29,13 @@
         }
 
     });
+    
+    if(!!$('.dropdown-item')){
+        $('.dropdown-item[href="#"]').unbind('click').click(function () {
+            $(this).closest('.dropdown').find('ul.dropdown-menu').toggle(200);
+            //console.log(111);
+        });
+    }
 
 
 

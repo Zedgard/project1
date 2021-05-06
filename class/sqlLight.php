@@ -35,7 +35,7 @@ class sqlLight {
         global $cfg_db_prefix, $cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name;
         //include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
         $this->db_prefix = $cfg_db_prefix;
-
+        //echo 'db_prefix: ' . $this->db_prefix . ' cfg_db_prefix: ' . $cfg_db_prefix . ' ';
         $this->mysqli = new \mysqli($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
 
         /* проверка соединения */
@@ -154,14 +154,14 @@ class sqlLight {
         // Защитим от инъекций
 
         if (count($values) > 0) {
-            foreach ($values as $value) {
-                $value = $this->mysqli->real_escape_string($value);
-                $query = $this->str_replace_once('?', $value, $query);
+            foreach ($values as $v) {
+                $v = $this->mysqli->real_escape_string($v);
+                $query = $this->str_replace_once('?', $v, $query);
             }
         }
 
         if ($see != 0) {
-            echo 'query: ' . $query . "<br/>\n";
+        echo "query: {$query} <br/>\n";
         } else {
             //$_SESSION['errors'][] = $query;
         }

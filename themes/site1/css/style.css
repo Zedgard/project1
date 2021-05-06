@@ -40,7 +40,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.2;
     color: #3D3D3D;
     overflow-x: hidden !important;
@@ -2930,7 +2930,7 @@ header .soc_links a i{
     content: "";
     height: 3px;
     width: 50px;
-    background: #000000;
+    /* background: #000000; */
     display: block;
     margin-top: 15px;
 }
@@ -4863,6 +4863,17 @@ footer_menu{
 .bottom_cookie_desktop_hide{
     height: 50px;
 }
+.accordion-collapse {
+    border: solid rgba(0, 0, 0, 0.125);
+    border-width: 0 1px 1px 1px;
+}
+.accordion-button.collapsed{
+    border-bottom-width: 1px;
+}
+.accordion-header{
+    background-color: #e7f1ff;
+}
+
 .block_cart_other{
     padding: 2rem 0;
     background-color: #e8e8e8;

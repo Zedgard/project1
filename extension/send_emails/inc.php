@@ -184,8 +184,6 @@ class send_emails extends \project\extension {
 //                    //echo "to: {$to_email} email_body_file: {$email_info['email_body_file']} subject: {$email_info['email_subject']} \n";
 //                    // Отправляем
 //                    $return = mail($to_email, $email_info['email_subject'], $body, $headers);
-
-
                     // Server settings Не работает
                     $mail->SMTPDebug = SMTP::DEBUG_OFF; //DEBUG_SERVER; // for detailed debug output
                     $mail->isSMTP();
@@ -196,18 +194,23 @@ class send_emails extends \project\extension {
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port = 587; // google
                     $mail->SMTPDebug = 0;
-                    $mail->SMTPSecure = 'tls';  
+                    $mail->SMTPSecure = 'tls';
                     //$mail->Port = 465;
                     //echo "u: {$user_info['user_email']} p: {$user_info['user_password']} \n";
                     $mail->Username = $user_info['user_email'];    // YOUR gmail email
-                    $mail->Password = $user_info['user_password']; // YOUR gmail password    info@edgardzaycev.com L2f6lernBsFZ
+                    $mail->Password = $user_info['user_password']; // YOUR gmail password    L2f6lernBsFZ
                     // Sender and recipient settings
-                    $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // samodinskaya1611@mail.ru
+                    $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // 
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
                     // Setting the email content
                     $mail->IsHTML(true);
-                    $mail->Subject = $email_info['email_subject'];
+                    // Если передали новую тему
+                    if (isset($params['subject']) && strlen($params['subject']) > 0) {
+                        $mail->Subject = $params['subject'];
+                    } else {
+                        $mail->Subject = $email_info['email_subject'];
+                    }
                     $mail->Body = $body;
                     //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
                     $return = $mail->send();
