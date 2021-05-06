@@ -3,7 +3,7 @@
 namespace project;
 
 defined('__CMS__') or die;
-
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
 class userprofile extends \project\extension {
@@ -28,9 +28,8 @@ class userprofile extends \project\extension {
     public function save_user_info($user_id, $data) {
         $user = new \project\user();
         //print_r($data);
-        
         //echo "login_instagram: {$data['login_instagram']}<br/>\n";
-        
+
         if ($user_id > 0) {
             $query = "UPDATE `zay_users` "
                     . "SET `first_name`='?',`last_name`='?', `city`='?',"
@@ -54,6 +53,12 @@ class userprofile extends \project\extension {
                         $data['login_instagram'],
                         $user_id), 0
             );
+
+            if ($ret) {
+                $p_auth = new \project\auth();
+                $data = $p_auth->getUserInfo($_SESSION['user']['info']['id']);
+                $_SESSION['user']['info'] = $data;
+            }
 
             return $ret;
         }

@@ -89,7 +89,7 @@
     <div class="col-lg-6 mb-4">
         <div class="block_profit_plus flex-item">
             <i class="fas fa-plus" style="font-size: 8rem;"></i>
-            <div class="block_profit_title">Вы получите:</div>
+            <div class="block_profit_title">Ты получишь:</div>
             <div class="pluss"></div>
         </div>
     </div>

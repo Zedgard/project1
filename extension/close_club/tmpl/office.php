@@ -37,12 +37,12 @@
                                             // Разрешить покупку если период не превышает 12 месяцев
                                             if ($close_club->check_add_new_period($value['club_month_period'])) {
                                                 ?>
-                                                <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add pl-5 pr-5" go_url="/shop/cart/" product_id="<?= $value['id'] ?>"><?= $value['title'] ?></a>
+                                                <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add mb-2 pl-5 pr-5" go_url="/shop/cart/" product_id="<?= $value['id'] ?>"><?= $value['title'] ?></a>
                                                 <div style="display: none;">
                                                     <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add pl-5 pr-5" go_url="/shop/cart/" product_id="<?= $value['id'] ?>">Купить</a>
                                                     <div class="btn-group">
-                                                        <a href="/shop/cart/" class="btn button btn-success textcenter cart_product_go_card" product_id="<?= $value['id'] ?>" style="display: none;">Перейти в корзину</a>
-                                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $value['id'] ?>" style="display: none;" title="Удалить из корзины"><i class="fa fa-trash" style="font-size: 1.2rem;padding-top: 6px;"></i></a>
+                                                        <a href="/shop/cart/" class="btn button btngreen-outline btn-success textcenter cart_product_go_card" product_id="<?= $value['id'] ?>" style="display: none;padding: 0.8rem;border-right: none;">Перейти в корзину</a>
+                                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $value['id'] ?>" style="display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                                 <?
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" style="display: none;">
                                 <div class="col-12">
                                     <table class="table table-hover">
                                         <thead style="display: none;">
