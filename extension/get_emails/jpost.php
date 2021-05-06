@@ -23,7 +23,7 @@ if (isset($_POST['set_email'])) {
                 $result = array('success' => 0, 'success_text' => 'Ошибка!');
             }
         } else {
-            $result = array('success' => 0, 'success_text' => 'Не верно указали адрес Email!');
+            $result = array('success' => 0, 'success_text' => 'Не верно указали адрес электронной почты!');
         }
     }
 }

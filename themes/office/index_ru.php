@@ -246,12 +246,19 @@
                                     </li>
                                     -->
                                     <!-- User Account -->
+                                    <?
+                                    if (strlen(trim($_SESSION['user']['info']['last_name'])) > 0 && strlen(trim($_SESSION['user']['info']['first_name'])) > 0) {
+                                        $show_user_name = $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'];
+                                    } else {
+                                        $show_user_name = $_SESSION['user']['info']['email'];
+                                    }
+                                    ?>
                                     <li class="dropdown user-menu">
                                         <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                             <? if (strlen($_SESSION['user']['info']['avatar'] && is_file($_SERVER['DOCUMENT_ROOT'] . $_SESSION['user']['info']['avatar'])) > 0): ?>
                                                 <img src="<?= $_SESSION['user']['info']['avatar'] ?>" class="user-image" alt="User Image" />
                                             <? endif; ?>
-                                            <span class="d-none d-lg-inline-block"><?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?></span>
+                                            <span class="d-none d-lg-inline-block"><?= $show_user_name ?></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <!-- User image -->
@@ -259,7 +266,7 @@
                                                 <!-- <img src="/assets/img/user/user.jpg" class="img-circle" alt="User Image" /> -->
                                                 <div class="d-inline-block">
                                                     Добрый день!<br/>
-                                                    <?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?> <small class="pt-1"><?= $_SESSION['user']['info']['email'] ?></small>
+                                                    <?= $show_user_name ?> <small class="pt-1"><?= $_SESSION['user']['info']['email'] ?></small>
                                                 </div>
                                             </li>
 

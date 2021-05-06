@@ -46,7 +46,14 @@
 
                         <div style="float: right;margin-top: 4px;">
                             <!--<a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | -->
-                            <a href="/auth/" class="header_close_club">Мой кабинет<?= (isset($_SESSION['user']['info']['id'])) ? ': <span>' . $_SESSION['user']['info']['first_name'] : '</span>' ?></a>  
+                            <?
+                            if (strlen(trim($_SESSION['user']['info']['first_name'])) > 0) {
+                                $show_user_name = $_SESSION['user']['info']['first_name'];
+                            } else {
+                                $show_user_name = $_SESSION['user']['info']['email'];
+                            }
+                            ?>
+                            <a href="/auth/" class="header_close_club">Мой кабинет<?= (isset($_SESSION['user']['info']['id'])) ? ': <span>' . $show_user_name : '</span>' ?></a>  
                             <? if (isset($_SESSION['user']['info']['id'])): ?>
                                 <a href="javascript:void(0)" class="btn_logout header_user_auth btn_logout" title="Выйти из личного кабинета"><i class="fas fa-sign-out-alt"></i></a>
                             <? endif; ?>
