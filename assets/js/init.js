@@ -193,11 +193,8 @@ $(document).ready(function () {
     initCartProductAdd();
     initCartProductRemove();
 
-
     $('.jaccordion').accordion({
-
         heightStyle: 'content'
-
     });
 
     // Отобразить пароль

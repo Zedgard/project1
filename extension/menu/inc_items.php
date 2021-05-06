@@ -137,6 +137,20 @@ class menu_item extends \project\extension {
         $query = "UPDATE `zay_menu_items` SET `position`='?' WHERE `menu_id`='?' and `id`='?'";
         return $this->query($query, array($position, $menu_id, $item_id), 0);
     }
+    
+    /**
+     * Обновить позицию
+     * @param type $db_table
+     * @param type $db_row
+     * @param type $material_id
+     * @param type $position_val
+     * @return type
+     */
+    public function position_update($db_table, $db_row, $material_id, $position_val) {
+        echo "pp: {$this->db_prefix} ";
+        $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'"; 
+        return $this->query($query, array($this->db_prefix . $db_table, $db_row, $position_val, $material_id), 0);
+    }
 
     /*
      * ------------------------------------------------------

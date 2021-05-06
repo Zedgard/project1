@@ -13,6 +13,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 class extension {
 
     public $db_prefix;
+    public $db_link;
     private $MysqliAssos = 0;
 
     public function __construct() {
@@ -27,7 +28,9 @@ class extension {
         if (!isset($_SESSION['extension_init']))
             $_SESSION['extension_init'] = 0;
         if ($_SESSION['extension_init'] == 0) {
-            $sqlLight = new \project\sqlLight();
+            $sqlLight= new \project\sqlLight();
+            //var_dump($sqlLight);
+            //echo 'init db_prefix: ' . $sqlLight->db_prefix . ' ';
             $this->db_prefix = $sqlLight->db_prefix;
             include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
@@ -168,6 +171,8 @@ class extension {
 
     public function query($query, $queryValues = array(), $see = 0) {
         $sqlLight = new \project\sqlLight();
+        //var_dump($sqlLight);
+        //echo 'query_db_prefix: ' . $sqlLight->db_prefix . ' ';
         return $sqlLight->query($query, $queryValues, $see);
     }
 
