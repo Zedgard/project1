@@ -138,8 +138,8 @@
                 <div class="col-md-12 text-end">
                     <a href="javascript:void(0)" class="btn button btngreen textcenter cart_product_add pl-5 pr-5" product_id="<?= $productData['id'] ?>">В корзину</a>
                     <div class="btn-group">
-                        <a href="/shop/cart/" class="btn button btngreen textcenter cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;">Перейти в корзину</a>
-                        <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;" title="Удалить из корзины"><i class="fa fa-trash" style="font-size: 1.2rem;padding-top: 6px;"></i></a>
+                        <a href="/shop/cart/" class="btn btngreen-outline button btngreen textcenter cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;padding: 0.8rem;border-right: none;">Перейти в корзину</a>
+                        <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
             </div>
