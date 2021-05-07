@@ -111,7 +111,7 @@
                                 </div> 
                                 -->
                                 <div class="header-nav-feature header-nav-features-cart d-inline-flex" style="float: right;">
-                                    <a href="#" class="header-nav-features-toggle">
+                                    <a href="javascript:void(0)" class="header-nav-features-toggle">
                                         <i class="fa fa-shopping-basket fa-4x header-nav-top-icon-img d-none d-lg-block" style="font-size: 1.6rem;"></i>
                                         <i class="fa fa-shopping-basket fa-4x header-nav-top-icon-img d-lg-none" style="font-size: 2.4rem;margin-top: 10px;"></i>
                                         <!--<img src="/assets/img/shop/icon-cart.svg" width="18" alt="" class="header-nav-top-icon-img">-->	
@@ -119,7 +119,7 @@
                                             <span class="cart-qty">0</span>	
                                         </span>							
                                     </a>											
-                                    <div class="header-nav-features-dropdown" id="headerTopCartDropdown" style="margin-top: 40px;margin-left: 20px">
+                                    <div class="header-nav-features-dropdown" id="headerTopCartDropdown">
                                         <ol class="mini-products-list">
 
 

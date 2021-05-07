@@ -613,7 +613,7 @@
     z-index: 10000;
     right: 100%;
     margin-right: -32px;
-    margin-top: 30px;
+    margin-top: 32px;
     transition: opacity .2s ease-out;
     pointer-events: none;
 }
@@ -692,7 +692,7 @@
     width: 100%;
     text-align: center;
     top: 50%;
-    margin-top: -4px;
+    margin-top: -10px;
     left: 0;
     padding: 0;
     display: block;
@@ -719,7 +719,7 @@
 #header .header-nav-features .header-nav-features-cart .mini-products-list {
     overflow: hidden;
     overflow-y: auto;
-    max-height: 30rem;
+    max-height: 22rem;
     width: 100%;
     list-style: none;
     margin: 0;
