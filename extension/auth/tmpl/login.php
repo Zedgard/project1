@@ -151,7 +151,7 @@
                                                     <label class="control control-checkbox">
                                                         <input type="checkbox" id="check_indicator" name="check_indicator" value="1" />
                                                         <div class="control-indicator"></div>
-                                                        Я согласен с условиями и положениями
+                                                        Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
                                                     </label>
 
                                                 </div>
