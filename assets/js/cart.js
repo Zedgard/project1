@@ -46,6 +46,22 @@ function fn_dataLayer() {
 }
 
 function init_pay() {
+
+    $(".header-nav-features-toggle").click(function () {
+        var opacity = $(".header-nav-features-dropdown").css("opacity");
+        if (opacity == 0) {
+            $(".header-nav-features-dropdown").css("opacity", "1");
+            $(".header-nav-features-dropdown").css("top", "12px");
+            $(".header-nav-features-dropdown").css("pointer-events", "all");
+        } else {
+            $(".header-nav-features-dropdown").css("opacity", "0");
+            $(".header-nav-features-dropdown").css("top", "-10000px");
+            $(".header-nav-features-dropdown").css("pointer-events", "none");
+        }
+    });
+
+
+
     $(".btn_cart_yandex").unbind('click').click(function () {
         // /pay.php?yandex=1
         fn_dataLayer();
