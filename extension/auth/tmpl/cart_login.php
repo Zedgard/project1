@@ -81,7 +81,10 @@
             <div class="col-mb-12 mt-2">
                 <div class="check_indicator2">
                     <label class="control control-checkbox">
-                        <input type="checkbox" id="check_indicator" name="check_indicator" value="1" class="mr-2" /> <span style="margin-left: 6px;">Я согласен с условиями и положениями</span>
+                        <input type="checkbox" id="check_indicator" name="check_indicator" value="1" class="mr-2" /> 
+                        <span style="margin-left: 6px;">
+                            Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
+                        </span>
                         <div class="control-indicator"></div>
 
                     </label>

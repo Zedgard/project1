@@ -15,7 +15,9 @@ function init_btn_send_message() {
             var user_email = $(".form_send_user_message").find(".user_email").val();
             var user_subject = $(".form_send_user_message").find(".user_subject").val();
             var user_message = $(".form_send_user_message").find(".user_message").val();
-            if (user_email.length > 2 && user_message.length > 10) {
+            var user_check_indicator = ($(".form_send_user_message").find('[name="user_check_indicator"]').prop("checked")) ? 1 : 0;
+
+            if (user_email.length > 2 && user_message.length > 10 && user_check_indicator > 0) {
                 sendPostLigth('/jpost.php?extension=contact', {
                     "user_send_message": 1,
                     "user_fio": user_fio,
@@ -32,7 +34,7 @@ function init_btn_send_message() {
                 if (user_message.length <= 10) {
                     $(".form_send_user_message").find(".user_message").css("border-color", "#ff0000");
                 }
-                alert('Не заполнены поля!');
+                alert('Не заполнены поля или не стоят галочки!');
             }
 
         });
