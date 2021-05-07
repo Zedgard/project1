@@ -8,3 +8,54 @@ and open the template in the editor.
     Author     : viktor
 */
 
+.cart_product_add{
+    font-size: 1rem;
+    font-weight: bold;
+}
+.freeze_ticket_block{
+    background-color: #F2F2F2;
+    text-align: center;
+}
+
+.freeze_day_buttons{
+    clear: both;
+    display: inline-block;
+margin: 0 auto;
+}
+.freeze_day_buttons .freeze_button{
+    float: left;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.freeze_day_buttons .freeze_button .freeze_bg{
+    padding: 0.6rem;
+    background-color: #a8a8a8;
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.freeze_day_buttons .freeze_button .default{
+    background-color: #4D6C80;
+}
+.freeze_day_buttons .freeze_button .lock{
+    background-color: #a8a8a8;
+}
+.freeze_day_buttons .freeze_button .active{
+    background-color: #9AD8FF;
+}
+
+.freeze_day_buttons .title_sum{
+    font-size: 3rem;
+    font-weight: bold;
+}
+.freeze_day_buttons .title_name{
+    font-size: 1rem;
+    font-weight: bold;
+}
+.freeze_day_buttons .button_text{
+    border-radius: 30px;
+}
+.freeze_day_buttons .freeze_user_active:hover{
+    cursor: pointer;
+}

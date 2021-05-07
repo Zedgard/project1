@@ -85,8 +85,9 @@ if (isset($_GET['API_CODE']) && PRIVATE_CODE == $_GET['API_CODE']) {
     /**
      * Все активные пользователи закрытого клуба
      */
-    if (isset($_GET['close_club_active_users'])) {
-        $data = $close_club->close_club_active_users($_GET['close_club_active_users']);
+    if (isset($_GET['method']) && $_GET['method'] == 'close_club_auth') {
+        $instagram_login = (isset($_GET['instagram_login']) && strlen($_GET['instagram_login']) > 0) ? $_GET['instagram_login'] : '';
+        $data = $close_club->close_club_active_users($instagram_login);
         $result = array('success' => 1, 'success_text' => 'OK', 'data' => $data);
     }
 } else {

@@ -32,6 +32,7 @@ class close_club extends \project\extension {
         }
 
         $query = "SELECT
+                        cc.id,
                         cc.status,
                         cc.end_date,
                         cc.freeze_date,
@@ -53,7 +54,7 @@ class close_club extends \project\extension {
     }
 
     /**
-     * Подучить данные по клубу
+     * Получить данные по клубу
      * @return type
      */
     public function get_club_user_info($user_id) {
