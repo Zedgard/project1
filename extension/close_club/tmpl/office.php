@@ -34,12 +34,12 @@
                                 // Разрешить покупку если период не превышает 12 месяцев
                                 if ($close_club->check_add_new_period($value['club_month_period'])) {
                                     ?>
-                                    <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add mb-2 " go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 140px;"><?= $value['title'] ?></a>
+                                    <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add mb-2 " go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 143px;"><?= $value['title'] ?> <i class="fas fa-bullhorn"></i></a>
                                     <div style="display: none;">
-                                        <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add" go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 140px;">Купить</a>
+                                        <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add" go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 143px;">Купить</a>
                                         <div class="btn-group">
-                                            <a href="/shop/cart/" class="btn button btngreen-outline btn-success textcenter cart_product_go_card" product_id="<?= $value['id'] ?>" style="width: 140px;display: none;padding: 0.8rem;border-right: none;">Перейти в корзину</a>
-                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $value['id'] ?>" style="width: 140px;display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
+                                            <a href="/shop/cart/" class="btn button btngreen-outline btn-success textcenter cart_product_go_card" product_id="<?= $value['id'] ?>" style="width: 143px;display: none;padding: 0.8rem;border-right: none;">Перейти в корзину</a>
+                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $value['id'] ?>" style="width: 143px;display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </div>
                                     <?
@@ -53,9 +53,9 @@
                                 // Разрешить покупку если период не превышает 12 месяцев
                                 if ($close_club->check_add_new_period($value['club_month_period'])) {
                                     ?>
-                                    <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add mb-2 pl-5 pr-5" go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 180px;"><?= $value['title'] ?></a>
+                                    <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add mb-2" go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 180px;"><?= $value['title'] ?> <i class="fas fa-bullhorn"></i></a>
                                     <div style="display: none;">
-                                        <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add pl-5 pr-5" go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 180px;">Купить</a>
+                                        <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add" go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 180px;">Купить</a>
                                         <div class="btn-group">
                                             <a href="/shop/cart/" class="btn button btngreen-outline btn-success textcenter cart_product_go_card" product_id="<?= $value['id'] ?>" style="width: 180px;display: none;padding: 0.8rem;border-right: none;">В корзину</a>
                                             <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $value['id'] ?>" style="width: 180px;display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
@@ -78,8 +78,8 @@
                 </div>
 
                 <div class="row freeze_ticket_block mb-3 p-3">
-                    <div class="col-12">
-                        <div class="text-center mb-3">Заморозить абонемент на:</div>
+                    <div class="col-12 text-center">
+                        <div class="mb-3">Заморозить абонемент на:</div>
                         <div class="freeze_day_buttons">
                             <?
                             // print_r($freeze_day_buttons);
