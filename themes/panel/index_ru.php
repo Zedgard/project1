@@ -125,7 +125,7 @@
                                 <span style="display: none;">
                                     <svg
                                         class="brand-icon"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                        xmlns="https://www.w3.org/2000/svg"
                                         preserveAspectRatio="xMidYMid"
                                         width="30"
                                         height="33"

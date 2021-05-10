@@ -75,7 +75,7 @@
               <a href="/index.html" title="Sleek Dashboard">
                 <svg
                   class="brand-icon"
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="https://www.w3.org/2000/svg"
                   preserveAspectRatio="xMidYMid"
                   width="30"
                   height="33"
@@ -1224,7 +1224,7 @@
                 &copy; <span id="copy-year">2019</span> Copyright Sleek Dashboard Bootstrap Template by
                 <a
                   class="text-primary"
-                  href="http://www.iamabdus.com/"
+                  href="https://www.iamabdus.com/"
                   target="_blank"
                   >Abdus</a
                 >.
