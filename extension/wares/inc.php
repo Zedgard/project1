@@ -268,7 +268,11 @@ class wares extends \project\extension {
      * @return type
      */
     public function getWaresVideoSeries($wares_id) {
-        $query_select = "SELECT vs.*, IF(vs.start_date <= CURRENT_DATE, 1, 0) as series_enable FROM `zay_wares_video_series` vs where vs.wares_id='?' order by vs.position asc ";
+        $query_select = "SELECT 
+            vs.*, 
+            IF(vs.start_date <= CURRENT_DATE, 1, 0) as series_enable 
+            FROM `zay_wares_video_series` vs 
+            where vs.wares_id='?' order by vs.position asc ";
         return $this->getSelectArray($query_select, array($wares_id));
     }
 
@@ -421,8 +425,8 @@ class wares extends \project\extension {
                                     wcc.id = wcat.category_id
                                 ) dd2
                                 WHERE
-                                    dd2.wares_show = '1'";        
-                        
+                                    dd2.wares_show = '1'";
+
                 //echo "{$querySelect}\n\n";
                 $objs = $this->getSelectArray($querySelect, $vals, 0);
                 return $objs;
@@ -495,7 +499,7 @@ class wares extends \project\extension {
                                     wcc.id = wcat.category_id
                                 ) dd2
                                 WHERE
-                                    dd2.wares_show = '1'"; 
+                                    dd2.wares_show = '1'";
                 return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id), 0)[0];
             }
         }
@@ -742,7 +746,7 @@ class wares extends \project\extension {
      * @return boolean
      */
     public function getWaresSeriesSeeBonusOpen($wares_id, $user_id) {
-        $query = "SELECT wvs.*, if((select wvss.count_see from zay_wares_video_series_see wvss where wvss.user_id='?' and wvss.series_id=wvs.id)>0, 1,0) as series_see
+        $query = "SELECT wvs.*, if((select SUM(wvss.count_see) from zay_wares_video_series_see wvss where wvss.user_id='?' and wvss.series_id=wvs.id)>0, 1,0) as series_see
                         FROM zay_wares_video_series wvs 
                         WHERE wvs.wares_id='?' AND wvs.title NOT LIKE 'Бонус'";
         $data = $this->getSelectArray($query, array($user_id, $wares_id), 0);
@@ -833,6 +837,16 @@ class wares extends \project\extension {
 //        }
         $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' order BY `position` asc";
         $data = $this->getSelectArray($select, array($wares_id), 0);
+        return $data;
+    }
+/**
+     * Получить материалы по товару учитывая серию
+     * @param type $wares_id
+     * @return type
+     */
+    public function list_materials_on_series($wares_id, $series_id) {
+        $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' and series_id='?' order BY `position` asc";
+        $data = $this->getSelectArray($select, array($wares_id, $series_id), 0);
         return $data;
     }
 

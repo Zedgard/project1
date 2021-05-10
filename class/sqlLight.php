@@ -185,7 +185,7 @@ class sqlLight {
             } else {
                 if ($_SESSION['DEBUG'] == 1) {
                     //echo "{$this->mysqli->errno} {$this->mysqli->error}\n";
-                    $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                    $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}\n query: {$query} <br/>\n";
                 } else {
                     echo $lang['sql_query_commit_false'];
                 }
