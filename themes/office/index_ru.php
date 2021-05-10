@@ -248,7 +248,7 @@
                                     <!-- User Account -->
                                     <?
                                     if (strlen(trim($_SESSION['user']['info']['first_name'])) > 0) {
-                                        $show_user_name = strlen(trim($_SESSION['user']['info']['first_name']));
+                                        $show_user_name = $_SESSION['user']['info']['first_name'];
                                     } else {
                                         $show_user_name = $_SESSION['user']['info']['email'];
                                     }
