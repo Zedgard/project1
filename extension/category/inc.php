@@ -66,7 +66,7 @@ class category extends \project\extension {
                             wcat.wares_id = w.id
                         WHERE
                             p.`user_id` = '?' AND p.`pay_status` = 'succeeded' AND w.`id` > 0 AND(
-                                wcat.category_id <> 2 OR wcat.category_id IS NULL
+                                wcat.category_id <> 2 OR wcat.category_id <> 9 OR wcat.category_id IS NULL
                             )
                             and  wcat.category_id IS NOT NULL
                     ) dd
