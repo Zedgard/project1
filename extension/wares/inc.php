@@ -352,32 +352,32 @@ class wares extends \project\extension {
                 $vals[] = $category_id;
             }
             if ($wares_id == 0) {
-                $querySelect = "SELECT DISTINCT w.*, "
-                        . "pr.id as product_id, "
-                        . "pr.title as product_title, "
-                        . "COALESCE(pcat.category_id, 0) AS pcat_category_id, "
-                        . "COALESCE(wcat.category_id, 0) as wcat_category_id, "
-                        . "wcc.title as wcc_title, "
-                        . "wcc.color as wcc_color "
-                        . "FROM `zay_pay` p "
-                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
-                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
-                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
-                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
-                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join zay_category wcc on wcc.id=wcat.category_id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
-                        . "{$category_sql} "
-                        . "and (pcat.category_id<>2 or pcat.category_id is null) "
-                        . "order by w.`title` asc ";
+//                $querySelect = "SELECT DISTINCT w.*, "
+//                        . "pr.id as product_id, "
+//                        . "pr.title as product_title, "
+//                        . "COALESCE(pcat.category_id, 0) AS pcat_category_id, "
+//                        . "COALESCE(wcat.category_id, 0) as wcat_category_id, "
+//                        . "wcc.title as wcc_title, "
+//                        . "wcc.color as wcc_color "
+//                        . "FROM `zay_pay` p "
+//                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
+//                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
+//                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
+//                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+//                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
+//                        . "left join zay_category wcc on wcc.id=wcat.category_id "
+//                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
+//                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
+//                        . "{$category_sql} "
+//                        . "and (pcat.category_id<>2 or pcat.category_id is null) "
+//                        . "order by w.`title` asc ";
                 $querySelect = "SELECT
                                     *
                                 FROM
                                     (
                                     SELECT
                                         dd.*,
-                                        (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = dd.product_id AND pcat.category_id = 2 or pcat.category_id is null), 0, 1)
+                                        (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = dd.product_id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
                                         ) AS wares_show,
                                         COALESCE(
                                             (
@@ -427,24 +427,75 @@ class wares extends \project\extension {
                 $objs = $this->getSelectArray($querySelect, $vals, 0);
                 return $objs;
             } else {
-                $querySelect = "SELECT DISTINCT w.*, "
-                        . "pr.id as product_id, "
-                        . "pr.title as product_title, "
-                        . "pcat.category_id AS pcat_category_id, "
-                        . "wcat.category_id as wcat_category_id, "
-                        . "wcc.title as wcc_title, "
-                        . "wcc.color as wcc_color "
-                        . "FROM `zay_pay` p "
-                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
-                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
-                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
-                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
-                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join zay_category wcc on wcc.id=wcat.category_id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
-                        . "and (pcat.category_id<>2 or pcat.category_id is null) " // Отбросим вебинары"
-                        . "order by w.`title` asc ";
+//                $querySelect = "SELECT DISTINCT w.*, "
+//                        . "pr.id as product_id, "
+//                        . "pr.title as product_title, "
+//                        . "pcat.category_id AS pcat_category_id, "
+//                        . "wcat.category_id as wcat_category_id, "
+//                        . "wcc.title as wcc_title, "
+//                        . "wcc.color as wcc_color "
+//                        . "FROM `zay_pay` p "
+//                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
+//                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
+//                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
+//                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+//                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
+//                        . "left join zay_category wcc on wcc.id=wcat.category_id "
+//                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
+//                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
+//                        . "and (pcat.category_id<>2 or pcat.category_id is null) " // Отбросим вебинары"
+//                        . "order by w.`title` asc ";
+                $querySelect = "SELECT
+                                    *
+                                FROM
+                                    (
+                                    SELECT
+                                        dd.*,
+                                        (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = dd.product_id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
+                                        ) AS wares_show,
+                                        COALESCE(
+                                            (
+                                            SELECT
+                                                GROUP_CONCAT(pcat.category_id)
+                                            FROM
+                                                zay_product_category pcat
+                                            WHERE
+                                                pcat.product_id = dd.product_id
+                                        ),
+                                        0
+                                        ) AS pcat_category_id,
+                                        COALESCE(wcat.category_id, 0) AS wcat_category_id,
+                                        wcc.title AS wcc_title,
+                                        wcc.color AS wcc_color
+                                    FROM
+                                        (
+                                        SELECT DISTINCT
+                                            w.*,
+                                            pr.id AS product_id,
+                                            pr.title AS product_title
+                                        FROM
+                                            zay_pay p
+                                        LEFT JOIN zay_pay_products pp ON
+                                            pp.pay_id = p.id
+                                        LEFT JOIN zay_product pr ON
+                                            pr.id = pp.product_id
+                                        LEFT JOIN zay_product_wares pw ON
+                                            pw.product_id = pr.id
+                                        LEFT JOIN zay_wares w ON
+                                            w.id = pw.wares_id
+                                        WHERE
+                                            p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.id='?'
+                                            {$category_sql}
+                                        ORDER BY
+                                            w.`title` ASC
+                                    ) dd
+                                LEFT JOIN zay_wares_category wcat ON
+                                    wcat.wares_id = dd.id
+                                LEFT JOIN zay_category wcc ON
+                                    wcc.id = wcat.category_id
+                                ) dd2
+                                WHERE
+                                    dd2.wares_show = '1'"; 
                 return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id), 0)[0];
             }
         }
