@@ -12,6 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/inc.php';
 
 class cart extends \project\extension {
 
@@ -43,6 +44,7 @@ class cart extends \project\extension {
     public function register_pay($pay_id) {
         $sign_up_consultation = new \project\sign_up_consultation();
         $close_club = new \project\close_club();
+        $promo = new \project\promo();
         /*
          * Если это консультация 
          */
@@ -52,6 +54,13 @@ class cart extends \project\extension {
         }
         // Зафиксируем покупку по закрытому клубу
         $close_club->register_ispay_club_month_period($pay_id);
+
+        // Применили промо то отметим что промо использовано
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $key => $value) {
+                $promo->sale_promo_code($key);
+            }
+        }
     }
 
 }

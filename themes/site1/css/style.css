@@ -125,6 +125,9 @@ p, .heading-title > span, .process-wrapp li > .pro-step,
 .getin_form .form-control{
     font-family: 'Open Sans', sans-serif;
 }
+.form-control{
+    border-radius: 0rem;
+}
 
 /*fontAwesome*/
 .zeus.tparrows.tp-rightarrow::before,

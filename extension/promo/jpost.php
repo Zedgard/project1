@@ -14,10 +14,24 @@ $c_promo = new \project\promo();
 
 // Получение всех принятых промо
 if (isset($_POST['getCodePromos'])) {
+    $errors = array();
     $data_promos = array();
-    $data = $c_promo->promo_get_code(trim($_POST['getCodePromos']));
+    $promo_code = trim($_POST['getCodePromos']);
+    $data = $c_promo->promo_get_code(trim($promo_code));
     if (count($data) > 0) {
-        $_SESSION['promos'][$data[0]['code']] = $data[0];
+        if ($data[0]['number_uses'] <= 0 && $promo_code != '0') {
+            if (isset($_SESSION['promos'][$promo_code])) {
+                unset($_SESSION['promos'][$promo_code]);
+            }
+            $_SESSION['errors'][] = 'Промо больше не доступно!';
+        } else {
+            $_SESSION['promos'][$data[0]['code']] = $data[0];
+        }
+    } else {
+
+        if ($promo_code != '0') {
+            $_SESSION['errors'][] = 'Промо не существует!';
+        }
     }
     foreach ($_SESSION['promos'] as $key => $value) {
         if (strlen($key) > 0) {
