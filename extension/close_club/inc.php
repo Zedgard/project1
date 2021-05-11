@@ -33,7 +33,7 @@ class close_club extends \project\extension {
 
         $query = "SELECT
                         cc.id,
-                        cc.status,
+                        if((cc.freeze_date>CURRENT_DATE),0,cc.status) as status,
                         cc.end_date,
                         cc.freeze_date,
                         cc.freeze_day,
@@ -47,7 +47,9 @@ class close_club extends \project\extension {
                     LEFT JOIN zay_users u ON
                         u.id = cc.user_id
                     WHERE
-                        cc.status = '1' AND u.login_instagram IS NOT NULL " . $filter_str;
+                        cc.status = '1' 
+                        
+                        AND u.login_instagram IS NOT NULL " . $filter_str;
         $this->setMysqliAssos();
         $data = $this->getSelectArray($query, $array, 0);
         return $data;
@@ -189,8 +191,26 @@ class close_club extends \project\extension {
     private function freeze_update() {
         $query = "UPDATE zay_close_club cc 
                     SET cc.freeze_day='40', cc.freeze_date=NOW()
-                  WHERE DATE_FORMAT(cc.freeze_date,'%Y-%m-%d')<>DATE_FORMAT(NOW(),'%Y-%m-%d')";
+                  WHERE DATE_FORMAT(NOW(),'%Y-%m-%d') > DATE_ADD(DATE_FORMAT(cc.end_date, '%Y-%m-%d'), INTERVAL 1 YEAR)";
+                // "UPDATE zay_close_club cc 
+                //    SET cc.freeze_day='40', cc.freeze_date=NOW()
+                //  WHERE DATE_ADD(DATE_FORMAT(cc.freeze_date, '%Y-%m-%d'), INTERVAL 1 YEAR)>=DATE_FORMAT(NOW(),'%Y-%m-%d')";
         return $this->query($query, array());
+    }
+    
+    /**
+     * Заморозить абонемент на колличество дней
+     * @param type $user_id
+     * @param type $day_num
+     * @return type
+     */
+    public function close_club_set_freeze_day($user_id, $day_num) {
+        $query = "UPDATE zay_close_club cc SET 
+                cc.freeze_date=(DATE_ADD(DATE_FORMAT(NOW(), '%Y-%m-%d'), INTERVAL ? DAY)),
+                cc.end_date=(DATE_ADD(cc.end_date, INTERVAL ? DAY)),
+                cc.freeze_day=(cc.freeze_day-?) 
+                WHERE cc.user_id='?' ";
+        return $this->query($query, array($day_num, $day_num, $day_num, $user_id));
     }
 
 }

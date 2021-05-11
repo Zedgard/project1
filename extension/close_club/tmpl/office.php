@@ -117,4 +117,26 @@
     </div>
 
 </div> 
+<script>
+    $(document).ready(function () {
+        $(".freeze_user_active").unbind('click').click(function () {
+            var v = $(this).closest(".freeze_button").find('.title_sum').html();
+            if (confirm('Вы уверены что хотите заморозить абонемент на ' + v + ' суток?')) {
 
+                sendPostLigth('/jpost.php?extension=close_club',
+                        {
+                            "set_freeze_day": v
+                        },
+                        function (e) {
+                            if (e['success'] == '1') {
+                                alert(e['success_text']);
+                                location.reload();
+                            } else {
+                                alert(e['success_text']);
+                            }
+                        });
+            }
+        });
+
+    });
+</script>
