@@ -10,6 +10,15 @@
                 .cart_product_list_title{
                     font-size: 1.2rem;
                 }
+                .errors_promo_code{
+                    margin: 0;
+                }
+                .errors_promo_code .html_text{
+                    white-space: nowrap;
+                    position: absolute;
+                    text-align: center;
+                    color: red;
+                }
             </style>
             <div class="cart_list">
 
@@ -39,11 +48,20 @@
 
                     </div>
                     <div class="mt-3">
-                        <div class="btn-group">
-                            <span style="font-size: 1.2rem;margin-right: 10px;padding: 0.5rem 0;">Промо код:</span> <input type="text" name="input_promo_code" value="" class="form-control input_promo_code" style="max-width: 160px;" />
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="btn-group">
+                                    <span style="font-size: 1.2rem;margin-right: 10px;padding: 0.5rem 0;white-space: nowrap;">Промо код:</span> 
+                                    <input type="text" name="input_promo_code" value="" class="form-control input_promo_code" />
+                                    <input type="button" value="применить" class="btn btngreen btn_input_promo_code" />
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <label class="errors_promo_code mb-2 mt-2"><span class="html_text"></span></label>
+                            </div>
                         </div>
                     </div>
-                    
+
                     <hr class="mt-4 mb-4"/>
                 </div>
             </div>

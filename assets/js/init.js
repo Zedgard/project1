@@ -458,8 +458,8 @@ function initCartArray() {
  * @returns {undefined}
  */
 function init_promo_input() {
-    $(".input_promo_code").keyup(function () {
-        var v = $(this).val();
+    $(".btn_input_promo_code").unbind('click').click(function () {
+        var v = $(".input_promo_code").val();
         get_promos(v);
 
     });
@@ -467,10 +467,10 @@ function init_promo_input() {
 }
 
 function get_promos(code) {
+    $(".errors_promo_code .html_text").html(ajax_load);
     sendPostLigth('/jpost.php?extension=promo', {"getCodePromos": code}, function (e) {
         $(".list_promos div").remove();
         if (e['success'] == '1') {
-            initCartArray();
             //console.log(e['data']);
             if (e['data'].length > 0) {
                 $(".list_promos").append('<div class="mb-3" style="font-size:1.5rem;">Список купонов:</div>');
@@ -488,7 +488,11 @@ function get_promos(code) {
                     </div>');
                 }
             }
+        } else {
+            var errors_html = e['errors'].toString();
+            $(".errors_promo_code .html_text").html(errors_html);
         }
+        initCartArray();
         init_delete_promo();
     });
 }

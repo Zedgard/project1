@@ -43,23 +43,28 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="config_title">Дата начала</label>
+                        <label for="promo_date_start">Дата начала</label>
                         <input type="text" class="form-control promo_date_start inp_datepicker" value="<?= (isset($promo_data['date_start'])) ? $promo_data['date_start'] : '' ?>" name="promo_date_start">
                     </div>
 
                     <div class="form-group">
-                        <label for="config_title">Дата окончания</label>
+                        <label for="promo_date_end">Дата окончания</label>
                         <input type="text" class="form-control promo_date_end inp_datepicker" value="<?= (isset($promo_data['date_end'])) ? $promo_data['date_end'] : '' ?>" name="promo_date_end">
                     </div>
 
                     <div class="form-group">
-                        <label for="config_title">Сумма скидки в рублях</label>
+                        <label for="promo_amount">Сумма скидки в рублях</label>
                         <input type="text" class="form-control promo_amount" value="<?= (isset($promo_data['amount'])) ? $promo_data['amount'] : '0' ?>" name="promo_amount">
                     </div>
 
                     <div class="form-group">
-                        <label for="config_title">Сумма скидки в процентах</label>
+                        <label for="promo_percent">Сумма скидки в процентах</label>
                         <input type="text" class="form-control promo_percent" value="<?= (isset($promo_data['percent']) && $promo_data['percent'] > 0) ? $promo_data['percent'] : '0' ?>" name="promo_percent">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="number_uses">Колличество использований</label>
+                        <input type="text" class="form-control number_uses" value="<?= (isset($promo_data['number_uses']) && $promo_data['number_uses'] > 0) ? $promo_data['number_uses'] : '99999' ?>" name="number_uses">
                     </div>
 
                     <div class="row">

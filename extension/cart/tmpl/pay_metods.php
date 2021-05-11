@@ -1,16 +1,16 @@
 <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
 <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
 <div class="row justify-content-md-center">
-    <div class="col-lg-4 text-left mt-3">
+    <div class="col-lg-4 text-center text-lg-left mt-3">
         <a href="javascript:void(0)" class="btn button btngreen text-center btn_cart_big btn_cart_cloudpayments">Картой</a> 
     </div> 
 </div>
 <div class="row mb-3 justify-content-md-center">
-    <div class="col-lg-4 text-left mt-3" style="display: block;">
+    <div class="col-lg-4 text-center text-lg-left mt-3" style="display: block;">
         <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_tinkoff" target="_blank">Картой через Тинькофф</a>
     </div>
 
-    <div class="col-lg-4 text-left mt-3" style="display: block;">
+    <div class="col-lg-4 text-center text-lg-left mt-3" style="display: block;">
         <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_other">Другой способ</a>
     </div>
 </div>

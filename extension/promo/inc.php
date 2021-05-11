@@ -67,7 +67,7 @@ class promo extends \project\extension {
         $return = false;
         if ($id > 0) {
             $query = "UPDATE `zay_promo` SET `code`='?',`title`='?',`date_start`='?',"
-                    . "`date_end`='?',`status`='?',`amount`='?',`percent`='?', `alliance`='?' "
+                    . "`date_end`='?',`status`='?',`amount`='?',`percent`='?', `number_uses`='?' `alliance`='?' "
                     . "WHERE `id`='?'";
             $return = $this->query($query, array(
                 $data['code'],
@@ -77,13 +77,14 @@ class promo extends \project\extension {
                 $data['status'],
                 $data['amount'],
                 $data['percent'],
+                $data['number_uses'],
                 $data['promo_alliance'],
                 $id), 0
             );
         } else {
             $id = $this->queryNextId('zay_promo');
-            $query = "INSERT INTO `zay_promo`(`code`, `title`, `date_start`, `date_end`, `status`, `amount`, `percent`, `alliance`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?')";
+            $query = "INSERT INTO `zay_promo`(`code`, `title`, `date_start`, `date_end`, `status`, `amount`, `percent`, `number_uses`, `alliance`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?','?')";
             $return = $this->query($query, array(
                 $data['code'],
                 $data['title'],
@@ -92,6 +93,7 @@ class promo extends \project\extension {
                 $data['status'],
                 $data['amount'],
                 $data['percent'],
+                $data['number_uses'],
                 $data['promo_alliance'])
             );
         }
@@ -145,6 +147,23 @@ class promo extends \project\extension {
     public function get_promo_products($promo_id) {
         $query = "SELECT * FROM `zay_promo_products` WHERE `promo_id`='?'";
         return $this->getSelectArray($query, array($promo_id));
+    }
+
+    /**
+     * Зафиксируем продажу по промо
+     * @param type $code
+     * @return boolean
+     */
+    public function sale_promo_code($code) {
+        $querySelect = "select p.id, (p.number_uses-1) as number_uses from zay_promo p where p.code='?'";
+        $data = $this->getSelectArray($querySelect, array($code));
+        if (count($data) > 0) {
+            $id = $data[0]['id'];
+            $number_uses = ($data[0]['number_uses'] >= 0) ? $data[0]['number_uses'] : 0;
+            $query = "UPDATE `zay_promo` pp SET pp.number_uses='?' WHERE pp.id='?'";
+            return $this->query($query, array($number_uses, $id));
+        }
+        return false;
     }
 
 }
