@@ -3,40 +3,43 @@
         <div class="col-lg-6">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="title">Служба технической поддержки</h3>
+                    <h3 class="title">Служба Заботы Эдгарда Зайцева</h3>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-12">
-                    Приветствуем! Вам нужна техническая помощь?<br/>
-                    Мы ответим вам так быстро, как сможем, а пока вы ожидаете почитайте рубрику САМОСТОЯТЕЛЬНЫЕ тех.РЕШЕНИЯ.
+                    Приветствуем! Тебе нужна техническая помощь?<br/> 
+                    Мы ответим так быстро, как сможем, а пока ты ожидаешь, почитай ответы на наиболее частые вопросы
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <i class="fa fa-support" style="color:#2e8ece; font-size:25px; line-height:25px; vertical-align: middle;"></i> <span class="font-size-18 font-weight-medium">Хотите получить ответ на свой вопрос?</span> 
+                    <i class="fa fa-support" style="color:#2e8ece; font-size:25px; line-height:25px; vertical-align: middle;"></i> 
+                    <span class="font-size-18 font-weight-medium">Хочешь получить ответ на свой вопрос?</span> 
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-12">
-                    Укажите фамилию, имя и электронную почту на которую был оформлен заказ
+                    Тогда укажи фамилию, имя и электронную почту. Если ты зарегистрированный на сайте пользователь, указывай тот e-mail, на который был оформлен заказ
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <i class="fa fa-clock-o" style="color:#2e8ece; font-size:25px; line-height:25px; vertical-align: middle;"></i> <span class="font-size-18 font-weight-medium">Время работы службы технической поддержки:</span>
+                    <i class="fa fa-clock-o" style="color:#2e8ece; font-size:25px; line-height:25px; vertical-align: middle;"></i> 
+                    <span class="font-size-18 font-weight-medium">Время работы Службы Заботы</span>
                 </div>
             </div>
 
             <div class="row mt-2">
                 <div class="col-12">
-                    с 02:00 до 20:00 *по московскому времени
+                    с 02:00 до 20:00 по московскому времени
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-12">
-                    <i class="fa fa-info" style="color:#2e8ece; font-size:25px; line-height:25px; vertical-align: middle;"></i> <span class="font-size-18 font-weight-medium">Время ответа на вопросы</span>
+                    <i class="fa fa-info" style="color:#2e8ece; font-size:25px; line-height:25px; vertical-align: middle;"></i> 
+                    <span class="font-size-18 font-weight-medium">Время ответа на вопросы</span>
                 </div>
             </div>
             <div class="row mt-2">
@@ -49,14 +52,14 @@
 
                     <div class="row mt-2">
                         <div class="col-12">
-                            <span class="font-size-18 font-weight-medium">Опишите вашу ситуацию</span>
+                            <span class="font-size-18 font-weight-medium">Опиши ситуацию</span>
                         </div>
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-12 form_send_user_message">
                             <div class="contact-left">
                                 <p class="mb-2">
-                                    <input type="text" name="user_fio" value="" size="40" class="form-control user_fio" placeholder="Ваше имя *">
+                                    <input type="text" name="user_fio" value="" size="40" class="form-control user_fio" placeholder="Твоё имя *">
                                 </p>
                                 <p class="mb-2">
                                     <input type="text" name="user_email" value="" size="40" class="form-control user_email" placeholder="Email *">
@@ -73,11 +76,11 @@
                             <div>
                                 <label class="control control-checkbox">
                                     <input type="checkbox" id="check_indicator" name="user_check_indicator" value="1" />
-                                    <div class="control-indicator"></div>
-                                    Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
+                                    <div class="control-indicator" style="float: left;"></div>
+                                    <span style="margin-left: 4px;">Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a></span>
                                 </label>
                             </div>
-                            <p class="contact-submit">
+                            <p class="contact-submit mt-2">
                                 <input type="submit" value="Отправить сообщение" class="btn btn-primary btn_send_user_message">
                             </p>
                             <div class="row">
