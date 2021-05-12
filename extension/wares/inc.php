@@ -415,6 +415,7 @@ class wares extends \project\extension {
                                             w.id = pw.wares_id
                                         WHERE
                                             p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0
+                                            AND w.club_month_period = 0
                                             {$category_sql}
                                         ORDER BY
                                             w.`title` ASC
@@ -489,6 +490,7 @@ class wares extends \project\extension {
                                             w.id = pw.wares_id
                                         WHERE
                                             p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.id='?'
+                                            AND w.club_month_period = 0
                                             {$category_sql}
                                         ORDER BY
                                             w.`title` ASC
