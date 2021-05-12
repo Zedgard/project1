@@ -74,21 +74,21 @@ if ($user->isClient()) {
 //echo $auth->password_generate();
 //print_r($_SESSION['user']['info']);
 
-if (isset($_GET['s_login'])) {
-   // print_r($_POST);
-    //print_r($_REQUEST);
-   // exit();
-    if (isset($_POST['token']) && strlen($_POST['token']) > 0) {
-        if ($auth->uLogin_auth_registred($_POST['token'])) {
-            location_href('/auth/');
-            exit();
-        } else {
-            $_SESSION['errors'][] = 'Ошибка авторизации!';
-        }
-    } else {
-        $_SESSION['errors'][] = 'Ошибка токена дочерней системы!';
-    }
-}
+//if (isset($_GET['s_login'])) {
+//   // print_r($_POST);
+//    //print_r($_REQUEST);
+//   // exit();
+//    if (isset($_POST['token']) && strlen($_POST['token']) > 0) {
+//        if ($auth->uLogin_auth_registred($_POST['token'])) {
+//            location_href('/auth/');
+//            exit();
+//        } else {
+//            $_SESSION['errors'][] = 'Ошибка авторизации!';
+//        }
+//    } else {
+//        $_SESSION['errors'][] = 'Ошибка токена дочерней системы!';
+//    }
+//}
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/ya.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';

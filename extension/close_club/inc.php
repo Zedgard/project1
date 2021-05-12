@@ -5,6 +5,8 @@ namespace project;
 defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/category/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 
 class close_club extends \project\extension {
 
@@ -151,6 +153,79 @@ class close_club extends \project\extension {
     }
 
     /**
+     * Загрузить данные по закрытому клубу со сторонней системы 
+     * @param type $data
+     */
+    public function import_club_data($data) {
+        $sqlLight = new \project\sqlLight();
+        $auth = new \project\auth();
+        $user_email = $data['_billing_email'];
+        $user_pass = $data['user_pass'];
+        $user_phone = $data['_billing_phone'];
+        $user_instagram = $data['Instagram'];
+        $date1 = $data['_schedule_next_payment'];
+        $date2 = $data['_schedule_end'];
+        // echo "user_email: {$user_email} | user_instagram: {$user_instagram} | date1: {$date1} | date2: {$date2}<br/>\n";
+
+        $date1 = strtotime(substr($data['_schedule_next_payment'], 10));
+        $date2 = strtotime(substr($data['_schedule_end'], 10));
+        $date = ($date1 > $date2) ? $data['_schedule_next_payment'] : $data['_schedule_end'];
+
+        $select = "SELECT u.* FROM `zay_users` u WHERE u.email='?' and u.active='1'";
+        $users = $sqlLight->queryList($select, array($user_email), 0);
+        //print_r($users);
+        // Зарегистрируем пользователей
+        if (count($users) == 0) {
+            $user_id = $sqlLight->queryNextId('zay_users');
+            $query = "INSERT INTO `zay_users`(`email`, `phone`, `login_instagram`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
+                    . "VALUES ('?','?','?','','','?','?','?', NOW() )";
+            $sqlLight->query($query, array($user_email, $user_phone, $user_instagram, $user_pass, 1, ''), 0);
+        } else {
+            $user_id = $users[0]['id'];
+            // Обновим логин инстаграмм
+            $query_update_insta = "UPDATE zay_users u SET u.login_instagram='?' WHERE u.id='?'";
+            if ($sqlLight->query($query_update_insta, array($user_instagram, $user_id), 0)) {
+                echo "query_update_insta OK <br/>\n";
+            } else {
+                echo "query_update_insta NOT <br/>\n";
+            }
+        }
+
+        // Получим данные по клиенту
+        $select_find_user = "SELECT u.* FROM `zay_users` u WHERE u.email='?' and u.active='1'";
+        $user_data = $sqlLight->queryList($select_find_user, array($user_email), 0);
+        $user_id = $user_data[0]['id'];
+
+        echo "<br/>--user_id: {$user_id} | user_email: {$user_email} | user_phone {$user_phone} | user_instagram: {$user_instagram} | date: {$date}<br/>\n";
+
+        $club_info = $this->get_club_user_info($user_id);
+        if (count($club_info) > 0) {
+            // Обновим данные
+            $queryInsertClub = "UPDATE zay_close_club cc 
+                                SET cc.period_month='6', 
+                                cc.status='1',
+                                cc.end_date=(DATE_FORMAT('?', '%Y-%m-%d'))
+                                WHERE cc.user_id='?'";
+            if ($sqlLight->query($queryInsertClub, array($date, $user_id), 1)) {
+                echo "UPDATE OK <br/>\n";
+            } else {
+                echo "UPDATE NOT <br/>\n";
+            }
+        } else {
+            // Зафиксируем
+            $queryInsertClub = "INSERT INTO `zay_close_club`(`user_id`, `period_month`, `lastdate`, `end_date`, `status`, `freeze_date`, `freeze_day`) "
+                    . "VALUES ('?','6',CURRENT_TIMESTAMP,(DATE_FORMAT('?', '%Y-%m-%d')),'1',CURRENT_TIMESTAMP, '40')";
+            if ($sqlLight->query($queryInsertClub, array($user_id, $date), 1)) {
+                echo "INSERT OK <br/>\n"; 
+            } else {
+                echo "INSERT NOT <br/>\n";
+            }
+        }
+
+        echo "-----<br/>\n";
+    }
+
+    /**
      * Проверить можно ли покупать новый период<br/>
      * Сумма периодов не должна превышать 12 месяцев
      * @param type $period_value
@@ -193,12 +268,12 @@ class close_club extends \project\extension {
         $query = "UPDATE zay_close_club cc 
                     SET cc.freeze_day='40', cc.freeze_date=NOW()
                   WHERE DATE_FORMAT(NOW(),'%Y-%m-%d') > DATE_ADD(DATE_FORMAT(cc.end_date, '%Y-%m-%d'), INTERVAL 1 YEAR)";
-                // "UPDATE zay_close_club cc 
-                //    SET cc.freeze_day='40', cc.freeze_date=NOW()
-                //  WHERE DATE_ADD(DATE_FORMAT(cc.freeze_date, '%Y-%m-%d'), INTERVAL 1 YEAR)>=DATE_FORMAT(NOW(),'%Y-%m-%d')";
+        // "UPDATE zay_close_club cc 
+        //    SET cc.freeze_day='40', cc.freeze_date=NOW()
+        //  WHERE DATE_ADD(DATE_FORMAT(cc.freeze_date, '%Y-%m-%d'), INTERVAL 1 YEAR)>=DATE_FORMAT(NOW(),'%Y-%m-%d')";
         return $this->query($query, array());
     }
-    
+
     /**
      * Заморозить абонемент на колличество дней
      * @param type $user_id
