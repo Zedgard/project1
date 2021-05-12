@@ -138,13 +138,12 @@ class close_club extends \project\extension {
                 $queryInsertClub = "UPDATE zay_close_club cc SET cc.period_month='?', cc.lastdate=NOW(), cc.status='1',
                     cc.end_date=(if((cc.end_date is null or cc.end_date < NOW()), DATE_ADD(NOW(), INTERVAL ? MONTH), DATE_ADD(cc.end_date, INTERVAL ? MONTH) )) 
                     WHERE cc.user_id='?'";
-                return $this->getSelectArray($queryInsertClub, array($club_month_period, $club_month_period, $club_month_period, $data[0]['user_id']));
+                return $this->query($queryInsertClub, array($club_month_period, $club_month_period, $club_month_period, $data[0]['user_id']));
             } else {
                 // Зафиксируем
-                // 
                 $queryInsertClub = "INSERT INTO `zay_close_club`(`user_id`, `period_month`, `lastdate`, `end_date`, `status`, `freeze_day`) "
                         . "VALUES ('?','?',NOW(), DATE_ADD(NOW(), INTERVAL ? MONTH), 1, 40)";
-                return $this->getSelectArray($queryInsertClub, array($data[0]['user_id'], $club_month_period, $club_month_period, '40'));
+                return $this->query($queryInsertClub, array($data[0]['user_id'], $club_month_period, $club_month_period, '40'));
             }
             return false;
         }
