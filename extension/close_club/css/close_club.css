@@ -63,3 +63,21 @@ and open the template in the editor.
     font-size: 1.5rem;
     opacity: 0.6;
 }
+.freeze_title_text{
+    color: #000000;
+}
+.freeze_date_str .fa-snowflake{
+    color: #61B7EE;
+}
+
+.freeze_date_str{
+    font-size: 2rem;
+
+}
+.freeze_date_str .freeze_date{
+    color: #000000;
+}
+.freeze_ticket_block .fa-snowflake{
+    font-size: 1rem;
+    color: #61B7EE;
+}

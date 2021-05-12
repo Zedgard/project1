@@ -79,26 +79,37 @@
 
                 <div class="row freeze_ticket_block mb-3 p-3">
                     <div class="col-12 text-center">
-                        <div class="mb-3">Заморозить абонемент на:</div>
-                        <div class="freeze_day_buttons">
-                            <?
-                            // print_r($freeze_day_buttons);
+                        <?
+                        if (strlen(trim($close_club_info[0]['freeze_date_str'])) > 0) {
                             ?>
+                            <div class="freeze_date_str">
+                                Абонемент заморожен до: <span class="freeze_date"><?= date_jquery_format($close_club_info[0]['freeze_date_str']) ?></span> <i class="far fa-snowflake"></i>
+                            </div>
                             <?
-                            foreach ($freeze_day_buttons as $value) {
-                                ?>
-                                <div class="freeze_button">
-                                    <div class="freeze_bg <?= $value['class'] ?>">
-                                        <div class="title_sum"><?= $value['title_sum'] ?></div>
-                                        <div class="title_name"><?= $value['title_name'] ?></div>
-                                    </div>
-                                    <div class="button_text button btn-success textcenter p-1 w-100 <?= $value['button_class'] ?>"><?= $value['button_text'] ?></div>
-                                </div>
-                                <?
-                            }
+                        } else {
                             ?>
 
-                        </div>
+
+                            <div class="mb-3 freeze_title_text"><i class="far fa-snowflake"></i> Заморозить абонемент на:</div>
+                            <div class="freeze_day_buttons">
+                                <?
+                                foreach ($freeze_day_buttons as $value) {
+                                    ?>
+                                    <div class="freeze_button">
+                                        <div class="freeze_bg <?= $value['class'] ?>">
+                                            <div class="title_sum"><?= $value['title_sum'] ?></div>
+                                            <div class="title_name"><?= $value['title_name'] ?></div>
+                                        </div>
+                                        <div class="button_text button btn-success textcenter p-1 w-100 <?= $value['button_class'] ?>"><?= $value['button_text'] ?></div>
+                                    </div>
+                                    <?
+                                }
+                                ?>
+
+                            </div>
+                            <?
+                        }
+                        ?>
                         <div class="clearfix"></div>
                     </div>
                 </div>

@@ -65,6 +65,7 @@ class close_club extends \project\extension {
         $data = array();
         if ($user_id > 0) {
             $query = "SELECT cc.*,
+                        if(cc.freeze_date > NOW(), cc.freeze_date, '') as freeze_date_str,
                         TIMESTAMPDIFF(MONTH, NOW(), cc.end_date) as diff_month, 
                         (DATE_FORMAT(LAST_DAY(NOW()),'%d') - DATE_FORMAT(cc.end_date,'%d')) as diff_day, 
                         TIMESTAMPDIFF(HOUR, DATE_FORMAT(NOW(),'%Y-%m-%d'), NOW()) as diff_hour, 
