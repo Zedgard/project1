@@ -120,13 +120,13 @@ class close_club extends \project\extension {
      */
     public function register_ispay_club_month_period($pay_id) {
         $club_month_period = 0;
-        $query = "select w.club_month_period, p.user_id "
-                . "from zay_pay p "
-                . "left join zay_pay_products pp on pp.pay_id=p.id "
-                . "left join zay_product pr on pr.id=pp.product_id "
-                . "left join zay_product_wares pw on pw.product_id=pr.id "
-                . "left join zay_wares w on w.id=pw.wares_id "
-                . "WHERE p.id='?' and p.pay_status='succeeded' and w.club_month_period>0";
+        $query = "select w.club_month_period, p.user_id 
+                        from zay_pay p 
+                        left join zay_pay_products pp on pp.pay_id=p.id 
+                        left join zay_product pr on pr.id=pp.product_id 
+                        left join zay_product_wares pw on pw.product_id=pr.id 
+                        left join zay_wares w on w.id=pw.wares_id 
+                        WHERE p.id='?' and p.pay_status='succeeded' and w.club_month_period>0";
         $data = $this->getSelectArray($query, array($pay_id));
         if (count($data) > 0 && $data[0]['user_id'] > 0) {
             $club_month_period = $data[0]['club_month_period'];
@@ -134,17 +134,16 @@ class close_club extends \project\extension {
             // Данные по клубу
             $club_info = $this->get_club_user_info($data[0]['user_id']);
             if (count($club_info) > 0) {
-                $amount = $club_info[0]['period_month'] + $club_month_period;
                 // Обновим данные
-                $queryInsertClub = "UPDATE zay_close_club cc SET cc.period_month='?', cc.lastdate=NOW(), cc.status='1',"
-                        . " cc.end_date=(if(c.last_date is null, DATE_ADD(c.last_date, INTERVAL ? MONTH),DATE_ADD(NOW(), INTERVAL ? MONTH))) "
-                        . "WHERE cc.user_id='?'";
-                return $this->getSelectArray($queryInsertClub, array($amount, $club_month_period, $club_month_period, $data[0]['user_id']));
+                $queryInsertClub = "UPDATE zay_close_club cc SET cc.period_month='?', cc.lastdate=NOW(), cc.status='1',
+                    cc.end_date=(if((cc.end_date is null or cc.end_date < NOW()), DATE_ADD(NOW(), INTERVAL ? MONTH), DATE_ADD(cc.end_date, INTERVAL ? MONTH) )) 
+                    WHERE cc.user_id='?'";
+                return $this->getSelectArray($queryInsertClub, array($club_month_period, $club_month_period, $club_month_period, $data[0]['user_id']));
             } else {
                 // Зафиксируем
                 // 
                 $queryInsertClub = "INSERT INTO `zay_close_club`(`user_id`, `period_month`, `lastdate`, `end_date`, `status`, `freeze_day`) "
-                        . "VALUES ('?','?',NOW(), DATE_ADD(NOW(), INTERVAL ? MONTH), 1)";
+                        . "VALUES ('?','?',NOW(), DATE_ADD(NOW(), INTERVAL ? MONTH), 1, 40)";
                 return $this->getSelectArray($queryInsertClub, array($data[0]['user_id'], $club_month_period, $club_month_period, '40'));
             }
             return false;
