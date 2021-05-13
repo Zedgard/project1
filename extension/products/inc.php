@@ -408,7 +408,7 @@ class products extends \project\extension {
 
 
         if (strlen($searchStr) > 0) {
-            $queryValSearchStr = "and (`title` like '%?%' or `desc` like '%?%')";
+            $queryValSearchStr = "and (p.title like '%?%' or p.desc like '%?%')";
             $queryArray[] = $searchStr;
             $queryArray[] = $searchStr;
         }
