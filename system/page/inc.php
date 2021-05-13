@@ -137,9 +137,9 @@ class page {
                 $_SESSION['page']['info'] = $page;
                 // Поиск замены заголовков
                 $title_data = $pages->title_get_url("/{$_SESSION['page_url']}/");
-                $new_title = $title_data['title_text'];
-                $descr_text = $title_data['descr_text'];
-                if (strlen($new_title) > 0) {
+                if (count($title_data) > 0) {
+                    $new_title = $title_data[0]['title_text'];
+                    $descr_text = $title_data[0]['descr_text'];
                     $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $new_title;
                     $_SESSION['site_seo_descr'] = $descr_text;
                 } else {
@@ -155,9 +155,10 @@ class page {
 
         // Если заголовок передали
         $title_data = $pages->title_get_url($_SERVER['REQUEST_URI']);
-        $new_title = $title_data['title_text'];
-        $descr_text = $title_data['descr_text'];
-        if (strlen($new_title) > 0) {
+
+        if (count($title_data) > 0) {
+            $new_title = $title_data[0]['title_text'];
+            $descr_text = $title_data[0]['descr_text'];
             $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $new_title;
             $_SESSION['site_seo_descr'] = $descr_text;
         }
