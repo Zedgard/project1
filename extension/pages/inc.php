@@ -22,14 +22,16 @@ class pages extends \project\extension {
 
     /**
      * Получить список заголовков
-     * @return type
+     * @param type $url
+     * @return string
      */
     public function title_get_url($url) {
+        $data = array();
         if (strlen(trim($url)) > 0) {
             $querySelect = "SELECT * FROM `zay_pages_titles` WHERE `url`='?' ORDER by `url` ASC";
             $data = $this->getSelectArray($querySelect, array($url));
             if (count($data) > 0) {
-                return $data[0];
+                return $data;
             }
         }
         return '';
