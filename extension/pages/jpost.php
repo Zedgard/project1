@@ -5,10 +5,12 @@ defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/page/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once 'inc.php';
 include 'lang.php';
 
 $p = new \project\page();
 $u = new \project\user();
+$p_pages = new \project\pages();
 
 // редактировать страницу
 if (isset($_POST['page_edit'])) {
@@ -118,5 +120,11 @@ if (isset($_POST['get_roles_block_id']) && $_POST['get_roles_block_id'] > 0) {
 // Список всех страниц
 if (isset($_POST['adminList'])) {
     $data = $p->adminList(0);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+// Все заголовки
+if(isset($_POST['init_titles'])){
+    $data = $p_pages->titles();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }

@@ -7,6 +7,7 @@ defined('__CMS__') or die;
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/pages/inc.php';
 
 /*
  * Страницы сайта
@@ -37,6 +38,7 @@ class page {
      */
     public function init() {
         $sqlLight = new \project\sqlLight();
+        $pages = new \project\pages();
 
         // Отчистим хлебные крошки
         $this->bread_clear();
@@ -56,7 +58,6 @@ class page {
         // информация о странице
         $page = $this->getPageInfoOrUrl($page_url);
         //print_r($page);
-
         //echo "\n page: {$page['id']} \n";
         // Если существует страница
         if (isset($page['id']) && $page['id'] > 0) {
@@ -134,13 +135,25 @@ class page {
 
             if ($page_show == 1) {
                 $_SESSION['page']['info'] = $page;
-                $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
+                // Поиск замены заголовков
+                $new_title = $pages->title_get_url("/{$_SESSION['page_url']}/");
+                if (strlen($new_title) > 0) {
+                    $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $new_title;
+                } else {
+                    $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
+                }
                 //echo $_SESSION['site_title'];
             }
         } else {
             // Не существует такой страницы
             $_SESSION['site_title'] = $_SESSION['site_title'] . ' - cтраница не найдена ';
             $_SESSION['page'] = array();
+        }
+
+        // Если заголовок передали
+        $new_title = $pages->title_get_url($_SERVER['REQUEST_URI']);
+        if (strlen($new_title) > 0) {
+            $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $new_title;
         }
 
         return $page;

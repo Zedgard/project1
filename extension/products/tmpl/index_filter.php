@@ -33,23 +33,11 @@
             </div>
         </div>
     </div>
-    <style>
-        .product_theme_btn{
-            width: 100%;
-            padding: 0.8rem 0;
-            text-align: center;
-            color: #FFFFFF;
-            font-size: 1rem;
-            -webkit-border-radius: 20px;
-            -moz-border-radius: 20px;
-            border-radius: 20px;
-        }
-        .product_theme_btn:hover{
-            cursor: pointer;
-        }
-    </style>
     <div class="row mr-2 pt-3 pb-4">
         <div class="col-12">
+            <?
+            //print_r($_SESSION['url']);
+            ?>
             <?
             foreach ($themeArray as $value) {
                 //$colorArray[$value['id']] = randomColor();
@@ -75,9 +63,16 @@
                         box-shadow: none;
                     }
                 </style>
+                <!--
                 <div class="mt-4 product_theme_btn product_theme_shadow<?= $value['id'] ?>" elm_id="<?= $value['id'] ?>" style="<?= $theme_color . $fontweight ?>">
                     <div><?= $value['title'] ?></div>
                 </div>
+                -->
+                <a href="/<?= $_SESSION['url'][0] ?>/?product_theme=<?= $value['id'] ?>">
+                    <div class="mt-4 product_theme_btn product_theme_shadow<?= $value['id'] ?>" elm_id="<?= $value['id'] ?>" style="<?= $theme_color . $fontweight ?>">
+                        <div><?= $value['title'] ?></div>
+                    </div>
+                </a>
                 <?
             }
             ?>

@@ -134,12 +134,12 @@ $(document).ready(function () {
     });
 
     // Тема
-    $(".product_theme_btn").unbind('click').click(function () {
-        var val = $(this).attr("elm_id");
-        sendPostLigth('/jpost.php?extension=products', {"click_product_theme": val}, function (e) {
-            document.location.reload();
-        });
-    });
+//    $(".product_theme_btn").unbind('click').click(function () {
+//        var val = $(this).attr("elm_id");
+//        sendPostLigth('/jpost.php?extension=products', {"click_product_theme": val}, function (e) {
+//            document.location.reload();
+//        });
+//    });
     $(".productSearchString").change(function () {
         var productSearchString = $(this).val();
         sendPostLigth('/jpost.php?extension=products', {"productSearchString": productSearchString}, function (e) {

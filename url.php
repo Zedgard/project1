@@ -56,8 +56,10 @@ if (count($_SESSION['page']) > 0) {
 }
 //print_r($_SESSION['page']['info']);
 //print_r();
+//echo $_SERVER['REQUEST_URI'];
 echo $html;
 //}
+//print_r($_SERVER['REQUEST_URI']);
 
 
 
