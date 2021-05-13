@@ -63,10 +63,15 @@ and open the template in the editor.
     font-size: 1.5rem;
     opacity: 0.6;
 }
+.freeze_title_text .fa-snowflake{
+    font-size: 1rem;
+    color: #61B7EE;
+}
 .freeze_title_text{
     color: #000000;
 }
 .freeze_date_str .fa-snowflake{
+    font-size: 2rem;
     color: #61B7EE;
 }
 
@@ -76,8 +81,4 @@ and open the template in the editor.
 }
 .freeze_date_str .freeze_date{
     color: #000000;
-}
-.freeze_ticket_block .fa-snowflake{
-    font-size: 2rem;
-    color: #61B7EE;
 }
