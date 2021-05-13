@@ -66,7 +66,8 @@
         <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script> 
-        <script type="text/javascript" src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+        <script type="text/javascript" src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>  
+        <script src="/system/extension/admin_super_init.js<?= $_SESSION['rand'] ?>"></script>
         <?
         //<script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] "></script> 139
         ?>

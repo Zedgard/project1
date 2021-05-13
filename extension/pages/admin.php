@@ -5,10 +5,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/page/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/theme/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
-
+include_once 'inc.php';
 include 'lang.php';
 
 $user = new \project\user();
+$p_pages = new \project\pages();
+
 if ($user->isEditor()) {
 
     $p = new \project\page();
@@ -52,6 +54,13 @@ if ($user->isEditor()) {
         //$blocks = $p->bloksListArray();
         include 'tmpl/bloks.php';
         include 'tmpl/block_edit.php';
+    } elseif (isset($_GET['titles'])) {
+        if(isset($_GET['add_new_title'])){
+            $p_pages->title_insert();
+            location_href('/admin/pages/?titles=1');
+        }
+        //$blocks = $p->bloksListArray();
+        include 'tmpl/titles.php';
     } else {
         $pages = $p->adminList(0);
         

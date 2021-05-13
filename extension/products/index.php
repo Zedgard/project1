@@ -55,6 +55,9 @@ $product_theme = '0';
 if (isset($_SESSION['product']['filter']['product_theme'])) {
     $product_theme = $_SESSION['product']['filter']['product_theme'];
 }
+if(isset($_GET['product_theme'])){
+    $product_theme = $_GET['product_theme'];
+}
 
 /* Все продукты сайта с учетом фильтра */
 $productsFilterArray = $c_product->getProductsIndex($productSearchString, '', $productTopicStr, $ProductPromo, $ProductNew, $product_theme);

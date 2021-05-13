@@ -5,7 +5,10 @@
 
                 <div class="card-header card-header-border-bottom">
                     <h2 class="col-lg-6"><?= $lang['pages'][$_SESSION['lang']]['descr'] ?></h2>
-                    <div class="col-lg-6" style="text-align: right;">
+                    <div class="col-lg-3" style="text-align: right;">
+                        <a href="?titles=1" class="btn btn-info">Заголовки страниц</a>
+                    </div>
+                    <div class="col-lg-3" style="text-align: right;">
                         <a href="?bloks=1" class="btn btn-info">Блоки сайта</a>
                     </div>
                 </div>
@@ -43,7 +46,7 @@
                                         <td style="text-align: center;"><a href="?content=<?= $pages[$i]['id'] ?>" class="btn-sm btn-primary">материалы</a></td>
                                         <td style="text-align: center;">
                                             <a href="?edit=<?= $pages[$i]['id'] ?>" class="btn-sm btn-primary"><?= $lang['pages'][$_SESSION['lang']]['edit'] ?></a>
-                                            
+
                                             <!--
                                             <a href="/<?= $pages[$i]['url'] ?>/" target="_blank" class="btn-sm btn-primary"><?= $lang['pages'][$_SESSION['lang']]['show'] ?></a>
                                             <input type="button" value="<?= $lang['pages'][$_SESSION['lang']]['role'] ?>" class="btn-sm btn-primary"/>

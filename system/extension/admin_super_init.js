@@ -16,7 +16,14 @@ function init_super_elm_edit() {
             var elm_id = $(this).attr("elm_id");
             var elm_table = $(this).attr("elm_table");
             var elm_row = $(this).attr("elm_row");
-            var value = $(this).val();
+            var tagName = $(this)[0].tagName;
+            var value = '';
+            if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
+                value = $(this).val();
+            }
+//            if (tagName == 'TEXTAREA') {
+//                value = $(this).html();
+//            }
             init_super_post(elm_id, value, elm_table, elm_row);
         });
     }
