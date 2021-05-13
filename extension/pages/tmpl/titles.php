@@ -21,6 +21,7 @@
                                     <tr>
                                         <th>Адрес сайта</th>
                                         <th>Заголовок</th>
+                                        <th>Текст для продвижения</th>
                                     </tr>
                                 </thead>
                                 <tbody class="body_list_titles">
@@ -35,7 +36,7 @@
                     <a href="./" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['back_link'] ?></a>
 
                 </div>
-
+                
             </div> 
         </div>
     </div>
@@ -64,7 +65,8 @@
             for (var i = 0; i < e['data'].length; i++) {
                 var html = '<tr>';
                 html += '<td><input type="text" name="url" value="' + e['data'][i]['url'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_pages_titles" elm_row="url" class="form-control init_elm_edit" placeholder="Url адрес" /></td>';
-                html += '<td><input type="text" name="url" value="' + e['data'][i]['title_text'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_pages_titles" elm_row="title_text" class="form-control init_elm_edit" placeholder="Заголовок" /></td>';
+                html += '<td><input type="text" name="title_text" value="' + e['data'][i]['title_text'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_pages_titles" elm_row="title_text" class="form-control init_elm_edit" placeholder="Заголовок" /></td>';
+                html += '<td><textarea name="descr_text" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_pages_titles" elm_row="descr_text" class="form-control init_elm_edit" placeholder="Текст для продвижения" style="height: 100px;">' + e['data'][i]['descr_text'] + '</textarea>\n\</td>';
                 html += '</tr>';
                 $(".body_list_titles").append(html);
             }

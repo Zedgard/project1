@@ -231,6 +231,9 @@
                     ?>
                 </div>
                 <div class="product_load_next"></div>
+                <div class="site_seo_descr mt-3 mb-3">
+                    <?= $_SESSION['site_seo_descr'] ?>
+                </div>
             </div>
             <hr class="d-block d-md-none pb-3 pt-3 mb-3 mt-3" />
 

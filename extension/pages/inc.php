@@ -29,7 +29,7 @@ class pages extends \project\extension {
             $querySelect = "SELECT * FROM `zay_pages_titles` WHERE `url`='?' ORDER by `url` ASC";
             $data = $this->getSelectArray($querySelect, array($url));
             if (count($data) > 0) {
-                return $data[0]['title_text'];
+                return $data[0];
             }
         }
         return '';
@@ -40,7 +40,7 @@ class pages extends \project\extension {
      * @return type
      */
     public function title_insert() {
-        $query = "INSERT INTO `zay_pages_titles`(`url`, `title_text`) VALUES ('','')";
+        $query = "INSERT INTO `zay_pages_titles`(`url`, `title_text`, `descr_text`) VALUES ('','','')";
         return $this->query($query);
     }
 
