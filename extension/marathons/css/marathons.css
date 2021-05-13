@@ -49,6 +49,16 @@
 .marathons_btn_green:hover{
     background-color: #7DCEA0;
 }
+.marathons_btn_white{
+    width: 100%;
+    background-color: #FFFFFF;
+    color: #000000;
+    text-transform: uppercase;
+}
+.marathons_btn_white:hover{
+    background-color: #f9f9f9;
+    color: #000000;
+}
 .marathons_btn_brown{
     width: 100%;
     background-color: #EB984E;

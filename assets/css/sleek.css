@@ -67,7 +67,7 @@ body {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #bcc2d2;
+    /* color: #bcc2d2; */
     text-align: left;
     background-color: #2c3a39; 
     background-image: url('/assets/img/office_bg.png');
@@ -1667,7 +1667,7 @@ textarea.form-control {
 .form-check-input {
     position: absolute;
     margin-top: 0.3rem;
-    margin-left: -1.25rem; }
+    margin-left: 0rem; }
 .form-check-input[disabled] ~ .form-check-label,
 .form-check-input:disabled ~ .form-check-label {
     color: #6c757d; }
@@ -9572,7 +9572,7 @@ code {
     left: 0;
     height: 15px;
     width: 15px;
-    background: #e1e2e5;
+    background: #FFFFFF;
     border: 1px solid #ccc;
     border-radius: 0.125rem; }
 
@@ -10394,7 +10394,7 @@ div.copied {
 .navbar .navbar-right .navbar-nav .right-sidebar-2-menu {
     text-align: center;
     cursor: pointer;
-    border-right: 1px solid #e5e9f2;
+    border-right: 1px solid #213f48;
     min-width: 60px; }
 @media (min-width: 1200px) {
     .navbar .navbar-right .navbar-nav .right-sidebar-2-menu {
@@ -13636,3 +13636,16 @@ html[dir="rtl"] .github-link svg {
     cursor: -webkit-grab;
 }
 
+.real_time{
+    font-size: 1rem;
+}
+
+.sortable-ul li{
+    list-style: none;
+}
+.system_memory{
+    padding: 1% 4%;
+    display: block;
+    width: 100%;
+    background-color: #FFFFFF;
+}

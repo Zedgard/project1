@@ -3,7 +3,7 @@
 namespace project;
 
 defined('__CMS__') or die;
-
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
 class userprofile extends \project\extension {
@@ -22,29 +22,43 @@ class userprofile extends \project\extension {
 
     /**
      * Радактируем общую информацию по пользователю
-     * @param type $user_id
-     * @param type $first_name
-     * @param type $last_name
-     * @param type $city
-     * @param type $city_code
-     * @param type $active_subscriber
+     * @param type $data
      * @return boolean
      */
-    public function save_user_info($user_id, $user_phone, $first_name, $last_name, $city, $city_code, $active_subscriber) {
+    public function save_user_info($user_id, $data) {
         $user = new \project\user();
+        //print_r($data);
+        //echo "login_instagram: {$data['login_instagram']}<br/>\n";
+
         if ($user_id > 0) {
             $query = "UPDATE `zay_users` "
                     . "SET `first_name`='?',`last_name`='?', `city`='?',"
-                    . "`city_code`='?', `active_subscriber`='?' "
+                    . "`city_code`='?', `active_subscriber`='?', "
+                    . "`login_instagram`='?' "
                     . "WHERE `id`='?' ";
             // Телефон могут менять только редакторы
             if ($user->isEditor()) {
                 $queryPhoneUpdate = "UPDATE `zay_users` "
                         . "SET `phone`='?' "
                         . "WHERE `id`='?' ";
-                $this->query($queryPhoneUpdate, array($user_phone, $user_id));
+                $this->query($queryPhoneUpdate, array($data['user_phone'], $user_id));
             }
-            $ret = $this->query($query, array($first_name, $last_name, $city, $city_code, $active_subscriber, $user_id));
+            $ret = $this->query($query,
+                    array(
+                        $data['first_name'],
+                        $data['last_name'],
+                        $data['city'],
+                        $data['city_code'],
+                        $data['active_subscriber'],
+                        $data['login_instagram'],
+                        $user_id), 0
+            );
+
+            if ($ret) {
+                $p_auth = new \project\auth();
+                $data = $p_auth->getUserInfo($_SESSION['user']['info']['id']);
+                $_SESSION['user']['info'] = $data;
+            }
 
             return $ret;
         }

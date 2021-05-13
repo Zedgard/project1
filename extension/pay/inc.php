@@ -75,9 +75,17 @@ class pay extends \project\extension {
      * @return type
      */
     public function get_pay_info($id) {
-        $querySelect = "SELECT p.*, pt.* FROM zay_pay p "
-                . "left join zay_pay_type pt on pt.pay_type_code=p.pay_type "
-                . "WHERE p.id='?'";
+        $querySelect = "SELECT
+                        p.*,
+                        if(pcr.id is not null, pcr.id, 0) as pay_credit,
+                        pt.*
+                    FROM
+                        zay_pay p
+                        left join zay_pay_credit pcr on pcr.pay_id=p.id
+                    LEFT JOIN zay_pay_type pt ON
+                        pt.pay_type_code = p.pay_type
+                    WHERE
+                        p.id='?'";
         return $this->getSelectArray($querySelect, array($id))[0];
     }
 

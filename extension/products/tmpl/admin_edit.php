@@ -90,6 +90,12 @@
                             <label for="products_price">Цена со скидкой</label>
                             <input type="text" class="form-control products_price_promo" id="products_price_promo" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Цена продукта" required>
                         </div>
+                        
+                        
+                        <div class="form-group">
+                            <label for="product_content">Содержание товара (Произвольный текст)</label>
+                            <textarea name="product_content" id="product_content" class="form-control product_content" placeholder="Текст содержание товара..." style="width: 100%;height: 100px;"></textarea>
+                        </div>
 
                         <?
                         importELFinder(1);

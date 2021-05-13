@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="col-lg-6 mb-3 block_profit_plus">
-                <div class="mb-3 block_profit_title">Вы получите</div>
+                <div class="mb-3 block_profit_title">Ты получишь</div>
                 <div class="mb-3">
                     <a href="javascript:void(0)" class="btn btn-primary btn_add_plus">Добавить</a>
                 </div>

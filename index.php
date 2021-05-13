@@ -2,6 +2,10 @@
 
 session_start();
 
+// Время и память скрипта
+$start = microtime(true);
+$memory = memory_get_usage();
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
@@ -19,8 +23,13 @@ if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'http') {
  */
 $server_http = explode('.', $_SERVER['HTTP_HOST']);
 if ($server_http[0] == 'www') {
-    //echo 'https://' . $server_http[1] . '.' . $server_http[2] . $_SERVER['REQUEST_URI'];
-    header('Location: https://' . $server_http[1] . '.' . $server_http[2] . $_SERVER['REQUEST_URI'], true, 301);
+    //print_r($server_http);
+    //echo 'https://' . $server_http[1] . '.' . $server_http[2] . '.' . $server_http[3] . $_SERVER['REQUEST_URI'];
+    $href_add_1 = '';
+    if (isset($server_http[3]) && strlen($server_http[3]) > 0) {
+        $href_add_1 = '.' . $server_http[3];
+    }
+    header('Location: https://' . $server_http[1] . '.' . $server_http[2] . $href_add_1 . $_SERVER['REQUEST_URI'], true, 301);
     exit();
 }
 
@@ -114,3 +123,32 @@ if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/statistic/inc.php')) {
 
 $_SESSION['errors'] = array();
 $_SESSION['message'] = array();
+
+/**
+ * Данные о производительности
+ */
+if ($user->isEditor()) {
+    $memory = memory_get_usage() - $memory;
+    $time = microtime(true) - $start;
+
+// Подсчет среднего времени.
+    $f = fopen('time.log', 'a');
+    fwrite($f, $time . PHP_EOL);
+    fclose($f);
+    $log = file('time.log');
+    $time = round(array_sum($log) / count($log), 3);
+
+// Перевод в КБ, МБ.
+    $i = 0;
+    while (floor($memory / 1024) > 0) {
+        $i++;
+        $memory /= 1024;
+    }
+
+    $name = array('байт', 'КБ', 'МБ');
+    $memory = round($memory, 2) . ' ' . $name[$i];
+
+    $memory = memory_get_usage() - $memory;
+
+    echo '<span class="system_memory">' . $time . ' сек. / ' . $memory . '</span>';
+}

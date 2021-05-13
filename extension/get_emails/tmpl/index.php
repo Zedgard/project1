@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row pt-2 pb-2">
             <div class="col-lg-6">
-                <span class="get_emails_text1">ПОДПИШИСЬ НА РАССЫЛКУ</span>
+                <span class="get_emails_text1 mb-1">ПОДПИШИСЬ НА РАССЫЛКУ</span>
                 <span class="get_emails_text2">и раньше других узнавай о выгодных предложениях</span>
             </div>
             <div class="col-lg-6" style="margin-top: 0.5rem;margin-bottom: 0.4rem;">
@@ -23,7 +23,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Отправка электронного адреса</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -31,7 +31,7 @@
                 ...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>

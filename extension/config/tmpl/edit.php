@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                
+
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Категория</label>
                     <select name="config_category" id="config_category" class="form-control config_category">
@@ -57,7 +57,9 @@
                 <div class="block block_checkbox" style="display: none;">
                     <div class="form-group">
                         <label for="config_val">Значение</label>
-                        <input type="checkbox" name="config_val" class="form-control config_checkbox_val" value="1" checked="checked" />
+                        <div>
+                            <input type="checkbox" name="config_val" class="form-check-input config_checkbox_val" value="1" checked="checked" />
+                        </div>
                     </div>
                 </div>
 

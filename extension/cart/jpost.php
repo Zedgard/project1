@@ -1,4 +1,5 @@
 <?php
+
 defined('__CMS__') or die;
 
 session_start();
@@ -9,6 +10,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
 include_once 'inc.php';
 
 $pr_cart = new \project\cart();
@@ -33,16 +35,21 @@ if (isset($_POST['cart_product_add'])) {
             $_SESSION['cart']['itms'] = $new_arr;
         }
         // Зарегистрируем товары
-        $obj = $pr_products->getProductElem($product_id);
-        $_SESSION['cart']['itms'][] = $obj;
-        init_prices();
+        $data = $pr_products->getProductElem($product_id);
+        if (count($data) > 0) {
+            $_SESSION['cart']['itms'][] = $data;
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            $_SESSION['errors'][] = 'Данные товар больше не продается!';
+            $result = array('success' => 0, 'success_text' => '');
+        }
     }
 }
 
 // Добавление в корзину консультации
 if (isset($_POST['send_consultation_form'])) {
     unset($_SESSION['consultation']);
-    $_SESSION['cart']['itms'] = array();
+    //$_SESSION['cart']['itms'] = array();
     $first_name = $_POST['first_name'];
     $user_phone = $_POST['user_phone'];
     $user_email = $_POST['user_email'];
@@ -76,29 +83,67 @@ if (isset($_POST['send_consultation_form'])) {
     } else {
         $user_id = $users[0]['id'];
     }
-    // -------------------------------------------------------------------------
 
-    $data_itm = array(
-        'id' => 0,
-        'your_master_id' => $your_master,
-        'user_id' => $user_id,
-        'first_name' => $first_name,
-        'user_phone' => $user_phone,
-        'user_email' => $user_email,
-        'pay_descr' => "<div>Консультация с {$first_name}</div>"
-        . "<div>Телефон: {$user_phone}</div>"
-        . "<div>Email: {$user_email}</div>"
-        . "<div>Консультант: {$your_master_text}</div>"
-        . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>"
-        . "<div>Цена: {$price}</div>",
-        'date' => $datepicker_data,
-        'time' => $timepicker_data,
-        'price' => $price,
-        'period_id' => $period_id,
+    // положим в корзину
+    $sign_up_consultation->set_cart_consultation(
+            $user_id,
+            $first_name,
+            $user_phone,
+            $user_email,
+            $your_master,
+            $datepicker_data,
+            $timepicker_data,
+            $price,
+            $period_id
     );
-    $_SESSION['consultation'] = $data_itm;
-    $_SESSION['cart']['itms'][] = $data_itm;
 }
+
+// Добавление в корзину
+if (isset($_POST['add_other_consultation_cart'])) {
+    unset($_SESSION['consultation']);
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+    $sign_up_consultation = new \project\sign_up_consultation();
+
+    $product_period_id = trim($_POST['product_period_id']);
+    $consultation_user_fio = trim($_POST['consultation_user_fio']);
+    $consultation_date = $_POST['consultation_date'];
+    $consultation_period = $_POST['consultation_period'];
+
+    $_SESSION['cart']['itms'] = array();
+
+    $data = $sign_up_consultation->get_consultation_on_period_info($product_period_id);
+
+    // Проверка на занятый день
+    $sign_up_consultation->consultation_check($consultation_date, $data['period_time']);
+
+    $product_price = trim($data['period_price']);
+
+    if (count($_SESSION['errors']) == 0) {
+        if (isset($_SESSION['user']['info']) && $_SESSION['user']['info']['id'] > 0) {
+
+            if (strlen(trim($consultation_user_fio)) == 0) {
+                $consultation_user_fio = $_SESSION['user']['info']['first_name'];
+            }
+            // положим в корзину
+            $sign_up_consultation->set_cart_consultation(
+                    $_SESSION['user']['info']['id'],
+                    $consultation_user_fio,
+                    $_SESSION['user']['info']['phone'],
+                    $_SESSION['user']['info']['email'],
+                    $data['master_id'],
+                    $consultation_date,
+                    $data['period_time'],
+                    $data['period_price'],
+                    $product_period_id
+            );
+
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            $errors[] = 'Не определен пользователь!';
+        }
+    }
+}
+
 
 // Удаление из корзины
 if (isset($_POST['cart_product_remove'])) {
@@ -114,16 +159,101 @@ if (isset($_POST['cart_product_remove'])) {
         }
         $_SESSION['cart']['itms'] = $new_arr;
         init_prices();
+    } else {
+        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+            if (0 == $value['id']) {
+                //unset($_SESSION['cart']['itms'][$key]);
+            } else {
+                $new_arr[] = $_SESSION['cart']['itms'][$key];
+            }
+        }
+        $_SESSION['cart']['itms'] = $new_arr;
+        init_prices();
     }
 }
 
 if (isset($_POST['cart_product_get_array'])) {
-    $arr = array();
+    $data = array();
+    $promo_array = array();
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            if (strlen($value['pay_descr']) == 0) {
-                $arr[] = $value;
+            $alliance = 1;
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        //echo "-: {$v['alliance']} \n";
+                        // Возможность объединять скидки
+                        if ($v['alliance'] == 0) {
+                            $alliance = 0;
+                        }
+                    }
+                }
             }
+            //echo "alliance: {$alliance} \n";
+//            if (strlen($value['pay_descr']) == 0) {
+//                $data[] = $value;
+//            }
+            //echo "cart title: {$value['title']} \n";
+            /*
+             * Работа с промо
+             */
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        //echo "title: {$v['title']} \n";
+                        // Изначальная цена
+                        $price = (int) $value['price'];
+
+
+                        // Если естьусловие по товарно
+                        if (strlen($v['product_ids']) > 0) {
+                            $ex = explode(',', $v['product_ids']);
+                            foreach ($ex as $product_id) {
+                                if ($value['id'] == $product_id) {
+                                    if ($v['amount'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                        } else {
+                                            $value['price_promo'] = ($price - $v['amount']);
+                                        }
+                                        //echo "1 price_promo: {$value['price_promo']} - " . ($price - $v['amount']) . "\n";
+                                    }
+                                    if ($v['percent'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                        } else {
+                                            $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                        }
+                                        //echo "2 price_promo: {$value['price_promo']} - " . ($price - (($v['percent'] / 100) * $price)) . "\n";
+                                    }
+                                }
+                            }
+                        } else { // Общее условие по купону
+                            if ($v['amount'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                } else {
+                                    $value['price_promo'] = ($price - $v['amount']);
+                                }
+                            }
+                            if ($v['percent'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                } else {
+                                    $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                }
+                            }
+                        }
+
+                        // Добавим для фиксации чтобы не объединять промо
+//                        if (!in_array($value['id'], $promo_array)) {
+//                            $promo_array[] = $value['id'];
+//                        }
+                    }
+                }
+            }
+            $data[] = $value; //$_SESSION['cart']['itms'][$key];
+            //echo "price_promo: {$value['price_promo']} \n";
             //    echo "itms: {$_SESSION['cart']['itms'][$key]}\n";
             //$_SESSION['cart']['itms'][$key]['product_info'] = $pr_products->getProductElem($_SESSION['cart']['itms'][$key]);
             //print_r($pr_products->getProductElem($_SESSION['cart']['itms'][$key]));
@@ -131,7 +261,8 @@ if (isset($_POST['cart_product_get_array'])) {
         }
     }
     // $_SESSION['cart']['itms']
-    $result = array('success' => 1, 'success_text' => '', 'data' => $arr);
+    //print_r($data);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
 if (isset($_POST['cart_product_get_count'])) {
@@ -152,33 +283,7 @@ if (isset($_POST['not_processed_col'])) {
     $result = array('success' => 1, 'success_text' => '', 'not_processed_col' => $not_processed_col);
 }
 
-/**
- * Письмо пользователю
- */
-if (isset($_POST['user_send_message'])) {
-    $user_fio = $_POST['user_fio'];
-    $user_email = $_POST['user_email'];
-    $user_subject = $_POST['user_subject'];
-    $user_message = $_POST['user_message'];
-    $arrayReplaseText = array(
-        'user_fio' => $user_fio,
-        'user_email' => $user_email,
-        'user_subject' => $user_subject,
-        'user_message' => $user_message,
-    );
 
-    if (strlen($config->getConfigParam('link_ed_mailto')) > 0) {
-        $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
-        //$link_ed_mailto = 'koman1706@gmail.com';
-
-        if ($p_user->sendEmail($link_ed_mailto, 'Письмо технической поддержки', 'send_user_message', $arrayReplaseText)) {
-            $result = array('success' => 1, 'success_text' => 'Успешно отправлено, ждите ответа.');
-        } else {
-            $_SESSION['errors'][] = 'Не отправлено!';
-            $result = array('success' => 0, 'success_text' => '');
-        }
-    }
-}
 
 /**
  * Создание платежа на cloudpayments
@@ -207,24 +312,23 @@ if (isset($_POST['set_cloudpayments'])) {
     $_SESSION['errors'] = array();
     $price_total = 0;
 
-    foreach ($_SESSION['cart']['itms'] as $key => $value) {
-        $email = $value['user_email'];
-        if ($value['price_promo'] > 0) {
-            $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
+    if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+            $email = $value['user_email'];
+            if ($value['price_promo'] > 0) {
+                $price = $value['price_promo'];
+            } else {
+                $price = $value['price'];
+            }
+            $price_total += $price;
         }
-        $price_total += $price;
-    }
-    /**
-     * Заглушка для админов покупка за 1 рубль
-     */
-    if ($p_user->isEditor()) {
-        $price_total = 1;
-    }
+        /**
+         * Заглушка для админов покупка за 1 рубль
+         */
+        if ($p_user->isEditor()) {
+            $price_total = 1;
+        }
 
-
-    if (count($_SESSION['cart']['itms']) > 0) {
         $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
         // Передадим ID пользователя (Создается при консультации)
@@ -294,15 +398,7 @@ if (isset($_POST['set_cloudpayments'])) {
                             //$products->setSoldAdd($product_id);
                         }
                     }
-                    /*
-                     * Если это консультация 
-                     */
-                    if ($_SESSION['consultation']['your_master_id'] > 0) {
-                        $_SESSION['consultation']['pay_id'] = $max_id;
-                        $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
-                    }
-                    $data_array['pay_descr'] = 'Покупка товара';
+
                     // Отправляем пользователя на страницу оплаты
                     //header('Location: ' . $confirmationUrl);
                     $result = array('success' => 1, 'success_text' => '', 'data' => $data_array);
@@ -349,6 +445,7 @@ if (isset($_POST['check_cloudpayments'])) {
     $products = new \project\products();
     $config = new \project\config();
     $sign_up_consultation = new \project\sign_up_consultation();
+    $close_club = new \project\close_club();
 
     $CloudPayments_id = $config->getConfigParam('CloudPayments');
 
@@ -397,8 +494,16 @@ if (isset($_POST['check_cloudpayments'])) {
                 . "WHERE `pay_type`='cp' and pay_key='?' and id='?' ";
 
         if ($sqlLight->query($query_update, array($pay_check, $_SESSION['PAY_AMOUNT'], 'CloudPayments', '', '', $_SESSION['PAY_KEY'], $pay_id), 0) && $pay_check == 'succeeded') {
+
+            // Зарегистрируем покупку
+            $pr_cart->register_pay($pay_id);
+
             // Зафиксируем продажу
-            $products->setSoldAdd($pay_id);
+            $query_products = "select * from zay_pay_products WHERE pay_id='?'";
+            $products_data = $sqlLight->queryList($query_products, array($pay_id));
+            foreach ($products_data as $v) {
+                $products->setSoldAdd($v['product_id']);
+            }
             $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');

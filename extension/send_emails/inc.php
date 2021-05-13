@@ -82,6 +82,7 @@ class send_emails extends \project\extension {
     public function file_get_html($file_name, $params = array()) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
         $file_url = __DIR__ . '/emails_tmpl/' . $file_name . '.php';
+        $body_str = '';
         $body_str = fileGet($file_url);
         // вставки системные http://getcourse.ru/notifications/unsubscribe/message/id/7461154924/h/93951
         $replaces = array(
@@ -150,7 +151,10 @@ class send_emails extends \project\extension {
      * Настроить по иструкции<br>
      * https://www.hostinger.ru/rukovodstva/kak-ispolzovat-smtp-server#-SMTP-Google<br>
      * Дать разрешение<br>
-     * https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4Ol_vs_Lq-qGdvCJbpcRTzlQK3LakI2iYSfeQSwNF_LoigTs-1-OAnTQiBdCXZ5cQYzgn_mpTXCIZXSpp7v7tybhg_wlw<br>
+     * https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4Ol_vs_Lq-qGdvCJbpcRTzlQK3LakI2iYSfeQSwNF_LoigTs-1-OAnTQiBdCXZ5cQYzgn_mpTXCIZXSpp7v7tybhg_wlw <br>
+     * https://accounts.google.com/DisplayUnlockCaptcha <br/>
+     * Генератор mdkim чтобы письма в спам не падали
+     * https://dmarcly.com/tools/dkim-record-generator
      * @param type $email_id тело сообщения
      * @param type $to_email кому отправить
      * @param type $params данные для замены
@@ -162,39 +166,57 @@ class send_emails extends \project\extension {
             $mail = new PHPMailer(false);
             $user_info = $this->get_smtp_user_info();
             $email_info = $this->get_email($email_code);
+            //echo "user_info: {$user_info}<br/>\n";
             //echo "send_email: {$email_info['email_send']} <br/>\n";
             if ($email_info['email_send'] > 0) {
                 // $email_info['email_body_file'] ;
                 $body = $this->file_get_html($email_info['email_body_file'], $params); //echo $body;
                 //echo "body: {$body}<br/>\n";
                 try {
-                    // Server settings
+                    //mail('koman1706@gmail.com','Тема','Сообщение 1');
+                    // Для отправки HTML-письма должен быть установлен заголовок Content-type
+//                    $headers = 'MIME-Version: 1.0' . "\r\n";
+//                    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+//
+//                    // Дополнительные заголовки
+//                    //$headers .= "To: <{$to_email}>\r\n";
+//                    $headers .= "From: <{$email_info['email_reply_to']}>\r\n";
+//                    //echo "to: {$to_email} email_body_file: {$email_info['email_body_file']} subject: {$email_info['email_subject']} \n";
+//                    // Отправляем
+//                    $return = mail($to_email, $email_info['email_subject'], $body, $headers);
+                    // Server settings Не работает
                     $mail->SMTPDebug = SMTP::DEBUG_OFF; //DEBUG_SERVER; // for detailed debug output
                     $mail->isSMTP();
                     $mail->CharSet = "UTF-8";
                     $mail->Host = 'smtp.gmail.com';
-                    //$mail->Host = 'smtp.agenstvnet.ru';
+                    //$mail->Host = 'mail.edgardzaycev.com';
                     $mail->SMTPAuth = true;
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
+                    $mail->Port = 587; // google
+                    $mail->SMTPDebug = 0;
+                    $mail->SMTPSecure = 'tls';
                     //$mail->Port = 465;
-
-                    $mail->Username = $user_info['user_email']; // YOUR gmail email
-                    $mail->Password = $user_info['user_password']; // YOUR gmail password
-                    //$mail->Username = 'admin@agenstvnet.ru'; // YOUR gmail email
-                    //$mail->Password = 'Kopass1987'; // YOUR gmail password
+                    //echo "u: {$user_info['user_email']} p: {$user_info['user_password']} \n";
+                    $mail->Username = $user_info['user_email'];    // YOUR gmail email
+                    $mail->Password = $user_info['user_password']; // YOUR gmail password    L2f6lernBsFZ
                     // Sender and recipient settings
-                    $mail->setFrom($to_email, $email_info['email_subject']); // samodinskaya1611@mail.ru
+                    $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // 
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
                     // Setting the email content
                     $mail->IsHTML(true);
-                    $mail->Subject = $email_info['email_subject'];
+                    // Если передали новую тему
+                    if (isset($params['subject']) && strlen($params['subject']) > 0) {
+                        $mail->Subject = $params['subject'];
+                    } else {
+                        $mail->Subject = $email_info['email_subject'];
+                    }
                     $mail->Body = $body;
                     //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
                     $return = $mail->send();
                     if (!$return) {
-                        echo "{$mail->ErrorInfo} <br/>\n";
+                        $_SESSION['errors'][] = $mail->ErrorInfo;
+                        //echo "{$mail->ErrorInfo} <br/>\n";
                     }
                     return $return;
                     //echo "Email message sent. <br/>\n";

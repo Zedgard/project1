@@ -2,7 +2,13 @@
  * Отправка данных из формы
  */
 var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets/img/ajax_load_2.svg" style="width: 40px;" /></center></div>';
+var ajax_load_true = 0;
+setTimeout(function () {
+    ajax_load_true = 1;
+}, 2000);
+
 (function ($) {
+    setCookie('site_user_ajax_access', '1', {secure: true, 'max-age': 3600});
 
     /**
      * Отправка формы с серилизацией данные из нее
@@ -11,11 +17,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
      */
     $.fn.sendPost = function (func) {
         //console.log("sendPost init");
-
-
-
         var make = function () {
-
             // реализация работы метода с отдельным элементом страницы
             var obj = this;
             $(this).submit(function (e) {
@@ -54,9 +56,8 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             $('.form_result').html("");
                             var metod = 0;
                             if (result['success'] == 1) {
+                                $('.form_result').html(result['success_text']);
                                 $('.form_result').removeClass("alert-danger");
-                                //$('.form_result').addClass("alert").addClass("alert-success");
-                                $('.form_result').append(result['success_text']);
                                 metod = 1;
                             }
                             if (result['success'] == 0) {
@@ -85,7 +86,7 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                                     $(obj).find('.form_result').append(result['success_text']);
                                 }
                             }
-                            if(result['success_text'].length > 0 || (!!result['errors'] && result['errors'].length > 0)){
+                            if (typeof result['success_text'] === "undefined" || (!!result['errors'] && result['errors'].length > 0)) {
                                 $(obj).find('.form_result').show(200);
                             }
                             // Выполнить втроенную функцию
@@ -108,7 +109,9 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
                             //$('.form_result').append('<button type="button" class="close"'
                             //        + ' data-dismiss="alert" aria-label="Close">'
                             //        + '<span aria-hidden="true">×</span></button>');
-
+                            if (result['success_text'].length > 0) {
+                                $('.form_result').show();
+                            }
                             // Скроем ответы серез 20 сек.
                             setTimeout(function () {
                                 $('.form_result').hide();
@@ -131,16 +134,22 @@ var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets
  * @param {type} func
  * @returns {ajaxL#5.$.fn@call;each}
  */
-function sendPostLigth(url, data, func) {
-    //console.log("sendPostLigth init");
-
+function sendPostLigth(url, data, func, val_async) {
+    var async = true;
+    if (typeof val_async !== 'undefined' && val_async == '1') {
+        async = false;
+    }
+    //console.log('val_async: ' + val_async + 'async: ' + async);
     // реализация работы метода с отдельным элементом страницы
     //var obj = this;
     $('.form_result').html("");
-    $('.form_result').after(ajax_load);
+    if (ajax_load_true > 0) {
+        $('.form_result').after(ajax_load);
+    }
     $.ajax({
         url: url,
         type: 'POST',
+        async: async,
         dataType: 'json',
         data: data,
         success: function (result) {
@@ -153,14 +162,16 @@ function sendPostLigth(url, data, func) {
                 if (!!result['success_text'] && result['success_text'].length > 0) {
                     if (typeof toastr !== 'undefined') {
                         toastr.success(result['success_text'], 'Выполнено');
-
                     }
                     if (!!$('.form_result')) {
                         $('.form_result').append('<div>' + result['success_text'] + '</div>');
+                        $('.form_result').removeClass("alert-danger");
+                        //$('.form_result').addClass("alert").addClass("alert-success");
                     }
                 }
                 metod = 1;
             }
+            // Отобразим ошибки
             if (result['success'] == 0) {
                 if (typeof result['errors'] !== 'undefined' && result['errors'].length > 0) {
                     for (var i = 0; i < result['errors'].length; i++) {
@@ -201,7 +212,13 @@ function sendPostLigth(url, data, func) {
                 }, (action_time * 1000));
 
             }
-
+            // Отобразим если есть сообщение
+            if (typeof result['success_text'] != "undefined" && result['success_text'].length > 0) {
+                $('.form_result').show();
+            }
+            setTimeout(function () {
+                $('.form_result').hide();
+            }, 20000);
         }
     });
 
@@ -211,7 +228,7 @@ function sendPostLigth(url, data, func) {
  * отправить запрос с задержкой
  * $(".search_wares").delayKeyup(function () {}, 700);
  */
-(function ($) {
+$(document).ready(function () {
     $.fn.delayKeyup = function (callback, ms) {
         var timer = 0;
         $(this).keyup(function () {
@@ -220,4 +237,49 @@ function sendPostLigth(url, data, func) {
         });
         return $(this);
     };
-})(jQuery);
+
+    site_sortable('.sortable-ul');
+
+});
+
+/*
+ * Сортировка
+ */
+function site_sortable(elem, func) {
+    if (elem.length == 0) {
+        elem = '.sortable-ul';
+    }
+    $(elem).sortable({
+        handle: '.handle',
+        update: function (event, ui) {
+            var ajax_url = $(this).attr("ajax-url");
+            var ajax_metod = $(this).attr("ajax-metod");
+            var db_table = $(this).attr("db-table");
+            var db_row = $(this).attr("db-row");
+            var elms = $(this).find("li");
+            var ids = [];
+            for (var i = 0; i < elms.length; i++) {
+                if (typeof $(elms[i]).attr("sortable-elm-id") !== 'undefined') {
+                    ids.push($(elms[i]).attr("sortable-elm-id"));
+                }
+            }
+            sendPostLigth(ajax_url,
+                    {
+                        "ajax_metod": ajax_metod,
+                        "db_table": db_table,
+                        "db_row": db_row,
+                        "ids": ids
+                    },
+                    function (e) {
+                        if (e['success'] == '1') {
+                            //console.log('sortable OK');
+                        } else {
+                            alert('Ошибка сортировки!');
+                        }
+                    });
+            if (typeof func != 'undefined') {
+                func(this);
+            }
+        }
+    });
+}

@@ -1,0 +1,84 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16 апр. 2021 г., 15:10:09
+    Author     : viktor
+*/
+
+.cart_product_add{
+    font-size: 1rem;
+    font-weight: bold;
+}
+.freeze_ticket_block{
+    background-color: #F2F2F2;
+    text-align: center;
+}
+
+.freeze_day_buttons{
+    clear: both;
+    display: inline-block;
+    margin: 0 auto;
+}
+.freeze_day_buttons .freeze_button{
+    float: left;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.freeze_day_buttons .freeze_button .freeze_bg{
+    padding: 0.6rem;
+    background-color: #a8a8a8;
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.freeze_day_buttons .freeze_button .default{
+    background-color: #4D6C80;
+}
+.freeze_day_buttons .freeze_button .lock{
+    background-color: #a8a8a8;
+}
+.freeze_day_buttons .freeze_button .active{
+    background-color: #9AD8FF;
+}
+
+.freeze_day_buttons .title_sum{
+    font-size: 3rem;
+    font-weight: bold;
+}
+.freeze_day_buttons .title_name{
+    font-size: 1rem;
+    font-weight: bold;
+}
+.freeze_day_buttons .button_text{
+    border-radius: 30px;
+}
+.freeze_day_buttons .freeze_user_active:hover{
+    cursor: pointer;
+}
+.cart_product_add .fa-bullhorn{
+    font-size: 1.5rem;
+    opacity: 0.6;
+}
+.freeze_title_text .fa-snowflake{
+    font-size: 1rem;
+    color: #61B7EE;
+}
+.freeze_title_text{
+    color: #000000;
+}
+.freeze_date_str .fa-snowflake{
+    font-size: 2rem;
+    color: #61B7EE;
+}
+
+.freeze_date_str{
+    font-size: 2rem;
+
+}
+.freeze_date_str .freeze_date{
+    color: #000000;
+}

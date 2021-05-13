@@ -80,7 +80,7 @@
             <?
             if ($p_user->isEditor()) {
                 ?>
-                <div class="text-right"><a href="/admin/catalog/?product_edit=<?= $productData['id'] ?>" target="_blank" class="btn btn-link">Редактировать товар</a></div>
+                <div class="text-end"><a href="/admin/catalog/?product_edit=<?= $productData['id'] ?>" target="_blank" class="btn btn-link">Редактировать товар</a></div>
                 <?
             }
             ?>
@@ -102,19 +102,23 @@
                     </span>
                     <div class="box_shadow product_wares_show" opacity="0">
                         <?
-                        if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
-                            foreach ($productData['products_wares_info'] as $value) {
-                                ?>
-                                <div class="mb-2 ml-3">
-                                    <i class="psmark"></i><?= $value['title'] ?>
-                                </div>
-                                <?
+                        if (strlen($productData['product_content']) > 0) {
+                            echo $productData['product_content'];
+                        } else {
+                            if (isset($productData['products_wares_info']) && count($productData['products_wares_info']) > 0) {
+                                foreach ($productData['products_wares_info'] as $value) {
+                                    ?>
+                                    <div class="mb-2 ml-3">
+                                        <i class="psmark"></i><?= $value['title'] ?>
+                                    </div>
+                                    <?
+                                }
                             }
                         }
                         ?>
                     </div>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-6 text-end">
                     <? if ($productData['price_promo'] > 0): ?>
                         <div style="clear: both;">
                             <div class="product_old_price float-right"><?= $productData['price'] ?></div>
@@ -131,11 +135,11 @@
             </div>
             <!-- cart button -->
             <div class="row ">
-                <div class="col-md-12 text-right">
+                <div class="col-md-12 text-end">
                     <a href="javascript:void(0)" class="btn button btngreen textcenter cart_product_add pl-5 pr-5" product_id="<?= $productData['id'] ?>">В корзину</a>
                     <div class="btn-group">
-                        <a href="/shop/cart/" class="btn button btngreen textcenter cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;">Перейти в корзину</a>
-                        <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;" title="Удалить из корзины"><i class="fa fa-trash" style="font-size: 1.2rem;padding-top: 6px;"></i></a>
+                        <a href="/shop/cart/" class="btn btngreen-outline button btngreen textcenter cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;padding: 0.8rem;border-right: none;">Перейти в корзину</a>
+                        <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
             </div>

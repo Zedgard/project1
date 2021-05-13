@@ -5,10 +5,12 @@ defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/page/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once 'inc.php';
 include 'lang.php';
 
 $p = new \project\page();
 $u = new \project\user();
+$p_pages = new \project\pages();
 
 // редактировать страницу
 if (isset($_POST['page_edit'])) {
@@ -38,9 +40,20 @@ if (isset($_POST['get_roles_page_id']) && $_POST['get_roles_page_id'] > 0) {
 // редактировать материал
 if (isset($_POST['edit_material'])) {
     $id = $_POST['edit_material'];
-    if ($p->contentEdit($id, $_POST['content_title'], $_POST['page_id'], $_POST['block_id'], $_POST['content_descr'], $_POST['ext_urls'])) {
-        $result = array('success' => 1, 'success_text' => $lang['pages'][$_SESSION['lang']]['success']//, 'action' => './?content=' . $_POST['page_id']
-                );
+    $content_descr = '';
+    if ($_POST['ext_urls'] == '0') {
+        $content_descr = $_POST['content_descr'];
+    }
+    if ($_POST['ext_urls'] == "T") {
+        $content_descr = $_POST['content_descr_text'];
+    }
+
+    if ($id == 0) {
+        $action = './?content=' . $_POST['page_id'];
+    }
+    if ($p->contentEdit($id, $_POST['content_title'], $_POST['page_id'], $_POST['block_id'], $content_descr, $_POST['ext_urls'])) {
+        $result = array('success' => 1, 'success_text' => $lang['pages'][$_SESSION['lang']]['success'], 'action' => $action
+        );
         $_SESSION['message'][] = $lang['pages'][$_SESSION['lang']]['success'];
     } else {
         $_SESSION['errors'][] = $lang['pages'][$_SESSION['lang']]['error'];
@@ -107,5 +120,11 @@ if (isset($_POST['get_roles_block_id']) && $_POST['get_roles_block_id'] > 0) {
 // Список всех страниц
 if (isset($_POST['adminList'])) {
     $data = $p->adminList(0);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+// Все заголовки
+if(isset($_POST['init_titles'])){
+    $data = $p_pages->titles();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }

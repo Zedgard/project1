@@ -72,10 +72,10 @@ if (isset($_POST['master_edit'])) {
     $master_name = (strlen($_POST['master_name']) > 0) ? $_POST['master_name'] : '';
     $token_file_name = (strlen($_POST['token_file_name']) > 0) ? $_POST['token_file_name'] : '';
     $credentials_file_name = (strlen($_POST['credentials_file_name']) > 0) ? $_POST['credentials_file_name'] : '';
-    $list_times = (count($_POST['list_times']) > 0) ? implode(',', $_POST['list_times']) : '';
+    $list_times = array();//(count($_POST['list_times']) > 0) ? implode(',', $_POST['list_times']) : '';
 
     if (strlen($master_name) > 2) {
-        if ($sign_up_consultation->edit_consultation_master($id, $master_name, $token_file_name, $credentials_file_name, $list_times)) {
+        if ($sign_up_consultation->edit_consultation_master($id, $master_name, $token_file_name, $credentials_file_name)) {
             $result = array('success' => 1, 'success_text' => '');
         } else {
             $result = array('success' => 0, 'success_text' => 'Ошибка!');
@@ -114,7 +114,7 @@ if (isset($_POST['get_master_consultation_periods'])) {
 if (isset($_POST['add_master_consultation_period'])) {
     $master_id = $_POST['master_id'];
     if ($master_id > 0) {
-        if ($sign_up_consultation->edit_consultation_period('0', $master_id, '1', '1', '100')) {
+        if ($sign_up_consultation->edit_consultation_period('0', $master_id, '00:00:00', '1', '0', '5000', '1')) {
             $result = array('success' => 1, 'success_text' => '', 'data' => $data);
         }
     } else {
@@ -127,11 +127,13 @@ if (isset($_POST['add_master_consultation_period'])) {
 if (isset($_POST['edit_master_consultation_period'])) {
     $consultation_period = $_POST['consultation_period'];
     $master_id = $_POST['master_id'];
+    $period_time = $_POST['period_time'];
     $period_hour = $_POST['period_hour'];
     $periods_minute = $_POST['periods_minute'];
     $period_price = $_POST['period_price'];
+    $period_active = $_POST['period_active'];
     if ($master_id > 0) {
-        if ($sign_up_consultation->edit_consultation_period($consultation_period, $master_id, $period_hour, $periods_minute, $period_price)) {
+        if ($sign_up_consultation->edit_consultation_period($consultation_period, $master_id, $period_time, $period_hour, $periods_minute, $period_price, $period_active)) {
             $result = array('success' => 1, 'success_text' => '', 'data' => $data);
         }
     } else {
@@ -202,6 +204,8 @@ if (isset($_POST['get_master_consultants'])) {
     $data = $sign_up_consultation->get_master_consultations($master_id);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+// Информация по консультации
 if (isset($_POST['get_consultations_id'])) {
     $data = $sign_up_consultation->get_consultations_id($_POST['event_id']);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
@@ -209,16 +213,68 @@ if (isset($_POST['get_consultations_id'])) {
 
 if (isset($_POST['update_consultation'])) {
     $data['consultation_id'] = $_POST['consultation_id'];
+    $data['first_name'] = $_POST['first_name'];
+    $data['user_phone'] = $_POST['user_phone'];
     $data['user_email'] = $_POST['user_email'];
+    $data['your_master_id'] = $_POST['your_master_id'];
     $data['pay_descr'] = $_POST['pay_descr'];
     $data['consultation_date'] = $_POST['consultation_date'];
     $data['consultation_time'] = $_POST['consultation_time'];
     $data['consultation_cancel'] = $_POST['consultation_cancel'];
-    if ($sign_up_consultation->update_consultation($data)) {
-        $result = array('success' => 1, 'success_text' => '');
+    if ($data['consultation_id'] == 0) {
+        // Приведем данные
+        $data['pay_id'] = 0;
+        $data['time'] = $data['consultation_time'];
+        $data['period_id'] = 0;
+        if ($sign_up_consultation->add_consultation($data)) {
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Ошибка!');
+        }
     } else {
-        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+        if ($sign_up_consultation->update_consultation($data)) {
+            $result = array('success' => 1, 'success_text' => '');
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Ошибка!');
+        }
+        $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
+}
 
+// Получить список купленных консультаций
+if (isset($_POST['get_master_consultant_period'])) {
+    $master_id = $_POST['master_id'];
+    $day = $_POST['day'];
+    $data = $sign_up_consultation->get_consultation_times($master_id, $day);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+// получим список исключений для консультанта
+if (isset($_POST['get_master_consultation_rejections'])) {
+    $master_id = $_POST['master_id'];
+    $data = $sign_up_consultation->get_master_consultation_rejections($master_id);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+// Добавление исключающего дня
+if (isset($_POST['edit_master_consultation_rejection'])) {
+    $data['id'] = $_POST['elm_id'];
+    $data['master_id'] = $_POST['master_id'];
+    $data['rejection_day'] = $_POST['rejection_day'];
+    $data['rejection_period'] = $_POST['rejection_period'];
+    $sign_up_consultation->set_master_consultant_rejection($data);
+}
+
+/*
+ * Удаление исключающего дня
+ */
+if (isset($_POST['delete_master_consultation_rejection'])) {
+    $consultation_rejection_id = $_POST['delete_master_consultation_rejection'];
+    if ($consultation_rejection_id > 0) {
+        if ($sign_up_consultation->delete_consultation_rejection($consultation_rejection_id)) {
+            $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+        }
+    } else {
+        $result = array('success' => 0, 'success_text' => '', 'data' => $data);
+    }
 }

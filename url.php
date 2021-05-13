@@ -40,6 +40,7 @@ $_SESSION['body_javascript'][] = $page->javascript();
 $page->showMessage();
 //array_reverse($_SESSION['url']);
 $pageArray = $page->init();
+//echo $_SESSION['site_title'];
 //echo "site_title: {$_SESSION['site_title']}<br/>\n";
 //print_r($pageArray);
 //echo "<br/>\n";
@@ -55,8 +56,10 @@ if (count($_SESSION['page']) > 0) {
 }
 //print_r($_SESSION['page']['info']);
 //print_r();
+//echo $_SERVER['REQUEST_URI'];
 echo $html;
 //}
+//print_r($_SERVER['REQUEST_URI']);
 
 
 

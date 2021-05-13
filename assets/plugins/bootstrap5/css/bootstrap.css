@@ -4387,7 +4387,7 @@ textarea.form-control-lg {
 
 .accordion-collapse {
   border: solid rgba(0, 0, 0, 0.125);
-  border-width: 0 1px;
+  border-width: 0 1px 1px 1px;
 }
 
 .accordion-body {

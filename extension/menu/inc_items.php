@@ -137,6 +137,20 @@ class menu_item extends \project\extension {
         $query = "UPDATE `zay_menu_items` SET `position`='?' WHERE `menu_id`='?' and `id`='?'";
         return $this->query($query, array($position, $menu_id, $item_id), 0);
     }
+    
+    /**
+     * Обновить позицию
+     * @param type $db_table
+     * @param type $db_row
+     * @param type $material_id
+     * @param type $position_val
+     * @return type
+     */
+    public function position_update($db_table, $db_row, $material_id, $position_val) {
+        echo "pp: {$this->db_prefix} ";
+        $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'"; 
+        return $this->query($query, array($this->db_prefix . $db_table, $db_row, $position_val, $material_id), 0);
+    }
 
     /*
      * ------------------------------------------------------
@@ -162,7 +176,7 @@ class menu_item extends \project\extension {
                 //$buffer[] = '<div class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">';
                 $buffer[] = '<nav class="collapse"><ul class="nav nav-pills" id="mainNav">';
                 for ($i = 0; $i < count($data); $i++) {
-                    if ($data[$i]['role_privilege']==0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
+                    if ($data[$i]['role_privilege'] == 0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
                         $buffer[] = '<li class="dropdown">';
                         $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '" elm="' . $data[$i]['id'] . '">' . $data[$i]['title'] . '</a>';
                         $buffer[] = $this->index_menu_items_parent_list($data[$i]['menu_id'], $data[$i]['id']);
@@ -186,16 +200,16 @@ class menu_item extends \project\extension {
             $data = $this->getSelectArray($querySelect, array($menu_id, $parent_id), 0);
             //echo count($data);
             if (count($data) > 0) {
+                $buffer[] = '<ul class="dropdown-menu">';
                 for ($i = 0; $i < count($data); $i++) {
-                    if ($data[$i]['role_privilege']==0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
-                        $buffer[] = '<ul class="dropdown-menu">';
+                    if ($data[$i]['role_privilege'] == 0 || $data[$i]['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
                         $buffer[] = '<li class="dropdown-submenu">';
                         $buffer[] = '<a class="dropdown-item" href="' . $data[$i]['link'] . '" style="' . $data[$i]['css'] . '">' . $data[$i]['title'] . '</a>';
                         $buffer[] = $this->index_menu_items_parent_list($menu_id, $data[$i]['id']);
                         $buffer[] = '</li>';
-                        $buffer[] = '</ul>';
                     }
                 }
+                $buffer[] = '</ul>';
             }
         }
         return implode("\n", $buffer);

@@ -25,7 +25,7 @@ if ($check_pay == 'ya') {
 }
 // Обработка ответа интеркассы
 if ($check_pay == 'in') {
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_check_pay.php';
+    //include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_check_pay.php';
 }
 // Обработка ответа интеркассы
 if ($check_pay == 'tk') {

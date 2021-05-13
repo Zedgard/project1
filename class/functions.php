@@ -327,9 +327,9 @@ if (!function_exists('importWisiwyng')) {
                 },
                 setup: function (ed) {
                     ed.on('keyup', function (e) {
-//                        console.log('the event object ', e);
-//                        console.log('the editor object ', ed);
-//                        console.log('the content ', ed.getContent());
+                        //                        console.log('the event object ', e);
+                        //                        console.log('the editor object ', ed);
+                        //                        console.log('the content ', ed.getContent());
                     });
                 }
             });
@@ -438,7 +438,7 @@ if (!function_exists('linkBack')) {
      * Прейти на адрес через 3 сек.
      */
     function linkBack() {
-        echo "<a href=\"javascript:history.go(-1)\" mce_href=\"javascript:history.go(-1)\" class=\"btn\"><i class=\"icon-arrow-left\"></i> назад</a>";
+        echo "<a href=\"javascript:history.go(-1)\" mce_href=\"javascript:history.go(-1)\" class=\"btn btn-link\"><i class=\"icon-arrow-left\"></i> назад</a>";
     }
 
 }
@@ -542,7 +542,7 @@ if (!function_exists('importELFinder')) {
         <script>
             function get_html_images_block(v, i) {
                 let html = '<div class="image_elm image_id_' + i + '">\n\
-                            <img src="' + v + '" class="image_elm_img" style="width: 50%;margin: 0 auto;display: block;"/>\n\
+                            <img src="' + v + '" class="image_elm_img" style="width: 50%;max-width: 200px;margin: 0 auto;display: block;"/>\n\
                             <div style="clear: both;height: 20px;width: 100%;">&nbsp;</div>\n\
                             <div>\n\
                                 <input type="text" name="image_obj_value" value="' + v + '" class="form-control image_obj_value" style="width: 80%;float: left;">\n\
@@ -724,6 +724,7 @@ if (!function_exists('initELFinderSelectFile')) {
         <!-- Extra contents editors (OPTIONAL) -->
         <script src="/system/elfinder/js/extras/editors.default.js?v=<?= rand() ?>"></script>
         <script>
+            var focus_element_file_manager = '';
             $(document).ready(function () {
                 $(".elfinder_model").draggable();
                 //$(".block_images").append('<br/><div class="btn btn-primary"><i class="mdi mdi-image-plus" style="font-size: 30px;"></i></div>');
@@ -737,6 +738,7 @@ if (!function_exists('initELFinderSelectFile')) {
                 init_elfinder();
                 $('.close_elfinder_modal').click(function () {
                     $('#form_elfinder_modal').hide(200);
+                    $(focus_element_file_manager).focus();
                 });
 
                 var col = $(".image_elm").length;
@@ -749,6 +751,7 @@ if (!function_exists('initELFinderSelectFile')) {
             function init_elfinder() {
                 $(".<?= $elm_class ?>").unbind('click').click(function () {
                     obj = this;
+                    focus_element_file_manager = this;
                     $('#form_elfinder_modal').show(200);
                     $('#elfinder').elfinder(
                             // 1st Arg - options
@@ -760,29 +763,7 @@ if (!function_exists('initELFinderSelectFile')) {
                                         getFileCallback: function (file) { // editor callback
                                             //console.log(file.url); // pass selected file path to TinyMCE
                                             $(obj).val(file.url);
-
-                                            // сохраниение поля
-                                            console.log('row_dbrow_dbrow_db');
-                                            if (!!$(obj).attr('row_db') && !!$(obj).attr('obj_id')) {
-                                                var row_db = $(obj).attr('row_db');
-                                                var obj_id = $(obj).attr('obj_id');
-                                                var val = $(obj).val();
-                                                console.log('sendPostLigth');
-                                                sendPostLigth('/jpost.php?extension=<?= $extensionUrl ?>',
-                                                        {
-                                                            "<?= $editParam ?>": 1,
-                                                            "row_db": row_db,
-                                                            "obj_id": obj_id,
-                                                            "val": val
-                                                        },
-                                                        function (e) {
-                                                            if (e['success'] == '1') {
-
-                                                            } else {
-                                                                alert('Ошибка сохранения!');
-                                                            }
-                                                        });
-                                            }
+                                            $(obj).focus();
                                             $('#elfinder').elfinder('destroy');
                                             $('#form_elfinder_modal').hide(200);
 
@@ -1155,7 +1136,7 @@ if (!function_exists('init_prices')) {
                 } else {
                     $price = $value['price'];
                 }
-                $_SESSION['cart']['prices'][] = $price;
+                $_SESSION['cart']['itms'][$key]['prices'] = $price;
             }
         }
     }

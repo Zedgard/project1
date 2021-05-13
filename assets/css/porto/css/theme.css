@@ -146,8 +146,6 @@
 
 
 
-
-
 #header .header_close_club{
     font-size: 0.8rem;
     font-family: 'Montserrat', sans-serif;
@@ -158,7 +156,7 @@
 #header .header_close_club span{
     font-size: 0.9rem;
     text-decoration: underline;
-    font-weight: 600;
+    /* font-weight: 600; */
 }
 #header .header_user_auth{
     font-size: 0.9rem;
@@ -615,7 +613,7 @@
     z-index: 10000;
     right: 100%;
     margin-right: -32px;
-    margin-top: 30px;
+    margin-top: 32px;
     transition: opacity .2s ease-out;
     pointer-events: none;
 }
@@ -694,7 +692,7 @@
     width: 100%;
     text-align: center;
     top: 50%;
-    margin-top: -4px;
+    margin-top: -10px;
     left: 0;
     padding: 0;
     display: block;
@@ -721,7 +719,7 @@
 #header .header-nav-features .header-nav-features-cart .mini-products-list {
     overflow: hidden;
     overflow-y: auto;
-    max-height: 30rem;
+    max-height: 22rem;
     width: 100%;
     list-style: none;
     margin: 0;
@@ -1370,6 +1368,18 @@ html.sticky-header-enabled.sticky-header-active #header .header-logo-sticky-chan
 html.sticky-header-enabled.sticky-header-active #header .header-logo-sticky-change .header-logo-sticky {
     opacity: 1 !important;
 }
+#header .header-nav-main nav > ul li.dropdown a[href="#"]:after {
+    font-family: 'Font Awesome 5 Free';
+    content: "\f054";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    font-size: 0.5rem;
+    opacity: 0.7;
+    right: 20px;
+    transform: translateY(-50%);
+    transition: all .2s ease-out;
+}
 
 /* Header Nav Main */
 @media (min-width: 992px) {
@@ -1468,7 +1478,7 @@ html.sticky-header-enabled.sticky-header-active #header .header-logo-sticky-chan
     #header .header-nav-main nav > ul > li.dropdown .dropdown-menu li.dropdown-submenu > a .fa-chevron-down {
         display: none;
     }
-
+/*
     #header .header-nav-main nav > ul > li.dropdown .dropdown-menu li.dropdown-submenu > a:after {
         font-family: 'Font Awesome 5 Free';
         content: "\f054";
@@ -1481,7 +1491,7 @@ html.sticky-header-enabled.sticky-header-active #header .header-logo-sticky-chan
         transform: translateY(-50%);
         transition: all .2s ease-out;
     }
-
+*/
     #header .header-nav-main nav > ul > li.dropdown .dropdown-menu li.dropdown-submenu > .dropdown-menu {
         left: 100%;
         display: block;

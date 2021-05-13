@@ -13,7 +13,7 @@
 
                     <div class="card-body">
                         <a href="./?content=<?= $_GET['content'] ?>" class="btn btn-secondary btn-default"><?= $lang['pages'][$_SESSION['lang']]['cancel'] ?></a>
-                        
+
                         <div class="form-group">
                             <label><?= $lang['pages'][$_SESSION['lang']]['content_title'] ?></label>
                             <input class="form-control" name="content_title" id="content_title" value="<?= $content['content_title'] ?>" placeholder="<?= $lang['pages'][$_SESSION['lang']]['title'] ?>..." <?= (strlen($content['content_title']) > 0) ? 'readonly="readonly"' : '' ?> type="text" required>
@@ -24,7 +24,7 @@
                                 <?= $lang['pages'][$_SESSION['lang']]['name_page_is_true'] ?>
                             </div>
                         </div>
-                        
+
                         <style>
                             .extension_checked_elms{
                                 clear: both;
@@ -35,14 +35,15 @@
                                 cursor: pointer;
                             }
                         </style>
-                        
+
                         <div class="form-group">
                             <label>Выбирите расширение</label>
                             <div>
-                                <? 
-                                
+                                <?
+                                $checked_text_null = ($content['extension'] == 'T') ? 'checked="checked"' : '';
                                 $checked_null = (strlen($content['extension']) == 0) ? 'checked="checked"' : '';
                                 ?>
+                                <input type="radio" name="ext_urls" value="T" class="ext_urls"  <?= $checked_text_null ?> /> Просто текст<br/>
                                 <input type="radio" name="ext_urls" value="0" class="ext_urls"  <?= $checked_null ?> /> Обычные HTML<br/>
                                 <? for ($i = 0; $i < count($extensions); $i++): ?>
                                     <?
@@ -58,10 +59,15 @@
                             </div>
                             <span class="mt-2 d-block"><?= $lang['pages'][$_SESSION['lang']]['choose_available_options'] ?></span>
                         </div>
-                        
+
                         <div class="form-group content_descr_block" style="<?= (strlen($content['extension']) == 0) ? 'display: block;' : 'display: none;' ?>">
                             <label><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></label>
-                            <textarea id="content_descr" name="content_descr" id="content_descr" style="width: 100%;min-height: 140px;"><?= $content['content_descr'] ?></textarea>
+                            <textarea id="content_descr" name="content_descr" style="width: 100%;min-height: 140px;"><?= $content['content_descr'] ?></textarea>
+                        </div>
+
+                        <div class="form-group content_descr_text_block" style="<?= ($content['extension'] == 'T') ? 'display: block;' : 'display: none;' ?>">
+                            <label><?= $lang['pages'][$_SESSION['lang']]['theme_title'] ?></label>
+                            <textarea id="content_descr_text" name="content_descr_text" style="width: 100%;min-height: 400px;"><?= $content['content_descr'] ?></textarea>
                         </div>
 
 
@@ -93,6 +99,11 @@
                 $(".content_descr_block").show(200);
             } else {
                 $(".content_descr_block").hide(200);
+            }
+            if (v === 'T') {
+                $(".content_descr_text_block").show(200);
+            } else {
+                $(".content_descr_text_block").hide(200);
             }
         });
     });

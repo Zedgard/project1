@@ -29,6 +29,7 @@
 
         <!-- SLEEK CSS -->
         <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" />
+        <link rel="stylesheet" href="/assets/css/edit.css<?= $_SESSION['rand'] ?>">
 
         <!-- FAVICON -->
         <link href="/assets/img/favicon.png" rel="shortcut icon" />
@@ -47,7 +48,6 @@
         <link href="/assets/plugins/select2/css/select2.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
         <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
 
         <script src="/assets/plugins/charts/Chart.js<?= $_SESSION['rand'] ?>"></script>
 
@@ -56,6 +56,7 @@
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css<?= $_SESSION['rand'] ?>" />
+        <link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
 
@@ -65,18 +66,21 @@
         <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script> 
-
+        <script type="text/javascript" src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>  
+        <script src="/system/extension/admin_super_init.js<?= $_SESSION['rand'] ?>"></script>
         <?
         //<script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] "></script> 139
         ?>
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
 
-        
+
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sortable.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
     </head>
     <body class="header-fixed sidebar-fixed sidebar-dark header-light body-office" id="body">
 
@@ -114,7 +118,7 @@
               ——— LEFT SIDEBAR WITH FOOTER
               =====================================
                 -->
-                <aside class="left-sidebar bg-sidebar">
+                <aside class="left-sidebar bg-sidebar" style="z-index: 2000;">
                     <div id="sidebar" class="sidebar ">
                         <!-- Aplication Brand -->
                         <div class="app-brand">
@@ -122,7 +126,7 @@
                                 <span style="display: none;">
                                     <svg
                                         class="brand-icon"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                        xmlns="https://www.w3.org/2000/svg"
                                         preserveAspectRatio="xMidYMid"
                                         width="30"
                                         height="33"
@@ -219,18 +223,28 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <!--
-                                    <li class="right-sidebar-in right-sidebar-2-menu">
+
+                                    <li class="right-sidebar-2-menu" title="Серверное время">
+                                        <span class="real_time"></span>
+                                    </li>
+                                    <li class="right-sidebar-in right-sidebar-2-menu" style="display: none;">
                                         <i class="mdi mdi-settings mdi-spin"></i>
                                     </li>
-                                    -->
+
                                     <!-- User Account -->
+                                    <?
+                                    if (strlen(trim($_SESSION['user']['info']['first_name'])) > 0) {
+                                        $show_user_name = $_SESSION['user']['info']['first_name'];
+                                    } else {
+                                        $show_user_name = $_SESSION['user']['info']['email'];
+                                    }
+                                    ?>
                                     <li class="dropdown user-menu">
                                         <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                            <? if (strlen($_SESSION['user']['info']['avatar']) > 0 && is_file($_SERVER['DOCUMENT_ROOT']. $_SESSION['user']['info']['avatar'])): ?>
+                                            <? if (strlen($_SESSION['user']['info']['avatar']) > 0 && is_file($_SERVER['DOCUMENT_ROOT'] . $_SESSION['user']['info']['avatar'])): ?>
                                                 <img src="<?= $_SESSION['user']['info']['avatar'] ?>" class="user-image" alt="User Image" />
                                             <? endif; ?>
-                                            <span class="d-none d-lg-inline-block"><?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?></span>
+                                            <span class="d-none d-lg-inline-block"><?= $show_user_name ?></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <!-- User image -->
@@ -238,7 +252,7 @@
                                                 <!-- <img src="/assets/img/user/user.jpg" class="img-circle" alt="User Image" /> -->
                                                 <div class="d-inline-block">
                                                     Добрый день!<br/>
-                                                    <?= $_SESSION['user']['info']['last_name'] . ' ' . $_SESSION['user']['info']['first_name'] ?> <small class="pt-1"><?= $_SESSION['user']['info']['email'] ?></small>
+                                                    <?= $show_user_name ?> <small class="pt-1"><?= $_SESSION['user']['info']['email'] ?></small>
                                                 </div>
                                             </li>
                                             <li>

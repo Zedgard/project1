@@ -10,7 +10,7 @@ session_start();
 
 //$user = new \project\user();
 //if ($user->isAdmin() || isEditor()) {
-echo 111;
+//echo 111;
 
 // // Optional exec path settings (Default is called with command name only)
 // define('ELFINDER_TAR_PATH',      '/PATH/TO/tar');
@@ -154,6 +154,8 @@ echo 111;
                     'video/mp4', 
                     'video/ogg', 
                     'video/webm', 
+                    'audio/mpeg',
+                    'audio/mp3',
                     'application/pdf'
                     ), // Mimetype `image` and `text/plain` allowed to upload
                 'uploadOrder' => array('deny', 'allow'), // allowed Mimetype `image` and `text/plain` only
@@ -174,6 +176,8 @@ echo 111;
                     'image/png', 
                     'image/x-icon', 
                     'text/plain', 
+                    'audio/mpeg',
+                    'audio/mp3',
                     'application/pdf'
                     ), // Same as above
                 'uploadOrder' => array('deny', 'allow'), // Same as above

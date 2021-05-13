@@ -57,6 +57,11 @@
                                         </div>
                                         <div class="form-group col-md-12 ">
                                             <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Пароль" required />
+                                            <label class="control control-checkbox mt-2 float-right" style="font-size: 0.8rem;">
+                                                <input type="checkbox" class="form-check-input password-checkbox">
+                                                    <div class="control-indicator"></div>
+                                                    <span class="">Показать пароль</span>
+                                            </label>
                                             <div class="valid-feedback">
                                                 принято!
                                             </div>
@@ -141,7 +146,7 @@
                                                 <label class="control control-checkbox">
                                                     <input type="checkbox" id="check_indicator" name="check_indicator" value="1" />
                                                     <div class="control-indicator"></div>
-                                                    Я согласен с условиями и положениями
+                                                    Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
                                                 </label>
 
                                             </div>

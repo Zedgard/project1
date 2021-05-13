@@ -57,20 +57,22 @@
 
 .material_info_none{
     padding: 1%;
-    position: absolute;
+    position: static;
     right: 0px;
-    width: 70%;
+    width: 100%;
     background-color: #FFFFFF;
     border: 1px solid #dee2e6;
     display: none;
 }
+.material_info{
+    min-height: 40px;
+}
 .material_info:hover .material_info_none{
-    display: block;
-    z-index: 999999;
+    /* display: block; */
+    z-index: 99;
 }
 .material_info_none:hover{
-    z-index: 99999999;
-    position: absolute;
+    z-index: 999;
 }
 .material_info:hover {
     background-color: #dee2e6;

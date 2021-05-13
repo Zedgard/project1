@@ -27,6 +27,7 @@
                                 include 'admin_edit.php';
                                 importWisiwyng('products_desc_minimal', 150);
                                 importWisiwyng('products_desc', 300);
+                                importWisiwyng('product_content', 150);
                                 ?>
                             <? endif; ?>
                             <select name="visible" class="form-control w-25 float-left ml-2 visible_products">
@@ -44,23 +45,25 @@
                     <br/>
                     <div class="row">
                         <div class="col-12">
-                            <table class="table table-striped table-bordered products_arrays_data" style="width:100%;background-color: #FFFFFF;">
-                                <thead>
-                                    <tr>
-                                        <th style="text-align: center;">id</th>
-                                        <th style="text-align: center;"></th>
-                                        <th>Наименование</th>
-                                        <th style="text-align: center;">Товары</th>
-                                        <th style="text-align: center;">Цена</th>
-                                        <th style="text-align: center;">Продажи</th>
-                                        <th style="text-align: center;">Отображение</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <div class="table-responsive-lg">
+                                <table class="table table-striped table-bordered products_arrays_data" style="width:100%;background-color: #FFFFFF;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;">id</th>
+                                            <th style="text-align: center;"></th>
+                                            <th>Наименование</th>
+                                            <th style="text-align: center;">Товары</th>
+                                            <th style="text-align: center;">Цена</th>
+                                            <th style="text-align: center;">Продажи</th>
+                                            <th style="text-align: center;">Отображение</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,25 +90,25 @@
         /*======== MULTIPLE SELECT ========*/
         var products_wares = $(".products_wares").select2({
             width: "style",
-            placeholder: "Выбирете товары",
+            placeholder: "Выберите товары",
             allowClear: true
         });
 
         products_category = $(".products_category").select2({
             width: "100%",
-            placeholder: "Выбирете категории",
+            placeholder: "Выберите категории",
             allowClear: true
         });
 
         var products_topic = $(".products_topic").select2({
             width: "100%",
-            placeholder: "Выбирете темы",
+            placeholder: "Выберите темы",
             allowClear: true
         });
-        
+
         var product_theme = $(".product_theme").select2({
             width: "100%",
-            placeholder: "Выбирете темы",
+            placeholder: "Выберите темы",
             allowClear: true
         });
 
@@ -173,7 +176,7 @@
                 }
             });
         }
-        
+
         /**
          * Темы 
          * @returns {undefined}
@@ -334,6 +337,7 @@
                                 tinymce.get('products_desc').setContent(e['data']['desc']);
 
                                 $(".form_save_products").find(".products_sold").val(e['data']['sold']);
+                                $(".form_save_products").find(".product_content").val(e['data']['product_content']);
 
                                 // active
                                 if (e['data']['active'] > 0) {
@@ -438,6 +442,7 @@
             var products_desc = tinymce.get('products_desc').getContent();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
             var products_sold = $(".form_save_products").find(".products_sold").val();
+            var product_content = tinymce.get('product_content').getContent(); 
             // checked
             var products_active = '0';
             if ($(".form_save_products").find(".products_active").prop("checked")) {
@@ -471,6 +476,7 @@
                         "products_price": products_price,
                         "products_price_promo": products_price_promo,
                         "product_new": product_new,
+                        "product_content": product_content,
                         "images_str": images_str.toString()},
                     function (e) {
                         if (e['success'] == '1') {

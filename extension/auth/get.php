@@ -19,7 +19,6 @@ if (isset($_GET['activation']) && strlen($_GET['activation']) > 0) {
     } else {
         $_SESSION['errors'][] = $lang['user_activate_false'];
     }
-    $_SESSION['message'] = array('type' => 'success', 'text' => $lang['user_activate_true']);
 }
 
 

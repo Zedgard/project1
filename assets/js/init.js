@@ -11,14 +11,13 @@ $(document).ready(function () {
     /*
      * Остановка видео
      */
-    $(".carousel-video").on("mouseover", function () {
-        this.pause();
-    });
-    $(".carousel-video").on("mouseleave", function () {
-        this.play();
-        $(this).css("background-color", "black");
-    });
-
+//    $(".carousel-video").on("mouseover", function () {
+//        this.pause();
+//    });
+//    $(".carousel-video").on("mouseleave", function () {
+//        this.play();
+//        $(this).css("background-color", "black");
+//    });
 
     initCartArray();
     //initCartCount();
@@ -26,9 +25,11 @@ $(document).ready(function () {
     init_logout();
     init_not_processed_col();
     init_get_emails_col();
-    init_btn_send_message();
     init_office_list_categorys_col();
     init_bottom_cookie_btn();
+    init_promo_input();
+    init_real_time();
+    get_promos('0');
 
 //    $("#menu").on("click", "a", function (event) {
 //        event.preventDefault();
@@ -148,16 +149,18 @@ $(document).ready(function () {
      * WOW effect 
      * 
      */
-    wow = new WOW(
-            {
-                boxClass: 'wow', // default
-                animateClass: 'animated', // default
-                offset: 0, // default
-                mobile: true, // default
-                live: true        // default
-            }
-    )
-    wow.init();
+    if (typeof WOW !== "undefined") {
+        wow = new WOW(
+                {
+                    boxClass: 'wow', // default
+                    animateClass: 'animated', // default
+                    offset: 0, // default
+                    mobile: true, // default
+                    live: true        // default
+                }
+        )
+        wow.init();
+    }
 
     /*
      * Фильтр для мобильной версии 
@@ -190,7 +193,22 @@ $(document).ready(function () {
     initCartProductAdd();
     initCartProductRemove();
 
+    $('.jaccordion').accordion({
+        heightStyle: 'content'
+    });
+
+    // Отобразить пароль
+    $('body').on('click', '.password-checkbox', function () {
+        if ($(this).is(':checked')) {
+            $('[name="password"]').attr('type', 'text');
+        } else {
+            $('[name="password"]').attr('type', 'password');
+        }
+    });
+
 });
+
+
 var animateTopVal = 0;
 function animateTop(val, height) {
     if (animateTopVal === 0) {
@@ -272,6 +290,9 @@ function initCartArray() {
                         price = Number(e['data'][i]['price_promo']);
 
                     }
+
+
+
                     var imgFirst = '/themes/site1/images/gallery-box1.jpg';
                     //console.log("g: " + e['data'][i]['images_str']);
 
@@ -417,7 +438,8 @@ function initCartArray() {
                     $(".cart-info").hide();
                 }
                 // cart_list
-                move(".cart_list", 300);
+                //move(".cart_list", 300);
+
                 ;
             }
         }
@@ -428,6 +450,77 @@ function initCartArray() {
         init_price_val();
     });
 }
+//if (typeof promos === 'undefined') {
+//    var promos = [];
+//}
+/**
+ * Промо
+ * @returns {undefined}
+ */
+function init_promo_input() {
+    $(".btn_input_promo_code").unbind('click').click(function () {
+        var v = $(".input_promo_code").val();
+        get_promos(v);
+
+    });
+    get_promos('0');
+}
+
+function get_promos(code) {
+    $(".errors_promo_code .html_text").html(ajax_load);
+    sendPostLigth('/jpost.php?extension=promo', {"getCodePromos": code}, function (e) {
+        $(".list_promos div").remove();
+        if (e['success'] == '1') {
+            //console.log(e['data']);
+            if (e['data'].length > 0) {
+                $(".list_promos").append('<div class="mb-3" style="font-size:1.5rem;">Список купонов:</div>');
+                //console.log(e['data'].length);
+                for (var i = 0; i < e['data'].length; i++) {
+                    var price = e['data'][i]['amount'] + 'р.';
+                    if (e['data'][i]['percent'] > 0) {
+                        price = e['data'][i]['percent'] + '%';
+                    }
+                    $(".list_promos").append('<div class="item_promo">\n\
+                            <span class="list_promo_title">' + e['data'][i]['title'] + '</span> \n\
+                            <span class="list_promo_code ml-3">' + e['data'][i]['code'] + '</span> \n\
+                            <span class="list_promo_delete ml-3" promo_delete_code="' + e['data'][i]['code'] + '"><i class="fas fa-times"></i></span>\n\
+                            <span class="list_promo_price ml-3">' + price + '</span>\n\
+                    </div>');
+                }
+            }
+        } else {
+            var errors_html = e['errors'].toString();
+            $(".errors_promo_code .html_text").html(errors_html);
+        }
+        initCartArray();
+        init_delete_promo();
+    });
+}
+
+function init_delete_promo() {
+    $(".list_promo_delete").unbind('click').click(function () {
+        var v = $(this).attr("promo_delete_code");
+        sendPostLigth('/jpost.php?extension=promo', {"deleteCodePromo": v}, function (e) {
+            get_promos('0');
+        });
+    });
+}
+
+//function get_promo_price(product_id, price) {
+//    if (promos.length > 0) {
+//        for (var i = 0; i < promos.length; i++) {
+//            if (promos[i]['product_ids'].length > 0) {
+//                var ex = promos[i]['product_ids'].split(',');
+//                for (var ii = 0; ii < ex.length; ii++) {
+//                    if (ex[ii] == product_id) {
+//                        amount
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
 
 /**
  * Выход из системы
@@ -489,6 +582,10 @@ function initCartCount() {
 function initCartProductAdd() {
     $(".cart_product_add").unbind('click').click(function () {
         var cart_product_id = $(this).attr('product_id');
+        var go_url = '';
+        if (!!$(this).attr('go_url')) {
+            go_url = $(this).attr('go_url');
+        }
         // Информаия по товару
         var cart_product_title = $(this).closest(".btn_product_list").find(".info_product_title").val();
         var cart_product_img = $(this).closest(".btn_product_list").find(".info_product_img").val();
@@ -519,15 +616,19 @@ function initCartProductAdd() {
             'gtm-ee-event-non-interaction': 'False',
         });
 
-
         sendPostLigth('/jpost.php?extension=cart', {"cart_product_add": 1, "cart_product_id": cart_product_id}, function (e) {
-            //$(".cart_product_add").html("");
-            //initCartCount();
-            open_cart_modal(cart_product_title, cart_product_img);
-            initCartArray();
+            if (e['success'] == 1) {
+                open_cart_modal(cart_product_title, cart_product_img);
+                initCartArray();
+                if (go_url.length > 0) {
+                    window.location.href = go_url;
+                }
+            } else {
+                alert(e['errors'].toString());
+            }
+
         });
-    }
-    );
+    });
 }
 
 /* 
@@ -559,6 +660,7 @@ function open_cart_modal(title, img) {
 /* Удаление с корзины */
 function initCartProductRemove() {
     $(".cart_product_remove").unbind('click').click(function () {
+        var btn_o = this;
         var cart_product_id = $(this).attr('product_id');
 
         var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");
@@ -597,46 +699,9 @@ function initCartProductRemove() {
     });
 }
 
-function init_btn_send_message() {
-    if (!!$(".btn_send_user_message")) {
-        $(".form_send_user_message").find(".user_email").keyup(function () {
-            $(".form_send_user_message").find(".user_email").css("border-color", "");
-        });
-        $(".form_send_user_message").find(".user_message").keyup(function () {
-            $(".form_send_user_message").find(".user_message").css("border-color", "");
-        });
-        $(".btn_send_user_message").click(function () {
-            var user_fio = $(".form_send_user_message").find(".user_fio").val();
-            var user_email = $(".form_send_user_message").find(".user_email").val();
-            var user_subject = $(".form_send_user_message").find(".user_subject").val();
-            var user_message = $(".form_send_user_message").find(".user_message").val();
-            if (user_email.length > 2 && user_message.length > 10) {
-                sendPostLigth('/jpost.php?extension=cart', {
-                    "user_send_message": 1,
-                    "user_fio": user_fio,
-                    "user_email": user_email,
-                    "user_subject": user_subject,
-                    "user_message": user_message,
-                }, function (e) {
-
-                });
-            } else {
-                if (user_email.length <= 2) {
-                    $(".form_send_user_message").find(".user_email").css("border-color", "#ff0000");
-                }
-                if (user_message.length <= 10) {
-                    $(".form_send_user_message").find(".user_message").css("border-color", "#ff0000");
-                }
-                alert('Не заполнены поля!');
-            }
-
-        });
-    }
-}
-
 
 function init_office_list_categorys_col() {
-    if (!!$(".office_list_categorys")) {
+    if (typeof $(".office_list_categorys")[0] !== "undefined") {
         sendPostLigth('/jpost.php?extension=wares', {
             "init_office_list_categorys_col": 1
         }, function (e) {
@@ -656,8 +721,42 @@ function init_office_list_categorys_col() {
     }
 }
 
+function init_datepicker(numberOfMonths) {
+    if (numberOfMonths.length == 0) {
+        numberOfMonths = 3
+    }
+    // Русифицируем
+    $.datepicker.regional['ru'] = {
+        closeText: 'Закрыть',
+        prevText: 'Пред',
+        nextText: 'След',
+        currentText: 'Сегодня',
+        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+            'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+        dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+        dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        weekHeader: 'Нед',
+        dateFormat: 'yy-mm-dd',
+        maxDate: "+1M +10D",
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ru']);
+    $('.inp_datepicker').datepicker({
+        changeMonth: false,
+        changeYear: false,
+        numberOfMonths: numberOfMonths,
+        showButtonPanel: false
+    });
+}
+
 function init_bottom_cookie_btn() {
-    if (!!$(".bottom_cookie_btn")) {
+    if (typeof $(".bottom_cookie_btn")[0] !== "undefined") {
         $(".bottom_cookie_btn").unbind('click').click(function () {
             sendPostLigth('/jpost.php', {
                 "bottom_cookie_btn": 1
@@ -670,4 +769,89 @@ function init_bottom_cookie_btn() {
         });
 
     }
+}
+
+// возвращает куки с указанным name,
+// или undefined, если ничего не найдено
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+
+// Пример использования:
+//setCookie('user', 'John', {secure: true, 'max-age': 3600});
+function setCookie(name, value, options = {}) {
+
+    options = {
+        path: '/'
+    };
+
+    if (options.expires instanceof Date) {
+        options.expires = options.expires.toUTCString();
+    }
+
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+    for (let optionKey in options) {
+        updatedCookie += "; " + optionKey;
+        let optionValue = options[optionKey];
+        if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+}
+
+// Удаление 
+function deleteCookie(name) {
+    setCookie(name, "", {
+        'max-age': -1
+    });
+}
+
+/**
+ * Текущее время на сайте
+ * @returns {undefined}
+ */
+function init_real_time() {
+
+    function time_format_str(val) {
+        var text = String((val.toString().length === 2) ? val : '0' + val.toString());
+        return text;
+    }
+
+    function server_time() {
+        sendPostLigth('/jpost.php?extension=auth', {"get_real_time": 1}, function (e) {
+            if (e['data'].length > 0) {
+                var date = new Date(e['data']);
+                var seconds = date.getSeconds();
+
+                var hours_str = (date.getHours().toString().length === 2) ? date.getHours() : '0' + date.getHours().toString();
+                var minutes_str = (date.getMinutes().toString().length === 2) ? date.getMinutes() : '0' + date.getMinutes().toString();
+                var seconds_str = (date.getSeconds().toString().length === 2) ? date.getSeconds() : '0' + date.getSeconds().toString();
+                $(".real_time").html((hours_str + ":" + minutes_str + ":" + seconds_str));
+                setInterval(function () {
+                    seconds++;
+                    date.setSeconds(seconds);
+                    var hours_str = time_format_str(date.getHours());
+                    var minutes_str = time_format_str(date.getMinutes());
+                    var seconds_str = time_format_str(date.getSeconds());
+                    $(".real_time").html((hours_str + ":" + minutes_str + ":" + seconds_str));
+                    if (seconds === 60) {
+                        seconds = 0;
+                    }
+                }, 1000);
+            } else {
+                $(".real_time").html('---');
+            }
+        });
+    }
+//    var time = setInterval(function () {
+//        server_time();
+//    }, 60000);
+    server_time();
 }

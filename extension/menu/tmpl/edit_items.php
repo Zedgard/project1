@@ -1,3 +1,19 @@
+<style>
+    .sortable_menu_items{
+        margin-top: 0.5rem;
+        margin-left: 2rem;
+    }
+    .sortable_menu_items li{
+        margin-bottom: 0.5rem;
+    }
+    .sortable_menu_items .handle:hover{
+        cursor: grab;
+    }
+    .sortable_menu_items .fa-arrows-alt{
+        font-size: 1rem;
+        padding: 0 0.4rem;
+    }
+</style>
 <div>
     <div class="row">
         <div class="col-lg-12">
@@ -69,34 +85,47 @@ include 'form_edit_item.php';
                     } else {
                         if (e['data'].length > 0) {
                             parent_items = 0;
-                            append_menu_items(e['data']);
+                            var html = append_menu_items(e['data']);
+                            $(".menu_items_list").append(html);
                         }
                     }
                     init_edit_item();
                     init_delete_item();
+                    site_sortable('.sortable_menu_items', function () {
+                        init_form_list_items();
+                    });
                 });
     }
+    /*
+     * <span><a href="javascript:void(0)" elem="' + data[i]['id'] + '" position="' + position + '" class="btn btn-outline-dark btn-sm position_up"><i class="mdi mdi-chevron-up"></i></a></span>\n\
+     * <span><a href="javascript:void(0)" elem="' + data[i]['id'] + '" position="' + position + '" class="btn btn-outline-dark btn-sm position_down"><i class="mdi mdi-chevron-down"></i></a></span>\n\            
+     */
     // Отображение меню
     function append_menu_items(data) {
         parent_items++;
         var offset_start = offset * parent_items;
         var position = 0;
-        for (var i = 0; i < data.length; i++) {
-            $(".menu_items_list").append('<div class="mb-2" style="margin-left: ' + offset_start + 'rem;">\n\
+        var html = '';
+        if (data.length > 0) {
+            //$(".menu_items_list").append('<ul class="sortable_menu_items">');
+            html += '<ul class="sortable_menu_items" ajax-url="/jpost.php?extension=menu" ajax-metod="update_position" db-table="zay_menu_items" db-row="position">';
+            for (var i = 0; i < data.length; i++) {
+                html += '<li sortable-elm-id="' + data[i]['id'] + '">\n\
+                    <spam class="handle"><i class="fas fa-arrows-alt"></i></span>\n\
                     <span><a href="javascript:void(0)" elem="' + data[i]['id'] + '" ids="' + item_datas.length + '" class="btn btn-primary btn-sm edit_item"><i class="mdi mdi-pencil"></i></a></span>\n\
                     <span><a href="javascript:void(0)" elem="' + data[i]['id'] + '" class="btn btn-danger btn-sm delete_item"><i class="mdi mdi-delete"></i></a></span>\n\
-                    <span><a href="javascript:void(0)" elem="' + data[i]['id'] + '" position="' + position + '" class="btn btn-outline-dark btn-sm position_up"><i class="mdi mdi-chevron-up"></i></a></span>\n\
-                    <span><a href="javascript:void(0)" elem="' + data[i]['id'] + '" position="' + position + '" class="btn btn-outline-dark btn-sm position_down"><i class="mdi mdi-chevron-down"></i></a></span>\n\
-                    &nbsp;&nbsp;&nbsp; <a href="' + data[i]['link'] + '" class="mr-2" target="_blank">' + data[i]['title'] + '</a> | <span class="ml-2">' + data[i]['link'] + '</span> \n\
-                    </div>');
-
-            item_datas.push(data[i]);
-            if (data[i]['parent_items'].length > 0) {
-                append_menu_items(data[i]['parent_items']);
+                    &nbsp;&nbsp;&nbsp; <a href="' + data[i]['link'] + '" class="mr-2" target="_blank">' + data[i]['title'] + '</a> | <span class="ml-2">' + data[i]['link'] + '</span>';
+                item_datas.push(data[i]);
+                if (data[i]['parent_items'].length > 0) {
+                    html += append_menu_items(data[i]['parent_items']);
+                }
+                html += '</li>';
+                position++;
             }
-            position++;
+            html += '</ul>';
         }
-        init_set_position(0, 0);
+        return html;
+        //init_set_position(0, 0);
     }
 
 

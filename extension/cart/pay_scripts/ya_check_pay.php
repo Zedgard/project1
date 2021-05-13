@@ -13,7 +13,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
 
+$pr_cart = new \project\cart();
 $sqlLight = new \project\sqlLight();
 $u = new \project\user();
 $products = new \project\products();
@@ -41,6 +43,7 @@ if (isset($_SESSION['PAY_KEY'])) {
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
 }
+
 //print_r($pays);
 //echo "\n";
 // Получаем список платежей циклом
@@ -52,7 +55,6 @@ if (count($pays) > 0) {
         $pay_paid = $payment->getPaid();
         $payment->setstatus('succeeded');
         //$pay_check = $payment->getstatus();
-//    echo "1111\n";
 //    //
 //    echo "paymentId: {$paymentId} <br/>\n";
 //    echo "pay_paid: {$pay_paid} <br/>\n";
@@ -78,8 +80,16 @@ if (count($pays) > 0) {
                 . "WHERE `pay_type`='ya' and pay_key = '?'";
         $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']));
         if ($pay_check == 'succeeded') {
+
+            // Зарегистрируем покупку
+            $pr_cart->register_pay($pay_id);
+
             // Зафиксируем продажу
-            $products->setSoldAdd($value['id']);
+            $query_products = "select * from zay_pay_products WHERE pay_id='?'";
+            $products_data = $sqlLight->queryList($query_products, array($value['id']));
+            foreach ($products_data as $v) {
+                $products->setSoldAdd($v['product_id']);
+            }
             $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
@@ -99,11 +109,10 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
         /*
          * Если установлена настройка отправим в календарь событие
          */
-        if ($_SESSION['consultation']['your_master_id'] > 0) {
-            if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
-
-                // Данные по консультанту для календаря
-                // Если календарь не используем не нужно
+        //if ($_SESSION['consultation']['your_master_id'] > 0) {
+        //    if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
+        // Данные по консультанту для календаря
+        // Если календарь не используем не нужно
 //                $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
 //                $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
 //                $master_token = $master['token_file_name'];
@@ -118,26 +127,29 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
 //
 
 
-                /*
-                  'your_master_id' => $your_master,
-                  'first_name' => $first_name,
-                  'user_phone' => $user_phone,
-                  'user_email' => $user_email,
-                  'pay_descr' => "<div>Консультация с {$first_name}</div>"
-                  . "<div>Телефон: {$user_phone}</div>"
-                  . "<div>Email: {$user_email}</div>"
-                  . "<div>Консультант: {$your_master_text}</div>"
-                  . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
-                  'date' => $datepicker_data,
-                  'time' => $timepicker_data,
-                  'price' => $price
-                 */
-                //$master_token = $master['credentials_file_name'];
-                // В последний раз чтото не работало 403 ошибка мол превышен лимит  и не добавлялось событие
-                //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
-            }
-            //$sign_up_consultation->add_consultation($_SESSION['consultation']);
-        }
+        /*
+          'your_master_id' => $your_master,
+          'first_name' => $first_name,
+          'user_phone' => $user_phone,
+          'user_email' => $user_email,
+          'pay_descr' => "<div>Консультация с {$first_name}</div>"
+          . "<div>Телефон: {$user_phone}</div>"
+          . "<div>Email: {$user_email}</div>"
+          . "<div>Консультант: {$your_master_text}</div>"
+          . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
+          'date' => $datepicker_data,
+          'time' => $timepicker_data,
+          'price' => $price
+         */
+        //$master_token = $master['credentials_file_name'];
+        // В последний раз чтото не работало 403 ошибка мол превышен лимит  и не добавлялось событие
+        //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
+        //   }
+        //$sign_up_consultation->add_consultation($_SESSION['consultation']);
+        //}
+        // Зарегистрируем покупку
+        $pr_cart->register_pay($pay_id);
+
         $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
     } else {
         $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');

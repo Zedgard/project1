@@ -8,6 +8,9 @@ include_once 'inc.php';
 
 $pr_wares = new \project\wares();
 
+$result = array('success' => 0, 'success_text' => 'Ошибка!');
+
+
 // Все товары с фильром
 if (isset($_POST['getWaresArray'])) {
     $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
@@ -47,20 +50,31 @@ if (isset($_POST['edit_wares'])) {
     $wares_ex_code = (isset($_POST['wares_ex_code'])) ? $_POST['wares_ex_code'] : '';
     $wares_articul = (isset($_POST['wares_articul'])) ? $_POST['wares_articul'] : '';
     $wares_col = (isset($_POST['wares_col'])) ? $_POST['wares_col'] : '';
+    $club_month_period = (isset($_POST['club_month_period'])) ? $_POST['club_month_period'] : '0';
     $wares_descr = (isset($_POST['wares_descr'])) ? $_POST['wares_descr'] : '';
     $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
     $wares_active = (isset($_POST['wares_active'])) ? $_POST['wares_active'] : '1';
     $wares_images = (isset($_POST['wares_images'])) ? $_POST['wares_images'] : '';
-    $wares_category = (isset($_POST['wares_categorys'])) ? $_POST['wares_categorys'] : '';
+    $wares_categorys = (isset($_POST['wares_categorys'])) ? $_POST['wares_categorys'] : '';
 
     if (!is_numeric($wares_ex_code)) {
         $_SESSION['errors'][] = 'Код товара не число!';
     }
 
-    $pr_wares->setWaresCategory($wares_category);
+    $pr_wares->setWaresCategory($wares_categorys);
 
     if (count($_SESSION['errors']) == 0) {
-        if ($pr_wares->insertOrUpdateWares($wares_id, $wares_title, $wares_descr, $wares_url_file, $wares_col, $wares_ex_code, $wares_articul, $wares_images, $wares_active)) {
+        if ($pr_wares->insertOrUpdateWares(
+                        $wares_id,
+                        $wares_title,
+                        $wares_descr,
+                        $wares_url_file,
+                        $wares_col,
+                        $club_month_period,
+                        $wares_ex_code,
+                        $wares_articul,
+                        $wares_images,
+                        $wares_active)) {
             $result = array('success' => 1, 'success_text' => 'Выполнено');
         } else {
             $result = array('success' => 0, 'success_text' => 'Ошибка!');
@@ -180,8 +194,41 @@ if (isset($_POST['waresVideoSee'])) {
     $result = array('success' => 1, 'success_text' => '');
 }
 
+if (isset($_POST['waresVideoSeriesSee'])) {
+    $data = array('bonus_open' => '0');
+    if ($_POST['waresVideoSeriesSee'] > 0) {
+        if ($pr_wares->insertWaresVideoSeriesSee($_POST['waresVideoSeriesSee'])) {
+            
+        }
+        if (isset($_POST['wares_id'])) {
+            $wares_id = $_POST['wares_id'];
+            if ($pr_wares->getWaresSeriesSeeBonusOpen($wares_id, $_SESSION['user']['info']['id'])) {
+                $data = array('bonus_open' => '1');
+            }
+        }
+    }
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+
 // Купленные колличество товаров в категориях
 if (isset($_POST['init_office_list_categorys_col'])) {
     $data = $pr_wares->getClientWaresCol();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+if (isset($_POST['ajax_metod'])) {
+    // Сортировка материалов
+    if ($_POST['ajax_metod'] == 'material_update_positions') {
+        $db_table = trim($_POST['db_table']);
+        $db_row = trim($_POST['db_row']);
+        $result = array('success' => 1, 'success_text' => '');
+        if (count($_POST['ids']) > 0) {
+            $i = 0;
+            foreach ($_POST['ids'] as $value) {
+                $pr_wares->material_position_update($db_table, $db_row, $value, $i);
+                $i++;
+            }
+        }
+    }
 }

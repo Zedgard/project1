@@ -57,6 +57,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     if ($p_user->isEditor()) {
         $price_total = 1;
     }
+    $price_total = 1;
 
     if (count($_SESSION['cart']['itms']) > 0) {
         $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
@@ -172,11 +173,13 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
                     // Отправляем пользователя на страницу оплаты
                     //header('Location: ' . $confirmationUrl);
                 } else {
-                    echo 'Ошибка операции!';
+                    $_SESSION['errors'][] = 'Ошибка операции!';
                 }
             } else {
-                echo "<div>Ошибка операции!</div>";
+                $_SESSION['errors'][] = "<div>Ошибка операции!</div>";
             }
         }
     }
+} else {
+    $_SESSION['errors'][] = 'Нет товаров к покупке!';
 }

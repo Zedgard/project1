@@ -17,8 +17,8 @@
                     <h2 class="col-lg-6">Мои покупки</h2>
                 </div>
 
-                <div class="card-body">
-                    <div class="row" style="margin-top: -30px;">
+                <div class="card-body m-1 p-0 m-lg-2 p-lg-0">
+                    <div class="row" style="margin-top: -10px;">
                         <div class="col-12">
                             <!-- Sorted block -->    
                             <div class="row mt-4 mb-4">

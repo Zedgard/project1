@@ -46,17 +46,24 @@
 
                         <div style="float: right;margin-top: 4px;">
                             <!--<a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | -->
-                            <a href="/auth/" class="header_close_club">Мой кабинет<?= (isset($_SESSION['user']['info']['id'])) ? ': <span>' . $_SESSION['user']['info']['first_name'] : '</span>' ?></a>  
+                            <?
+                            if (strlen(trim($_SESSION['user']['info']['first_name'])) > 0) {
+                                $show_user_name = $_SESSION['user']['info']['first_name'];
+                            } else {
+                                $show_user_name = $_SESSION['user']['info']['email'];
+                            }
+                            ?>
+                            <a href="/auth/" class="header_close_club">Мой кабинет<?= (isset($_SESSION['user']['info']['id'])) ? ': <span>' . $show_user_name : '</span>' ?> </a>  
                             <? if (isset($_SESSION['user']['info']['id'])): ?>
                                 <a href="javascript:void(0)" class="btn_logout header_user_auth btn_logout" title="Выйти из личного кабинета"><i class="fas fa-sign-out-alt"></i></a>
                             <? endif; ?>
                         </div>
-                        <div style="float: left;" class="d-block d-lg-none">
+                        <div style="float: left;" class="soc_links d-block d-lg-none">
                             <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
                         </div>
-                        <div style="float: right;margin-right: 1rem;" class="d-none d-lg-block">
+                        <div style="float: right;margin-right: 1rem;" class="soc_links d-none d-lg-block">
                             <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
                             <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
@@ -104,7 +111,7 @@
                                 </div> 
                                 -->
                                 <div class="header-nav-feature header-nav-features-cart d-inline-flex" style="float: right;">
-                                    <a href="#" class="header-nav-features-toggle">
+                                    <a href="javascript:void(0)" class="header-nav-features-toggle">
                                         <i class="fa fa-shopping-basket fa-4x header-nav-top-icon-img d-none d-lg-block" style="font-size: 1.6rem;"></i>
                                         <i class="fa fa-shopping-basket fa-4x header-nav-top-icon-img d-lg-none" style="font-size: 2.4rem;margin-top: 10px;"></i>
                                         <!--<img src="/assets/img/shop/icon-cart.svg" width="18" alt="" class="header-nav-top-icon-img">-->	
@@ -112,7 +119,7 @@
                                             <span class="cart-qty">0</span>	
                                         </span>							
                                     </a>											
-                                    <div class="header-nav-features-dropdown" id="headerTopCartDropdown" style="margin-top: 40px;margin-left: 20px">
+                                    <div class="header-nav-features-dropdown" id="headerTopCartDropdown">
                                         <ol class="mini-products-list">
 
 

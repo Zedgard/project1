@@ -43,7 +43,7 @@ class token {
         echo ' ' . $t_start .' < ' . $timer . "\n";
         if ($t_start < $timer) {
             //echo 'yea';
-            $this->token_key = random_int(1000000000, 9999999999);
+            $this->token_key = random_int(1000, 9999) . uniqid();
             $this->token_hash = md5($this->token_key);
             if (strlen($this->token_hash) > 0) {
                 $_SESSION['token_hash'] = $this->token_hash;
@@ -135,14 +135,13 @@ class token {
                             dataType: 'json',
                             data: {t: '1', 'h': h, 'w': w},
                             success: function (data) {
-                                console.log(data['t']);
+                                //console.log(data['t']);
                             }
                         });
                     }, 3000);
                 });
             </script>
             <?
-
             return ob_get_clean();
         }
     }

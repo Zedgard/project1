@@ -12,7 +12,11 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 
 class extension {
 
-    public function __construct() { 
+    public $db_prefix;
+    public $db_link;
+    private $MysqliAssos = 0;
+
+    public function __construct() {
         $this->init();
     }
 
@@ -20,10 +24,14 @@ class extension {
      * Заполение данных о расширениях
      */
     public function init() {
+        //$this->delete_Extention_null();
         if (!isset($_SESSION['extension_init']))
             $_SESSION['extension_init'] = 0;
         if ($_SESSION['extension_init'] == 0) {
-            $sqlLight = new \project\sqlLight();
+            $sqlLight= new \project\sqlLight();
+            //var_dump($sqlLight);
+            //echo 'init db_prefix: ' . $sqlLight->db_prefix . ' ';
+            $this->db_prefix = $sqlLight->db_prefix;
             include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
             // Получим список доступных расширений
@@ -42,15 +50,16 @@ class extension {
                         include $conf;
                     }
 
-                    $querySelect = "SELECT `id`, `extension_url`, `version` FROM `zay_extension` e WHERE e.extension_url='?'";
+                    $querySelect = "SELECT e.id, e.extension_url, e.version FROM `zay_extension` e WHERE e.extension_url='?'";
                     $e = $sqlLight->queryList($querySelect, array($value));
-
-                    // Добавим в список если его небыло
-                    if (count($e) == 0) {
+                    if (count($e) > 0) {
+                        $this->setExtensionUrls($e[0]['id'], $config);
+                        // Добавим в список если его небыло
+                    } else {
                         $queryInsert = "INSERT INTO `zay_extension`(`extension_url`, `version`) "
                                 . "VALUES ('?','?')";
                         if ($sqlLight->query($queryInsert, array($value, $config['version']))) {
-                            $querySelect = "SELECT `id`, `extension_url`, `version` FROM `zay_extension` e WHERE e.extension_url='?'";
+                            $querySelect = "SELECT e.id, e.extension_url, e.version FROM `zay_extension` e WHERE e.extension_url='?'";
                             $e = $sqlLight->queryList($querySelect, array($value));
                             // Добавим ссылки для вставки 
                             if (count($e) > 0) {
@@ -80,16 +89,23 @@ class extension {
         $sqlLight = new \project\sqlLight();
         if ($extension_id > 0) {
             foreach ($config['urls'] as $key => $value) {
-//                $querySelect = "SELECT * FROM `zay_extension_urls` WHERE extension_id='?' and url='?'";
-//                $e = $sqlLight->queryList($querySelect, array($extension_id, $value));
-//                if (count($e) > 0) {
-//                    $queryUpdate = "UPDATE `zay_extension_urls` set extension_id='?', title='?', url='?' ";
-//                    $sqlLight->query($queryInsert, array($extension_id, $key, $value));
-//                } else {
-                $queryInsert = "INSERT INTO `zay_extension_urls`(`extension_id`, `title`, `url`) "
-                        . "VALUES ('?','?','?')";
-                $sqlLight->query($queryInsert, array($extension_id, $key, $value));
-                //}
+                $select_exts = "SELECT * FROM `zay_extension_urls` eu WHERE eu.url='?'";
+                $items = $sqlLight->queryList($select_exts, array($value), 0);
+                //echo "----<br/>\n";
+                if (count($items) == 0) {
+
+                    $queryInsert = "INSERT INTO `zay_extension_urls`(`extension_id`, `title`, `url`) "
+                            . "VALUES ('?','?','?')";
+                    $sqlLight->query($queryInsert, array($extension_id, $key, $value));
+                } else {
+                    //if (strlen($key) == 0 || strlen($value) == 0) {
+                    //    echo "-- {$key} {$value} id: {$items[0]['id']}<br/>\n";
+                    // }
+                    $queryInsert = "UPDATE zay_extension_urls eu set "
+                            . "eu.title='?', eu.url='?' "
+                            . "where eu.id='?' ";
+                    $sqlLight->query($queryInsert, array($key, $value, $items[0]['id']), 0);
+                }
             }
         }
     }
@@ -119,18 +135,44 @@ class extension {
         return $data;
     }
 
+    /**
+     * Удаление не используемых расширений
+     */
+    public function delete_Extention_null() {
+        $sqlLight = new \project\sqlLight();
+        $query = "SELECT
+                        e.*, u.id as u_id
+                    FROM
+                        zay_extension e
+                        left join zay_extension_urls u on  u.extension_id = e.id";
+        $items = $sqlLight->queryList($query);
+        foreach ($items as $value) {
+            //echo "u_id: " . strlen(trim($value['u_id'])) . "<br/>\n";
+            if (strlen(trim($value['u_id'])) === 0) {
+
+                $query_dell = "delete from zay_extension where id=?";
+                $sqlLight->query($query_dell, array($value['id']), 0);
+            }
+        }
+    }
+
     /*
      * Вспомогающие методы
      */
 
     public function getSelectArray($querySelect, $queryValues = array(), $see = 0) {
         $sqlLight = new \project\sqlLight();
+        if ($this->MysqliAssos == 1) {
+            $sqlLight->setMysqliAssos();
+        }
         $data = $sqlLight->queryList($querySelect, $queryValues, $see);
         return $data;
     }
 
     public function query($query, $queryValues = array(), $see = 0) {
         $sqlLight = new \project\sqlLight();
+        //var_dump($sqlLight);
+        //echo 'query_db_prefix: ' . $sqlLight->db_prefix . ' ';
         return $sqlLight->query($query, $queryValues, $see);
     }
 
@@ -138,6 +180,15 @@ class extension {
         $sqlLight = new \project\sqlLight();
         $s = "UPDATE ? set ?='?' WHERE id='?' ";
         return $sqlLight->query($s, array($table, $row, $val, $elm_id));
+    }
+
+    public function setMysqliAssos() {
+        $this->MysqliAssos = 1;
+    }
+
+    public function queryNextId($table_name) {
+        $sqlLight = new \project\sqlLight();
+        return $sqlLight->queryNextId($table_name);
     }
 
     /**

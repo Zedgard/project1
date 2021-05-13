@@ -65,23 +65,38 @@ class products extends \project\extension {
      */
     public function getProductsArray($active, $searchStr, $id = 0) {
         if ($id > 0) {
-            $querySelect = "SELECT * FROM `zay_product` WHERE `id`='?' order by id desc ";
-            $data = $this->getSelectArray($querySelect, array($id));
+            $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
+                    . "left join zay_product_wares pw on pw.product_id=p.id "
+                    . "left join zay_wares w on w.id=pw.wares_id "
+                    . "WHERE p.id='?' "
+                    . "order by p.id desc ";
+            $data = $this->getSelectArray($querySelect, array($id), 0);
         } else {
             if (strlen($searchStr) > 0) {
-                $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `title` like '%?%' and `is_delete`='0' order by id desc ";
-                $data = $this->getSelectArray($querySelect, array($active, $searchStr));
+                $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
+                        . "left join zay_product_wares pw on pw.product_id=p.id "
+                        . "left join zay_wares w on w.id=pw.wares_id "
+                        . "WHERE p.active='?' AND p.title LIKE '%?%' AND p.is_delete='0' "
+                        . "order by id desc ";
+                $data = $this->getSelectArray($querySelect, array($active, $searchStr), 0);
             } else {
                 if ($active == 9) {
-                    $querySelect = "SELECT * FROM `zay_product` WHERE `is_delete`='1' order by lastdate desc";
+                    $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
+                            . "left join zay_product_wares pw on pw.product_id=p.id "
+                            . "left join zay_wares w on w.id=pw.wares_id "
+                            . "WHERE p.is_delete='1' "
+                            . "order by p.lastdate desc";
                     $data = $this->getSelectArray($querySelect, array());
                 } else {
-                    $querySelect = "SELECT * FROM `zay_product` WHERE `active`='?' and `is_delete`='0' order by id desc";
+                    $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
+                            . "left join zay_product_wares pw on pw.product_id=p.id "
+                            . "left join zay_wares w on w.id=pw.wares_id "
+                            . "WHERE p.active='?' and p.is_delete='0' order by id desc";
                     $data = $this->getSelectArray($querySelect, array($active));
                 }
             }
         }
-        
+
         for ($i = 0; $i < count($data); $i++) {
             //$value['images_str'];
             $image = $data[$i]['images_str']; //$this->checkImageFile($value['images_str']);
@@ -98,33 +113,58 @@ class products extends \project\extension {
     }
 
     /**
+     * Список продуктов закрытого клуба
+     * @return type
+     */
+    public function getProductsClubArray() {
+        $querySelect = "SELECT p.*, w.club_month_period FROM zay_product p "
+                . "left join zay_product_wares pw on pw.product_id=p.id "
+                . "left join zay_wares w on w.id=pw.wares_id "
+                . "WHERE p.active=1 and p.is_delete<>1 and w.club_month_period>0 "
+                . "order by p.title desc";
+        return $this->getSelectArray($querySelect, array());
+    }
+
+    /**
      * Данные по продукту
      * @param type $id
-     * @return array
+     * @param type $all Даже удаленные и неактивные
+     * @return type
      */
-    public function getProductElem($id) {
+    public function getProductElem($id, $all = 0) {
+        $data = array();
         if ($id > 0) {
-            $querySelect = "SELECT p.*,"
-                    . "(SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p.`id`) as category_ids, "
-                    . "(SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p.`id`) as topic_ids "
-                    . "FROM `zay_product` p WHERE id='?' ";
-            $obj_product = $this->getSelectArray($querySelect, array($id))[0];
-            $obj_product['products_wares'] = $this->getProducts_wares($obj_product['id']);
-            $obj_product['products_category'] = $this->getProducts_category($obj_product['id']);
-            $obj_product['products_topic'] = $this->getProducts_topic($obj_product['id']);
-            $obj_product['products_theme'] = $this->getProducts_theme($obj_product['id']);
-
-            if (count($obj_product['products_category']) > 0) {
-                $category = new category();
-                foreach ($obj_product['products_category'] as $key => $value) {
-                    $obj_product['products_category_list'][] = $category->getCategoryElem($value)[0]['title'];
-                }
+            if ($all == 1) {
+                $querySelect = "SELECT p.*,"
+                        . "(SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p.`id`) as category_ids, "
+                        . "(SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p.`id`) as topic_ids "
+                        . "FROM `zay_product` p WHERE p.id='?' ";
+            } else {
+                $querySelect = "SELECT p.*,"
+                        . "(SELECT GROUP_CONCAT(c.`category_id`) FROM `zay_product_category` c WHERE c.`product_id`=p.`id`) as category_ids, "
+                        . "(SELECT GROUP_CONCAT(t.`topic_id`) FROM `zay_product_topic` t WHERE t.`product_id`=p.`id`) as topic_ids "
+                        . "FROM `zay_product` p WHERE p.id='?' and p.active='1' and p.is_delete='0'";
             }
+            $obj_product = $this->getSelectArray($querySelect, array($id));
+            if (count($obj_product) > 0) {
+                $obj_product[0]['products_wares'] = $this->getProducts_wares($obj_product[0]['id']);
+                $obj_product[0]['products_category'] = $this->getProducts_category($obj_product[0]['id']);
+                $obj_product[0]['products_topic'] = $this->getProducts_topic($obj_product[0]['id']);
+                $obj_product[0]['products_theme'] = $this->getProducts_theme($obj_product[0]['id']);
 
-            $obj_product['products_wares_info'] = $this->getProducts_waresInfo($obj_product['id']);
-            return $obj_product;
+                if (count($obj_product[0]['products_category']) > 0) {
+                    $category = new category();
+                    foreach ($obj_product[0]['products_category'] as $key => $value) {
+                        $obj_product[0]['products_category_list'][] = $category->getCategoryElem($value)[0]['title'];
+                    }
+                }
+
+                $obj_product[0]['products_wares_info'] = $this->getProducts_waresInfo($obj_product[0]['id']);
+                $data = $obj_product[0];
+            }
+            return $data;
         }
-        return array();
+        return $data;
     }
 
     /**
@@ -148,13 +188,13 @@ class products extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active = 1) {
+    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active = 1) {
         if ($id > 0) {
             $query = "UPDATE `zay_product` "
-                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', "
+                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', `product_content`='?', "
                     . "`images_str`='?', `product_new`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active, $id), 0)) {
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active, $id), 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -163,9 +203,9 @@ class products extends \project\extension {
             }
         } else {
 
-            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `desc`, `sold`, `images_str`, `product_new`, `active`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $images_str, $product_new, $active))) {
+            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `desc`, `sold`, `product_content`, `images_str`, `product_new`, `active`, `lastdate`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active))) {
                 $querySelect = "SELECT MAX(p.id) as id FROM `zay_product` p ";
                 $id = $this->getSelectArray($querySelect)[0]['id'];
                 $this->insertProductWares($id, $this->products_wares);
@@ -368,7 +408,7 @@ class products extends \project\extension {
 
 
         if (strlen($searchStr) > 0) {
-            $queryValSearchStr = "and (`title` like '%?%' or `desc` like '%?%')";
+            $queryValSearchStr = "and (p.title like '%?%' or p.desc like '%?%')";
             $queryArray[] = $searchStr;
             $queryArray[] = $searchStr;
         }
@@ -417,12 +457,14 @@ class products extends \project\extension {
             (SELECT GROUP_CONCAT(t.`theme_id`) FROM `zay_product_theme` t WHERE t.`product_id`=p2.`id`) as product_theme_ids
                 from `zay_product` p2 
                         where p2.id in(
-                            SELECT p.id
+                            SELECT distinct p.id
                                 FROM `zay_product` p
-                                left join `zay_product_category` c on c.product_id=p.id
-                                left join `zay_product_topic` t on t.product_id=p.id
-                                left join `zay_product_theme` pth on pth.product_id=p.id
-                                where p.`active`='1' and p.`is_delete`='0'  
+                                left join zay_product_category c on c.product_id=p.id
+                                left join zay_product_topic t on t.product_id=p.id
+                                left join zay_product_theme pth on pth.product_id=p.id
+                                left join zay_product_wares pww on pww.product_id=p.id
+                                left join zay_wares ww on ww.id=pww.wares_id 
+                                where p.active='1' and p.is_delete='0' and ww.club_month_period='0'   
                                 {$queryValSearchStr} 
                                 {$queryValCategory} 
                                 {$queryValTopic}

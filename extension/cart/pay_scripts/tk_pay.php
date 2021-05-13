@@ -13,11 +13,13 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
 
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
 $products = new \project\products();
 $sign_up_consultation = new \project\sign_up_consultation();
+$pr_cart = new \project\cart();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
@@ -144,10 +146,10 @@ $_SESSION['PAY_KEY'] = $pay_key;
 
 $max_id = $sqlLight->queryNextId('zay_pay');
 
-if(strlen($max_id)==0){
-    echo "max_id: {$max_id}";
-    exit();
-}
+//if(strlen($max_id)==0){
+//    echo "max_id: {$max_id}";
+//    exit();
+//}
 
 $params = [
     'OrderId' => $max_id,
@@ -189,10 +191,13 @@ if ($api->error) {
     $pay_status = "pending"; // Устанавливаем стандартный статус платежа
     $pay_key = $api->paymentId;
     $_SESSION['PAY_KEY'] = $pay_key;
+    $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
+
     // Сохраняем данные платежа в базу
     $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
             . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
     if ($sqlLight->query($queryPay, array(($max_id), 'tk', $client_id, $price_total, $pay_date, $pay_key, 'Tinkoff', '', '', $pay_status, '', $pay_descr, $api->paymentUrl), 1)) {
+
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
             $product_id = $value['id'];
             if ($product_id > 0) {
@@ -204,17 +209,15 @@ if ($api->error) {
                 $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
                         . "VALUES ('?','?','?')";
                 $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-                // Зафиксируем продажу
-                //$products->setSoldAdd($product_id);
             }
         }
         /*
          * Если это консультация 
          */
-        if ($_SESSION['consultation']['your_master_id'] > 0) {
-            $_SESSION['consultation']['pay_id'] = $max_id;
-            $sign_up_consultation->add_consultation($_SESSION['consultation']);
-        }
+//        if ($_SESSION['consultation']['your_master_id'] > 0) {
+//            $_SESSION['consultation']['pay_id'] = $max_id;
+//            $sign_up_consultation->add_consultation($_SESSION['consultation']);
+//        }
         // Отправляем пользователя на страницу оплаты
         header('Location: ' . $api->paymentUrl);
     } else {

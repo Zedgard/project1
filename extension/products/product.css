@@ -45,6 +45,20 @@
     max-width: 30px;
 }
 
+.product_theme_btn{
+    width: 100%;
+    padding: 0.8rem 0;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1rem;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+.product_theme_btn:hover{
+    cursor: pointer;
+}
+
 .row-flex, .row-flex > div[class*='col-'] {  
     display: -webkit-box;
     display: -moz-box;
@@ -402,7 +416,7 @@
 }
 .product_wares_show{
     width: 85%;
-    padding: 1.2rem;
+    padding: 1.6rem;
     background-color: #FFFFFF;
     margin-top: 0.3rem;
     visibility: hidden;
@@ -551,19 +565,19 @@
 Для офиса
 */
 .product_title{
-        border-top: 1px solid #CCCCCC;
-        color: #000000;
-        margin-bottom: 1rem;
-        clear: both;
-        font-size: 1.4rem;
-        font-weight: 600;
-    }
-    .products_arrays_data .product_title{
-        border-top: none;
-    }
-    .wares_title{
-        font-size: 0.9rem;
-        color: #000000;
-        text-align: left;
-    }
+    border-top: 1px solid #CCCCCC;
+    color: #000000;
+    margin-bottom: 1rem;
+    clear: both;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.products_arrays_data .product_title{
+    border-top: none;
+}
+.wares_title{
+    font-size: 0.9rem;
+    color: #000000;
+    text-align: left;
+}
 /* ------------------------------------------------------------- */

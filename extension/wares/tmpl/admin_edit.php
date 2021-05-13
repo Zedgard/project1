@@ -58,11 +58,33 @@
                 <?
                 importELFinder(1);
                 ?>
+
+                <div class="mb-3" style="padding: 1%;background-color: #f7f7f7;">
+                    <h3>Закрытый клуб</h3>
+                    <div class="form-group">
+                        <label for="club_month_period">Колличество месяцев для доступа к закрытому клубу</label>
+                        <select id="club_month_period" name="club_month_period" class="form-control club_month_period">
+                            <option value="0">Не предосавлено</option>
+                            <option value="1">1 месяц</option>
+                            <option value="2">2 месяц</option>
+                            <option value="3">3 месяц</option>
+                            <option value="4">4 месяц</option>
+                            <option value="5">5 месяц</option>
+                            <option value="6">6 месяц</option>
+                            <option value="7">7 месяц</option>
+                            <option value="8">8 месяц</option>
+                            <option value="9">9 месяц</option>
+                            <option value="10">10 месяц</option>
+                            <option value="11">11 месяц</option>
+                            <option value="12">12 месяц</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="wares_id" class="wares_id" id="wares_id" value="0" />
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary btn_save_config">Сохранить</button>
+                <button type="button" class="btn btn-primary btn_save_wares">Сохранить</button>
             </div>
         </div>
     </div>

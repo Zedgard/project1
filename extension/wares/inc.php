@@ -69,14 +69,26 @@ class wares extends \project\extension {
     }
 
     /**
+     * Получим список товаров по закрытому клубу
+     * @return type
+     */
+    public function getWaresClubArray() {
+        $querySelect = "SELECT * FROM zay_wares w WHERE w.club_month_period>0 order by w.title desc ";
+        return $this->getSelectArray($querySelect, array(), 0);
+    }
+
+    /**
      * Данные по товару
      * @param type $id
      * @return array
      */
     public function getWaresElem($id) {
         if ($id > 0) {
-            $querySelect = "SELECT * FROM `zay_wares` WHERE id='?' ";
-            $obj = $this->getSelectArray($querySelect, array($id))[0];
+            $querySelect = "SELECT w.*, cat.id as category_id, cat.title as category_title, cat.color as category_color FROM zay_wares w "
+                    . "left join zay_wares_category wc on wc.wares_id=w.id "
+                    . "left join zay_category cat on cat.id=wc.category_id "
+                    . "WHERE w.id='?' ";
+            $obj = $this->getSelectArray($querySelect, array($id), 0)[0];
             $obj['wares_category'] = $this->getWaresCategory($obj['id']);
             $category = new category();
 
@@ -103,57 +115,36 @@ class wares extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active) {
+    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $club_month_period, $ex_code, $articul, $wares_images, $active) {
         if (strlen($col) == 0) {
             $col = 0;
         }
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
-                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `ex_code`='?', `articul`='?', `images`='?', `active`='?', "
+                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', "
+                    . "`ex_code`='?', `articul`='?', `images`='?', `active`='?', "
                     . "is_delete='0', "
                     . "`lastdate`=NOW() "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active, $id), 0)) {
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period,
+                        $ex_code, $articul, $wares_images, $active, $id), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
             }
         } else {
+            $id = $this->queryNextId('zay_wares');
             $query = "INSERT INTO `zay_wares` "
-                    . "(`title`, `descr`, `url_file`, `col`, `ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
+                    . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, "
+                    . "`ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $ex_code, $articul, $wares_images, $active), 0)) {
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period,
+                        $ex_code, $articul, $wares_images, $active), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
             }
         }
-        /*
-         * INSERT INTO `zay_wares` (
-         * `title`, 
-         * `descr`, 
-         * `url_file`, 
-         * `col`, 
-         * `ex_code`, 
-         * `articul`, 
-         * `images`,
-         * `active`, 
-         * `is_delete`, 
-         * `creat_date`, 
-         * `lastdate`
-         * ) VALUES (
-         * 'www',
-         * '<p>&nbsp;1111</p>',
-         * '',
-         * '1',
-         * '53335',
-         * 'A-53335',
-         * '',
-         * '1', 
-         * (DATE_ADD(NOW(), INTERVAL 7 HOUR)), 
-         * (DATE_ADD(NOW(), INTERVAL 7 HOUR)) 
-         * )
-         * 
-         */
+
         return false;
     }
 
@@ -277,7 +268,11 @@ class wares extends \project\extension {
      * @return type
      */
     public function getWaresVideoSeries($wares_id) {
-        $query_select = "SELECT vs.*, IF(vs.start_date <= CURRENT_DATE, 1, 0) as series_enable FROM `zay_wares_video_series` vs where vs.wares_id='?' order by vs.position asc ";
+        $query_select = "SELECT 
+            vs.*, 
+            IF(vs.start_date <= CURRENT_DATE, 1, 0) as series_enable 
+            FROM `zay_wares_video_series` vs 
+            where vs.wares_id='?' order by vs.position asc ";
         return $this->getSelectArray($query_select, array($wares_id));
     }
 
@@ -361,47 +356,152 @@ class wares extends \project\extension {
                 $vals[] = $category_id;
             }
             if ($wares_id == 0) {
-                $querySelect = "SELECT DISTINCT w.*, "
-                        . "pr.id as product_id, "
-                        . "pr.title as product_title, "
-                        . "COALESCE(pcat.category_id, 0) AS pcat_category_id, "
-                        . "COALESCE(wcat.category_id, 0) as wcat_category_id, "
-                        . "wcc.title as wcc_title, "
-                        . "wcc.color as wcc_color "
-                        . "FROM `zay_pay` p "
-                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
-                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
-                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
-                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
-                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join zay_category wcc on wcc.id=wcat.category_id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
-                        . "{$category_sql} "
-                        . "and (pcat.category_id<>2 or pcat.category_id is null) "
-                        . "order by w.`title` asc ";
+//                $querySelect = "SELECT DISTINCT w.*, "
+//                        . "pr.id as product_id, "
+//                        . "pr.title as product_title, "
+//                        . "COALESCE(pcat.category_id, 0) AS pcat_category_id, "
+//                        . "COALESCE(wcat.category_id, 0) as wcat_category_id, "
+//                        . "wcc.title as wcc_title, "
+//                        . "wcc.color as wcc_color "
+//                        . "FROM `zay_pay` p "
+//                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
+//                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
+//                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
+//                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+//                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
+//                        . "left join zay_category wcc on wcc.id=wcat.category_id "
+//                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
+//                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
+//                        . "{$category_sql} "
+//                        . "and (pcat.category_id<>2 or pcat.category_id is null) "
+//                        . "order by w.`title` asc ";
+                $querySelect = "SELECT
+                                    *
+                                FROM
+                                    (
+                                    SELECT
+                                        dd.*,
+                                        (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = dd.product_id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
+                                        ) AS wares_show,
+                                        COALESCE(
+                                            (
+                                            SELECT
+                                                GROUP_CONCAT(pcat.category_id)
+                                            FROM
+                                                zay_product_category pcat
+                                            WHERE
+                                                pcat.product_id = dd.product_id
+                                        ),
+                                        0
+                                        ) AS pcat_category_id,
+                                        COALESCE(wcat.category_id, 0) AS wcat_category_id,
+                                        wcc.title AS wcc_title,
+                                        wcc.color AS wcc_color
+                                    FROM
+                                        (
+                                        SELECT DISTINCT
+                                            w.*,
+                                            pr.id AS product_id,
+                                            pr.title AS product_title
+                                        FROM
+                                            zay_pay p
+                                        LEFT JOIN zay_pay_products pp ON
+                                            pp.pay_id = p.id
+                                        LEFT JOIN zay_product pr ON
+                                            pr.id = pp.product_id
+                                        LEFT JOIN zay_product_wares pw ON
+                                            pw.product_id = pr.id
+                                        LEFT JOIN zay_wares w ON
+                                            w.id = pw.wares_id
+                                        WHERE
+                                            p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0
+                                            AND w.club_month_period = 0
+                                            {$category_sql}
+                                        ORDER BY
+                                            w.`title` ASC
+                                    ) dd
+                                LEFT JOIN zay_wares_category wcat ON
+                                    wcat.wares_id = dd.id
+                                LEFT JOIN zay_category wcc ON
+                                    wcc.id = wcat.category_id
+                                ) dd2
+                                WHERE
+                                    dd2.wares_show = '1'";
+
                 //echo "{$querySelect}\n\n";
                 $objs = $this->getSelectArray($querySelect, $vals, 0);
                 return $objs;
             } else {
-                $querySelect = "SELECT DISTINCT w.*, "
-                        . "pr.id as product_id, "
-                        . "pr.title as product_title, "
-                        . "pcat.category_id AS pcat_category_id, "
-                        . "wcat.category_id as wcat_category_id, "
-                        . "wcc.title as wcc_title, "
-                        . "wcc.color as wcc_color "
-                        . "FROM `zay_pay` p "
-                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
-                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
-                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
-                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
-                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join zay_category wcc on wcc.id=wcat.category_id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
-                        . "and (pcat.category_id<>2 or pcat.category_id is null) " // Отбросим вебинары"
-                        . "order by w.`title` asc ";
+//                $querySelect = "SELECT DISTINCT w.*, "
+//                        . "pr.id as product_id, "
+//                        . "pr.title as product_title, "
+//                        . "pcat.category_id AS pcat_category_id, "
+//                        . "wcat.category_id as wcat_category_id, "
+//                        . "wcc.title as wcc_title, "
+//                        . "wcc.color as wcc_color "
+//                        . "FROM `zay_pay` p "
+//                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
+//                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
+//                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
+//                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
+//                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
+//                        . "left join zay_category wcc on wcc.id=wcat.category_id "
+//                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
+//                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
+//                        . "and (pcat.category_id<>2 or pcat.category_id is null) " // Отбросим вебинары"
+//                        . "order by w.`title` asc ";
+                $querySelect = "SELECT
+                                    *
+                                FROM
+                                    (
+                                    SELECT
+                                        dd.*,
+                                        (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = dd.product_id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
+                                        ) AS wares_show,
+                                        COALESCE(
+                                            (
+                                            SELECT
+                                                GROUP_CONCAT(pcat.category_id)
+                                            FROM
+                                                zay_product_category pcat
+                                            WHERE
+                                                pcat.product_id = dd.product_id
+                                        ),
+                                        0
+                                        ) AS pcat_category_id,
+                                        COALESCE(wcat.category_id, 0) AS wcat_category_id,
+                                        wcc.title AS wcc_title,
+                                        wcc.color AS wcc_color
+                                    FROM
+                                        (
+                                        SELECT DISTINCT
+                                            w.*,
+                                            pr.id AS product_id,
+                                            pr.title AS product_title
+                                        FROM
+                                            zay_pay p
+                                        LEFT JOIN zay_pay_products pp ON
+                                            pp.pay_id = p.id
+                                        LEFT JOIN zay_product pr ON
+                                            pr.id = pp.product_id
+                                        LEFT JOIN zay_product_wares pw ON
+                                            pw.product_id = pr.id
+                                        LEFT JOIN zay_wares w ON
+                                            w.id = pw.wares_id
+                                        WHERE
+                                            p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.id='?'
+                                            AND w.club_month_period = 0
+                                            {$category_sql}
+                                        ORDER BY
+                                            w.`title` ASC
+                                    ) dd
+                                LEFT JOIN zay_wares_category wcat ON
+                                    wcat.wares_id = dd.id
+                                LEFT JOIN zay_category wcc ON
+                                    wcc.id = wcat.category_id
+                                ) dd2
+                                WHERE
+                                    dd2.wares_show = '1'";
                 return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id), 0)[0];
             }
         }
@@ -445,7 +545,7 @@ class wares extends \project\extension {
         }
         return array();
     }
-    
+
     /**
      * Купленные марафоны клиента
      */
@@ -544,9 +644,9 @@ class wares extends \project\extension {
             $_SESSION['wares_video_see'][] = $wares_video_id;
             $count_see = 0;
             $querySelect = "select * from `zay_wares_video_see` wvs where wvs.`wares_video_id`='?' and wvs.`user_id`='?' ";
-            $wares_video_see = $this->getSelectArray($querySelect, array($wares_video_id, $_SESSION['user']['info']['id']), 1);
+            $wares_video_see = $this->getSelectArray($querySelect, array($wares_video_id, $_SESSION['user']['info']['id']), 0);
             if (count($wares_video_see) > 0) {
-                $count_see = $wares_video_see['count_see'];
+                $count_see = $wares_video_see[0]['count_see'];
             }
             $count_see++;
             $query = "INSERT INTO `zay_wares_video_see` (`wares_video_id`, `user_id`, `count_see`) "
@@ -570,7 +670,7 @@ class wares extends \project\extension {
                 $wares_video_see = $this->getSelectArray($querySelect, array($wares_video_id), 1);
             }
             // колличество просмотров по пользователю
-            if ($wares_video_id = 0 && $user_id > 0) {
+            if ($wares_video_id == 0 && $user_id > 0) {
                 $querySelect = "select * from `zay_wares_video_see` wvs where wvs.`user_id`='?' ";
                 $wares_video_see = $this->getSelectArray($querySelect, array($user_id), 1);
             }
@@ -581,6 +681,83 @@ class wares extends \project\extension {
             }
         }
         return 0;
+    }
+
+    /**
+     * Зафиксировать просмотр серии 
+     * @param type $series_id
+     * @return boolean
+     */
+    public function insertWaresVideoSeriesSee($series_id) {
+        $t = 0;
+        if (!isset($_SESSION['wares_serie_see'])) {
+            $_SESSION['wares_video_see'][] = $series_id;
+            $t = 1;
+        } else {
+            if (!in_array($series_id, $_SESSION['wares_serie_see'])) {
+                $t = 1;
+            }
+        }
+        if ($t == 1) {
+            $_SESSION['wares_serie_see'][] = $series_id;
+            $count_see = 0;
+            $querySelect = "SELECT * FROM zay_wares_video_series_see wvs where wvs.series_id='?' and wvs.user_id='?' ";
+            $data = $this->getSelectArray($querySelect, array($series_id, $_SESSION['user']['info']['id']), 0);
+            if (count($data) > 0) {
+                $count_see = $data[0]['count_see'];
+            }
+            $count_see++;
+            $query = "INSERT INTO `zay_wares_video_series_see` (`series_id`, `user_id`, `count_see`) "
+                    . "VALUES ('?','?','?')";
+            return $this->query($query, array($series_id, $_SESSION['user']['info']['id'], $count_see));
+        }
+        return true;
+    }
+
+    /**
+     * Получить данные по колличеству просмотров видео
+     * @param type $series_id
+     * @param int $user_id
+     * @return int
+     */
+    public function getWaresSeriesSee($series_id = 0, $user_id = 0) {
+        if ($user_id > 0) {
+            // колличество просмотров по видео
+            if ($series_id > 0 && $user_id = 0) {
+                $querySelect = "select * from `zay_wares_video_series_see` wvs where wvs.series_id='?' ";
+                $wares_video_see = $this->getSelectArray($querySelect, array($series_id), 1);
+            }
+            // колличество просмотров по пользователю
+            if ($series_id == 0 && $user_id > 0) {
+                $querySelect = "select * from `zay_wares_video_series_see` wvs where wvs.user_id='?' ";
+                $wares_video_see = $this->getSelectArray($querySelect, array($user_id), 1);
+            }
+            // колличество просмотров конкретного видео пользователем
+            if ($series_id > 0 && $user_id > 0) {
+                $querySelect = "select * from `zay_wares_video_series_see` wvs where wvs.series_id='?' and wvs.user_id='?' ";
+                $wares_video_see = $this->getSelectArray($querySelect, array($series_id, $user_id), 1);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Получить доступ к бонусу только после просмотра всех материалов
+     * @param type $wares_id
+     * @param type $user_id
+     * @return boolean
+     */
+    public function getWaresSeriesSeeBonusOpen($wares_id, $user_id) {
+        $query = "SELECT wvs.*, if((select SUM(wvss.count_see) from zay_wares_video_series_see wvss where wvss.user_id='?' and wvss.series_id=wvs.id)>0, 1,0) as series_see
+                        FROM zay_wares_video_series wvs 
+                        WHERE wvs.wares_id='?' AND wvs.title NOT LIKE 'Бонус'";
+        $data = $this->getSelectArray($query, array($user_id, $wares_id), 0);
+        foreach ($data as $value) {
+            if ($value['series_see'] == '0') {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -653,8 +830,26 @@ class wares extends \project\extension {
      * @return type
      */
     public function list_materials($wares_id) {
+//        $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' order BY `position` asc";
+//        $materials = $this->getSelectArray($select, array($wares_id));
+//        $i = 0;
+//        foreach ($materials as $value) {
+//            $this->material_position_update($value['id'], $i);
+//            $i++;
+//        }
         $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' order BY `position` asc";
-        return $this->getSelectArray($select, array($wares_id));
+        $data = $this->getSelectArray($select, array($wares_id), 0);
+        return $data;
+    }
+/**
+     * Получить материалы по товару учитывая серию
+     * @param type $wares_id
+     * @return type
+     */
+    public function list_materials_on_series($wares_id, $series_id) {
+        $select = "SELECT * FROM `zay_wares_material` WHERE `wares_id`='?' and series_id='?' order BY `position` asc";
+        $data = $this->getSelectArray($select, array($wares_id, $series_id), 0);
+        return $data;
     }
 
     /**
@@ -685,7 +880,7 @@ class wares extends \project\extension {
                             $data['position']
                         ), 0);
     }
-    
+
     /**
      * Удалить материал
      * @param type $wares_id
@@ -735,7 +930,7 @@ class wares extends \project\extension {
         }
         return $v;
     }
-    
+
     /**
      * Обновить позицию серии
      * @param type $menu_id
@@ -747,6 +942,11 @@ class wares extends \project\extension {
 //        if ($position <= 0) {
 //            return true;
 //        }
+        if ($series_id > 0) {
+            
+        } else {
+            $series_id = 0;
+        }
 
         if ($metod == "up") {
             $q1 = "select * from `zay_wares_material` WHERE `series_id`='?' and `id`='?'";
@@ -754,7 +954,7 @@ class wares extends \project\extension {
             $q2 = "select * from `zay_wares_material` WHERE `series_id`='?' and `position`='?'";
             $elem2 = $this->getSelectArray($q2, array($series_id, ($elem1['position'] - 1)), 0)[0];
         }
-            
+
         if ($metod == "down") {
             $q1 = "select * from `zay_wares_material` WHERE `series_id`='?' and `id`='?'";
             $elem1 = $this->getSelectArray($q1, array($series_id, $material_id), 0)[0];
@@ -763,10 +963,21 @@ class wares extends \project\extension {
         }
 
         $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
-        $this->query($query, array($elem2['position'], $elem1['id']), 0);
+        $this->query($query, array($elem2['position'], $elem1['id']), 1);
         $query = "UPDATE `zay_wares_material` SET `position`='?' WHERE `id`='?'";
-        $this->query($query, array($elem1['position'], $elem2['id']), 0);
+        $this->query($query, array($elem1['position'], $elem2['id']), 1);
         return true;
+    }
+
+    /**
+     * обновить позицию материала
+     * @param type $material_id
+     * @param type $position_val
+     * @return type
+     */
+    public function material_position_update($db_table, $db_row, $material_id, $position_val) {
+        $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'";
+        return $this->query($query, array($this->db_prefix . $db_table, $db_row, $position_val, $material_id), 0);
     }
 
 }

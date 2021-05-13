@@ -30,6 +30,9 @@
 
 /*Table Of Contents ends */
 
+.btn-group > .btn-group:not(:first-child), .btn-group > .btn:not(:first-child){
+    margin-left: 0px;
+}
 
 /*Global Styling*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Overpass Mono:200,300,400,500,600,700,800');
@@ -37,7 +40,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.2;
     color: #3D3D3D;
     overflow-x: hidden !important;
@@ -122,6 +125,9 @@ p, .heading-title > span, .process-wrapp li > .pro-step,
 .getin_form .form-control{
     font-family: 'Open Sans', sans-serif;
 }
+.form-control{
+    border-radius: 0rem;
+}
 
 /*fontAwesome*/
 .zeus.tparrows.tp-rightarrow::before,
@@ -165,6 +171,7 @@ blockquote.blockquote::before{
     color: #FFF;
 }
 .sign_up_consultation_back{
+    padding: 1rem 0;
     background-image: url('/assets/img/sign_up_consultation.svg');
     background-position: center center;
     -webkit-background-size: cover;
@@ -379,8 +386,8 @@ blockquote.blockquote::before{
     position: absolute;
     content: "";
     width: 100%;
-    height: 95%;
-    transform: rotate(-4deg);
+    height: 0.8rem;
+    transform: rotate(-7deg);
 }
 
 .cart_product_remove:hover{
@@ -669,6 +676,7 @@ ul.social-icons.white li a:focus{
     */
     overflow: hidden;
 }
+
 .square-layout .button {
     -webkit-border-radius: 0;
     border-radius: 0;
@@ -1276,6 +1284,9 @@ nav{
     opacity: 0.4;
 }
 
+.modal .btn-close{
+    font-size: 2rem;
+}
 /*side clode btn*/
 .side-menu .btn-close {
     height: 33px;
@@ -1325,6 +1336,15 @@ nav{
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
+}
+header .soc_links a i{
+    width: 2.4rem;
+    text-align: center;
+}
+
+.gradient_bg_2{
+    background: rgb(107,221,120);
+    background: linear-gradient(135deg, rgba(107,221,120,1) 0%, rgba(99,167,214,1) 100%);
 }
 
 /*side open btn*/
@@ -1538,6 +1558,11 @@ nav{
 }
 .cart_list:hover .btn_cart_product_remove_display_none{
     display: block;
+}
+
+.pays_list_line_block a{
+    text-align: center;
+    margin: 0 auto;
 }
 
 
@@ -2908,7 +2933,7 @@ nav{
     content: "";
     height: 3px;
     width: 50px;
-    background: #000000;
+    /* background: #000000; */
     display: block;
     margin-top: 15px;
 }
@@ -2989,6 +3014,117 @@ nav{
     -webkit-background-size: cover;
     background-size: cover;
 }
+.list_promos{
+    border-top: 1px solid #CCCCCC;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+.list_promos .item_promo{
+    width: 100%;
+    padding: 1rem;
+}
+
+.list_promos .item_promo:hover{
+    background-color: #f3f3f3;
+    cursor: pointer;
+}
+.list_promos .list_promo_title{
+    font-size: 1.2rem;
+}
+.list_promos .list_promo_code{
+    margin-left: 2%;
+}
+.list_promos .list_promo_price{
+    float: right;
+    font-size: 1.2rem;
+    margin-right: 2%;
+    margin-top: -0.1rem;
+}
+.list_promos .list_promo_delete{
+    float: right;
+    font-size: 1.4rem;
+    margin-top: -0.2rem;
+}
+.list_promos .list_promo_delete:hover{
+    float: right;
+    transform: rotate(180deg);
+}
+
+.TINKOFF_BTN_YELLOW {
+    background-color: #ffdd2d;
+    font-family: haas,pragmatica,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+    position: relative;
+    display: inline-block;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    max-width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    font-weight: 400;
+    transition-property: background-color, border, box-shadow;
+    transition-duration: .25s;
+    transition-timing-function: ease;
+}
+
+.TINKOFF_BTN_YELLOW:empty:before {
+    content: "Купить в кредит"
+}
+
+.TINKOFF_BTN_YELLOW[disabled] {
+    pointer-events: none;
+    opacity: .56;
+}
+
+.TINKOFF_BTN_YELLOW::-moz-focus-inner {
+    border: 0 none;
+    padding: 0;
+}
+
+.TINKOFF_BTN_YELLOW:focus {
+    outline-width: 0;
+}
+
+.TINKOFF_BTN_YELLOW:focus,
+.TINKOFF_BTN_YELLOW:hover:not([disabled]) {
+    background-color: #fcc521;
+    color: #333;
+}
+
+.TINKOFF_BTN_YELLOW:active:not([disabled]) {
+    background-color: #fab619;
+}
+
+.TINKOFF_BTN_YELLOW,
+.TINKOFF_SIZE_M {
+    min-height: 42px;
+    font-size: 15px;
+    line-height: 24px;
+    padding: 9px 19px;
+}
+
+.TINKOFF_SIZE_XL {
+    padding: 18px 35px 16px;
+    min-height: 58px;
+    font-size: 17px;
+    line-height: 24px;
+}
+
+.TINKOFF_SIZE_L {
+    padding: 15px 31px;
+    min-height: 54px;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+.TINKOFF_SIZE_S {
+    padding: 7px 11px;
+    min-height: 30px;
+    font-size: 13px;
+    line-height: 16px;
+}
+
 
 @media screen and (max-width: 767px) {
     .fact-iconic h3::after {
@@ -4051,8 +4187,13 @@ textarea:-ms-input-placeholder {
     font-weight: bold;
     margin-left: 22rem;
 }
-
+.button_lg {
+    padding: 1rem;
+}
 @media (max-width: 792px) {
+    .button_lg {
+        padding: 1.4rem;
+    }
     .error_page_edgard404_line {
         text-align: center;
         margin-left: 10rem;
@@ -4725,6 +4866,17 @@ footer_menu{
 .bottom_cookie_desktop_hide{
     height: 50px;
 }
+.accordion-collapse {
+    border: solid rgba(0, 0, 0, 0.125);
+    border-width: 0 1px 1px 1px;
+}
+.accordion-button.collapsed{
+    border-bottom-width: 1px;
+}
+.accordion-header{
+    background-color: #e7f1ff;
+}
+
 .block_cart_other{
     padding: 2rem 0;
     background-color: #e8e8e8;

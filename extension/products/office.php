@@ -20,16 +20,19 @@ $user = new \project\user();
 
 //$categorys = $categoryArray = $c_category->getCategoryArray('product_category', '');
 $categoryArray = $c_category->getCategoryUserArray();
-
 if ($user->isClient() || $user->isEditor()) {
     // для клиентов
 
     if (isset($_GET['wares_id'])) {
-        $series = $pr_wares->getWaresVideoSeries($_GET['wares_id']);
         $wares_info = $pr_wares->getWaresElem($_GET['wares_id']);
         $wares = $pr_wares->getClientProducts($_GET['wares_id']);
+        if(!isset($wares['id'])){
+            location_href('/nofound/');
+        }
         //$video_materials = $pr_wares->listClientMaterials($wares['id']);
-        $video_materials = $pr_wares->listClientWebinarsMaterials($wares['id']);
+        //$video_materials = $pr_wares->listClientWebinarsMaterials($wares['id']);
+        $series = $pr_wares->getWaresVideoSeries($_GET['wares_id']);
+        $materials = $pr_wares->list_materials($wares['id']);
 
         $wares_img = '';
         if (is_file($_SERVER['DOCUMENT_ROOT'] . $wares['images'])) {

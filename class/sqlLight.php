@@ -23,7 +23,7 @@ class sqlLight {
     private $htmlspecialchars_true = 1;
     /* @var $mysqli new mysqli */
     private $mysqli;
-    private $MYSQLI_TYPE = MYSQLI_BOTH; // MYSQLI_ASSOC
+    private $MYSQLI_TYPE = MYSQLI_ASSOC; // MYSQLI_BOTH MYSQLI_ASSOC
 
     public function __construct() {
         $this->conect();
@@ -32,10 +32,10 @@ class sqlLight {
     public function conect() {
 
         global $lang;
-        global $cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name;
+        global $cfg_db_prefix, $cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name;
         //include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
         $this->db_prefix = $cfg_db_prefix;
-
+        //echo 'db_prefix: ' . $this->db_prefix . ' cfg_db_prefix: ' . $cfg_db_prefix . ' ';
         $this->mysqli = new \mysqli($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
 
         /* проверка соединения */
@@ -154,48 +154,54 @@ class sqlLight {
         // Защитим от инъекций
 
         if (count($values) > 0) {
-            foreach ($values as $value) {
-                $value = $this->mysqli->real_escape_string($value);
-                $query = $this->str_replace_once('?', $value, $query);
+            foreach ($values as $v) {
+                $v = $this->mysqli->real_escape_string($v);
+                $query = $this->str_replace_once('?', $v, $query);
             }
         }
 
         if ($see != 0) {
-            echo 'query: ' . $query . "<br/>\n";
+        echo "query: {$query} <br/>\n";
         } else {
             //$_SESSION['errors'][] = $query;
         }
         /* Select запросы возвращают результирующий набор */
-        if ($result = $this->mysqli->query($query)) {
-            $this->count = $result->num_rows;
-            while ($row = $result->fetch_array($this->MYSQLI_TYPE)) {
-                $bufferRow = array();
-                $i++;
-                foreach ($row as $key => $value) {
-                    if ($this->htmlspecialchars_true == 1) {
-                        $bufferRow[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
-                    } else {
-                        $bufferRow[$key] = $value;
+        try {
+            if ($result = $this->mysqli->query($query)) {
+                $this->count = $result->num_rows;
+                while ($row = $result->fetch_array($this->MYSQLI_TYPE)) {
+                    $bufferRow = array();
+                    $i++;
+                    foreach ($row as $key => $value) {
+                        if ($this->htmlspecialchars_true == 1) {
+                            $bufferRow[$key] = htmlspecialchars_decode($value, ENT_QUOTES);
+                        } else {
+                            $bufferRow[$key] = $value;
+                        }
                     }
+                    $buffer[] = $bufferRow;
                 }
-                $buffer[] = $bufferRow;
-            }
-        } else {
-            if ($_SESSION['DEBUG'] == 1) {
-                echo "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                $result->free();
             } else {
-                echo $lang['sql_query_commit_false'];
+                if ($_SESSION['DEBUG'] == 1) {
+                    //echo "{$this->mysqli->errno} {$this->mysqli->error}\n";
+                    $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}\n query: {$query} <br/>\n";
+                } else {
+                    echo $lang['sql_query_commit_false'];
+                }
             }
+        } catch (Exception $exc) {
+            $_SESSION['errors'][] = $exc->getTraceAsString();
         }
 
-        $result->free();
         $this->setCount($i);
         return $buffer;
     }
-    
+
     public function queryNextId($table_name) {
-        $query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'zay_pay'";
-        return $this->queryList($query, array($table_name))[0]['AUTO_INCREMENT'];
+        global $cfg_db_name;
+        $query = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE TABLE_SCHEMA='?' AND table_name = '?'";
+        return $this->queryList($query, array($cfg_db_name, $table_name))[0]['AUTO_INCREMENT'];
     }
 
     /**
@@ -215,7 +221,7 @@ class sqlLight {
     public function setSpecialcharsHtml($str) {
         return htmlspecialchars($str, ENT_QUOTES);
     }
-    
+
     // MYSQLI_ASSOC вернуть без нумераций
     public function setMysqliAssos() {
         $this->MYSQLI_TYPE = MYSQLI_ASSOC;

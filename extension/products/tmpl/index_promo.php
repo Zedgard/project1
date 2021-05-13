@@ -140,14 +140,14 @@
                                                 </div>
                                     <? endif; ?>
                                     --> 
-                                    <div class="float-right btn_product_list">
+                                    <div class="float-end btn_product_list">
                                         <input type="hidden" name="product_title" class="info_product_title" value="<?= $productsFilterArray[$i]['title'] ?>" />
                                         <input type="hidden" name="product_title" class="info_product_price" value="<?= $product_price ?>" />
                                         <input type="hidden" name="product_title" class="info_product_img" value="<?= $image ?>" />
                                         <a href="javascript:void(0)" class="btn btngreen cart_product_add" product_id="<?= $productsFilterArray[$i]['id'] ?>">В корзину</a>
                                         <div class="btn-group">
-                                            <a href="/shop/cart/" class="btn btngreen align-self-center cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;">В корзине</a>
-                                            <a href="javascript:void(0)" class="btn btn-danger cart_product_remove cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
+                                            <a href="/shop/cart/" class="btn btngreen-outline btngreen align-self-center cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;padding: 0.8rem;border-right: none;">В корзине</a>
+                                            <a href="javascript:void(0)" class="btn btn-danger cart_product_remove cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </div>
                                 </div>

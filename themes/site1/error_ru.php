@@ -20,7 +20,7 @@
               integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
               crossorigin="anonymous">
 
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
 
 
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
@@ -57,32 +57,6 @@
 
         <?= $_SESSION['message']['text'] ?>
 
-        <!--PreLoader-->
-        <!--
-               <div class="loader">
-                   <div class="loader-inner">
-                       <div class="loader-blocks">
-                           <span class="block-1"></span>
-                           <span class="block-2"></span>
-                           <span class="block-3"></span>
-                           <span class="block-4"></span>
-                           <span class="block-5"></span>
-                           <span class="block-6"></span>
-                           <span class="block-7"></span>
-                           <span class="block-8"></span>
-                           <span class="block-9"></span>
-                           <span class="block-10"></span>
-                           <span class="block-11"></span>
-                           <span class="block-12"></span>
-                           <span class="block-13"></span>
-                           <span class="block-14"></span>
-                           <span class="block-15"></span>
-                           <span class="block-16"></span>
-                       </div>
-                   </div>
-               </div>
-        -->
-        <!--PreLoader Ends-->
         <?
         include $_SERVER['DOCUMENT_ROOT'] . '/extension/topmenu/index.php';
         ?>
@@ -110,21 +84,9 @@
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
         <?
         include 'footer_' . $_SESSION['lang'] . '.php'
         ?>
-
-
-
 
         <!--Bootstrap Core-->
         <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
@@ -163,19 +125,6 @@
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
 
-        <!--Revolution SLider-->
-        <script src="/themes/site1/js/revolution/jquery.themepunch.tools.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/jquery.themepunch.revolution.min.js<?= $_SESSION['rand'] ?>"></script>
-        <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.actions.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.kenburn.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.layeranimation.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.migration.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.navigation.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.parallax.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.slideanims.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/revolution/extensions/revolution.extension.video.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
