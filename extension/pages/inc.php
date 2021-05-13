@@ -34,7 +34,7 @@ class pages extends \project\extension {
                 return $data;
             }
         }
-        return '';
+        return $data;
     }
 
     /**

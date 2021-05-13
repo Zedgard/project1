@@ -138,10 +138,10 @@ class page {
                 // Поиск замены заголовков
                 $title_data = $pages->title_get_url("/{$_SESSION['page_url']}/");
                 if (count($title_data) > 0) {
-                    $new_title = $title_data[0]['title_text'];
-                    $descr_text = $title_data[0]['descr_text'];
-                    $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $new_title;
-                    $_SESSION['site_seo_descr'] = $descr_text;
+                    if (strlen($title_data[0]['title_text']) > 0) {
+                        $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $title_data[0]['title_text'];
+                        $_SESSION['site_seo_descr'] = $title_data[0]['descr_text'];
+                    }
                 } else {
                     $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
                 }
@@ -153,14 +153,16 @@ class page {
             $_SESSION['page'] = array();
         }
 
-        // Если заголовок передали
-        $title_data = $pages->title_get_url($_SERVER['REQUEST_URI']);
-
-        if (count($title_data) > 0) {
-            $new_title = $title_data[0]['title_text'];
-            $descr_text = $title_data[0]['descr_text'];
-            $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $new_title;
-            $_SESSION['site_seo_descr'] = $descr_text;
+        // SEO Уникальные заголовки 
+        if ($_SERVER['REQUEST_URI'] != "/{$_SESSION['page_url']}/") {
+            $title_data = array();
+            $title_data = $pages->title_get_url($_SERVER['REQUEST_URI']);
+            if (count($title_data) > 0) {
+                if (strlen($title_data[0]['title_text']) > 0) {
+                    $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $title_data[0]['title_text'];
+                    $_SESSION['site_seo_descr'] = $title_data[0]['descr_text'];
+                }
+            }
         }
 
         return $page;
