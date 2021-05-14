@@ -10,11 +10,14 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+include_once 'inc.php';
 
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
 $products = new \project\products();
 $u = new \project\user();
+
+$sign_up_consultation = new \project\sign_up_consultation();
 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
 $url_ref = "{$url_ref}/pay.php?pay_payment_true=1";
@@ -40,5 +43,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
 if (strlen($u->isClientEmail()) > 0) {
     $email = $u->isClientEmail();
 }
+
+$consultation_masters = $sign_up_consultation->get_consultation_master();
 
 include_once 'tmpl/index.php';
