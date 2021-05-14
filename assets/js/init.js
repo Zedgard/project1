@@ -274,34 +274,35 @@ function init_price_val() {
 
 var cart_itms = [];
 function initCartArray() {
-    /* Данные по корзины */
-    sendPostLigth('/jpost.php?extension=cart', {"cart_product_get_array": 1}, function (e) {
-        var o = $(".mini-products-list");
-        var total_titles = '';
-        var total = 0;
+    if ($(".mini-products-list").length > 0) {
+        /* Данные по корзины */
+        sendPostLigth('/jpost.php?extension=cart', {"cart_product_get_array": 1}, function (e) {
+            var o = $(".mini-products-list");
+            var total_titles = '';
+            var total = 0;
 
-        /* Отображение в мини корзине */
-        if (!!$(".cart-info")) {
-            o.html("");
-            if (!!e['data']) {
-                for (var i = 0; i < e['data'].length; i++) {
-                    var price = e['data'][i]['price'];
-                    if (e['data'][i]['price_promo'] > 0) {
-                        price = Number(e['data'][i]['price_promo']);
+            /* Отображение в мини корзине */
+            if (!!$(".cart-info")) {
+                o.html("");
+                if (!!e['data']) {
+                    for (var i = 0; i < e['data'].length; i++) {
+                        var price = e['data'][i]['price'];
+                        if (e['data'][i]['price_promo'] > 0) {
+                            price = Number(e['data'][i]['price_promo']);
 
-                    }
+                        }
 
 
 
-                    var imgFirst = '/themes/site1/images/gallery-box1.jpg';
-                    //console.log("g: " + e['data'][i]['images_str']);
+                        var imgFirst = '/themes/site1/images/gallery-box1.jpg';
+                        //console.log("g: " + e['data'][i]['images_str']);
 
-                    if (typeof e['data'][i]['images_str'] != 'undefined' && e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
-                        imgFirst = e['data'][i]['images_str'];//e['data'][i]['products_wares_info'][0]['images'];
-                    }
+                        if (typeof e['data'][i]['images_str'] != 'undefined' && e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
+                            imgFirst = e['data'][i]['images_str'];//e['data'][i]['products_wares_info'][0]['images'];
+                        }
 
-                    total += Number(price);
-                    o.append('<li class="item">\n\
+                        total += Number(price);
+                        o.append('<li class="item">\n\
                     <a href="/shop/?product=' + e['data'][i]['id'] + '" title="' + e['data'][i]['title'] + '" class="product-image"><img src="' + imgFirst + '"></a>\n\
                     <div class="product-details">\n\
                     <p class="product-name">\n\
@@ -314,141 +315,142 @@ function initCartArray() {
                     </a>\n\
                     </div>\n\
                     </li>');
-                    //console.log('itm: ' +  e['data'][i]['id']);
-                    total_titles += '"' + e['data'][i]['title'] + '" ';
-                    $('.cart_product_add[product_id="' + e['data'][i]['id'] + '"]').hide();
-                    $('.cart_product_go_card[product_id="' + e['data'][i]['id'] + '"]').show();
-                    $(".cart-info").find(".cart-qty").html(e['data']['count']);
-                }
-                $(".price-total").find(".price").html(total);
-                //$(".total_titles").val(total_titles);
-                $(".cart-info").find(".cart-qty").html(e['data'].length);
-                if (e['data'].length > 0) {
-                    $(".cart-info").show();
-                } else {
-                    $(".cart-info").hide();
-                }
-                //$(".cart_total_val").val(total);
-            }
-        }
-
-
-        if (!!$(".cart_list")) {
-            cart_itms = [];
-            var total = 0;
-            var price_promo_total = 0;
-            $(".cart_list").html("");
-            if (!!e['data']) {
-                window.dataLayer = window.dataLayer || [];
-                for (var i = 0; i < e['data'].length; i++) {
-                    cart_itms.push(e['data'][i]);
-                    var isPromo = 0;
-                    var price_promo = 0;
-                    var price = e['data'][i]['price'];
-                    if (e['data'][i]['price_promo'] > 0) {
-                        isPromo = 1;
-                        price_promo = Number(e['data'][i]['price_promo']);
-                        price_promo_total += price - price_promo;
+                        //console.log('itm: ' +  e['data'][i]['id']);
+                        total_titles += '"' + e['data'][i]['title'] + '" ';
+                        $('.cart_product_add[product_id="' + e['data'][i]['id'] + '"]').hide();
+                        $('.cart_product_go_card[product_id="' + e['data'][i]['id'] + '"]').show();
+                        $(".cart-info").find(".cart-qty").html(e['data']['count']);
                     }
-                    var imgFirst = '/themes/site1/images/gallery-box1.jpg';
-                    if (typeof e['data'][i]['images_str'] != 'undefined' && e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
-                        imgFirst = e['data'][i]['images_str'];//e['data'][i]['products_wares_info'][0]['images'];
-                    }
-
-                    var products_category_list = e['data'][i]['products_category_list'];
-                    // ' + products_category_list.toString() + '
-
-                    var html = '<div class="row">';
-                    html += '<div class="col-3">';
-
-                    html += '<a href="' + imgFirst + '" class="fancybox d-none d-lg-block"><img src="' + imgFirst + '" class="cart_product_list_img"/></a>';
-                    html += '<a href="' + imgFirst + '" class="fancybox d-lg-none"><img src="' + imgFirst + '" class="w-100"/></a>';
-                    html += '</div>';
-                    html += '<div class="col-6">';
-                    html += '<div class="row">';
-                    html += '<div class="col-12 font-weight-bold"></div>';
-                    html += '</div>';
-                    html += '<div class="row">';
-                    html += '<div class="col-12 cart_product_list_title">' + e['data'][i]['title'] + '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '<div class="col-3 text-right font-weight-bold" style="font-size: 1.4rem;">';
-
-                    var product_price = 0;
-                    if (isPromo > 0) {
-                        total += Number(price_promo);
-                        product_price = price_promo;
-                        html += '<div><span class="init_price_val" style="color:#FF0000;">' + price_promo + '</span> <i class="fa fa-ruble" style="color:#FF0000;"></i></div>';
-                        html += '<div><span class="init_price_val wares_old_price_cart">' + price + '</span> <i class="fa fa-ruble" style="color: #808080;"></i></div>';
+                    $(".price-total").find(".price").html(total);
+                    //$(".total_titles").val(total_titles);
+                    $(".cart-info").find(".cart-qty").html(e['data'].length);
+                    if (e['data'].length > 0) {
+                        $(".cart-info").show();
                     } else {
-                        total += Number(price);
-                        product_price = price;
-                        html += '<div><span class="init_price_val">' + price + '</span> <i class="fa fa-ruble"></i></div>';
+                        $(".cart-info").hide();
                     }
-
-
-                    html += '</div>';
-                    html += '</div>';
-                    html += '<div class="cart_product_remove btn_cart_product_remove_display_none" product_id="' + e['data'][i]['id'] + '" title="Удалить из корзины" style="font-size: 1rem;text-align: right;z-index: 9;position: relative;">Удалить</div>';
-
-                    html += '<hr/>';
-                    // <span class="fas fa-times"></span>
-
-                    $(".price_promo_total").html((price_promo_total * -1));
-
-                    $(".cart_list").append(html);
-
-                    // Оформление заказа.
-                    if (window.location.pathname == "/shop/cart/") { // зафиксируем только на странице корзины
-                        dataLayer.push({
-                            'ecommerce': {
-                                'currencyCode': 'UAH',
-                                'coupon': 'Номер купона',
-                                'checkout': {
-                                    'actionField': {'step': 1},
-                                    'products': [{
-                                            "name": e['data'][i]['title'],
-                                            "price": product_price,
-                                            "quantity": 1,
-                                        },
-                                        {
-                                            "name": e['data'][i]['title'],
-                                            "price": product_price,
-                                            "quantity": 1
-                                        }]
-                                }
-                            },
-                            'event': 'gtm-ee-event',
-                            'gtm-ee-event-category': 'Enhanced Ecommerce',
-                            'gtm-ee-event-action': 'Checkout Step 1',
-                            'gtm-ee-event-non-interaction': 'False',
-                        });
-                    }
+                    //$(".cart_total_val").val(total);
                 }
-                if (price_promo_total > 0) {
-                    $(".cart_product_promo_block").show();
-                } else {
-                    $(".cart_product_promo_block").hide();
-                }
-                $(".total_cart").html(total);
-                $(".cart_total").html(total);
-                if (e['data'].length > 0) {
-                    $(".cart-info").show();
-                } else {
-                    $(".cart-info").hide();
-                }
-                // cart_list
-                //move(".cart_list", 300);
-
-                ;
             }
-        }
-        if (typeof $(".fancybox")[0] != 'undefined') {
-            $(".fancybox").fancybox();
-        }
-        initCartProductRemove();
-        init_price_val();
-    });
+
+
+            if (!!$(".cart_list")) {
+                cart_itms = [];
+                var total = 0;
+                var price_promo_total = 0;
+                $(".cart_list").html("");
+                if (!!e['data']) {
+                    window.dataLayer = window.dataLayer || [];
+                    for (var i = 0; i < e['data'].length; i++) {
+                        cart_itms.push(e['data'][i]);
+                        var isPromo = 0;
+                        var price_promo = 0;
+                        var price = e['data'][i]['price'];
+                        if (e['data'][i]['price_promo'] > 0) {
+                            isPromo = 1;
+                            price_promo = Number(e['data'][i]['price_promo']);
+                            price_promo_total += price - price_promo;
+                        }
+                        var imgFirst = '/themes/site1/images/gallery-box1.jpg';
+                        if (typeof e['data'][i]['images_str'] != 'undefined' && e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
+                            imgFirst = e['data'][i]['images_str'];//e['data'][i]['products_wares_info'][0]['images'];
+                        }
+
+                        var products_category_list = e['data'][i]['products_category_list'];
+                        // ' + products_category_list.toString() + '
+
+                        var html = '<div class="row">';
+                        html += '<div class="col-3">';
+
+                        html += '<a href="' + imgFirst + '" class="fancybox d-none d-lg-block"><img src="' + imgFirst + '" class="cart_product_list_img"/></a>';
+                        html += '<a href="' + imgFirst + '" class="fancybox d-lg-none"><img src="' + imgFirst + '" class="w-100"/></a>';
+                        html += '</div>';
+                        html += '<div class="col-6">';
+                        html += '<div class="row">';
+                        html += '<div class="col-12 font-weight-bold"></div>';
+                        html += '</div>';
+                        html += '<div class="row">';
+                        html += '<div class="col-12 cart_product_list_title">' + e['data'][i]['title'] + '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="col-3 text-right font-weight-bold" style="font-size: 1.4rem;">';
+
+                        var product_price = 0;
+                        if (isPromo > 0) {
+                            total += Number(price_promo);
+                            product_price = price_promo;
+                            html += '<div><span class="init_price_val" style="color:#FF0000;">' + price_promo + '</span> <i class="fa fa-ruble" style="color:#FF0000;"></i></div>';
+                            html += '<div><span class="init_price_val wares_old_price_cart">' + price + '</span> <i class="fa fa-ruble" style="color: #808080;"></i></div>';
+                        } else {
+                            total += Number(price);
+                            product_price = price;
+                            html += '<div><span class="init_price_val">' + price + '</span> <i class="fa fa-ruble"></i></div>';
+                        }
+
+
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="cart_product_remove btn_cart_product_remove_display_none" product_id="' + e['data'][i]['id'] + '" title="Удалить из корзины" style="font-size: 1rem;text-align: right;z-index: 9;position: relative;">Удалить</div>';
+
+                        html += '<hr/>';
+                        // <span class="fas fa-times"></span>
+
+                        $(".price_promo_total").html((price_promo_total * -1));
+
+                        $(".cart_list").append(html);
+
+                        // Оформление заказа.
+                        if (window.location.pathname == "/shop/cart/") { // зафиксируем только на странице корзины
+                            dataLayer.push({
+                                'ecommerce': {
+                                    'currencyCode': 'UAH',
+                                    'coupon': 'Номер купона',
+                                    'checkout': {
+                                        'actionField': {'step': 1},
+                                        'products': [{
+                                                "name": e['data'][i]['title'],
+                                                "price": product_price,
+                                                "quantity": 1,
+                                            },
+                                            {
+                                                "name": e['data'][i]['title'],
+                                                "price": product_price,
+                                                "quantity": 1
+                                            }]
+                                    }
+                                },
+                                'event': 'gtm-ee-event',
+                                'gtm-ee-event-category': 'Enhanced Ecommerce',
+                                'gtm-ee-event-action': 'Checkout Step 1',
+                                'gtm-ee-event-non-interaction': 'False',
+                            });
+                        }
+                    }
+                    if (price_promo_total > 0) {
+                        $(".cart_product_promo_block").show();
+                    } else {
+                        $(".cart_product_promo_block").hide();
+                    }
+                    $(".total_cart").html(total);
+                    $(".cart_total").html(total);
+                    if (e['data'].length > 0) {
+                        $(".cart-info").show();
+                    } else {
+                        $(".cart-info").hide();
+                    }
+                    // cart_list
+                    //move(".cart_list", 300);
+
+                    ;
+                }
+            }
+            if (typeof $(".fancybox")[0] != 'undefined') {
+                $(".fancybox").fancybox();
+            }
+            initCartProductRemove();
+            init_price_val();
+        });
+    }
 }
 //if (typeof promos === 'undefined') {
 //    var promos = [];
@@ -458,52 +460,58 @@ function initCartArray() {
  * @returns {undefined}
  */
 function init_promo_input() {
-    $(".btn_input_promo_code").unbind('click').click(function () {
-        var v = $(".input_promo_code").val();
-        get_promos(v);
+    if ($(".input_promo_code").length > 0) {
+        $(".btn_input_promo_code").unbind('click').click(function () {
+            var v = $(".input_promo_code").val();
+            get_promos(v);
 
-    });
-    get_promos('0');
+        });
+        get_promos('0');
+    }
 }
 
 function get_promos(code) {
-    $(".errors_promo_code .html_text").html(ajax_load);
-    sendPostLigth('/jpost.php?extension=promo', {"getCodePromos": code}, function (e) {
-        $(".list_promos div").remove();
-        if (e['success'] == '1') {
-            //console.log(e['data']);
-            if (e['data'].length > 0) {
-                $(".list_promos").append('<div class="mb-3" style="font-size:1.5rem;">Список купонов:</div>');
-                //console.log(e['data'].length);
-                for (var i = 0; i < e['data'].length; i++) {
-                    var price = e['data'][i]['amount'] + 'р.';
-                    if (e['data'][i]['percent'] > 0) {
-                        price = e['data'][i]['percent'] + '%';
-                    }
-                    $(".list_promos").append('<div class="item_promo">\n\
+    if ($(".input_promo_code").length > 0) {
+        $(".errors_promo_code .html_text").html(ajax_load);
+        sendPostLigth('/jpost.php?extension=promo', {"getCodePromos": code}, function (e) {
+            $(".list_promos div").remove();
+            if (e['success'] == '1') {
+                //console.log(e['data']);
+                if (e['data'].length > 0) {
+                    $(".list_promos").append('<div class="mb-3" style="font-size:1.5rem;">Список купонов:</div>');
+                    //console.log(e['data'].length);
+                    for (var i = 0; i < e['data'].length; i++) {
+                        var price = e['data'][i]['amount'] + 'р.';
+                        if (e['data'][i]['percent'] > 0) {
+                            price = e['data'][i]['percent'] + '%';
+                        }
+                        $(".list_promos").append('<div class="item_promo">\n\
                             <span class="list_promo_title">' + e['data'][i]['title'] + '</span> \n\
                             <span class="list_promo_code ml-3">' + e['data'][i]['code'] + '</span> \n\
                             <span class="list_promo_delete ml-3" promo_delete_code="' + e['data'][i]['code'] + '"><i class="fas fa-times"></i></span>\n\
                             <span class="list_promo_price ml-3">' + price + '</span>\n\
                     </div>');
+                    }
                 }
+            } else {
+                var errors_html = e['errors'].toString();
+                $(".errors_promo_code .html_text").html(errors_html);
             }
-        } else {
-            var errors_html = e['errors'].toString();
-            $(".errors_promo_code .html_text").html(errors_html);
-        }
-        initCartArray();
-        init_delete_promo();
-    });
+            initCartArray();
+            init_delete_promo();
+        });
+    }
 }
 
 function init_delete_promo() {
-    $(".list_promo_delete").unbind('click').click(function () {
-        var v = $(this).attr("promo_delete_code");
-        sendPostLigth('/jpost.php?extension=promo', {"deleteCodePromo": v}, function (e) {
-            get_promos('0');
+    if ($(".list_promo_delete").length > 0) {
+        $(".list_promo_delete").unbind('click').click(function () {
+            var v = $(this).attr("promo_delete_code");
+            sendPostLigth('/jpost.php?extension=promo', {"deleteCodePromo": v}, function (e) {
+                get_promos('0');
+            });
         });
-    });
+    }
 }
 
 //function get_promo_price(product_id, price) {
@@ -541,7 +549,7 @@ function init_logout() {
  */
 function init_not_processed_col() {
     //alert("not_processed_col");
-    if (!!$(".not_processed_col")) {
+    if ($(".not_processed_col").length > 0) {
         sendPostLigth('/jpost.php?extension=cart', {"not_processed_col": 1}, function (e) {
             //$(".cart-info").find(".cart-qty").html(e['data']['count']);
             $(".not_processed_col").html("");
@@ -557,7 +565,7 @@ function init_not_processed_col() {
  * @returns {undefined}
  */
 function init_get_emails_col() {
-    if (!!$(".get_emails_col")) {
+    if ($(".get_emails_col").length > 0) {
         sendPostLigth('/jpost.php?extension=get_emails', {"get_emails_col": 1}, function (e) {
             $(".get_emails_col").html("");
             if (Number(e['get_emails_col']) > 0) {
@@ -580,63 +588,63 @@ function initCartCount() {
 
 /* Добавление в корзину */
 function initCartProductAdd() {
-    $(".cart_product_add").unbind('click').click(function () {
-        var cart_product_id = $(this).attr('product_id');
-        var go_url = '';
-        if (!!$(this).attr('go_url')) {
-            go_url = $(this).attr('go_url');
-        }
-        // Информаия по товару
-        var cart_product_title = $(this).closest(".btn_product_list").find(".info_product_title").val();
-        var cart_product_img = $(this).closest(".btn_product_list").find(".info_product_img").val();
-
-        var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");
-        var product_info_title = $.trim(o.find(".product_info_title").html());
-        var product_info_price = $.trim(o.find(".product_info_price").html());
-        //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
-        window.dataLayer = window.dataLayer || [];
-        dataLayer.push({
-            "ecommerce": {
-                "currencyCode": "RUB",
-                "add": {
-                    "products": [{
-                            "name": product_info_title, // Например, https://prnt.sc/un3f6x 
-                            "price": product_info_price, // Например, https://prnt.sc/un3hf7 
-                            "quantity": 1
-                        }, {
-                            "name": product_info_title, // Например, https://prnt.sc/un3f6x 
-                            "price": product_info_price, // Например, https://prnt.sc/un3hf7 
-                            "quantity": 1,
-                        }]
-                }
-            },
-            'event': 'gtm-ee-event',
-            'gtm-ee-event-category': 'Enhanced Ecommerce',
-            'gtm-ee-event-action': 'Product Add Cart',
-            'gtm-ee-event-non-interaction': 'False',
-        });
-
-        sendPostLigth('/jpost.php?extension=cart', {"cart_product_add": 1, "cart_product_id": cart_product_id}, function (e) {
-            if (e['success'] == 1) {
-                open_cart_modal(cart_product_title, cart_product_img);
-                initCartArray();
-                if (go_url.length > 0) {
-                    window.location.href = go_url;
-                }
-            } else {
-                alert(e['errors'].toString());
+    if ($(".cart_product_add").length > 0) {
+        $(".cart_product_add").unbind('click').click(function () {
+            var cart_product_id = $(this).attr('product_id');
+            var go_url = '';
+            if (!!$(this).attr('go_url')) {
+                go_url = $(this).attr('go_url');
             }
+            // Информаия по товару
+            var cart_product_title = $(this).closest(".btn_product_list").find(".info_product_title").val();
+            var cart_product_img = $(this).closest(".btn_product_list").find(".info_product_img").val();
 
+            var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");
+            var product_info_title = $.trim(o.find(".product_info_title").html());
+            var product_info_price = $.trim(o.find(".product_info_price").html());
+            //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                "ecommerce": {
+                    "currencyCode": "RUB",
+                    "add": {
+                        "products": [{
+                                "name": product_info_title, // Например, https://prnt.sc/un3f6x 
+                                "price": product_info_price, // Например, https://prnt.sc/un3hf7 
+                                "quantity": 1
+                            }, {
+                                "name": product_info_title, // Например, https://prnt.sc/un3f6x 
+                                "price": product_info_price, // Например, https://prnt.sc/un3hf7 
+                                "quantity": 1,
+                            }]
+                    }
+                },
+                'event': 'gtm-ee-event',
+                'gtm-ee-event-category': 'Enhanced Ecommerce',
+                'gtm-ee-event-action': 'Product Add Cart',
+                'gtm-ee-event-non-interaction': 'False',
+            });
+
+            sendPostLigth('/jpost.php?extension=cart', {"cart_product_add": 1, "cart_product_id": cart_product_id}, function (e) {
+                if (e['success'] == 1) {
+                    open_cart_modal(cart_product_title, cart_product_img);
+                    initCartArray();
+                    if (go_url.length > 0) {
+                        window.location.href = go_url;
+                    }
+                } else {
+                    alert(e['errors'].toString());
+                }
+
+            });
         });
-    });
+    }
 }
 
 /* 
  * Модальное окно
  */
 function open_cart_modal(title, img) {
-    console.log('title: ' + title);
-    console.log('img: ' + img);
     if (typeof title == "undefined" || typeof img == "undefined") {
         console.log('Not data open_cart_modal');
         return 1;
@@ -659,49 +667,51 @@ function open_cart_modal(title, img) {
 
 /* Удаление с корзины */
 function initCartProductRemove() {
-    $(".cart_product_remove").unbind('click').click(function () {
-        var btn_o = this;
-        var cart_product_id = $(this).attr('product_id');
+    if ($(".cart_product_remove").length > 0) {
+        $(".cart_product_remove").unbind('click').click(function () {
+            var btn_o = this;
+            var cart_product_id = $(this).attr('product_id');
 
-        var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");
-        var product_info_title = $.trim(o.find(".product_info_title").html());
-        var product_info_price = $.trim(o.find(".product_info_price").html());
-        //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
-        window.dataLayer = window.dataLayer || [];
-        dataLayer.push({
-            "ecommerce": {
-                "currencyCode": "RUB",
-                "remove": {
-                    "products": [{
-                            "name": product_info_title,
-                            "price": product_info_price,
-                            "quantity": 1
-                        },
-                        {
-                            "name": product_info_title,
-                            "price": product_info_price,
-                            "quantity": 1
-                        }]
-                }
-            },
-            'event': 'gtm-ee-event',
-            'gtm-ee-event-category': "Enhanced Ecommerce",
-            'gtm-ee-event-action': "Product Remove Cart",
-            'gtm-ee-event-non-interaction': "False",
-        });
+            var o = $('.cart_product_add[product_id="' + cart_product_id + '"]').closest(".product_info");
+            var product_info_title = $.trim(o.find(".product_info_title").html());
+            var product_info_price = $.trim(o.find(".product_info_price").html());
+            //console.log("product_info_title: " + product_info_title + ' - ' + product_info_price);
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                "ecommerce": {
+                    "currencyCode": "RUB",
+                    "remove": {
+                        "products": [{
+                                "name": product_info_title,
+                                "price": product_info_price,
+                                "quantity": 1
+                            },
+                            {
+                                "name": product_info_title,
+                                "price": product_info_price,
+                                "quantity": 1
+                            }]
+                    }
+                },
+                'event': 'gtm-ee-event',
+                'gtm-ee-event-category': "Enhanced Ecommerce",
+                'gtm-ee-event-action': "Product Remove Cart",
+                'gtm-ee-event-non-interaction': "False",
+            });
 
-        sendPostLigth('/jpost.php?extension=cart', {"cart_product_remove": 1, "cart_product_id": cart_product_id}, function (e) {
-            //initCartCount();
-            initCartArray();
-            $('.cart_product_add[product_id="' + cart_product_id + '"]').show();
-            $('.cart_product_go_card[product_id="' + cart_product_id + '"]').hide();
+            sendPostLigth('/jpost.php?extension=cart', {"cart_product_remove": 1, "cart_product_id": cart_product_id}, function (e) {
+                //initCartCount();
+                initCartArray();
+                $('.cart_product_add[product_id="' + cart_product_id + '"]').show();
+                $('.cart_product_go_card[product_id="' + cart_product_id + '"]').hide();
+            });
         });
-    });
+    }
 }
 
 
 function init_office_list_categorys_col() {
-    if (typeof $(".office_list_categorys")[0] !== "undefined") {
+    if ($(".office_list_categorys").length > 0) {
         sendPostLigth('/jpost.php?extension=wares', {
             "init_office_list_categorys_col": 1
         }, function (e) {
@@ -756,7 +766,7 @@ function init_datepicker(numberOfMonths) {
 }
 
 function init_bottom_cookie_btn() {
-    if (typeof $(".bottom_cookie_btn")[0] !== "undefined") {
+    if ($(".bottom_cookie_btn").length > 0) {
         $(".bottom_cookie_btn").unbind('click').click(function () {
             sendPostLigth('/jpost.php', {
                 "bottom_cookie_btn": 1
@@ -818,40 +828,42 @@ function deleteCookie(name) {
  * @returns {undefined}
  */
 function init_real_time() {
+    if ($(".real_time").length > 0) {
 
-    function time_format_str(val) {
-        var text = String((val.toString().length === 2) ? val : '0' + val.toString());
-        return text;
-    }
+        function time_format_str(val) {
+            var text = String((val.toString().length === 2) ? val : '0' + val.toString());
+            return text;
+        }
 
-    function server_time() {
-        sendPostLigth('/jpost.php?extension=auth', {"get_real_time": 1}, function (e) {
-            if (e['data'].length > 0) {
-                var date = new Date(e['data']);
-                var seconds = date.getSeconds();
+        function server_time() {
+            sendPostLigth('/jpost.php?extension=auth', {"get_real_time": 1}, function (e) {
+                if (e['data'].length > 0) {
+                    var date = new Date(e['data']);
+                    var seconds = date.getSeconds();
 
-                var hours_str = (date.getHours().toString().length === 2) ? date.getHours() : '0' + date.getHours().toString();
-                var minutes_str = (date.getMinutes().toString().length === 2) ? date.getMinutes() : '0' + date.getMinutes().toString();
-                var seconds_str = (date.getSeconds().toString().length === 2) ? date.getSeconds() : '0' + date.getSeconds().toString();
-                $(".real_time").html((hours_str + ":" + minutes_str + ":" + seconds_str));
-                setInterval(function () {
-                    seconds++;
-                    date.setSeconds(seconds);
-                    var hours_str = time_format_str(date.getHours());
-                    var minutes_str = time_format_str(date.getMinutes());
-                    var seconds_str = time_format_str(date.getSeconds());
+                    var hours_str = (date.getHours().toString().length === 2) ? date.getHours() : '0' + date.getHours().toString();
+                    var minutes_str = (date.getMinutes().toString().length === 2) ? date.getMinutes() : '0' + date.getMinutes().toString();
+                    var seconds_str = (date.getSeconds().toString().length === 2) ? date.getSeconds() : '0' + date.getSeconds().toString();
                     $(".real_time").html((hours_str + ":" + minutes_str + ":" + seconds_str));
-                    if (seconds === 60) {
-                        seconds = 0;
-                    }
-                }, 1000);
-            } else {
-                $(".real_time").html('---');
-            }
-        });
-    }
+                    setInterval(function () {
+                        seconds++;
+                        date.setSeconds(seconds);
+                        var hours_str = time_format_str(date.getHours());
+                        var minutes_str = time_format_str(date.getMinutes());
+                        var seconds_str = time_format_str(date.getSeconds());
+                        $(".real_time").html((hours_str + ":" + minutes_str + ":" + seconds_str));
+                        if (seconds === 60) {
+                            seconds = 0;
+                        }
+                    }, 1000);
+                } else {
+                    $(".real_time").html('---');
+                }
+            });
+        }
 //    var time = setInterval(function () {
 //        server_time();
 //    }, 60000);
-    server_time();
+        server_time();
+    }
 }
