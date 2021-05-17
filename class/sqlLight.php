@@ -161,7 +161,7 @@ class sqlLight {
         }
 
         if ($see != 0) {
-        echo "query: {$query} <br/>\n";
+            echo "query: {$query} <br/>\n";
         } else {
             //$_SESSION['errors'][] = $query;
         }

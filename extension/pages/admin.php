@@ -24,6 +24,7 @@ if ($user->isEditor()) {
             $extension_url_id = $_GET['edit_material'];
             $e = new \project\extension();
 
+            $e->init_extension();
             $content = $p->pageBlockContentsListArray($extension_url_id)[0];
             //print_r($content);
             $extensions = $e->getExtensionListArray(0);
@@ -55,7 +56,7 @@ if ($user->isEditor()) {
         include 'tmpl/bloks.php';
         include 'tmpl/block_edit.php';
     } elseif (isset($_GET['titles'])) {
-        if(isset($_GET['add_new_title'])){
+        if (isset($_GET['add_new_title'])) {
             $p_pages->title_insert();
             location_href('/admin/pages/?titles=1');
         }
@@ -63,8 +64,8 @@ if ($user->isEditor()) {
         include 'tmpl/titles.php';
     } else {
         $pages = $p->adminList(0);
-        
-        
+
+
         if (isset($_GET['edit'])) {
             if ($_GET['edit'] > 0) {
                 $obj = $p->adminList($_GET['edit'])[0];

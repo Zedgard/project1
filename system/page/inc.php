@@ -60,7 +60,7 @@ class page {
         //print_r($page);
         //echo "\n page: {$page['id']} \n";
         // Если существует страница
-        if (isset($page['id']) && $page['id'] > 0) {
+        if (count($page) > 0 && isset($page['id']) && $page['id'] > 0) {
             //$r = array();
             // Роли страницы
             $queryRole = "SELECT * FROM zay_pages_roles pr 
@@ -73,7 +73,8 @@ class page {
              */
             //print_r($roles);
             //exit();
-            $page_show = 0;
+            // Так как страница найдена то по умолчанию отправим на авторизацию
+            $page_show = 2;
             if (count($roles) > 0) {
                 // Зафиксируем роли страницы
                 foreach ($roles as $v) {
@@ -91,13 +92,14 @@ class page {
                         }
                     }
 
-                    // если зашел админ под учеткой пользователя он мет смотреть данные
+                    // если зашел админ под учеткой пользователя 
                     if ($page_show == 0 && $_SESSION['user']['other'] == 1) {
                         $page_show = 1;
-                    }
-                    foreach ($roles as $v) {
-                        if ($v['role_privilege'] == 0) {
-                            $page_show = 1;
+                    } else {
+                        foreach ($roles as $v) {
+                            if ($v['role_privilege'] == 0) {
+                                $page_show = 1;
+                            }
                         }
                     }
                 } else {
