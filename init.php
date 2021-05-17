@@ -86,5 +86,4 @@ if (!isset($_SESSION['system']['sidebar_toggler'])) {
     $_SESSION['system']['sidebar_toggler'] = 'false';
 }
 
-unset($_SESSION['extension_init']);
 

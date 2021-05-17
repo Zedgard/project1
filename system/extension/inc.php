@@ -25,57 +25,56 @@ class extension {
      */
     public function init() {
         //$this->delete_Extention_null();
-        if (!isset($_SESSION['extension_init']))
-            $_SESSION['extension_init'] = 0;
-        if ($_SESSION['extension_init'] == 0) {
-            $sqlLight= new \project\sqlLight();
-            //var_dump($sqlLight);
-            //echo 'init db_prefix: ' . $sqlLight->db_prefix . ' ';
-            $this->db_prefix = $sqlLight->db_prefix;
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+    }
 
-            // Получим список доступных расширений
-            $dirs = directoryListDirArray(DOCUMENT_ROOT . '/extension');
+    public function init_extension() {
+        $sqlLight = new \project\sqlLight();
+        //var_dump($sqlLight);
+        //echo 'init db_prefix: ' . $sqlLight->db_prefix . ' ';
+        $this->db_prefix = $sqlLight->db_prefix;
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
-            if (count($dirs) > 0) {
-                foreach ($dirs as $value) {
-                    $lang_file = '';
-                    // конфиг расширения
-                    $lang_file = $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/lang.php';
-                    if (is_file($lang_file)) {
-                        include $lang_file;
-                    }
-                    $conf = $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/conf.php';
-                    if (is_file($conf)) {
-                        include $conf;
-                    }
+        // Получим список доступных расширений
+        $dirs = directoryListDirArray(DOCUMENT_ROOT . '/extension');
 
-                    $querySelect = "SELECT e.id, e.extension_url, e.version FROM `zay_extension` e WHERE e.extension_url='?'";
-                    $e = $sqlLight->queryList($querySelect, array($value));
-                    if (count($e) > 0) {
-                        $this->setExtensionUrls($e[0]['id'], $config);
-                        // Добавим в список если его небыло
-                    } else {
-                        $queryInsert = "INSERT INTO `zay_extension`(`extension_url`, `version`) "
-                                . "VALUES ('?','?')";
-                        if ($sqlLight->query($queryInsert, array($value, $config['version']))) {
-                            $querySelect = "SELECT e.id, e.extension_url, e.version FROM `zay_extension` e WHERE e.extension_url='?'";
-                            $e = $sqlLight->queryList($querySelect, array($value));
-                            // Добавим ссылки для вставки 
-                            if (count($e) > 0) {
-                                $this->setExtensionUrls($e[0]['id'], $config);
-                            }
+        if (count($dirs) > 0) {
+            foreach ($dirs as $value) {
+                $lang_file = '';
+                // конфиг расширения
+                $lang_file = $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/lang.php';
+                if (is_file($lang_file)) {
+                    include $lang_file;
+                }
+                $conf_file = $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $value . '/conf.php';
+                if (is_file($conf_file)) {
+                    include $conf_file;
+                }
+
+                $querySelect = "SELECT e.id, e.extension_url, e.version FROM `zay_extension` e WHERE e.extension_url='?'";
+                $e = $sqlLight->queryList($querySelect, array($value));
+                if (count($e) > 0) {
+                    $this->setExtensionUrls($e[0]['id'], $config);
+                    // Добавим в список если его небыло
+                } else {
+                    $queryInsert = "INSERT INTO `zay_extension`(`extension_url`, `version`) "
+                            . "VALUES ('?','?')";
+                    $extension_id = $sqlLight->queryNextId('zay_extension');
+                    if ($sqlLight->query($queryInsert, array($value, $config['version']))) {
+                        //$querySelect = "SELECT e.id, e.extension_url, e.version FROM `zay_extension` e WHERE e.extension_url='?'";
+                        //$e = $sqlLight->queryList($querySelect, array($value));
+                        // Добавим ссылки для вставки 
+                        if ($extension_id > 0) {
+                            $this->setExtensionUrls($extension_id, $config);
                         }
                     }
+                }
 
-                    // обновим версию расширения
-                    if ($e[0]['version'] != $config['version']) {
-                        $queryUpdate = "UPDATE `zay_extension` SET `version`='?' WHERE e.extension_url='?'";
-                        $sqlLight->query($queryInsert, array($config['version'], $value));
-                    }
+                // обновим версию расширения
+                if ($e[0]['version'] != $config['version']) {
+                    $queryUpdate = "UPDATE `zay_extension` SET `version`='?' WHERE e.extension_url='?'";
+                    $sqlLight->query($queryInsert, array($config['version'], $value));
                 }
             }
-            $_SESSION['extension_init'] = 1;
         }
     }
 
