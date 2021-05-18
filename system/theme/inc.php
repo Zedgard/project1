@@ -104,7 +104,7 @@ class theme {
                     //$content = "page_id: {$page_id} | block_id: {$block_id} | material_id: {$value['material_id']} | ext_url: {$ext_url}<br/>\n";
                     $content = '';
                     if ($_SESSION['user']['info']['role_privilege'] > 7) {
-                        $content .= '<div class="btn btn-sm btn-link admin_edit_block" title="Редактировать материал"><a href="/admin/pages/?content=' . $page_id . '&block_id=' . $block_id . '&edit_material=' . $value['material_id'] . '" target="_blank"><i class="fas fa-file-signature"></i> ред.</a></div>';
+                        $content .= '<div class="btn btn-sm btn-link admin_edit_block" title="Редактировать материал"><a href="/admin/pages/?content=' . $page_id . '&block_id=' . $block_id . '&edit_material=' . $value['material_id'] . '" target="_blank"><i class="fas fa-file-signature"></i></a></div>';
                     }
                     $content .= $value['content_descr'];
                     //echo "page_id: {$page_id} | block_id: {$value['id']} | ext_url: {$ext_url}<br/>\n";
@@ -124,7 +124,7 @@ class theme {
                     }
                     $content = '';
                     if ($_SESSION['user']['info']['role_privilege'] > 7) {
-                        $content .= '<div class="btn btn-sm btn-link admin_edit_block" title="Редактировать материал"><a href="/admin/pages/?content=' . $page_id . '&block_id=' . $block_id . '&edit_material=' . $value['material_id'] . '" target="_blank"><i class="fas fa-file-signature"></i> ред.</a></div>';
+                        $content .= '<div class="btn btn-sm btn-link admin_edit_block" title="Редактировать материал"><a href="/admin/pages/?content=' . $page_id . '&block_id=' . $block_id . '&edit_material=' . $value['material_id'] . '" target="_blank"><i class="fas fa-file-signature"></i></a></div>';
                     }
                     $content .= implode("\n", $html_extension);
                 }

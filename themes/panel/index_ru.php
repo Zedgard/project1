@@ -308,12 +308,9 @@
                     </header>
 
 
-                    <div class="content-wrapper">
-                        <div class="content">						 
+                    <div class="content-wrapper">					 
 
                             <?= $_SESSION['page']['block_center'] ?>
-
-                        </div>
 
 
                         <div class="right-sidebar-2" style="display: none;">
