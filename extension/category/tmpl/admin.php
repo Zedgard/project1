@@ -71,7 +71,7 @@ include 'edit.php';
     });
 
     function init_categories_all() {
-        console.log('init_categories_all');
+        //console.log('init_categories_all');
         sendPostLigth('/jpost.php?extension=category',
                 {"getCategoryAllArray": 1},
                 function (e) {

@@ -168,7 +168,7 @@ $(document).ready(function () {
     w = $(window).width();
     var productMenuShowAction = 0;
     $('.product-menu-show, .product-menu-top-title').click(function () {
-        $(".product-menu-top-elements").width(w - 40);
+        //$(".product-menu-top-elements").width(w - 20);
         //alert('width' + w + ' ' +  $('.product-menu-block').css("right"));
 
         if (productMenuShowAction == 1)
@@ -183,7 +183,7 @@ $(document).ready(function () {
         {
             productMenuShowAction = 1;
             $('.product-menu-block').animate({"right": '0px'});
-
+ 
             $('.product-menu-show i').animate({"left": '20px'});
             $('.product-menu-show i').css("right", 'auto');
             //alert('r: ' + $('.product-menu-show i').css("right") + ' l: '+ $('.product-menu-show i').css("left"));

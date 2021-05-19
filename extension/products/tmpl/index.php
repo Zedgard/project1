@@ -19,7 +19,7 @@
     </div>
 
     <!-- мобильный вид -->
-    <div class="row mt-2 mb-1 bread d-block d-xl-none">
+    <div class="row mt-3 mb-1 bread d-block d-xl-none">
         <div class="col-12">
             <?= $page->bread_get() ?>
         </div>
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top: -1rem;">
         <?
         /*
          * Список продуктов
