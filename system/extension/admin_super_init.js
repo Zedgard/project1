@@ -1,10 +1,14 @@
 $(document).ready(function () {
+    super_init();
+});
+
+function super_init() {
     setInterval(function () {
         init_super_insert();
         init_super_elm_edit();
         init_super_delete();
     }, 1000);
-});
+}
 
 /**
  * Добавление новой записи
