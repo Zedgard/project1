@@ -27,9 +27,10 @@ class pages extends \project\extension {
      */
     public function title_get_url($url) {
         $data = array();
+        $url = str_replace('&', '&amp;', $url);
         if (strlen(trim($url)) > 0) {
             $querySelect = "SELECT * FROM `zay_pages_titles` WHERE `url`='?' ORDER by `url` ASC";
-            $data = $this->getSelectArray($querySelect, array($url));
+            $data = $this->getSelectArray($querySelect, array($url), 0);
             if (count($data) > 0) {
                 return $data;
             }

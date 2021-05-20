@@ -22,7 +22,7 @@ function init_utm() {
                                 <span class="btn btn-danger init_elm_delete" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm" func="init_utm()"><i class="mdi mdi-delete"></i></span>\n\
                             </td>\n\
                             </tr>\n\
-                            <tr class="utm_tags_list_' + e['data'][i]['id'] + '" style="display:none;">\n\
+                            <tr class="utm_tags_lists_block utm_tags_list_' + e['data'][i]['id'] + '" style="display:none;">\n\
                                 <td colspan="2">\n\
                                     <div class="table-responsive-lg">\n\
                                     <table class="table table-striped table-bordered w-100 utm_tag_values_list">\n\
@@ -79,6 +79,7 @@ function init_config_utm_values_btn() {
     if ($(".config_utm_values").length > 0) {
         setTimeout(function () {
             $(".config_utm_values").unbind('click').click(function () {
+                $(".utm_tags_lists_block").hide(200);
                 var elm_id = $(this).attr('elm_id');
 
                 $(".utm_tags_list_" + elm_id).toggle(200);

@@ -159,6 +159,7 @@ class page {
         if ($_SERVER['REQUEST_URI'] != "/{$_SESSION['page_url']}/") {
             $title_data = array();
             $title_data = $pages->title_get_url($_SERVER['REQUEST_URI']);
+            //print_r($title_data);
             if (count($title_data) > 0) {
                 if (strlen($title_data[0]['title_text']) > 0) {
                     $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $title_data[0]['title_text'];
