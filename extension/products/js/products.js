@@ -12,7 +12,7 @@ $.fn.isInViewport = function () {
 
 $(document).ready(function () {
 
-    
+
 
     setInterval(function () {
         //console.log('btn_category_controll_active');
@@ -51,7 +51,7 @@ $(document).ready(function () {
      * Актив\ация фильтра каталога
      * @type Element
      */
-    
+
 
     $(".btn_category_controll").click(function () {
         var elm = $(this).attr('elm');
@@ -61,7 +61,7 @@ $(document).ready(function () {
         $(".btn_category_controll").removeClass("btn_category_controll_active");
         $(this).addClass("btn_category_controll_active");
     });
-    
+
     $(".btn_category_controll_cart").click(function () {
         var elm = $(this).attr('elm');
         sendPostLigth('/jpost.php?extension=products', {"category_controll": elm}, function (e) {
@@ -183,11 +183,14 @@ $(".product_info").each(function () {
 
 
 function init_category_controll() {
-    if (typeof(category_controll) !='undefined' && category_controll.length > 0) {
-        if (Number(category_controll) > 0) {
-            setTimeout(function () {
-                $(".fast_control_btn").find('button[elm="' + category_controll + '"]').click();
-            }, 100);
+    setTimeout(function () {
+        if (typeof (category_controll) != 'undefined' && category_controll.length > 0) {
+            if (Number(category_controll) > 0) {
+                setTimeout(function () {
+                    $(".fast_control_btn").find('button[elm="' + category_controll + '"]').click();
+                }, 100);
+            }
         }
-    }
+    }, 900);
+
 }
