@@ -71,6 +71,13 @@
                 <span class="nav-text">Подписчики</span> <span class="get_emails_col"></span>
             </a>
         </li>
+        
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'utm') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/admin/utm/">
+                <i class="mdi mdi-link-variant"></i>
+                <span class="nav-text">UTM метки</span> 
+            </a>
+        </li>
 
         <li style="margin: 0;padding: 0;" class="has-sub" >
             <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#system_configs"
