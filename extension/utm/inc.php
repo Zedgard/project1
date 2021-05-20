@@ -116,4 +116,29 @@ class utm extends \project\extension {
         return $return;
     }
 
+    public function utm_insert_href($url_params) {
+        $ex_url = explode('&', $url_params);
+        unset($ex_url[0]);
+        $utm = false;
+        foreach ($ex_url as $value) {
+            $ex = explode('=', $value);
+            if ($ex[0] == 'utm_source') {
+                $utm = true;
+                break;
+            }
+        }
+        $q_params = array();
+        if ($utm) {
+            foreach ($ex_url as $value) {
+                $ex = explode('=', $value);
+                $q_params[] = "{$ex[0]}='{$ex[1]}'";
+            }
+        }
+        print_r($q_params);
+        //var_dump($utm);
+        // $query = "";
+        //echo 'REQUEST_URI: ' . $url_params;
+        //return 1;
+    }
+
 }

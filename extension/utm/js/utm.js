@@ -81,8 +81,8 @@ function init_config_utm_values_btn() {
             $(".config_utm_values").unbind('click').click(function () {
                 $(".utm_tags_lists_block").hide(200);
                 var elm_id = $(this).attr('elm_id');
-
                 $(".utm_tags_list_" + elm_id).toggle(200);
+                
                 // Получим данные по меткам
                 sendPostLigth('/jpost.php?extension=utm', {
                     "utm_tag_values_list": 1,

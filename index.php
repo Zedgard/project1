@@ -58,11 +58,13 @@ if (isset($_GET['ya_payment_true'])) {
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/url.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/utm/inc.php';
 //print_r($_SERVER);
 //echo "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}<br/>";
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 $send_emails = new \project\send_emails();
 $p_auth = new \project\auth();
+$p_utm = new \project\utm();
 
 // DEBUG
 $_SESSION['DEBUG'] = 0;
@@ -99,6 +101,8 @@ if (isset($_COOKIE[$_SESSION['SERVER_NAME'] . '_cookie_access'])) {
 
 $user = new \project\user();
 $user->upUserRole(); // role_privilege
+
+$p_utm->utm_insert_href($_SERVER['QUERY_STRING']);
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/menu/index.php';
 
