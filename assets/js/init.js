@@ -867,3 +867,4 @@ function init_real_time() {
         server_time();
     }
 }
+
