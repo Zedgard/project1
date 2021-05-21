@@ -79,7 +79,7 @@ function init_config_utm_values_btn() {
     if ($(".config_utm_values").length > 0) {
         setTimeout(function () {
             $(".config_utm_values").unbind('click').click(function () {
-                $(".utm_tags_lists_block").hide(200);
+                //$(".utm_tags_lists_block").hide(200);
                 var elm_id = $(this).attr('elm_id');
                 $(".utm_tags_list_" + elm_id).toggle(200);
                 
@@ -88,11 +88,11 @@ function init_config_utm_values_btn() {
                     "utm_tag_values_list": 1,
                     "utm_id": elm_id
                 }, function (e) {
-                    $(".utm_tag_values_list tbody tr").remove();
+                    $(".utm_tags_list_" + elm_id).find(".utm_tag_values_list tbody tr").remove();
                     if (e['success'] == '1') {
                         if (e['data'].length > 0) {
                             for (var i = 0; i < e['data'].length; i++) {
-                                $(".utm_tag_values_list tbody").append(
+                                $(".utm_tags_list_" + elm_id).find(".utm_tag_values_list tbody").append(
                                         '<tr>\n\
                                             <td>' + e['data'][i]['code'] + '</td>\n\
                                             <td><input type="text" name="tag_val" value="' + e['data'][i]['val'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm_tag_values" elm_row="val" class="form-control init_elm_edit"></td>\n\
