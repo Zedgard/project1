@@ -199,4 +199,73 @@ class utm extends \project\extension {
         return $this->query($query, array($utm_id, $tag_id));
     }
 
+    /*
+     * Отчеты
+     */
+
+    /**
+     * Данные по меткам
+     * @param type $date_start
+     * @param type $date_end
+     * @return type
+     */
+    public function utm_href_list($utm_id, $date_start, $date_end, $tag_id) {
+        // 2021-05-25
+        $w = array();
+        $array = array();
+
+
+
+
+        if ($tag_id == 0) {
+
+            if (strlen($date_start) > 0 && strlen($date_end) > 0) {
+                $w[] = "uh.lastdate BETWEEN '? 00:00:00.000000' AND '? 23:59:59.000000'";
+                $array[] = $date_start;
+                $array[] = $date_end;
+            }
+            if ($utm_id > 0) {
+                $w[] = "u.id='?'";
+                $array[] = $utm_id;
+            }
+            $where = '';
+            if (count($w) > 0) {
+                $where = "WHERE " . implode(' and ', $w);
+            }
+            $query_select = "SELECT u.title, uh.lastdate, count(uh.utm_id) as col, '' as tag_title 
+                FROM zay_utm_href uh 
+                left join zay_utm u on u.id=uh.utm_id
+                {$where} 
+                GROUP by u.title 
+                ORDER BY uh.lastdate DESC";
+            return $this->getSelectArray($query_select, $array, 0);
+        } else {
+            if (strlen($date_start) > 0 && strlen($date_end) > 0) {
+                $w[] = "uth.lastdate BETWEEN '? 00:00:00.000000' AND '? 23:59:59.000000'";
+                $array[] = $date_start;
+                $array[] = $date_end;
+            }
+            if ($utm_id > 0) {
+                $w[] = "u.id='?'";
+                $array[] = $utm_id;
+            }
+            if ($tag_id > 0) {
+                $w[] = "uth.tag_id='?'";
+                $array[] = $tag_id;
+            }
+            $where = '';
+            if (count($w) > 0) {
+                $where = "WHERE " . implode(' and ', $w);
+            }
+            $query_select = "SELECT u.title, uth.lastdate, ut.code as tag_title, count(uth.id) as col 
+                FROM zay_utm_tag_href uth 
+                left join zay_utm u on u.id=uth.utm_id
+                left join zay_utm_tags ut on ut.id=uth.tag_id
+                {$where} 
+                GROUP by u.title, ut.title 
+                ORDER BY uth.lastdate DESC";
+            return $this->getSelectArray($query_select, $array, 0);
+        }
+    }
+
 }
