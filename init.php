@@ -19,6 +19,11 @@ if (!isset($_SESSION['SERVER_NAME'])) {
 if (!isset($_SESSION['user_load_page_time'])) {
     $_SESSION['user_load_page_time'];
 }
+
+if (!isset($_SESSION['token_hash'])) {
+    $_SESSION['token_hash'] = '';
+}
+
 //$_SESSION['user'] = array();
 // Данные авторезированного пользователя
 if (!isset($_SESSION['user'])) {

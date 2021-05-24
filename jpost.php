@@ -31,11 +31,6 @@ if (isset($_POST)) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/token.php';
         $token = new \project\token();
 
-        // Сам хеш если он есть 
-        if (!isset($_SESSION['token_hash'])) {
-            $_SESSION['token_hash'] = '';
-        }
-
         if ($token->register()) {
             /*
              * Соберем статистику о посетителе

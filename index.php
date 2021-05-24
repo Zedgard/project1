@@ -132,6 +132,11 @@ $_SESSION['message'] = array();
  * Данные о производительности
  */
 if ($user->isEditor()) {
+    // Авторизированных сразу разрешим отправлять запросы
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/token.php';
+    $token = new \project\token();
+    $token->register();
+
     $memory = memory_get_usage() - $memory;
     $time = microtime(true) - $start;
 
