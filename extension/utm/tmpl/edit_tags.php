@@ -1,6 +1,6 @@
 <div class="card card-default">
     <div class="card-header card-header-border-bottom">
-        <a href="./" class="btn btn-link">UTM метки</a>- Управление тегами
+        <a href="./">UTM метки</a>&nbsp;-&nbsp;<a href="./?utm_creat=1">Управление UTM метками</a>&nbsp;-&nbsp;Управление тегами
     </div>
 
     <div class="card-body">

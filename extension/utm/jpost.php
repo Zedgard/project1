@@ -50,3 +50,12 @@ if (isset($_POST['utm_tag_values_list'])) {
     $data = $pr_utm->utm_tag_values_list($utm_id);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+if (isset($_POST['utm_list_filter'])) {
+    $utm_id = $_POST['utm_filter'];
+    $date_start = $_POST['utm_date_start_filter'];
+    $date_end = $_POST['utm_date_end_filter'];
+    $utm_tags_list_filter = ($_POST['utm_tags_list_filter'] > 0) ? $_POST['utm_tags_list_filter'] : 0;
+    $data = $pr_utm->utm_href_list($utm_id, $date_start, $date_end, $utm_tags_list_filter);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}

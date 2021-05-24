@@ -1,8 +1,11 @@
 $(document).ready(function () {
     init_utm();
+    init_utm_filter();
     init_utm_tags();
+    if ($(".inp_datepicker").length > 0) {
+        init_datepicker(3);
+    }
 });
-
 
 
 function init_utm() {
@@ -165,9 +168,50 @@ function copy_text(elm_id) {
  */
 function input_text_select(elm) {
     //console.log('input_text_select elm ' + elm);
-    $(elm).focus(function(){
-    if(this.value == this.defaultValue){
-        this.select();
+    $(elm).focus(function () {
+        if (this.value == this.defaultValue) {
+            this.select();
+        }
+    });
+}
+
+function init_utm_filter() {
+    console.log('init_utm_filter');
+    if ($(".utm_filter").length > 0) {
+
+        $(".utm_filter, .utm_date_start_filter, .utm_date_end_filter, .utm_tags_list_filter").unbind('change').change(function () {
+            init_utm_filter();
+        });
+
+        var utm_filter = $(".utm_filter").val();
+        var utm_date_start_filter = $(".utm_date_start_filter").val();
+        var utm_date_end_filter = $(".utm_date_end_filter").val();
+        var utm_tags_list_filter = $(".utm_tags_list_filter").val();
+
+        sendPostLigth('/jpost.php?extension=utm', {
+            "utm_list_filter": 1,
+            "utm_filter": utm_filter,
+            "utm_date_start_filter": utm_date_start_filter,
+            "utm_date_end_filter": utm_date_end_filter,
+            "utm_tags_list_filter": utm_tags_list_filter
+        }, function (e) {
+            $(".table_utm_list_filter tbody tr").remove();
+            if (e['success'] == '1') {
+                if (e['data'].length > 0) {
+                    for (var i = 0; i < e['data'].length; i++) {
+                        $(".table_utm_list_filter tbody").append(
+                                '<tr>\n\
+                            <td>' + e['data'][i]['title'] + '</td>\n\
+                            <td>' + e['data'][i]['lastdate'] + '</td>\n\
+                            <td>' + e['data'][i]['col'] + '</td>\n\
+                            <td>' + e['data'][i]['tag_title'] + '</td>\n\
+                            </tr>'
+                                );
+                    }
+
+                }
+            }
+
+        });
     }
-});
 }
