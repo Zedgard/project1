@@ -324,7 +324,6 @@ if (isset($_POST['set_cloudpayments'])) {
         }
 
         if ($price_total == 0) {
-            //location_href('/pay.php');
             $result = array('success' => 1, 'success_text' => '', 'data' => array(), 'action' => '/pay.php');
         } else {
             /**

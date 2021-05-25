@@ -60,7 +60,7 @@ class page {
         //print_r($page);
         //echo "\n page: {$page['id']} \n";
         // Если существует страница
-        if (count($page) > 0 && isset($page['id']) && $page['id'] > 0) {
+        if (is_array($page) && count($page) > 0 && isset($page['id']) && $page['id'] > 0) {
             //$r = array();
             // Роли страницы
             $queryRole = "SELECT * FROM zay_pages_roles pr 
