@@ -69,7 +69,7 @@ if (count($_SESSION['cart']['itms']) > 0) {
 
         $_SESSION['cart']['itms'] = array();
         // Отправляем пользователя на страницу оплаты
-        header('Location: /office/');
+        header('Location: /?page_type=pay_thanks');
     } else {
         echo 'Ошибка операции!';
     }

@@ -90,7 +90,7 @@ if (count($pays) > 0) {
             foreach ($products_data as $v) {
                 $products->setSoldAdd($v['product_id']);
             }
-            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action'=> '/?page_type=pay_thanks');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
         }
@@ -150,7 +150,7 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
         // Зарегистрируем покупку
         $pr_cart->register_pay($pay_id);
 
-        $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
+        $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action'=> '/?page_type=pay_thanks');
     } else {
         $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');
     }

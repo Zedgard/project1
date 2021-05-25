@@ -93,7 +93,8 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             }
         }
     }
-    header('Location: ' . '/shop/cart/?in_payment_true=1');
+    header('Location: ' . '/?page_type=pay_thanks');
+    //header('Location: ' . '/shop/cart/?in_payment_true=1');
     exit();
 } else {
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='tk' and `pay_status`!='succeeded' and `pay_date`>=CURRENT_DATE-1";
@@ -148,7 +149,8 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             }
         }
     }
-    header('Location: ' . '/shop/cart/?in_payment_true=2');
+    header('Location: ' . '/?page_type=pay_thanks');
+    //header('Location: ' . '/shop/cart/?in_payment_true=2');
     exit();
 }
 /*

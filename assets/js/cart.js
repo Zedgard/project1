@@ -87,60 +87,65 @@ function init_pay() {
             "set_cloudpayments": 1
         }, function (e) {
             if (e['success'] == '1') {
-                console.log('pay');
-                this.pay = function () {
-                    var widget = new cp.CloudPayments();
-                    widget.pay('auth', // или auth 'charge'
-                            {//options
-                                publicId: e['data']['publicId'], //id из личного кабинета
-                                description: e['data']['pay_descr'], //назначение
-                                amount: e['data']['amount'], //сумма
-                                currency: e['data']['currency'], //валюта
-                                invoiceId: e['data']['pay_id'], //номер заказа  (необязательно)
-                                accountId: e['data']['customer_email'], //идентификатор плательщика (необязательно)
-                                skin: "mini", //дизайн виджета (необязательно)
-                                data: {
-                                    //   myProp: 'myProp value'
-                                }
-                            },
-                            {
-                                onSuccess: function (options) { // success
-                                    if (pay_status == 1) {
-                                        $(".pay_result").append('<div class="font-size-16"><a href="/office/" target="_blank">Пройдите в личный кабинет</a></div>');
+                if (typeof e['action'] !== 'undefined' && e['action'].length === 0) {
+                    console.log('pay');
+                    this.pay = function () {
+                        var widget = new cp.CloudPayments();
+                        widget.pay('auth', // или auth 'charge'
+                                {//options
+                                    publicId: e['data']['publicId'], //id из личного кабинета
+                                    description: e['data']['pay_descr'], //назначение
+                                    amount: e['data']['amount'], //сумма
+                                    currency: e['data']['currency'], //валюта
+                                    invoiceId: e['data']['pay_id'], //номер заказа  (необязательно)
+                                    accountId: e['data']['customer_email'], //идентификатор плательщика (необязательно)
+                                    skin: "mini", //дизайн виджета (необязательно)
+                                    data: {
+                                        //   myProp: 'myProp value'
                                     }
-                                    initCartArray();
                                 },
-                                onFail: function (reason, options) { // fail
-                                    console.log('fail');
-                                    //console.log(reason);
-                                    //console.log(options);
-                                    //$(".pay_result").append('<div>Ошибка операции! Недостаточно средств или карта не активна!</div>');
-                                },
-                                onComplete: function (paymentResult, options) {
-                                    //console.log(paymentResult['success']);
-                                    // console.log('G: ' +  (paymentResult['success'] == true) );
-
-                                    sendPostLigth('/jpost.php?extension=cart', {
-                                        "check_cloudpayments": 1,
-                                        "paymentResult": paymentResult,
-                                        "options": options
-                                    }, function (e) {
-                                        console.log('success | ' + e['success']);
-                                        if (e['success'] == '1') {
-                                            pay_status = 1;
+                                {
+                                    onSuccess: function (options) { // success
+                                        if (pay_status == 1) {
+                                            $(".pay_result").append('<div class="font-size-16"><a href="/office/" target="_blank">Пройдите в личный кабинет</a></div>');
+                                            document.location.href = '/?page_type=pay_thanks';
                                         }
-                                        $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
-                                        $(".pay_result").show(200);
-                                        //}
-                                    });
+                                        initCartArray();
+                                    },
+                                    onFail: function (reason, options) { // fail
+                                        console.log('fail');
+                                        //console.log(reason);
+                                        //console.log(options);
+                                        //$(".pay_result").append('<div>Ошибка операции! Недостаточно средств или карта не активна!</div>');
+                                    },
+                                    onComplete: function (paymentResult, options) {
+                                        //console.log(paymentResult['success']);
+                                        // console.log('G: ' +  (paymentResult['success'] == true) );
 
-                                    console.log(paymentResult);
-                                    console.log(options);
+                                        sendPostLigth('/jpost.php?extension=cart', {
+                                            "check_cloudpayments": 1,
+                                            "paymentResult": paymentResult,
+                                            "options": options
+                                        }, function (e) {
+                                            console.log('success | ' + e['success']);
+                                            if (e['success'] == '1') {
+                                                pay_status = 1;
+                                            }
+                                            $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
+                                            $(".pay_result").show(200);
+                                            //}
+                                        });
+
+                                        console.log(paymentResult);
+                                        console.log(options);
+                                    }
                                 }
-                            }
-                    )
-                };
-                pay();
+                        );
+                    };
+                    pay();
+                } else {
+                    document.location.href = e['action'];
+                }
             } else {
                 alert(e['errors'].toString());
             }
@@ -148,20 +153,20 @@ function init_pay() {
     });
 
 
-    $(".btn_cart_tinkoff").unbind('click').click(function () {
-        fn_dataLayer();
-        pay_status = 0;
-        sendPostLigth('/jpost.php?extension=cart', {
-            "set_tinkoff": 1
-        }, function (e) {
-            console.log(e);
-            if (e['success'] == '1') {
-
-            } else {
-                alert(e['errors'].toString());
-            }
-        });
-    });
+//    $(".btn_cart_tinkoff").unbind('click').click(function () {
+//        fn_dataLayer();
+//        pay_status = 0;
+//        sendPostLigth('/jpost.php?extension=cart', {
+//            "set_tinkoff": 1
+//        }, function (e) {
+//            console.log(e);
+//            if (e['success'] == '1') {
+//
+//            } else {
+//                alert(e['errors'].toString());
+//            }
+//        });
+//    });
 
 
 
@@ -199,27 +204,31 @@ function init_pay() {
             "get_cart_other": 1
         }, function (e) {
             if (e['success'] == '1') {
-                var pay_key = e['pay_key'];
-                var return_url = e['return_url'];
-                //Инициализация виджета. Все параметры обязательные.
-                const checkout = new window.YooMoneyCheckoutWidget({
-                    confirmation_token: 'ct-' + pay_key,
-                    return_url: return_url,
-                    error_callback(error) {
-                        //Обработка ошибок инициализации
-                    }
-                });
+                if (typeof e['action'] !== 'undefined' && e['action'].length === 0) {
+                    var pay_key = e['pay_key'];
+                    var return_url = e['return_url'];
+                    //Инициализация виджета. Все параметры обязательные.
+                    const checkout = new window.YooMoneyCheckoutWidget({
+                        confirmation_token: 'ct-' + pay_key,
+                        return_url: return_url,
+                        error_callback(error) {
+                            //Обработка ошибок инициализации
+                        }
+                    });
 
-                //Отображение платежной формы в контейнере
-                checkout.render('payment-form')
-                        //После отображения платежной формы метод render возвращает Promise (можно не использовать).
-                        .then(() => {
-                            //Код, который нужно выполнить после отображения платежной формы.
-                            //$(".block_cart_other").show(200);
-                            $(".pay_preloader").hide(200);
-                        });
+                    //Отображение платежной формы в контейнере
+                    checkout.render('payment-form')
+                            //После отображения платежной формы метод render возвращает Promise (можно не использовать).
+                            .then(() => {
+                                //Код, который нужно выполнить после отображения платежной формы.
+                                //$(".block_cart_other").show(200);
+                                $(".pay_preloader").hide(200);
+                            });
 
-                ;
+                    ;
+                } else {
+                    document.location.href = e['action'];
+                }
             } else {
                 alert(e['errors'].toString());
                 $(".pay_preloader").hide(200);
