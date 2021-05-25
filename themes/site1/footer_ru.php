@@ -9,14 +9,14 @@
                         <span class="font-weight-bold text-white">МОИ КОНТАКТЫ</span>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-2" style="display: none;">
                     <div class="col-lg-12">
                         <div style="color: #bbbbbb; font-size: 15px;">
                             <i class="fa fa-life-ring"></i><a href="https://edgardzaitsev.com/contact" class="ml-2">Техническая поддержка</a>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-2" style="display: none;">
                     <div class="col-lg-12">
                         <p style="color: #bbbbbb; font-size: 15px;">
                             <i class="fa fa-envelope"></i><a href="" class="link_ed_mailto ml-2"></a>

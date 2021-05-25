@@ -18,14 +18,14 @@
             <div class="container"> <!-- header-container --> 
 
                 <div class="row  mt-3">
-                    <div class="col-lg-5 mb-2 mobile_contxt_center d-none d-md-block">
+                    <div class="col-lg mb-2 mobile_contxt_center d-none d-md-block">
                         <div class="header_mobile_app_block mobile_contxt_center">
                             <i class="app_block_text">Мобильное приложение</i>
                         </div>
                         <a href="https://play.google.com/store/apps/details?id=ru.dvfx.edgardzaitsev" target="_blank"><img src="/assets/img/google_play.png" class="mobile_apk_img1" /></a>
                         <a href="https://apps.apple.com/us/app/эдгард-зайцев/id1468250750" target="_blank"><img src="/assets/img/app_store.svg" class="mobile_apk_img2" /></a>
                     </div>
-                    <div class="col-lg-2 mb-2 mobile_contxt_center">
+                    <div class="col-lg mb-2 mobile_contxt_center" style="display: none;">
                         <span <?= ($_SESSION['config']['language_enable'] == '1') ? '' : 'style="display: none;"' ?>>
                             <a href="#"><img src="/assets/img/lang_ru.svg" class="flag" /></a>
                             <a href="#"><img src="/assets/img/lang_us.svg" class="flag" /></a>
@@ -42,7 +42,7 @@
                         <a href="#" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a>
                     </div>
                     -->
-                    <div class="col-lg-5 contxt_right">
+                    <div class="col-lg contxt_right">
 
                         <div style="float: right;margin-top: 4px;">
                             <!--<a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | -->

@@ -55,7 +55,7 @@
         <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
         <?= $config->getConfigParam('yandex_metrika') ?>
 
-    </head>    
+    </head>  
     <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">
 
         <?= $config->getConfigParam('site_development') ?>
@@ -65,27 +65,38 @@
         <?
         include $_SERVER['DOCUMENT_ROOT'] . '/extension/topmenu/index.php';
         ?>
+
         <div class="error_page_bg">
             <object class="svg_objects" type="image/svg+xml" data="/themes/site1/images/ez_site_bg404.svg" width="0px" height="0px" ></object>
             <object class="svg_objects" type="image/svg+xml" data="/themes/site1/images/ez_site_edgard404.svg" width="0px" height="0px" ></object>
 
             <div class="container">
                 <div class="error_page_text_404">
-                    <div class="error_line_text1">Страница</div>
-                    <div class="error_line_text2">404</div>
+                    <div class="thanks_line_text1">БЛАГО</div>
+                    <div class="thanks_line_text2">ДАРЮ</div>
                 </div>
                 <div class="error_page_edgard404">
                     <div class="error_page_edgard404_line">
-                        <div class="error_page_edgard404_line_text">
-                            <div>Добрая душа,</div>
-                            <div>Такой страницы нет</div>
-                        </div>
-                        <object class="" type="image/svg+xml" data="/themes/site1/images/ez_site_line404.svg" width="70px" height="70px" ></object>
+
                     </div>
                     <div>
-                        <object type="image/svg+xml" data="/themes/site1/images/ez_site_edgard404.svg" class="error_page_edgard404_img"></object>
+                        <img src="/themes/site1/images/thanks.png" class="thanks_page_edgard_img"/>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="mt-5 mb-5">
+            <div class="text-center mb-3">
+                <a href="/" class="btn thanks_link_green">На главную</a>
+            </div>
+            <div class="text-center mb-3">
+                <a href="/" class="btn thanks_btn_blue thanks_text_upper">В личный кабинет</a>
+            </div>
+            <div class="text-center thanks_text_upper thanks_text_bold mb-3">
+                Добрый человек, проверь свой EMAIL - там вся информация
+            </div>
+            <div class="text-center thanks_text_upper thanks_text_bold mb-3">
+                Если есть какие-то вопросы, обращайся в мою <a href="https://t.me/EZ_support" class="thanks_link">службу заботы</a>
             </div>
         </div>
 
@@ -93,57 +104,57 @@
         include 'footer_' . $_SESSION['lang'] . '.php'
         ?>
 
-        <!--Bootstrap Core-->
-        <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/themes/site1/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--to view items on reach-->
-        <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Equal-Heights-->
-        <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Owl Slider-->
-        <script src="/themes/site1/js/owl.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--number counters-->
-        <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Parallax Background-->
-        <script src="/themes/site1/js/parallaxie.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Cubefolio Gallery-->
-        <script src="/themes/site1/js/jquery.cubeportfolio.min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--FancyBox popup-->
-        <script src="/themes/site1/js/jquery.fancybox.min.js<?= $_SESSION['rand'] ?>"></script>       
-
-        <!-- Video Background-->
-        <script src="/themes/site1/js/jquery.background-video.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--TypeWriter-->
-        <script src="/themes/site1/js/typewriter.js<?= $_SESSION['rand'] ?>"></script> 
-
-        <!--Particles-->
-        <script src="/themes/site1/js/particles.min.js<?= $_SESSION['rand'] ?>"></script>            
-
-        <!--WOw animations-->
-        <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
-
-        <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
-        <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
-
-        <!--Google Map API-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
-        <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>	
-        <?
-        foreach ($_SESSION['body_javascript'] as $js) {
-            echo $js . "\n";
-        }
-        ?>
     </body>
+    <!--Bootstrap Core-->
+    <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/themes/site1/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--to view items on reach-->
+    <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Equal-Heights-->
+    <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Owl Slider-->
+    <script src="/themes/site1/js/owl.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--number counters-->
+    <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Parallax Background-->
+    <script src="/themes/site1/js/parallaxie.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Cubefolio Gallery-->
+    <script src="/themes/site1/js/jquery.cubeportfolio.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--FancyBox popup-->
+    <script src="/themes/site1/js/jquery.fancybox.min.js<?= $_SESSION['rand'] ?>"></script>       
+
+    <!-- Video Background-->
+    <script src="/themes/site1/js/jquery.background-video.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--TypeWriter-->
+    <script src="/themes/site1/js/typewriter.js<?= $_SESSION['rand'] ?>"></script> 
+
+    <!--Particles-->
+    <script src="/themes/site1/js/particles.min.js<?= $_SESSION['rand'] ?>"></script>            
+
+    <!--WOw animations-->
+    <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
+
+    <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
+    <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+    <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
+
+    <!--Google Map API-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
+    <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>	
+    <?
+    foreach ($_SESSION['body_javascript'] as $js) {
+        echo $js . "\n";
+    }
+    ?>
 </html>

@@ -38,6 +38,16 @@ class theme {
             $html = ob_get_clean();
         }
 
+        if ($type == 'pay_thanks') {
+            $run = 1;
+            ob_start();
+            global $lang;
+            include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+            $config = new \project\config();
+            include DOCUMENT_ROOT . '/themes/site1/pay_' . $_SESSION['lang'] . '.php';
+            $html = ob_get_clean();
+        }
+
         if (strlen($theme_name) > 0 && $run == 0) {
             ob_start();
             if (isset($_SESSION['page']['info']['id']) && $_SESSION['page']['info']['id'] > 0) {

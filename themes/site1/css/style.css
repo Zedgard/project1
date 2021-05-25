@@ -4127,6 +4127,9 @@ textarea:-ms-input-placeholder {
     color: #a5a5a5;
     opacity: 1;
 }
+#mainNav .dropdown-item:hover{
+    text-decoration: underline;
+}
 
 /*-------------------------------*/
 /*  COntact US */
@@ -4138,6 +4141,58 @@ textarea:-ms-input-placeholder {
     height: 0px;
 }
 
+/*-------------------------------*/
+/* Thanks page */
+/*-------------------------------*/
+.thanks_page_edgard_img{
+    max-width: 300px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: 112px;
+}
+.thanks_line_text1{
+    font-size: 4rem;
+}
+.thanks_line_text2{
+    margin-top: -1rem;
+    font-size: 4rem;
+    letter-spacing: 0.8rem;
+}
+.thanks_text_upper{
+    text-transform: uppercase;
+}
+.thanks_text_bold{
+    color: #848484;
+    font-weight: bold;
+}
+.thanks_link_green{
+    text-decoration: underline;
+    color: #038c3a;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.thanks_link_green:hover{
+    color: #027831;
+    text-decoration: underline;
+}
+.thanks_btn_blue{
+    color: #FFFFFF;
+    font-weight: bold;
+    background-color: #04a5f4;
+    border: 0;
+    padding: 0.9rem;
+}
+.thanks_btn_blue:hover{
+    color: #FFFFFF;
+    background-color: #2fb8fc;
+}
+.thanks_link{
+    text-decoration: underline;
+}
+.thanks_link:hover{
+    text-decoration: underline;
+}
 /*-------------------------------*/
 /* Error */
 /*-------------------------------*/
@@ -4164,6 +4219,11 @@ textarea:-ms-input-placeholder {
     -webkit-background-clip: text;
     background-clip: text;
     background-image: repeating-linear-gradient(315deg, rgba(107,221,120,1), rgba(99,167,214,1));
+    background: -webkit-linear-gradient(to bottom right, #04A5F4 0%, #27F19D 100%);
+    background: -moz-linear-gradient(to bottom right, #04A5F4 0%, #27F19D 100%);
+    background: linear-gradient(to bottom right, #04A5F4 0%, #27F19D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .error_page_edgard404{
     width: 100%;
