@@ -510,7 +510,7 @@ if (isset($_POST['check_cloudpayments'])) {
             foreach ($products_data as $v) {
                 $products->setSoldAdd($v['product_id']);
             }
-            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action' => '/?page_type=pay_thanks');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');
         }
