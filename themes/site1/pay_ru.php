@@ -85,14 +85,14 @@
                 </div>
             </div>
         </div>
-        <div class="mt-5 mb-5">
+        <div class="mt-3 mb-5 mt-lg-4 mb-lg-5">
             <div class="text-center mb-3">
                 <a href="/" class="btn thanks_link_green">На главную</a>
             </div>
             <div class="text-center mb-3">
-                <a href="/" class="btn thanks_btn_blue thanks_text_upper">В личный кабинет</a>
+                <a href="/office/?katalog" class="btn thanks_btn_blue thanks_text_upper">В личный кабинет</a>
             </div>
-            <div class="text-center thanks_text_upper thanks_text_bold mb-3">
+            <div class="text-center thanks_text_upper thanks_text_bold mb-3" style="display: none;">
                 Добрый человек, проверь свой EMAIL - там вся информация
             </div>
             <div class="text-center thanks_text_upper thanks_text_bold mb-3">

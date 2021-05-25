@@ -107,6 +107,7 @@ function init_pay() {
                                 onSuccess: function (options) { // success
                                     if (pay_status == 1) {
                                         $(".pay_result").append('<div class="font-size-16"><a href="/office/" target="_blank">Пройдите в личный кабинет</a></div>');
+                                        document.location.href = '/?page_type=pay_thanks';
                                     }
                                     initCartArray();
                                 },

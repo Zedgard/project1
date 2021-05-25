@@ -4146,17 +4146,16 @@ textarea:-ms-input-placeholder {
 /*-------------------------------*/
 .thanks_page_edgard_img{
     max-width: 300px;
-    height: 100%;
     margin: 0;
     padding: 0;
     margin-top: 112px;
 }
 .thanks_line_text1{
-    font-size: 4rem;
+    font-size: 5rem;
 }
 .thanks_line_text2{
     margin-top: -1rem;
-    font-size: 4rem;
+    font-size: 5rem;
     letter-spacing: 0.8rem;
 }
 .thanks_text_upper{
@@ -4168,12 +4167,12 @@ textarea:-ms-input-placeholder {
 }
 .thanks_link_green{
     text-decoration: underline;
-    color: #038c3a;
+    color: #04BE4E;
     text-transform: uppercase;
     font-weight: bold;
 }
 .thanks_link_green:hover{
-    color: #027831;
+    color: #03ab46;
     text-decoration: underline;
 }
 .thanks_btn_blue{
@@ -4193,6 +4192,15 @@ textarea:-ms-input-placeholder {
 .thanks_link:hover{
     text-decoration: underline;
 }
+@media (max-width: 792px) {
+    .thanks_page_edgard_img {
+        max-width: 60%;
+        margin: 0;
+        margin-top: 0px;
+        padding: 0;
+        margin-top: 30px;
+    }
+}
 /*-------------------------------*/
 /* Error */
 /*-------------------------------*/
@@ -4201,7 +4209,6 @@ textarea:-ms-input-placeholder {
     background-size: cover; 
     width: 100%;
     text-align: center;
-    padding-top: 2rem;
 }
 .error_line_text1{
     font-size: 3rem;
@@ -4217,11 +4224,11 @@ textarea:-ms-input-placeholder {
     margin-bottom: -21px;
     color: transparent;    
     -webkit-background-clip: text;
-    background-clip: text;
-    background-image: repeating-linear-gradient(315deg, rgba(107,221,120,1), rgba(99,167,214,1));
-    background: -webkit-linear-gradient(to bottom right, #04A5F4 0%, #27F19D 100%);
-    background: -moz-linear-gradient(to bottom right, #04A5F4 0%, #27F19D 100%);
-    background: linear-gradient(to bottom right, #04A5F4 0%, #27F19D 100%);
+    background-clip: text;/* 2, 161, 249 */
+    background-image: repeating-linear-gradient(315deg, rgba(2, 161, 249,1), rgba(41, 241, 156,1));
+    background: -webkit-linear-gradient(to bottom right, #02a1f9 0%, #29f19c 100%);
+    background: -moz-linear-gradient(to bottom right, #02a1f9 0%, #29f19c 100%);
+    background: linear-gradient(to bottom right, #02a1f9 0%, #29f19c 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
