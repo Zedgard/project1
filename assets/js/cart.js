@@ -108,7 +108,6 @@ function init_pay() {
                                     onSuccess: function (options) { // success
                                         if (pay_status == 1) {
                                             $(".pay_result").append('<div class="font-size-16"><a href="/office/" target="_blank">Пройдите в личный кабинет</a></div>');
-                                            document.location.href = '/?page_type=pay_thanks';
                                         }
                                         initCartArray();
                                     },
@@ -133,6 +132,10 @@ function init_pay() {
                                             }
                                             $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
                                             $(".pay_result").show(200);
+                                            if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
+                                                console.log('document.location.href=' + e['action']);
+                                                document.location.href = e['action'];
+                                            }
                                             //}
                                         });
 
