@@ -87,7 +87,9 @@ function init_pay() {
             "set_cloudpayments": 1
         }, function (e) {
             if (e['success'] == '1') {
-                if (typeof e['action'] !== 'undefined' && e['action'].length === 0) {
+                if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
+                    document.location.href = e['action'];
+                } else {
                     console.log('pay');
                     this.pay = function () {
                         var widget = new cp.CloudPayments();
@@ -133,7 +135,7 @@ function init_pay() {
                                             $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
                                             $(".pay_result").show(200);
                                             if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
-                                                console.log('document.location.href=' + e['action']);
+                                                //console.log('document.location.href=' + e['action']);
                                                 document.location.href = e['action'];
                                             }
                                             //}
@@ -146,8 +148,6 @@ function init_pay() {
                         );
                     };
                     pay();
-                } else {
-                    document.location.href = e['action'];
                 }
             } else {
                 alert(e['errors'].toString());
@@ -207,7 +207,9 @@ function init_pay() {
             "get_cart_other": 1
         }, function (e) {
             if (e['success'] == '1') {
-                if (typeof e['action'] !== 'undefined' && e['action'].length === 0) {
+                if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
+                    document.location.href = e['action'];
+                } else {
                     var pay_key = e['pay_key'];
                     var return_url = e['return_url'];
                     //Инициализация виджета. Все параметры обязательные.
@@ -227,10 +229,6 @@ function init_pay() {
                                 //$(".block_cart_other").show(200);
                                 $(".pay_preloader").hide(200);
                             });
-
-                    ;
-                } else {
-                    document.location.href = e['action'];
                 }
             } else {
                 alert(e['errors'].toString());
