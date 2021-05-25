@@ -177,6 +177,12 @@ if ($item_counts == 0) {
     $_SESSION['page_errors'][] = 'Корзина пуста!';
 }
 
+// Без оплатная продажа
+if ($price_total == 0) {
+    header('Location: /pay.php');
+    exit();
+}
+
 if ($price_total < 3000) {
     $_SESSION['page_errors'][] = 'Кредитование возможно только от 3000 тысяч рублей!';
 }
@@ -305,8 +311,8 @@ if (count($_SESSION['errors']) > 0) {
     foreach ($_SESSION['errors'] as $value) {
         ?>
         <div class="alert alert-danger" role="alert">
-        <?= $value ?>
+            <?= $value ?>
         </div>
-            <?
-        }
+        <?
     }
+}

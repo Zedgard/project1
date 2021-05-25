@@ -80,7 +80,7 @@
 
                     </div>
                     <div>
-                        <img src="/themes/site1/images/thanks.png" class="thanks_page_edgard_img"/>
+                        <img src="/themes/site1/images/thanks2.png" class="thanks_page_edgard_img"/>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                 Добрый человек, проверь свой EMAIL - там вся информация
             </div>
             <div class="text-center thanks_text_upper thanks_text_bold mb-3">
-                Если есть какие-то вопросы, обращайся в мою <a href="https://t.me/EZ_support" class="thanks_link">службу заботы</a>
+                Если есть какие-то вопросы, обращайся в мою <a href="https://t.me/EZ_support" class="thanks_link" target="_blank">службу заботы</a>
             </div>
         </div>
 

@@ -63,7 +63,7 @@ if(isset($_GET['category'])){
 }
 
 /* Все продукты сайта с учетом фильтра */
-$productsFilterArray = $c_product->getProductsIndex($productSearchString, $_SESSION['product']['filter']['category_controll'], $productTopicStr, $ProductPromo, $ProductNew, $product_theme);
+$productsFilterArray = $c_product->getProductsIndex($productSearchString, '', $productTopicStr, $ProductPromo, $ProductNew, $product_theme);
 $productsFilterCount = count($productsFilterArray);
 
 // Для рекомендаций

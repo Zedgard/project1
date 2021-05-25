@@ -7,7 +7,7 @@
 </div>
 <div class="row mb-3 justify-content-md-center">
     <div class="col-lg-4 text-center text-lg-left mt-3" style="display: block;">
-        <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_tinkoff" target="_blank">Картой через Тинькофф</a>
+        <a href="javascript:void(0)" class="btn button btngreen4 text-center btn_cart btn_cart_tinkoff">Картой через Тинькофф</a>
     </div>
 
     <div class="col-lg-4 text-center text-lg-left mt-3" style="display: block;">
