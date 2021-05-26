@@ -91,10 +91,10 @@ $(document).ready(function () {
         });
     }
 
-    // отчистка фильтра
+    // Отчистка фильтра
     $(".filter_clear").unbind('click').click(function () {
         sendPostLigth('/jpost.php?extension=products', {"filter_clear": 1}, function (e) {
-            document.location.reload();
+            document.location.href = './';
         });
     });
 
