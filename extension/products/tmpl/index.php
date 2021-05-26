@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top: -1rem;">
+    <div class="row">
         <?
         /*
          * Список продуктов
@@ -44,7 +44,7 @@
             ?>
             <div class="col-lg-10">
                 <!-- Sorted block -->    
-                <div class="row mt-4 mb-4">
+                <div class="row mb-4">
                     <div class="col-12">
                         <div class="row controls fast_control_btn">
                             <div class="col-lg-3">

@@ -1,7 +1,7 @@
 <!--------- Filter block End --------->
 <!-- Скроем на малых разрешениях -->
 <div class="col-lg-2  d-none d-lg-block"> 
-    <div class="row mt-4 mb-4">
+    <div class="row mb-4">
         <div class="col-12 text-left">
             <!--
             <img src="/assets/img/ez_button_appointment.png" class="sign_up_consultation border_radius3 " />
