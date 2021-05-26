@@ -139,13 +139,14 @@ class page {
                 $_SESSION['page']['info'] = $page;
                 // Поиск замены заголовков
                 $title_data = $pages->title_get_url("/{$_SESSION['page_url']}/");
+                //print_r($title_data);
                 if (count($title_data) > 0) {
                     if (strlen($title_data[0]['title_text']) > 0) {
                         $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $title_data[0]['title_text'];
                         $_SESSION['site_seo_descr'] = $title_data[0]['descr_text'];
                     }
                 } else {
-                    $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
+                    //$_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $_SESSION['page']['info']['page_title'];
                 }
                 //echo $_SESSION['site_title'];
             }
