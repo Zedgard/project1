@@ -1173,6 +1173,8 @@ if (!function_exists('date_jquery_format')) {
     }
 
 }
+
+
 if (!function_exists('date_sql_format')) {
 
     /**

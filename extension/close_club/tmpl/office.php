@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="mb-3" style="margin-top: -20px;">
-                    Информация от КУРАТОРА
+                    Задай вопрос своему <a href="https://t.me/valerevna_annet" target="_blank">куратору</a>
                 </div>
 
                 <div class="mb-4">
@@ -24,10 +24,17 @@
                     // Если есть купленный период к закрытому клубу
                     if (count($close_club_info) > 0 && $close_club_info[0]['status'] == '1') {
                         ?>
-                        <div class="mb-3">Твой абонемент заканчивается через:</div>
+                        <div class="mb-3">Твой абонемент заканчивается "<?= date_jquery_format($close_club_info[0]['end_date']) ?>" через:</div>
                         <div class="mb-3" style="border: 3px solid #47a44a;padding: 10px;display: inline-block;font-size: 1.3rem;font-weight: 900;color: #000000;">
-                            <?= $close_club_info[0]['diff_month'] ?> мес <?= $close_club_info[0]['diff_day'] ?> дн <?= $close_club_info[0]['diff_hour'] ?> ч <?= $close_club_info[0]['diff_minute'] ?> м
+                            <!--<?= $close_club_info[0]['diff_month'] ?> мес --><?= $close_club_info[0]['diff_day'] ?> дн <?= $close_club_info[0]['diff_hour'] ?> ч <?= $close_club_info[0]['diff_minute'] ?> м
                         </div>
+                        <?
+                    } else {
+                        ?>
+                        <div class="mb-3" style="border: 3px solid #FF0000;padding: 10px;display: inline-block;font-size: 1.3rem;font-weight: 900;color: #FF0000;">
+                            Нет абонемента!
+                        </div>
+                        <div class="mb-3">Купить абонемент на период</div>
                         <?
                     }
                     ?>
@@ -35,9 +42,13 @@
                         <?
                         foreach ($waresClub as $value) {
                             // Разрешить покупку если период не превышает 12 месяцев
-                            if ($close_club->check_add_new_period($value['club_month_period'])) {
+                            if ($close_club->check_add_new_period($value['club_month_period'], $close_club_info)) {
                                 ?>
                                 <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add mb-2 " go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 143px;"><?= $value['title'] ?> <i class="fas fa-bullhorn"></i></a>
+                                <?
+                            } else {
+                                ?>
+                                <a href="javascript:void(0)" class="btn button btn-secondary textcenter mb-2 " onclick="alert('Нельзя купить больше 12 месяцев!');return false;" style="width: 143px;"><?= $value['title'] ?> <i class="fas fa-bullhorn"></i></a>
                                 <?
                             }
                         }
@@ -47,9 +58,13 @@
                         <?
                         foreach ($waresClub as $value) {
                             // Разрешить покупку если период не превышает 12 месяцев
-                            if ($close_club->check_add_new_period($value['club_month_period'])) {
+                            if ($close_club->check_add_new_period($value['club_month_period'], $close_club_info)) {
                                 ?>
                                 <a href="javascript:void(0)" class="btn button btn-success textcenter cart_product_add mb-2" go_url="/shop/cart/" product_id="<?= $value['id'] ?>" style="width: 180px;"><?= $value['title'] ?> <i class="fas fa-bullhorn"></i></a>
+                                <?
+                            } else {
+                                ?>
+                                <a href="javascript:void(0)" class="btn button btn-secondary textcenter mb-2 " onclick="alert('Нельзя купить больше 12 месяцев!');return false;" style="width: 180px;"><?= $value['title'] ?> <i class="fas fa-bullhorn"></i></a>
                                 <?
                             }
                         }

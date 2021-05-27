@@ -48,10 +48,8 @@ class close_club extends \project\extension {
                         zay_close_club cc
                     LEFT JOIN zay_users u ON
                         u.id = cc.user_id
-                    WHERE
-                        cc.status = '1' 
-                        
-                        AND u.login_instagram IS NOT NULL " . $filter_str;
+                    WHERE 
+                        u.login_instagram IS NOT NULL " . $filter_str;
         $this->setMysqliAssos();
         $data = $this->getSelectArray($query, $array, 0);
         return $data;
@@ -66,11 +64,12 @@ class close_club extends \project\extension {
         $this->freeze_update();
         $data = array();
         if ($user_id > 0) {
+            // OLD (DATE_FORMAT(LAST_DAY(NOW()),'%d') - DATE_FORMAT(cc.end_date,'%d')) as diff_day 
             $query = "SELECT cc.*,
                         if(cc.freeze_date > NOW(), cc.freeze_date, '') as freeze_date_str,
-                        TIMESTAMPDIFF(MONTH, NOW(), cc.end_date) as diff_month, 
-                        (DATE_FORMAT(LAST_DAY(NOW()),'%d') - DATE_FORMAT(cc.end_date,'%d')) as diff_day, 
-                        TIMESTAMPDIFF(HOUR, DATE_FORMAT(NOW(),'%Y-%m-%d'), NOW()) as diff_hour, 
+                        TIMESTAMPDIFF(MONTH, DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59'), cc.end_date) as diff_month, 
+                        (DATEDIFF(cc.end_date, NOW())) as diff_day, 
+                        TIMESTAMPDIFF(HOUR, NOW(), DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59')) as diff_hour, 
                         TIMESTAMPDIFF(MINUTE, DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i'), DATE_FORMAT(NOW(),'%Y-%m-%d %H:59:59')) as diff_minute
                         FROM zay_close_club cc WHERE cc.user_id='?'";
             $data = $this->getSelectArray($query, array($user_id));
@@ -135,7 +134,7 @@ class close_club extends \project\extension {
             $club_info = $this->get_club_user_info($data[0]['user_id']);
             if (count($club_info) > 0) {
                 // Обновим данные
-                $queryInsertClub = "UPDATE zay_close_club cc SET cc.period_month='?', cc.lastdate=NOW(), cc.status='1',
+                $queryInsertClub = "UPDATE zay_close_club cc SET cc.period_month='?', cc.lastdate=NOW(), cc.status='1', cc.freeze_day='40', 
                     cc.end_date=(if((cc.end_date is null or cc.end_date < NOW()), DATE_ADD(NOW(), INTERVAL ? MONTH), DATE_ADD(cc.end_date, INTERVAL ? MONTH) )) 
                     WHERE cc.user_id='?'";
                 return $this->query($queryInsertClub, array($club_month_period, $club_month_period, $club_month_period, $data[0]['user_id']));
@@ -214,7 +213,7 @@ class close_club extends \project\extension {
             $queryInsertClub = "INSERT INTO `zay_close_club`(`user_id`, `period_month`, `lastdate`, `end_date`, `status`, `freeze_date`, `freeze_day`) "
                     . "VALUES ('?','6',CURRENT_TIMESTAMP,(DATE_FORMAT('?', '%Y-%m-%d')),'1',CURRENT_TIMESTAMP, '40')";
             if ($sqlLight->query($queryInsertClub, array($user_id, $date), 1)) {
-                echo "INSERT OK <br/>\n"; 
+                echo "INSERT OK <br/>\n";
             } else {
                 echo "INSERT NOT <br/>\n";
             }
@@ -229,15 +228,16 @@ class close_club extends \project\extension {
      * @param type $period_value
      * @return boolean
      */
-    public function check_add_new_period($period_value) {
-        $club_info = $this->get_club_user_info($_SESSION['user']['info']['id']);
+    public function check_add_new_period($period_value, $club_info) {
+        //echo "period_value: {$period_value}<br/>";
+        //$club_info = $this->get_club_user_info($_SESSION['user']['info']['id']);
         $amount = 0;
         if (count($club_info) > 0) {
-            $amount = $club_info[0]['period_month'] + $period_value;
+            $amount = $club_info[0]['diff_month'] + $period_value;
         } else {
             $amount = $period_value;
         }
-        if ($period_value < 13) {
+        if ($amount < 13) {
             return true;
         }
         return false;
@@ -251,6 +251,8 @@ class close_club extends \project\extension {
     private function end_open_period_close_club() {
         try {
             $query = "UPDATE zay_close_club cc SET cc.status='0' WHERE cc.status='1' AND cc.end_date < NOW() ";
+            $this->query($query, array());
+            $query = "UPDATE zay_close_club cc SET cc.status='1' WHERE cc.status='0' AND DATE_FORMAT(cc.end_date, '%Y-%m-%d 23:59:59') > NOW() ";
             return $this->query($query, array());
         } catch (Exception $exc) {
             $_SESSION['errors'][] = $exc->getTraceAsString();

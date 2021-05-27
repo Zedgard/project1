@@ -140,6 +140,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
 
             $queryMaxId = "select MAX(p.id) max_id from `zay_pay` p";
             $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
+            $pay_id = $max_id;
             //echo "pay_key: {$pay_key} <br/>\n";
             //print_r($payment);
 //echo $max_id . "<br/>\n";
@@ -165,10 +166,14 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
                 /*
                  * Если это консультация 
                  */
-                if ($_SESSION['consultation']['your_master_id'] > 0) {
-                    $_SESSION['consultation']['pay_id'] = $max_id;
-                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
-                }
+//                if ($_SESSION['consultation']['your_master_id'] > 0) {
+//                    $_SESSION['consultation']['pay_id'] = $max_id;
+//                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
+//                }
+
+                // Зарегистрируем покупку
+                $pr_cart->register_pay($pay_id);
+
                 // Отправляем пользователя на страницу оплаты
                 //header('Location: ' . $confirmationUrl);
             } else {
