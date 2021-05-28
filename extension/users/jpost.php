@@ -14,13 +14,18 @@ if ($user->isEditor()) {
     // Данные по пользователю
     if (isset($_POST['getUsersList'])) {
         $page_num = $_POST['page_num'];
-        $input_search_str = (strlen(trim($_POST['input_search_str'])) > 0) ? $_POST['input_search_str'] : '';
+
+        $input_search_close_club_users = $_POST['input_search_close_club_users'];
+        $_SESSION['input_search_str'] = $_POST['input_search_str'];
+
         $user_id = 0;
         if (isset($_POST['system_user_id']) && $_POST['system_user_id'] > 0) {
             $user_id = $_POST['system_user_id'];
             $_SESSION['user_edit_obj_id'] = $user_id;
         }
-        $data = $user->getUserInfo($user_id, $page_num, $input_search_str);
+        $params = array();
+        //$params['input_search_close_club_users'] = $input_search_close_club_users;
+        $data = $user->getUserInfo($user_id, $page_num, $_SESSION['input_search_str'], $params);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
 

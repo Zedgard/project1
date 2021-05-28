@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="/extension/products/office.css<?= $_SESSION['rand'] ?>">
 <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
 <script src="/assets/plugins/calamansi/calamansi.min.js"></script>
+<link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
+<script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <div class="office_block_top_main">
     <div class="office_block_top_left">
         <a href="/office/?katalog" class="office_link_back">
