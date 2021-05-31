@@ -62,6 +62,8 @@
         </div>
     </div>
 </div>
+<script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
+<script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <script>
     var wares_id = '<?= $wares_id ?>';
     var searchStr = '';

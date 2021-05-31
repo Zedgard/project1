@@ -14,7 +14,6 @@
         <link href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
         <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js<?= $_SESSION['rand'] ?>"></script>
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-        <link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>

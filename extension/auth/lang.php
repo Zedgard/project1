@@ -35,5 +35,6 @@ $lang['auth']['ru'] = array(
     'editing' => 'Редактирование',
     'back_link' => '< назад',
     'no_input_form' => 'Не верно ввели данные',
-    'error_register_form' => 'Ошибка регистрации, попробуйте позже!'
+    'error_register_form' => 'Ошибка регистрации, попробуйте позже!',
+    'user_search_register_true' => 'Уже зарегистрирован!'
 );

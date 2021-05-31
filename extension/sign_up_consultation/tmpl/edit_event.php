@@ -59,7 +59,7 @@
                             <div class="mb-1"><input type="text" name="consultation_date" value="" class="consultation_date" /></div>
                         </div>
                         <div class="form-group">
-                            <label>Время продолжительности консультации</label>
+                            <label>Время консультации (МСК)</label>
                             <div class="mb-1"><input type="text" name="consultation_time" value="" class="consultation_time" /></div>
                         </div>
 

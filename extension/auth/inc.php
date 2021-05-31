@@ -172,7 +172,7 @@ class auth extends \project\user {
             }
 
             if (strlen($phone) == 0) { // если не передан номер телефона
-                $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1"; // and `active` = 1 // ТОлько активированых 
+                $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1"; // and `active` = 1 // Только активированых 
                 $users = $sqlLight->queryList($query, array($email));
             } else {
                 $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active`=1"; // and `active` = 1 // ТОлько активированых 
@@ -180,7 +180,7 @@ class auth extends \project\user {
             }
 
             if (count($users) > 0) {
-                $error[] = $lang['user_search_register_true'];
+                $error[] = $lang['auth'][$_SESSION['lang']]['user_search_register_true'];
             }
             // поиск возможно существующей учетки
             $query_find_user = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=0";
@@ -188,6 +188,7 @@ class auth extends \project\user {
 
             if (count($error) == 0) {
                 if (count($find_user) == 0) {
+                    $_SESSION['db_next_id'] = $sqlLight->queryNextId('zay_users');
                     $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
                             . "VALUES ('?','?','','','?','?','?', NOW() )";
                     if ($sqlLight->query($query, array($email, $phone, $pass_hash, $active, $activate_code), 0)) {
@@ -198,6 +199,8 @@ class auth extends \project\user {
                     } else {
                         $error[] = $lang['auth'][$_SESSION['lang']]['error_register_form'];
                     }
+                } else {
+                    $error[] = 'Уже зарегистрирован!';
                 }
             } else {
 //                $query_update = "UPDATE `zay_users` SET `phone`='?',`first_name`='?',`last_name`='?',`u_pass`='?', "
@@ -215,6 +218,7 @@ class auth extends \project\user {
 //                    }
 //                    return true;
 //                }
+                $error[] = 'Ошибка!';
             }
         } else {
             $error[] = 'Не заполнены поля!';

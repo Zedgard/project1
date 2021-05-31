@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css<?= $_SESSION['rand'] ?>">
 <script src="/assets/plugins/calamansi/calamansi.min.js<?= $_SESSION['rand'] ?>"></script>
 <link href="/extension/marathons/css/marathons.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
+<script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <input type="hidden" name="marathons_wares_id" value="<?= $_GET['wares_id'] ?>" class="marathons_wares_id" />
 <div class="container-fluid">
     <!-- Большие экраны -->

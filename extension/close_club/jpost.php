@@ -56,8 +56,19 @@ if (isset($_POST['set_freeze_day'])) {
     $day_num = $_POST['set_freeze_day'];
     if ($close_club->close_club_set_freeze_day($_SESSION['user']['info']['id'], $day_num)) {
         $data = $close_club->get_club_user_info($_SESSION['user']['info']['id']);
-        $result = array('success' => 1, 'success_text' => 'Абонемент заморожен до ' . $data[0]['freeze_date'] , 'data' => $data);
+        $result = array('success' => 1, 'success_text' => 'Абонемент заморожен до ' . $data[0]['freeze_date'], 'data' => $data);
     } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка заморозки абонемента!');
     }
+}
+
+if (isset($_POST['get_close_club_user_info'])) {
+    $user_id = $_POST['user_id'];
+    $data = $close_club->get_club_user_info($user_id);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+if (isset($_GET['close_club_insert'])) {
+    $close_club->close_club_insert($_GET['user_id']);
+    $result = array('success' => 1, 'success_text' => '');
 }

@@ -6,6 +6,7 @@ defined('__CMS__') or die;
 include_once 'inc.php';
 include_once DOCUMENT_ROOT . '/extension/auth/inc.php';
 include 'lang.php';
+include_once DOCUMENT_ROOT . '/extension/auth/lang.php';
 
 $user = new \project\user();
 $auth = new \project\auth();
@@ -14,13 +15,18 @@ if ($user->isEditor()) {
     // Данные по пользователю
     if (isset($_POST['getUsersList'])) {
         $page_num = $_POST['page_num'];
-        $input_search_str = (strlen(trim($_POST['input_search_str'])) > 0) ? $_POST['input_search_str'] : '';
+
+        $input_search_close_club_users = $_POST['input_search_close_club_users'];
+        $_SESSION['input_search_str'] = $_POST['input_search_str'];
+
         $user_id = 0;
         if (isset($_POST['system_user_id']) && $_POST['system_user_id'] > 0) {
             $user_id = $_POST['system_user_id'];
             $_SESSION['user_edit_obj_id'] = $user_id;
         }
-        $data = $user->getUserInfo($user_id, $page_num, $input_search_str);
+        $params = array();
+        //$params['input_search_close_club_users'] = $input_search_close_club_users;
+        $data = $user->getUserInfo($user_id, $page_num, $_SESSION['input_search_str'], $params);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
 
@@ -30,6 +36,7 @@ if ($user->isEditor()) {
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $email = $_POST['email'];
+        $login_instagram = $_POST['login_instagram'];
         $phone = $auth->phoneReplace($_POST['phone']);
         $user_role_id = $_POST['user_role'];
 
@@ -47,14 +54,47 @@ if ($user->isEditor()) {
             $_SESSION['errors'][] = 'Номер телефона должен быть заполнен';
         }
 
+        $ret = false;
         if (count($_SESSION['errors']) == 0) {
 
-            $updateUserInfo = "UPDATE `zay_users` SET `email`='?',`phone`='?',`first_name`='?',"
-                    . "`last_name`='?' WHERE id='?' ";
-            if (!$user->query($updateUserInfo, array($email, $phone, $first_name, $last_name, $user_id))) {
-                $_SESSION['errors'][] = 'Обновление не выполнено';
+            if ($user_id > 0) {
+
+                $select_query_email = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and id<>'?'"; 
+                $users_email = $user->getSelectArray($select_query_email, array($email, $user_id));
+                
+                $select_query_phone = "SELECT * FROM `zay_users` u WHERE u.`phone`='?' and id<>'?'"; 
+                $users_phone = $user->getSelectArray($select_query_phone, array($phone, $user_id));
+
+                if (count($users_email) == 0 && count($users_phone) == 0) {
+                    $updateUserInfo = "UPDATE `zay_users` SET `email`='?',`phone`='?',`first_name`='?',"
+                            . "`last_name`='?', `login_instagram`='?' WHERE id='?' ";
+                    $ret = $user->query($updateUserInfo, array($email, $phone, $first_name, $last_name, $login_instagram, $user_id));
+                } else {
+                    $ret = false;
+                    $_SESSION['errors'][] = 'Ошибка! В системе будет 2 клиента с таким email адресом или номером телефона!';
+                }
             } else {
-                $user->edit_user_role($user_id, $user_role_id);
+                if (strlen($conPassword) > 2) {
+                    // Не зарегистрирован, регистрируем и вносим изменения
+                    if ($auth->register($email, $phone, $conPassword, $conPassword, 1, 1)) {
+                        if (isset($_SESSION['db_next_id'])) {
+                            $user_id = $_SESSION['db_next_id'];
+                            $updateUserInfo2 = "UPDATE `zay_users` SET `email`='?',`phone`='?',`first_name`='?',"
+                                    . "`last_name`='?', `login_instagram`='?' WHERE id='?' ";
+                            $ret = $user->query($updateUserInfo2, array($email, $phone, $first_name, $last_name, $login_instagram, $_SESSION['db_next_id']));
+                        }
+                    } else {
+                        $_SESSION['errors'][] = 'Ошибка регистрации!';
+                    }
+                } else {
+                    $_SESSION['errors'][] = 'Не задан пароль!';
+                }
+            }
+
+            $user->edit_user_role($user_id, $user_role_id);
+
+            if (!$ret) {
+                $_SESSION['errors'][] = 'Обновление не выполнено';
             }
 
             if (strlen($conPassword) > 3) {

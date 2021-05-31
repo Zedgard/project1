@@ -12,7 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 
 class user extends \project\extension {
 
-    private $page_max = 100;
+    private $page_max = 30;
     private $id, $email, $phone, $first_name, $last_name, $u_pass, $lastdate;
     protected $errors = array();
 
@@ -21,30 +21,42 @@ class user extends \project\extension {
     }
 
     /**
+     * Колличество пользователей
+     * @return int
+     */
+    public function user_count() {
+        $select = "SELECT count(*) as col FROM zay_users ";
+        $r = $this->getSelectArray($select, array(), 0)[0]['col'];
+        return $r;
+    }
+
+    /**
      * Инофрмация по пользователю
      * @param type $id
      * @return type
      */
-    public function getUserInfo($id = 0, $page_num = 1, $input_search_str = '') {
+    public function getUserInfo($id = 0, $page_num = 1, $input_search_str = '', $params = array()) {
         $col = ($page_num * $this->page_max);
         $data = array();
 
         if ($id > 0) {
-            $select = "SELECT u.*, ru.`role_id`, ru.`user_id`, r.role_name as role_name, r.role_privilege as role_privilege, "
-                    . "IF(ADDTIME(u.`active_lastdate`, \"0:05:0.00\") > CURRENT_TIMESTAMP(), '1', '0') as `user_online` "
-                    . "FROM `zay_users` u "
-                    . "left join `zay_roles_users` ru on ru.user_id=u.id "
-                    . "left join `zay_roles` r on r.id=ru.role_id "
-                    . "WHERE u.id='?' ORDER BY u.`id` DESC LIMIT {$col} ";
+            $select = "SELECT u.*, ru.role_id, ru.user_id, r.role_name as role_name, r.role_privilege as role_privilege, 
+                    IF(ADDTIME(u.active_lastdate, \"0:05:0.00\") > CURRENT_TIMESTAMP(), '1', '0') as `user_online`,
+                    if((cc.id>0),1,0) as close_club_true, 
+                    if((cc.freeze_date>CURRENT_DATE),0,cc.status) as close_club_status, 
+                    cc.end_date as close_club_end_date 
+                    FROM zay_users u 
+                    left join zay_close_club cc on cc.user_id=u.id
+                    left join zay_roles_users ru on ru.user_id=u.id 
+                    left join zay_roles r on r.id=ru.role_id 
+                    WHERE u.id='?'";
             $data = $this->getSelectArray($select, array($id))[0];
-            //$_SESSION['user']['info'] = $data;
         } else {
             $where_val = array();
             $where_array = array();
-            $where = '';
+            $where2 = '';
             $w = '';
             if (strlen($input_search_str) > 0) {
-                $where = "WHERE";
                 $where_val[] = "`email` LIKE '%?%'";
                 $where_val[] = "`phone` LIKE '%?%'";
                 $where_val[] = "`first_name` LIKE '%?%'";
@@ -53,18 +65,48 @@ class user extends \project\extension {
                 $where_array[] = $input_search_str;
                 $where_array[] = $input_search_str;
                 $where_array[] = $input_search_str;
-                $w = implode(' or ', $where_val);
-                $where = "{$where} ({$w}) ";
             }
-            $where_array[] = $col;
 
-            $select = "SELECT u.*, ru.`role_id`, ru.`user_id`, r.role_name, r.role_privilege, "
-                    . "IF(ADDTIME(u.`active_lastdate`, \"0:05:0.00\") > CURRENT_TIMESTAMP(), '1', '0') as `user_online` "
-                    . "FROM `zay_users` u "
-                    . "left join `zay_roles_users` ru on ru.user_id=u.id "
-                    . "left join `zay_roles` r on r.id=ru.role_id "
-                    . "{$where} "
-                    . "ORDER BY u.`id` DESC LIMIT ? ";
+
+
+            
+
+            if (count($where_val) > 0) {
+                $w = implode(' or ', $where_val);
+                $where = "WHERE {$w} ";
+            }
+
+            if (count($params) > 0) {
+                if (isset($params['input_search_close_club_users']) && $params['input_search_close_club_users'] == 1) {
+                    //$where_val[] = "cc.freeze_date>CURRENT_DATE";
+                    if (strlen($where2) > 0) {
+                        $where2 .= " AND dd.close_club_true>0";
+                    } else {
+                        $where2 = "WHERE dd.close_club_true>0";
+                    }
+                }
+            }
+            
+            if (strlen($where) > 0 || strlen($where2) > 0) {
+                $where_array[] = '';
+            } else {
+                $where_array[] = 'LIMIT ' . $col;
+            }
+
+
+            $select = "select dd.* from (
+                    SELECT u.*, ru.role_id, ru.user_id, r.role_name, r.role_privilege, 
+                    IF(ADDTIME(u.active_lastdate, \"0:05:0.00\") > CURRENT_TIMESTAMP(), '1', '0') as `user_online`,
+                    if((cc.id>0),1,0) as close_club_true, 
+                    if((cc.freeze_date>CURRENT_DATE),0,cc.status) as close_club_status, 
+                    cc.end_date as close_club_end_date 
+                    FROM zay_users u 
+                    left join zay_close_club cc on cc.user_id=u.id
+                    left join zay_roles_users ru on ru.user_id=u.id 
+                    left join zay_roles r on r.id=ru.role_id 
+                    {$where} 
+                    ORDER BY u.id DESC ? ) as dd
+                    {$where2} ";
 //                    "SELECT u.id, u.`email`, u.`phone`, u.`first_name`, u.`last_name`, "
 //                    . "u.`active`, u.`active_lastdate`, ru.`role_id`, ru.`user_id`, r.role_privilege, "
 //                    . "IF(ADDTIME(CURRENT_TIMESTAMP(), \"0:05:0.00\") > u.`active_lastdate`, '1', '0') as `user_online` "
