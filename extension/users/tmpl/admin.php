@@ -88,9 +88,29 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer mb-5">
                 <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Закрыть</button>
                 <button type="button" class="btn btn-primary btn-pill btn_save_user_settings">Сохранить</button>
+            </div>
+
+            <div class="edit_close_club_block pl-5 pb-5 pr-5" style="display: none;">
+                <h2 class="mb-3">Информация по закрытому клубу</h2>
+                <div>
+                    <div class="table-responsive-lg">
+                        <table class="table">
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="btn_close_club_insert pl-5 pb-5 pr-5">
+                <a href="javascript:void(0)" class="btn btn-primary init_super_insert" func="">Добавить новую запись по закрытому клубу</a>
+            </div>
+
+            <div class="form_result" style="display: none;">
+
             </div>
         </div>
     </div>

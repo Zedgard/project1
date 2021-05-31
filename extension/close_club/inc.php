@@ -289,4 +289,15 @@ class close_club extends \project\extension {
         return $this->query($query, array($day_num, $day_num, $day_num, $user_id));
     }
 
+    /**
+     * Добавить запись по закрытому клубу для пользователя
+     * @param type $user_id
+     * @return type
+     */
+    public function close_club_insert($user_id) {
+        $queryInsertClub = "INSERT INTO `zay_close_club`(`user_id`, `period_month`, `lastdate`, `end_date`, `status`, `freeze_date`, `freeze_day`) "
+                . "VALUES ('?','0',CURRENT_TIMESTAMP,(DATE_FORMAT(CURRENT_TIMESTAMP, '%Y-%m-%d')),'1',CURRENT_TIMESTAMP, '40')";
+        return $this->query($queryInsertClub, array($user_id), 0);
+    }
+
 }

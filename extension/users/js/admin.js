@@ -107,53 +107,8 @@ function initUserEdit() {
                 //$('.user_phone').mask('+7 (999) 999-9999');
             });
 
-            $(".btn_save_user_settings").unbind('click').click(function () {
-                var first_name = $(".user_settings .first_name").val();
-                var last_name = $(".user_settings .last_name").val();
-                var phone = $(".user_settings .user_phone").val();
-                var email = $(".user_settings .user_email").val();
-                var user_role = $(".user_settings .user_role").val();
-
-//                    var oldPassword = $(".user_settings .oldPassword").val();
-//                    var newPassword = $(".user_settings .newPassword").val();
-                var conPassword = $(".user_settings .conPassword").val();
-
-                $('.form_result').html("");
-                sendPostLigth('/jpost.php?extension=users',
-                        {"saveProfilSettings": 1,
-                            "first_name": first_name,
-                            "last_name": last_name,
-                            "phone": phone,
-                            "email": email,
-                            "user_role": user_role,
-                            //"newPassword": newPassword,
-                            "conPassword": conPassword
-                        }, function (result) {
-                    //console.log("data: " + result);;
-                    initTable();
-                    var metod = 0;
-                    if (result['success'] == 1) {
-                        $('.form_result').append(result['success_text']);
-                        metod = 1;
-                        if (user_edit.length > 0) {
-                            document.location.href = '/admin/admin_users/?search_str=' + input_search_str;
-                        }
-                    }
-                    if (result['success'] == 0) {
-                        if (result['errors'].length > 0) {
-                            for (var i = 0; i < result['errors'].length; i++) {
-                                $('.form_result').append(result['errors'][i]);
-                            }
-                        }
-                        metod = 2;
-                    }
-                    // Непредвиденная ошибка, если result['success'] не передали
-                    if (metod == 0) {
-                        $('.form_result').append("Error system №101 !");
-                    }
-                    $('#editModal').modal('hide');
-                });
-            });
+            init_edit_close_club(obj_id);
+            init_btn_save_user_settings();
 
         });
 
@@ -192,6 +147,64 @@ function initUserEdit() {
     }
 }
 
+function init_btn_save_user_settings(func) {
+    if ($(".btn_save_user_settings").length > 0) {
+        $(".btn_save_user_settings").unbind('click').click(function () {
+            var first_name = $(".user_settings .first_name").val();
+            var last_name = $(".user_settings .last_name").val();
+            var phone = $(".user_settings .user_phone").val();
+            var email = $(".user_settings .user_email").val();
+            var login_instagram = $(".user_settings .login_instagram").val();
+            var user_role = $(".user_settings .user_role").val();
+
+//                    var oldPassword = $(".user_settings .oldPassword").val();
+//                    var newPassword = $(".user_settings .newPassword").val();
+            var conPassword = $(".user_settings .conPassword").val();
+
+            $('.form_result').html("");
+            sendPostLigth('/jpost.php?extension=users',
+                    {"saveProfilSettings": 1,
+                        "first_name": first_name,
+                        "last_name": last_name,
+                        "phone": phone,
+                        "email": email,
+                        "login_instagram": login_instagram,
+                        "user_role": user_role,
+                        //"newPassword": newPassword,
+                        "conPassword": conPassword
+                    }, function (result) {
+                //console.log("data: " + result);;
+                initTable();
+                var metod = 0;
+                if (result['success'] == 1) {
+                    $('.form_result').append(result['success_text']);
+                    metod = 1;
+                    if (user_edit.length > 0) {
+                        document.location.href = '/admin/admin_users/?search_str=' + input_search_str;
+                    }
+                }
+                if (result['success'] == 0) {
+                    if (result['errors'].length > 0) {
+                        for (var i = 0; i < result['errors'].length; i++) {
+                            $('.form_result').append(result['errors'][i]);
+                        }
+                    }
+                    metod = 2;
+                }
+                // Непредвиденная ошибка, если result['success'] не передали
+                if (metod == 0) {
+                    $('.form_result').append("Error system №101 !");
+                }
+                $('#editModal').modal('hide');
+
+                if (typeof func !== 'undefined') {
+                    func();
+                }
+            });
+        });
+    }
+}
+
 /**
  * Получить доступные роли
  * @returns {undefined}
@@ -208,6 +221,45 @@ function init_roles(role_id) {
                     selected = 'selected="selected"';
                 }
                 $(".user_role").append('<option value="' + e['data'][i]['id'] + '" ' + selected + ' >' + e['data'][i]['role_name'] + '</option>');
+            }
+        });
+    }
+}
+
+function init_edit_close_club(user_id) {
+    console.log('init_edit_close_club: ' + user_id);
+    if (user_id > 0) {
+        $(".edit_close_club_block").hide();
+        $(".btn_close_club_insert").hide();
+        $(".edit_close_club_block .table tbody").html("");
+        sendPostLigth('/jpost.php?extension=close_club', {
+            "get_close_club_user_info": 1,
+            'user_id': user_id
+        }, function (e) {
+            if (e['data'].length > 0) {
+                $(".edit_close_club_block").show();
+                for (var i = 0; i < e['data'].length; i++) {
+                    $(".edit_close_club_block .table tbody").append('<tr>\n\
+                                <td>Дата окончания обонемента</td>\n\
+                                <td><input type="text" name="close_club_end_date" value="' + e['data'][0]['end_date'] + '" elm_id="' + e['data'][0]['id'] + '" elm_table="zay_close_club" elm_row="end_date" class="form-control inp_datepicker init_elm_edit"></td>\n\
+                            </tr>');
+                    $(".edit_close_club_block .table tbody").append('<tr>\n\
+                                <td>Дата Заморозки</td>\n\
+                                <td><input type="text" name="close_club_freeze_date" value="' + e['data'][0]['freeze_date'] + '" elm_id="' + e['data'][0]['id'] + '" elm_table="zay_close_club" elm_row="freeze_date" class="form-control inp_datepicker init_elm_edit"></td>\n\
+                            </tr>');
+                    $(".edit_close_club_block .table tbody").append('<tr>\n\
+                                <td>Дни заморозки</td>\n\
+                                <td><input type="text" name="close_club_freeze_date" value="' + e['data'][0]['freeze_day'] + '" elm_id="' + e['data'][0]['id'] + '" elm_table="zay_close_club" elm_row="freeze_day" class="form-control init_elm_edit"></td>\n\
+                            </tr>');
+
+                }
+
+                super_init();
+                init_datepicker(3);
+            } else {
+                $(".btn_close_club_insert").show();
+                $(".btn_close_club_insert .init_super_insert").attr('jpost_url', '/jpost.php?extension=close_club&close_club_insert=1&user_id=' + user_id);
+                $(".btn_close_club_insert .init_super_insert").attr('func',"init_edit_close_club('" + user_id + "')");
             }
         });
     }

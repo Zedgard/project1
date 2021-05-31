@@ -24,7 +24,9 @@ function init_super_insert() {
             sendPostLigth(jpost_url,
                     {},
                     function (e) {
-                        eval(func);
+                        if (typeof func != "undefined") {
+                            eval(func);
+                        }
                     });
         });
     }
@@ -35,23 +37,26 @@ function init_super_insert() {
  * @returns {undefined}
  */
 function init_super_elm_edit() {
-    if ($(".init_elm_edit").length > 0) {
-        $(".init_elm_edit").unbind('keyup').keyup(function () {
-
-            var elm_id = $(this).attr("elm_id");
-            var elm_table = $(this).attr("elm_table");
-            var elm_row = $(this).attr("elm_row");
-            var func = $(this).attr("func");
-            var tagName = $(this)[0].tagName;
-            var value = '';
-            if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
-                value = $(this).val();
-            }
+    if ($(".init_elm_edit").length > 0) { // keyup, focusout, change
+        $(".init_elm_edit").unbind('focusout').unbind('keyup').unbind('change').on('keyup, focusout, change', function (e) {
+            var e = this;
+            setTimeout(function () {
+                var elm_id = $(e).attr("elm_id");
+                var elm_table = $(e).attr("elm_table");
+                var elm_row = $(e).attr("elm_row");
+                var func = $(e).attr("func");
+                var tagName = $(e)[0].tagName;
+                var value = '';
+                if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
+                    value = $(e).val();
+                }
 //            if (tagName == 'TEXTAREA') {
 //                value = $(this).html();
 //            }
-            console.log('super_elm_edit: ' + value);
-            init_super_post(elm_id, value, elm_table, elm_row, func);
+                console.log('super_elm_edit: ' + value);
+                init_super_post(elm_id, value, elm_table, elm_row, func);
+            }, 200);
+
         });
     }
 }
@@ -73,7 +78,9 @@ function init_super_delete() {
                         "elm_table": elm_table
                     },
                     function (e) {
-                        eval(func);
+                        if (typeof func != "undefined") {
+                            eval(func);
+                        }
                     });
         });
     }
@@ -98,7 +105,7 @@ function init_super_post(elm_id, value, elm_table, elm_row, func) {
                 "elm_row": elm_row
             },
             function (e) {
-                if (func.length > 0) {
+                if (typeof func != "undefined") {
                     eval(func);
                 }
             });

@@ -36,15 +36,27 @@
             <span class="d-block mt-1">Телефон для оповещений и восстановления аккаунта.</span>
         </div>
 
-        <div class="form-group mb-4">
-            <label for="user_email">Email</label>
-            <input type="email" name="user_email" class="form-control user_email" id="user_email" value="" required>
+        <div class="row mb-2">
+
+            <div class="col-lg-6">
+                <div class="form-group mb-4">
+                    <label for="user_email">Email</label>
+                    <input type="email" name="user_email" class="form-control user_email" id="user_email" value="" required>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group mb-4">
+                    <label for="user_email">Ник в инстаграм</label>
+                    <input type="text" name="login_instagram " class="form-control login_instagram " id="login_instagram " value="" required>
+                </div>
+            </div>
+
         </div>
 
         <div class="form-group mb-4">
             <label for="user_role">Роль пользователя</label>
             <select class="form-control user_role" name="user_role" name="user_role">
-                
+
             </select>
         </div>
 
@@ -53,25 +65,17 @@
             <input type="text" name="conPassword" class="form-control conPassword" id="conPassword">
         </div>
 
-
-
-        <div class="form_result" style="display: none;">
-
-        </div>
-
     </form>
 </div>
 <script>
     $(function () {
 
-        $(".passwordGen").click(function (){
-           var p = gen_password(8);
-           $(".conPassword").val(p);
+        $(".passwordGen").click(function () {
+            var p = gen_password(8);
+            $(".conPassword").val(p);
         });
-        
-    });
 
-    
+    });
 
     // генерация пароля
     function gen_password(len) {
