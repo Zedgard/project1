@@ -86,6 +86,8 @@ class send_emails extends \project\extension {
         $body_str = fileGet($file_url);
         // вставки системные http://getcourse.ru/notifications/unsubscribe/message/id/7461154924/h/93951
         $replaces = array(
+            'site' => "{$_SERVER['HTTP_HOST']}",
+            'site_url' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}",
             'link_site_url' => "<a href=\"{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}\" target=\"_blank\">{$_SESSION['site_title']}</a>",
             'site_ps' => '<div style=\"text-align: center;\">PS. Вы можете задать любой вопрос менеджеру, просто ответив на это письмо.</div>',
             'site_footer' => "<div style=\"text-align: center;background-color: #eee;padding: 10px;font-size: 0.7rem;margin-top: 20px;\">Вы получили это письмо, потому что регистрировались в проекте «{{link_site_url}}» </div>",
@@ -153,8 +155,6 @@ class send_emails extends \project\extension {
      * Дать разрешение<br>
      * https://myaccount.google.com/u/0/lesssecureapps?pli=1&rapt=AEjHL4Ol_vs_Lq-qGdvCJbpcRTzlQK3LakI2iYSfeQSwNF_LoigTs-1-OAnTQiBdCXZ5cQYzgn_mpTXCIZXSpp7v7tybhg_wlw <br>
      * https://accounts.google.com/DisplayUnlockCaptcha <br/>
-     * Генератор mdkim чтобы письма в спам не падали
-     * https://dmarcly.com/tools/dkim-record-generator
      * @param type $email_id тело сообщения
      * @param type $to_email кому отправить
      * @param type $params данные для замены
@@ -181,18 +181,20 @@ class send_emails extends \project\extension {
 //                    // Дополнительные заголовки
 //                    //$headers .= "To: <{$to_email}>\r\n";
 //                    $headers .= "From: <{$email_info['email_reply_to']}>\r\n";
-//                    //echo "to: {$to_email} email_body_file: {$email_info['email_body_file']} subject: {$email_info['email_subject']} \n";
+//                    echo "to: {$to_email} email_body_file: {$email_info['email_body_file']} subject: {$email_info['email_subject']} <br/>\n";
 //                    // Отправляем
 //                    $return = mail($to_email, $email_info['email_subject'], $body, $headers);
+//                    var_dump($return);
+//                  -----------------------------------------------------------------------------------  
                     // Server settings Не работает
                     $mail->SMTPDebug = SMTP::DEBUG_OFF; //DEBUG_SERVER; // for detailed debug output
                     $mail->isSMTP();
                     $mail->CharSet = "UTF-8";
-                    $mail->Host = 'smtp.gmail.com';
-                    //$mail->Host = 'mail.edgardzaycev.com';
+                    //$mail->Host = 'smtp.gmail.com';
+                    
                     $mail->SMTPAuth = true;
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587; // google
+                    //$mail->Port = 587; // google
                     $mail->SMTPDebug = 0;
                     $mail->SMTPSecure = 'tls';
                     //$mail->Port = 465;
@@ -204,6 +206,13 @@ class send_emails extends \project\extension {
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
                     // Setting the email content
+                    // Отправка с нашего сервере
+                    //$mail->Username = 'hello@edgardzaycev.com';    // YOUR gmail email
+                    //$mail->Password = 'L2f6lernBsFZ'; // YOUR gmail password    L2f6lernBsFZ
+                    $mail->Host = 'mail.edgardzaycev.com';
+                    $mail->Port = 587;
+                    $mail->SMTPOptions = array( 'ssl' => array( 'verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true ) ); 
+                    
                     $mail->IsHTML(true);
                     // Если передали новую тему
                     if (isset($params['subject']) && strlen($params['subject']) > 0) {
@@ -222,14 +231,15 @@ class send_emails extends \project\extension {
                     //echo "Email message sent. <br/>\n";
                     //return true;
                 } catch (Exception $e) {
-                    //echo "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
-                    $_SESSION['errors'][] = "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
+                    echo "Error in sending email. Mailer Error";
+                    //$_SESSION['errors'][] = "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
                 }
             } else {
-                return true;
+                $_SESSION['errors'][] = 'Нет настроек для отправки сообщений';
+                return false;
             }
         } else {
-            $_SESSION['errors'][] = 'Данные не заданы email_id или to_email - коми отправить';
+            $_SESSION['errors'][] = 'Данные не заданы email_id или to_email - кому отправить';
         }
         return false;
     }

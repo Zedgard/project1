@@ -9,4 +9,4 @@ $headers .= "From: <koman1706@gmail.com>\r\n";
 //$headers[] = 'Cc: birthdayarchive@example.com';
 //$headers[] = 'Bcc: birthdaycheck@example.com';
 // Отправляем
-$return = mail('resko1987@mail.ru', 'email_subject', 'test 1', $headers);
+$return = mail('koman1706@gmail.com', 'email_subject', 'test 1', $headers);
