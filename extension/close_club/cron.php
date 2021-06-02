@@ -53,15 +53,17 @@ if (count($data) > 0) {
             $params['day_str'] = 'семь дней';
         }
 
-        echo "email: {$value['email']} Период: {$params['day_str']}<br/>\n";
-        if (count($params) > 0 && isset($_GET['send'])) {
-            if ($send_emails->send('close_club_end_ticket', $value['email'], $params)) {
-                echo "Отправлено<br/>\n";
-            } else {
-                echo "Ошибка<br/>\n";
+        if (count($params) > 0) {
+            echo "email: {$value['email']} Период: {$params['day_str']}<br/>\n";
+            if (isset($_GET['send'])) {
+                if ($send_emails->send('close_club_end_ticket', $value['email'], $params)) {
+                    echo "Отправлено<br/>\n";
+                } else {
+                    echo "Ошибка<br/>\n";
+                }
             }
+            echo "--------<br/>\n";
         }
-        echo "--------<br/>\n";
     }
 }
 
