@@ -200,15 +200,13 @@ class send_emails extends \project\extension {
                     //$mail->Port = 465;
                     //echo "u: {$user_info['user_email']} p: {$user_info['user_password']} \n";
                     $mail->Username = $user_info['user_email'];    // YOUR gmail email
-                    $mail->Password = $user_info['user_password']; // YOUR gmail password    L2f6lernBsFZ
+                    $mail->Password = $user_info['user_password']; // YOUR gmail password    
                     // Sender and recipient settings
                     $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // 
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
-                    // Setting the email content
-                    // Отправка с нашего сервере
-                    //$mail->Username = 'hello@edgardzaycev.com';    // YOUR gmail email
-                    //$mail->Password = 'L2f6lernBsFZ'; // YOUR gmail password    L2f6lernBsFZ
+                    // Setting the email content L2f6lernBsFZ
+                    // Отправка с нашего сервере    
                     $mail->Host = 'mail.edgardzaycev.com';
                     $mail->Port = 587;
                     $mail->SMTPOptions = array( 'ssl' => array( 'verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true ) ); 
