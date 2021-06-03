@@ -16,7 +16,7 @@
                 <div class="marathons_wares_title">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</div>
                 <div class="row mb-3">
                     <div class="col-6">
-                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default marathons_material_series_active" series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы марафона</a>
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default " series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы марафона</a>
                     </div>
                     <div class="col-6">
                         <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus" style="<?= $bonus_btn_style ?>" bonus_material_id="<?= $bonus_material_id ?>">Бонус <?= $bonus_lock_content ?></a>
@@ -31,18 +31,14 @@
                                     continue;
                                 }
                                 ?>
-                                <div class="row mb-1">
-                                    <div class="col-11" style="margin: 0 auto;">
-                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn <?= $bonus_class ?>" style="<?= $bonus_style ?>" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?> <?= $g ?><i class="fas fa-plus"></i></a>
-                                    </div>
+                                <div class="marathons_elm mb-1">
+                                    <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn <?= $bonus_class ?>" style="<?= $bonus_style ?>" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?> <?= $g ?><i class="fas fa-plus"></i></a>
                                 </div>
                                 <?
                             } else {
                                 ?>
-                                <div class="row mb-1">
-                                    <div class="col-11" style="margin: 0 auto;">
-                                        <div class="marathons_not_btn marathons_btn_enable_day_lock" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-lock"></i></div>
-                                    </div>
+                                <div class="row marathons_elm mb-1">
+                                    <div class="marathons_not_btn marathons_btn_enable_day_lock" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-lock"></i></div>
                                 </div>
                                 <?
                             }
@@ -67,8 +63,93 @@
         </div>
     </div>
 
+    <!------------------------------------ Мобильная версия ---------------------------------------------->
+    <div class="d-lg-none">
+        <div class="row">
+            <div class="col-12" style="height: 10px;"></div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="marathons_wares_title">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</div>
+                <div class="row mb-3">
+                    <div class="col-lg-6 mb-1">
+                        <div class="marathons_elm mb-1">
+                            <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default marathons_material_series_active" series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы марафона</a>
+                            <div class="marathons_material_list_block series_id_block_0">
+                                <div class="marathons_material_lists">
 
+                                    <div class="material_info" style="display: block;">
+                                        <div class="row mt-2 mb-2">
+                                            <div class="col-12 material_content_block">
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-1">
+                        <div class="marathons_elm mb-1">
+                            <a href="javascript:void(0)" class="marathons_btn marathons_btn_brown marathons_material_bonus" style="<?= $bonus_btn_style ?>" series_id="bonus" bonus_material_id="<?= $bonus_material_id ?>">Бонус <?= $bonus_lock_content ?></a>
+
+                            <div class="marathons_material_list_block" series_id_block_bonus style="display: none;">
+                                <div class="marathons_material_list_block_title">Бонус</div>
+                                <div class="marathons_material_lists">
+
+                                    <div class="material_info" style="display: block;">
+                                        <div class="row mt-2 mb-2">
+                                            <div class="col-12 material_content_block">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <?
+                        foreach ($series as $series_value) {
+                            ?>  
+                            <div class="marathons_elm">
+                                <?
+                                if ($series_value['series_enable'] == 1) {
+                                    if (mb_strtoupper($series_value['title']) == 'БОНУС') {
+                                        continue;
+                                    }
+                                    ?>
+                                    <div class="mb-1">
+                                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_enable_day_green marathons_material_series_btn <?= $bonus_class ?>" style="<?= $bonus_style ?>" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?> <?= $g ?><i class="fas fa-plus"></i></a>
+                                    </div>
+                                    <?
+                                }
+                                ?>
+                                <div class="marathons_material_list_block series_id_block_<?= $series_value['id'] ?> mb-1" style="display: none;">
+                                    <div class="marathons_material_list_block_title">Общие материалы марафона</div>
+                                    <div class="marathons_material_lists">
+
+                                        <div class="material_info" style="display: block;">
+                                            <div class="row mt-2 mb-2">
+                                                <div class="col-12 material_content_block">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <?
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 <script>
@@ -79,9 +160,10 @@
             $('.video-js').remove();
             $(".clmns--hide-on-pause").click();
             var o = this;
+
             var title = $(o).html();
             var series_id = $(o).attr("series_id");
-            var hide = 0;
+            var block = 0;
 
             var default_class = 'marathons_btn_enable_day_green';
             var green_class = 'marathons_btn_enable_day_green';
@@ -107,53 +189,36 @@
                 $(this).find(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
             });
 
-            if ($('.series_' + series_id).css("display") == 'block') {
-                hide = 1;
+            if ($('.series_id_block_' + series_id).css("display") == 'block') {
+                block = 1;
             }
 
             $(".marathons_material_series_btn").removeClass("marathons_material_series_active");
             $('.marathons_material_series_btn').removeAttr('style');
 
-//        $(".marathons_btn").each(function (index) {
-//            //console.log($(this).hasClass(green_class));
-//            if (!$(this).hasClass(green_class)) {
-//                $(this).removeClass(white_class);
-//                $(this).addClass(default_class);
-//            }
-//        });
+
+            if ($(o).closest(".marathons_elm").find(".marathons_material_list_block").length > 0) {
+                $(".marathons_material_list_block").hide(200);
+                if (block === 1) {
+                    $(o).closest(".marathons_elm").find(".marathons_material_list_block").hide(200);
+                } else {
+                    $(o).closest(".marathons_elm").find(".marathons_material_list_block").show(200);
+                }
+            } else {
+                $(".marathons_material_list_block").show(200);
+            }
 
             $(o).addClass("marathons_material_series_active");
             $(o).removeClass(default_class);
             $(o).addClass("marathons_btn_white");
-            //$(o).css("background-color", "#ffffff");
-            //$(o).css("color", "#000000");
-
 
             if (series_id > 0) {
                 $(".marathons_material_list_block_title").html("Список материалов «" + title.replace(/<\/?[^>]+(>|$)/g, "") + "»");
             } else {
                 $(".marathons_material_list_block_title").html("Общие материалы марафона");
             }
-//            if (hide == 1) {
-//                $(".marathons_material_list_block").hide(100);
-//                $('.series_' + series_id).hide(100);
-//                $('.marathons_material_series_btn').find(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
-//                $(".marathons_material_series_btn").removeClass("marathons_material_series_active");
-//                $('.marathons_material_series_btn').removeAttr('style');
-//            } else {
-//                $(".marathons_material_list_block").show(100);
-//                $(".material_info:visible").hide();
-//                $('.marathons_material_series_btn').find(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
-//                $(o).find(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
-//                $('.series_' + series_id).show(100);
-//            }
-
-            //console.log('series_id: ' + series_id + ' hide: ' + hide);
-            //$('.series_' + series_id).each(function () {
-            //$(".material_content_block").html('series_id: ' + series_id);
 
             marathon_series_material_post(series_id);
-
 
         });
 
@@ -193,10 +258,8 @@
             }
         });
 
-
-        setTimeout(function () {
-            $('.marathons_material_series_btn[series_id="0"]').click();
-        }, 200);
+        // Подгрузим сразу общие материалы
+        marathon_series_material_post(0);
 
     });
 
