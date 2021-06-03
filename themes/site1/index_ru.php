@@ -51,7 +51,7 @@
         <script type="text/javascript" src="/assets/plugins/mixitup/mixitup.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/cart.js<?= $_SESSION['rand'] ?>"></script>  
-        <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script async="async" type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
         <?= $config->getConfigParam('yandex_metrika') ?>
