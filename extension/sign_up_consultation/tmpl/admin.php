@@ -29,7 +29,7 @@
                         <a href="javascript:void(0)" class="btn btn-primary btn-sm float-right update_calendar">Обновить календарь</a>
                         <br/>
                         <div>
-                            <select name="init_master" class="form-select init_master mt-2" style="width: 200px;">
+                            <select name="init_master" class="form-control init_master mt-2" style="width: 200px;">
                                 <? foreach ($consultation_masters as $value): ?>
                                     <option value="<?= $value['id'] ?>" <?= ($_SESSION['consultation_id'] == $value['id']) ? 'selected="selected"' : '' ?>><?= $value['master_name'] ?></option>
                                 <? endforeach; ?>
