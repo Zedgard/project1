@@ -24,12 +24,21 @@ $(".calendar_day_active").unbind("click").click(function () {
                     var active = 0;
                     var elm_class = 'btn button btn-secondary button_lg textcenter';
                     var alert = 'onClick="alert(\'Время занято!\')"';
+                    var text_type = e['data'][i]['text_type'];
+                    var text_type_color = 'color: green;';
+                    if (text_type.toLowerCase().indexOf('онлайн') === -1) {
+                        text_type_color = 'color: #0073AA;';
+                    }
+                    var text_address = e['data'][i]['text_address'];
                     if (e['data'][i]['period_active'] == "1" && e['data'][i]['is_pay'] == "0" && e['data'][i]['rejection_day'] == "0" && e['data'][i]['rejection_period'] == "0") {
                         active = 1;
                         alert = '';
                         elm_class = 'btn button button_lg btngreen textcenter btn_consultation_pay';
                     }
-                    $(".consultant_periods").find("tbody").append('<tr><td><i class="far fa-clock"></i> ' + e['data'][i]['period_time'].substr(0, 5) + '<span class="consultant_period_span_msk">МСК</span></td>\n\
+                    $(".consultant_periods").find("tbody").append('<tr><td><div class="text_type" style="' + text_type_color + '">' + text_type + '</div>\n\
+                            <i class="far fa-clock"></i> ' + e['data'][i]['period_time'].substr(0, 5) + '<span class="consultant_period_span_msk">МСК</span>\n\
+                            <div class="text_address">' + text_address + '</div>\n\
+                            </td>\n\
                         <td><a href="javascript:void(0)" class="' + elm_class + '" price="' + e['data'][i]['period_price'] + '" period_text="' + e['data'][i]['period_time'] + '" elm_id="' + e['data'][i]['id'] + '" ' + alert + '>Оплатить</a></td>\n\
                         </tr>');
                 }
@@ -91,7 +100,7 @@ function init_btn_consultation_pay() {
 
                 sendPostLigth('/jpost.php?extension=auth', {
                     "check_and_register_user": 1,
-                    "consultation_user_fio": user_fio, 
+                    "consultation_user_fio": user_fio,
                     "consultation_user_phone": user_phone,
                     "consultation_user_email": user_email,
                     "consultation_user_pass": user_pass

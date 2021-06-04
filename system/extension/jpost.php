@@ -10,7 +10,7 @@ $extension = new \project\extension();
  */
 if (isset($_GET['super']) && isset($_POST['elm_edit'])) {
     $elm_id = (isset($_POST['elm_id'])) ? $_POST['elm_id'] : '0';
-    $value = (isset($_POST['value'])) ? $_POST['value'] : '';
+    $value = (isset($_POST['value']) && strlen($_POST['value']) > 0) ? $_POST['value'] : 'null';
     $elm_table = (isset($_POST['elm_table'])) ? $_POST['elm_table'] : '';
     $elm_row = (isset($_POST['elm_row'])) ? $_POST['elm_row'] : '';
     if (strlen($elm_table) > 0 && strlen($elm_row) > 0 && $elm_id > 0) {

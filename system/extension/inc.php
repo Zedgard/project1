@@ -246,8 +246,13 @@ class extension {
      */
     public function initSuperFormPOST($elm_id, $value, $elm_table, $elm_row) {
         $sqlLight = new \project\sqlLight();
-        $query = "UPDATE `?` SET `?`='?' WHERE id='?'";
-        return $sqlLight->query($query, array($elm_table, $elm_row, $value, $elm_id));
+        if ($value == 'null') {
+            $query = "UPDATE `?` SET `?`=NULL WHERE id='?'";
+            return $sqlLight->query($query, array($elm_table, $elm_row, $elm_id), 0);
+        } else {
+            $query = "UPDATE `?` SET `?`='?' WHERE id='?'";
+            return $sqlLight->query($query, array($elm_table, $elm_row, $value, $elm_id), 0);
+        }
     }
 
     /**

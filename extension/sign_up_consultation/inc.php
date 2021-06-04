@@ -263,16 +263,27 @@ class sign_up_consultation extends \project\extension {
      */
 
     /**
-     * 
+     * Получить список периодов и цен
      * @param type $master_id
-     * @return typeПолучить список периодав и цен
+     * @return type
      */
-    public function get_master_consultation_periods($master_id, $periods_id = 0) {
+    public function get_master_consultation_periods($master_id, $date, $periods_id = 0) {
+        $array = array();
+        $array[] = $master_id;
+        $where1 = ' or cp.period_date is not null';
+        if (strlen($date) > 0) {
+            $array[] = $date;
+            $where1 = "or cp.period_date='?'";
+        }
         if ($periods_id == 0) {
-            $querySelect = "SELECT * FROM `zay_consultation_periods` cp where cp.`master_id`='?' ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
-            return $this->getSelectArray($querySelect, array($master_id));
+            $querySelect = "SELECT * FROM `zay_consultation_periods` cp 
+                    where cp.`master_id`='?' AND (cp.period_date is null or cp.period_date='' {$where1}) 
+                    ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
+            return $this->getSelectArray($querySelect, $array, 0);
         } else {
-            $querySelect = "SELECT * FROM `zay_consultation_periods` cp where cp.`master_id`='?' and cp.id='?' ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
+            $querySelect = "SELECT * FROM `zay_consultation_periods` cp 
+                    where cp.`master_id`='?' and cp.id='?'
+                    ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
             return $this->getSelectArray($querySelect, array($master_id, $periods_id));
         }
     }
@@ -389,8 +400,8 @@ and pp.pay_status='succeeded') AS is_pay,
                             FROM
                                 zay_consultation_periods p
                             WHERE
-                                p.master_id = '?'";
-        $data = $this->getSelectArray($querySelect, array($day_sql, $day_sql, $day_sql, $master_id), 0);
+                                p.master_id = '?' and (p.period_date is null or p.period_date='?') ";
+        $data = $this->getSelectArray($querySelect, array($day_sql, $day_sql, $day_sql, $master_id, $day_sql), 0);
         return $data;
     }
 
@@ -419,7 +430,7 @@ and pp.pay_status='succeeded') AS is_pay,
      * @return type
      */
     public function get_master_consultation_rejections($master_id) {
-        $query = "SELECT * FROM `zay_consultation_rejection` WHERE `master_id`='?'";
+        $query = "SELECT * FROM zay_consultation_rejection cr WHERE cr.master_id='?' and cr.rejection_day >= CURRENT_DATE ";
         return $this->getSelectArray($query, array($master_id));
     }
 

@@ -72,7 +72,7 @@ if (isset($_POST['master_edit'])) {
     $master_name = (strlen($_POST['master_name']) > 0) ? $_POST['master_name'] : '';
     $token_file_name = (strlen($_POST['token_file_name']) > 0) ? $_POST['token_file_name'] : '';
     $credentials_file_name = (strlen($_POST['credentials_file_name']) > 0) ? $_POST['credentials_file_name'] : '';
-    $list_times = array();//(count($_POST['list_times']) > 0) ? implode(',', $_POST['list_times']) : '';
+    $list_times = array(); //(count($_POST['list_times']) > 0) ? implode(',', $_POST['list_times']) : '';
 
     if (strlen($master_name) > 2) {
         if ($sign_up_consultation->edit_consultation_master($id, $master_name, $token_file_name, $credentials_file_name)) {
@@ -101,8 +101,9 @@ if (isset($_POST['master_delete'])) {
  */
 if (isset($_POST['get_master_consultation_periods'])) {
     $master_id = $_POST['master_id'];
+    $date = (strlen($_POST['date']) > 0) ? $_POST['date'] : '';
     if ($master_id > 0) {
-        $data = $sign_up_consultation->get_master_consultation_periods($master_id);
+        $data = $sign_up_consultation->get_master_consultation_periods($master_id, $date);
     } else {
         $data = array();
     }

@@ -25,7 +25,7 @@ if (isset($_GET['user_id'])) {
 }
 
 $query_select = "SELECT 
-cc.*, u.email,
+cc.*, u.email
 if(DATEDIFF(DATE_ADD(cc.end_date, INTERVAL -1 DAY) , CURRENT_DATE)=0, 1, 0) as day_1,
 if(DATEDIFF(DATE_ADD(cc.end_date, INTERVAL -3 DAY) , CURRENT_DATE)=0, 1, 0) as day_3,
 if(DATEDIFF(DATE_ADD(cc.end_date, INTERVAL -5 DAY) , CURRENT_DATE)=0, 1, 0) as day_5,
