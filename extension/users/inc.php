@@ -31,6 +31,20 @@ class user extends \project\extension {
     }
 
     /**
+     * Информация по пользователю
+     * @param type $email
+     * @return array
+     */
+    public function user_info($email) {
+        $select = "SELECT * FROM zay_users u WHERE u.active='1' and u.email='?'";
+        $data = $this->getSelectArray($select, array($email), 0);
+        if (count($data) == 1) {
+            return $data[0];
+        }
+        return array();
+    }
+
+    /**
      * Инофрмация по пользователю
      * @param type $id
      * @return type
@@ -69,7 +83,7 @@ class user extends \project\extension {
 
 
 
-            
+
 
             if (count($where_val) > 0) {
                 $w = implode(' or ', $where_val);
@@ -86,7 +100,7 @@ class user extends \project\extension {
                     }
                 }
             }
-            
+
             if (strlen($where) > 0 || strlen($where2) > 0) {
                 $where_array[] = '';
             } else {

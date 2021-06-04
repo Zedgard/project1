@@ -5,7 +5,7 @@
     <div class="col-12">
         <table class="table table-hover">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th>Время</th>
                     <th>Часы</th>
                     <th>Минуты</th>
@@ -55,7 +55,7 @@
                             <td><input type="text" name="m_c_p__period_hour" class="form-control m_c_p_period_hour" value="' + e['data'][i]['period_hour'] + '" obj_i="' + i + '" /></td>\n\
                             <td><input type="text" name="m_c_p__periods_minute" class="form-control m_c_p_periods_minute" value="' + e['data'][i]['periods_minute'] + '" obj_i="' + i + '" /></td>\n\
                             <td><input type="text" name="m_c_p__period_price" class="form-control m_c_p_period_price" value="' + e['data'][i]['period_price'] + '" obj_i="' + i + '" /></td>\n\
-                            <td><input type="checkbox" name="m_c_p_period_active" class="form-check-input ml-3 m_c_p_period_active" value="1" obj_i="' + i + '" ' + period_active_checked + ' style="margin-top: 12px;" /></td>\n\
+                            <td><input type="checkbox" name="m_c_p_period_active" class="form-check ml-3 m_c_p_period_active" value="1" obj_i="' + i + '" ' + period_active_checked + ' style="margin-top: 12px;" /></td>\n\
                             <td><a href="javascript:void(0)" class="btn btn-sm btn-danger mt-2 btn_delete_consultation_period" obj_i="' + i + '" title="Удалить"><i class="mdi mdi-delete"></i></a></td>\n\
                     </tr>');
                 }

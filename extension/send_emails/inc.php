@@ -12,6 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/Exception.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/PHPMailer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/SMTP.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
 class send_emails extends \project\extension {
 
@@ -162,16 +163,27 @@ class send_emails extends \project\extension {
      */
     public function send($email_code, $to_email, $params = array()) {
         if (strlen($email_code) > 0 && strlen($to_email) > 0) {
+
+            // Информиция по клиенту
+            $p_user = new \project\user();
+            $user_info = $p_user->user_info($to_email);
+            $user_hello_text = '';
+            if (isset($user_info['first_name'])) {
+                $user_hello_text = "<p>Добрый день, <strong>{$user_info['first_name']}</strong>!</p>";
+            }
+
             //echo "email_code: {$email_code} to_email: {$to_email} <br/>\n";
             $mail = new PHPMailer(false);
-            $user_info = $this->get_smtp_user_info();
+            $smtp_user_info = $this->get_smtp_user_info();
             $email_info = $this->get_email($email_code);
-            //echo "user_info: {$user_info}<br/>\n";
+            //echo "user_info: {$smtp_user_info}<br/>\n";
             //echo "send_email: {$email_info['email_send']} <br/>\n";
             if ($email_info['email_send'] > 0) {
                 // $email_info['email_body_file'] ;
                 $body = $this->file_get_html($email_info['email_body_file'], $params); //echo $body;
                 //echo "body: {$body}<br/>\n";
+
+                $body = $user_hello_text . $body;
                 try {
                     //mail('koman1706@gmail.com','Тема','Сообщение 1');
                     // Для отправки HTML-письма должен быть установлен заголовок Content-type
@@ -191,26 +203,26 @@ class send_emails extends \project\extension {
                     $mail->isSMTP();
                     $mail->CharSet = "UTF-8";
                     //$mail->Host = 'smtp.gmail.com';
-                    
+
                     $mail->SMTPAuth = true;
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     //$mail->Port = 587; // google
                     $mail->SMTPDebug = 0;
                     $mail->SMTPSecure = 'tls';
                     //$mail->Port = 465;
-                    //echo "u: {$user_info['user_email']} p: {$user_info['user_password']} \n";
-                    $mail->Username = $user_info['user_email'];    // YOUR gmail email
-                    $mail->Password = $user_info['user_password']; // YOUR gmail password    
+                    //echo "u: {$smtp_user_info['user_email']} p: {$smtp_user_info['user_password']} \n";
+                    $mail->Username = $smtp_user_info['user_email'];    // YOUR gmail email
+                    $mail->Password = $smtp_user_info['user_password']; // YOUR gmail password    
                     // Sender and recipient settings
-                    $mail->setFrom($user_info['user_email'], $email_info['email_subject']); // 
+                    $mail->setFrom($smtp_user_info['user_email'], $email_info['email_subject']); // 
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
                     // Setting the email content L2f6lernBsFZ
                     // Отправка с нашего сервере    
                     $mail->Host = 'mail.edgardzaycev.com';
                     $mail->Port = 587;
-                    $mail->SMTPOptions = array( 'ssl' => array( 'verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true ) ); 
-                    
+                    $mail->SMTPOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true));
+
                     $mail->IsHTML(true);
                     // Если передали новую тему
                     if (isset($params['subject']) && strlen($params['subject']) > 0) {
