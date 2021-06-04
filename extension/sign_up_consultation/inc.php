@@ -430,7 +430,7 @@ and pp.pay_status='succeeded') AS is_pay,
      * @return type
      */
     public function get_master_consultation_rejections($master_id) {
-        $query = "SELECT * FROM zay_consultation_rejection cr WHERE cr.master_id='?' and cr.rejection_day >= CURRENT_DATE ";
+        $query = "SELECT * FROM zay_consultation_rejection cr WHERE cr.master_id='?' and cr.rejection_day >= CURRENT_DATE ORDER by cr.rejection_day ";
         return $this->getSelectArray($query, array($master_id));
     }
 
