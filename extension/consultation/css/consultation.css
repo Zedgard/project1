@@ -201,3 +201,16 @@
     position: absolute;
     margin-left: 4px;
 }
+.consultant_periods .text_type{
+    text-align: left;
+    color: green;
+    padding: 0 3%;
+    font-size: 0.9rem;
+}
+.consultant_periods .text_address{
+    margin-top: 6px;
+    text-align: center;
+    color: #A2A2A2;
+    padding: 0 3%;
+    font-size: 0.9rem;
+}
