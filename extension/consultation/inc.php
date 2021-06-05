@@ -80,9 +80,10 @@ class Calendar {
             if ($_SESSION['calendar']['max_day'] <= 0) {
                 $class = 'last';
             }
-
+            // Суббота и воскресенье
             if ($day_week == 6 || $day_week == 5) {
-                $class = 'last';
+                //$class = 'last';          // Заблокируем
+                $class = 'calendar_day_active'; // Активируем
             }
 
             // Форматирование

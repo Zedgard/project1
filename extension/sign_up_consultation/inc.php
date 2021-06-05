@@ -270,20 +270,20 @@ class sign_up_consultation extends \project\extension {
     public function get_master_consultation_periods($master_id, $date, $periods_id = 0) {
         $array = array();
         $array[] = $master_id;
-        $where1 = ' or cp.period_date is not null';
+        $where1 = ' or p.period_start is not null';
         if (strlen($date) > 0) {
             $array[] = $date;
-            $where1 = "or cp.period_date='?'";
+            $where1 = "or (p.period_start<='?' AND p.period_end>='?')";
         }
         if ($periods_id == 0) {
-            $querySelect = "SELECT * FROM `zay_consultation_periods` cp 
-                    where cp.`master_id`='?' AND (cp.period_date is null or cp.period_date='' {$where1}) 
-                    ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
+            $querySelect = "SELECT * FROM zay_consultation_periods p 
+                    where p.master_id='?' AND (p.period_start is null or p.period_start='' {$where1}) 
+                    ORDER BY p.period_time ASC, p.periods_minute ASC";
             return $this->getSelectArray($querySelect, $array, 0);
         } else {
-            $querySelect = "SELECT * FROM `zay_consultation_periods` cp 
-                    where cp.`master_id`='?' and cp.id='?'
-                    ORDER BY `cp`.`period_hour` ASC, `cp`.`periods_minute` ASC";
+            $querySelect = "SELECT * FROM zay_consultation_periods p 
+                    where p.master_id='?' and p.id='?'
+                    ORDER BY p.period_time ASC, p.periods_minute ASC";
             return $this->getSelectArray($querySelect, array($master_id, $periods_id));
         }
     }
@@ -400,8 +400,9 @@ and pp.pay_status='succeeded') AS is_pay,
                             FROM
                                 zay_consultation_periods p
                             WHERE
-                                p.master_id = '?' and (p.period_date is null or p.period_date='?') ";
-        $data = $this->getSelectArray($querySelect, array($day_sql, $day_sql, $day_sql, $master_id, $day_sql), 0);
+                                p.master_id = '?' and (p.period_start is null or (p.period_start<='?' AND p.period_end>='?')) 
+                            ORDER BY p.period_time";
+        $data = $this->getSelectArray($querySelect, array($day_sql, $day_sql, $day_sql, $master_id, $day_sql, $day_sql), 0);
         return $data;
     }
 

@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal bd-example-modal-lg fade" id="edit_consult_master_form" tabindex="-1" role="dialog" aria-labelledby="edit_consult_master_form" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-xxl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Настройка</h5>

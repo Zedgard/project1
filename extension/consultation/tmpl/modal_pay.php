@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <div class="mb-2 text-center">Добрый человек, проверь <strong>внимательно все детали</strong> заказа</div>
                 <div class="block_consultation_pay_info mb-4">
-                    <div class="block_consultation_pay_info_title mb-2">онлайн-консультация</div>
+                    <div class="block_consultation_pay_info_title mb-2">консультация</div>
                     <table class="block_consultation_pay_info_table text-center" style="margin: 0 auto;width: 220px;">
                         <tr>
                             <td>

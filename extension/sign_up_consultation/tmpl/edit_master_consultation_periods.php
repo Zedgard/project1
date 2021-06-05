@@ -5,28 +5,37 @@
         float: left;
         margin-left: 2%;
     }
+    /*
+    .m_c_p_text_address:hover{
+        position: absolute;
+        width: 500px;
+    }
+    */
 </style>
 <div class="row mb-2">
     <a href="javascript:void(0)" class="btn btn-primary btn-sm ml-3 add_master_consultation_period" obj_i=""><i class="mdi mdi-plus-box-outline"></i> Добавить период</a>
 </div>
 <div class="row">
     <div class="col-12">
-        <table class="table table-hover">
-            <thead>
-                <tr class="text-center">
-                    <th>День</th>
-                    <th>Время начала</th>
-                    <th>Продолжительность</th>
-                    <th>Доп. текст</th>
-                    <th>Стоимость</th>
-                    <th>Статус</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody class="master_consultation_periods">
+        <div class="table-responsive-md">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>Старт</th>
+                        <th>Конец</th>
+                        <th>Время начала</th>
+                        <th>Продолжительность</th>
+                        <th>Доп. текст</th>
+                        <th>Стоимость</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="master_consultation_periods">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -60,7 +69,8 @@
                     }
 
                     $(".master_consultation_periods").append('<tr>\n\
-                            <td><input type="text" name="m_c_p__period_date" class="form-control m_c_p_period_date inp_datepicker init_elm_edit" value="' + e['data'][i]['period_date'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_consultation_periods" elm_row="period_date" obj_i="' + i + '" /></td>\n\
+                            <td><input type="text" name="m_c_p_period_start" class="form-control m_c_p_period_start inp_datepicker init_elm_edit" value="' + e['data'][i]['period_start'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_consultation_periods" elm_row="period_start" obj_i="' + i + '" /></td>\n\
+                            <td><input type="text" name="m_c_p_period_end" class="form-control m_c_p_period_end inp_datepicker init_elm_edit" value="' + e['data'][i]['period_end'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_consultation_periods" elm_row="period_end" obj_i="' + i + '" /></td>\n\
                             <td><input type="text" name="m_c_p__period_time" class="form-control m_c_p_period_time" value="' + e['data'][i]['period_time'] + '" obj_i="' + i + '" /></td>\n\
                             <td>\n\
                                 <input type="text" name="m_c_p__period_hour" class="form-control m_c_p_period_hour" value="' + e['data'][i]['period_hour'] + '" obj_i="' + i + '" title="Часы"/>\n\

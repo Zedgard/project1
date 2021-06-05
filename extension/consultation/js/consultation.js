@@ -20,14 +20,20 @@ $(".calendar_day_active").unbind("click").click(function () {
         sendPostLigth('/jpost.php?extension=sign_up_consultation', {"get_master_consultant_period": 1, "master_id": 1, 'day': consultation_date}, function (e) {
             if (e['success'] == '1') {
                 $(".consultant_periods").html('<table class="table table-striped"><tbody></tbody></table>');
+                var period_count = 0;
                 for (var i = 0; i < e['data'].length; i++) {
+                    if (e['data'][i]['period_active'] == "0") {
+                        continue;
+                    }
                     var active = 0;
                     var elm_class = 'btn button btn-secondary button_lg textcenter';
                     var alert = 'onClick="alert(\'Время занято!\')"';
                     var text_type = e['data'][i]['text_type'];
                     var text_type_color = 'color: green;';
+                    var background_color = '';
                     if (text_type.toLowerCase().indexOf('онлайн') === -1) {
-                        text_type_color = 'color: #0073AA;';
+                        background_color = '';
+                        background_color = "background-color: #9fc7e2;";
                     }
                     var text_address = e['data'][i]['text_address'];
                     if (e['data'][i]['period_active'] == "1" && e['data'][i]['is_pay'] == "0" && e['data'][i]['rejection_day'] == "0" && e['data'][i]['rejection_period'] == "0") {
@@ -35,14 +41,20 @@ $(".calendar_day_active").unbind("click").click(function () {
                         alert = '';
                         elm_class = 'btn button button_lg btngreen textcenter btn_consultation_pay';
                     }
-                    $(".consultant_periods").find("tbody").append('<tr><td><div class="text_type" style="' + text_type_color + '">' + text_type + '</div>\n\
+                    $(".consultant_periods").find("tbody").append('<tr style="' + background_color + '"><td><div class="text_type" style="' + text_type_color + '">' + text_type + '</div>\n\
                             <i class="far fa-clock"></i> ' + e['data'][i]['period_time'].substr(0, 5) + '<span class="consultant_period_span_msk">МСК</span>\n\
                             <div class="text_address">' + text_address + '</div>\n\
                             </td>\n\
                         <td><a href="javascript:void(0)" class="' + elm_class + '" price="' + e['data'][i]['period_price'] + '" period_text="' + e['data'][i]['period_time'] + '" elm_id="' + e['data'][i]['id'] + '" ' + alert + '>Оплатить</a></td>\n\
                         </tr>');
+                    period_count++;
                 }
                 setTimeout(init_btn_consultation_pay(), 1000);
+                console.log("period_count: " + period_count);
+                if (period_count == 0) {
+                    //$(".fast_consultation_result").html("Записей на этот день нет.");
+                    $(".consultant_periods").find("tbody").append('<tr><td>Записей на этот день нет.</td>\n\</tr>');
+                }
             } else {
 
                 $(".fast_consultation_result").html("Ошибка! " + e['success_text']);

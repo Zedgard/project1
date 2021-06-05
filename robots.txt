@@ -1,5 +1,1 @@
-User-agent: Yandex
-Disallow: /
-
-User-agent: *
-Disallow: /
+Host: https://edgardzaycev.com
