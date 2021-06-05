@@ -5239,6 +5239,10 @@ textarea.form-control-lg {
   overflow: scroll;
 }
 
+.modal-xxl {
+  max-width: 96%;
+}
+
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: 500px;
@@ -5268,6 +5272,9 @@ textarea.form-control-lg {
     max-width: 1140px;
   }
 }
+
+
+
 .modal-fullscreen {
   width: 100vw;
   max-width: none;

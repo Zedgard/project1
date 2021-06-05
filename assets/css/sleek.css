@@ -4457,6 +4457,10 @@ a.close.disabled {
     .modal-xl {
         max-width: 1140px; } }
 
+.modal-xxl {
+  max-width: 90%;
+}
+
 .tooltip {
     position: absolute;
     z-index: 1070;
