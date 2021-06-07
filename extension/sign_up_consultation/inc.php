@@ -278,12 +278,12 @@ class sign_up_consultation extends \project\extension {
         if ($periods_id == 0) {
             $querySelect = "SELECT * FROM zay_consultation_periods p 
                     where p.master_id='?' AND (p.period_start is null or p.period_start='' {$where1}) 
-                    ORDER BY p.period_time ASC, p.periods_minute ASC";
+                    ORDER BY p.period_start, p.period_time ASC, p.periods_minute ASC";
             return $this->getSelectArray($querySelect, $array, 0);
         } else {
             $querySelect = "SELECT * FROM zay_consultation_periods p 
                     where p.master_id='?' and p.id='?'
-                    ORDER BY p.period_time ASC, p.periods_minute ASC";
+                    ORDER BY p.period_start, p.period_time ASC, p.periods_minute ASC";
             return $this->getSelectArray($querySelect, array($master_id, $periods_id));
         }
     }
