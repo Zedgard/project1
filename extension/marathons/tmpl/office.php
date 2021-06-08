@@ -20,33 +20,23 @@
     }
 </style>
 <div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card card-default">
+    <div class="card card-default">
 
-                <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6">Марафоны</h2>
-                </div>
-
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-8">
-
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row container_mix webinar_products_arrays_data">
-
-                    </div>
-                </div>
-
-                <div class="form-footer pt-4 pt-5 mt-4 border-top ">
-
-                </div>
-
-            </div> 
+        <div class="card-header card-header-border-bottom">
+            <h2 class="col-lg-6">Марафоны</h2>
         </div>
-    </div>
+
+        <div class="card-body">
+            <div class="container_mix webinar_products_arrays_data">
+
+            </div>
+        </div>
+
+        <div class="form-footer pt-4 pt-5 mt-4 border-top ">
+
+        </div>
+
+    </div> 
 </div>
 <script>
     $(document).ready(function () {

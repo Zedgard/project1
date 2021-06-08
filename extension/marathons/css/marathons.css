@@ -47,7 +47,8 @@
 
 }
 .marathons_btn_green:hover{
-    background-color: #7DCEA0;
+    background-color: #FFFFFF;
+    color: #000000;
 }
 .marathons_btn_white{
     width: 100%;
@@ -88,7 +89,8 @@
 }
 
 .marathons_material_series_active{
-
+    background-color: #FFFFFF;
+    color: #000000;
 }
 
 /* Материалы */
