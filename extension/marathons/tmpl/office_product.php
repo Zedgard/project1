@@ -167,7 +167,7 @@
                     $(".marathons_material_list_block").show(200);
                 }
             }
-
+            move(".marathons_material_list_block", 200);
             init_series_id = series_id;
         });
 
