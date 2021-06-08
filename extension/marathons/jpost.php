@@ -14,12 +14,15 @@ $config = new \project\config();
 $pr_wares = new \project\wares();
 
 if ($user->isClient() || $user->isEditor()) {
-    if (isset($_POST['marathon_series_material'])) {
+    //header("Access-Control-Allow-Headers: *");
+    header('Access-Control-Allow-Origin: *');
+    //header('Access-Control-Allow-Origin: https://edgardzaitsev.com');
+    if (isset($_GET['marathon_series_material'])) {
         //echo "wares_id: {$_POST['wares_id']} series_id: {$_POST['series_id']}\n ";
-        $materials = $pr_wares->list_materials_on_series($_POST['wares_id'], $_POST['series_id']);
+        $materials = $pr_wares->list_materials_on_series($_GET['wares_id'], $_GET['series_id']);
         $objs['materials'] = $materials;
-        $objs['wares_id'] = $_POST['wares_id'];
-        $objs['series_id'] = $_POST['series_id'];
+        $objs['wares_id'] = $_GET['wares_id'];
+        $objs['series_id'] = $_GET['series_id'];
         
         $html = inc($_SERVER['DOCUMENT_ROOT'] . '/extension/marathons/tmpl/materials.php', $objs);
         $result = array('success' => 1, 'success_text' => '', 'html' => $html);

@@ -11,14 +11,17 @@
         // controls autoplay
         $(document).ready(function () {
             var options = {};
-            var player = videojs('video_<?= $union_elm_id ?>', options);
+            //setTimeout(function () {
+                var player = videojs('video_<?= $union_elm_id ?>', options);
 //                    function onPlayerReady() {
 //                        //this.play();
 //                        this.on('ended', function () {
 //                        });
 //                        //this.pause();
 //                    });
-            player.src({src: '<?= $value['video_youtube'] ?>', type: 'video/youtube'})
+                player.src({src: '<?= $value['video_youtube'] ?>', type: 'video/youtube'});
+            //}, 200);
+
 
             //player.pause();
         });

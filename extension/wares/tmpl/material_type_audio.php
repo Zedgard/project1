@@ -3,6 +3,7 @@
         Загрузка плеера... 
     </div>
     <script>
+        //debugger;
         Calamansi.autoload();
         player_<?= $union_elm_id ?> = new Calamansi(
                 document.querySelector('#calamansi-player-<?= $union_elm_id ?>'), {

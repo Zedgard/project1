@@ -24,6 +24,10 @@
         <link href="/extension/wares/css/edit_videos.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
         <script src="/assets/plugins/calamansi/calamansi.min.js"></script>
+
+        <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/extension/wares/js/edit_videos.js<?= $_SESSION['rand'] ?>"></script>
     </head>
     <body class="header-fixed sidebar-fixed sidebar-dark header-light">
 
@@ -66,7 +70,7 @@
                                                         }
                                                     ],
                                                 },
-                                                defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
+                                                defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png'
                                             });
                                             //player.destroy();
                                         </script>
@@ -386,7 +390,5 @@
         </div>
     </body>
 
-    <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/extension/wares/js/edit_videos.js<?= $_SESSION['rand'] ?>"></script>
+
 </html>

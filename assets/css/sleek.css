@@ -8957,8 +8957,8 @@ label {}
 .card-default {
     margin-bottom: 1.5rem; }
 .card-default .card-header {
-    padding-left: 1.88rem;
-    padding-right: 1.88rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
     padding-top: 3rem;
     display: flex;
     flex-wrap: wrap;
@@ -8981,7 +8981,7 @@ label {}
 .card-default .card-header-border-bottom h2 {
     margin-bottom: 0; }
 .card-default .card-body {
-    padding: 1.88rem 1.88rem; }
+    padding: 0rem 0rem; }
 @media (min-width: 1500px) {
     .card-default .card-body {
         padding: 3.125rem; } }
