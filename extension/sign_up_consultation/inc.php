@@ -287,6 +287,19 @@ class sign_up_consultation extends \project\extension {
             return $this->getSelectArray($querySelect, array($master_id, $periods_id));
         }
     }
+    
+    /**
+     * Уникальные периоды времени по консультанту
+     * @param type $master_id
+     * @return type
+     */
+    public function get_master_consultation_periods_distinct($master_id) {
+            $querySelect = "SELECT DISTINCT p.period_time FROM zay_consultation_periods p 
+                    where p.master_id='?' AND (p.period_start is null or (p.period_start<=CURRENT_DATE and p.period_end>=CURRENT_DATE)) 
+                    ORDER BY p.period_start, p.period_time ASC, p.periods_minute ASC";
+            return $this->getSelectArray($querySelect, array($master_id));
+     
+    }
 
     /**
      * Редактирование периодов консультаций и цен
@@ -395,8 +408,8 @@ class sign_up_consultation extends \project\extension {
 left join zay_pay pp on pp.id=c.pay_id 
 WHERE c.master_id = p.master_id AND c.consultation_date = '?' AND c.consultation_time = p.period_time
 and pp.pay_status='succeeded') AS is_pay,
-(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_period=0 and cr.rejection_day='?') as rejection_day,
-(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_period=p.id and cr.rejection_day='?') as rejection_period
+(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_time=null and cr.rejection_day='?') as rejection_day,
+(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_time=p.period_time and cr.rejection_day='?') as rejection_period
                             FROM
                                 zay_consultation_periods p
                             WHERE
@@ -441,16 +454,20 @@ and pp.pay_status='succeeded') AS is_pay,
      * @return type
      */
     public function set_master_consultant_rejection($data) {
+        $rejection_time_edit = ",`rejection_time`='?'";
+        if ($data['rejection_time'] == 'null') {
+            $rejection_time_edit = ",`rejection_time`=? ";
+        }
         if (is_array($data)) {
             if ($data['id'] > 0) {
-                $query = "UPDATE `zay_consultation_rejection` SET `master_id`='?',`rejection_day`='?',`rejection_period`='?' "
+                $query = "UPDATE `zay_consultation_rejection` SET `master_id`='?',`rejection_day`='?' {$rejection_time_edit} "
                         . "WHERE `id`='?'";
-                return $this->query($query, array($data['master_id'], $data['rejection_day'], $data['rejection_period'], $data['id']));
+                return $this->query($query, array($data['master_id'], $data['rejection_day'], $data['rejection_time'], $data['id']));
             } else {
                 $data['rejection_day'] = date("Y-m-d");
-                $query = "INSERT INTO `zay_consultation_rejection`(`master_id`, `rejection_day`, `rejection_period`) "
-                        . "VALUES ('?','?','?')";
-                return $this->query($query, array($data['master_id'], $data['rejection_day'], $data['rejection_period']), 0);
+                $query = "INSERT INTO `zay_consultation_rejection`(`master_id`, `rejection_day`, `rejection_time`) "
+                        . "VALUES ('?','?',null)";
+                return $this->query($query, array($data['master_id'], $data['rejection_day']), 0);
             }
         }
     }

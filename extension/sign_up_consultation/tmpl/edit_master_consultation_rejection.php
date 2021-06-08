@@ -54,7 +54,7 @@
             // отметим выбранные периоды
             setTimeout(function () {
                 for (var i = 0; i < master_consultation_rejections.length; i++) {
-                    $('.m_c_p_rejection_period[obj_i="' + i + '"]').find('option[value="' + e['data'][i]['rejection_period'] + '"]').attr("selected", "selected");
+                    $('.m_c_p_rejection_period[obj_i="' + i + '"]').find('option[value="' + e['data'][i]['rejection_time'] + '"]').attr("selected", "selected");
                 }
             }, 500);
             // удаление исключения
@@ -83,7 +83,7 @@
                 "elm_id": 0,
                 "master_id": master_consultation_id,
                 "rejection_day": '',
-                "rejection_period": '0'
+                "rejection_time": '0'
             }, function (e) {
                 init_master_consultation_rejection(master_consultation_id);
             });
@@ -96,14 +96,14 @@
             var obj_i = $(this).attr("obj_i");
             var master_consultation_rejections_id = master_consultation_rejections[obj_i]['id'];
             var rejection_day = $('.m_c_p_rejection_day[obj_i=' + obj_i + ']').val();
-            var rejection_period = $('.m_c_p_rejection_period[obj_i=' + obj_i + ']').val();
+            var rejection_time = $('.m_c_p_rejection_period[obj_i=' + obj_i + ']').val();
 
             sendPostLigth('/jpost.php?extension=sign_up_consultation', {
                 "edit_master_consultation_rejection": 1,
                 "master_id": master_consultation_id,
                 "elm_id": master_consultation_rejections_id,
                 "rejection_day": rejection_day,
-                "rejection_period": rejection_period
+                "rejection_time": rejection_time
             }, function (e) {
                 init_master_consultation_rejection(master_consultation_id);
             });

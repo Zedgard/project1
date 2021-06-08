@@ -69,8 +69,8 @@
                     }
 
                     $(".master_consultation_periods").append('<tr>\n\
-                            <td><input type="text" name="m_c_p_period_start" class="form-control m_c_p_period_start inp_datepicker init_elm_edit" value="' + e['data'][i]['period_start'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_consultation_periods" elm_row="period_start" obj_i="' + i + '" /></td>\n\
-                            <td><input type="text" name="m_c_p_period_end" class="form-control m_c_p_period_end inp_datepicker init_elm_edit" value="' + e['data'][i]['period_end'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_consultation_periods" elm_row="period_end" obj_i="' + i + '" /></td>\n\
+                            <td><input type="text" name="m_c_p_period_start" class="form-control m_c_p_period_start inp_datepicker init_elm_edit" value="' + e['data'][i]['period_start'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_consultation_periods" elm_row="period_start" obj_i="' + i + '" func="init_get_master_consultation_periods_distinct()" /></td>\n\
+                            <td><input type="text" name="m_c_p_period_end" class="form-control m_c_p_period_end inp_datepicker init_elm_edit" value="' + e['data'][i]['period_end'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_consultation_periods" elm_row="period_end" obj_i="' + i + '" func="init_get_master_consultation_periods_distinct()" /></td>\n\
                             <td><input type="text" name="m_c_p__period_time" class="form-control m_c_p_period_time" value="' + e['data'][i]['period_time'] + '" obj_i="' + i + '" /></td>\n\
                             <td>\n\
                                 <input type="text" name="m_c_p__period_hour" class="form-control m_c_p_period_hour" value="' + e['data'][i]['period_hour'] + '" obj_i="' + i + '" title="Часы"/>\n\
@@ -92,6 +92,7 @@
 
                 init_add_master_consultation_period();
                 init_actions_master_consultation_period();
+                init_get_master_consultation_periods_distinct();
                 setTimeout(function () {
                     init_select_periods_list();
                     init_datepicker(3);
@@ -102,6 +103,19 @@
         } else {
             $(".add_master_consultation_period").addClass('disabled');
             $(".master_consultation_periods").html('Добавлять периоды можно только после того как создадите запись!');
+        }
+    }
+
+    var periods_list = [];
+    function init_get_master_consultation_periods_distinct() {
+        if (master_consultation_id > 0) {
+            sendPostLigth('/jpost.php?extension=sign_up_consultation', {
+                "get_master_consultation_periods_distinct": 1,
+                "master_id": master_consultation_id
+            }, function (e) {
+                periods_list = e['data'];
+                init_select_periods_list();
+            });
         }
     }
 
@@ -166,10 +180,10 @@
     function init_select_periods_list() {
         if (!!$(".periods_list")) {
             $(".periods_list").html("");
-            $(".periods_list").append('<option value="0">Все</option>');
-            if (master_consultation_periods.length > 0) {
-                for (var i = 0; i < master_consultation_periods.length; i++) {
-                    $(".periods_list").append('<option value="' + master_consultation_periods[i]['id'] + '">"' + master_consultation_periods[i]['period_time'] + '"</option>');
+            $(".periods_list").append('<option value="null">Все</option>');
+            if (periods_list.length > 0) {
+                for (var i = 0; i < periods_list.length; i++) {
+                    $(".periods_list").append('<option value="' + master_consultation_periods[i]['period_time'] + '">"' + periods_list[i]['period_time'] + '"</option>');
                 }
             }
         }
