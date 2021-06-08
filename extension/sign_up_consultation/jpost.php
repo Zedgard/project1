@@ -109,6 +109,21 @@ if (isset($_POST['get_master_consultation_periods'])) {
     }
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+/**
+ * Получим список уникальных периодов
+ */
+if (isset($_POST['get_master_consultation_periods_distinct'])) {
+    $master_id = $_POST['master_id'];
+    if ($master_id > 0) {
+        $data = $sign_up_consultation->get_master_consultation_periods_distinct($master_id);
+    } else {
+        $data = array();
+    }
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
+
 /*
  * Добавление периода
  */
@@ -262,7 +277,7 @@ if (isset($_POST['edit_master_consultation_rejection'])) {
     $data['id'] = $_POST['elm_id'];
     $data['master_id'] = $_POST['master_id'];
     $data['rejection_day'] = $_POST['rejection_day'];
-    $data['rejection_period'] = $_POST['rejection_period'];
+    $data['rejection_time'] = $_POST['rejection_time'];
     $sign_up_consultation->set_master_consultant_rejection($data);
 }
 

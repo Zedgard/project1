@@ -354,7 +354,7 @@ var master_consultation_periods = [];
 function init_select_time_period(master_id) {
     sendPostLigth('/jpost.php?extension=sign_up_consultation', {
         "get_master_consultation_periods": 1,
-        "master_id": master_id,
+        "master_id": master_id
     }, function (e) {
         $(".select_time_period").html("");
         master_consultation_periods = [];
