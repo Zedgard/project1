@@ -295,7 +295,7 @@ class sign_up_consultation extends \project\extension {
      */
     public function get_master_consultation_periods_distinct($master_id) {
             $querySelect = "SELECT DISTINCT p.period_time FROM zay_consultation_periods p 
-                    where p.master_id='?' AND (p.period_start is null or (p.period_start<=CURRENT_DATE and p.period_end>=CURRENT_DATE)) 
+                    where p.master_id='?' AND (p.period_start is null or (p.period_end>=CURRENT_DATE)) 
                     ORDER BY p.period_start, p.period_time ASC, p.periods_minute ASC";
             return $this->getSelectArray($querySelect, array($master_id));
      
