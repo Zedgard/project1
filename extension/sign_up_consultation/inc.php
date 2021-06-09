@@ -408,7 +408,7 @@ class sign_up_consultation extends \project\extension {
 left join zay_pay pp on pp.id=c.pay_id 
 WHERE c.master_id = p.master_id AND c.consultation_date = '?' AND c.consultation_time = p.period_time
 and pp.pay_status='succeeded') AS is_pay,
-(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_time=null and cr.rejection_day='?') as rejection_day,
+(select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_time is null and cr.rejection_day='?') as rejection_day,
 (select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_time=p.period_time and cr.rejection_day='?') as rejection_period
                             FROM
                                 zay_consultation_periods p
