@@ -94,7 +94,7 @@
                 init_actions_master_consultation_period();
                 init_get_master_consultation_periods_distinct();
                 setTimeout(function () {
-                    init_select_periods_list();
+                    //init_select_periods_list();
                     init_datepicker(3);
                 }, 500);
 
@@ -106,18 +106,7 @@
         }
     }
 
-    var periods_list = [];
-    function init_get_master_consultation_periods_distinct() {
-        if (master_consultation_id > 0) {
-            sendPostLigth('/jpost.php?extension=sign_up_consultation', {
-                "get_master_consultation_periods_distinct": 1,
-                "master_id": master_consultation_id
-            }, function (e) {
-                periods_list = e['data'];
-                init_select_periods_list();
-            });
-        }
-    }
+    
 
     /**
      * Кнопка добавления периода
@@ -177,17 +166,7 @@
     }
 
 
-    function init_select_periods_list() {
-        if (!!$(".periods_list")) {
-            $(".periods_list").html("");
-            $(".periods_list").append('<option value="null">Все</option>');
-            if (periods_list.length > 0) {
-                for (var i = 0; i < periods_list.length; i++) {
-                    $(".periods_list").append('<option value="' + master_consultation_periods[i]['period_time'] + '">"' + periods_list[i]['period_time'] + '"</option>');
-                }
-            }
-        }
-    }
+    
 
 </script>
 
