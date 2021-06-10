@@ -9,13 +9,15 @@
         <title><?= $_SESSION['site_title'] ?></title>
         <meta name="description" content="<?= $_SESSION['page']['info']['description'] ?>" />
 
-        <!-- GOOGLE FONTS -->
+        <!-- GOOGLE FONTS --> 
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
         <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css?v=<?= $_SESSION['rand'] ?>" 
-              integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
-              crossorigin="anonymous">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/fontawesome.min.css<?= $_SESSION['rand'] ?>"> 
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/brands.min.css<?= $_SESSION['rand'] ?>"> 
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/all.min.css<?= $_SESSION['rand'] ?>"> 
+        
+        
         <!-- PLUGINS CSS STYLE -->
         <link href="/assets/plugins/nprogress/nprogress.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
