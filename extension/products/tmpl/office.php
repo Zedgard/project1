@@ -11,10 +11,10 @@
 <div class="card card-default">
 
     <div class="card-header card-header-border-bottom">
-        <h2 class="col-lg-6">Мои покупки</h2>
+        <h2 class="col-lg-6">Продукты</h2>
     </div>
 
-    <div class="card-body ">
+    <div class="card-body">
         <div  style="margin-top: -10px;">
             <div class="col-12">
                 <!-- Sorted block -->    
@@ -40,11 +40,9 @@
             </div>
         </div>
         <br/>
-        <div class="">
-            <div class="container_mix" data-ref="mixitup-container">
-                <div class="card-deck w-100 products_arrays_data">
+        <div class="container_mix" data-ref="mixitup-container">
+            <div class="card-deck mixitup-container products_arrays_data row m-0 p-0 row-cols-2 row-cols-md-4 w-100">
 
-                </div>
             </div>
         </div>
     </div>

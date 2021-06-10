@@ -212,10 +212,20 @@
     position: absolute;
     z-index: 9;
 }
+.opacity75{
+    opacity:0.75;
+    filter:alpha(opacity=75);
+    -moz-opacity:0.75;
+}
 .opacity50{
     opacity:0.5;
     filter:alpha(opacity=50);
     -moz-opacity:0.5;
+}
+.opacity25{
+    opacity:0.25;
+    filter:alpha(opacity=25);
+    -moz-opacity:0.25;
 }
 .class_category, .class_category2{
     text-transform: uppercase;   
@@ -440,9 +450,6 @@
 
 /* Корректировка для мобильной версии */
 @media (max-width: 768px) {
-    .class_category{
-        font-size: 1.1rem;
-    }
     .cart_product_title{
         font-size: 1.2rem;
         line-height: 1;
@@ -459,6 +466,17 @@
     }
     .product_wares_show{
         width: 75%;
+    }
+    .container_mix .item{
+        border:1px solid #f2f2f2;
+        background-color:#fff;
+
+        box-shadow: none;
+        -webkit-transition: none;
+        transition: box-shadow 0.2s,border-color 0.2s;
+    }
+    .class_category_lbl{
+        padding: 0.2rem 0.3rem;
     }
 }
 /* Rating end   background-image: uri('/assets/img/products/cart_product_button_bg.png');   */

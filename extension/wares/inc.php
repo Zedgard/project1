@@ -509,6 +509,95 @@ class wares extends \project\extension {
     }
 
     /**
+     * Получение купленных продуктов
+     * @param type $product_id
+     * @return type
+     */
+    public function getClientPayProducts($product_id = 0) {
+        if ($_SESSION['user']['info']['id'] > 0) {
+            $array[] = $_SESSION['user']['info']['id'];
+            $where1 = '';
+            if($product_id > 0){
+                $where1 = "and pr.id='?'";
+                $array[] = $product_id;
+            }
+
+            $querySelect = "SELECT dd.* from
+                            (SELECT DISTINCT
+                                    pr.*, cat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
+                                    (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = pr.id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
+                                        ) AS wares_show
+                                FROM
+                                    zay_pay p
+                                LEFT JOIN zay_pay_products pp ON
+                                    pp.pay_id = p.id
+                                LEFT JOIN zay_product pr ON
+                                    pr.id = pp.product_id
+                                LEFT JOIN zay_product_wares pw ON
+                                    pw.product_id = pr.id
+                                LEFT JOIN zay_wares w ON
+                                    w.id = pw.wares_id
+                                LEFT JOIN zay_product_category cat ON
+                                    cat.product_id = pr.id    
+                                LEFT JOIN zay_category c ON
+                                    c.id = cat.category_id       
+                                WHERE
+                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 {$where1} 
+                                ORDER BY
+                                    pr.`title` ASC
+                                    ) as dd
+                                    WHERE dd.wares_show = '1'";
+
+            //echo "{$querySelect}\n\n";
+            $objs = $this->getSelectArray($querySelect, $array, 0);
+            return $objs;
+        }
+        return array();
+    }
+    
+    public function getClientProductWaresList($product_id) {
+        if ($_SESSION['user']['info']['id'] > 0) {
+            $array[] = $_SESSION['user']['info']['id'];
+            $where1 = '';
+            if($product_id > 0){
+                $where1 = "and pr.id='?'";
+                $array[] = $product_id;
+            }
+
+            $querySelect = "SELECT dd.* from
+                            (SELECT DISTINCT
+                                    w.*, cat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
+                                    (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = pr.id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
+                                        ) AS wares_show
+                                FROM
+                                    zay_pay p
+                                LEFT JOIN zay_pay_products pp ON
+                                    pp.pay_id = p.id
+                                LEFT JOIN zay_product pr ON
+                                    pr.id = pp.product_id
+                                LEFT JOIN zay_product_wares pw ON
+                                    pw.product_id = pr.id
+                                LEFT JOIN zay_wares w ON
+                                    w.id = pw.wares_id
+                                LEFT JOIN zay_product_category cat ON
+                                    cat.product_id = pr.id    
+                                LEFT JOIN zay_category c ON
+                                    c.id = cat.category_id       
+                                WHERE
+                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 {$where1} 
+                                ORDER BY
+                                    w.`title` ASC
+                                    ) as dd
+                                    WHERE dd.wares_show = '1'";
+
+            //echo "{$querySelect}\n\n";
+            $objs = $this->getSelectArray($querySelect, $array, 0);
+            return $objs;
+        }
+        return array();
+    }
+
+    /**
      * Купленные вебинары клиента
      */
     public function getClientWebinarsProducts($wares_id = 0) {
@@ -841,7 +930,8 @@ class wares extends \project\extension {
         $data = $this->getSelectArray($select, array($wares_id), 0);
         return $data;
     }
-/**
+
+    /**
      * Получить материалы по товару учитывая серию
      * @param type $wares_id
      * @return type

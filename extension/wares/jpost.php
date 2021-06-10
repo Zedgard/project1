@@ -175,6 +175,11 @@ if (isset($_POST['getClientProducts'])) {
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
+if (isset($_POST['getClientPayProducts'])) {
+    $data = $pr_wares->getClientPayProducts();
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
 if (isset($_POST['getClientWebinarsProducts'])) {
     $data = $pr_wares->getClientWebinarsProducts();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);

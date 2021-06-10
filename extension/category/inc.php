@@ -76,6 +76,42 @@ class category extends \project\extension {
                         c.`title` ASC";
         return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
     }
+    
+    /**
+     * Список категорий если у пользователя есть товары данной категории
+     * @return фккфн
+     */
+    public function getCategoryProductsArray() {
+        $querySelect = "SELECT
+                        c.*
+                    FROM
+                        (
+                        SELECT DISTINCT
+                            wcat.category_id
+                        FROM
+                            zay_pay p
+                        LEFT JOIN zay_pay_products pp ON
+                            pp.pay_id = p.id
+                        LEFT JOIN zay_product pr ON
+                            pr.id = pp.product_id
+                        LEFT JOIN zay_product_wares pw ON
+                            pw.product_id = pr.id
+                        LEFT JOIN zay_wares w ON
+                            w.id = pw.wares_id
+                        LEFT JOIN zay_product_category wcat ON
+                            wcat.product_id = pr.id
+                        WHERE
+                            p.user_id='?' AND p.pay_status='succeeded' AND w.id>0 AND(
+                                wcat.category_id<>2 and wcat.category_id<>9
+                            )
+                            and  wcat.category_id IS NOT NULL
+                    ) dd
+                    LEFT JOIN zay_category c ON
+                        c.id = dd.category_id
+                    ORDER BY
+                        c.title ASC";
+        return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
+    }
 
     /**
      * Список категорий с реализацией поиска
