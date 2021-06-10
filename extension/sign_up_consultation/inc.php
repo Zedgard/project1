@@ -455,7 +455,8 @@ and pp.pay_status='succeeded') AS is_pay,
      */
     public function set_master_consultant_rejection($data) {
         $rejection_time_edit = ",`rejection_time`='?'";
-        if ($data['rejection_time'] == 'null') {
+        if ($data['rejection_time'] == 'null' || $data['rejection_time'] == '') {
+            $data['rejection_time'] = 'null';
             $rejection_time_edit = ",`rejection_time`=? ";
         }
         if (is_array($data)) {
