@@ -48,7 +48,6 @@
             }
             //<option></option> <input type="text" name="m_c_p_rejection_period" class="form-control m_c_p_rejection_period" value="' + e['data'][i]['rejection_period'] + '" obj_i="' + i + '" />
             init_datepicker(3);
-            init_actions_master_consultation_rejection();
             init_get_master_consultation_periods_distinct();
 
             //init_select_periods_list();
@@ -132,6 +131,7 @@
                             $('.m_c_p_rejection_period[obj_id="' + master_consultation_rejections[i]['id'] + '"]').find('option[value="' + master_consultation_rejections[i]['rejection_time'] + '"]').attr("selected", "selected");
 //                        }
                     }
+                    init_actions_master_consultation_rejection();
                 }
             });
         }
