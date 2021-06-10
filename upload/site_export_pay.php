@@ -13,7 +13,7 @@ $sqlLight = new \project\sqlLight();
 
 $user = new \project\user();
 
-if (!$user->isAdmin()) {
+if (!$user->isClient()) {
     header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
     location_href('/');
     exit();
