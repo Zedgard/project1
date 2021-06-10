@@ -41,9 +41,9 @@
             for (var i = 0; i < e['data'].length; i++) { // periods_minute
                 //master_consultation_rejections.push(e['data'][i]);
                 $(".master_consultation_rejections").append('<tr elm_id="' + e['data'][i]['id'] + '">\n\
-                            <td><input type="text" name="m_c_p_rejection_day" class="form-control inp_datepicker m_c_p_rejection_day" value="' + e['data'][i]['rejection_day'] + '" obj_i="' + i + '" /></td>\n\
-                            <td><select name="m_c_p_rejection_period" class="form-control periods_list m_c_p_rejection_period" obj_id="' + e['data'][i]['id'] + '"></select></td>\n\
-                            <td><a href="javascript:void(0)" class="btn mt-2 btn-sm btn-danger btn_delete_consultation_rejection" obj_i="' + i + '" title="Удалить"><i class="mdi mdi-delete"></i></a></td>\n\
+                            <td><input type="text" name="m_c_p_rejection_day" class="form-control inp_datepicker m_c_p_rejection_day" value="' + e['data'][i]['rejection_day'] + '" obj_i="' + i + '" obj_id="' + e['data'][i]['id'] + '" /></td>\n\
+                            <td><select name="m_c_p_rejection_period" class="form-control periods_list m_c_p_rejection_period" obj_i="' + i + '" obj_id="' + e['data'][i]['id'] + '"></select></td>\n\
+                            <td><a href="javascript:void(0)" class="btn mt-2 btn-sm btn-danger btn_delete_consultation_rejection" obj_i="' + i + '" obj_id="' + e['data'][i]['id'] + '" title="Удалить"><i class="mdi mdi-delete"></i></a></td>\n\
                     </tr>');
             }
             //<option></option> <input type="text" name="m_c_p_rejection_period" class="form-control m_c_p_rejection_period" value="' + e['data'][i]['rejection_period'] + '" obj_i="' + i + '" />
@@ -131,8 +131,8 @@
                             $('.m_c_p_rejection_period[obj_id="' + master_consultation_rejections[i]['id'] + '"]').find('option[value="' + master_consultation_rejections[i]['rejection_time'] + '"]').attr("selected", "selected");
 //                        }
                     }
-                    init_actions_master_consultation_rejection();
                 }
+                init_actions_master_consultation_rejection();
             });
         }
     }
