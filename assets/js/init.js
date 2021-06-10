@@ -752,7 +752,7 @@ function init_datepicker(numberOfMonths) {
         dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
         weekHeader: 'Нед',
         dateFormat: 'yy-mm-dd',
-        maxDate: "+1M +10D",
+        //maxDate: "+2M +30D",
         firstDay: 1,
         isRTL: false,
         showMonthAfterYear: false,
