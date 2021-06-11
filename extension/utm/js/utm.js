@@ -13,35 +13,39 @@ function init_utm() {
         sendPostLigth('/jpost.php?extension=utm', {
             "utm_list": 1
         }, function (e) {
-            $(".utm_list tbody tr").remove();
+            $(".utm_list tbody").html("");
             if (e['success'] == '1') {
                 if (e['data'].length > 0) {
                     for (var i = 0; i < e['data'].length; i++) {
                         $(".utm_list tbody").append(
                                 '<tr>\n\
-                            <td><input type="text" name="tag_title" value="' + e['data'][i]['title'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm" elm_row="title" class="form-control init_elm_edit"></td>\n\
-                            <td class="text-center">\n\
-                                <span class="btn btn-primary config_utm_values" elm_id="' + e['data'][i]['id'] + '">Настроить теги</span>\n\
-                                <span class="btn btn-danger init_elm_delete" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm" func="init_utm()"><i class="mdi mdi-delete"></i></span>\n\
-                            </td>\n\
-                            </tr>\n\
-                            <tr class="utm_tags_lists_block utm_tags_list_' + e['data'][i]['id'] + '" elm_id="' + e['data'][i]['id'] + '" style="display:none;">\n\
-                                <td colspan="2">\n\
-                                    <div class="table-responsive-lg">\n\
-                                    <table class="table table-striped table-bordered w-100 utm_tag_values_list">\n\
-                                        <thead>\n\
-                                            <tr>\n\
-                                                <th style="width: 200px;padding: 1.4rem;">Код метки</th>\n\
-                                                <th><div style="padding: 0.6rem 0.6rem 0 0;">Значение</div></th>\n\
-                                            </tr>\n\
-                                        </thead>\n\
-                                        <tbody>\n\
-                                        </tbody>\n\
-                                    </table>\n\
-                                    </div>\n\
-                                    <div>Ссылка: <input type="text" value="" class="form-control copy_link" onclick="this.select();"></div>\n\
-                                </td>\n\
-                            </tr>'
+                                    <td><input type="text" name="tag_title" value="' + e['data'][i]['title'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm" elm_row="title" class="form-control init_elm_edit"></td>\n\
+                                    <td class="text-center">\n\
+                                        <span class="btn btn-sm btn-primary config_utm_values" elm_id="' + e['data'][i]['id'] + '">Настроить теги</span>\n\
+                                    </td>\n\
+                                    <td>\n\
+                                        <span class="btn btn-sm btn-danger init_elm_delete" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm" func="init_utm()">\n\
+                                            <i class="mdi mdi-delete"></i>\n\
+                                        </span>\n\
+                                    </td>\n\
+                                </tr>\n\
+                                <tr class="utm_tags_lists_block utm_tags_list_' + e['data'][i]['id'] + '" elm_id="' + e['data'][i]['id'] + '" style="display:none;">\n\
+                                    <td colspan="3">\n\
+                                        <div class="table-responsive-lg">\n\
+                                        <table class="table table-striped table-bordered w-100 utm_tag_values_list">\n\
+                                            <thead>\n\
+                                                <tr>\n\
+                                                    <th style="width: 200px;padding: 1.4rem;">Код метки</th>\n\
+                                                    <th><div style="padding: 0.6rem 0.6rem 0 0;">Значение</div></th>\n\
+                                                </tr>\n\
+                                            </thead>\n\
+                                            <tbody>\n\
+                                            </tbody>\n\
+                                        </table>\n\
+                                        </div>\n\
+                                        <div>Ссылка: <input type="text" value="" class="form-control copy_link" onclick="this.select();"></div>\n\
+                                    </td>\n\
+                                </tr>'
                                 );
                     }
                     //<button onclick="copy_text(\'' + e['data'][i]['id'] + '\')" class="btn btn-sm btn-secondary">Скопировать в буфер</button>\n\
@@ -68,7 +72,7 @@ function init_utm_tags() {
                             <td><input type="text" name="tag_code" value="' + e['data'][i]['code'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm_tags" elm_row="code" class="form-control init_elm_edit"></td>\n\
                             <td><input type="text" name="tag_title" value="' + e['data'][i]['title'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm_tags" elm_row="title" class="form-control init_elm_edit"></td>\n\
                             <td><input type="text" name="tag_descr" value="' + e['data'][i]['descr'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm_tags" elm_row="descr" class="form-control init_elm_edit"></td>\n\
-                            <td><span class="btn btn-danger init_elm_delete" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm_tags" func="init_utm_tags()"><i class="mdi mdi-delete"></i></span></td>\n\
+                            <td><span class="btn btn-sm btn-danger init_elm_delete" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_utm_tags" func="init_utm_tags()"><i class="mdi mdi-delete"></i></span></td>\n\
                             </tr>'
                                 );
                     }
@@ -197,18 +201,23 @@ function init_utm_filter() {
         }, function (e) {
             $(".table_utm_list_filter tbody tr").remove();
             if (e['success'] == '1') {
+                $(".count_utm_list_filter").html(e['data'].length);
                 if (e['data'].length > 0) {
                     for (var i = 0; i < e['data'].length; i++) {
+                        var pay_info_link = '';
+                        if (e['data'][i]['pay_id'].length > 0) {
+                            pay_info_link = '<a href="javascript:void(0)" class="btn btn-sm btn-link btn_pay_info_modal" objid="' + e['data'][i]['pay_id'] + '">детали</a>';
+                        }
                         $(".table_utm_list_filter tbody").append(
                                 '<tr>\n\
                             <td>' + e['data'][i]['title'] + '</td>\n\
                             <td>' + e['data'][i]['lastdate'] + '</td>\n\
-                            <td>' + e['data'][i]['col'] + '</td>\n\
-                            <td>' + e['data'][i]['tag_title'] + '</td>\n\
+                            <td>' + pay_info_link + '</td>\n\
+                            <td>' + e['data'][i]['pay_summ'] + '</td>\n\
                             </tr>'
                                 );
                     }
-
+                    init_pay_info();
                 }
             }
 

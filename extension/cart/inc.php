@@ -13,6 +13,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/utm/inc.php';
 
 class cart extends \project\extension {
 
@@ -45,6 +46,11 @@ class cart extends \project\extension {
         $sign_up_consultation = new \project\sign_up_consultation();
         $close_club = new \project\close_club();
         $promo = new \project\promo();
+        $utm = new \project\utm();
+        /*
+         * Если клиент перешел по utm метки то фиксируем покупку реферала 
+         */
+        $utm->utm_product_bay($pay_id);
         /*
          * Если это консультация 
          */

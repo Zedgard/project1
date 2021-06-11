@@ -77,6 +77,23 @@ class utm extends \project\extension {
         return $this->query($query, array($id));
     }
 
+    public function get_list_utms($tags_line) {
+        $query = "SELECT * FROM (SELECT
+                    u.id, 
+                    u.title,
+                    GROUP_CONCAT(CONCAT(ut.code , '=' , utv.val)) as utm_all_tags_line
+                FROM
+                    zay_utm u
+                LEFT JOIN zay_utm_tag_values utv ON
+                    utv.utm_id = u.id
+                LEFT JOIN zay_utm_tags ut ON
+                    ut.id = utv.tag_id
+                GROUP BY u.id, u.title
+                ORDER BY ut.code ASC) dd
+                WHERE dd.utm_all_tags_line='?'";
+        return $this->getSelectArray($query, array($tags_line), 0);
+    }
+
     /*
      * Управление значениями меток
      */
@@ -133,63 +150,50 @@ class utm extends \project\extension {
                 break;
             }
         }
-        $q_params = array();
+
         if ($utm) {
             $tags = $this->utm_tags_list();
-            $tags_count = count($tags);
-
             $qyery_select = "SELECT u.id, u.title, ut.code, utv.tag_id, utv.val
                                 FROM zay_utm u
                                 left join zay_utm_tag_values utv on utv.utm_id=u.id
                                 left join zay_utm_tags ut on ut.id=utv.tag_id
                                 where u.id is not null";
             $data = $this->getSelectArray($qyery_select, array());
-            //print_r($data);
-            //echo "------<br/>\n";
-            $id = 0;
-            $ids = array();
-            foreach ($data as $k => $v) {
-                foreach ($ex_url as $value) {
-                    $ex = explode('=', $value);
-                    if ($v['code'] == $ex[0] && $v['val'] == $ex[1]) {
-                        $q_params[] = "{$ex[0]}='{$ex[1]}'";
-                        $ids[$v['id']]['ids'][] = $v['id'];
-                        $ids[$v['id']]['tag'][$ex[0]] = array($v['tag_id'], $ex[1]);
-                        //print_r($ids);
-                        //echo "c: {$tags_count} id: {$ids[$v['id']]}  col=" . count($ids[$v['id']]) . "------<br/>\n";
-                        //var_dump(empty($ids[$v['id']]));
-                        if (count($ids[$v['id']]['ids']) == $tags_count) {
-                            $id = $ids[$v['id']]['ids'][0];
-                            break;
-                        }
-                    }
+
+            $url = $_SERVER['REQUEST_URI'];
+            $params = array();
+            foreach ($tags as $value) {
+                if (isset($_GET[$value['code']])) {
+                    $params[$value['code']] = "{$value['code']}={$_GET[$value['code']]}";
+                    $url = str_replace('?' . $value['code'] . '=' . $_GET[$value['code']], '', $url);
+                    $url = str_replace('&' . $value['code'] . '=' . $_GET[$value['code']], '', $url);
                 }
             }
-            //echo "-- ID: {$id}------<br/>\n";
-            if ($id > 0) {
-                $query_utm_href = "INSERT INTO `zay_utm_href`(`utm_id`) VALUES ('?')";
-                $this->query($query_utm_href, array($id));
+            $params_line = implode(',', $params);
+            $utms = $this->get_list_utms($params_line);
+            //echo "------<br/>\n";
+            $id = 0;
+            if ($utms > 0) {
+                $id = $utms[0]['id'];
+            }
 
-                $url = $_SERVER['REQUEST_URI'];
-                foreach ($ex_url as $value) {
-                    $ex = explode('=', $value);
-                    $val = $ids[$id]['tag'][$ex[0]];
-                    //echo "code={$ex[0]} val={$val[1]}<br/>\n";
-                    //echo '?' . $ex[0] . '=' . $ex[1] . "<br/>\n";
-                    $this->utm_utm_tag_href_insert($id, $val[0]);
-                    $url = str_replace('?' . $ex[0] . '=' . $ex[1], '', $url);
-                    $url = str_replace('&' . $ex[0] . '=' . $ex[1], '', $url);
-                    //print_r($ids);
-                    //echo "c: {$tags_count} id: {$ids[$v['id']]}  col=" . count($ids[$v['id']]) . "------<br/>\n";
+            if ($id > 0) {
+                $_SESSION['utm_tag_href_id'] = $this->queryNextId('zay_utm_href');
+                $query_utm_href = "INSERT INTO `zay_utm_href`(`utm_id`,`url`) VALUES ('?','?')";
+                $this->query($query_utm_href, array($id, $url));
+
+                foreach ($tags as $value) {
+                    if (isset($_GET[$value['code']])) {
+                        $this->utm_utm_tag_href_insert($id, $value['id']);
+                    }
                 }
-                //$url = $_SERVER['REQUEST_URI'];
                 location_href($url);
             }
         }
     }
 
     /**
-     * ФИксируем теги по которым перешли
+     * Фиксируем теги по которым перешли
      * @param type $utm_id
      * @param type $tag_id
      * @return type
@@ -214,9 +218,6 @@ class utm extends \project\extension {
         $w = array();
         $array = array();
 
-
-
-
         if ($tag_id == 0) {
 
             if (strlen($date_start) > 0 && strlen($date_end) > 0) {
@@ -232,11 +233,11 @@ class utm extends \project\extension {
             if (count($w) > 0) {
                 $where = "WHERE " . implode(' and ', $w);
             }
-            $query_select = "SELECT u.title, uh.lastdate, count(uh.utm_id) as col, '' as tag_title 
+            $query_select = "SELECT u.title, uh.id, uh.url, uh.lastdate, utbp.pay_id, (select p.pay_sum from zay_pay p where p.id=utbp.pay_id) as pay_summ
                 FROM zay_utm_href uh 
                 left join zay_utm u on u.id=uh.utm_id
+                left join zay_utm_buy_products utbp on utbp.utm_id=uh.id
                 {$where} 
-                GROUP by u.title 
                 ORDER BY uh.lastdate DESC";
             return $this->getSelectArray($query_select, $array, 0);
         } else {
@@ -257,15 +258,30 @@ class utm extends \project\extension {
             if (count($w) > 0) {
                 $where = "WHERE " . implode(' and ', $w);
             }
-            $query_select = "SELECT u.title, uth.lastdate, ut.code as tag_title, count(uth.id) as col 
+            $query_select = "SELECT u.title, uh.id, uh.url, uh.lastdate, utbp.pay_id, (select p.pay_sum from zay_pay p where p.id=utbp.pay_id) as pay_summ
                 FROM zay_utm_tag_href uth 
                 left join zay_utm u on u.id=uth.utm_id
+                left join zay_utm_href uh on u.id=uh.utm_id
                 left join zay_utm_tags ut on ut.id=uth.tag_id
+                left join zay_utm_buy_products utbp on utbp.utm_id=uh.id
                 {$where} 
-                GROUP by u.title, ut.title 
                 ORDER BY uth.lastdate DESC";
             return $this->getSelectArray($query_select, $array, 0);
         }
+    }
+
+    /**
+     * Фиксируем покупки клиента по этому ID 
+     * @param type $product_id
+     * @return boolean
+     */
+    public function utm_product_bay($pay_id) {
+        if (isset($_SESSION['utm_tag_href_id']) && $_SESSION['utm_tag_href_id'] > 0 && $pay_id > 0) {
+            $query = "INSERT INTO `zay_utm_buy_products`(`utm_id`, `pay_id`) "
+                    . "VALUES ('?','?')";
+            return $this->query($query, array($_SESSION['utm_tag_href_id'], $pay_id));
+        }
+        return false;
     }
 
 }

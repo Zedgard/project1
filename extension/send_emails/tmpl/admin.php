@@ -165,7 +165,7 @@ include 'edit.php';
                         "email_send": email_send
                     }, function (e) {
                         if (e['success'] == '1') {
-                            $("#form_edit_email_modal").modal('toggle');
+                            //$("#form_edit_email_modal").modal('toggle');
                             init_get_emails();
                         }
                     });

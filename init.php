@@ -91,4 +91,10 @@ if (!isset($_SESSION['system']['sidebar_toggler'])) {
     $_SESSION['system']['sidebar_toggler'] = 'false';
 }
 
+// Переход по UTM метки для фиксации продажи
+if (!isset($_SESSION['utm_tag_href_id'])) {
+    $_SESSION['utm_tag_href_id'] = 0;
+}
+
+
 

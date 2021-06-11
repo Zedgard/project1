@@ -22,6 +22,7 @@ if ($user->isEditor()) {
         $utm_list = $pr_utm->utm_list();
         $utm_tags_list = $pr_utm->utm_tags_list();
         include 'tmpl/admin.php';
+        include $_SERVER['DOCUMENT_ROOT'] . '/extension/pay/tmpl/info.php';
     }
 } else {
     ?>
