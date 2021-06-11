@@ -190,51 +190,53 @@ function init_search_pay_user() {
 }
 
 function init_pay_info() {
-    $(".btn_pay_info_modal").click(function () {
+    $(".btn_pay_info_modal").unbind('click').click(function () {
         console.log('init_pay_info');
         $('#form_pay_info_modal').modal('toggle');
         var objid = $(this).attr('objid');
-        $(".pay_info_data").html("");
-        sendPostLigth('/jpost.php?extension=pay', {"get_pay_info": objid}, function (e) {
-            var pay_status = '';
-            var border_class = '';
-            if (e['data']['pay_status'] === 'succeeded') {
-                pay_status = 'выполнено';
-                border_class = 'table-success';
-            }
-            if (e['data']['pay_status'] === 'canceled') {
-                pay_status = 'отмененная';
-                border_class = 'table-danger';
-            }
-            if (e['data']['pay_status'] === 'pending') {
-                pay_status = 'Незавершенная';
-                border_class = 'table-danger';
-            }
-            var credit_type = '';
-            var pay_credit = 0;
-            if (e['data']['pay_credit'] > 0) {
-                credit_type = '( Кредитный )';
-                pay_credit = e['data']['pay_credit'];
-            }
+        if (objid > 0) {
+            $(".pay_info_data").html("");
+            sendPostLigth('/jpost.php?extension=pay', {"get_pay_info": objid}, function (e) {
+                var pay_status = '';
+                var border_class = '';
+                if (e['data']['pay_status'] === 'succeeded') {
+                    pay_status = 'выполнено';
+                    border_class = 'table-success';
+                }
+                if (e['data']['pay_status'] === 'canceled') {
+                    pay_status = 'отмененная';
+                    border_class = 'table-danger';
+                }
+                if (e['data']['pay_status'] === 'pending') {
+                    pay_status = 'Незавершенная';
+                    border_class = 'table-danger';
+                }
+                var credit_type = '';
+                var pay_credit = 0;
+                if (e['data']['pay_credit'] > 0) {
+                    credit_type = '( Кредитный )';
+                    pay_credit = e['data']['pay_credit'];
+                }
 
-            $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + "</td></tr>");
-            $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
-            $(".pay_info_data").append("<tr><td>Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
-            $(".pay_info_data").append("<tr><td>Статус платежа</td><td class=\"border_class\">" + pay_status + "</td></tr>");
-            $(".pay_info_data").append("<tr><td>Сумма</td><td>" + e['data']['pay_sum'] + " руб</td></tr>");
-            $(".pay_info_data").append("<tr><td>Тип</td><td>" + e['data']['pay_type_title'] + " " + credit_type + "</td></tr>");
-            if (pay_credit > 0) {
-                $(".pay_info_data").append('<tr><td>Ссылка на проверку оплаты</td><td><a href="' + e['data']['confirmationUrl'] + '" target="_blank">' + e['data']['confirmationUrl'] + '</a></td></tr>');
-            }
-            $(".pay_info_data").append("<tr><td>Пользователь</td><td>" + e['data_user']['first_name'] + " " + e['data_user']['last_name'] + "<br/>\n\
+                $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Статус платежа</td><td class=\"border_class\">" + pay_status + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Сумма</td><td>" + e['data']['pay_sum'] + " руб</td></tr>");
+                $(".pay_info_data").append("<tr><td>Тип</td><td>" + e['data']['pay_type_title'] + " " + credit_type + "</td></tr>");
+                if (pay_credit > 0) {
+                    $(".pay_info_data").append('<tr><td>Ссылка на проверку оплаты</td><td><a href="' + e['data']['confirmationUrl'] + '" target="_blank">' + e['data']['confirmationUrl'] + '</a></td></tr>');
+                }
+                $(".pay_info_data").append("<tr><td>Пользователь</td><td>" + e['data_user']['first_name'] + " " + e['data_user']['last_name'] + "<br/>\n\
                 " + e['data_user']['email'] + "<br/>\n\
                 " + e['data_user']['phone'] + "<br/>\n\
                 <a href=\"/admin/admin_users/?edit=" + e['data_user']['id'] + "&search_str=" + e['data_user']['email'] + "\" target=\"_blank\">Ред. данные пользователя</a></td></tr>");
-            $(".pay_info_data_products").html("");
-            for (var i = 0; i < e['data_products'].length; i++) {
-                $(".pay_info_data_products").append("<tr><td><img src=\"" + e['data_products'][i]['images_str'] + "\" class=\"w-100\"/></td><td><div class=\"mb-3\"><a href=\"/shop/?product=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Просмотреть</a></div>\n\
+                $(".pay_info_data_products").html("");
+                for (var i = 0; i < e['data_products'].length; i++) {
+                    $(".pay_info_data_products").append("<tr><td><img src=\"" + e['data_products'][i]['images_str'] + "\" class=\"w-100\"/></td><td><div class=\"mb-3\"><a href=\"/shop/?product=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Просмотреть</a></div>\n\
                 <div class=\"mb-3\"><a href=\"/admin/catalog/?product_edit=" + e['data_products'][i]['id'] + "\" target=\"_blank\">Редактировать</a></div></td></tr>")
-            }
-        });
+                }
+            });
+        }
     });
 }

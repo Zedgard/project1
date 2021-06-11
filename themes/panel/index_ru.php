@@ -23,9 +23,7 @@
         <!-- No Extra plugin used -->
 
         <link href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
-
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
-
         <link href="/assets/plugins/toastr/toastr.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
         <!-- SLEEK CSS -->

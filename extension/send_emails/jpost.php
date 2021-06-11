@@ -38,7 +38,7 @@ if ($u->isEditor()) {
 
         if ($send_emails->file_set($email_body_file, $email_text)) {
             if ($send_emails->edit_email_smtp($email_id, $email_subject, $email_descr, $email_body_file, $email_reply_to, $email_send)) {
-                $result = array('success' => 1, 'success_text' => '');
+                $result = array('success' => 1, 'success_text' => 'Сохранено');
             } else {
                 $result = array('success' => 0, 'success_text' => 'Ошибка!');
             }
