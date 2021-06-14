@@ -10,7 +10,7 @@
         <?
         print_r($_SERVER);
         ?>
-
+        
         <video
             id="vid1"
             class="video-js vjs-default-skin h-100"
