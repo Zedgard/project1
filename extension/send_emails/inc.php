@@ -32,9 +32,11 @@ class send_emails extends \project\extension {
      */
     public function edit_email_smtp($id, $email_subject, $email_descr, $email_body_file, $email_reply_to, $email_send) {
         if ($id > 0) {
-            $query = "UPDATE `zay_smtp_emails` SET `email_subject`='?', `email_descr`='?', `email_body_file`='?',`email_reply_to`='?',`email_send`='?' "
+            //$this->getSelectArray("SELECT * FROM zay_smtp_emails WHERE ", $queryValues)
+            // `email_body_file`='?',
+            $query = "UPDATE `zay_smtp_emails` SET `email_subject`='?', `email_descr`='?', `email_reply_to`='?',`email_send`='?' "
                     . "WHERE `id`='?' ";
-            return $this->query($query, array($email_subject, $email_descr, $email_body_file, $email_reply_to, $email_send, $id));
+            return $this->query($query, array($email_subject, $email_descr, $email_reply_to, $email_send, $id), 0);
         } else {
             $query = "INSERT INTO `zay_smtp_emails`(`email_subject`, `email_descr`, `email_body_file`, `email_reply_to`, `email_send`) "
                     . "VALUES ('?','?','?','?','?')";
@@ -84,11 +86,11 @@ class send_emails extends \project\extension {
     public function file_get_html($file_name, $params = array()) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
         $file_url = __DIR__ . '/emails_tmpl/' . $file_name . '.php';
-        
+
         $config = new \project\config();
         $site_title = $config->getConfigParam('site_title');
         $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
-        
+
         $body_str = '';
         $body_str = fileGet($file_url);
         // вставки системные http://getcourse.ru/notifications/unsubscribe/message/id/7461154924/h/93951
@@ -96,7 +98,7 @@ class send_emails extends \project\extension {
             'site' => "{$_SERVER['HTTP_HOST']}",
             'site_url' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}",
             'link_site_url' => "<a href=\"{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}\" target=\"_blank\">{$site_title}</a>",
-            'site_title' => $site_title,    
+            'site_title' => $site_title,
             'link_ed_mailto' => $link_ed_mailto,
             'site_ps' => '<div style=\"text-align: center;\">PS. Вы можете задать любой вопрос менеджеру, просто ответив на это письмо.</div>',
             'site_footer' => "<div style=\"text-align: center;background-color: #eee;padding: 10px;font-size: 0.7rem;margin-top: 20px;\">Вы получили это письмо, потому что регистрировались в проекте «{{link_site_url}}» </div>",
@@ -180,11 +182,14 @@ class send_emails extends \project\extension {
                 //$user_hello_text = "<p>Добрый день, <strong>{$user_info['first_name']}</strong>!</p>";
                 $params['user_first_name'] = $user_info['first_name'];
             }
-            if (isset($user_info['user_email']) && strlen($user_info['user_email']) > 0) {
-                if (strlen($params['user_first_name']) == 0) {
-                    $params['user_first_name'] = $user_info['user_email'];
-                }
-                $params['user_email'] = $user_info['user_email'];
+
+            if (strlen($params['user_first_name']) == 0) {
+                $params['user_first_name'] = $user_info['email'];
+            }
+            $params['user_email'] = $user_info['email'];
+            
+            if(!isset($params['user_password']) || strlen($params['user_password'])==0){
+                $params['user_password'] = '*****';
             }
 
             //echo "email_code: {$email_code} to_email: {$to_email} <br/>\n";
@@ -195,6 +200,7 @@ class send_emails extends \project\extension {
             //echo "send_email: {$email_info['email_send']} <br/>\n";
             if ($email_info['email_send'] > 0) {
                 // $email_info['email_body_file'] ;
+                //echo 'user_email: ' . $params['user_email'] . "\n";
                 $body = $this->file_get_html($email_info['email_body_file'], $params); //echo $body;
                 //echo "body: {$body}<br/>\n";
 
