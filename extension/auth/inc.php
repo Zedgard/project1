@@ -440,10 +440,11 @@ class auth extends \project\user {
      * @return type
      */
     public function updateUserPassword($newPassword, $user_id) {
-        $s = "UPDATE `zay_users` u set u.u_pass='?' "
-                . "where u.id='?' ";
+        $send_emails = new \project\send_emails();
+        $user_info = $this->getSelectArray("SELECT * FROM zay_users WHERE id='?'", array($user_id))[0];
+        $send_emails->send('new_password', $user_info['email'], array('user_password' => $newPassword));
         $newPasswordHash = $this->passHash($newPassword);
-        return $this->query($s, array($newPasswordHash, $user_id));
+        return $this->query("UPDATE `zay_users` u set u.u_pass='?' where u.id='?' ", array($newPasswordHash, $user_id));
     }
 
     /**
@@ -593,9 +594,9 @@ class auth extends \project\user {
                 $send_emails = new \project\send_emails();
                 // Отправка подготовленного сообщения
                 if ($send_emails->send('re_password', $email, array(
-                    'link' => "/auth/?repassword={$re_pass}"
-                    )
-                    )) {
+                            'link' => "/auth/?repassword={$re_pass}"
+                                )
+                        )) {
                     return true;
                 }
             }
