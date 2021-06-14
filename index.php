@@ -140,7 +140,7 @@ if ($user->isEditor()) {
     $memory = memory_get_usage() - $memory;
     $time = microtime(true) - $start;
 
-    // Подсчет среднего времени.
+    // Подсчет среднего времени.  gZLlzj46%0}Q
     $f = fopen('time.log', 'a');
     fwrite($f, $time . PHP_EOL);
     fclose($f);
@@ -158,6 +158,6 @@ if ($user->isEditor()) {
     $memory = round($memory, 2) . ' ' . $name[$i];
 
     $memory = memory_get_usage() - $memory;
-    echo "<br/>utm_tag_href_id: {$_SESSION['utm_tag_href_id']}<br/>\n";
+    //echo "<br/>utm_tag_href_id: {$_SESSION['utm_tag_href_id']}<br/>\n";
     echo '<span class="system_memory">' . $time . ' сек. / ' . $memory . '</span>';
 }

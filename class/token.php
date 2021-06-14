@@ -40,9 +40,8 @@ class token {
         $timer = time();
         //echo "session_time: {$_SESSION['site_time']} \n";
         $t_start = ($_SESSION['site_time'] + 3);
-        echo ' ' . $t_start .' < ' . $timer . "\n";
+        //echo ' ' . $t_start .' < ' . $timer . "\n";
         if ($t_start < $timer) {
-            //echo 'yea';
             $this->token_key = random_int(1000, 9999) . uniqid();
             $this->token_hash = md5($this->token_key);
             if (strlen($this->token_hash) > 0) {

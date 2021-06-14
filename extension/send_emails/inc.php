@@ -168,8 +168,15 @@ class send_emails extends \project\extension {
             $p_user = new \project\user();
             $user_info = $p_user->user_info($to_email);
             $user_hello_text = '';
-            if (isset($user_info['first_name'])) {
-                $user_hello_text = "<p>Добрый день, <strong>{$user_info['first_name']}</strong>!</p>";
+            if (isset($user_info['first_name']) && strlen($user_info['first_name']) > 0) {
+                //$user_hello_text = "<p>Добрый день, <strong>{$user_info['first_name']}</strong>!</p>";
+                $params['user_first_name'] = $user_info['first_name'];
+            }
+            if (isset($user_info['user_email']) && strlen($user_info['user_email']) > 0) {
+                if (strlen($params['user_first_name']) == 0) {
+                    $params['user_first_name'] = $user_info['user_email'];
+                }
+                $params['user_email'] = $user_info['user_email'];
             }
 
             //echo "email_code: {$email_code} to_email: {$to_email} <br/>\n";
@@ -183,7 +190,7 @@ class send_emails extends \project\extension {
                 $body = $this->file_get_html($email_info['email_body_file'], $params); //echo $body;
                 //echo "body: {$body}<br/>\n";
 
-                $body = $user_hello_text . $body;
+                $body = $body;
                 try {
                     //mail('koman1706@gmail.com','Тема','Сообщение 1');
                     // Для отправки HTML-письма должен быть установлен заголовок Content-type
