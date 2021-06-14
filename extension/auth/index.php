@@ -40,6 +40,17 @@ if ($_GET['set_email_true']) {
     }
     exit();
 }
+if ($_GET['set_email_false']) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/get_emails/inc.php';
+    $pr_get_emails = new \project\get_emails();
+    if ($pr_get_emails->get_email_unactivate($_GET['set_email_false'])) {
+        header("refresh: 4; url=/");
+        ?>
+        <div>Отписались от рассылки!</div>
+        <?
+    }
+    exit();
+}
 
 // Авторизация спомощью cookie
 if ($_SESSION['user']['other'] == 0 && isset($_COOKIE["edgard_master_cookie_token"])) {

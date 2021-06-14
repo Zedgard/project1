@@ -201,7 +201,7 @@ if (isset($_POST['send_fast_consultation'])) {
                     'fio' => $fio, 'email' => $email, 'phone' => $phone, 'topic' => $topic))) {
             // Письмо менеджерам
             $send_emails->send('send_fast_consultation', $send_fast_consultation, array(
-                'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
+                'site' => 'https://www' . $_SERVER['SERVER_NAME'],
                 'fio' => $fio, 'email' => $email, 'phone' => $phone, 'topic' => $topic));
 
             $result = array('success' => 1, 'success_text' => '', 'data' => $data);

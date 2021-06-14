@@ -48,7 +48,10 @@ class get_emails extends \project\extension {
         if ($return) {
             // Отправить сообщение пользователю для подтверждения почты
             $send_emails = new \project\send_emails();
-            if ($send_emails->send('set_emails', $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'site_activate_email' => "https://www.{$_SERVER['SERVER_NAME']}/auth/?set_email_true={$token}"))) {
+            if ($send_emails->send('set_emails', $email, array(
+                'site_activate_email' => "/auth/?set_email_true={$token}",
+                'site_unactivate_email' => "/auth/?set_email_false={$email}")
+                )) {
                 return true;
             }
         }
@@ -67,6 +70,23 @@ class get_emails extends \project\extension {
             if ($obj[0]['id'] > 0) {
                 // обновим статус
                 $query = "UPDATE `zay_get_emails` SET `token`='',`activate`='1' WHERE `id`='?'";
+                return $this->query($query, array($obj[0]['id']));
+            }
+        }
+        return false;
+    }
+    /**
+     * Отписаться от рассылки
+     * @param type $email
+     * @return boolean\
+     */
+    public function get_email_unactivate($email) {
+        $querySelect = "SELECT * FROM `zay_get_emails` WHERE `get_email`='?' ";
+        $obj = $this->getSelectArray($querySelect, array($email));
+        if (count($obj) > 0) {
+            if ($obj[0]['id'] > 0) {
+                // обновим статус
+                $query = "UPDATE `zay_get_emails` SET `token`='',`activate`='0' WHERE `id`='?'";
                 return $this->query($query, array($obj[0]['id']));
             }
         }
