@@ -90,6 +90,7 @@ class send_emails extends \project\extension {
             'site' => "{$_SERVER['HTTP_HOST']}",
             'site_url' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}",
             'link_site_url' => "<a href=\"{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}\" target=\"_blank\">{$_SESSION['site_title']}</a>",
+            'site_title' => $_SESSION['site_title'],      
             'site_ps' => '<div style=\"text-align: center;\">PS. Вы можете задать любой вопрос менеджеру, просто ответив на это письмо.</div>',
             'site_footer' => "<div style=\"text-align: center;background-color: #eee;padding: 10px;font-size: 0.7rem;margin-top: 20px;\">Вы получили это письмо, потому что регистрировались в проекте «{{link_site_url}}» </div>",
             'site_unsubscribe' => "<div style=\"text-align: center;font-size: 0.7rem;margin-top: 10px;margin-bottom: 20px;\">Если вы не хотите получать письма от нас, вы можете отписаться</div>",

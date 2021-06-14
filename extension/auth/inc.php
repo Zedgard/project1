@@ -592,7 +592,10 @@ class auth extends \project\user {
             if ($this->query($queryUpdate, array($re_pass, $u_id))) {
                 $send_emails = new \project\send_emails();
                 // Отправка подготовленного сообщения
-                if ($send_emails->send('re_password', $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'link' => "<a href='https://www.{$_SERVER['SERVER_NAME']}/auth/?repassword={$re_pass}' target='_blank'>перейти</a>"))) {
+                if ($send_emails->send('re_password', $email, array(
+                    'link' => "/auth/?repassword={$re_pass}"
+                    )
+                    )) {
                     return true;
                 }
             }
