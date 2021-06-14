@@ -13,6 +13,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/Exception.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/PHPMailer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/SMTP.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 
 class send_emails extends \project\extension {
 
@@ -83,6 +84,9 @@ class send_emails extends \project\extension {
     public function file_get_html($file_name, $params = array()) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
         $file_url = __DIR__ . '/emails_tmpl/' . $file_name . '.php';
+        
+        $config = new \project\config();
+        
         $body_str = '';
         $body_str = fileGet($file_url);
         // вставки системные http://getcourse.ru/notifications/unsubscribe/message/id/7461154924/h/93951
@@ -90,7 +94,7 @@ class send_emails extends \project\extension {
             'site' => "{$_SERVER['HTTP_HOST']}",
             'site_url' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}",
             'link_site_url' => "<a href=\"{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}\" target=\"_blank\">{$_SESSION['site_title']}</a>",
-            'site_title' => $_SESSION['site_title'],      
+            'site_title' => $config->getConfigParam('site_title'),      
             'site_ps' => '<div style=\"text-align: center;\">PS. Вы можете задать любой вопрос менеджеру, просто ответив на это письмо.</div>',
             'site_footer' => "<div style=\"text-align: center;background-color: #eee;padding: 10px;font-size: 0.7rem;margin-top: 20px;\">Вы получили это письмо, потому что регистрировались в проекте «{{link_site_url}}» </div>",
             'site_unsubscribe' => "<div style=\"text-align: center;font-size: 0.7rem;margin-top: 10px;margin-bottom: 20px;\">Если вы не хотите получать письма от нас, вы можете отписаться</div>",
@@ -98,9 +102,9 @@ class send_emails extends \project\extension {
         foreach ($replaces as $key => $value) {
             $body_str = str_replace('{{' . $key . '}}', $value, $body_str);
         }
-        foreach ($replaces as $key => $value) {
-            $body_str = str_replace('{{' . $key . '}}', $value, $body_str);
-        }
+//        foreach ($replaces as $key => $value) {
+//            $body_str = str_replace('{{' . $key . '}}', $value, $body_str);
+//        }
 
         // вставки переданные $params
         if (count($params) > 0) {
