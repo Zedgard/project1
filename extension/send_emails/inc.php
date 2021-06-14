@@ -86,6 +86,8 @@ class send_emails extends \project\extension {
         $file_url = __DIR__ . '/emails_tmpl/' . $file_name . '.php';
         
         $config = new \project\config();
+        $site_title = $config->getConfigParam('site_title');
+        $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
         
         $body_str = '';
         $body_str = fileGet($file_url);
@@ -93,8 +95,9 @@ class send_emails extends \project\extension {
         $replaces = array(
             'site' => "{$_SERVER['HTTP_HOST']}",
             'site_url' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}",
-            'link_site_url' => "<a href=\"{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}\" target=\"_blank\">{$_SESSION['site_title']}</a>",
-            'site_title' => $config->getConfigParam('site_title'),      
+            'link_site_url' => "<a href=\"{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}\" target=\"_blank\">{$site_title}</a>",
+            'site_title' => $site_title,    
+            'link_ed_mailto' => $link_ed_mailto,
             'site_ps' => '<div style=\"text-align: center;\">PS. Вы можете задать любой вопрос менеджеру, просто ответив на это письмо.</div>',
             'site_footer' => "<div style=\"text-align: center;background-color: #eee;padding: 10px;font-size: 0.7rem;margin-top: 20px;\">Вы получили это письмо, потому что регистрировались в проекте «{{link_site_url}}» </div>",
             'site_unsubscribe' => "<div style=\"text-align: center;font-size: 0.7rem;margin-top: 10px;margin-bottom: 20px;\">Если вы не хотите получать письма от нас, вы можете отписаться</div>",
@@ -102,9 +105,9 @@ class send_emails extends \project\extension {
         foreach ($replaces as $key => $value) {
             $body_str = str_replace('{{' . $key . '}}', $value, $body_str);
         }
-//        foreach ($replaces as $key => $value) {
-//            $body_str = str_replace('{{' . $key . '}}', $value, $body_str);
-//        }
+        foreach ($replaces as $key => $value) {
+            $body_str = str_replace('{{' . $key . '}}', $value, $body_str);
+        }
 
         // вставки переданные $params
         if (count($params) > 0) {
