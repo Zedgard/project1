@@ -45,17 +45,18 @@ class sign_up_consultation extends \project\extension {
                 if ($period_id > 0) {
                     $periods = $this->get_master_consultation_periods($data['your_master_id'], $period_id);
                     if (count($periods) > 0) {
-                        $period_str = $periods[0]['period_hour'] . ':' . $periods[0]['periods_minute'] . ' цена: ' . $periods[0]['period_price'];
+                        $period_str = $periods[0]['period_hour'] . ':' . $periods[0]['periods_minute']; // . ' цена: ' . $periods[0]['period_price'];
                     }
                 }
 
                 $send_emails = new \project\send_emails();
                 $config = new \project\config();
-                $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
+                
+                // Отправка письма клиенту
                 $send_emails->send(
                         'consultation',
-                        $link_ed_mailto, array(
-                    'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
+                        $data['user_email'], array(
+                    //'site' => 'https://' . $_SERVER['SERVER_NAME'],
                     'fio' => $data['first_name'],
                     'email' => $data['user_email'],
                     'phone' => $data['user_phone'],
@@ -65,6 +66,42 @@ class sign_up_consultation extends \project\extension {
                     'period' => $period_str
                         )
                 );
+
+                
+                // Отправка на основную почту
+//                $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
+//                $send_emails->send(
+//                        'consultation',
+//                        $link_ed_mailto, array(
+//                    //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+//                    'fio' => $data['first_name'],
+//                    'email' => $data['user_email'],
+//                    'phone' => $data['user_phone'],
+//                    'descr' => $data['pay_descr'],
+//                    'date' => $data['date'],
+//                    'time' => $data['time'],
+//                    'period' => $period_str
+//                        )
+//                );
+
+                // Отправить опопвещение менеджеру
+                $consultation_manager_email = $config->getConfigParam('consultation_manager_email');
+                if (strlen($consultation_manager_email) > 0) {
+                    $send_emails->send(
+                            'consultation',
+                            $consultation_manager_email, array(
+                        //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+                        'fio' => $data['first_name'],
+                        'email' => $data['user_email'],
+                        'phone' => $data['user_phone'],
+                        'descr' => $data['pay_descr'],
+                        'date' => $data['date'],
+                        'time' => $data['time'],
+                        'period' => $period_str
+                            )
+                    );
+                }
+
                 unset($_SESSION['consultation']);
             }
 
@@ -287,18 +324,17 @@ class sign_up_consultation extends \project\extension {
             return $this->getSelectArray($querySelect, array($master_id, $periods_id));
         }
     }
-    
+
     /**
      * Уникальные периоды времени по консультанту
      * @param type $master_id
      * @return type
      */
     public function get_master_consultation_periods_distinct($master_id) {
-            $querySelect = "SELECT DISTINCT p.period_time FROM zay_consultation_periods p 
+        $querySelect = "SELECT DISTINCT p.period_time FROM zay_consultation_periods p 
                     where p.master_id='?' AND (p.period_start is null or (p.period_end>=CURRENT_DATE)) 
                     ORDER BY p.period_start, p.period_time ASC, p.periods_minute ASC";
-            return $this->getSelectArray($querySelect, array($master_id));
-     
+        return $this->getSelectArray($querySelect, array($master_id));
     }
 
     /**

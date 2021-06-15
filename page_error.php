@@ -87,6 +87,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
             </div>
         </div>
 
-
+        <?
+        include 'themes/site1/footer_ru.php';
+        ?> 
     </body>
 </html>
