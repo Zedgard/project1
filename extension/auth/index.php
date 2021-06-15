@@ -34,9 +34,11 @@ if ($_GET['set_email_true']) {
     $pr_get_emails = new \project\get_emails();
     if ($pr_get_emails->get_email_activate($_GET['set_email_true'])) {
         header("refresh: 4; url=/");
-        ?>
-        <div>Активировано!</div>
-        <?
+        $_SESSION['page_errors'][] = 'Успешно подписаны!';
+        include $_SERVER['DOCUMENT_ROOT'] . '/page_error.php';
+    } else {
+        $_SESSION['page_errors'][] = 'Ошибка токена!';
+        include $_SERVER['DOCUMENT_ROOT'] . '/page_error.php';
     }
     exit();
 }
@@ -45,10 +47,12 @@ if ($_GET['set_email_false']) {
     $pr_get_emails = new \project\get_emails();
     if ($pr_get_emails->get_email_unactivate($_GET['set_email_false'])) {
         header("refresh: 4; url=/");
-        ?>
-        <div>Отписались от рассылки!</div>
-        <?
+        $_SESSION['page_errors'][] = 'Отписались от рассылки!';
+    } else {
+        $_SESSION['page_errors'][] = 'Ошибка токена!';
+        include $_SERVER['DOCUMENT_ROOT'] . '/page_error.php';
     }
+    include $_SERVER['DOCUMENT_ROOT'] . '/page_error.php';
     exit();
 }
 
@@ -60,8 +64,8 @@ if ($_SESSION['user']['other'] == 0 && isset($_COOKIE["edgard_master_cookie_toke
 /*
  * Авторизация через свои API
  *   */
-if(isset($_GET['oauth'])){
-    if($_GET['oauth'] == 'vk'){
+if (isset($_GET['oauth'])) {
+    if ($_GET['oauth'] == 'vk') {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
     }
 }
@@ -84,7 +88,6 @@ if ($user->isClient()) {
  */
 //echo $auth->password_generate();
 //print_r($_SESSION['user']['info']);
-
 //if (isset($_GET['s_login'])) {
 //   // print_r($_POST);
 //    //print_r($_REQUEST);

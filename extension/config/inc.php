@@ -63,8 +63,13 @@ class config extends \project\extension {
                 $v = $_SESSION['config'][$config_code];
             } else {
                 $querySelect = "SELECT * FROM `zay_configs` WHERE `config_code`='?' ";
-                $v = $this->getSelectArray($querySelect, array($config_code))[0]['config_val'];
-                $_SESSION['config'][$config_code] = $config_code;
+                $data = $this->getSelectArray($querySelect, array($config_code)); //[0]['config_val'];
+                if (count($data) > 0) {
+                    $_SESSION['config'][$config_code] = $data[0]['config_val'];
+                    $v = $data[0]['config_val'];
+                } else {
+                    $v = '';
+                }
             }
             return $v;
         }
