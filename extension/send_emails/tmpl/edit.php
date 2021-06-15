@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-12">
                             <label for="email_text">Текст</label>
-                            <a href="javascript:void(0)" class="btn btn-primary btn_show_body_text_message float-right" style="display: none;">просмотреть</a>
+                            <a href="javascript:void(0)" class="btn btn-sm btn-primary btn_show_body_text_message float-right" style="display: none;">просмотреть</a>
                         </div>
                     </div>
                     <div class="row">
@@ -45,7 +45,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <textarea name="email_text" id="email_text" class="form-control email_text" placeholder="Текст сообщения" style="width: 100%;height: 100px;"></textarea>
+                            <textarea name="email_text" id="email_text" class="form-control email_text" placeholder="Текст сообщения" style="width: 100%;height: 200px;"></textarea>
                         </div>
                     </div>
                 </div>

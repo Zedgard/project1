@@ -53,9 +53,7 @@ class send_emails extends \project\extension {
     public function file_set($file_name, $body) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
         $file_url = __DIR__ . '/emails_tmpl/' . $file_name . '.php';
-        $body_str = "<html><body>";
-        $body_str .= $body . "\n";
-        $body_str .= "</body></html>";
+        $body_str = "<html><body>{$body}</body></html>";
         return fileSet($file_url, $body_str);
     }
 
@@ -68,9 +66,7 @@ class send_emails extends \project\extension {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
         $file_url = __DIR__ . '/emails_tmpl/' . $file_name . '.php';
         $body_str = fileGet($file_url);
-        $replase_array = array('<html>', '</html>', '<body>', '</body>', '<head>', '</head>',
-            '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">'
-        );
+        $replase_array = array('<html>', '</html>', '<body>', '</body>', '<head>', '</head>');
         foreach ($replase_array as $value) {
             $body_str = str_replace($value, '', $body_str);
         }
@@ -101,8 +97,7 @@ class send_emails extends \project\extension {
             'site_title' => $site_title,
             'link_ed_mailto' => $link_ed_mailto,
             'site_ps' => '<div style=\"text-align: center;\">PS. Вы можете задать любой вопрос менеджеру, просто ответив на это письмо.</div>',
-            'site_footer' => "<div style=\"text-align: center;background-color: #eee;padding: 10px;font-size: 0.7rem;margin-top: 20px;\">Вы получили это письмо, потому что регистрировались в проекте «{{link_site_url}}» </div>",
-            'site_unsubscribe' => "<div style=\"text-align: center;font-size: 0.7rem;margin-top: 10px;margin-bottom: 20px;\">Если вы не хотите получать письма от нас, вы можете отписаться</div>",
+            'site_footer' => "<div style=\"text-align: center;background-color: #eee;padding: 10px;font-size: 0.7rem;margin-top: 20px;\">Вы получили это письмо, потому что регистрировались на сайте «{{link_site_url}}» </div>"
         );
         foreach ($replaces as $key => $value) {
             $body_str = str_replace('{{' . $key . '}}', $value, $body_str);
