@@ -51,6 +51,8 @@ class sign_up_consultation extends \project\extension {
 
                 $send_emails = new \project\send_emails();
                 $config = new \project\config();
+                $date = $data['date'];
+                $date = date_sql_format($date);
                 
                 // Отправка письма клиенту
                 $send_emails->send(
@@ -61,7 +63,7 @@ class sign_up_consultation extends \project\extension {
                     'email' => $data['user_email'],
                     'phone' => $data['user_phone'],
                     'descr' => $data['pay_descr'],
-                    'date' => $data['date'],
+                    'date' => $date,
                     'time' => $data['time'],
                     'period' => $period_str
                         )
@@ -78,7 +80,7 @@ class sign_up_consultation extends \project\extension {
 //                    'email' => $data['user_email'],
 //                    'phone' => $data['user_phone'],
 //                    'descr' => $data['pay_descr'],
-//                    'date' => $data['date'],
+//                    'date' => $date,
 //                    'time' => $data['time'],
 //                    'period' => $period_str
 //                        )
@@ -95,7 +97,7 @@ class sign_up_consultation extends \project\extension {
                         'email' => $data['user_email'],
                         'phone' => $data['user_phone'],
                         'descr' => $data['pay_descr'],
-                        'date' => $data['date'],
+                        'date' => $date,
                         'time' => $data['time'],
                         'period' => $period_str
                             )
@@ -443,7 +445,7 @@ class sign_up_consultation extends \project\extension {
 (SELECT count(*) FROM zay_consultation c 
 left join zay_pay pp on pp.id=c.pay_id 
 WHERE c.master_id = p.master_id AND c.consultation_date = '?' AND c.consultation_time = p.period_time
-and pp.pay_status='succeeded') AS is_pay,
+and pp.pay_status='succeeded' and c.cancel='0') AS is_pay,
 (select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_time is null and cr.rejection_day='?') as rejection_day,
 (select count(*) from zay_consultation_rejection cr where cr.master_id=p.master_id and cr.rejection_time=p.period_time and cr.rejection_day='?') as rejection_period
                             FROM
