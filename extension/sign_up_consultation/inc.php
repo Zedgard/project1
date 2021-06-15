@@ -52,7 +52,7 @@ class sign_up_consultation extends \project\extension {
                 $send_emails = new \project\send_emails();
                 $config = new \project\config();
                 $date = $data['date'];
-                $date = date_sql_format($date);
+                $date = date_jquery_format($date);
                 
                 // Отправка письма клиенту
                 $send_emails->send(
