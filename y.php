@@ -11,6 +11,7 @@
         print_r($_SERVER);
         ?>
         
+        <a href="g" target="_blank">g</a>
         <video
             id="vid1"
             class="video-js vjs-default-skin h-100"

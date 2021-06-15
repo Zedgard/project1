@@ -30,9 +30,9 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Код</th>
+                                        <th class="text-center">ID</th>
                                         <th>Тема письма</th>
-                                        <th>Описание</th>
+                                        <th>Фаил</th>
                                         <th class="text-center">Установлен ответ на</th>
                                         <th class="text-center">Активность</th>
                                         <th class="text-center"></th>
@@ -78,24 +78,25 @@ include 'edit.php';
 
     });// 380896
 
-    var editor = CodeMirror.fromTextArea(document.getElementById("email_text"), {
-                mode: "javascript",
-                lineNumbers: true,
-                matchBrackets: true,
-                mode: "application/x-httpd-php",
-                indentUnit: 4,
-                indentWithTabs: true,
-//                changes: function (e) {
-//                    console.log(e);
-//                }
-            });
+//    var editor = CodeMirror.fromTextArea(document.getElementById("email_text"), {
+//                mode: "javascript",
+//                lineNumbers: true,
+//                matchBrackets: true,
+//                mode: "application/x-httpd-php",
+//                indentUnit: 4,
+//                indentWithTabs: true,
+////                changes: function (e) {
+////                    console.log(e);
+////                }
+//            });
     /*
      * Рерактирование рассылок
      * @returns {undefined}
      */
     function init_form_edit_email_modal() {
         $(".add_send_email, .btn_email_edit").unbind('click').click(function () {
-            editor.refresh();
+            //editor.refresh();
+            $(".show_body_text_message").html("");
 
             var id = $(this).attr("obj_i");
 
@@ -115,6 +116,7 @@ include 'edit.php';
                     $("#form_edit_email_modal").find(".email_body_file").removeAttr('disabled');
                 }
                 $("#form_edit_email_modal").find(".email_reply_to").val(get_emails[id]['email_reply_to']);
+                //$("#form_edit_email_modal").find(".email_text").val(get_emails[id]['email_text']);
                 //$(".email_text").val(get_emails[id]['email_text']);
                 //editor.setValue(get_emails[id]['email_text']);
 
@@ -141,7 +143,7 @@ include 'edit.php';
                 var email_descr = $(".email_descr").val();
                 var email_body_file = $(".email_body_file").val();
                 var email_reply_to = $(".email_reply_to").val();
-                var email_text = editor.getValue();
+                var email_text = $(".email_text").val();//editor.getValue();
                 var email_send = 1;
                 if (!$(".email_send").prop('checked')) {
                     email_send = 0;
@@ -184,6 +186,7 @@ include 'edit.php';
     function init_show_body_text_message() {
         // просмотр сообщения
         $(".btn_show_body_text_message").unbind('click').click(function () {
+            $(".show_body_text_message").html('<div class="spinner-border" role="status"><span class="visually-hidden"></span></div>');
             var id = $(this).attr('obj_i');
 
             var edit_email_id = get_emails[id]['id'];
@@ -192,7 +195,7 @@ include 'edit.php';
             var email_descr = $(".email_descr").val();
             var email_body_file = $(".email_body_file").val();
             var email_reply_to = $(".email_reply_to").val();
-            var email_text = editor.getValue();
+            var email_text = $(".email_text").val();//editor.getValue();
             var email_send = 1;
             if (!$(".email_send").prop('checked')) {
                 email_send = 0;
@@ -203,6 +206,7 @@ include 'edit.php';
             if (email_body_file.length < 4) {
                 alert('Наименование файла не заполнено');
             }
+
 
             if (email_subject.length > 3 && email_body_file.length > 3) {
                 sendPostLigth('/jpost.php?extension=send_emails', {
@@ -215,6 +219,7 @@ include 'edit.php';
                     "email_text": email_text,
                     "email_send": email_send
                 }, function (e) {
+
                     if (e['success'] == '1') {
                         /*
                          * Просмотри что у нас получилось
@@ -224,11 +229,12 @@ include 'edit.php';
                         sendPostLigth('/jpost.php?extension=send_emails', {
                             "show_body_text_message": get_emails[id]['email_body_file']
                         }, function (e) {
+                            $(".show_body_text_message").html("");
                             if (e['success'] == '1') {
                                 $(".show_body_text_message").html('<hr/>' + e['data'] + '<hr/>');
                                 $(".show_body_text_message").show(200);
-                                $(".show_body_text_message").append('<input type="text" name="test_send_email" class="test_send_email w-100" value="' + email_reply_to + '" placeholder="email для тестового письма..." />');
-                                $(".show_body_text_message").append('<div class="text-center mt-2 mb-2"><a href="javascript:void(0)" class="btn btn-primary btn_test_send_email">Прислать для тестирования</a></div>');
+                                $(".show_body_text_message").append('<input type="text" name="test_send_email" class="test_send_email w-100" value="" placeholder="email для тестового письма..." />');
+                                $(".show_body_text_message").append('<div class="text-center mt-2 mb-2"><a href="javascript:void(0)" class="btn btn-sm btn-primary btn_test_send_email">Отправить на почту для просмотра</a></div>');
                                 //move(".show_body_text_message");
                                 $(".btn_test_send_email").unbind("click").click(function () {
                                     var test_email = $(".test_send_email").val();
@@ -244,10 +250,14 @@ include 'edit.php';
                                         }
                                     });
                                 });
+                            } else {
+                                $(".show_body_text_message").html('<hr/>Ошибка получения тела письма!<hr/>');
                             }
                         });
                     }
                 });
+            } else {
+                alert("Не заполениы 'Тема' или 'файла'!");
             }
 
 
@@ -267,8 +277,10 @@ include 'edit.php';
         }, function (e) {
             if (e['success'] == '1') {
                 get_emails[id]['email_body_file_text'] = e['data'];
-                editor.setValue(get_emails[id]['email_body_file_text']);
-                editor.refresh();
+                $("#form_edit_email_modal").find(".email_text").val(get_emails[id]['email_body_file_text']);
+
+                //editor.setValue(get_emails[id]['email_body_file_text']);
+                //editor.refresh();
             }
         });
     }
@@ -294,7 +306,7 @@ include 'edit.php';
                     $('.emails_arrays_data').append('<tr objid="' + e['data'][i]['id'] + '" obj_i="' + i + '">\n\
                                                 <th class="text-center">' + e['data'][i]['id'] + '</th>\n\
                                                 <th>' + e['data'][i]['email_subject'] + '</th>\n\
-                                                <th>' + e['data'][i]['email_descr'] + '</th>\n\
+                                                <th>' + e['data'][i]['email_body_file'] + '</th>\n\
                                                 <th class="text-center">' + e['data'][i]['email_reply_to'] + '</th>\n\
                                                 <th class="text-center">' + email_send + '</th>\n\
                                                 <th class="text-center"><span class="btn btn-sm btn-primary btn_email_edit" obj_i="' + i + '" title="Редактировать"><i class="mdi mdi-pencil"></i></span></th>\n\
