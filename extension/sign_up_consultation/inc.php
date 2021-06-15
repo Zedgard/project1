@@ -43,7 +43,7 @@ class sign_up_consultation extends \project\extension {
             if ($return) {
                 $period_str = '';
                 if ($period_id > 0) {
-                    $periods = $this->get_master_consultation_periods($data['your_master_id'], $period_id);
+                    $periods = $this->get_master_consultation_periods($data['your_master_id'], $data['date'], $period_id);
                     if (count($periods) > 0) {
                         $period_str = $periods[0]['period_hour'] . ':' . $periods[0]['periods_minute']; // . ' цена: ' . $periods[0]['period_price'];
                     }
@@ -52,7 +52,7 @@ class sign_up_consultation extends \project\extension {
                 $send_emails = new \project\send_emails();
                 $config = new \project\config();
                 $date = $data['date'];
-                $date = date_sql_format($date);
+                $date = date_jquery_format($date);
                 
                 // Отправка письма клиенту
                 $send_emails->send(
