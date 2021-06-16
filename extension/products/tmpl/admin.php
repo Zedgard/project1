@@ -19,53 +19,55 @@
                 </style>
 
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-8">
-                            <? if (!isset($_GET['edit'])): ?>
-                                <a href="javascript:void(0)" class="btn btn-primary float-left add_products" data-toggle="modal" data-target="#form_edit_products_modal">Добавление</a>
-                                <?
-                                include 'admin_edit.php';
-                                importWisiwyng('products_desc_minimal', 150);
-                                importWisiwyng('products_desc', 300);
-                                importWisiwyng('product_content', 150);
-                                ?>
-                            <? endif; ?>
-                            <select name="visible" class="form-control w-25 float-left ml-2 visible_products">
-                                <option value="1" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 1) ? 'selected="selected"' : '' ?>>Отображаемые</option>
-                                <option value="0" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 0) ? 'selected="selected"' : '' ?>>Не отображаемые</option>
-                                <option value="9" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 9) ? 'selected="selected"' : '' ?>>Удаленные</option>
-                            </select>
-                        </div>
-                        <div class="col-4 col-offset-4">
-                            <input type="text" class="form-control search_products" value="<?= $_SESSION['product']['searchStr'] ?>" placeholder="Поиск...">
-                            <div class="float-right" style="font-size: 0.7rem;">Найдено <span class="search_products_col"></span></div>
-                        </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8">
+                                <? if (!isset($_GET['edit'])): ?>
+                                    <a href="javascript:void(0)" class="btn btn-primary float-left add_products" data-toggle="modal" data-target="#form_edit_products_modal">Добавление</a>
+                                    <?
+                                    //include 'admin_edit.php';
+                                    //importWisiwyng('products_desc_minimal', 150);
+                                    //importWisiwyng('products_desc', 300);
+                                    //importWisiwyng('product_content', 150);
+                                    ?>
+                                <? endif; ?>
+                                <select name="visible" class="form-control w-25 float-left ml-2 visible_products">
+                                    <option value="1" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 1) ? 'selected="selected"' : '' ?>>Отображаемые</option>
+                                    <option value="0" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 0) ? 'selected="selected"' : '' ?>>Не отображаемые</option>
+                                    <option value="9" <?= (isset($_SESSION['product']['active']) && $_SESSION['product']['active'] == 9) ? 'selected="selected"' : '' ?>>Удаленные</option>
+                                </select>
+                            </div>
+                            <div class="col-4 col-offset-4">
+                                <input type="text" class="form-control search_products" value="<?= $_SESSION['product']['searchStr'] ?>" placeholder="Поиск...">
+                                <div class="float-right" style="font-size: 0.7rem;">Найдено <span class="search_products_col"></span></div>
+                            </div>
 
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive-lg">
-                                <table class="table table-striped table-bordered products_arrays_data" style="width:100%;background-color: #FFFFFF;">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center;">id</th>
-                                            <th style="text-align: center;"></th>
-                                            <th>Наименование</th>
-                                            <th style="text-align: center;">Товары</th>
-                                            <th style="text-align: center;">Цена</th>
-                                            <th style="text-align: center;">Продажи</th>
-                                            <th style="text-align: center;">Отображение</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive-lg">
+                                    <table class="table table-striped table-bordered products_arrays_data" style="width:100%;background-color: #FFFFFF;">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">id</th>
+                                                <th style="text-align: center;"></th>
+                                                <th>Наименование</th>
+                                                <th style="text-align: center;">Товары</th>
+                                                <th style="text-align: center;">Цена</th>
+                                                <th style="text-align: center;">Продажи</th>
+                                                <th style="text-align: center;">Отображение</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
 
                 <div class="form-footer pt-4 pt-5 mt-4 border-top">
@@ -125,18 +127,20 @@
          * @returns {undefined}
          */
         function getWaresArray(v) {
-            $(".products_wares option").remove();
-            sendPostLigth('/jpost.php?extension=wares', {"getWaresArray": '1', "searchStr": ''}, function (e) {
-                var data = e['data'];
-                if (data.length > 0) {
-                    for (var i = 0; i < data.length; i++) {
-                        $(".products_wares").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + ' ' + data[i]['articul'] + ' ' + data[i]['ex_code'] + '</option>');
+            if ($(".products_wares").length > 0) {
+                $(".products_wares option").remove();
+                sendPostLigth('/jpost.php?extension=wares', {"getWaresArray": '1', "searchStr": ''}, function (e) {
+                    var data = e['data'];
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            $(".products_wares").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + ' ' + data[i]['articul'] + ' ' + data[i]['ex_code'] + '</option>');
+                        }
+                        if (!!v && v.length > 0) {
+                            products_wares.val(v).trigger("change");
+                        }
                     }
-                    if (!!v && v.length > 0) {
-                        products_wares.val(v).trigger("change");
-                    }
-                }
-            });
+                });
+            }
         }
 
         /**
@@ -144,18 +148,20 @@
          * @returns {undefined}
          */
         function getCategoryArray(v) {
-            $(".products_category option").remove();
-            sendPostLigth('/jpost.php?extension=category', {"getCategoryArray": '1', "searchStr": ''}, function (e) {
-                var data = e['data'];
-                if (data.length > 0) {
-                    for (var i = 0; i < data.length; i++) {
-                        $(".products_category").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+            if ($(".products_category").length > 0) {
+                $(".products_category option").remove();
+                sendPostLigth('/jpost.php?extension=category', {"getCategoryArray": '1', "searchStr": ''}, function (e) {
+                    var data = e['data'];
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            $(".products_category").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                        }
+                        if (!!v && v.length > 0) {
+                            products_category.val(v).trigger("change");
+                        }
                     }
-                    if (!!v && v.length > 0) {
-                        products_category.val(v).trigger("change");
-                    }
-                }
-            });
+                });
+            }
         }
 
         /**
@@ -163,18 +169,20 @@
          * @returns {undefined}
          */
         function getTopicArray(v) {
-            $(".products_topic option").remove();
-            sendPostLigth('/jpost.php?extension=category', {"getTopicArray": '1', "searchStr": ''}, function (e) {
-                var data = e['data'];
-                if (data.length > 0) {
-                    for (var i = 0; i < data.length; i++) {
-                        $(".products_topic").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+            if ($(".products_topic").length > 0) {
+                $(".products_topic option").remove();
+                sendPostLigth('/jpost.php?extension=category', {"getTopicArray": '1', "searchStr": ''}, function (e) {
+                    var data = e['data'];
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            $(".products_topic").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                        }
+                        if (!!v && v.length > 0) {
+                            products_topic.val(v).trigger("change");
+                        }
                     }
-                    if (!!v && v.length > 0) {
-                        products_topic.val(v).trigger("change");
-                    }
-                }
-            });
+                });
+            }
         }
 
         /**
@@ -182,18 +190,20 @@
          * @returns {undefined}
          */
         function getProductThemeArray(v) {
-            $(".product_theme option").remove();
-            sendPostLigth('/jpost.php?extension=category', {"getProductTheme": '1', "searchStr": ''}, function (e) {
-                var data = e['data'];
-                if (data.length > 0) {
-                    for (var i = 0; i < data.length; i++) {
-                        $(".product_theme").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+            if ($(".product_theme").length > 0) {
+                $(".product_theme option").remove();
+                sendPostLigth('/jpost.php?extension=category', {"getProductTheme": '1', "searchStr": ''}, function (e) {
+                    var data = e['data'];
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            $(".product_theme").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                        }
+                        if (!!v && v.length > 0) {
+                            product_theme.val(v).trigger("change");
+                        }
                     }
-                    if (!!v && v.length > 0) {
-                        product_theme.val(v).trigger("change");
-                    }
-                }
-            });
+                });
+            }
         }
 
 
@@ -260,18 +270,18 @@
                                     </label>\n\
                                 </td>\n\
                                 <td style="text-align: center;white-space: nowrap;">\n\
-                            <span class="btn btn-sm btn-primary btn_products_edit" title="Редактировать"><i class="mdi mdi-pencil"></i></span>\n\
+                            <a href="./?product_edit=' + data[i]['id'] + '" class="btn btn-sm btn-primary" title="Редактировать"><i class="mdi mdi-pencil"></i></a>\n\
                             <span class="btn btn-sm btn-danger btn_products_delete" title="Удалить"><i class="mdi mdi-delete"></i></span> \n\
                             </td>\n\
                             </tr>');
-
+// <span class="btn btn-sm btn-primary btn_products_edit" title="Редактировать"><i class="mdi mdi-pencil"></i></span>
                     }
                     products_switch_init();
-                    if (product_edit.length > 0) {
-                        setTimeout(function () {
-                            $(".products_arrays_data tbody").find('tr[elm_id="' + product_edit + '"]').find(".btn_products_edit").click();
-                        }, 1000)
-                    }
+//                    if (product_edit.length > 0) {
+//                        setTimeout(function () {
+//                            $(".products_arrays_data tbody").find('tr[elm_id="' + product_edit + '"]').find(".btn_products_edit").click();
+//                        }, 1000);
+//                    }
 
                 }
 
@@ -442,7 +452,7 @@
             var products_desc = tinymce.get('products_desc').getContent();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
             var products_sold = $(".form_save_products").find(".products_sold").val();
-            var product_content = tinymce.get('product_content').getContent(); 
+            var product_content = tinymce.get('product_content').getContent();
             // checked
             var products_active = '0';
             if ($(".form_save_products").find(".products_active").prop("checked")) {
@@ -503,32 +513,36 @@
          * Действия
          */
         function products_delete_init() {
-            $(".btn_products_delete").click(function () {
-                var product_id = $(this).closest("tr").attr("elm_id");
-                sendPostLigth('/jpost.php?extension=products',
-                        {"deleteProducts": product_id},
-                        function (e) {
-                            getProductsArray();
-                        });
-            });
+            if ($(".btn_products_delete").length > 0) {
+                $(".btn_products_delete").click(function () {
+                    var product_id = $(this).closest("tr").attr("elm_id");
+                    sendPostLigth('/jpost.php?extension=products',
+                            {"deleteProducts": product_id},
+                            function (e) {
+                                getProductsArray();
+                            });
+                });
+            }
         }
 
     });
 
     function products_switch_init() {
-        $(".products_active_switch").unbind("click").click(function () {
-            var products_id = $(this).attr("elm_id");
-            var checked = 0;
-            if ($(this).prop('checked')) {
-                checked = 1;
-            }
-            sendPostLigth('/jpost.php?extension=products',
-                    {"setProductsActive": products_id,
-                        "active": checked},
-                    function (e) {
-                        getProductsArray();
-                    });
-        });
+        if ($(".products_active_switch").length > 0) {
+            $(".products_active_switch").unbind("click").click(function () {
+                var products_id = $(this).attr("elm_id");
+                var checked = 0;
+                if ($(this).prop('checked')) {
+                    checked = 1;
+                }
+                sendPostLigth('/jpost.php?extension=products',
+                        {"setProductsActive": products_id,
+                            "active": checked},
+                        function (e) {
+                            getProductsArray();
+                        });
+            });
+        }
     }
 
 
@@ -536,49 +550,55 @@
      * Отобразить или скрыть дополнительный блок
      */
     function block_checked_init() {
-        $(".block_checked").unbind('click').click(function () {
-            var block_type = $(this).attr("block_type");
-            var show = 0;
-            if ($(this).prop('checked')) {
-                show = 1;
-            }
-            sendPostLigth('/jpost.php?extension=products',
-                    {"block_show": 1, "products_id": products_id, "block": block_type, "show": show},
-                    function (e) {
+        if ($(".block_checked").length > 0) {
+            $(".block_checked").unbind('click').click(function () {
+                var block_type = $(this).attr("block_type");
+                var show = 0;
+                if ($(this).prop('checked')) {
+                    show = 1;
+                }
+                sendPostLigth('/jpost.php?extension=products',
+                        {"block_show": 1, "products_id": products_id, "block": block_type, "show": show},
+                        function (e) {
 
-                    });
-        });
+                        });
+
+            });
+        }
     }
 
     /*
      * Общая функция обновление данных блоков
      */
     function block_data_edit_init(func) {
-        $(".block_data_edit").unbind('change').change(function () {
-            var block_id = $(this).attr("elm_id");
-            var block_type = $(this).attr("block_type");
-            var row = $(this).attr("row");
-            var val = $(this).val();
-            sendPostLigth('/jpost.php?extension=products',
-                    {"block_data_edit": 1, "block_id": block_id, "products_id": products_id, "block_type": block_type, "row": row, "val": val},
-                    function (e) {
-                        func();
-                    });
-        });
+        if ($(".block_data_edit").length > 0) {
+            $(".block_data_edit").unbind('change').change(function () {
+                var block_id = $(this).attr("elm_id");
+                var block_type = $(this).attr("block_type");
+                var row = $(this).attr("row");
+                var val = $(this).val();
+                sendPostLigth('/jpost.php?extension=products',
+                        {"block_data_edit": 1, "block_id": block_id, "products_id": products_id, "block_type": block_type, "row": row, "val": val},
+                        function (e) {
+                            func();
+                        });
+            });
+        }
     }
 
     /*
      * Общая функция удаления информации по блоку
      */
     function block_data_delete_init(func) {
-        $(".block_elm_delete").unbind('click').click(function () {
-            var block_id = $(this).attr("elm_id");
-            sendPostLigth('/jpost.php?extension=products',
-                    {"block_data_delete": 1, "block_id": block_id},
-                    function (e) {
-                        func();
-                    });
-        });
+        if ($(".block_elm_delete").length > 0) {
+            $(".block_elm_delete").unbind('click').click(function () {
+                var block_id = $(this).attr("elm_id");
+                sendPostLigth('/jpost.php?extension=products',
+                        {"block_data_delete": 1, "block_id": block_id},
+                        function (e) {
+                            func();
+                        });
+            });
+        }
     }
-
 </script>    

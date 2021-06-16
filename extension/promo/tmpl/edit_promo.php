@@ -61,7 +61,7 @@
                         <label for="promo_percent">Сумма скидки в процентах</label>
                         <input type="text" class="form-control promo_percent" value="<?= (isset($promo_data['percent']) && $promo_data['percent'] > 0) ? $promo_data['percent'] : '0' ?>" name="promo_percent">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="number_uses">Колличество использований</label>
                         <input type="text" class="form-control number_uses" value="<?= (isset($promo_data['number_uses']) && $promo_data['number_uses'] > 0) ? $promo_data['number_uses'] : '99999' ?>" name="number_uses">
@@ -152,19 +152,21 @@
      * @returns {undefined}
      */
     function getWaresArray(vals) {
-        $(".promo_products option").remove();
-        sendPostLigth('/jpost.php?extension=products', {"getProductsArray": '1', "searchStr": ''}, function (e) {
-            var data = e['data'];
-            if (data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                    var selected = '';
-                    if (vals.indexOf(data[i]['id']) !== -1) {
-                        selected = 'selected="selected"';
+        if ($(".promo_products").length > 0) {
+            $(".promo_products option").remove();
+            sendPostLigth('/jpost.php?extension=products', {"getProductsArray": '1', "searchStr": ''}, function (e) {
+                var data = e['data'];
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        var selected = '';
+                        if (vals.indexOf(data[i]['id']) !== -1) {
+                            selected = 'selected="selected"';
+                        }
+                        $(".promo_products").append('<option value="' + data[i]['id'] + '" ' + selected + '>' + data[i]['id'] + ' ' + data[i]['title'] + ' цена: ' + data[i]['price'] + '</option>');
                     }
-                    $(".promo_products").append('<option value="' + data[i]['id'] + '" ' + selected + '>' + data[i]['id'] + ' ' + data[i]['title'] + ' цена: ' + data[i]['price'] + '</option>');
-                }
 
-            }
-        });
+                }
+            });
+        }
     }
 </script>    

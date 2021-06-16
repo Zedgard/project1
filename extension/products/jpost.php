@@ -42,7 +42,14 @@ if (isset($_POST['edit_products'])) {
     $products_id = $_POST['edit_products'];
     $products_title = (isset($_POST['products_title'])) ? $_POST['products_title'] : '';
     $products_wares = (isset($_POST['products_wares'])) ? $_POST['products_wares'] : '';
-    $products_category = (isset($_POST['products_category'])) ? $_POST['products_category'] : '';
+    if (isset($_POST['products_category'])) {
+        if (is_array($_POST['products_category'])) {
+            $products_category = $_POST['products_category'];
+        } else {
+            $products_category[] = $_POST['products_category'];
+        }
+    }
+    //$products_category[] = (isset($_POST['products_category'])) ? $_POST['products_category'] : '';// old
     $products_theme = (isset($_POST['products_theme'])) ? $_POST['products_theme'] : '';
     $products_topic = (isset($_POST['products_topic'])) ? $_POST['products_topic'] : '';
     $products_desc_minimal = (isset($_POST['products_desc_minimal'])) ? $_POST['products_desc_minimal'] : '';

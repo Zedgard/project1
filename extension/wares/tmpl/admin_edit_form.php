@@ -240,7 +240,7 @@ importWisiwyng('wares_descr');
                                 tinymce.get('wares_descr').setContent(e['data']['descr']);
                                 $(".wares_col").val(e['data']['col']);
                                 $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
-                                
+
                                 if (e['data']['active'] > 0) {
                                     if (!$(".wares_active").is(':checked')) {
                                         $(".wares_active").click();
@@ -297,18 +297,20 @@ importWisiwyng('wares_descr');
      * @returns {undefined}
      */
     function getCategoryArray(v) {
-        $(".wares_categorys option").remove();
-        sendPostLigth('/jpost.php?extension=category', {"getCategoryArray": '1', "searchStr": ''}, function (e) {
-            var data = e['data'];
-            if (data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                    $(".wares_categorys").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+        if ($(".wares_categorys").length > 0) {
+            $(".wares_categorys option").remove();
+            sendPostLigth('/jpost.php?extension=category', {"getCategoryArray": '1', "searchStr": ''}, function (e) {
+                var data = e['data'];
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        $(".wares_categorys").append('<option value="' + data[i]['id'] + '">' + data[i]['title'] + '</option>');
+                    }
+                    if (!!v && v.length > 0) {
+                        wares_categorys.val(v).trigger("change");
+                    }
                 }
-                if (!!v && v.length > 0) {
-                    wares_categorys.val(v).trigger("change");
-                }
-            }
-        });
+            });
+        }
     }
 
 </script>    
