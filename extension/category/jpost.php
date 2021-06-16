@@ -43,3 +43,9 @@ if (isset($_POST['getProductTheme'])) {
     $data = $pr_category->getCategoryArray('product_theme', $searchStr);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+if (isset($_POST['getCategoryType'])) {
+    $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
+    $data = $pr_category->getCategoryArray($_POST['getCategoryType'], $searchStr);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}

@@ -50,6 +50,7 @@ if (isset($_POST['edit_products'])) {
         }
     }
     //$products_category[] = (isset($_POST['products_category'])) ? $_POST['products_category'] : '';// old
+    $products_tax = (isset($_POST['products_tax']) && $_POST['products_tax'] > 0) ? $_POST['products_tax'] : '0';
     $products_theme = (isset($_POST['products_theme'])) ? $_POST['products_theme'] : '';
     $products_topic = (isset($_POST['products_topic'])) ? $_POST['products_topic'] : '';
     $products_desc_minimal = (isset($_POST['products_desc_minimal'])) ? $_POST['products_desc_minimal'] : '';
@@ -68,7 +69,7 @@ if (isset($_POST['edit_products'])) {
     $pr_products->setProducts_theme($products_theme);
 
     if ($pr_products->insertOrUpdateProducts($products_id, $products_title, $products_desc_minimal,
-                    $products_price, $products_price_promo, $products_desc, $products_sold, $product_content, $images_str, $product_new, $products_active)) {
+                    $products_price, $products_price_promo, $products_desc, $products_sold, $product_content, $images_str, $product_new, $products_tax, $products_active)) {
         $result = array('success' => 1, 'success_text' => 'Выполнено');
         $_SESSION['product']['searchStr'] = '';
         $_SESSION['message'][] = 'Успешно выполнено';

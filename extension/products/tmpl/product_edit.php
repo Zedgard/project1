@@ -89,6 +89,13 @@
                         <input type="text" class="form-control products_price_promo" id="products_price_promo" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Цена продукта" required>
                     </div>
 
+                    <div class="form-group">
+                        <label for="products_price">Налог (указывается в чеке)</label>
+                        <select class="form-control products_tax" name="states[]" style="width: 100%">
+
+                        </select>
+                    </div>
+
 
                     <div class="form-group">
                         <label for="product_content">Содержание товара (Произвольный текст отображается в карточке товара)</label>
@@ -135,7 +142,7 @@ importWisiwyng('product_content', 150);
 
     $(document).ready(function () {
 
-
+        get_taxs();
 
         /*======== MULTIPLE SELECT ========*/
         var products_wares = $(".products_wares").select2({
@@ -293,11 +300,11 @@ importWisiwyng('product_content', 150);
                                     products_theme_array.push(e['data']['products_theme'][i]);
                                 }
                             }
+                            
+                            $(".products_tax").find('option[value="' + e['data']['tax'] + '"]').attr("selected","selected");
 
                             getWaresArray(products_wares_array);
                             getTopicArray(products_topic_array);
-                            console.log('products_category_array: ');
-                            console.log(products_category_array);
                             getCategoryArray(products_category_array);
                             getProductThemeArray(products_theme_array);
 
@@ -373,28 +380,7 @@ importWisiwyng('product_content', 150);
         }
 
 
-        // обнулить данные блока
-//        function clear_form_save_products() {
-//            $(".form_save_products").find(".products_id").val("0");
-//            $(".form_save_products").find(".products_title").val("");
-//            products_wares.val([]).trigger("change");
-//            products_category.val([]).trigger("change");
-//            products_topic.val([]).trigger("change");
-//            product_theme.val([]).trigger("change");
-//            tinymce.get('products_desc_minimal').setContent("<p></p>");
-//            tinymce.get('products_desc').setContent("<p></p>");
-//            $(".form_save_products").find(".products_sold").val("");
-//            if (!$(".form_save_products").find(".products_active").is(':checked')) {
-//                $(".form_save_products").find(".products_active").click();
-//            }
-//            if (!$(".form_save_products").find(".product_new").is(':checked')) {
-//                $(".form_save_products").find(".product_new").click();
-//            }
-//            $(".form_save_products").find(".products_price").val("");
-//            $(".form_save_products").find(".products_price_promo").val("");
-//            $(".form_save_products").find(".products_id").val("0");
-//            $(".form_save_products").find(".images").html("");
-//        }
+
 
         /*
          * Сохраниение информации по продукту
@@ -407,6 +393,7 @@ importWisiwyng('product_content', 150);
             var products_topic = $(".form_save_products").find(".products_topic").val();
             var products_category = $(".form_save_products").find(".products_category").val();
             var products_theme = $(".form_save_products").find(".product_theme").val();
+            var products_tax = $(".form_save_products").find(".products_tax").val();
             var products_desc_minimal = tinymce.get('products_desc_minimal').getContent();
             var products_desc = tinymce.get('products_desc').getContent();
             // tinymce.get('wares_descr').setContent("<p>Hello world!</p>")
@@ -437,6 +424,7 @@ importWisiwyng('product_content', 150);
                         "products_wares": products_wares,
                         "products_topic": products_topic,
                         "products_category": products_category,
+                        "products_tax": products_tax,
                         "products_theme": products_theme,
                         "products_desc_minimal": products_desc_minimal,
                         "products_desc": products_desc,
@@ -453,7 +441,7 @@ importWisiwyng('product_content', 150);
                             //$('#form_edit_products_modal').modal('hide');
 
                             //if (product_edit.length > 0) {
-                                //window.location.href = '/admin/catalog/';
+                            //window.location.href = '/admin/catalog/';
                             //}
                         }
                     });
@@ -528,4 +516,18 @@ importWisiwyng('product_content', 150);
         }
     }
 
+    function get_taxs() {
+        var products_taxs = [];
+        sendPostLigth('/jpost.php?extension=category',
+                {"getCategoryType": 'tax'},
+                function (e) {
+                    $(".products_tax").append('<option value="0">По умолчанию без налога</option>');
+                    if (e['success'] == '1') {
+                        products_taxs.push(e['data']);
+                        for (var i = 0; i < e['data'].length; i++) {
+                            $(".products_tax").append('<option value="' + e['data'][i]['id'] + '">' + e['data'][i]['title'] + '</option>');
+                        }
+                    }
+                });
+    }
 </script>
