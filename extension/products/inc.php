@@ -188,13 +188,13 @@ class products extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active = 1) {
+    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0,$active = 1) {
         if ($id > 0) {
             $query = "UPDATE `zay_product` "
                     . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', `product_content`='?', "
-                    . "`images_str`='?', `product_new`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
+                    . "`images_str`='?', `product_new`='?', `tax`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active, $id), 0)) {
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active, $id), 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -203,9 +203,10 @@ class products extends \project\extension {
             }
         } else {
 
-            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `desc`, `sold`, `product_content`, `images_str`, `product_new`, `active`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $active))) {
+            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `desc`, `sold`, "
+                    . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) "
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active))) {
                 $querySelect = "SELECT MAX(p.id) as id FROM `zay_product` p ";
                 $id = $this->getSelectArray($querySelect)[0]['id'];
                 $this->insertProductWares($id, $this->products_wares);

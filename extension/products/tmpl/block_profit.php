@@ -35,7 +35,7 @@
                     <a href="javascript:void(0)" class="btn btn-primary btn_add_plus">Добавить</a>
                 </div>
                 <div class="pluss">
-                    
+
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             $(".block_profit").toggle(200);
         });
 
-        
+
 
         // Добавить "Кому подходит"
         $(".btn_add_question").unbind('click').click(function () {
@@ -84,56 +84,60 @@
     function init_block_profit_questions_array() {
         var block_type = 'block_profit';
         var row = 'question';
-        sendPostLigth('/jpost.php?extension=products',
-                {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
-                function (e) {
-                    $(".questions").html("");
-                    if (e['data'].length > 0) {
-                        for (var i = 0; i < e['data'].length; i++) {
-                            $(".questions").append('<div class="mb-2 input-group">\n\
+        if ($(".questions").length > 0) {
+            sendPostLigth('/jpost.php?extension=products',
+                    {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
+                    function (e) {
+                        $(".questions").html("");
+                        if (e['data'].length > 0) {
+                            for (var i = 0; i < e['data'].length; i++) {
+                                $(".questions").append('<div class="mb-2 input-group">\n\
                                 <input type="text" name="question_' + e['data'][i]['id'] + '" value="' + e['data'][i]['val'] + '" elm_id="' + e['data'][i]['id'] + '" block_type="block_profit" row="question" class="form-control block_data_edit" />\n\
                                 <span class="btn btn-danger block_elm_delete" elm_id="' + e['data'][i]['id'] + '"><i class="mdi mdi-delete"></i></span>\n\
                                 </div>');
+                            }
                         }
-                    }
-                    block_data_edit_init(function () {
-                        init_block_profit_questions_array();
-                        init_block_profit_plus_array();
+                        block_data_edit_init(function () {
+                            init_block_profit_questions_array();
+                            init_block_profit_plus_array();
+                        });
+                        block_data_delete_init(function () {
+                            init_block_profit_questions_array();
+                            init_block_profit_plus_array();
+                        });
                     });
-                    block_data_delete_init(function () {
-                        init_block_profit_questions_array();
-                        init_block_profit_plus_array();
-                    });
-                });
+        }
     }
-    
+
     /*
      * Получить список "Вы получите"
      */
     function init_block_profit_plus_array() {
         var block_type = 'block_profit';
         var row = 'plus';
-        sendPostLigth('/jpost.php?extension=products',
-                {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
-                function (e) {
-                    $(".pluss").html("");
-                    if (e['data'].length > 0) {
-                        for (var i = 0; i < e['data'].length; i++) {
-                            $(".pluss").append('<div class="mb-2 input-group">\n\
+        if ($(".pluss").length > 0) {
+            sendPostLigth('/jpost.php?extension=products',
+                    {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
+                    function (e) {
+                        $(".pluss").html("");
+                        if (e['data'].length > 0) {
+                            for (var i = 0; i < e['data'].length; i++) {
+                                $(".pluss").append('<div class="mb-2 input-group">\n\
                                 <input type="text" name="plus_' + e['data'][i]['id'] + '" value="' + e['data'][i]['val'] + '" elm_id="' + e['data'][i]['id'] + '" block_type="block_profit" row="plus" class="form-control block_data_edit" />\n\
                                 <span class="btn btn-danger block_elm_delete" elm_id="' + e['data'][i]['id'] + '"><i class="mdi mdi-delete"></i></span>\n\
                                 </div>');
+                            }
                         }
-                    }
-                    block_data_edit_init(function () {
-                        init_block_profit_questions_array();
-                        init_block_profit_plus_array();
+                        block_data_edit_init(function () {
+                            init_block_profit_questions_array();
+                            init_block_profit_plus_array();
+                        });
+                        block_data_delete_init(function () {
+                            init_block_profit_questions_array();
+                            init_block_profit_plus_array();
+                        });
                     });
-                    block_data_delete_init(function () {
-                        init_block_profit_questions_array();
-                        init_block_profit_plus_array();
-                    });
-                });
+        }
     }
 
 </script>

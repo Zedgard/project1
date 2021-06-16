@@ -1,5 +1,5 @@
 <style>
-.block_trailer_title{
+    .block_trailer_title{
         font-size: 2rem;
         font-weight: 600;
         color: #000000;
@@ -18,7 +18,7 @@
                     <a href="javascript:void(0)" class="btn btn-primary btn_add_trailer">Добавить</a>
                 </div>
                 <div class="trailer">
-                    
+
                 </div>
             </div>
         </div>
@@ -53,24 +53,26 @@
     function init_block_trailer_array() {
         var block_type = 'block_trailer';
         var row = 'trailer';
-        sendPostLigth('/jpost.php?extension=products',
-                {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
-                function (e) {
-                    $(".trailer").html("");
-                    if (e['data'].length > 0) {
-                        for (var i = 0; i < e['data'].length; i++) {
-                            $(".trailer").append('<div class="mb-2 input-group">\n\
+        if ($(".trailer").length > 0) {
+            sendPostLigth('/jpost.php?extension=products',
+                    {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
+                    function (e) {
+                        $(".trailer").html("");
+                        if (e['data'].length > 0) {
+                            for (var i = 0; i < e['data'].length; i++) {
+                                $(".trailer").append('<div class="mb-2 input-group">\n\
                                 <input type="text" name="trailer_' + e['data'][i]['id'] + '" value="' + e['data'][i]['val'] + '" elm_id="' + e['data'][i]['id'] + '" block_type="block_trailer" row="trailer" class="form-control block_data_edit" />\n\
                                 <span class="btn btn-danger block_elm_delete" elm_id="' + e['data'][i]['id'] + '"><i class="mdi mdi-delete"></i></span>\n\
                                 </div>');
+                            }
                         }
-                    }
-                    block_data_edit_init(function () {
-                        init_block_trailer_array();
+                        block_data_edit_init(function () {
+                            init_block_trailer_array();
+                        });
+                        block_data_delete_init(function () {
+                            init_block_trailer_array();
+                        });
                     });
-                    block_data_delete_init(function () {
-                        init_block_trailer_array();
-                    });
-                });
+        }
     }
 </script>

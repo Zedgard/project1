@@ -23,9 +23,15 @@ if ($user->isEditor()) {
     if (isset($_GET['index_promo'])) {
         $get_page = 'index_promo';
     }
+    if(isset($_GET['product_edit'])){
+        $get_page = 'product_edit';
+    }
     switch ($get_page) {
         case 'index_promo':
             $page_url = 'tmpl/admin_index_promo.php';
+            break;
+        case 'product_edit':
+            $page_url = 'tmpl/product_edit.php';
             break;
         default:
             $page_url = 'tmpl/admin.php';

@@ -1,66 +1,65 @@
-<div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header card-header-border-bottom">
-                    <div class="col-md-6">
-                        <h2>Настройки значения</h2>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="#" class="btn btn-primary form_category" data-toggle="modal" data-target="#form_category_modal" style="float: right;">Управление категориями</a>
-                    </div>
+
+<div class="card card-default">
+    <div class="card-header card-header-border-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg mt-3 mt-lg-3 text-center text-lg-left">
+                    <h2>Настройки</h2>
                 </div>
-                <div class="card-body">
-                    <a href="#" class="btn btn-primary mb-3 add_config" data-toggle="modal" data-target="#form_edit_config_modal" style="margin-top: -2rem;">Добавить настройку</a>
+                <div class="col-lg mt-3 mt-lg-3 text-center text-lg-right">
+                    <a href="#" class="btn btn-primary form_category" data-toggle="modal" data-target="#form_category_modal">Управление категориями</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="text-center text-lg-left">
+                <a href="#" class="btn btn-primary mt-3 mb-3 add_config" data-toggle="modal" data-target="#form_edit_config_modal">Добавить настройку</a>
+            </div>
+            <div id="accordion1" class="accordion accordion-bordered">
+                <?
+                foreach ($categorys as $value) {
+                    ?>
+                    <div id="accordion3" class="accordion accordion-bordered ">
+                        <div class="card">
+                            <div class="card-header" id="heading3">
+                                <button class="btn btn-link collapsed btn_category" category_id="<?= $value['id'] ?>" data-toggle="collapse" data-target="#collapse<?= $value['id'] ?>" aria-expanded="false" aria-controls="collapse">
+                                    <?= $value['title'] ?>
+                                </button>
+                            </div>
+                            <div id="collapse<?= $value['id'] ?>" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
+                                <div class="card-body card-default w-100">
+                                    <div class="table-responsive-lg">
+                                        <table class="table table-bordered table-striped config_arrays_data<?= $value['id'] ?>">
+                                            <thead>
+                                                <tr>
+                                                    <th>Код</th>
+                                                    <th>Наименование</th>
+                                                    <th>Значение</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                    <div id="accordion1" class="accordion accordion-bordered">
-                        <?
-                        foreach ($categorys as $value) {
-                            ?>
-                            <div id="accordion3" class="accordion accordion-bordered ">
-                                <div class="card">
-                                    <div class="card-header" id="heading3">
-                                        <button class="btn btn-link collapsed btn_category" category_id="<?= $value['id'] ?>" data-toggle="collapse" data-target="#collapse<?= $value['id'] ?>" aria-expanded="false" aria-controls="collapse">
-                                            <?= $value['title'] ?>
-                                        </button>
-                                    </div>
-                                    <div id="collapse<?= $value['id'] ?>" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
-                                        <div class="card-body card-default w-100">
-                                            <div class="table-responsive-lg">
-                                                <table class="table table-bordered table-striped config_arrays_data<?= $value['id'] ?>">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Код</th>
-                                                            <th>Наименование</th>
-                                                            <th>Значение</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <?
-                        }
-                        ?>
+                        </div>
                     </div>
-
-                </div>
-
-                <div class="form-footer pt-4 pt-5 mt-4 border-top">
-                    <i class="">
-                </div>
-            </div> 
-        </div>
-
+                    <?
+                }
+                ?>
+            </div>
+        </div> 
     </div>
-</div>
 
+    <div class="form-footer pt-4 pt-5 mt-4 border-top">
+        <i class="">
+    </div>
+</div> 
 <!-- Large Modal -->
 <div class="modal fade" id="form_category_modal" tabindex="-1" role="dialog" aria-labelledby="form_category_modal" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
