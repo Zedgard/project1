@@ -25,6 +25,7 @@ if (isset($_POST['getCodePromos'])) {
             }
             $_SESSION['errors'][] = 'Промо больше не доступно!';
         } else {
+            //if(product_ids)
             $_SESSION['promos'][$data[0]['code']] = $data[0];
         }
     } else {
