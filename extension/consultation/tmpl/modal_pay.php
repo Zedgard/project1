@@ -30,7 +30,7 @@
                             </td>
                         </tr>
                     </table>
-                    
+
                     <div class="consultation_price_block">
                         <span class="consultation_price"></span>&#8381;
                     </div>
@@ -63,19 +63,23 @@
                             <?
                         }
                         ?>
-                        <div class="text-center">
+                        <div class="text-center mt-2">
                             <input type="button" value="Оплатить" class="btn btn-success btn_consultation_pay_show" />
                             <div class="btn_consultation_pay_text">Выбери способ оплаты ниже:</div>
                         </div>
                     </form>
                 </div>
                 <div class="btn_consultation_pay_block mb-3" style="display: none;">
-                    <div class="col-12">
+                    <div class="mb-3">
                         <?
                         include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/tmpl/pay_metods_line.php';
                         ?>
                     </div>
+                    <div class="">
+                        <a href="/shop/cart/">Применить промо код</a>
+                    </div>
                 </div>
+
                 <div class="fast_auth_block mb-3" style="display: none;">
                     <div class="col-12">
                         <?

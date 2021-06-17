@@ -51,9 +51,9 @@ class promo extends \project\extension {
      * @return type
      */
     public function promo_get_code($code) {
-        $query = "SELECT p.*, "
-                . "(select GROUP_CONCAT(pp.product_id) from zay_promo_products pp WHERE pp.promo_id=p.id) as product_ids "
-                . "FROM zay_promo p WHERE p.code='?' AND p.status='1' AND p.date_start<=DATE_FORMAT(NOW(),'%y-%m-%d') AND p.date_end>DATE_FORMAT(NOW(),'%y-%m-%d')";
+        $query = "SELECT p.*, 
+                (select GROUP_CONCAT(pp.product_id) from zay_promo_products pp WHERE pp.promo_id=p.id) as product_ids 
+                FROM zay_promo p WHERE p.code='?' AND p.status='1' AND p.date_start<=DATE_FORMAT(NOW(),'%y-%m-%d') AND p.date_end>DATE_FORMAT(NOW(),'%y-%m-%d')";
         return $this->getSelectArray($query, array($code), 0);
     }
 

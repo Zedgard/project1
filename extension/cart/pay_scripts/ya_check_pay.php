@@ -84,12 +84,6 @@ if (count($pays) > 0) {
             // Зарегистрируем покупку
             $pr_cart->register_pay($pay_id);
 
-            // Зафиксируем продажу
-            $query_products = "select * from zay_pay_products WHERE pay_id='?'";
-            $products_data = $sqlLight->queryList($query_products, array($value['id']));
-            foreach ($products_data as $v) {
-                $products->setSoldAdd($v['product_id']);
-            }
             $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action'=> '/?page_type=pay_thanks');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
