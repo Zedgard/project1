@@ -171,8 +171,10 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
 //                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
 //                }
 
-                // Зарегистрируем покупку
-                $pr_cart->register_pay($pay_id);
+                if ($pay_status == 'succeeded') {
+                    // Зарегистрируем покупку
+                    $pr_cart->register_pay($pay_id);
+                }
 
                 // Отправляем пользователя на страницу оплаты
                 //header('Location: ' . $confirmationUrl);
