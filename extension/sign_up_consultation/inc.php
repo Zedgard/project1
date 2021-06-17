@@ -283,7 +283,7 @@ class sign_up_consultation extends \project\extension {
             'id' => 0,
             'your_master_id' => $master_id,
             'user_id' => $user_id,
-            'title' => "Консультация \"{$master_name}\" Дата: {$day_date} {$time}",
+            'title' => "Консультация \"{$master_name}\" Дата: {$day} {$time}",
             'images_str' => '/assets/img/products/consultation.jpg',
             'first_name' => $first_name,
             'user_phone' => $user_phone,
