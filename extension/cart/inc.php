@@ -14,6 +14,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.ph
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/utm/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 
 class cart extends \project\extension {
 
@@ -47,6 +48,7 @@ class cart extends \project\extension {
         $close_club = new \project\close_club();
         $promo = new \project\promo();
         $utm = new \project\utm();
+        $products = new \project\products();
         /*
          * Если клиент перешел по utm метки то фиксируем покупку реферала 
          */
@@ -66,6 +68,15 @@ class cart extends \project\extension {
             foreach ($_SESSION['promos'] as $key => $value) {
                 $promo->sale_promo_code($key);
             }
+        }
+
+        // Зафиксируем продажу товара
+        $query_products = "SELECT pp.* FROM zay_pay p 
+                            left join zay_pay_products pp on pp.pay_id=p.id
+                            WHERE p.id='?'";
+        $products_data = $this->getSelectArray($query_products, array($pay_id));
+        foreach ($products_data as $v) {
+            $products->setSoldAdd($v['product_id']);
         }
     }
 

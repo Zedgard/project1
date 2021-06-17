@@ -269,7 +269,7 @@ class sign_up_consultation extends \project\extension {
             }
         }
 
-// Описание
+        // Описание
         $descr = "<div>Консультация с {$first_name}</div>"
                 . "<div>Телефон: {$user_phone}</div>"
                 . "<div>Email: {$user_email}</div>"
@@ -277,7 +277,7 @@ class sign_up_consultation extends \project\extension {
                 . "<div>Дата и время: {$day} {$time}</div>"
                 . "<div>Цена: {$price}</div>";
 
-// Массив данных
+        // Массив данных
         $data_itm = array(
             'id' => 0,
             'your_master_id' => $master_id,

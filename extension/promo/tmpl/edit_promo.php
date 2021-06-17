@@ -157,6 +157,7 @@
             sendPostLigth('/jpost.php?extension=products', {"getProductsArray": '1', "searchStr": ''}, function (e) {
                 var data = e['data'];
                 if (data.length > 0) {
+                    $(".promo_products").append('<option value="0" ' + selected + '>Онлайн консультации</option>');
                     for (var i = 0; i < data.length; i++) {
                         var selected = '';
                         if (vals.indexOf(data[i]['id']) !== -1) {

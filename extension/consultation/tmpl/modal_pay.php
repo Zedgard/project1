@@ -63,7 +63,7 @@
                             <?
                         }
                         ?>
-                        <div class="text-center">
+                        <div class="text-center mt-2">
                             <input type="button" value="Оплатить" class="btn btn-success btn_consultation_pay_show" />
                             <div class="btn_consultation_pay_text">Выбери способ оплаты ниже:</div>
                         </div>

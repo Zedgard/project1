@@ -83,7 +83,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
         if (strlen($p_user->isClientEmail()) > 0) {
             $email = $p_user->isClientEmail();
         }
-        $return_url = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/?page_type=pay_thanks";
+        $return_url = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/check_pay.php?check_pay=ya";//?page_type=pay_thanks";
 
         $data_array = array(
             "amount" => array(
