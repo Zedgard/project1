@@ -78,20 +78,27 @@ if (count($pays) > 0) {
         $query_update = "UPDATE zay_pay "
                 . "SET pay_status='?', payment_type='?', payment_c='?', payment_bank='?' "
                 . "WHERE `pay_type`='ya' and pay_key = '?'";
-        $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']));
+        $sqlLight->query($query_update, array($pay_check, $payment_type, $payment_c, $payment_bank, $value['pay_key']), 0);
         if ($pay_check == 'succeeded') {
 
             // Зарегистрируем покупку
-            $pr_cart->register_pay($pay_id);
-
-            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action'=> '/?page_type=pay_thanks');
+            $pr_cart->register_pay($value['id']);
+            
+            $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
+            $_SESSION['cart']['total'] = $total;
+            $_SESSION['cart']['pay_id'] = $pay_id;
+            $_SESSION['cart']['itms'] = array();
+            $_SESSION['PAY_KEY'] = '';
+            unset($_SESSION['PAY_KEY']);
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action' => '/?page_type=pay_thanks');
+            location_href('/?page_type=pay_thanks');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
         }
     }
 }
 
-
+// Метод POST
 if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && $u->isClientId() > 0) {
     // Проверяем статус оплаты
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='succeeded' and `user_id`='?' and pay_key='?' ";
@@ -144,7 +151,7 @@ if (isset($_POST['check_pay']) && isset($_SESSION['PAY_KEY']) && strlen($_SESSIO
         // Зарегистрируем покупку
         $pr_cart->register_pay($pay_id);
 
-        $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action'=> '/?page_type=pay_thanks');
+        $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action' => '/?page_type=pay_thanks');
     } else {
         $result = array('success' => 0, 'success_text' => 'Платеж не проведен! Проверьте чуть позже еще раз!');
     }

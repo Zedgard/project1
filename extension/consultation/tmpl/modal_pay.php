@@ -75,7 +75,7 @@
                         include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/tmpl/pay_metods_line.php';
                         ?>
                     </div>
-                    <div class="">
+                    <div class="text-center">
                         <a href="/shop/cart/">Применить промо код</a>
                     </div>
                 </div>
