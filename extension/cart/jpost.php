@@ -205,7 +205,7 @@ if (isset($_POST['cart_product_get_array'])) {
                         $price = (int) $value['price'];
 
 
-                        // Если естьусловие по товарно
+                        // Если есть условие по товарно
                         if (strlen($v['product_ids']) > 0) {
                             $ex = explode(',', $v['product_ids']);
                             foreach ($ex as $product_id) {
