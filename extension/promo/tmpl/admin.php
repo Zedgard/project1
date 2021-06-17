@@ -35,6 +35,7 @@
                                 <th>Скидка</th>
                                 <th>Объединение</th>
                                 <th>Статус</th>
+                                <th>Кол.</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -64,6 +65,7 @@
                                     <td class="text-center"><?= $promo ?></td>
                                     <td class="text-center"><?= $alliance ?></td>
                                     <td class="text-center"><?= $status ?></td>
+                                    <td class="text-center"><?= $value['number_uses'] ?></td>
                                     <td class="text-center">
                                         <a href="?edit=<?= $value['id'] ?>" class="btn btn-sm btn-primary"><i class="mdi mdi-pencil"></i></a>
                                     </td>

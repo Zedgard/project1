@@ -209,6 +209,7 @@ if (isset($_POST['cart_product_get_array'])) {
                         if (strlen($v['product_ids']) > 0) {
                             $ex = explode(',', $v['product_ids']);
                             foreach ($ex as $product_id) {
+                                //echo "{$value['id']} == {$product_id}\n";
                                 if ($value['id'] == $product_id) {
                                     if ($v['amount'] > 0) {
                                         if ($value['price_promo'] > 0 && $alliance == 1) {

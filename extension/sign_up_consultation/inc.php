@@ -268,6 +268,7 @@ class sign_up_consultation extends \project\extension {
                 $c_price = $period_data['period_price'];
             }
         }
+        $day_date = date_sql_format($day);
 
         // Описание
         $descr = "<div>Консультация с {$first_name}</div>"
@@ -282,13 +283,13 @@ class sign_up_consultation extends \project\extension {
             'id' => 0,
             'your_master_id' => $master_id,
             'user_id' => $user_id,
-            'title' => "Консультация \"{$master_name}\"",
+            'title' => "Консультация \"{$master_name}\" Дата: {$day_date} {$time}",
             'images_str' => '/assets/img/products/consultation.jpg',
             'first_name' => $first_name,
             'user_phone' => $user_phone,
             'user_email' => $user_email,
             'pay_descr' => $descr,
-            'date' => date_sql_format($day),
+            'date' => $day_date,
             'time' => $time,
             'price' => $c_price,
             'period_id' => $period_id,

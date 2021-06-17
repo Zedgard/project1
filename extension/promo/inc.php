@@ -67,7 +67,7 @@ class promo extends \project\extension {
         $return = false;
         if ($id > 0) {
             $query = "UPDATE `zay_promo` SET `code`='?',`title`='?',`date_start`='?',"
-                    . "`date_end`='?',`status`='?',`amount`='?',`percent`='?', `number_uses`='?' `alliance`='?' "
+                    . "`date_end`='?',`status`='?',`amount`='?',`percent`='?', `number_uses`='?', `alliance`='?' "
                     . "WHERE `id`='?'";
             $return = $this->query($query, array(
                 $data['code'],
