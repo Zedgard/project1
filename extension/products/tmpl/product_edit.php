@@ -176,6 +176,13 @@ importWisiwyng('product_content', 150);
         // products_category.val(["CA", "AL"]).trigger("change");
         // products_topic.val(["CA", "AL"]).trigger("change");
 
+        if (products_id == '0') {
+            getWaresArray(0);
+            getTopicArray(0);
+            getCategoryArray(0);
+            getProductThemeArray(0);
+        }
+
         /**
          * Товары 
          * @returns {undefined}
@@ -300,8 +307,8 @@ importWisiwyng('product_content', 150);
                                     products_theme_array.push(e['data']['products_theme'][i]);
                                 }
                             }
-                            
-                            $(".products_tax").find('option[value="' + e['data']['tax'] + '"]').attr("selected","selected");
+
+                            $(".products_tax").find('option[value="' + e['data']['tax'] + '"]').attr("selected", "selected");
 
                             getWaresArray(products_wares_array);
                             getTopicArray(products_topic_array);
@@ -440,9 +447,9 @@ importWisiwyng('product_content', 150);
                             //$(".form_save_products").find('data-dismiss="modal"').click();
                             //$('#form_edit_products_modal').modal('hide');
 
-                            //if (product_edit.length > 0) {
-                            //window.location.href = '/admin/catalog/';
-                            //}
+                            if (products_id == '0') {
+                                window.location.href = '/admin/catalog/';
+                            }
                         }
                     });
         });

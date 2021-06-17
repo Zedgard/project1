@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-lg mt-3 mb-lg-0 mt-lg-0">
                     <? if (!isset($_GET['edit'])): ?>
-                        <a href="javascript:void(0)" class="btn btn-primary float-left add_products" data-toggle="modal" data-target="#form_edit_products_modal">Добавление</a>
+                        <a href="/admin/catalog/?product_edit=0" class="btn btn-primary float-left">Добавление</a>
                         <?
                         //include 'admin_edit.php';
                         //importWisiwyng('products_desc_minimal', 150);
