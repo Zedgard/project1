@@ -137,7 +137,7 @@ if (isset($_POST['add_other_consultation_cart'])) {
                     $product_period_id
             );
 
-            $result = array('success' => 1, 'success_text' => '', 'action' => '/shop/cart/', 'action_time' => 0);
+            $result = array('success' => 1, 'success_text' => ''); // , 'action' => '/shop/cart/', 'action_time' => 0 // Для редиректа
         } else {
             $errors[] = 'Не определен пользователь!';
         }
