@@ -166,6 +166,12 @@
             } else { // Десктоп
                 if (init_series_id === series_id) {
                     $(".marathons_material_list_block").toggle(200);
+                    setTimeout(function () {
+                        if ($(".marathons_material_list_block").css('display') == 'none') {
+                            $(o).find('.fas').removeClass('fa-minus');
+                            $(o).find('.fas').addClass('fa-plus');
+                        }
+                    }, 300);
                 } else {
                     $('.materials_list').html(html);
                     // Подгрузим сразу общие материалы
