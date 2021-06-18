@@ -284,7 +284,7 @@ class wares extends \project\extension {
      * @return type
      */
     public function getWaresVideoSeriesOffice($wares_id, $pay_id = 0) {
-       
+
         $query_select = "SELECT 
                                 vs.*,
                                 '0' AS series_enable,
@@ -668,37 +668,32 @@ class wares extends \project\extension {
      */
     public function getClientMarathonsProducts($wares_id = 0) {
         if ($_SESSION['user']['info']['id'] > 0) {
-
             if ($wares_id == 0) {
-                $querySelect = "SELECT DISTINCT w.*, p.id as pay_id, wcat.category_id FROM `zay_pay` p "
-                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
-                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
-                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
-                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
-                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` 
-                           left join `zay_category` cpcat on cpcat.id=pcat.category_id
-                            "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
-                        . "and cpcat.type='product_category' and  cpcat.title='Марафоны' " // марафоны
-                        . "order by pp.`id` DESC ";
+                $querySelect = "SELECT DISTINCT w.*, p.id as pay_id, wcat.category_id FROM zay_pay p 
+                        left join zay_pay_products pp on pp.pay_id=p.id 
+                        left join zay_product pr on pr.id=pp.product_id 
+                        left join zay_product_wares pw on pw.product_id=pr.id 
+                        left join zay_wares w on w.id=pw.wares_id 
+                        left join zay_wares_category wcat on wcat.wares_id=w.id 
+                        left join zay_product_category pcat on pcat.product_id=pr.id
+                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
+                        and cpcat.type='product_category' and  cpcat.title='Марафоны' 
+                        order by pp.id DESC ";
                 $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
-
                 return $objs;
             } else {
-                $querySelect = "SELECT DISTINCT w.*, p.id as pay_id, wcat.category_id FROM `zay_pay` p "
-                        . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
-                        . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
-                        . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
-                        . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
-                        . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` 
-                           left join `zay_category` cpcat on cpcat.id=pcat.category_id
-                            "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
-                        . "and cpcat.type='product_category' and  cpcat.title='Марафоны' " //  марафоны
-                        . "order by pp.`id` DESC ";
-                //echo "{$querySelect}\n";
+                $querySelect = "SELECT DISTINCT w.*, p.id as pay_id, wcat.category_id FROM zay_pay p 
+                        left join zay_pay_products pp on pp.pay_id=p.id 
+                        left join zay_product pr on pr.id=pp.product_id 
+                        left join zay_product_wares pw on pw.product_id=pr.id 
+                        left join zay_wares w on w.id=pw.wares_id 
+                        left join zay_wares_category wcat on wcat.wares_id=w.id 
+                        left join zay_product_category pcat on pcat.product_id=pr.id 
+                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
+                        and cpcat.type='product_category' and  cpcat.title='Марафоны' 
+                        order by pp.id DESC ";
                 return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, 0))[0];
             }
         }
