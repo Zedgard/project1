@@ -5,9 +5,11 @@
         <!-- GOOGLE FONTS -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
         <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css<?= $_SESSION['rand'] ?>" 
-              integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" 
-              crossorigin="anonymous">
+
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/fontawesome.min.css<?= $_SESSION['rand'] ?>"> 
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/brands.min.css<?= $_SESSION['rand'] ?>"> 
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/all.min.css<?= $_SESSION['rand'] ?>"> 
+
         <!-- FAVICON -->
         <link href="/favicon.ico" rel="shortcut icon" />
         <script src="/assets/plugins/jquery/jquery.js<?= $_SESSION['rand'] ?>"></script>
@@ -20,6 +22,7 @@
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+        <script src="/system/extension/admin_super_init.js<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" href="/extension/products/office.css<?= $_SESSION['rand'] ?>">
         <link href="/extension/wares/css/edit_videos.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
@@ -143,13 +146,15 @@
                                                                 include 'material_type_text.php';
                                                             }
                                                             if ($value['material_type'] == 'material_type_audio') {
-                                                                include 'material_type_audio.php';
+                                                                //include 'material_type_audio.php';
+                                                                echo "Аудио ссылка: {$value['audio_file']}";
                                                             }
                                                             if ($value['material_type'] == 'material_type_file') {
                                                                 include 'material_type_file.php';
                                                             }
                                                             if ($value['material_type'] == 'material_type_video') {
-                                                                include 'material_type_video.php';
+                                                                //include 'material_type_video.php';
+                                                                echo "Видео ссылка: {$value['video_youtube']}";
                                                             }
                                                             ?>
                                                         </div>
@@ -238,49 +243,50 @@
                                                        title="Название серии уроков..." style="float: left;width: 60%;" />
                                                 <input type="text" 
                                                        name="series_date_<?= $value['id'] ?>" 
-                                                       value="<?= date_jquery_format($series_value['start_date']) ?>" 
+                                                       value="<?= $series_value['start_day'] ?>" 
                                                        id="series_date_<?= $series_value['id'] ?>" 
-                                                       class="form-control form-control-series datepicker<?= $series_value['id'] ?> series_date_<?= $value['id'] ?>" 
-                                                       row_db="start_date" 
+                                                       class="form-control form-control-series init_elm_edit" 
                                                        obj_id="<?= $series_value['id'] ?>"
-                                                       obj_format="date"
+                                                       elm_id="<?= $series_value['id'] ?>"
+                                                       elm_table="zay_wares_video_series" 
+                                                       elm_row="start_day"
                                                        title="Дата старта урока..." style="float: left;width: 35%;margin-left: 5%;" />
                                                 <script>
                                                     $(document).ready(function () {
-                                                        $(".datepicker<?= $series_value['id'] ?>").datepicker({
-                                                            changeMonth: false,
-                                                            changeYear: false,
-                                                            numberOfMonths: 1, // колличество отображаемых месяцев
-                                                            showButtonPanel: false,
-                                                            onSelect: function (selectedDate) {
-                                                                console.log("selectedDate: " + selectedDate);
-                                                                var elm_type = $(".datepicker<?= $series_value['id'] ?>").get(0).tagName;
-                                                                var row_db = $(".datepicker<?= $series_value['id'] ?>").attr('row_db');
-                                                                var obj_id = $(".datepicker<?= $series_value['id'] ?>").attr('obj_id');
-                                                                var val = selectedDate;
-
-                                                                var obj_format = '';
-                                                                if (!!$(this).attr("obj_format")) {
-                                                                    obj_format = $(this).attr("obj_format");
-                                                                }
-                                                                //$(".datepicker<?= $series_value['id'] ?>").val(selectedDate);
-                                                                sendPostLigth('/jpost.php?extension=wares',
-                                                                        {
-                                                                            "editSeries": 1,
-                                                                            "row_db": row_db,
-                                                                            "obj_id": obj_id,
-                                                                            "obj_format": obj_format,
-                                                                            "val": val
-                                                                        },
-                                                                        function (e) {
-                                                                            if (e['success'] == '1') {
-
-                                                                            } else {
-                                                                                alert('Ошибка сохранения!');
-                                                                            }
-                                                                        });
-                                                            }
-                                                        });
+                                                        //                                                        $(".datepicker<?= $series_value['id'] ?>").datepicker({
+                                                        //                                                            changeMonth: false,
+                                                        //                                                            changeYear: false,
+                                                        //                                                            numberOfMonths: 1, // колличество отображаемых месяцев
+                                                        //                                                            showButtonPanel: false,
+                                                        //                                                            onSelect: function (selectedDate) {
+                                                        //                                                                console.log("selectedDate: " + selectedDate);
+                                                        //                                                                var elm_type = $(".datepicker<?= $series_value['id'] ?>").get(0).tagName;
+                                                        //                                                                var row_db = $(".datepicker<?= $series_value['id'] ?>").attr('row_db');
+                                                        //                                                                var obj_id = $(".datepicker<?= $series_value['id'] ?>").attr('obj_id');
+                                                        //                                                                var val = selectedDate;
+                                                        //
+                                                        //                                                                var obj_format = '';
+                                                        //                                                                if (!!$(this).attr("obj_format")) {
+                                                        //                                                                    obj_format = $(this).attr("obj_format");
+                                                        //                                                                }
+                                                        //                                                                //$(".datepicker<?= $series_value['id'] ?>").val(selectedDate);
+                                                        //                                                                sendPostLigth('/jpost.php?extension=wares',
+                                                        //                                                                        {
+                                                        //                                                                            "editSeries": 1,
+                                                        //                                                                            "row_db": row_db,
+                                                        //                                                                            "obj_id": obj_id,
+                                                        //                                                                            "obj_format": obj_format,
+                                                        //                                                                            "val": val
+                                                        //                                                                        },
+                                                        //                                                                        function (e) {
+                                                        //                                                                            if (e['success'] == '1') {
+                                                        //
+                                                        //                                                                            } else {
+                                                        //                                                                                alert('Ошибка сохранения!');
+                                                        //                                                                            }
+                                                        //                                                                        });
+                                                        //                                                            }
+                                                        //                                                        });
                                                     });
                                                 </script>
                                             </div> 
@@ -315,13 +321,15 @@
                                                                                             include 'material_type_text.php';
                                                                                         }
                                                                                         if ($value['material_type'] == 'material_type_audio') {
-                                                                                            include 'material_type_audio.php';
+                                                                                            //include 'material_type_audio.php';
+                                                                                            echo "Аудио ссылка: {$value['audio_file']}";
                                                                                         }
                                                                                         if ($value['material_type'] == 'material_type_file') {
                                                                                             include 'material_type_file.php';
                                                                                         }
                                                                                         if ($value['material_type'] == 'material_type_video') {
-                                                                                            include 'material_type_video.php';
+                                                                                            //include 'material_type_video.php';
+                                                                                            echo "Видео ссылка: {$value['video_youtube']}";
                                                                                         }
                                                                                         ?>
                                                                                     </div>
@@ -388,6 +396,11 @@
             </ul>
             <div style="height: 300px;"></div> 
         </div>
+        <script>
+            $(document).ready(function () {
+                init_super_elm_edit();
+            });
+        </script> 
     </body>
 
 

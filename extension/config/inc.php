@@ -106,6 +106,20 @@ class config extends \project\extension {
     }
 
     /**
+     * Обновление значения настройки
+     * @param type $config_code
+     * @param type $val
+     * @return boolean
+     */
+    public function config_update_val($config_code, $val) {
+        $query = "UPDATE `zay_configs` SET config_val='?' WHERE config_code='?'";
+        if ($this->query($query, array($val, $config_code), 1)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Удаление настройки
      * @param type $id
      * @return boolean

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header card-header-border-bottom">
-        <h2 class="col-lg-6">Промо акции - Редактирование</h2>
+        <h2 class="col-lg-6"><a href="/admin/promo/">Промо акции</a> - Редактирование</h2>
     </div>
     <div class="card-body">
         <div class="row">
@@ -104,8 +104,8 @@
         </div>
     </div>
 
-    <div class="form-footer pt-4 pt-5 mt-4 border-top">
-
+    <div class="form-footer p-3 mt-4 border-top">
+        <a href="/admin/promo/">назад</a>
     </div>
 
 </div> 

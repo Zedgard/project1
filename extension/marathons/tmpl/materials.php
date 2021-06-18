@@ -6,7 +6,7 @@ foreach ($obj['materials'] as $key => $value) {
     //$union_elm_id = mt_rand(100000, 999999) . $value['id'];
     $union_elm_id = $series_id . mt_rand(100000, 999999) . $value['id'];
     ?>
-    <div class="material_info series_<?= $value['series_id'] ?>" series_id="<?= $value['series_id'] ?>" material_id="<?= $value['id'] ?>">
+    <div class="material_info series_<?= $value['series_id'] ?> mb-3" series_id="<?= $value['series_id'] ?>" material_id="<?= $value['id'] ?>">
         <div class="row mt-2 mb-2">
             <div class="col-12">
                 <?

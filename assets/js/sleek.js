@@ -9,6 +9,17 @@
  11
  ====== End ======*/
 
+/**
+ * Генерация случайного числа 
+ * @param {type} min
+ * @param {type} max
+ * @returns {Number}
+ */
+function randomNumber(min, max) {
+    const r = Math.random() * (max - min) + min
+    return Math.floor(r)
+}
+
 $(document).ready(function () {
     "use strict";
 
@@ -211,11 +222,23 @@ $(document).ready(function () {
      */
     if (!!$(".modal-content")) {
         $(".modal-header").mouseover(function () {
-            $(".modal-dialog").draggable({ disabled: false });
+            $(".modal-dialog").draggable({disabled: false});
         });
         $(".modal-header").mouseout(function () {
-            $(".modal-dialog").draggable({ disabled: true });//.draggable();
+            $(".modal-dialog").draggable({disabled: true});//.draggable();
         });
     }
+
+    $(".btn_update_cache").unbind('click').click(function () {
+        //console.log("btn_logout");
+        var rand = randomNumber(1000, 9999);
+        sendPostLigth('/jpost.php?extension=config', {
+            "config_update": 1,
+            "config_code": 'session_number',
+            "config_val": rand
+        }, function () {
+
+        });
+    });
 
 });

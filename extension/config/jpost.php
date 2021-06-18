@@ -50,3 +50,11 @@ if (isset($_POST['get_config_categoryes'])) {
     $data = $config->getCategoryes();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
+
+if (isset($_POST['config_update'])) {
+    if ($config->config_update_val($_POST['config_code'], $_POST['config_val'])) {
+        $result = array('success' => 1, 'success_text' => 'Обновлено');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
+}

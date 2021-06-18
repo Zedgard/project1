@@ -8,3 +8,13 @@ table tbody input{
 table tbody .inp_datepicker{
     min-width: 130px;
 }
+.navbar .navbar-right .navbar-nav .right-sidebar-2-menu .btn_update_cache .mdi-file-restore-outline{
+
+}
+.navbar .navbar-right .navbar-nav .right-sidebar-2-menu .btn_update_cache .mdi-file-restore-outline:hover{
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.navbar .navbar-right .navbar-nav .right-sidebar-2-menu .btn_update_cache .mdi-file-restore-outline:active{
+    color: #ff8888;
+}

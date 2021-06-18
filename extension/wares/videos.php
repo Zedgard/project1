@@ -114,7 +114,7 @@ if ($user->isEditor()) {
         $series = $wares->getWaresVideoSeries($_GET['wares_id']);
         $materials = $wares->list_materials($_GET['wares_id']);
 
-        //print_r($wares_info);
+        //print_r($series);
         include __DIR__ . '/tmpl/edit_videos.php';
         initELFinderSelectFile('material_file');
     }

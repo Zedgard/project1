@@ -35,7 +35,7 @@ $_SESSION['url'] = array();
 $_SESSION['page_url'] = '';
 
 // Работать без кеша
-$_SESSION['rand'] = '?v=' . rand();
+$_SESSION['rand'] = '?v=' . mt_rand(1000, 9999);
 
 // Ошибки которые произошли в системе
 if (!isset($_SESSION['page_errors'])) {

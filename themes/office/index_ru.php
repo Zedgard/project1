@@ -11,23 +11,23 @@
 
         <!-- GOOGLE FONTS --> 
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet" />
-        <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/fontawesome.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/brands.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/all.min.css<?= $_SESSION['rand'] ?>"> 
-        
-        
+
+
         <!-- PLUGINS CSS STYLE -->
-        <link href="/assets/plugins/nprogress/nprogress.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <link href="/assets/plugins/nprogress/nprogress.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
         <!-- No Extra plugin used -->
 
-        <link href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <link href="/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
-        <link href="/assets/plugins/daterangepicker/daterangepicker.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
-        <link href="/assets/plugins/toastr/toastr.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <link href="/assets/plugins/toastr/toastr.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
         <!-- SLEEK CSS -->
         <link id="sleek-css" rel="stylesheet" href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" />
@@ -37,37 +37,37 @@
         <link href="/assets/img/favicon.png" rel="shortcut icon" />
 
 
-        <script src="/assets/plugins/nprogress/nprogress.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/nprogress/nprogress.js<?= $_SESSION['rand'] ?>"></script>
 
 
-        <script src="/assets/plugins/jquery/jquery.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/jquery/jquery.js<?= $_SESSION['rand'] ?>"></script>
 
-        <link href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
-        <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <link href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js<?= $_SESSION['rand'] ?>"></script>
 
-        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/jekyll-search.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/jekyll-search.min.js<?= $_SESSION['rand'] ?>"></script>
 
-        <link href="/assets/plugins/select2/css/select2.min.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet" />
-        <script src="/assets/plugins/select2/js/select2.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <link href="/assets/plugins/select2/css/select2.min.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
+        <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
 
-        <script src="/assets/plugins/charts/Chart.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/charts/Chart.js<?= $_SESSION['rand'] ?>"></script>
 
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
 
         <!-- timepicker -->
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css?v=<?= $_SESSION['rand'] ?>" />
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-sliderAccess.js<?= $_SESSION['rand'] ?>"></script>
+        <link rel="stylesheet" media="all" type="text/css" href="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.css<?= $_SESSION['rand'] ?>" />
 
         <script type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/daterangepicker/daterangepicker2.js<?= $_SESSION['rand'] ?>"></script>
-        
-        
+
+
         <script>
             jQuery(document).ready(function () {
                 if (!!$("input[name='dateRange']")[0]) {
@@ -92,13 +92,13 @@
         <script src="/assets/plugins/slimscrollbar/jquery.slimscroll.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/toastr/toastr.min.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
-        <script type="text/javascript" src="/assets/js/ajax.js?v=<?= $_SESSION['rand'] ?>"></script>   
+        <script type="text/javascript" src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
 
         <script type="text/javascript" src="/assets/plugins/mixitup/mixitup.js<?= $_SESSION['rand'] ?>"></script>
-        <link href="/assets/css/sleek.css?v=<?= $_SESSION['rand'] ?>" rel="stylesheet">
-        <script src="/assets/js/sleek.bundle.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/sleek.js?v=<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/sortable.js?v=<?= $_SESSION['rand'] ?>"></script>
+        <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+        <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/sortable.js<?= $_SESSION['rand'] ?>"></script>
     </head>
     <body class="header-fixed sidebar-fixed sidebar-dark header-light body-office" id="body">
 
@@ -413,16 +413,13 @@
 
                 </div>
             </div>
-
         <?
         endif;
         ?>
-
         <?
         foreach ($_SESSION['body_javascript'] as $js) {
             echo $js . "\n";
         }
         ?>
-
     </body>
 </html>
