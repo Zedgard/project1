@@ -157,7 +157,7 @@ if ($user->isEditor()) {
     $name = array('байт', 'КБ', 'МБ');
     $memory = round($memory, 2) . ' ' . $name[$i];
 
-    $memory = memory_get_usage() - $memory;
-    //echo "<br/>utm_tag_href_id: {$_SESSION['utm_tag_href_id']}<br/>\n";
+    $memory = memory_get_usage() - $memory; 
+    //echo "<br/>utm_tag_href_id: {$_SESSION['utm_tag_href_id']}<br/>\n"; 
     echo '<span class="system_memory">' . $time . ' сек. / ' . $memory . '</span>';
 }
