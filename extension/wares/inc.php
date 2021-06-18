@@ -270,10 +270,38 @@ class wares extends \project\extension {
     public function getWaresVideoSeries($wares_id) {
         $query_select = "SELECT 
             vs.*, 
-            IF(vs.start_date <= CURRENT_DATE, 1, 0) as series_enable 
+            '1' as series_enable
             FROM `zay_wares_video_series` vs 
             where vs.wares_id='?' order by vs.position asc ";
-        return $this->getSelectArray($query_select, array($wares_id));
+        // IF(vs.start_date <= CURRENT_DATE, 1, 0) as series_enable 
+        return $this->getSelectArray($query_select, array($wares_id), 0);
+    }
+
+    /**
+     * Получить список всех серий для видео для кабинета пользователя
+     * С учетом ограичения по дням
+     * @param type $wares_id
+     * @return type
+     */
+    public function getWaresVideoSeriesOffice($wares_id, $pay_id = 0) {
+       
+        $query_select = "SELECT 
+                                vs.*,
+                                '0' AS series_enable,
+                                if((DATE_ADD(date_format(p.pay_date, '%Y-%m-%d'), INTERVAL (vs.start_day-1) DAY))<=CURRENT_DATE, 1, 0) as series_enable
+                            FROM
+                                zay_wares_video_series vs
+                                left join zay_wares w on w.id=vs.wares_id
+                                left join zay_product_wares pw on pw.wares_id=vs.wares_id
+                                left join zay_pay_products pp on pp.product_id=pw.product_id
+                                left join zay_pay p on p.id=pp.pay_id
+                            WHERE
+                                vs.wares_id = '?'
+                                and p.pay_status='succeeded'
+                                and p.id='?'
+                            ORDER BY
+                                vs.position ASC";
+        return $this->getSelectArray($query_select, array($wares_id, $pay_id), 0);
     }
 
     /**
@@ -517,7 +545,7 @@ class wares extends \project\extension {
         if ($_SESSION['user']['info']['id'] > 0) {
             $array[] = $_SESSION['user']['info']['id'];
             $where1 = '';
-            if($product_id > 0){
+            if ($product_id > 0) {
                 $where1 = "and pr.id='?'";
                 $array[] = $product_id;
             }
@@ -554,12 +582,12 @@ class wares extends \project\extension {
         }
         return array();
     }
-    
+
     public function getClientProductWaresList($product_id) {
         if ($_SESSION['user']['info']['id'] > 0) {
             $array[] = $_SESSION['user']['info']['id'];
             $where1 = '';
-            if($product_id > 0){
+            if ($product_id > 0) {
                 $where1 = "and pr.id='?'";
                 $array[] = $product_id;
             }
@@ -642,29 +670,33 @@ class wares extends \project\extension {
         if ($_SESSION['user']['info']['id'] > 0) {
 
             if ($wares_id == 0) {
-                $querySelect = "SELECT DISTINCT w.*, wcat.category_id FROM `zay_pay` p "
+                $querySelect = "SELECT DISTINCT w.*, p.id as pay_id, wcat.category_id FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
                         . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
+                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` 
+                           left join `zay_category` cpcat on cpcat.id=pcat.category_id
+                            "
                         . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
-                        . "and pcat.`category_id`=9 " // марафоны
+                        . "and cpcat.type='product_category' and  cpcat.title='Марафоны' " // марафоны
                         . "order by pp.`id` DESC ";
                 $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
 
                 return $objs;
             } else {
-                $querySelect = "SELECT DISTINCT w.*, wcat.category_id FROM `zay_pay` p "
+                $querySelect = "SELECT DISTINCT w.*, p.id as pay_id, wcat.category_id FROM `zay_pay` p "
                         . "left join `zay_pay_products` pp on pp.`pay_id`=p.`id` "
                         . "left join `zay_product` pr on pr.`id`=pp.`product_id` "
                         . "left join `zay_product_wares` pw on pw.`product_id`=pr.`id` "
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
                         . "left join zay_wares_category wcat on wcat.wares_id=w.id "
-                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
+                        . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` 
+                           left join `zay_category` cpcat on cpcat.id=pcat.category_id
+                            "
                         . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
-                        . "and pcat.`category_id`=9 " //  марафоны
+                        . "and cpcat.type='product_category' and  cpcat.title='Марафоны' " //  марафоны
                         . "order by pp.`id` DESC ";
                 //echo "{$querySelect}\n";
                 return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, 0))[0];

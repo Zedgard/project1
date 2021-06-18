@@ -72,7 +72,6 @@
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
 
-
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
@@ -220,8 +219,9 @@
                                         </ul>
                                     </li>
 
-                                    <li class="right-sidebar-2-menu" title="Серверное время">
-                                        <span class="real_time"></span>
+                                    <li class="right-sidebar-2-menu">
+                                        <span class="btn_update_cache" title="Обновить кэш сайта"><i class="mdi mdi-file-restore-outline"></i></span>
+                                        <span class="real_time" title="Серверное время"></span>
                                     </li>
                                     <li class="right-sidebar-in right-sidebar-2-menu" style="display: none;">
                                         <i class="mdi mdi-settings mdi-spin"></i>
