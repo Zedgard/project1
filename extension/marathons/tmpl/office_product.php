@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg">
-            <div class="marathons_wares_title"><span style="display: none;">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
+            <div class="marathons_wares_title border-bottom pb-3"><span style="display: none;">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
         </div>
         <div class="col-lg">
 
@@ -120,8 +120,8 @@
                 series_id = bonus_material_id;
             }
 
-            $('.fas').removeClass('fa-minus');
-            $('.fas').addClass('fa-plus');
+            $('.marathons_material_series_btn .fas').removeClass('fa-minus');
+            $('.marathons_material_series_btn .fas').addClass('fa-plus');
             var e = $(o).find('.fas'); // <i class="fas fa-minus">
             if (e.length > 0) {
                 e.removeClass('fa-plus');
@@ -149,6 +149,12 @@
                 // Отображение и скрытие
                 if (init_series_id === series_id) {
                     $(".marathons_material_list_block").toggle(200);
+                    setTimeout(function () {
+                        if ($(".marathons_material_list_block").css('display') == 'none') {
+                            $(o).find('.fas').removeClass('fa-minus');
+                            $(o).find('.fas').addClass('fa-plus');
+                        }
+                    }, 300);
                 } else {
                     $(".marathons_material_list_block").remove();
                     $(o).closest('.marathons_elm').after(html);
@@ -167,7 +173,8 @@
                     $(".marathons_material_list_block").show(200);
                 }
             }
-            move(".marathons_material_list_block", 200);
+
+            //move(o, 200);
             init_series_id = series_id;
         });
 

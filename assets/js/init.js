@@ -242,13 +242,14 @@ function move(elm, animate) {
             //event.preventDefault();
             try {
                 var height = $(window).height();
-                var top = $(elm).offset().top - (height / 2);
+                var top = $(elm).offset().top - 100; // (height / 2)
+                //console.log('offset: ' + $(elm).offset().top + ' - ' + (height / 2));
                 $('body,html').animate({scrollTop: top}, animate);
             } catch (exception) {
             }
 
             move_start = 0;
-        }, 500);
+        }, 300);
     }
     move_start = 1;
 }
