@@ -93,7 +93,7 @@
                         } else {
                             ?>
                             <div class="mb-1">
-                                <div class="d-block d-lg-none marathons_not_btn marathons_btn_enable_day_lock" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-lock"></i></div>
+                                <div class="d-block marathons_not_btn marathons_btn_enable_day_lock" series_id="<?= $series_value['id'] ?>"><?= $series_value['title'] ?><i class="fas fa-lock"></i></div>
                             </div>
                             <?
                         }
