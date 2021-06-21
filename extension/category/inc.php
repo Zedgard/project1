@@ -87,7 +87,7 @@ class category extends \project\extension {
                     FROM
                         (
                         SELECT DISTINCT
-                            wcat.category_id
+                            pcat.category_id
                         FROM
                             zay_pay p
                         LEFT JOIN zay_pay_products pp ON
@@ -98,13 +98,14 @@ class category extends \project\extension {
                             pw.product_id = pr.id
                         LEFT JOIN zay_wares w ON
                             w.id = pw.wares_id
-                        LEFT JOIN zay_product_category wcat ON
-                            wcat.product_id = pr.id
+                        LEFT JOIN zay_product_category pcat ON
+                            pcat.product_id = pr.id
+                        LEFT JOIN zay_category cat ON cat.id=pcat.category_id  
                         WHERE
                             p.user_id='?' AND p.pay_status='succeeded' AND w.id>0 AND(
-                                wcat.category_id<>2 and wcat.category_id<>9
+                                cat.type='product_category' and cat.title<>'Вебинары' and cat.title<>'Марафоны' and cat.title<>'Онлайн-тренинги'
                             )
-                            and  wcat.category_id IS NOT NULL
+                            and  pcat.category_id IS NOT NULL
                     ) dd
                     LEFT JOIN zay_category c ON
                         c.id = dd.category_id
