@@ -19,7 +19,7 @@ if ($user->isClient() || $user->isEditor()) {
 
     if (isset($_GET['wares_id'])) {
 
-        $wares = $pr_wares->getClientMarathonsProducts($_GET['wares_id']);
+        $wares = $pr_wares->getClientOnlineTreningsProducts($_GET['wares_id']);
         $series = $pr_wares->getWaresVideoSeriesOffice($wares['id'], $wares['pay_id']);
         $materials = $pr_wares->list_materials($wares['id']);
         //echo "pay_id: {$wares['pay_id']} <br/>\n";

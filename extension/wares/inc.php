@@ -552,8 +552,10 @@ class wares extends \project\extension {
 
             $querySelect = "SELECT dd.* from
                             (SELECT DISTINCT
-                                    pr.*, cat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
-                                    (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = pr.id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
+                                    pr.*, pcat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
+                                    (IF( EXISTS(SELECT * FROM zay_category cat WHERE cat.id=pcat.category_id  
+                                                    AND (cat.title<>'Марафоны' and cat.title<>'Вебинары' and cat.title<>'Онлайн-тренинги') 
+                                               ), 1, 0)
                                         ) AS wares_show
                                 FROM
                                     zay_pay p
@@ -565,10 +567,10 @@ class wares extends \project\extension {
                                     pw.product_id = pr.id
                                 LEFT JOIN zay_wares w ON
                                     w.id = pw.wares_id
-                                LEFT JOIN zay_product_category cat ON
-                                    cat.product_id = pr.id    
+                                LEFT JOIN zay_product_category pcat ON
+                                    pcat.product_id = pr.id    
                                 LEFT JOIN zay_category c ON
-                                    c.id = cat.category_id       
+                                    c.id = pcat.category_id       
                                 WHERE
                                     p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 {$where1} 
                                 ORDER BY
@@ -707,6 +709,53 @@ class wares extends \project\extension {
         }
         return array();
     }
+    
+    /**
+     * Купленные онлайн тренинги клиента
+     */
+    public function getClientOnlineTreningsProducts($wares_id = 0) {
+        if ($_SESSION['user']['info']['id'] > 0) {
+            if ($wares_id == 0) {
+                $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        MIN(p.id) as pay_id, wcat.category_id 
+                        FROM zay_pay p 
+                        left join zay_pay_products pp on pp.pay_id=p.id 
+                        left join zay_product pr on pr.id=pp.product_id 
+                        left join zay_product_wares pw on pw.product_id=pr.id 
+                        left join zay_wares w on w.id=pw.wares_id 
+                        left join zay_wares_category wcat on wcat.wares_id=w.id 
+                        left join zay_product_category pcat on pcat.product_id=pr.id
+                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
+                        and cpcat.type='product_category' and  cpcat.title='Онлайн-тренинги' 
+                        GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
+                        order by pp.id DESC ";
+                $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
+                return $objs;
+            } else {
+                $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        MIN(p.id) as pay_id, wcat.category_id 
+                        FROM zay_pay p 
+                        left join zay_pay_products pp on pp.pay_id=p.id 
+                        left join zay_product pr on pr.id=pp.product_id 
+                        left join zay_product_wares pw on pw.product_id=pr.id 
+                        left join zay_wares w on w.id=pw.wares_id 
+                        left join zay_wares_category wcat on wcat.wares_id=w.id 
+                        left join zay_product_category pcat on pcat.product_id=pr.id 
+                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
+                        and cpcat.type='product_category' and  cpcat.title='Онлайн-тренинги' 
+                        GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
+                        order by pp.id DESC ";
+                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, 0))[0];
+            }
+        }
+        return array();
+    }
+    
+    
 
     /**
      * Получить колличество купоеллных продуктов данной категории

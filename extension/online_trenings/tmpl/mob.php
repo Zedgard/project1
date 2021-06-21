@@ -5,14 +5,14 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="marathons_wares_title">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</div>
+                <div class="marathons_wares_title">Прохождение онлайн-тренинга &laquo; <?= $wares['title'] ?> &raquo;</div>
                 <div class="row mb-3">
                     <div class="col-12">
-                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default marathons_material_series_active" series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы марафона</a>
+                        <a href="javascript:void(0)" class="marathons_btn marathons_btn_green marathons_material_series_btn marathons_material_default marathons_material_series_active" series_id="0" style="background-color: #FFFFFF;color: #000000;">Общие материалы онлайн-тренинга</a>
                     </div>
                 </div>
                 <div class="col-12 mb-3 material_info series_0 marathons_material_list_block" style="display: block;">
-                    <div class="marathons_material_list_block_title">Общие материалы марафона</div>
+                    <div class="marathons_material_list_block_title">Общие материалы онлайн-тренинга</div>
                     <div class="marathons_material_lists">
                         <?
                         $video_i = 0;

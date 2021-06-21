@@ -1,10 +1,10 @@
 <?php
 
 $config = array(
-    'title' => 'Марафоны',
-    'descr' => 'Марафоны',
+    'title' => 'Онлайн тренинги',
+    'descr' => 'Онлайн тренинги',
     'urls' => array(
-        'Марафоны для кабинета пользователя' => '/extension/marathons/office.php',
+        'Онлайн тренинги для кабинета пользователя' => '/extension/online_trenings/office.php',
     ),
     'version' => '0.1'
 );
