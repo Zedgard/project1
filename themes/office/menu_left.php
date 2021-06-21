@@ -46,6 +46,12 @@
                 </div>
             </ul>
         </li>
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'online_trenings') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/office/online_trenings/">
+                <i class="mdi mdi-message-video"></i>
+                <span class="nav-text">Тренинги</span> 
+            </a> 
+        </li>
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'marathons') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/office/marathons/">
                 <i class="mdi mdi-message-video"></i>

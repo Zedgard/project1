@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css<?= $_SESSION['rand'] ?>">
 <script src="/assets/plugins/calamansi/calamansi.min.js<?= $_SESSION['rand'] ?>"></script>
-<link href="/extension/marathons/css/marathons.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<link href="/extension/online_trenings/css/online_trenings.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg">
-            <div class="marathons_wares_title border-bottom pb-3"><span style="display: none;">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
+            <div class="marathons_wares_title border-bottom pb-3"><span style="display: none;">Прохождение онлайн-тренинга &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
         </div>
         <div class="col-lg">
 
@@ -27,14 +27,14 @@
                                series_id="0" 
                                elm_type="D"
                                >
-                                <span>Общие материалы марафона</span>
+                                <span>Общие материалы онлайн-тренинга</span>
                             </a>
                             <a href="javascript:void(0)" 
                                class="d-block d-lg-none marathons_btn marathons_btn_green marathons_material_series_btn ckick_to_upload_page" 
                                series_id="0" 
                                elm_type="M"
                                >
-                                <span>Общие материалы марафона</span>
+                                <span>Общие материалы онлайн-тренинга</span>
                             </a>
                         </div>
                     </div>

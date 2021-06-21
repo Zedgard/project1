@@ -190,6 +190,11 @@ if (isset($_POST['getClientMarathonsProducts'])) {
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
+if (isset($_POST['getClientOnlineTreningsProducts'])) {
+    $data = $pr_wares->getClientOnlineTreningsProducts();
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
 if (isset($_POST['waresVideoSee'])) {
     if ($_POST['waresVideoSee'] > 0) {
         if ($pr_wares->insertWaresVideoSee($_POST['waresVideoSee'])) {
