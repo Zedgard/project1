@@ -20,39 +20,43 @@
 
             <div class="row mb-3">
                 <div class="col-md mb-1">
-                    <div class="marathons_elm">
-                        <a href="javascript:void(0)" 
-                           class="d-none d-lg-block marathons_btn marathons_btn_green marathons_material_series_btn ckick_to_upload_page" 
-                           series_id="0" 
-                           elm_type="D"
-                           >
-                            <span>Общие материалы марафона</span>
-                        </a>
-                        <a href="javascript:void(0)" 
-                           class="d-block d-lg-none marathons_btn marathons_btn_green marathons_material_series_btn ckick_to_upload_page" 
-                           series_id="0" 
-                           elm_type="M"
-                           >
-                            <span>Общие материалы марафона</span>
-                        </a>
+                    <div class="series_block series_0">
+                        <div class="marathons_elm">
+                            <a href="javascript:void(0)" 
+                               class="d-none d-lg-block marathons_btn marathons_btn_green marathons_material_series_btn ckick_to_upload_page" 
+                               series_id="0" 
+                               elm_type="D"
+                               >
+                                <span>Общие материалы марафона</span>
+                            </a>
+                            <a href="javascript:void(0)" 
+                               class="d-block d-lg-none marathons_btn marathons_btn_green marathons_material_series_btn ckick_to_upload_page" 
+                               series_id="0" 
+                               elm_type="M"
+                               >
+                                <span>Общие материалы марафона</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md mb-1" style="<?= $bonus_btn_style ?>">
-                    <div class="marathons_elm">
-                        <a href="javascript:void(0)" 
-                           class="d-none d-lg-block marathons_btn marathons_btn_brown marathons_material_series_btn" 
-                           bonus_material_id="<?= $bonus_material_id ?>"
-                           elm_type="D"
-                           >
-                            <span>Бонус</span> <?= $bonus_lock_content ?>
-                        </a>
-                        <a href="javascript:void(0)" 
-                           class="d-block d-lg-none marathons_btn marathons_btn_brown marathons_material_series_btn" 
-                           bonus_material_id="<?= $bonus_material_id ?>"
-                           elm_type="M"
-                           >
-                            <span>Бонус</span> <?= $bonus_lock_content ?>
-                        </a>
+                    <div class="series_block series_<?= $series_value['id'] ?>">
+                        <div class="marathons_elm">
+                            <a href="javascript:void(0)" 
+                               class="d-none d-lg-block marathons_btn marathons_btn_brown marathons_material_series_btn" 
+                               bonus_material_id="<?= $bonus_material_id ?>"
+                               elm_type="D"
+                               >
+                                <span>Бонус</span> <?= $bonus_lock_content ?>
+                            </a>
+                            <a href="javascript:void(0)" 
+                               class="d-block d-lg-none marathons_btn marathons_btn_brown marathons_material_series_btn" 
+                               bonus_material_id="<?= $bonus_material_id ?>"
+                               elm_type="M"
+                               >
+                                <span>Бонус</span> <?= $bonus_lock_content ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,23 +69,25 @@
                                 continue;
                             }
                             ?>
-                            <div class="marathons_elm mb-1">
-                                <a href="javascript:void(0)" 
-                                   class="d-none d-lg-block marathons_btn marathons_btn_green marathons_material_series_btn <?= $bonus_class ?>" 
-                                   style="<?= $bonus_style ?>" 
-                                   series_id="<?= $series_value['id'] ?>"
-                                   elm_type="D"
-                                   >
-                                    <span><?= $series_value['title'] ?></span><i class="fas fa-plus"></i>
-                                </a>
-                                <a href="javascript:void(0)" 
-                                   class="d-block d-lg-none marathons_btn marathons_btn_green marathons_material_series_btn <?= $bonus_class ?>" 
-                                   style="<?= $bonus_style ?>" 
-                                   series_id="<?= $series_value['id'] ?>"
-                                   elm_type="M"
-                                   >
-                                    <span><?= $series_value['title'] ?></span><i class="fas fa-plus"></i>
-                                </a>
+                            <div class="series_block series_<?= $series_value['id'] ?>">
+                                <div class="marathons_elm mb-1">
+                                    <a href="javascript:void(0)" 
+                                       class="d-none d-lg-block marathons_btn marathons_btn_green marathons_material_series_btn <?= $bonus_class ?>" 
+                                       style="<?= $bonus_style ?>" 
+                                       series_id="<?= $series_value['id'] ?>"
+                                       elm_type="D"
+                                       >
+                                        <span><?= $series_value['title'] ?></span><i class="fas fa-plus"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" 
+                                       class="d-block d-lg-none marathons_btn marathons_btn_green marathons_material_series_btn <?= $bonus_class ?>" 
+                                       style="<?= $bonus_style ?>" 
+                                       series_id="<?= $series_value['id'] ?>"
+                                       elm_type="M"
+                                       >
+                                        <span><?= $series_value['title'] ?></span><i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
                             </div>
                             <?
                         } else {
@@ -116,17 +122,16 @@
             var bonus_material_id = $(o).attr('bonus_material_id');
 
             if (bonus_material_id > 0) {
-                console.log('bonus_material_id: ' + bonus_material_id);
+                //console.log('bonus_material_id: ' + bonus_material_id);
                 series_id = bonus_material_id;
             }
 
-            $('.marathons_material_series_btn .fas').removeClass('fa-minus');
-            $('.marathons_material_series_btn .fas').addClass('fa-plus');
-            var e = $(o).find('.fas'); // <i class="fas fa-minus">
-            if (e.length > 0) {
-                e.removeClass('fa-plus');
-                e.addClass('fa-minus');
-            }
+
+//            var e = $(o).find('.fas'); // <i class="fas fa-minus">
+//            if (e.length > 0) {
+//                e.removeClass('fa-plus');
+//                e.addClass('fa-minus');
+//            }
 
             $(".marathons_material_series_btn").removeClass("marathons_material_series_active");
             $(o).addClass("marathons_material_series_active");
@@ -147,40 +152,53 @@
                 </div>';
             if (elm_type === 'M') { // Мобильные
                 // Отображение и скрытие
-                if (init_series_id === series_id) {
-                    $(".marathons_material_list_block").toggle(200);
-                    setTimeout(function () {
-                        if ($(".marathons_material_list_block").css('display') == 'none') {
-                            $(o).find('.fas').removeClass('fa-minus');
-                            $(o).find('.fas').addClass('fa-plus');
-                        }
-                    }, 300);
-                } else {
-                    $(".marathons_material_list_block").remove();
+
+                //if (init_series_id === series_id) {
+                //    $(o).closest('.series_block').find(".marathons_material_list_block").toggle(200);
+                //} 
+                if ($(o).closest('.series_block').find(".marathons_material_list_block").length == 0) {
                     $(o).closest('.marathons_elm').after(html);
+                    $(o).closest('.series_block').find(".marathons_material_list_block").toggle(200);
                     // Подгрузим сразу общие материалы
-                    marathon_series_material_post(series_id);
-                    $(".marathons_material_list_block_title").remove();
-                    $(".marathons_material_list_block").show(200);
+                    marathon_series_material_post(".series_" + series_id, series_id);
+                    $(o).closest('.series_block').find(".marathons_material_list_block_title").remove();
+                } else {
+                    $(o).closest('.series_block').find(".marathons_material_list_block").toggle(200);
                 }
+                setTimeout(function () {
+                    if ($(o).closest('.series_block').find(".marathons_material_list_block").css('display') == 'none') {
+                        $(o).closest('.series_block').find('.fas').removeClass('fa-minus');
+                        $(o).closest('.series_block').find('.fas').addClass('fa-plus');
+                    } else {
+                        $(o).closest('.series_block').find('.fas').removeClass('fa-plus');
+                        $(o).closest('.series_block').find('.fas').addClass('fa-minus');
+                    }
+                }, 200);
             } else { // Десктоп
+                console.log('D ' + init_series_id + ' === ' + series_id);
                 if (init_series_id === series_id) {
-                    $(".marathons_material_list_block").toggle(200);
-                    setTimeout(function () {
-                        if ($(".marathons_material_list_block").css('display') == 'none') {
-                            $(o).find('.fas').removeClass('fa-minus');
-                            $(o).find('.fas').addClass('fa-plus');
-                        }
-                    }, 300);
+                    $('.materials_list').find(".marathons_material_list_block").toggle(200);
                 } else {
                     $('.materials_list').html(html);
                     // Подгрузим сразу общие материалы
-                    marathon_series_material_post(series_id);
-                    $(".marathons_material_list_block").show(200);
+                    marathon_series_material_post('.materials_list', series_id);
+                    $('.materials_list').find(".marathons_material_list_block").show(200);
                 }
+
+                $(".fas").removeClass('fa-minus');
+                $(".fas").addClass('fa-plus');
+
+                setTimeout(function () {
+                    if ($('.materials_list').find(".marathons_material_list_block").css('display') == 'none') {
+                        $(o).closest('.series_block').find('.fas').removeClass('fa-minus');
+                        $(o).closest('.series_block').find('.fas').addClass('fa-plus');
+                    } else {
+                        $(o).closest('.series_block').find('.fas').removeClass('fa-plus');
+                        $(o).closest('.series_block').find('.fas').addClass('fa-minus');
+                    }
+                }, 200);
             }
 
-            //move(o, 200);
             init_series_id = series_id;
         });
 
@@ -188,10 +206,9 @@
 
     /**
      * Подгрузим сразу общие материалы
-     
      * @param {type} series_id
      * @returns {undefined}     */
-    function marathon_series_material_post(series_id) {
+    function marathon_series_material_post(o, series_id) {
         $.ajax({
             url: '/jpost.php?extension=marathons',
             type: 'GET',
@@ -207,8 +224,9 @@
             },
             success: function (e) {
                 if (e['success'] == '1') {
-                    $(".material_content_block").html(e['html']);
-                    $(".marathons_elm_content").html(e['html']);
+
+                    $(o).find(".material_content_block").html(e['html']);
+                    $(o).find(".marathons_elm_content").html(e['html']);
 
                     $(".material_info").unbind('mouseenter').mouseenter(function () {
                         var wares_id = $(".marathons_wares_id").val();
