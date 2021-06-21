@@ -47,7 +47,7 @@
 
 }
 .marathons_btn_green:hover{
-    background-color: #FFFFFF;
+    background-color: #e9e9ea;
     color: #000000;
 }
 .marathons_btn_white{
@@ -89,7 +89,7 @@
 }
 
 .marathons_material_series_active{
-    background-color: #FFFFFF;
+    background-color: #e9e9ea;
     color: #000000;
 }
 
@@ -126,4 +126,7 @@
     margin-bottom: -100px;
     position: relative;
     z-index: 9;
+}
+.marathons_material_list_block{
+    border: 1px solid #e9e9ea;
 }
