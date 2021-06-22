@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="form-footer p-4 border-top">
-        <a href="&modal=1" class="btn btn-primary">Просмотреть модальное окно</a>
+        <a href="?promo_modal=<?= $_GET['promo_modal'] ?>&modal=1" class="btn btn-primary">Просмотреть модальное окно</a>
     </div>
 </div> 
 <script>
