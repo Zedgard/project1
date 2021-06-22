@@ -11,8 +11,7 @@ $c_promo = new \project\promo();
 if ($c_user->isEditor()) {
 
     // Главная 
-    if (!isset($_GET['edit'])) {
-
+    if (!isset($_GET['edit']) && !isset($_GET['promo_modal'])) {
         if (isset($_GET['promo_delete'])) {
             if ($c_promo->promo_delete($_GET['promo_delete'])) {
                 location_href('/admin/promo/');
@@ -20,8 +19,6 @@ if ($c_user->isEditor()) {
                 $_SESSION['errors'][] = 'Ошибка удаления';
             }
         }
-
-
         $find_str = (isset($_SESSION['promo_find_str'])) ? $_SESSION['promo_find_str'] : '';
         if (isset($_GET['find_str'])) {
             $find_str = $_GET['find_str'];
@@ -34,7 +31,6 @@ if ($c_user->isEditor()) {
 
     // Редактирование акции
     if (isset($_GET['edit'])) {
-
         if (isset($_POST['promo_id'])) {
             $data['code'] = $_POST['promo_code'];
             $data['title'] = $_POST['promo_title'];
@@ -57,9 +53,13 @@ if ($c_user->isEditor()) {
         if ($_GET['edit'] > 0) {
             $promo_data = $c_promo->promo_get_id($_GET['edit']);
         }
-        
-        
         include 'tmpl/edit_promo.php';
+    }
+
+    if (isset($_GET['promo_modal'])) {
+        $modal_data = $c_promo->promo_get_modal_data();
+        include 'tmpl/edit_promo_modal.php';
+        importWisiwyng('promo_modal_descr', 300);
     }
 } else {
     ?>

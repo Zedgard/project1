@@ -18,6 +18,7 @@
             <div class="col-12">
                 <div class="mb-3">
                     <a href="?edit=0" class="btn btn-primary">Добавить промо акцию</a>
+                    <a href="?promo_modal=1" class="btn btn-primary">Промо текст приветствия</a>
                     <div class="float-right btn-group">
                         <input type="text" class="form-control find_str" name="find_str" value="<?= $find_str ?>" />
                         <input type="button" class="btn btn-outline-secondary" value="Поиск" />
@@ -94,5 +95,7 @@
         $(".find_str").change(function () {
             location.href = '?find_str=' + $(this).val();
         });
+        
+        
     });
 </script>    
