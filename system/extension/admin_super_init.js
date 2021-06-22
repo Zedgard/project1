@@ -46,9 +46,17 @@ function init_super_elm_edit() {
                 var elm_row = $(e).attr("elm_row");
                 var func = $(e).attr("func");
                 var tagName = $(e)[0].tagName;
+                var elm_type = $(e).attr("type");
                 var value = '';
                 if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
                     value = $(e).val();
+                }
+                if (elm_type === 'checkbox') {
+                    if ($(e).prop("checked")) {
+                        value = 1;
+                    } else {
+                        value = 0;
+                    }
                 }
 //            if (tagName == 'TEXTAREA') {
 //                value = $(this).html();

@@ -166,4 +166,20 @@ class promo extends \project\extension {
         return false;
     }
 
+    /**
+     * Получить данные по модальному окну
+     * @return type
+     */
+    public function promo_get_modal_data() {
+        $query_select = "SELECT * FROM zay_promo_modal ";
+        $data = $this->getSelectArray($query_select, array());
+        if (count($data) == 0) {
+            $query = "INSERT INTO `zay_promo_modal` (`id`, `title`, `descr`, `product_id`, `active`, `lastdate`)    
+                        VALUES (1, 'test', 'descr', 0, 0, NULL)";
+            $this->query($query);
+            $data = $this->getSelectArray($query_select, array());
+        }
+        return $data;
+    }
+
 }

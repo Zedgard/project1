@@ -327,6 +327,14 @@ if (!function_exists('importWisiwyng')) {
                 },
                 setup: function (ed) {
                     ed.on('keyup', function (e) {
+                        if ($('#' + ed.id).hasClass("init_elm_edit")) {
+                            var elm_id = $('#' + ed.id).attr("elm_id");
+                            var elm_table = $('#' + ed.id).attr("elm_table");
+                            var elm_row = $('#' + ed.id).attr("elm_row");
+                            var func = $('#' + ed.id).attr("func");
+                            var value = ed.getContent();
+                            init_super_post(elm_id, value, elm_table, elm_row, func);
+                        }
                         //                        console.log('the event object ', e);
                         //                        console.log('the editor object ', ed);
                         //                        console.log('the content ', ed.getContent());
