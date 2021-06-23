@@ -143,7 +143,7 @@
             $(".periods_list").append('<option value="null">Все</option>');
             if (periods_list.length > 0) {
                 for (var i = 0; i < periods_list.length; i++) {
-                    $(".periods_list").append('<option value="' + master_consultation_periods[i]['period_time'] + '">' + periods_list[i]['period_time'] + '</option>');
+                    $(".periods_list").append('<option value="' + periods_list[i]['period_time'] + '">' + periods_list[i]['period_time'] + '</option>');
                 }
             }
         }

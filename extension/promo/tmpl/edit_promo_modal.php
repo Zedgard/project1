@@ -4,6 +4,7 @@
     </div>
     <div class="card-body">
         <div class="container-fluid">
+            <a href="javascript:void(0)" class="btn btn-primary open_modal_<?= $modal_data[0]['id'] ?>" elm_id="<?= $modal_data[0]['id'] ?>">Просмотреть модальное окно</a>
             <div class="form-group">
                 <label for="config_title">Заголовок модального окна</label>
                 <input type="text" class="form-control promo_modal_title init_elm_edit" value="<?= $modal_data[0]['title'] ?>" elm_id="<?= $modal_data[0]['id'] ?>" elm_table="zay_promo_modal" elm_row="title">
@@ -26,10 +27,10 @@
             </div>
         </div>
     </div>
-    <div class="form-footer p-4 border-top">
-        <a href="?promo_modal=<?= $_GET['promo_modal'] ?>&modal=1" class="btn btn-primary">Просмотреть модальное окно</a>
-    </div>
 </div> 
+<?
+include 'promo_modal.php';
+?>
 <script>
     var active_select = "<?= ($modal_data[0]['active'] == 1) ? 1 : 0 ?>";
     $(document).ready(function () {
@@ -38,8 +39,9 @@
                 $(".promo_modal_first_load").click();
             }
         }
-
-
+        $(".open_modal_<?= $modal_data[0]['id'] ?>").click(function () {
+            var elm_id = $(this).attr('elm_id');
+            $("#promo_modal_" + elm_id).modal('show');
+        });
     });
-
 </script>    

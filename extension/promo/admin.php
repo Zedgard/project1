@@ -59,6 +59,7 @@ if ($c_user->isEditor()) {
     if (isset($_GET['promo_modal'])) {
         $modal_data = $c_promo->promo_get_modal_data();
         include 'tmpl/edit_promo_modal.php';
+        $c_promo->promo_get_modal_windows($promo_data[0]['id']);
         importWisiwyng('promo_modal_descr', 300);
     }
 } else {
