@@ -170,9 +170,14 @@ class promo extends \project\extension {
      * Получить данные по модальному окну
      * @return type
      */
-    public function promo_get_modal_data() {
-        $query_select = "SELECT * FROM zay_promo_modal ";
-        $data = $this->getSelectArray($query_select, array());
+    public function promo_get_modal_data($id = 0) {
+        if ($id == 0) {
+            $query_select = "SELECT * FROM zay_promo_modal ";
+            $data = $this->getSelectArray($query_select, array());
+        } else {
+            $query_select = "SELECT * FROM zay_promo_modal WHERE id='?'";
+            $data = $this->getSelectArray($query_select, array($id));
+        }
         if (count($data) == 0) {
             $query = "INSERT INTO `zay_promo_modal` (`id`, `title`, `descr`, `product_id`, `active`, `lastdate`)    
                         VALUES (1, 'test', 'descr', 0, 0, NULL)";
@@ -180,6 +185,14 @@ class promo extends \project\extension {
             $data = $this->getSelectArray($query_select, array());
         }
         return $data;
+    }
+
+    public function promo_get_modal_windows($id) {
+        $modal_data = $this->promo_get_modal_data($id);
+        //print_r($modal_data);
+        if (count($modal_data) > 0 && $modal_data[0]['active'] == 1) {
+            include 'tmpl/promo_modal.php';
+        }
     }
 
 }
