@@ -55,7 +55,7 @@ if (isset($_POST)) {
      */
     if (isset($_POST['bottom_cookie_btn'])) {
         $cookie_val = $_SESSION['SERVER_NAME'] . '_cookie_access';
-        setcookie($cookie_val, '1');
+        //setcookie($cookie_val, '1'); // это не работает, задавать cookie надо через javascript
         $result = array('success' => 1, 'success_text' => '', 'data' => $cookie_val);
     }
 

@@ -184,7 +184,10 @@
         <?
         include 'footer_' . $_SESSION['lang'] . '.php'
         ?>
-
+        
+        <?
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/index.php';
+        ?>
 
     </body>
     <!--Bootstrap Core-->

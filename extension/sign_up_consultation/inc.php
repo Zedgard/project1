@@ -336,7 +336,7 @@ class sign_up_consultation extends \project\extension {
     public function get_master_consultation_periods_distinct($master_id) {
         $querySelect = "SELECT DISTINCT p.period_time FROM zay_consultation_periods p 
                     where p.master_id='?' AND (p.period_start is null or (p.period_end>=CURRENT_DATE)) 
-                    ORDER BY p.period_start, p.period_time ASC, p.periods_minute ASC";
+                    ORDER BY p.period_time ASC";
         return $this->getSelectArray($querySelect, array($master_id));
     }
 
@@ -483,7 +483,7 @@ and pp.pay_status='succeeded' and c.cancel='0') AS is_pay,
      * @return type
      */
     public function get_master_consultation_rejections($master_id) {
-        $query = "SELECT * FROM zay_consultation_rejection cr WHERE cr.master_id='?' and cr.rejection_day >= CURRENT_DATE ORDER by cr.rejection_day ";
+        $query = "SELECT * FROM zay_consultation_rejection cr WHERE cr.master_id='?' and cr.rejection_day >= CURRENT_DATE ORDER by cr.rejection_day, cr.rejection_time ";
         return $this->getSelectArray($query, array($master_id));
     }
 

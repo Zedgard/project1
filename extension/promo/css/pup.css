@@ -1,0 +1,34 @@
+.modal_green_bg{
+    background-image: url('/assets/files/image/modal/pup_green_bg.jpg');
+    background-repeat: repeat-x;
+}
+.modal_green_bg img{
+    width: 90%;
+}
+.pup_promo_bg{
+    background-image: url('/assets/files/image/modal/pup_waves_bg.jpg.png');
+    background-repeat: repeat;
+}
+.pup .btn-warning{
+    margin: 0 auto;
+    background-color: #fdcb03;
+} 
+.modal_close_btn1{
+    /* background-image: url('/assets/files/image/modal/close.png'); */
+    font-size: 2rem;
+    text-align: center;
+}
+
+.pup .close{
+    font-size: 2rem;
+    margin-left: -2.2rem;
+    margin-top: -0.8rem;
+    background-color: #fff;
+    opacity: 0.99;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    font-weight: 300;
+}

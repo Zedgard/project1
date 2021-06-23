@@ -775,7 +775,8 @@ function init_bottom_cookie_btn() {
                 "bottom_cookie_btn": 1
             }, function (e) {
                 if (e['data'].length > 0) {
-                    console.log(e['data']);
+                    //console.log(e['data']);
+                    setCookie(e['data'], '1', {secure: true, 'max-age': 31556926});
                     $(".bottom_cookie_block").remove();
                 }
             });
