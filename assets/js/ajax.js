@@ -8,7 +8,9 @@ setTimeout(function () {
 }, 2000);
 
 (function ($) {
-    setCookie('site_user_ajax_access', '1', {secure: true, 'max-age': 3600});
+    var cookie_date = new Date();
+    cookie_date.setYear(cookie_date.getHours() + 1);
+    setCookie('site_user_ajax_access', '1', {secure: true, path: '/', expires: cookie_date.toUTCString()});
 
     /**
      * Отправка формы с серилизацией данные из нее

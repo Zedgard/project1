@@ -23,7 +23,9 @@ if (!isset($_COOKIE['edgard_cookie_promo_' . $promo_data[0]['id']]) || $_COOKIE[
                 $("#promo_modal_" + <?= $promo_data[0]['id'] ?>).modal('show');
                 $(".modal_close_btn").unbind("click").click(function () {
                     var elm_id = $(this).attr('elm_id');
-                    setCookie('edgard_cookie_promo_' + elm_id, '1', {secure: true, 'max-age': 31556926});
+                    var cookie_date = new Date();
+                    cookie_date.setYear(cookie_date.getFullYear() + 5);
+                    setCookie('edgard_cookie_promo_' + elm_id, '1', {secure: true, path: '/', expires: cookie_date.toUTCString()});
                 });
             }
         }, 300);
@@ -31,7 +33,7 @@ if (!isset($_COOKIE['edgard_cookie_promo_' . $promo_data[0]['id']]) || $_COOKIE[
         $(".promo_product_go").unbind("click").click(function () {
             var elm_id = $(this).attr('elm_id');
             var href_data = $(this).attr('href_data');
-            setCookie('edgard_cookie_promo_' + elm_id, '1', {secure: true, 'max-age': 31556926});
+            setCookie('edgard_cookie_promo_' + elm_id, '1', {secure: true, path: '/', expires: cookie_date.toUTCString()});
             location.href = href_data;
         });
     });

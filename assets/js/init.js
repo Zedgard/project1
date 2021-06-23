@@ -776,7 +776,9 @@ function init_bottom_cookie_btn() {
             }, function (e) {
                 if (e['data'].length > 0) {
                     //console.log(e['data']);
-                    setCookie(e['data'], '1', {secure: true, 'max-age': 31556926});
+                    var cookie_date = new Date();
+                    cookie_date.setYear(cookie_date.getFullYear() + 5);
+                    setCookie(e['data'], '1', {secure: true, path: '/', expires: cookie_date.toUTCString()});
                     $(".bottom_cookie_block").remove();
                 }
             });
@@ -799,9 +801,14 @@ function getCookie(name) {
 //setCookie('user', 'John', {secure: true, 'max-age': 3600});
 function setCookie(name, value, options = {}) {
 
-    options = {
-        path: '/'
-    };
+    var cookie_date = new Date();
+    cookie_date.setYear(cookie_date.getFullYear() + 5);
+
+    //options = {
+    //    path: '/'//,
+    //expires: cookie_date.toUTCString()
+    //};
+
 
     if (options.expires instanceof Date) {
         options.expires = options.expires.toUTCString();
