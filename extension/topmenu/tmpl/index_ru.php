@@ -196,7 +196,7 @@
         <a href="/" class="footer_menu_link">
             <img src="/assets/img/footer_links/footer_link_home.svg"/>
         </a>
-        <a href="/?move=datetime_piker_select_title" class="footer_menu_link">
+        <a href="/consultations/" class="footer_menu_link">
             <img src="/assets/img/footer_links/footer_link_monthly_calendar.svg"/>
         </a>
         <a href="/shop/" class="footer_menu_link">

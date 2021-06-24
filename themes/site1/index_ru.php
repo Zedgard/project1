@@ -14,13 +14,15 @@
 
         <!-- SLEEK CSS -->
         <link rel="stylesheet" href="/themes/site1/css/plugins.css<?= $_SESSION['rand'] ?>">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
-        
+        <link href="/assets/fonts/SkolarPE/stylesheet.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+
+        <link href="/themes/site1/css/fonts.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+
         <link rel="stylesheet" href="/assets/css/fontawesome/css/fontawesome.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/brands.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/all.min.css<?= $_SESSION['rand'] ?>"> 
- 
+
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
@@ -31,6 +33,7 @@
 
         <!-- bootstrap CSS -->
         <link rel="stylesheet" href="/assets/plugins/bootstrap5/css/bootstrap.min.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/plugins/bootslider/css/bootslider.css<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/themes/site1/css/style.css<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/assets/css/edit.css<?= $_SESSION['rand'] ?>">
 
@@ -94,87 +97,299 @@
 
 
 
-        <!--Main Slider-->
-        <!--     
-        -->
-        <link rel="stylesheet" href="/themes/site1/css/carousel.css<?= $_SESSION['rand'] ?>">
-        <div id="carouselEdgardCaptions" class="carousel slide carousel-fade" data-ride="carousel" >
-            <ol class="carousel-indicators">
-                <?
-                /*
-                  <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></li>
-                 */
-                ?>
-                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="0" aria-label="Slide 2"></li>
-                <li type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide-to="1" class="active" aria-label="Slide 3"></li>
-            </ol>
-            <div class="carousel-inner">
-                <?
-                /*
-                  <div class="carousel-item carousel-item-next carousel-item-left" data-interval="50000">
-                  <!--
-                  <object width="100%" class="d-block w-100 video">
-                  <param name="movie" value="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&autoplay=1&modestbranding=0&rel=0&showinfo=0"/>
-                  <param name="allowFullScreen" value="true"/>
-                  <param name="allowscriptaccess" value="always"/>
-                  <embed width="100%" height="360" src="https://www.youtube.com/embed/ovf26Ujm_Ds?controls=0&disablekb=0&iv_load_policy=0&mute=1&loop=1&enablejsapi=0&&autoplay=1&modestbranding=0&rel=0&showinfo=0" class="youtube-player" type="text/html" allowscriptaccess="always" allowfullscreen="true"/>
-                  </object>
-                  -->
-                  <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>
-                  <source src="/themes/site1/video/video-slide.mp4" type="video/mp4">
-                  <source src="/themes/site1/video/video-slide.webm" type="video/webm">
-                  <source src="/themes/site1/video/video-slide.ogv" type="video/ogg">
-                  Your browser does not support the video tag.
-                  </video>
-                  <!--
-                  <img class="d-block w-100" data-src="/themes/site1/images/transparent.png" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
-                  -->
-                  <div class="carousel-caption d-none d-md-block">
-                  <h5>First slide label</h5>
-                  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                  </div>
-                  </div>
-                 */
-                ?>
-                <div class="carousel-item" data-interval="50000">
-                    <!--
-                    <video class="d-block w-100 carousel-video" data-holder-rendered="true" autoplay loop muted>
-                        <source src="/themes/site1/video/video-slide.mp4" type="video/mp4">
-                        <source src="/themes/site1/video/video-slide.webm" type="video/webm"> 
-                        <source src="/themes/site1/video/video-slide.ogv" type="video/ogg">
-                        Your browser does not support the video tag.
-                    </video>
-                    -->
-                    <img class="d-block w-100" data-src="/themes/site1/images/slider_banner 2.jpg" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
 
-                   <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+        <div class="bootslider m-0 p-0" id="bootslider">
+            <!-- Bootslider Loader -->
+            <div class="bs-loader">
+                <img src="/assets/img/ajax_load_2.svg" width="31" height="31" alt="Loading.." id="loader"/>
+            </div>
+            <!-- /Bootslider Loader -->
 
+            <!-- Bootslider Container -->
+            <div class="bs-container">
 
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <!-- Bootslider Slide -->
+                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="bs-vertical-center">
+
+                                    </div>
+                                </div> 
+                                <div class="col d-flex justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+                                        <div 
+                                            data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
+                                            <div class="text-white font_2">ОНЛАЙН-КОНСУЛЬТАЦИИ</div>
+                                            <div class="text-white font_26" style="font-weight: bold;">
+                                                ЭДГАРДА ЗАЙЦЕВА
+                                            </div>
+                                            <div class="subheading skolar mt-2 mt-lg-3 font_26" style="color: #ffe36e;">
+                                                РЕЗУЛЬТАТ<br/>
+                                                С ПЕРВОЙ<br/>
+                                                КОНСУЛЬТАЦИИ
+                                            </div>
+                                            <div class="mt-2 mt-lg-3">
+                                                <a href="/consultations/" class="btn btn-warning btn_slider_link_consultations">ПОЛУЧИТЬ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                    <div class="bs-background">
+                        <img src="/assets/files/image/banner_index/edgard.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
+                             data-width="566" data-height="649" data-left="100" data-bottom="0"/>
+                        <img src="/assets/files/image/banner_index/consult_bg.jpg" alt="" />
+                    </div>
                 </div>
-                <div class="carousel-item active carousel-item-left" data-interval="50000">
-                    <img class="d-block w-100" data-src="/themes/site1/images/slider_banner 2.jpg" src="/themes/site1/images/slider_banner 2.jpg" data-holder-rendered="true">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                <!-- /Bootslider Slide -->
+
+                <!-- Bootslider Slide -->
+                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="bs-vertical-center">
+
+                                    </div>
+                                </div> 
+                                <div class="col d-flex justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+                                        <div 
+                                            data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
+                                            <div class="text-white font_2">ОНЛАЙН-КОНСУЛЬТАЦИИ</div>
+                                            <div class="text-white font_26" style="font-weight: bold;">
+                                                ЭДГАРДА ЗАЙЦЕВА
+                                            </div>
+                                            <h2 class="subheading skolar font_26" style="color: #ffe36e;">
+                                                РЕЗУЛЬТАТ<br/>
+                                                С ПЕРВОЙ<br/>
+                                                КОНСУЛЬТАЦИИ
+                                            </h2>
+                                            <div class="mt-1 mt-lg-2">
+                                                <a href="/consultations/" class="btn btn-warning btn_slider_link_consultations">ПОЛУЧИТЬ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="bs-background">
+                        <img src="/assets/files/image/banner_index/edgard.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
+                             data-width="566" data-height="649" data-left="100" data-bottom="0"/>
+                        <img src="/assets/files/image/banner_index/consult_bg.jpg" alt="" />
+                    </div>
+                </div>
+                <!-- /Bootslider Slide -->
+
+                <!-- Bootslider Slide -->
+                <!--
+                <div class="bs-slide" data-animate-in="bounceInUp" data-animate-out="hinge">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row" data-animate-in="fadeInLeftBig" data-delay="1000" data-animate-out="fadeOutDown">
+                                <div class="col-md-12">
+                                    <h1 class="heading">BOOTSLIDER</h1>
+                                    <p class="subheading text-white">SIMPLY LOVES BOOTSTRAP</p>
+                                    <p>
+                                        <a class="btn btn-primary" href="http://codecanyon.net/item/bootslider-responsive-bootstrap-css3-slider/6477433?ref=AlexGrozav">BUY NOW</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+                        <img src="/themes/site1/images/slider_banner 2.jpg" 
+                             data-animate-in="fadeInUpBig" data-animate-out="fadeLeftDownBig" class="bs-layer" 
+                             data-width="683" data-height="302" data-left="342" data-bottom="100"/>
+                        <img src="/themes/site1/images/slider_banner 2.jpg" 
+                             data-animate-in="fadeInLeftBig" data-animate-out="fadeInDownBig" class="bs-layer" 
+                             data-width="442" data-height="273" data-left="382" data-bottom="0" data-delay="1200"/>
+                        <img src="/themes/site1/images/slider_banner 2.jpg" alt="" />
+                    </div>
+                </div>
+                -->
+                <!-- /Bootslider Slide -->
+
+                <!-- Bootslider Slide -->
+                <!--
+                <div class="bs-slide" data-animate-in="bounceInDown" data-animate-out="flipOutX">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div data-animate-in="tada" data-animate-out="fadeOutUpBig" data-delay="2000">
+                                        <h1 class="heading">
+                                            BOOTSLIDER
+                                        </h1>
+                                        <h2 class="subheading text-white">
+                                            ABSOLUTELY RESPONSIVE
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+                        <img src="img/slide-2-layer-4.png" class="bs-layer"
+                             data-animate-in="fadeInDown" data-animate-out="fadeOutUpBig" data-delay="2000"
+                             data-width="775" data-height="473" data-right="125" data-top="243"/>
+                        <img src="img/slide-2-layer-1.png" class="bs-layer"
+                             data-animate-in="fadeInDownBig" data-animate-out="fadeOutUpBig" data-delay="800"
+                             data-width="922" data-height="532" data-left="237" data-top="174"/>
+                        <img src="img/slide-2-layer-2.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutUpBig" data-delay="1200"
+                             data-width="208" data-height="410" data-right="322" data-top="276"/>
+                        <img src="img/slide-2-layer-3.png" class="bs-layer"
+                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutUpBig" data-delay="1600"
+                             data-width="423" data-height="512" data-left="183" data-top="203"/>
+                        <img src="img/slide-2.jpg" alt="" />
+                    </div>
+                </div>
+                -->
+                <!-- /Bootslider Slide -->
+
+                <!-- Bootslider Slide -->
+                <!--
+                <div class="bs-slide" data-animate-in="rollIn" data-animate-out="flipOutX">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1 class="heading"
+                                        data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="800">
+                                        NOW LAYERED
+                                    </h1>
+                                    <h2 class="subheading text-white"
+                                        data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="2000">
+                                        AND EVEN MORE AWESOME
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+                        <img src="img/slide-3-layer-1.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="800"
+                             data-width="854" data-height="508" data-left="82" data-top="200"/>
+                        <img src="img/slide-3-layer-2.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="1200"
+                             data-width="854" data-height="508" data-left="336" data-top="140"/>
+                        <img src="img/slide-3-layer-3.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="1600"
+                             data-width="854" data-height="508" data-right="23" data-top="95"/>
+                        <img src="img/slide-3.jpg" alt="" />
+                    </div>
+                </div>
+                -->
+                <!-- /Bootslider Slide -->
+
+                <!-- Bootslider Slide -->
+                <!--
+                <div class="bs-slide" data-animate-in="scaleUpIn" data-animate-out="scaleUpOut">
+                    <div class="bs-background">
+                        <img src="img/slide-5-layer-1.png" class="bs-layer"
+                             data-animate-in="scaleDownIn" data-animate-out="fadeOutLeftBig" data-delay="800"
+                             data-width="1440" data-height="720" data-right="0" data-top="0"/>
+                        <div class="bs-layer" 
+                             data-width="894" data-height="510" data-left="282" data-top="85">
+                            <div class="bs-video black" data-animate-in="fadeIn" data-delay="1500" data-animate-out="fadeOutLeftBig"> 
+                                <iframe src="http://player.vimeo.com/video/79470878" width="500" height="285" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <img src="img/slide-5.jpg" alt="" />
+                    </div>
+                </div>
+                -->
+                <!-- /Bootslider Slide -->
+
+                <!-- Bootslider Slide -->
+                <!--
+                <div class="bs-slide" data-animate-in="openDownLeftReturn" data-animate-out="slideUp">
+                    <div class="bs-foreground">
+                        <div class="bs-video-fullscreen">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/-qwevh0_bZY" data-bs-video-autoplay="true" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+                        <img src="img/slide-6.jpg" alt="" />
+                    </div>
+                </div>
+                -->
+                <!-- /Bootslider Slide -->
+
+            </div>
+
+            <!-- /Bootslider Container -->
+
+            <!-- Bootslider Progress -->
+            <div class="bs-progress progress">
+                <div class="progress-bar progress-primary bg-warning"></div>
+            </div>
+            <!-- /Bootslider Progress -->
+
+            <!-- Bootslider Thumbnails -->
+            <div class="bs-thumbnails text-center text-turquoise">
+                <ul class=""></ul>
+            </div>
+            <!-- /Bootslider Thumbnails -->
+
+            <!-- Bootslider Pagination -->
+            <div class="bs-pagination text-center text-turquoise">
+                <ul class="pagination"></ul>
+            </div>
+            <!-- /Bootslider Pagination -->
+
+            <!-- Bootslider Controls -->
+            <div class="text-center">
+                <div class="btn-group w-100 Bootslider_Controls">
+                    <a href="javascript:void(0);" class="btn slider_btn_prev bs-prev wow fadeInLeft" style="animation-delay: 400ms; animation-name: fadeInLeft; visibility: visible;">&lt;</a>
+                    <a href="javascript:void(0);" class="btn slider_btn_next bs-next wow fadeInRight" style="animation-delay: 400ms; animation-name: fadeInRight; visibility: visible;">&gt;</a>
                 </div>
             </div>
-            <a class="carousel-control-prev" type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-                </button>
-                <a class="carousel-control-next" type="button" data-bs-target="#carouselEdgardCaptions" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </a>
-        </div>
+            <!-- /Bootslider Controls -->
 
-        <!--Main Slider ends -->
+        </div>
+        <script src="/assets/plugins/bootslider/jquery.grozav.plugins.min.js" type="text/javascript"></script>
+        <script src="/assets/plugins/bootslider/jquery.grozav.bootslider.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                var slider = new bootslider('#bootslider', {
+                    animationIn: "fadeInUp",
+                    animationOut: "flipOutX",
+                    timeout: 77000,
+                    autoplay: true,
+                    preload: true,
+                    pauseOnHover: true,
+                    thumbnails: false,
+                    pagination: false,
+                    mousewheel: false,
+                    keyboard: true,
+                    touchscreen: true,
+                    layout: 'default',
+                    canvas: {
+                        width: 1440,
+                        height: 720
+                    }
+                });
+                slider.init();
+
+
+            });
+        </script>
+
+
+        <!--Main Slider-->
+        <!--     -->
+
 
 
         <?= $_SESSION['page']['block_center'] ?>
@@ -184,7 +399,7 @@
         <?
         include 'footer_' . $_SESSION['lang'] . '.php'
         ?>
-        
+
         <?
         include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/index.php';
         ?>
