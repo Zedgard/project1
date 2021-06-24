@@ -23,7 +23,7 @@ $pr_cart = new \project\cart();
 
 // рабочий адрес к Тинькоф
 $credit_url = 'https://forma.tinkoff.ru/api/partners/v2/orders/create'; // https://forma.tinkoff.ru/api/partners/v2/orders/create-demo // demo
-$credit_url = 'https://forma.tinkoff.ru/api/partners/v2/orders/create-demo'; // demo
+//$credit_url = 'https://forma.tinkoff.ru/api/partners/v2/orders/create-demo'; // demo
 // Тип банка
 $pay_type = 'tk';
 
