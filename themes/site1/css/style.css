@@ -46,6 +46,11 @@ body {
     overflow-x: hidden !important;
     overflow-y: auto !important;
 }
+
+.skolar{
+    font-family: 'SkolarPE';
+}
+
 body.full-page {
     overflow: hidden !important;
 }
@@ -729,6 +734,45 @@ ul.social-icons.white li a:focus{
     background: transparent;
     border: 1px solid #00bcd4;
     color: #00bcd4;
+}
+
+.slider_btn_prev{
+    text-align: left;
+    float: left;
+    padding: 1rem;
+}
+.slider_btn_next{
+    text-align: right;
+    float: right;
+    padding: 1rem;
+}
+.slider_btn_next, .slider_btn_prev{
+    font-size: 2rem;
+    opacity: 0.3;
+    color: #FFFFFF;
+}
+.slider_btn_next:hover, .slider_btn_prev:hover{
+    color: #FFFFFF;
+    opacity: 0.9;
+    background-color: transparent;
+}
+.btn_slider_link_consultations{
+    padding: 0.4rem 1.4rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.Bootslider_Controls{
+    margin-top: -6rem;
+}
+@media (max-width: 992px) {
+    .btn_slider_link_consultations{
+        padding: 0.2rem 0.6rem;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .Bootslider_Controls{
+        margin-top: -5rem;
+    }
 }
 .rev_slider .btnprimary-alt:hover, .rev_slider .btnprimary-alt:focus {
     background: transparent;

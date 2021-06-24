@@ -8,7 +8,6 @@
         cursor: pointer;
     }
 </style>
-<div style="height: 2rem;"></div>
 <div class="container">
     <div>Популярные товары</div>
     <!-- product list -->

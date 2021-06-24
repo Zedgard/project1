@@ -1,0 +1,28 @@
+.font_14{
+    font-size: 1.4rem;
+}
+.font_2{
+    font-size: 2rem ;
+}
+.font_26{
+    font-size: 2.6rem;
+}
+.font_3{
+    font-size: 3rem;
+}
+
+@media (max-width: 992px) {
+    .font_14{
+        font-size: calc(1.4rem / 2);
+    }
+    .font_2{
+        font-size: calc(2rem / 2);
+    }
+    .font_26{
+        font-size: calc(2.6rem / 2);
+    }
+    .font_3{
+        font-size: calc(3rem / 2);
+    }
+
+}
