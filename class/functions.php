@@ -274,7 +274,7 @@ if (!function_exists('importWisiwyng')) {
         }
         if ($GLOBALS["ImportWisiwyng"] == 0) {
             ?>
-            <script src="/assets/plugins/tinymce/tinymce.js?v=1"></script>
+            <script src="/assets/plugins/tinymce/tinymce.js<?= $_SESSION['rand'] ?>"></script>
             <?
         }
         ?>
@@ -327,7 +327,7 @@ if (!function_exists('importWisiwyng')) {
                 },
                 setup: function (ed) {
                     ed.on('keyup', function (e) {
-                        if ($('#' + ed.id).hasClass("init_elm_edit")) {
+                        if ($('#' + ed.id).hasClass("init_elm_edit").length > 0) {
                             var elm_id = $('#' + ed.id).attr("elm_id");
                             var elm_table = $('#' + ed.id).attr("elm_table");
                             var elm_row = $('#' + ed.id).attr("elm_row");
