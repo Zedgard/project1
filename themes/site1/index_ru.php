@@ -178,7 +178,7 @@
                              data-width="400" data-height="300" data-left="290" data-bottom="0" data-top="90">
                             КЕЙС
                         </div>
-                        <img src="/assets/files/image/banner_index/hbd.png" class="bs-layer"
+                        <img src="/assets/files/image/banner_index/hbd_2.png" class="bs-layer"
                              data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
                              data-width="400" data-height="300" data-left="150" data-bottom="0" data-top="160"/>
                         <img src="/assets/files/image/banner_index/nbd_bg.jpg" alt="" />
