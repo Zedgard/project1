@@ -740,11 +740,14 @@ ul.social-icons.white li a:focus{
     text-align: left;
     float: left;
     padding: 1rem;
+    width: 10%;
 }
 .slider_btn_next{
     text-align: right;
     float: right;
     padding: 1rem;
+    margin-left: 80%;
+    width: 10%;
 }
 .slider_btn_next, .slider_btn_prev{
     font-size: 2rem;
@@ -756,10 +759,23 @@ ul.social-icons.white li a:focus{
     opacity: 0.9;
     background-color: transparent;
 }
+.slider_text_keise{
+    text-transform: uppercase;
+    font-size: 3.8rem;
+    color: #FFFFFF;
+}
+
 .btn_slider_link_consultations{
     padding: 0.4rem 1.4rem;
     font-size: 2rem;
     font-weight: bold;
+}
+.btn_slider_link_keise{
+    padding: 0.4rem 1.4rem;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 auto;
+    margin-bottom: 200px;
 }
 .Bootslider_Controls{
     margin-top: -6rem;
@@ -770,8 +786,18 @@ ul.social-icons.white li a:focus{
         font-size: 1rem;
         font-weight: bold;
     }
+    .btn_slider_link_keise{
+        padding: 0.2rem 0.6rem;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-left: 46%;
+        margin-bottom: 30px;
+    }
     .Bootslider_Controls{
         margin-top: -5rem;
+    }
+    .slider_text_keise{
+        font-size: 1rem;
     }
 }
 .rev_slider .btnprimary-alt:hover, .rev_slider .btnprimary-alt:focus {
