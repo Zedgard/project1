@@ -300,7 +300,7 @@ class user extends \project\extension {
      * @param type $email
      * @return boolean
      */
-    public function sendEmail($to_email, $subject, $file_name, $arrayReplaseText) {
+    public function sendEmail($to_email, $file_name, $arrayReplaseText) {
         global $lang;
         $config = new \project\config();
         $send_emails = new \project\send_emails();
@@ -312,32 +312,27 @@ class user extends \project\extension {
         }
 
         if (count($error) == 0) {
-            $link_ed_mailto = 'hello@edgardzaitsev.com';
-            if (strlen($config->getConfigParam('link_ed_mailto')) > 0) {
-                $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
-            }
+//            $link_ed_mailto = '';
+//            if (strlen($config->getConfigParam('link_ed_mailto')) > 0) {
+//                $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
+//            }
             //$from_site = 'https://' . $_SERVER['SERVER_NAME'];
             // получи фаил шаблона письма
-            $email_body = $this->fileTmpl($file_name, $arrayReplaseText);
-
+            //echo "file_name: {$file_name} <br/>\n";
+            //$email_body = $this->fileTmpl($file_name, $arrayReplaseText);
+            //echo "email_body: {$email_body} <br/>\n";
             // заменим тэги
-            $email_body = str_replace("{site}", 'http://' . $_SERVER['SERVER_NAME'], $email_body);
-            $email_body = str_replace("{site_name}", $_SERVER['SERVER_NAME'], $email_body);
+            //$email_body = str_replace("{site}", 'http://' . $_SERVER['SERVER_NAME'], $email_body);
+            //$email_body = str_replace("{site_name}", $_SERVER['SERVER_NAME'], $email_body);
             //echo "1: {$to_email} <br/>\n";
             //echo "2: {$subject} <br/>\n";
             //echo "3: {$file_name} <br/>\n";
             //echo "email_body {$email_body} <br/>\n";
-            $mail = new \project\Mail($link_ed_mailto);  // Создаём экземпляр класса
-            $mail->setType('text/html');
-            $mail->setFromName($link_ed_mailto); // Устанавливаем имя в обратном адресе
+            //$mail = new \project\Mail($link_ed_mailto);  // Создаём экземпляр класса
+            //$mail->setType('text/html');
+            //$mail->setFromName($link_ed_mailto); // Устанавливаем имя в обратном адресе
             //var_dump($mail->send($to_email, $subject, $email_body));
-            if ($send_emails->send('message_default', $to_email,
-                            array(
-                                'site' => 'https://www.' . $_SERVER['SERVER_NAME'],
-                                'subject' => $subject,
-                                'message' => $email_body,
-                            )
-                    )) {
+            if ($send_emails->send($file_name, $to_email, $arrayReplaseText)) {
                 return true;
             }
 //            if ($mail->send($to_email, $subject, $email_body)) {
