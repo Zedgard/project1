@@ -25,7 +25,12 @@ function init_btn_send_message() {
                     "user_subject": user_subject,
                     "user_message": user_message,
                 }, function (e) {
-
+                    if (e['success'] == '1') {
+                        alert("Успешно отправлено, ждите ответа.");
+                        $(".form_send_user_message").find(".user_email").val("");
+                    } else {
+                        alert("Ошибка!");
+                    }
                 });
             } else {
                 if (user_email.length <= 2) {
