@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/extension/products/product.css<?= $_SESSION['rand'] ?>">
-
 <div class="row">
     <div class="col-lg-12" style="background-color: #DEDEDE;height: 66px;"></div>
 </div>
@@ -62,21 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <script>
-                    $(document).ready(function () {
-                        setTimeout(function () {
-                            var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
-                            if (!!containerEl) {
-                                //console.log('containerEl');
-                                var mixer = mixitup(containerEl, {
-                                    selectors: {
-                                        target: '[data-ref~="mixitup-target"]'
-                                    }
-                                });
-                            }
-                        }, 800);
-                    });
-                </script>
+
                 <!-- Sorted block end -->    
 
 
@@ -258,8 +243,20 @@
 <div class="row">
     <div class="col-lg-12" style="height: 100px;"></div>
 </div>
-
-
+<script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
 <script>
     var category_controll = '<?= $_SESSION['product']['filter']['category_controll'] ?>';
+    $(document).ready(function () {
+        //setTimeout(function () {
+            var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
+            if (!!containerEl) {
+                //console.log('containerEl');
+                var mixer = mixitup(containerEl, {
+                    selectors: {
+                        target: '[data-ref~="mixitup-target"]'
+                    }
+                });
+            }
+        //}, 1000);
+    });
 </script>
