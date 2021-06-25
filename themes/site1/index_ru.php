@@ -148,47 +148,46 @@
                     </div>
                 </div>
                 <!-- /Bootslider Slide -->
-
+                
                 <!-- Bootslider Slide -->
-                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
+                <div class="bs-slide active" data-animate-in="bounceInUp" data-animate-out="hinge">
                     <div class="bs-foreground">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="bs-vertical-center">
-
-                                    </div>
+                        <div class="container h-100">
+                            <div class="row h-100">
+                                <div class="col d-flex align-items-end text-center">
+                                    <a href="/shop/?product=4610" class="btn btn-warning btn_slider_link_keise">ПОЛУЧИТЬ</a>
                                 </div> 
-                                <div class="col d-flex justify-content-center">
+                                <div class="col">
+
+                                </div> 
+                                <div class="col">
+
+                                </div> 
+                                <div class="col  justify-content-center">
                                     <div class="bs-vertical-center text-center ">
-                                        <div 
-                                            data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
-                                            <div class="text-white font_2">ОНЛАЙН-КОНСУЛЬТАЦИИ</div>
-                                            <div class="text-white font_26" style="font-weight: bold;">
-                                                ЭДГАРДА ЗАЙЦЕВА
-                                            </div>
-                                            <h2 class="subheading skolar font_26" style="color: #ffe36e;">
-                                                РЕЗУЛЬТАТ<br/>
-                                                С ПЕРВОЙ<br/>
-                                                КОНСУЛЬТАЦИИ
-                                            </h2>
-                                            <div class="mt-1 mt-lg-2">
-                                                <a href="/consultations/" class="btn btn-warning btn_slider_link_consultations">ПОЛУЧИТЬ</a>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="bs-background">
-                        <img src="/assets/files/image/banner_index/edgard.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
-                             data-width="566" data-height="649" data-left="100" data-bottom="0"/>
-                        <img src="/assets/files/image/banner_index/consult_bg.jpg" alt="" />
+                        <div class="slider_text_keise bs-layer"
+                             <div class="slider_text_keise bs-layer"  
+                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
+                             data-width="400" data-height="300" data-left="290" data-bottom="0" data-top="90">
+                            КЕЙС
+                        </div>
+                        <img src="/assets/files/image/banner_index/hbd.png" class="bs-layer"
+                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
+                             data-width="400" data-height="300" data-left="150" data-bottom="0" data-top="160"/>
+                        <img src="/assets/files/image/banner_index/nbd_bg.jpg" alt="" />
+                        <img src="/assets/files/image/banner_index/flakes_bg.png" class="bs-layer" data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="300"
+                             data-width="100%" data-height="100%" data-bottom="0" />
                     </div>
                 </div>
                 <!-- /Bootslider Slide -->
+
 
                 <!-- Bootslider Slide -->
                 <!--
@@ -351,8 +350,8 @@
             <!-- Bootslider Controls -->
             <div class="text-center">
                 <div class="btn-group w-100 Bootslider_Controls">
-                    <a href="javascript:void(0);" class="btn slider_btn_prev bs-prev wow fadeInLeft" style="animation-delay: 400ms; animation-name: fadeInLeft; visibility: visible;">&lt;</a>
-                    <a href="javascript:void(0);" class="btn slider_btn_next bs-next wow fadeInRight" style="animation-delay: 400ms; animation-name: fadeInRight; visibility: visible;">&gt;</a>
+                    <a href="javascript:void(0);" class="slider_btn_prev bs-prev wow fadeInLeft" style="animation-delay: 400ms; animation-name: fadeInLeft; visibility: visible;">&lt;</a>
+                    <a href="javascript:void(0);" class="slider_btn_next bs-next wow fadeInRight" style="animation-delay: 400ms; animation-name: fadeInRight; visibility: visible;">&gt;</a>
                 </div>
             </div>
             <!-- /Bootslider Controls -->
