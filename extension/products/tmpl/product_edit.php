@@ -107,15 +107,15 @@
                     ?>
 
                     <?
-                    include 'block_profit.php';
-                    ?>
-
-                    <?
-                    include 'block_trailer.php';
-                    ?>
-
-                    <?
-                    include 'block_feedback.php';
+                    if ($_GET['product_edit'] > 0) {
+                        include 'block_profit.php';
+                        include 'block_trailer.php';
+                        include 'block_feedback.php';
+                    } else {
+                        ?>
+                        <div>Управление блоками возможно только на уже созданом товаре</div>
+                        <?
+                    }
                     ?>
 
                 </div>
@@ -269,121 +269,135 @@ importWisiwyng('product_content', 150);
 
         // Инициализация кнопки редактирования
         function products_init() {
-            sendPostLigth('/jpost.php?extension=products',
-                    {"getProductElemId": product_edit},
-                    function (e) {
-                        if (e['success'] == '1') {
-                            $(".form_save_products").find(".products_id").val(e['data']['id']);
-                            $(".form_save_products").find(".products_title").val(e['data']['title']);
+            if (product_edit > 0) {
+                sendPostLigth('/jpost.php?extension=products',
+                        {"getProductElemId": product_edit},
+                        function (e) {
+                            console.log('products_init');
+                            if (e['success'] == '1') {
+                                $(".form_save_products").find(".products_id").val(e['data']['id']);
+                                $(".form_save_products").find(".products_title").val(e['data']['title']);
 
-                            // товары
-                            products_wares_array = [];
-                            if (e['data']['products_wares'].length > 0) {
-                                for (var i = 0; i < e['data']['products_wares'].length; i++) {
-                                    products_wares_array.push(e['data']['products_wares'][i]);
+                                // товары
+                                products_wares_array = [];
+                                if (e['data']['products_wares'].length > 0) {
+                                    for (var i = 0; i < e['data']['products_wares'].length; i++) {
+                                        products_wares_array.push(e['data']['products_wares'][i]);
+                                    }
                                 }
-                            }
-                            //products_wares.val(products_wares_array).trigger("change");
+                                //products_wares.val(products_wares_array).trigger("change");
 
-                            // Каталоги
-                            var products_category_array = [];
-                            if (e['data']['products_category'].length > 0) {
-                                for (var i = 0; i < e['data']['products_category'].length; i++) {
-                                    products_category_array.push(e['data']['products_category'][i]);
+                                // Каталоги
+                                var products_category_array = [];
+                                if (e['data']['products_category'].length > 0) {
+                                    for (var i = 0; i < e['data']['products_category'].length; i++) {
+                                        products_category_array.push(e['data']['products_category'][i]);
+                                    }
                                 }
-                            }
-                            //products_category.val(products_category_array).trigger("change");
+                                //products_category.val(products_category_array).trigger("change");
 
-                            // Темы
-                            var products_topic_array = [];
-                            if (e['data']['products_topic'].length > 0) {
-                                for (var i = 0; i < e['data']['products_topic'].length; i++) {
-                                    products_topic_array.push(e['data']['products_topic'][i]);
+                                // Темы
+                                var products_topic_array = [];
+                                if (e['data']['products_topic'].length > 0) {
+                                    for (var i = 0; i < e['data']['products_topic'].length; i++) {
+                                        products_topic_array.push(e['data']['products_topic'][i]);
+                                    }
                                 }
-                            }
-                            var products_theme_array = [];
-                            if (e['data']['products_theme'].length > 0) {
-                                for (var i = 0; i < e['data']['products_theme'].length; i++) {
-                                    products_theme_array.push(e['data']['products_theme'][i]);
+                                var products_theme_array = [];
+                                if (e['data']['products_theme'].length > 0) {
+                                    for (var i = 0; i < e['data']['products_theme'].length; i++) {
+                                        products_theme_array.push(e['data']['products_theme'][i]);
+                                    }
                                 }
-                            }
 
-                            $(".products_tax").find('option[value="' + e['data']['tax'] + '"]').attr("selected", "selected");
+                                $(".products_tax").find('option[value="' + e['data']['tax'] + '"]').attr("selected", "selected");
 
-                            getWaresArray(products_wares_array);
-                            getTopicArray(products_topic_array);
-                            getCategoryArray(products_category_array);
-                            getProductThemeArray(products_theme_array);
+                                getWaresArray(products_wares_array);
+                                getTopicArray(products_topic_array);
+                                getCategoryArray(products_category_array);
+                                getProductThemeArray(products_theme_array);
+
+                                setTimeout(function () {
+                                    try {
+                                        tinymce.get('products_desc_minimal').setContent(e['data']['desc_minimal']);
+                                    } catch (e) {
+                                        console.log('Error products_desc_minimal');
+                                    }
+
+                                    try {
+                                        tinymce.get('products_desc').setContent(e['data']['desc']);
+                                    } catch (e) {
+                                        console.log('Error products_desc');
+                                    }
+                                }, 1500);
 
 
-                            tinymce.get('products_desc_minimal').setContent(e['data']['desc_minimal']);
-                            tinymce.get('products_desc').setContent(e['data']['desc']);
 
-                            $(".form_save_products").find(".products_sold").val(e['data']['sold']);
-                            $(".form_save_products").find(".product_content").val(e['data']['product_content']);
 
-                            // active
-                            if (e['data']['active'] > 0) {
-                                if (!$(".form_save_products").find(".products_active").is(':checked')) {
-                                    $(".form_save_products").find(".products_active").click();
+                                $(".form_save_products").find(".products_sold").val(e['data']['sold']);
+                                $(".form_save_products").find(".product_content").val(e['data']['product_content']);
+
+                                // active
+                                if (e['data']['active'] > 0) {
+                                    if (!$(".form_save_products").find(".products_active").is(':checked')) {
+                                        $(".form_save_products").find(".products_active").click();
+                                    }
+                                } else {
+                                    $(".form_save_products").find(".products_active").removeAttr("checked");
                                 }
-                            } else {
-                                $(".form_save_products").find(".products_active").removeAttr("checked");
-                            }
-                            // product_new
-                            if (e['data']['product_new'] > 0) {
-                                if (!$(".form_save_products").find(".product_new").is(':checked')) {
-                                    $(".form_save_products").find(".product_new").click();
+                                // product_new
+                                if (e['data']['product_new'] > 0) {
+                                    if (!$(".form_save_products").find(".product_new").is(':checked')) {
+                                        $(".form_save_products").find(".product_new").click();
+                                    }
+                                } else {
+                                    $(".form_save_products").find(".product_new").removeAttr("checked");
                                 }
-                            } else {
-                                $(".form_save_products").find(".product_new").removeAttr("checked");
-                            }
 
-                            $(".form_save_products").find(".products_price").val(e['data']['price']);
-                            $(".form_save_products").find(".products_price_promo").val(e['data']['price_promo']);
+                                $(".form_save_products").find(".products_price").val(e['data']['price']);
+                                $(".form_save_products").find(".products_price_promo").val(e['data']['price_promo']);
 
-                            /* -- images -- */
-                            var images = e['data']['images_str'].split(',');
-                            for (var i = 0; i < images.length; i++) {
-                                $(".form_save_products").find(".images").append(get_html_images_block(images[i], i));
-                            }
-                            /* -- images end -- */
-
-                            // Отобразим "Блок выгода" 
-                            if (e['data']['block_profit'] == '1') {
-                                if (!$(".block_profit_checked").is(':checked')) {
-                                    $(".block_profit_checked").click();
-                                    $(".btn_block_profit").click();
+                                /* -- images -- */
+                                var images = e['data']['images_str'].split(',');
+                                for (var i = 0; i < images.length; i++) {
+                                    $(".form_save_products").find(".images").append(get_html_images_block(images[i], i));
                                 }
-                            }
-                            init_block_profit_questions_array();
-                            init_block_profit_plus_array();
+                                /* -- images end -- */
 
-                            // Отобразим "Блок выгода" 
-                            if (e['data']['block_trailer'] == '1') {
-                                if (!$(".block_trailer_checked").is(':checked')) {
-                                    $(".block_trailer_checked").click();
-                                    $(".btn_block_trailer").click();
+                                // Отобразим "Блок выгода" 
+                                if (e['data']['block_profit'] == '1') {
+                                    if (!$(".block_profit_checked").is(':checked')) {
+                                        $(".block_profit_checked").click();
+                                        $(".btn_block_profit").click();
+                                    }
                                 }
-                            }
-                            init_block_trailer_array();
+                                init_block_profit_questions_array();
+                                init_block_profit_plus_array();
 
-                            // Отобразим "Отзывы счастливых клиентов" 
-                            if (e['data']['block_feedback'] == '1') {
-                                if (!$(".block_feedback_checked").is(':checked')) {
-                                    $(".block_feedback_checked").click();
-                                    $(".btn_block_feedback").click();
+                                // Отобразим "Блок выгода" 
+                                if (e['data']['block_trailer'] == '1') {
+                                    if (!$(".block_trailer_checked").is(':checked')) {
+                                        $(".block_trailer_checked").click();
+                                        $(".btn_block_trailer").click();
+                                    }
                                 }
+                                init_block_trailer_array();
+
+                                // Отобразим "Отзывы счастливых клиентов" 
+                                if (e['data']['block_feedback'] == '1') {
+                                    if (!$(".block_feedback_checked").is(':checked')) {
+                                        $(".block_feedback_checked").click();
+                                        $(".btn_block_feedback").click();
+                                    }
+                                }
+                                init_block_feedback_array();
+
+                                block_checked_init();
+
+                                $('#form_edit_products_modal').modal('show');
                             }
-                            init_block_feedback_array();
-
-                            block_checked_init();
-
-                            $('#form_edit_products_modal').modal('show');
-                        }
-                    });
-
-
+                        });
+            }
         }
 
 

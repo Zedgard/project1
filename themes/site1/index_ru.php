@@ -22,6 +22,11 @@
         <link rel="stylesheet" href="/assets/css/fontawesome/css/fontawesome.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/brands.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/all.min.css<?= $_SESSION['rand'] ?>"> 
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/regular.min<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/solid.min<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/svg-with-js.min<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/v4-shims.min<?= $_SESSION['rand'] ?>">
+        
 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
