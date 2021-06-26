@@ -1244,11 +1244,11 @@ nav{
     color: #bbbbbb;
 }
 .hasTooltip i{
-    width: 35px;
-    height: 35px;
-    border: 1px solid #bbbbbb;
     color: #bbbbbb;
     padding: 10px;
+}
+.rounded-circle{
+    border: 1px solid #bbbbbb;
 }
 .hasTooltip:hover .fa-facebook{
     background-color: #3b5998;
@@ -5027,4 +5027,18 @@ footer_menu{
 .block_cart_other{
     padding: 2rem 0;
     background-color: #e8e8e8;
+}
+
+.site_footer a{
+    color: #bbbbbb;
+    font-size: 15px;
+}
+
+.site_footer .fa{
+    color: #bbbbbb;
+    font-size: 15px;
+}
+.site_footer span{
+    color: #bbbbbb;
+    font-size: 15px;
 }
