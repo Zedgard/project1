@@ -221,7 +221,7 @@
                              data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
                              data-width="500" data-height="40" data-left="130" data-bottom="0" data-top="40"/>
                         <img src="/assets/files/image/banner_index/club_text.png" class="bs-layer"
-                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
+                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="900"
                              data-width="700" data-height="500" data-left="100" data-bottom="0" data-top="50"/>
                         <img src="/assets/files/image/banner_index/club_bg.jpg" alt="" />
 
