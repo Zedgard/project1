@@ -1240,15 +1240,18 @@ nav{
     transform: rotate(-135deg);
     opacity: 0.9;
 }
+.social_link a:hover{
+    text-decoration: underline;
+}
 .hasTooltip{
     color: #bbbbbb;
 }
 .hasTooltip i{
     color: #bbbbbb;
-    padding: 10px;
 }
 .rounded-circle{
     border: 1px solid #bbbbbb;
+    
 }
 .hasTooltip:hover .fa-facebook{
     background-color: #3b5998;
