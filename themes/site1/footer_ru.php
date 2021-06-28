@@ -72,35 +72,35 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="instagram" href="http://instagram.com/edgard_zaycev" target="_self">
+                        <a class="instagram" href="http://instagram.com/edgard_zaycev" target="_blank">
                             <i class="fab fa-instagram"></i> <span class="ml-3">Instagram</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="youtube" href="https://www.youtube.com/user/zaiaz67" target="_self">
+                        <a class="youtube" href="https://www.youtube.com/user/zaiaz67" target="_blank">
                             <i class="fab fa-youtube"></i> <span class="ml-3">Youtube</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="facebook" href="https://www.facebook.com/profile.php?id=100002017651033" target="_self">
+                        <a class="facebook" href="https://www.facebook.com/profile.php?id=100002017651033" target="_blank">
                             <i class="fab fa-facebook"></i> <span class="ml-3">Facebook</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="dribbble" href="https://ok.ru/edgardzaitsev" target="_self">
+                        <a class="dribbble" href="https://ok.ru/edgardzaitsev" target="_blank">
                             <i class="fab fa-dribbble"></i> <span class="ml-3">Одноклассники</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="pinterest" href="https://vm.tiktok.com/J1kKUEL/" target="_self">
+                        <a class="pinterest" href="https://vm.tiktok.com/J1kKUEL/" target="_blank">
                             <i class="fab fa-pinterest "></i> <span class="ml-3">Tik-Tok</span>
                         </a>
                     </div>

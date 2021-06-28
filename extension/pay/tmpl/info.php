@@ -23,6 +23,7 @@
 
                             </tbody>
                         </table>
+                        
                     </div>
                     <div class="col-6">
                         <div style="font-size: 1.4rem;">Продукты</div>

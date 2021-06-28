@@ -217,11 +217,19 @@ function init_pay_info() {
                     credit_type = '( Кредитный )';
                     pay_credit = e['data']['pay_credit'];
                 }
+                
+                var pay_status_html = '<select name="pay_status" class="init_elm_edit" elm_id="' + objid + '" elm_table="zay_pay" elm_row="pay_status" func="init_pay_data_list()">\n\
+                                            <option value="' + e['data']['pay_status'] + '" selected="selected">' + pay_status + '</option>\n\
+                                            <option value="succeeded">выполнено</option>\n\
+                                            <option value="canceled">отмененная</option>\n\
+                                            <option value="pending">Незавершенная</option>\n\
+                                       </select>';
+                
 
                 $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + "</td></tr>");
                 $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
                 $(".pay_info_data").append("<tr><td>Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
-                $(".pay_info_data").append("<tr><td>Статус платежа</td><td class=\"border_class\">" + pay_status + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Статус платежа</td><td class=\"border_class\">" + pay_status_html + "</td></tr>");
                 $(".pay_info_data").append("<tr><td>Сумма</td><td>" + e['data']['pay_sum'] + " руб</td></tr>");
                 $(".pay_info_data").append("<tr><td>Тип</td><td>" + e['data']['pay_type_title'] + " " + credit_type + "</td></tr>");
                 if (pay_credit > 0) {

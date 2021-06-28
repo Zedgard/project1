@@ -777,6 +777,13 @@ ul.social-icons.white li a:focus{
     margin: 0 auto;
     margin-bottom: 200px;
 }
+.btn_slider_link_club{
+    padding: 0.4rem 1.4rem;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 auto;
+    margin-bottom: 200px;
+}
 .Bootslider_Controls{
     margin-top: -6rem;
 }
@@ -789,9 +796,16 @@ ul.social-icons.white li a:focus{
     .btn_slider_link_keise{
         padding: 0.2rem 0.6rem;
         font-size: 1rem;
-        font-weight: bold;
+        font-weight: bold; 
         margin-left: 46%;
         margin-bottom: 30px;
+    }
+    .btn_slider_link_club{
+        padding: 0.4rem 0.8rem;
+        font-size: 1rem; 
+        font-weight: bold;
+        margin-bottom: 30px;
+        margin-left: 24%;
     }
     .Bootslider_Controls{
         margin-top: -5rem;
@@ -1251,7 +1265,7 @@ nav{
 }
 .rounded-circle{
     border: 1px solid #bbbbbb;
-    
+
 }
 .hasTooltip:hover .fa-facebook{
     background-color: #3b5998;

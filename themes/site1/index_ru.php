@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="/assets/css/fontawesome/css/solid.min<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/assets/css/fontawesome/css/svg-with-js.min<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/assets/css/fontawesome/css/v4-shims.min<?= $_SESSION['rand'] ?>">
-        
+
 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <!-- /Bootslider Slide -->
-                
+
                 <!-- Bootslider Slide -->
                 <div class="bs-slide active" data-animate-in="bounceInUp" data-animate-out="hinge">
                     <div class="bs-foreground">
@@ -193,6 +193,41 @@
                 </div>
                 <!-- /Bootslider Slide -->
 
+                <!-- Bootslider Slide -->
+                <div class="bs-slide active" data-animate-in="bounceInUp" data-animate-out="hinge">
+                    <div class="bs-foreground">
+                        <div class="container h-100">
+                            <div class="row h-100">
+                                <div class="col d-flex align-items-end text-center">
+                                    <a href="https://edgardzaycev.ru/club" target="_blank" class="btn btn-warning btn_slider_link_club">ПРИСОЕДЕНИТЬСЯ</a>
+                                </div> 
+                                <div class="col">
+
+                                </div> 
+                                <div class="col">
+
+                                </div> 
+                                <div class="col  justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+
+                        <img src="/assets/files/image/banner_index/club_text_top.png" class="bs-layer"
+                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
+                             data-width="500" data-height="40" data-left="130" data-bottom="0" data-top="40"/>
+                        <img src="/assets/files/image/banner_index/club_text.png" class="bs-layer"
+                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
+                             data-width="700" data-height="500" data-left="100" data-bottom="0" data-top="50"/>
+                        <img src="/assets/files/image/banner_index/club_bg.jpg" alt="" />
+
+                    </div>
+                </div>
+                <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
                 <!--
