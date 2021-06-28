@@ -48,7 +48,7 @@ function init_super_elm_edit() {
                 var tagName = $(e)[0].tagName;
                 var elm_type = $(e).attr("type");
                 var value = '';
-                if (tagName == 'INPUT' || tagName == 'TEXTAREA') {
+                if (tagName == 'INPUT' || tagName == 'TEXTAREA' || tagName == 'SELECT') {
                     value = $(e).val();
                 }
                 if (elm_type === 'checkbox') {
