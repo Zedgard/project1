@@ -199,7 +199,7 @@
                         <div class="container h-100">
                             <div class="row h-100">
                                 <div class="col d-flex align-items-end text-center">
-                                    <a href="https://edgardzaycev.ru/club" target="_blank" class="btn btn-warning btn_slider_link_club">ПРИСОЕДЕНИТЬСЯ</a>
+                                    <a href="https://edgardzaycev.ru/club" target="_blank" class="btn btn-warning btn_slider_link_club">ПРИСОЕДИНИТЬСЯ</a>
                                 </div> 
                                 <div class="col">
 
