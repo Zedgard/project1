@@ -64,7 +64,7 @@
                 <p class="copyrights wow fadeInUp" data-wow-delay="350ms"> &copy; 2019 XeOne. made with love by <a href="http://www.themesindustry.com/" target="_blank">themesindustry</a> </p>
                 -->
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4 social_link">
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         <span class="font-weight-bold text-white">СОЦИАЛЬНЫЕ СЕТИ</span>
@@ -72,36 +72,36 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="instagram hasTooltip" href="http://instagram.com/edgard_zaycev" target="_self">
-                            <i class="fab fa-instagram rounded-circle"></i> <span class="ml-3">Instagram</span>
+                        <a class="instagram" href="http://instagram.com/edgard_zaycev" target="_self">
+                            <i class="fab fa-instagram"></i> <span class="ml-3">Instagram</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="youtube hasTooltip" href="https://www.youtube.com/user/zaiaz67" target="_self">
-                            <i class="fab fa-youtube rounded-circle"></i> <span class="ml-3">Youtube</span>
+                        <a class="youtube" href="https://www.youtube.com/user/zaiaz67" target="_self">
+                            <i class="fab fa-youtube"></i> <span class="ml-3">Youtube</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="facebook hasTooltip" href="https://www.facebook.com/profile.php?id=100002017651033" target="_self">
-                            <span class="rounded-circle"><i class="fab fa-facebook"></i></span> <span class="ml-3">Facebook</span>
+                        <a class="facebook" href="https://www.facebook.com/profile.php?id=100002017651033" target="_self">
+                            <i class="fab fa-facebook"></i> <span class="ml-3">Facebook</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="dribbble hasTooltip" href="https://ok.ru/edgardzaitsev" target="_self">
-                            <i class="fab fa-dribbble rounded-circle"></i> <span class="ml-3">Одноклассники</span>
+                        <a class="dribbble" href="https://ok.ru/edgardzaitsev" target="_self">
+                            <i class="fab fa-dribbble"></i> <span class="ml-3">Одноклассники</span>
                         </a>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-12">
-                        <a class="pinterest hasTooltip" href="https://vm.tiktok.com/J1kKUEL/" target="_self">
-                            <i class="fab fa-pinterest rounded-circle"></i> <span class="ml-3">Tik-Tok</span>
+                        <a class="pinterest" href="https://vm.tiktok.com/J1kKUEL/" target="_self">
+                            <i class="fab fa-pinterest "></i> <span class="ml-3">Tik-Tok</span>
                         </a>
                     </div>
                 </div>

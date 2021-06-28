@@ -45,45 +45,62 @@ if (isset($_GET['response'])) {
         if (isset($_GET['response'])) {
             switch ($_GET['response']) {
                 case 'HOOK':
-                    echo 'HOOK';
-                    
-                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/TinkoffMerchantAPI.php';
+                    echo "<div>HOOK</div>\n";
 
-                    spl_autoload_register(function ($class_name) {
-                        include $class_name . '.php';
-                    });
-
-                    $tk_shop_terminal_key = $config->getConfigParam('tk_shop_terminal_key');
-                    $tk_shop_secret_key = $config->getConfigParam('tk_shop_secret_key');
-
-                    $api = new TinkoffMerchantAPI(
-                            $tk_shop_terminal_key, //Ваш Terminal_Key
-                            $tk_shop_secret_key    //Ваш Secret_Key
-                    );
-                    
-                    //$args = array('':'','':'');
-
-                    var_dump($api);
-                    
-                    //print_r($api->);
-                    echo "<br/>\n";
-                    echo 'terminalKey: ' . $api->terminalKey . "<br/>\n";
-                    //echo 'secretKey: ' . $api['secretKey:TinkoffMerchantAPI:private'] . "<br/>\n";
-
-                    //$url = 'https://forma.tinkoff.ru/api/partners/v2/orders/' . $_GET['orderId'] . '/info?orderNumber=' . $_GET['orderId'] . '&Authorization=' ;
-
-                    //$ch = curl_init($url);
-
+//                    include $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/TinkoffMerchantAPI.php';
+//
+//                    spl_autoload_register(function ($class_name) {
+//                        include $class_name . '.php';
+//                    });
+//
+//                    $tk_shop_terminal_key = $config->getConfigParam('tk_shop_terminal_key');
+//                    $tk_shop_secret_key = 'H9EMfAGZJWHu9X-'; //$config->getConfigParam('tk_shop_secret_key'); // 'H9EMfAGZJWHu9X-'; //
+//
+//                    $api = new TinkoffMerchantAPI(
+//                            $tk_shop_terminal_key, //Ваш Terminal_Key
+//                            $tk_shop_secret_key    //Ваш Secret_Key
+//                    );
+//
+//                    function genToken($secret_key, $args) {
+//                        $token = '';
+//                        $args['Password'] = $secret_key;
+//                        ksort($args);
+//
+//                        foreach ($args as $arg) {
+//                            if (!is_array($arg)) {
+//                                $token .= $arg;
+//                            }
+//                        }
+//                        echo "fn_token: {$token} <br/>";
+//                        $token = hash('sha256', $token);
+//                        return $token;
+//                    }
+//
+//                    $args['orderNumber'] = '60d1e771be04e8.33358093';
+//                    $token = genToken($tk_shop_secret_key, $args);
+//
+//                    //$args = array('':'','':'');
+//                    //var_dump($api);
+//                    //print_r($api->);
+//                    echo "<br/>\n";
+//                    echo 'token: ' . $token . "<br/>\n";
+//                    $headers = array(
+//                        'Authorization: Basic <' . $token . '>'
+//                    );
+//                    $url = 'https://forma.tinkoff.ru/api/partners/v2/orders/' . $_GET['orderId'] . '/info';
+//                    $ch = curl_init($url);
 //                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 //                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 //                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 //                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+//                    
+//                    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//                    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 //                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 //                    $result = curl_exec($ch);
 //                    curl_close($ch);
-
-                    //echo $result;
-                    exit();
+//                    echo $result;
+//                    exit();
                     mail('koman1706@gmail.com', 'Оплата тинькоф HOOK', "GET: {$get_str}\n");
                     break;
                 case 'SUCCESS': // Если дали добро на кредит отметим покупку
@@ -351,8 +368,8 @@ if (count($_SESSION['errors']) > 0) {
     foreach ($_SESSION['errors'] as $value) {
         ?>
         <div class="alert alert-danger" role="alert">
-            <?= $value ?>
+        <?= $value ?>
         </div>
-        <?
+            <?
+        }
     }
-}
