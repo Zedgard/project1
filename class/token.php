@@ -8,7 +8,7 @@ namespace project;
 
 // Для проверки
 if ($_SESSION['DEBUG'] == 1) {
-    //echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
+//echo "token_hash: {$_SESSION['token_hash']} <br/>\n";
     if (isset($_GET['token_kill'])) {
         $_SESSION['token_hash'] = '';
         $_SESSION['token_data'] = '';
@@ -38,9 +38,9 @@ class token {
      */
     public function register() {
         $timer = time();
-        //echo "session_time: {$_SESSION['site_time']} \n";
+//echo "session_time: {$_SESSION['site_time']} \n";
         $t_start = ($_SESSION['site_time'] + 3);
-        //echo ' ' . $t_start .' < ' . $timer . "\n";
+//echo ' ' . $t_start .' < ' . $timer . "\n";
         if ($t_start < $timer) {
             $this->token_key = random_int(1000, 9999) . uniqid();
             $this->token_hash = md5($this->token_key);
@@ -120,10 +120,11 @@ class token {
      * @return type
      */
     public function javascript() {
+        ob_start();
         if (!isset($_SESSION['token_hash']) || strlen($_SESSION['token_hash']) == 0) {
-            ob_start();
             ?>
             <script>
+                var token = 0;
                 $(document).ready(function () {
                     setTimeout(function () {
                         var h = window.screen.availHeight;
@@ -135,14 +136,21 @@ class token {
                             data: {t: '1', 'h': h, 'w': w},
                             success: function (data) {
                                 //console.log(data['t']);
+                                token = 1;
                             }
                         });
-                    }, 3000);
+                    }, 1000);
                 });
             </script>
             <?
-            return ob_get_clean();
-        }
-    }
 
+        } else {
+            ?>
+            <script>
+                var token = 1;
+            </script>
+            <?
+        }
+        return ob_get_clean();
+    }
 }

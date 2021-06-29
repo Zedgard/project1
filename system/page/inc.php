@@ -867,14 +867,14 @@ class page {
                             setTimeout(function () {
                                 $(".link_ed_mailto").attr("href", "mailto:<?= $config->getConfigParam('link_ed_mailto') ?>");
                                 $(".link_ed_mailto").html("<?= $config->getConfigParam('link_ed_mailto') ?>");
-                            }, 2000);
+                            }, 1000);
                             setInterval(function () {
                                 i--;
                                 $(".goto_main_page").find('strong').html(i);
                                 if (i <= 0) {
                                     document.location.href = '/';
                                 }
-                            }, 1000);
+                            }, 500);
                         });
                     </script>
                 </body>
@@ -968,7 +968,7 @@ class page {
                 setTimeout(function () {
                     $(".link_ed_mailto").attr("href", "mailto:<?= $config->getConfigParam('link_ed_mailto') ?>");
                     $(".link_ed_mailto").html("<?= $config->getConfigParam('link_ed_mailto') ?>");
-                }, 2000);
+                }, 1000);
             });
         </script>
         <?
