@@ -93,7 +93,7 @@
             <div class="pluss"></div>
         </div>
     </div>
-</div>     
+</div>      
 
 <script>
     /*
@@ -109,12 +109,12 @@
                     $(".questions").html("");
                     if (!!e['data'] && e['data'].length > 0) {
                         for (var i = 0; i < e['data'].length; i++) {
-                            $(".questions").append('<div class="mb-4" style="height: 20px;display: flex;">\n\
-                                    <div class="block_profit_line flexbox-wrapper">\n\
-                                        <i class="fas fa-check mr-3" style="float: left;"></i> ' + e['data'][i]['val'] + '\n\
+                            $(".questions").append('<div class="mb-4 w-100">\n\
+                                    <div class="block_profit_line h-100 d-flex align-items-center">\n\
+                                        <i class="fas fa-check" style="margin: 0;margin-right: 0.8rem;"></i>' + e['data'][i]['val'] + '\n\
                                     </div></div>');
                         }
-                    }
+                    } 
                 });
     }
 
@@ -128,12 +128,12 @@
         sendPostLigth('/jpost.php?extension=products',
                 {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
                 function (e) {
-                    $(".pluss").html("");
+                    $(".pluss").html(""); 
                     if (!!e['data'] && e['data'].length > 0) {
                         for (var i = 0; i < e['data'].length; i++) {
-                            $(".pluss").append('<div class="mb-4" style="height: 20px;display: flex;">\n\
-                                    <div class="block_profit_line flexbox-wrapper">\n\
-                                        <i class="fas fa-plus mr-3" style="float: left;"></i> ' + e['data'][i]['val'] + '\n\
+                            $(".pluss").append('<div class="mb-4 w-100">\n\
+                                    <div class="block_profit_line h-100 d-flex align-items-center">\n\
+                                        <i class="fas fa-plus" style="margin: 0;margin-right: 0.8rem;"></i>' + e['data'][i]['val'] + '\n\
                                     </div></div>');
 //                                                    .append('<div class="mb-4" style="height: 20px;display: flex;">\n\
 //            <i class="fas fa-plus mr-3" style="float: left;"></i> <div class="block_profit_line flex-center">' + e['data'][i]['val'] + '</div></div>');
@@ -141,6 +141,11 @@
                     }
                 });
     }
-    init_block_profit_questions_array();
-    init_block_profit_plus_array();
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            init_block_profit_questions_array();
+            init_block_profit_plus_array();
+        }, 3000);
+    });
 </script>
