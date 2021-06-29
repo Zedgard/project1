@@ -203,6 +203,18 @@
     }
     ?>
 
+    <!-- cart button -->
+    <div class="row ">
+        <div class="col-md-12 text-center">
+            <a href="javascript:void(0)" class="btn btn-lg button btngreen textcenter cart_product_add pl-5 pr-5" style="font-size: 2rem;" product_id="<?= $productData['id'] ?>">В корзину</a>
+            <div class="btn-group">
+                <a href="/shop/cart/" class="btn btngreen-outline button btngreen textcenter cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;font-size: 2rem;padding: 0.8rem;border-right: none;">Перейти в корзину</a>
+                <a href="javascript:void(0)" class="btn btn-danger btn-sm cart_product_remove cart_product_go_card" product_id="<?= $productData['id'] ?>" style="display: none;padding: 0.6rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- cart button end -->
+
     <div style="height: 1rem;"></div>
     <?
     include 'recommend.php';
