@@ -18,7 +18,7 @@ if (isset($_POST['set_email'])) {
     } else {
         if (strlen($set_email) > 0 && $validator->valid_email($set_email)) {
             if ($pr_get_emails->set_email($set_email)) {
-                $result = array('success' => 1, 'success_text' => 'Успешно отправлено! ');
+                $result = array('success' => 1, 'success_text' => 'Благодарю тебе за подписку! Она успешно оформлена.');
             } else {
                 $result = array('success' => 0, 'success_text' => 'Ошибка!');
             }
