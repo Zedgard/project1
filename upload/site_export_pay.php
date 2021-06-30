@@ -28,6 +28,7 @@ function download_send_headers($filename) {
     header("Content-Type: application/force-download");
     header("Content-Type: application/octet-stream");
     header("Content-Type: application/download");
+    header("content-type: application/csv;charset=WINDOWS-1251");
 
     // disposition / encoding on response body
     header("Content-Disposition: attachment;filename={$filename}");
@@ -43,7 +44,8 @@ function array2csv(array &$array) {
     $df = fopen("php://output", 'w');
     fputcsv($df, array_keys(reset($array)), ';');
     foreach ($array as $row) {
-        fputcsv($df, $row, ';');
+        $s = mb_convert_encoding($row, "WINDOWS-1251", "UTF-8");
+        fputcsv($df, $s, ';');
     }
     fclose($df);
     return ob_get_clean();
