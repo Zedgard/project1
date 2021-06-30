@@ -213,8 +213,12 @@ function init_pay_info() {
                 }
                 var credit_type = '';
                 var pay_credit = 0;
+                var pay_tinkoff_id = '';
+                var pay_tinkoff_link = '';
                 if (e['data']['pay_credit'] > 0) {
                     credit_type = '( Кредитный )';
+                    pay_tinkoff_id = 'Тинькоф: ' + e['data']['pay_tinkoff_id'];
+                    pay_tinkoff_link = e['data']['pay_tinkoff_link'];
                     pay_credit = e['data']['pay_credit'];
                 }
                 
@@ -226,7 +230,7 @@ function init_pay_info() {
                                        </select>';
                 
 
-                $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + " " + pay_tinkoff_id + "</td></tr>");
                 $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
                 $(".pay_info_data").append("<tr><td>Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
                 $(".pay_info_data").append("<tr><td>Статус платежа</td><td class=\"border_class\">" + pay_status_html + "</td></tr>");
