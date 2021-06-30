@@ -78,6 +78,8 @@ class pay extends \project\extension {
         $querySelect = "SELECT
                         p.*,
                         if(pcr.id is not null, pcr.id, 0) as pay_credit,
+                        pcr.pay_tinkoff_id,
+                        pcr.pay_tinkoff_link,
                         pt.*
                     FROM
                         zay_pay p
