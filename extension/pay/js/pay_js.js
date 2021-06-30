@@ -217,7 +217,7 @@ function init_pay_info() {
                 var pay_tinkoff_link = '';
                 if (e['data']['pay_credit'] > 0) {
                     credit_type = '( Кредитный )';
-                    pay_tinkoff_id = 'Тинькоф: ' + e['data']['pay_tinkoff_id'];
+                    pay_tinkoff_id = '<br/>Тинькоф: ' + e['data']['pay_tinkoff_id'];
                     pay_tinkoff_link = e['data']['pay_tinkoff_link'];
                     pay_credit = e['data']['pay_credit'];
                 }

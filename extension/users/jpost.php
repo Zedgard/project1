@@ -17,6 +17,7 @@ if ($user->isEditor()) {
         $page_num = $_POST['page_num'];
 
         $input_search_close_club_users = $_POST['input_search_close_club_users'];
+        $params['input_search_close_club_users'] = $input_search_close_club_users;
         $_SESSION['input_search_str'] = $_POST['input_search_str'];
 
         $user_id = 0;
@@ -25,7 +26,7 @@ if ($user->isEditor()) {
             $_SESSION['user_edit_obj_id'] = $user_id;
         }
         $params = array();
-        //$params['input_search_close_club_users'] = $input_search_close_club_users;
+        
         $data = $user->getUserInfo($user_id, $page_num, $_SESSION['input_search_str'], $params);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
