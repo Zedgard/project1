@@ -35,10 +35,13 @@ if (isset($_POST['set_email'])) {
 if (isset($_POST['remove_email'])) {
     $email = $_POST['remove_email'];
     $elm_id = $_POST['elm_id'];
+    $elm_activate = $_POST['elm_activate'];
     if ($pr_get_emails->delete_email($elm_id)) {
         $result = array('success' => 1, 'success_text' => '');
-        // Удалить и с сендпульса
-        $pr_get_emails->send_pulse_remove_email($email);
+        if ($elm_activate == 1) {
+            // Удалить и с сендпульса
+            $pr_get_emails->send_pulse_remove_email($email);
+        }
     } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
     }
