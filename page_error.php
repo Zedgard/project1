@@ -64,7 +64,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
                             <div class="row mt-3 mb-3">
                                 <div class="col-12">
                                     <?
-                                    if (count($_SESSION['page_errors']) > 0) {
+                                    if (isset($_SESSION['page_errors']) && count($_SESSION['page_errors']) > 0) {
                                         foreach ($_SESSION['page_errors'] as $value) {
                                             ?>
                                             <div class="alert alert-danger" role="alert">
@@ -73,6 +73,16 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
                                             <?
                                         }
                                         $_SESSION['page_errors'] = array();
+                                    }
+                                    if (isset($_SESSION['page_success']) && count($_SESSION['page_success']) > 0) {
+                                        foreach ($_SESSION['page_success'] as $value) {
+                                            ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <?= $value ?>
+                                            </div>
+                                            <?
+                                        }
+                                        $_SESSION['page_success'] = array();
                                     }
                                     ?>
                                 </div>

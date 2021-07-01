@@ -78,6 +78,7 @@ function init_super_delete() {
         $(".init_elm_delete").unbind('click').click(function () {
             var elm_id = $(this).attr("elm_id");
             var elm_table = $(this).attr("elm_table");
+            var elm_table_tr_hide = $(this).attr("elm_table_tr_hide");
             var func = $(this).attr("func");
             sendPostLigth('/jpost.php?super=1',
                     {
@@ -88,6 +89,11 @@ function init_super_delete() {
                     function (e) {
                         if (typeof func != "undefined") {
                             eval(func);
+                        }
+                        if (e['success'] == 1) {
+                            if (elm_table_tr_hide == "1") {
+                                $('.init_elm_delete[elm_id=' + elm_id + ']').closest("tr").hide(200);
+                            }
                         }
                     });
         });
