@@ -5,8 +5,30 @@ namespace project;
 defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+
+/*
+ * SendPulse REST API Usage Example
+ *
+ * Documentation
+ * https://login.sendpulse.com/manual/rest-api/
+ * https://sendpulse.com/api
+ *
+ * Settings
+ * https://login.sendpulse.com/settings/#api
+ */
+require($_SERVER['DOCUMENT_ROOT'] . "/system/sendpulse-rest-api-php-master/src/ApiInterface.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/system/sendpulse-rest-api-php-master/src/ApiClient.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/system/sendpulse-rest-api-php-master/src/Storage/TokenStorageInterface.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/system/sendpulse-rest-api-php-master/src/Storage/FileStorage.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/system/sendpulse-rest-api-php-master/src/Storage/SessionStorage.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/system/sendpulse-rest-api-php-master/src/Storage/MemcachedStorage.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/system/sendpulse-rest-api-php-master/src/Storage/MemcacheStorage.php");
+
+use Sendpulse\RestApi\ApiClient;
+use Sendpulse\RestApi\Storage\FileStorage;
 
 class get_emails extends \project\extension {
 
@@ -29,7 +51,7 @@ class get_emails extends \project\extension {
                 return $this->getSelectArray($querySelect, array($email));
             } else {
                 // по условию 
-                $querySelect = "SELECT * FROM `zay_get_emails` WHERE `get_email`='?' and `send_active`='?' order by `id` DESC";
+                $querySelect = "SELECT * FROM `zay_get_emails` WHERE `get_email`='?' and `activate`='?' order by `id` DESC";
                 return $this->getSelectArray($querySelect, array($email, $send_active));
             }
         }
@@ -49,13 +71,23 @@ class get_emails extends \project\extension {
             // Отправить сообщение пользователю для подтверждения почты
             $send_emails = new \project\send_emails();
             if ($send_emails->send('set_emails', $email, array(
-                'site_activate_email' => "/auth/?set_email_true={$token}",
-                'site_unactivate_email' => "/auth/?set_email_false={$email}")
-                )) {
+                        'site_activate_email' => "/auth/?set_email_true={$token}",
+                        'site_unactivate_email' => "/auth/?set_email_false={$email}")
+                    )) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Удалить запись по email из базы данных
+     * @param type $id
+     * @return type
+     */
+    public function delete_email($id) {
+        $query = "DELETE FROM `zay_get_emails` WHERE id='?'";
+        return $this->query($query, array($id));
     }
 
     /**
@@ -69,12 +101,14 @@ class get_emails extends \project\extension {
         if (count($obj) > 0) {
             if ($obj[0]['id'] > 0) {
                 // обновим статус
+                $this->send_pulse_add_email($obj[0]['get_email']);
                 $query = "UPDATE `zay_get_emails` SET `token`='',`activate`='1' WHERE `id`='?'";
                 return $this->query($query, array($obj[0]['id']));
             }
         }
         return false;
     }
+
     /**
      * Отписаться от рассылки
      * @param type $email
@@ -120,6 +154,54 @@ class get_emails extends \project\extension {
     private function get_email_token() {
         $token_str = sha1(time() . mt_rand(10000, 99999));
         return $token_str;
+    }
+
+    public function send_pulse_add_email($email) {
+        $config = new \project\config();
+        $API_USER_ID = $config->getConfigParam('sendpulse_API_USER_ID');
+        $API_SECRET = $config->getConfigParam('sendpulse_API_SECRET');
+        $bookID = $config->getConfigParam('sendpulse_book_id');
+        define('API_USER_ID', $API_USER_ID);
+        define('API_SECRET', $API_SECRET);
+        define('PATH_TO_ATTACH_FILE', __FILE__);
+
+        $SPApiClient = new ApiClient(API_USER_ID, API_SECRET, new FileStorage());
+        $emails = array(
+            array(
+                'email' => $email
+            )
+        );
+
+//        $additionalParams = array(
+//            'status' => 1,
+//            'status_explain' => 'Active'
+//        );
+
+        $addEmail = $SPApiClient->addEmails($bookID, $emails);
+        if ($addEmail) {
+            //echo "<div>True addEmails</div>";
+            return true;
+        }
+        return false;
+    }
+
+    public function send_pulse_remove_email($email) {
+        $config = new \project\config();
+        $API_USER_ID = $config->getConfigParam('sendpulse_API_USER_ID');
+        $API_SECRET = $config->getConfigParam('sendpulse_API_SECRET');
+        //$bookID = $config->getConfigParam('sendpulse_book_id');
+
+        define('API_USER_ID', $API_USER_ID);
+        define('API_SECRET', $API_SECRET);
+        define('PATH_TO_ATTACH_FILE', __FILE__);
+
+        $SPApiClient = new ApiClient(API_USER_ID, API_SECRET, new FileStorage());
+
+        if ($SPApiClient->removeEmailFromAllBooks($email)) {
+            //echo "<div>True removeEmailFromAllBooks</div>";
+            return true;
+        }
+        return false;
     }
 
 }

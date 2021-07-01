@@ -15,6 +15,7 @@
                                 <th class="text-center">Активирован</th>
                                 <th class="text-center">Признак</th>
                                 <th class="text-center">Дата</th>
+                                <th class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,17 +29,18 @@
                                     <td class="text-center"><?
                                         if ($value['send_active'] == '1') {
                                             ?>
-                                            <a href="javascript:void(0)" objid="<?= $value['id'] ?>" send_active="<?= $value['send_active'] ?>" class="btn btn-success btn-pill btn_send_active btn-sm text-nowrap">обработано</a>
+                                            <a href="javascript:void(0)" objid="<?= $value['id'] ?>" send_active="<?= $value['send_active'] ?>" class="btn btn-success btn-pill btn_send_active btn-sm text-nowrap">Выгружено</a>
                                             <?
                                         } else {
                                             ?>
-                                            <a href="javascript:void(0)" objid="<?= $value['id'] ?>" send_active="<?= $value['send_active'] ?>" class="btn btn-danger btn-pill btn_send_active btn-sm text-nowrap">не просмотрено</a>
+                                            <a href="javascript:void(0)" objid="<?= $value['id'] ?>" send_active="<?= $value['send_active'] ?>" class="btn btn-danger btn-pill btn_send_active btn-sm text-nowrap">Не выгружено</a>
                                             <?
                                         }
                                         ?>
 
                                     </td>
                                     <td class="text-center"><?= $value['lastdate'] ?></td>
+                                    <td class="text-center"><a href="javascript:void(0)" elm_email ="<?= $value['get_email'] ?>" elm_id="<?= $value['id'] ?>" elm_table="zay_get_emails" elm_table_tr_hide="1" class="btn btn-danger btn_remove_email btn-sm text-nowrap">Удалить</a></td>
                                 </tr>
                                 <?
                             }
@@ -51,7 +53,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $(".btn_send_active").unbind("click").click(function () {
@@ -66,16 +67,28 @@
             sendPostLigth('/jpost.php?extension=get_emails', {"send_active": send_active, "objid": objid}, function (e) {
                 if (e['success'] == '1') {
                     if (send_active == '1') {
-                        $(o).html("обработано");
+                        $(o).html("Выгружено");
                         $(o).attr('send_active', '1');
                         $(o).removeClass("btn-danger");
                         $(o).addClass("btn-success");
-                    } else { 
-                        $(o).html("не просмотрено");
+                    } else {
+                        $(o).html("Не выгружено");
                         $(o).attr('send_active', '0');
                         $(o).removeClass("btn-success");
                         $(o).addClass("btn-danger");
                     }
+                }
+                init_get_emails_col();
+            });
+        });
+
+        $(".btn_remove_email").unbind("click").click(function () {
+            var o = this;
+            var elm_id = $(this).attr("elm_id");
+            var elm_email = $(this).attr("elm_email");
+            sendPostLigth('/jpost.php?extension=get_emails', {"remove_email": elm_email, "elm_id": elm_id}, function (e) {
+                if (e['success'] == '1') {
+                    $(o).closest("tr").hide(200);
                 }
                 init_get_emails_col();
             });

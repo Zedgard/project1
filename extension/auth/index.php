@@ -29,12 +29,12 @@ if (isset($_GET['code_integration'])) {
 
 // подтверждение email адреса подписки \
 // модуль get_emails 
-if ($_GET['set_email_true']) {
+if (isset($_GET['set_email_true'])) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/get_emails/inc.php';
     $pr_get_emails = new \project\get_emails();
     if ($pr_get_emails->get_email_activate($_GET['set_email_true'])) {
         header("refresh: 4; url=/");
-        $_SESSION['page_errors'][] = 'Успешно подписаны!';
+        $_SESSION['page_success'][] = 'Успешно подписаны!';
         include $_SERVER['DOCUMENT_ROOT'] . '/page_error.php';
     } else {
         $_SESSION['page_errors'][] = 'Ошибка токена!';
@@ -42,7 +42,7 @@ if ($_GET['set_email_true']) {
     }
     exit();
 }
-if ($_GET['set_email_false']) {
+if (isset($_GET['set_email_false'])) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/get_emails/inc.php';
     $pr_get_emails = new \project\get_emails();
     if ($pr_get_emails->get_email_unactivate($_GET['set_email_false'])) {

@@ -18,13 +18,29 @@ if (isset($_POST['set_email'])) {
     } else {
         if (strlen($set_email) > 0 && $validator->valid_email($set_email)) {
             if ($pr_get_emails->set_email($set_email)) {
-                $result = array('success' => 1, 'success_text' => 'Благодарю тебе за подписку! Она успешно оформлена.');
+                $result = array('success' => 1, 'success_text' => 'Благодарю тебя за подписку!<br/>'
+                    . 'Проверьте свою почту ( <b>' . $set_email . '</b> ) для подтверждения подписки.');
             } else {
                 $result = array('success' => 0, 'success_text' => 'Ошибка!');
             }
         } else {
             $result = array('success' => 0, 'success_text' => 'Не верно указали адрес электронной почты!');
         }
+    }
+}
+
+/**
+ * Удалить email из подписки
+ */
+if (isset($_POST['remove_email'])) {
+    $email = $_POST['remove_email'];
+    $elm_id = $_POST['elm_id'];
+    if ($pr_get_emails->delete_email($elm_id)) {
+        $result = array('success' => 1, 'success_text' => '');
+        // Удалить и с сендпульса
+        $pr_get_emails->send_pulse_remove_email($email);
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
     }
 }
 
