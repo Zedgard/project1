@@ -112,6 +112,40 @@
 
             <!-- Bootslider Container -->
             <div class="bs-container">
+                
+                <!-- Bootslider Slide -->
+                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="bs-vertical-center">
+
+                                    </div>
+                                </div> 
+                                <div class="col d-flex justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+                                        <div data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
+                                            <div class="mt-2 mt-lg-3">
+                                                <a href="/shop/?product=4634" class="btn btn-warning btn_slider_link_exam">ПОЛУЧИТЬ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+                        <img src="/assets/files/image/banner_index/exam_text1.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
+                             data-width="350" data-height="150" data-right="240" data-top="100"/>
+                        <img src="/assets/files/image/banner_index/exam_text2.png" class="bs-layer"
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="800"
+                             data-width="350" data-height="160" data-right="230" data-top="260"/>
+                        <img src="/assets/files/image/banner_index/exam_bg.jpg" alt="" />
+                    </div>
+                </div>
+                <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
