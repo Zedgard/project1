@@ -765,11 +765,19 @@ ul.social-icons.white li a:focus{
     color: #FFFFFF;
 }
 
+.btn_slider_link_exam{
+    margin-top: 230px;
+    margin-left: 40%;
+    padding: 0.4rem 1.4rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
 .btn_slider_link_consultations{
     padding: 0.4rem 1.4rem;
     font-size: 2rem;
     font-weight: bold;
 }
+
 .btn_slider_link_keise{
     padding: 0.4rem 1.4rem;
     font-size: 2rem;
@@ -788,6 +796,13 @@ ul.social-icons.white li a:focus{
     margin-top: -6rem;
 }
 @media (max-width: 992px) {
+    .btn_slider_link_exam{
+        padding: 0.2rem 0.6rem;
+        margin-top: 60px;
+        margin-left: -26%;
+        font-size: 1rem;
+        font-weight: bold;
+    }
     .btn_slider_link_consultations{
         padding: 0.2rem 0.6rem;
         font-size: 1rem;
