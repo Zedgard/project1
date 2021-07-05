@@ -766,8 +766,6 @@ ul.social-icons.white li a:focus{
 }
 
 .btn_slider_link_exam{
-    margin-top: 230px;
-    margin-left: 40%;
     padding: 0.4rem 1.4rem;
     font-size: 2rem;
     font-weight: bold;
@@ -783,23 +781,24 @@ ul.social-icons.white li a:focus{
     font-size: 2rem;
     font-weight: bold;
     margin: 0 auto;
-    margin-bottom: 200px;
+    margin-bottom: 100px;
 }
 .btn_slider_link_club{
     padding: 0.4rem 1.4rem;
     font-size: 2rem;
     font-weight: bold;
     margin: 0 auto;
-    margin-bottom: 200px;
+    margin-bottom: 100px;
 }
 .Bootslider_Controls{
     margin-top: -6rem;
 }
+.exam_bg{
+        margin-top: -7%;
+    }
 @media (max-width: 992px) {
     .btn_slider_link_exam{
         padding: 0.2rem 0.6rem;
-        margin-top: 60px;
-        margin-left: -26%;
         font-size: 1rem;
         font-weight: bold;
     }
@@ -819,14 +818,15 @@ ul.social-icons.white li a:focus{
         padding: 0.4rem 0.8rem;
         font-size: 1rem; 
         font-weight: bold;
-        margin-bottom: 30px;
-        margin-left: 16%;
     }
     .Bootslider_Controls{
         margin-top: -5rem;
     }
     .slider_text_keise{
         font-size: 1rem;
+    }
+    .exam_bg{
+        margin-top: 0%;
     }
 }
 .rev_slider .btnprimary-alt:hover, .rev_slider .btnprimary-alt:focus {
