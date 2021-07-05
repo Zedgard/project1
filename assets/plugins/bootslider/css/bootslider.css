@@ -5,6 +5,24 @@
     Author: Alex GROZAV
     Author Website: http://grozav.com
 */
+/*
+ bootslider height 
+
+#bootslider .bs-slide{
+    height:600px;
+}
+@media screen and (max-width:979px){
+    #bootslider.bs-slide{
+        height:500px;
+    }
+}
+@media screen and (max-width:767px){
+    #bootslider.bs-slide .bs-container{
+        height:300px;
+    }
+}
+*/
+
 /* Custom Styling */
 .bootslider {
   margin-bottom: 50px; }

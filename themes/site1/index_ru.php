@@ -112,50 +112,17 @@
 
             <!-- Bootslider Container -->
             <div class="bs-container">
-                
-                <!-- Bootslider Slide -->
-                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
-                    <div class="bs-foreground">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="bs-vertical-center">
 
-                                    </div>
-                                </div> 
-                                <div class="col d-flex justify-content-center">
-                                    <div class="bs-vertical-center text-center ">
-                                        <div data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
-                                            <div class="mt-2 mt-lg-3">
-                                                <a href="/shop/?product=4634" class="btn btn-warning btn_slider_link_exam">ПОЛУЧИТЬ</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bs-background">
-                        <img src="/assets/files/image/banner_index/exam_text1.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
-                             data-width="350" data-height="150" data-right="240" data-top="100"/>
-                        <img src="/assets/files/image/banner_index/exam_text2.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="800"
-                             data-width="350" data-height="160" data-right="230" data-top="260"/>
-                        <img src="/assets/files/image/banner_index/exam_bg.jpg" alt="" />
-                    </div>
-                </div>
-                <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
                     <div class="bs-foreground">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="bs-vertical-center">
-
-                                    </div>
+                        <div class="container h-100">
+                            <div class="row h-100">
+                                <div class="col h-100 d-flex align-items-end"> 
+                                    <img src="/assets/files/image/banner_index/edgard.png" class="m-auto m-lg-0 mb-0 " style="width: 75%;"
+                                         data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
+                                         />
                                 </div> 
                                 <div class="col d-flex justify-content-center">
                                     <div class="bs-vertical-center text-center ">
@@ -180,21 +147,66 @@
                         </div>
                     </div>
                     <div class="bs-background">
-                        <img src="/assets/files/image/banner_index/edgard.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
-                             data-width="566" data-height="649" data-left="100" data-bottom="0"/>
+
                         <img src="/assets/files/image/banner_index/consult_bg.jpg" alt="" />
                     </div>
                 </div>
                 <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
+                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="bs-vertical-center">
+
+                                    </div>
+                                </div> 
+                                <div class="col d-flex justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+                                        <div>
+                                            <div class="">
+                                                <img src="/assets/files/image/banner_index/exam_text1.png" style="width: 80%;"
+                                                     data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="400"
+                                                     />
+                                            </div>
+                                            <div class="">
+                                                <img src="/assets/files/image/banner_index/exam_text2.png" style="width: 80%;"
+                                                     data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="800"
+                                                     >
+                                            </div>
+                                            <div class="mt-2 mt-lg-3">
+                                                <a href="/shop/?product=4634" 
+                                                   data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1400"
+                                                   class="btn btn-warning btn_slider_link_exam">ПОЛУЧИТЬ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+
+                        <img src="/assets/files/image/banner_index/exam_bg.jpg" alt="" class="exam_bg" />
+                    </div>
+                </div>
+                <!-- /Bootslider Slide -->
+
+
+
+
+
+                <!-- Bootslider Slide -->
+
                 <div class="bs-slide active" data-animate-in="bounceInUp" data-animate-out="hinge">
                     <div class="bs-foreground">
                         <div class="container h-100">
                             <div class="row h-100">
                                 <div class="col d-flex align-items-end text-center">
-                                    <a href="/shop/?product=4610" class="btn btn-warning btn_slider_link_keise">ПОЛУЧИТЬ</a>
+                                    <a href="/shop/?product=4610" class="btn btn-warning btn_slider_link_keise"
+                                       data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1400">ПОЛУЧИТЬ</a>
                                 </div> 
                                 <div class="col">
 
@@ -219,185 +231,200 @@
                         </div>
                         <img src="/assets/files/image/banner_index/hbd_2.png" class="bs-layer"
                              data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
-                             data-width="400" data-height="300" data-left="150" data-bottom="0" data-top="160"/>
+                             data-width="400" data-height="300" data-left="150" data-bottom="0" data-top="200"/>
                         <img src="/assets/files/image/banner_index/nbd_bg.jpg" alt="" />
-                        <img src="/assets/files/image/banner_index/flakes_bg.png" class="bs-layer" data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="300"
+                        <img src="/assets/files/image/banner_index/flakes_bg.png" class="bs-layer" 
+                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="300"
                              data-width="100%" data-height="100%" data-bottom="0" />
                     </div>
                 </div>
+
                 <!-- /Bootslider Slide -->
 
+
                 <!-- Bootslider Slide -->
+
                 <div class="bs-slide active" data-animate-in="bounceInUp" data-animate-out="hinge">
                     <div class="bs-foreground">
-                        <div class="container h-100">
-                            <div class="row h-100">
-                                <div class="col d-flex align-items-end text-center">
-                                    <a href="https://edgardzaycev.ru/club" target="_blank" class="btn btn-warning btn_slider_link_club">ПРИСОЕДИНИТЬСЯ</a>
-                                </div> 
+                        <div class="container text-center h-100">
+                            <div class="row mt-4 mt-lg-5">
                                 <div class="col">
-
+                                    <img src="/assets/files/image/banner_index/club_text_top.png" style="width: 100%;"
+                                         data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
+                                         />
                                 </div> 
+                                <div class="col"></div>
+                            </div>
+                            <div class="row mt-2">
                                 <div class="col">
-
+                                    <img src="/assets/files/image/banner_index/club_text.png" style="width: 100%;margin-left: 9%;"
+                                         data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="900"
+                                         />
+                                </div> 
+                                <div class="col"></div>
+                            </div>
+                            <div class="row mt-2 h-100">
+                                <div class="col">
+                                    <div>
+                                        <a href="https://edgardzaycev.ru/club" target="_blank" class="btn btn-warning btn_slider_link_club"
+                                           data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="1200">ПРИСОЕДИНИТЬСЯ</a>
+                                    </div>
                                 </div> 
                                 <div class="col  justify-content-center">
-                                    <div class="bs-vertical-center text-center ">
-
-                                    </div>
+                                    <div class="bs-vertical-center text-center "></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="bs-background">
 
-                        <img src="/assets/files/image/banner_index/club_text_top.png" class="bs-layer"
-                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
-                             data-width="500" data-height="40" data-left="130" data-bottom="0" data-top="40"/>
-                        <img src="/assets/files/image/banner_index/club_text.png" class="bs-layer"
-                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="900"
-                             data-width="700" data-height="500" data-left="100" data-bottom="0" data-top="50"/>
+
                         <img src="/assets/files/image/banner_index/club_bg.jpg" alt="" />
 
                     </div>
                 </div>
+
                 <!-- /Bootslider Slide -->
 
-                <!-- Bootslider Slide -->
-                <!--
-                <div class="bs-slide" data-animate-in="bounceInUp" data-animate-out="hinge">
-                    <div class="bs-foreground">
-                        <div class="container">
-                            <div class="row" data-animate-in="fadeInLeftBig" data-delay="1000" data-animate-out="fadeOutDown">
-                                <div class="col-md-12">
-                                    <h1 class="heading">BOOTSLIDER</h1>
-                                    <p class="subheading text-white">SIMPLY LOVES BOOTSTRAP</p>
-                                    <p>
-                                        <a class="btn btn-primary" href="http://codecanyon.net/item/bootslider-responsive-bootstrap-css3-slider/6477433?ref=AlexGrozav">BUY NOW</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bs-background">
-                        <img src="/themes/site1/images/slider_banner 2.jpg" 
-                             data-animate-in="fadeInUpBig" data-animate-out="fadeLeftDownBig" class="bs-layer" 
-                             data-width="683" data-height="302" data-left="342" data-bottom="100"/>
-                        <img src="/themes/site1/images/slider_banner 2.jpg" 
-                             data-animate-in="fadeInLeftBig" data-animate-out="fadeInDownBig" class="bs-layer" 
-                             data-width="442" data-height="273" data-left="382" data-bottom="0" data-delay="1200"/>
-                        <img src="/themes/site1/images/slider_banner 2.jpg" alt="" />
-                    </div>
-                </div>
-                -->
-                <!-- /Bootslider Slide -->
+                <?php /*
+                  <!-- Bootslider Slide -->
+                  <!--
+                  <div class="bs-slide" data-animate-in="bounceInUp" data-animate-out="hinge">
+                  <div class="bs-foreground">
+                  <div class="container">
+                  <div class="row" data-animate-in="fadeInLeftBig" data-delay="1000" data-animate-out="fadeOutDown">
+                  <div class="col-md-12">
+                  <h1 class="heading">BOOTSLIDER</h1>
+                  <p class="subheading text-white">SIMPLY LOVES BOOTSTRAP</p>
+                  <p>
+                  <a class="btn btn-primary" href="http://codecanyon.net/item/bootslider-responsive-bootstrap-css3-slider/6477433?ref=AlexGrozav">BUY NOW</a>
+                  </p>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  <div class="bs-background">
+                  <img src="/themes/site1/images/slider_banner 2.jpg"
+                  data-animate-in="fadeInUpBig" data-animate-out="fadeLeftDownBig" class="bs-layer"
+                  data-width="683" data-height="302" data-left="342" data-bottom="100"/>
+                  <img src="/themes/site1/images/slider_banner 2.jpg"
+                  data-animate-in="fadeInLeftBig" data-animate-out="fadeInDownBig" class="bs-layer"
+                  data-width="442" data-height="273" data-left="382" data-bottom="0" data-delay="1200"/>
+                  <img src="/themes/site1/images/slider_banner 2.jpg" alt="" />
+                  </div>
+                  </div>
+                  -->
+                  <!-- /Bootslider Slide -->
 
-                <!-- Bootslider Slide -->
-                <!--
-                <div class="bs-slide" data-animate-in="bounceInDown" data-animate-out="flipOutX">
-                    <div class="bs-foreground">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <div data-animate-in="tada" data-animate-out="fadeOutUpBig" data-delay="2000">
-                                        <h1 class="heading">
-                                            BOOTSLIDER
-                                        </h1>
-                                        <h2 class="subheading text-white">
-                                            ABSOLUTELY RESPONSIVE
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bs-background">
-                        <img src="img/slide-2-layer-4.png" class="bs-layer"
-                             data-animate-in="fadeInDown" data-animate-out="fadeOutUpBig" data-delay="2000"
-                             data-width="775" data-height="473" data-right="125" data-top="243"/>
-                        <img src="img/slide-2-layer-1.png" class="bs-layer"
-                             data-animate-in="fadeInDownBig" data-animate-out="fadeOutUpBig" data-delay="800"
-                             data-width="922" data-height="532" data-left="237" data-top="174"/>
-                        <img src="img/slide-2-layer-2.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutUpBig" data-delay="1200"
-                             data-width="208" data-height="410" data-right="322" data-top="276"/>
-                        <img src="img/slide-2-layer-3.png" class="bs-layer"
-                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutUpBig" data-delay="1600"
-                             data-width="423" data-height="512" data-left="183" data-top="203"/>
-                        <img src="img/slide-2.jpg" alt="" />
-                    </div>
-                </div>
-                -->
-                <!-- /Bootslider Slide -->
+                  <!-- Bootslider Slide -->
+                  <!--
+                  <div class="bs-slide" data-animate-in="bounceInDown" data-animate-out="flipOutX">
+                  <div class="bs-foreground">
+                  <div class="container">
+                  <div class="row">
+                  <div class="col-md-12 text-center">
+                  <div data-animate-in="tada" data-animate-out="fadeOutUpBig" data-delay="2000">
+                  <h1 class="heading">
+                  BOOTSLIDER
+                  </h1>
+                  <h2 class="subheading text-white">
+                  ABSOLUTELY RESPONSIVE
+                  </h2>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  <div class="bs-background">
+                  <img src="img/slide-2-layer-4.png" class="bs-layer"
+                  data-animate-in="fadeInDown" data-animate-out="fadeOutUpBig" data-delay="2000"
+                  data-width="775" data-height="473" data-right="125" data-top="243"/>
+                  <img src="img/slide-2-layer-1.png" class="bs-layer"
+                  data-animate-in="fadeInDownBig" data-animate-out="fadeOutUpBig" data-delay="800"
+                  data-width="922" data-height="532" data-left="237" data-top="174"/>
+                  <img src="img/slide-2-layer-2.png" class="bs-layer"
+                  data-animate-in="fadeInRightBig" data-animate-out="fadeOutUpBig" data-delay="1200"
+                  data-width="208" data-height="410" data-right="322" data-top="276"/>
+                  <img src="img/slide-2-layer-3.png" class="bs-layer"
+                  data-animate-in="fadeInLeftBig" data-animate-out="fadeOutUpBig" data-delay="1600"
+                  data-width="423" data-height="512" data-left="183" data-top="203"/>
+                  <img src="img/slide-2.jpg" alt="" />
+                  </div>
+                  </div>
+                  -->
+                  <!-- /Bootslider Slide -->
 
-                <!-- Bootslider Slide -->
-                <!--
-                <div class="bs-slide" data-animate-in="rollIn" data-animate-out="flipOutX">
-                    <div class="bs-foreground">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h1 class="heading"
-                                        data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="800">
-                                        NOW LAYERED
-                                    </h1>
-                                    <h2 class="subheading text-white"
-                                        data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="2000">
-                                        AND EVEN MORE AWESOME
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bs-background">
-                        <img src="img/slide-3-layer-1.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="800"
-                             data-width="854" data-height="508" data-left="82" data-top="200"/>
-                        <img src="img/slide-3-layer-2.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="1200"
-                             data-width="854" data-height="508" data-left="336" data-top="140"/>
-                        <img src="img/slide-3-layer-3.png" class="bs-layer"
-                             data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="1600"
-                             data-width="854" data-height="508" data-right="23" data-top="95"/>
-                        <img src="img/slide-3.jpg" alt="" />
-                    </div>
-                </div>
-                -->
-                <!-- /Bootslider Slide -->
+                  <!-- Bootslider Slide -->
+                  <!--
+                  <div class="bs-slide" data-animate-in="rollIn" data-animate-out="flipOutX">
+                  <div class="bs-foreground">
+                  <div class="container">
+                  <div class="row">
+                  <div class="col-md-12">
+                  <h1 class="heading"
+                  data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="800">
+                  NOW LAYERED
+                  </h1>
+                  <h2 class="subheading text-white"
+                  data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="2000">
+                  AND EVEN MORE AWESOME
+                  </h2>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  <div class="bs-background">
+                  <img src="img/slide-3-layer-1.png" class="bs-layer"
+                  data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="800"
+                  data-width="854" data-height="508" data-left="82" data-top="200"/>
+                  <img src="img/slide-3-layer-2.png" class="bs-layer"
+                  data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="1200"
+                  data-width="854" data-height="508" data-left="336" data-top="140"/>
+                  <img src="img/slide-3-layer-3.png" class="bs-layer"
+                  data-animate-in="fadeInRightBig" data-animate-out="fadeOutLeftBig" data-delay="1600"
+                  data-width="854" data-height="508" data-right="23" data-top="95"/>
+                  <img src="img/slide-3.jpg" alt="" />
+                  </div>
+                  </div>
+                  -->
+                  <!-- /Bootslider Slide -->
 
-                <!-- Bootslider Slide -->
-                <!--
-                <div class="bs-slide" data-animate-in="scaleUpIn" data-animate-out="scaleUpOut">
-                    <div class="bs-background">
-                        <img src="img/slide-5-layer-1.png" class="bs-layer"
-                             data-animate-in="scaleDownIn" data-animate-out="fadeOutLeftBig" data-delay="800"
-                             data-width="1440" data-height="720" data-right="0" data-top="0"/>
-                        <div class="bs-layer" 
-                             data-width="894" data-height="510" data-left="282" data-top="85">
-                            <div class="bs-video black" data-animate-in="fadeIn" data-delay="1500" data-animate-out="fadeOutLeftBig"> 
-                                <iframe src="http://player.vimeo.com/video/79470878" width="500" height="285" frameborder="0" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <img src="img/slide-5.jpg" alt="" />
-                    </div>
-                </div>
-                -->
-                <!-- /Bootslider Slide -->
+                  <!-- Bootslider Slide -->
+                  <!--
+                  <div class="bs-slide" data-animate-in="scaleUpIn" data-animate-out="scaleUpOut">
+                  <div class="bs-background">
+                  <img src="img/slide-5-layer-1.png" class="bs-layer"
+                  data-animate-in="scaleDownIn" data-animate-out="fadeOutLeftBig" data-delay="800"
+                  data-width="1440" data-height="720" data-right="0" data-top="0"/>
+                  <div class="bs-layer"
+                  data-width="894" data-height="510" data-left="282" data-top="85">
+                  <div class="bs-video black" data-animate-in="fadeIn" data-delay="1500" data-animate-out="fadeOutLeftBig">
+                  <iframe src="http://player.vimeo.com/video/79470878" width="500" height="285" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                  </div>
+                  <img src="img/slide-5.jpg" alt="" />
+                  </div>
+                  </div>
+                  -->
+                  <!-- /Bootslider Slide -->
 
-                <!-- Bootslider Slide -->
-                <!--
-                <div class="bs-slide" data-animate-in="openDownLeftReturn" data-animate-out="slideUp">
-                    <div class="bs-foreground">
-                        <div class="bs-video-fullscreen">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/-qwevh0_bZY" data-bs-video-autoplay="true" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="bs-background">
-                        <img src="img/slide-6.jpg" alt="" />
-                    </div>
-                </div>
-                -->
-                <!-- /Bootslider Slide -->
+                  <!-- Bootslider Slide -->
+                  <!--
+                  <div class="bs-slide" data-animate-in="openDownLeftReturn" data-animate-out="slideUp">
+                  <div class="bs-foreground">
+                  <div class="bs-video-fullscreen">
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/-qwevh0_bZY" data-bs-video-autoplay="true" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                  </div>
+                  <div class="bs-background">
+                  <img src="img/slide-6.jpg" alt="" />
+                  </div>
+                  </div>
+                  -->
+                  <!-- /Bootslider Slide -->
+
+                 */
+                ?>
 
             </div>
 
@@ -438,19 +465,19 @@
                 var slider = new bootslider('#bootslider', {
                     animationIn: "fadeInUp",
                     animationOut: "flipOutX",
-                    timeout: 77000,
+                    timeout: 5000,
                     autoplay: true,
-                    preload: true,
+                    preload: false,
                     pauseOnHover: true,
                     thumbnails: false,
                     pagination: false,
                     mousewheel: false,
                     keyboard: true,
                     touchscreen: true,
-                    layout: 'default',
+                    layout: 'fixedheight-center',
                     canvas: {
                         width: 1440,
-                        height: 720
+                        height: 800
                     }
                 });
                 slider.init();
