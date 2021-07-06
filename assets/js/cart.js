@@ -90,7 +90,7 @@ function init_pay() {
                 if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
                     document.location.href = e['action'];
                 } else {
-                    console.log('pay');
+                    //console.log('pay');
                     this.pay = function () {
                         var widget = new cp.CloudPayments();
                         widget.pay('auth', // или auth 'charge'
@@ -122,26 +122,32 @@ function init_pay() {
                                     onComplete: function (paymentResult, options) {
                                         //console.log(paymentResult['success']);
                                         // console.log('G: ' +  (paymentResult['success'] == true) );
-
-                                        sendPostLigth('/jpost.php?extension=cart', {
-                                            "check_cloudpayments": 1,
-                                            "paymentResult": paymentResult,
-                                            "options": options
-                                        }, function (e) {
-                                            console.log('success | ' + e['success']);
-                                            if (e['success'] == '1') {
-                                                pay_status = 1;
-                                            }
-                                            $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
+                                        if (paymentResult['success'] == true) {
+                                            sendPostLigth('/jpost.php?extension=cart', {
+                                                "check_cloudpayments": 1,
+                                                "paymentResult": paymentResult,
+                                                "options": options
+                                            }, function (e) {
+                                                console.log(e);
+                                                if (e['success'] == '1') {
+                                                    pay_status = 1;
+                                                }
+                                                $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
+                                                $(".pay_result").show(200);
+                                                if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
+                                                    //console.log('document.location.href=' + e['action']);
+                                                    document.location.href = e['action'];
+                                                }
+                                                //}
+                                            });
+                                        } else {
+                                            console.log('paymentResult_success: ' + paymentResult['success']);
+                                            $(".pay_result").append("<div class='font-size-20'>" + paymentResult['message'] + "</div>");
                                             $(".pay_result").show(200);
-                                            if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
-                                                //console.log('document.location.href=' + e['action']);
-                                                document.location.href = e['action'];
-                                            }
-                                            //}
-                                        });
-
+                                        }
+                                        console.log('paymentResult');
                                         console.log(paymentResult);
+                                        console.log('options');
                                         console.log(options);
                                     }
                                 }

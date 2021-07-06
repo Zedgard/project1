@@ -15,6 +15,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/utm/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/business_ru-check.business.ru-api/OpenApiConnector.php'; // Импорт файла с классом
+
+use OpenApiConnector as CONNECTOR;
 
 class cart extends \project\extension {
 
@@ -44,6 +47,7 @@ class cart extends \project\extension {
      * @param type $pay_id
      */
     public function register_pay($pay_id) {
+        // Еще есть массив $_SESSION['cart']['itms']
         $sign_up_consultation = new \project\sign_up_consultation();
         $close_club = new \project\close_club();
         $promo = new \project\promo();
@@ -61,7 +65,9 @@ class cart extends \project\extension {
             $sign_up_consultation->add_consultation($_SESSION['consultation']);
         }
         // Зафиксируем покупку по закрытому клубу
-        $close_club->register_ispay_club_month_period($pay_id);
+        
+        // Регистрируем чек
+        $this->register_business_check($pay_id, $_SESSION['cart']['itms']);
 
         // Применили промо то отметим что промо использовано
         if (count($_SESSION['promos']) > 0) {
@@ -77,6 +83,118 @@ class cart extends \project\extension {
         $products_data = $this->getSelectArray($query_products, array($pay_id));
         foreach ($products_data as $v) {
             $products->setSoldAdd($v['product_id']);
+        }
+    }
+
+    /**
+     * Регистрация чека <br/>
+     * https://check-dev.business.ru/checks <br/>
+     * https://check.business.ru/checks <br/>
+     * @param type $pay_id
+     * @param type $itms
+     */
+    public function register_business_check($pay_id, $itms) {
+        $config = new \project\config();
+        // Настройка
+        // appID
+        $business_check_appID = $config->getConfigParam('business_check_appID');
+        // secret
+        $business_check_secret = $config->getConfigParam('business_check_secret');
+        // ндс
+        $business_check_nds = $config->getConfigParam('business_check_nds');
+        if ($business_check_nds == '') {
+            $business_check_nds = 0; // По умолчанию 20%
+        }
+
+        // Получим покупку
+        $query = "SELECT * FROM zay_pay WHERE id='?'";
+        $pay_data = $this->getSelectArray($query, array($pay_id));
+        if (count($pay_data) > 0 && $pay_data[0]['pay_sum'] > 0 && $pay_data[0]['pay_status'] == 'succeeded') {
+            $query_products = "SELECT pp.product_price, pp.creat_date, pr.* FROM zay_pay_products pp 
+                                LEFT JOIN zay_product pr on pr.id=pp.product_id
+                                WHERE pp.pay_id='?'";
+            $products = $this->getSelectArray($query_products, array($pay_data[0]['id']));
+            
+            /*
+             * Работа с кассой
+             */
+            $connector = new CONNECTOR($business_check_appID, $business_check_secret);  //Создание экземпляра класса
+
+            $connector->openShift(); // Выполнение открытия смены
+            //var_dump($connector);
+            //echo "<br/>\n";
+            $goods = array();
+            $total = 0;
+            foreach ($itms as $value) {
+                //$price = $value['product_price'];
+                if ($value['price_promo'] > 0) {
+                    $price = $value['price_promo'];
+                } else {
+                    $price = $value['price'];
+                }
+                $total += $price;
+                foreach ($products as $p_value) {
+                    if ($p_value['id'] == $value['id']) {
+                        if ($p_value['tax'] > 0) {
+                            $business_check_nds = $p_value['tax'];
+                        }
+                    }
+                }
+
+                $pay_descr = (strlen($itms['pay_descr']) > 0) ? $itms['pay_descr'] : ''; // это консультация
+                if (strlen($pay_descr) > 0) {
+                    $title = $itms['pay_descr'];
+                } else {
+                    $title = $value['title'];
+                }
+
+                $goods[] = array(
+                    "count" => 1, // (float) Количество товара (Не более 3-х знаков после точки).
+                    "price" => $price, // (float) Стоимость товара (Не более 2-х знаков после точки).
+                    "sum" => $price, // (float) Сумма товарной позиции (Не более 2-х знаков после точки).
+                    "name" => $title, // (String) Наименование товара (Будет пробито на чеке).
+                    "nds_value" => $business_check_nds, // (int) Значение налога.
+                    "nds_not_apply" => false // (bool) Используется ли НДС для товара.
+                );
+            }
+
+            //print_r($goods);
+            //echo "billArray<br/>\n";
+            $billArray = [// Массив с данными чека.
+                "command" => [// Массив с данными команды.
+                    "author" => "Сайт {$_SERVER['SERVER_NAME']}", // (String) Имя кассира (Будет пробито на чеке).
+                    "smsEmail54FZ" => $_SESSION['user']['info']['email'], // (String) Телефон или e-mail покупателя.
+                    "c_num" => $pay_id, // (int) Номер чека.
+                    "payed_cash" => 0.00, // (float) Сумма оплаты наличными (Не более 2-х знаков после точки).
+                    "payed_cashless" => $total . '.00', // (float) Сумма оплаты безаличным рассчетом (Не более 2-х знаков после точки).
+//                    "goods" => [// Массив с позициями в чеке.
+//                        [
+//                            "count" => 2, // (float) Количество товара (Не более 3-х знаков после точки).
+//                            "price" => 500, // (float) Стоимость товара (Не более 2-х знаков после точки).
+//                            "sum" => 1000, // (float) Сумма товарной позиции (Не более 2-х знаков после точки).
+//                            "name" => "Товар 1", // (String) Наименование товара (Будет пробито на чеке).
+//                            "nds_value" => 18, // (int) Значение налога.
+//                            "nds_not_apply" => false // (bool) Используется ли НДС для товара.
+//                        ],
+//                        [
+//                            "count" => 1,
+//                            "price" => 500.10,
+//                            "sum" => 500.10,
+//                            "name" => "Товар 2",
+//                            "nds_value" => 18,
+//                            "nds_not_apply" => true
+//                        ]
+//                    ]
+                    "goods" => $goods
+                ]
+            ];
+            //echo "billArray<br/>\n";
+            //print_r($billArray);
+            //echo "<br/>\n";
+
+            $connector->printBill($billArray); // Команда на печать чека прихода.
+
+            $connector->closeShift(); // Выполнение закрытия смены
         }
     }
 

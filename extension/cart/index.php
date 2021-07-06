@@ -250,6 +250,8 @@ if ($form_show == 0) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/facebook.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/google.php';
     
+    //$c_cart->register_business_check(279558, array());
+    
     include 'tmpl/index.php';
 } else {
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
@@ -300,7 +302,7 @@ if ($form_show == 0) {
                 'event': 'gtm-ee-event',
                 'gtm-ee-event-category': 'Enhanced Ecommerce',
                 'gtm-ee-event-action': 'Purchase',
-                'gtm-ee-event-non-interaction': 'False',
+                'gtm-ee-event-non-interaction': 'False'
             });
         <?
     }
