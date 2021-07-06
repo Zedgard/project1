@@ -64,7 +64,9 @@ class cart extends \project\extension {
             $_SESSION['consultation']['pay_id'] = $pay_id;
             $sign_up_consultation->add_consultation($_SESSION['consultation']);
         }
+        
         // Зафиксируем покупку по закрытому клубу
+        $close_club->register_ispay_club_month_period($pay_id);
         
         // Регистрируем чек
         $this->register_business_check($pay_id, $_SESSION['cart']['itms']);
@@ -109,12 +111,17 @@ class cart extends \project\extension {
         // Получим покупку
         $query = "SELECT * FROM zay_pay WHERE id='?'";
         $pay_data = $this->getSelectArray($query, array($pay_id));
+
+
+        $query_pay_type = "SELECT * FROM zay_pay_type WHERE pay_type_code='?'";
+        $pay_type = $this->getSelectArray($query_pay_type, array($pay_data[0]['pay_type']))[0]['pay_type_title'];
+
         if (count($pay_data) > 0 && $pay_data[0]['pay_sum'] > 0 && $pay_data[0]['pay_status'] == 'succeeded') {
             $query_products = "SELECT pp.product_price, pp.creat_date, pr.* FROM zay_pay_products pp 
                                 LEFT JOIN zay_product pr on pr.id=pp.product_id
                                 WHERE pp.pay_id='?'";
             $products = $this->getSelectArray($query_products, array($pay_data[0]['id']));
-            
+
             /*
              * Работа с кассой
              */
@@ -141,10 +148,13 @@ class cart extends \project\extension {
                     }
                 }
 
+                $item_type = 4; // УСЛУГА по умолчанию
                 $pay_descr = (strlen($itms['pay_descr']) > 0) ? $itms['pay_descr'] : ''; // это консультация
                 if (strlen($pay_descr) > 0) {
                     $title = $itms['pay_descr'];
+                    //$item_type = 4; // УСЛУГА
                 } else {
+                    //$item_type = 1; // Товар
                     $title = $value['title'];
                 }
 
@@ -154,7 +164,9 @@ class cart extends \project\extension {
                     "sum" => $price, // (float) Сумма товарной позиции (Не более 2-х знаков после точки).
                     "name" => $title, // (String) Наименование товара (Будет пробито на чеке).
                     "nds_value" => $business_check_nds, // (int) Значение налога.
-                    "nds_not_apply" => false // (bool) Используется ли НДС для товара.
+                    "nds_not_apply" => false, // (bool) Используется ли НДС для товара.
+                    "payment_mode" => 4, // Признак способа расчёта 
+                    "item_type" => $item_type// Признак предмета расчёта
                 );
             }
 
@@ -167,6 +179,14 @@ class cart extends \project\extension {
                     "c_num" => $pay_id, // (int) Номер чека.
                     "payed_cash" => 0.00, // (float) Сумма оплаты наличными (Не более 2-х знаков после точки).
                     "payed_cashless" => $total . '.00', // (float) Сумма оплаты безаличным рассчетом (Не более 2-х знаков после точки).
+                    "tag1055" => 32, //  Применяемая система налогообложения для текущего чека\n
+//                                              указывается числом: 1  - ОСН,\n 
+//                                                                  2  - УСН,\n
+//                                                                  4  - УСН доход-расход,\n
+//                                                                  8  - ЕНВД,\n
+//                                                                  16 - ЕСХН,\n 
+//                                                                  32 - ПСН\n\n
+                    "user_data" => $pay_type,
 //                    "goods" => [// Массив с позициями в чеке.
 //                        [
 //                            "count" => 2, // (float) Количество товара (Не более 3-х знаков после точки).
