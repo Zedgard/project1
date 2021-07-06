@@ -10,7 +10,7 @@ $client = new \CloudPayments\Manager($publicKey, $privateKey);
 //var_dump($client);
 
 try {
-    $payment_info = $client->findPayment(4584);
+    $payment_info = $client->findPayment($_GET['id']);
 
     if ($client->getSuccess()) {
         echo "OK <br/>\n";
