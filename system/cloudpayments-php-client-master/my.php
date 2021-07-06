@@ -1,14 +1,20 @@
 <?php
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/cloudpayments-php-client-master/src/Manager.php';
 
-$publicKey = 'pk_ae3b603c5c8518915e82a60298cd3';
-$privateKey = '7693198309f9c3745b6c8e2c203be498';
+$config = new \project\config();
+$publicKey = $config->getConfigParam('CloudPayments');
+$privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
 
 $client = new \CloudPayments\Manager($publicKey, $privateKey);
 //$transaction = $client->chargeToken($amount, $currency, $accountId, $cardToken);
 //var_dump($client);
-
+echo "id: {$_GET['id']} <br/>\n"; 
 try {
     $payment_info = $client->findPayment($_GET['id']);
 
