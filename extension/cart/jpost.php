@@ -314,7 +314,7 @@ if (isset($_POST['set_cloudpayments'])) {
     $price_total = 0;
 
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
-        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+        foreach ($_SESSION['cart']['itms'] as $value) {
             $email = $value['user_email'];
             if ($value['price_promo'] > 0) {
                 $price = $value['price_promo'];
@@ -354,22 +354,27 @@ if (isset($_POST['set_cloudpayments'])) {
                 $email = $p_user->isClientEmail();
             }
 
+            $queryMaxId = "select MAX(p.id) max_id from `zay_pay` p";
+            $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
+
             $data_array = array(
                 "publicId" => $CloudPayments_id,
                 "amount" => $price_total, // Сумма платежа
                 "currency" => "RUB", // Валюта платежа
                 "customer_email" => $email,
             );
+            $data_array['pay_id'] = $max_id;
 
             $_SESSION['PAY_AMOUNT'] = $price_total;
             //print_r($data_array);
 
             if (count($_SESSION['errors']) == 0) {
                 $pay_objs = array();
-                if (isset($_SESSION['PAY_KEY']) && isset($_SESSION['PAY_TYPE_CP']) && $_SESSION['PAY_TYPE_CP'] == 'cp') {
-                    $select = "select * from zay_pay p WHERE p.pay_type='cp' and pay_date>=(CURRENT_DATE-1) and p.pay_key='?' ";
-                    $pay_objs = $sqlLight->queryList($select, array($_SESSION['PAY_KEY']));
-                }
+//                if (isset($_SESSION['PAY_KEY']) && isset($_SESSION['PAY_TYPE_CP']) && $_SESSION['PAY_TYPE_CP'] == 'cp') {
+//                    $select = "select * from zay_pay p WHERE p.pay_type='cp' and pay_date>=(CURRENT_DATE-2) and p.pay_key='?' ";
+//                    $pay_objs = $sqlLight->queryList($select, array($_SESSION['PAY_KEY']));
+//                    $data_array['pay_id'] = $pay_objs[0]['id'];
+//                }
 
                 /*
                  * Если уже платеж был не будем дублировать платеж
@@ -378,9 +383,6 @@ if (isset($_POST['set_cloudpayments'])) {
                     $_SESSION['PAY_KEY'] = $pay_key;
                     $_SESSION['PAY_TYPE_CP'] = 'cp';
 
-
-                    $queryMaxId = "select MAX(p.id) max_id from `zay_pay` p";
-                    $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
                     //echo $max_id . "<br/>\n";
                     // Сохраняем данные платежа в базу
                     $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
@@ -490,16 +492,43 @@ if (isset($_POST['check_cloudpayments'])) {
 
         $pay_check = 'pending';
 
-        if ($_POST['paymentResult']['success'] == true) {
-            $pay_check = 'succeeded';
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/system/cloudpayments-php-client-master/src/Manager.php';
+        $publicKey = $config->getConfigParam('CloudPayments');
+        $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
+        $client = new \CloudPayments\Manager($publicKey, $privateKey);
+
+        //echo "paymentResult_success: {$_POST['paymentResult']['success']}";
+//        if ($_POST['paymentResult']['success'] == 'true') {
+//            $pay_check = 'succeeded';
+//        }
+        try {
+            $payment_info = $client->findPayment($_POST['options']['invoiceId']);
+
+            if ($client->getSuccess()) {
+                $pay_check = 'succeeded';
+            }
+
+            if ($client->getSuccess()) {
+                $message = 'Оплата успешно проведена';
+                //echo "message: {$message} <br/>\n";
+            }
+        } catch (Exception $exc) {
+            $pay_check = 'pending';
         }
+
+        // Запишем ЛОГ
+        ob_start();
+        print_r($_POST);
+        $post_log = ob_get_clean();
+
+        //$post_log = implode(',', $_POST['paymentResult']);
         //echo "GG: {$_POST['paymentResult']['success']} check: {$pay_check}";
         //Обновляем статус платежа
         $query_update = "UPDATE zay_pay "
-                . "SET pay_status='?', pay_sum='?', payment_type='?', payment_c='?', payment_bank='?' "
+                . "SET pay_status='?', pay_sum='?', payment_type='?', payment_c='?', payment_bank='?', pay_log='?' "
                 . "WHERE `pay_type`='cp' and pay_key='?' and id='?' ";
 
-        if ($sqlLight->query($query_update, array($pay_check, $_SESSION['PAY_AMOUNT'], 'CloudPayments', '', '', $_SESSION['PAY_KEY'], $pay_id), 0) && $pay_check == 'succeeded') {
+        if ($sqlLight->query($query_update, array($pay_check, $_SESSION['PAY_AMOUNT'], 'CloudPayments', '', '', $post_log, $_SESSION['PAY_KEY'], $pay_id), 0) && $pay_check == 'succeeded') {
 
             // Зарегистрируем покупку
             $pr_cart->register_pay($pay_id);
@@ -510,7 +539,7 @@ if (isset($_POST['check_cloudpayments'])) {
             foreach ($products_data as $v) {
                 $products->setSoldAdd($v['product_id']);
             }
-            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action' => '/?page_type=pay_thanks');
+            $result = array('success' => 1, 'success_text' => 'Оплата успешно проведена', 'action' => '/?page_type=pay_thanks'); // '/?page_type=pay_thanks'
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');
         }

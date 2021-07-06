@@ -460,6 +460,11 @@
         </div>
         <script src="/assets/plugins/bootslider/jquery.grozav.plugins.min.js" type="text/javascript"></script>
         <script src="/assets/plugins/bootslider/jquery.grozav.bootslider.min.js" type="text/javascript"></script>
+        <?
+        /*
+          http://envato.pixevil.com/bootslider/documentation.html#layouts
+         */
+        ?>
         <script>
             $(document).ready(function () {
                 var slider = new bootslider('#bootslider', {

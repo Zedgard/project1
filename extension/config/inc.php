@@ -24,16 +24,16 @@ class config extends \project\extension {
      */
     public function getConfigArray($category_id, $searchStr) {
         if (strlen($searchStr) > 0) {
-            $querySelect = "SELECT * FROM `zay_configs` c WHERE c.`category`='?' and  (c.`config_code` like '%?%' OR c.`config_title` like '%?%') ";
+            $querySelect = "SELECT * FROM `zay_configs` c WHERE c.`category`='?' and  (c.`config_code` like '%?%' OR c.`config_title` like '%?%') ORDER BY c.config_code ASC";
             return $this->getSelectArray($querySelect, array($category_id, $searchStr, $searchStr));
         } else {
             // получим все настройки
             if ($category_id == 0) {
-                $querySelect = "SELECT * FROM `zay_configs` c ";
+                $querySelect = "SELECT * FROM `zay_configs` c ORDER BY c.config_code ASC";
                 return $this->getSelectArray($querySelect, array(), 0);
             } else {
                 // конкретной категории если передали
-                $querySelect = "SELECT * FROM `zay_configs` c WHERE c.`category`='?'";
+                $querySelect = "SELECT * FROM `zay_configs` c WHERE c.`category`='?' ORDER BY c.config_code ASC";
                 return $this->getSelectArray($querySelect, array($category_id), 0);
             }
         }

@@ -66,9 +66,9 @@
         <?
         include $_SERVER['DOCUMENT_ROOT'] . '/extension/topmenu/index.php';
 
-        if ($_SESSION['user']['info']['id'] == 15) {
-            print_r($_SESSION);
-        }
+        //if ($_SESSION['user']['info']['id'] == 15) {
+        //    print_r($_SESSION);
+        //}
         ?>
 
         <div class="error_page_bg">

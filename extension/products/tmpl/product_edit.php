@@ -546,7 +546,7 @@ importWisiwyng('product_content', 150);
                     if (e['success'] == '1') {
                         products_taxs.push(e['data']);
                         for (var i = 0; i < e['data'].length; i++) {
-                            $(".products_tax").append('<option value="' + e['data'][i]['id'] + '">' + e['data'][i]['title'] + '</option>');
+                            $(".products_tax").append('<option value="' + e['data'][i]['title'] + '">' + e['data'][i]['title'] + '</option>');
                         }
                     }
                 });
