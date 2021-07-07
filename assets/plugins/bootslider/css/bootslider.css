@@ -603,3 +603,6 @@ a:hover.bg-custom {
   display: block;
   line-height: 50px;
   color: #fff; }
+.Bootslider_Controls{
+    overflow: hidden;
+}

@@ -91,69 +91,73 @@ function init_pay() {
                     document.location.href = e['action'];
                 } else {
                     //console.log('pay');
-                    this.pay = function () {
-                        var widget = new cp.CloudPayments();
-                        widget.pay('auth', // или auth 'charge'
-                                {//options
-                                    publicId: e['data']['publicId'], //id из личного кабинета
-                                    description: e['data']['pay_descr'], //назначение
-                                    amount: e['data']['amount'], //сумма
-                                    currency: e['data']['currency'], //валюта
-                                    invoiceId: e['data']['pay_id'], //номер заказа  (необязательно)
-                                    accountId: e['data']['customer_email'], //идентификатор плательщика (необязательно)
-                                    skin: "mini", //дизайн виджета (необязательно)
-                                    data: {
-                                        //   myProp: 'myProp value'
-                                    }
-                                },
-                                {
-                                    onSuccess: function (options) { // success
-                                        if (pay_status == 1) {
-                                            $(".pay_result").append('<div class="font-size-16"><a href="/office/" target="_blank">Пройдите в личный кабинет</a></div>');
+                    if (e['data']['pay_id'] > 0) {
+                        this.pay = function () {
+                            var widget = new cp.CloudPayments();
+                            widget.pay('auth', // или auth 'charge'
+                                    {//options
+                                        publicId: e['data']['publicId'], //id из личного кабинета
+                                        description: e['data']['pay_descr'], //назначение
+                                        amount: e['data']['amount'], //сумма
+                                        currency: e['data']['currency'], //валюта
+                                        invoiceId: e['data']['pay_id'], //номер заказа  (необязательно)
+                                        accountId: e['data']['customer_email'], //идентификатор плательщика (необязательно)
+                                        skin: "mini", //дизайн виджета (необязательно)
+                                        data: {
+                                            //   myProp: 'myProp value'
                                         }
-                                        initCartArray();
                                     },
-                                    onFail: function (reason, options) { // fail
-                                        console.log('fail');
-                                        //console.log(reason);
-                                        //console.log(options);
-                                        //$(".pay_result").append('<div>Ошибка операции! Недостаточно средств или карта не активна!</div>');
-                                    },
-                                    onComplete: function (paymentResult, options) {
-                                        //console.log(paymentResult['success']);
-                                        // console.log('G: ' +  (paymentResult['success'] == true) );
-                                        if (paymentResult['success'] == true) {
-                                            sendPostLigth('/jpost.php?extension=cart', {
-                                                "check_cloudpayments": 1,
-                                                "paymentResult": paymentResult,
-                                                "options": options
-                                            }, function (e) {
-                                                console.log(e);
-                                                if (e['success'] == '1') {
-                                                    pay_status = 1;
-                                                }
-                                                $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
+                                    {
+                                        onSuccess: function (options) { // success
+                                            if (pay_status == 1) {
+                                                $(".pay_result").append('<div class="font-size-16"><a href="/office/" target="_blank">Пройдите в личный кабинет</a></div>');
+                                            }
+                                            initCartArray();
+                                        },
+                                        onFail: function (reason, options) { // fail
+                                            console.log('fail');
+                                            //console.log(reason);
+                                            //console.log(options);
+                                            //$(".pay_result").append('<div>Ошибка операции! Недостаточно средств или карта не активна!</div>');
+                                        },
+                                        onComplete: function (paymentResult, options) {
+                                            //console.log(paymentResult['success']);
+                                            // console.log('G: ' +  (paymentResult['success'] == true) );
+                                            if (paymentResult['success'] == true) {
+                                                sendPostLigth('/jpost.php?extension=cart', {
+                                                    "check_cloudpayments": 1,
+                                                    "paymentResult": paymentResult,
+                                                    "options": options
+                                                }, function (e) {
+                                                    console.log(e);
+                                                    if (e['success'] == '1') {
+                                                        pay_status = 1;
+                                                    }
+                                                    $(".pay_result").append("<div class='font-size-20'>" + e['success_text'] + "</div>");
+                                                    $(".pay_result").show(200);
+                                                    if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
+                                                        //console.log('document.location.href=' + e['action']);
+                                                        document.location.href = e['action'];
+                                                    }
+                                                    //}
+                                                });
+                                            } else {
+                                                console.log('paymentResult_success: ' + paymentResult['success']);
+                                                $(".pay_result").append("<div class='font-size-20'>" + paymentResult['message'] + "</div>");
                                                 $(".pay_result").show(200);
-                                                if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
-                                                    //console.log('document.location.href=' + e['action']);
-                                                    document.location.href = e['action'];
-                                                }
-                                                //}
-                                            });
-                                        } else {
-                                            console.log('paymentResult_success: ' + paymentResult['success']);
-                                            $(".pay_result").append("<div class='font-size-20'>" + paymentResult['message'] + "</div>");
-                                            $(".pay_result").show(200);
+                                            }
+                                            console.log('paymentResult');
+                                            console.log(paymentResult);
+                                            console.log('options');
+                                            console.log(options);
                                         }
-                                        console.log('paymentResult');
-                                        console.log(paymentResult);
-                                        console.log('options');
-                                        console.log(options);
                                     }
-                                }
-                        );
-                    };
-                    pay();
+                            );
+                        };
+                        pay();
+                    } else {
+                        alert("Ошибка номера заказа!");
+                    }
                 }
             } else {
                 alert(e['errors'].toString());
