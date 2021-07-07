@@ -12,24 +12,34 @@ $publicKey = $config->getConfigParam('CloudPayments');
 $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
 
 $client = new \CloudPayments\Manager($publicKey, $privateKey);
-//$transaction = $client->chargeToken($amount, $currency, $accountId, $cardToken);
-//var_dump($client);
-echo "id: {$_GET['id']} <br/>\n"; 
-try {
-    $payment_info = $client->findPayment($_GET['id']);
+//echo "id: {$_GET['id']} <br/>\n";
 
+if (isset($_GET['id'])) {
+    $code = $_GET['id'];
+}
+if (isset($_POST['id'])) {
+    $code = $_POST['id'];
+}
+try {
+    $payment_info = $client->findPayment($code);
     if ($client->getSuccess()) {
-        echo "OK <br/>\n";
+        $result = array('success' => 1, 'success_text' => 'Платеж успешно выполнен', 'data' => array());
+    } else {
+        if ($client->getSuccess()) {
+            $message = $client->getMessage();
+            //echo "message: {$message} <br/>\n";
+        }
+        $result = array('success' => 0, 'success_text' => 'Ошибка! ' . $message);
     }
-    var_dump($payment_info);
-    if ($client->getSuccess()) {
-        $message = $client->getMessage();
-        //echo "message: {$message} <br/>\n";
+    if (isset($_GET['dump'])) {
+        var_dump($payment_info);
     }
 } catch (Exception $exc) {
-    echo $exc->getTraceAsString();
+    //echo $exc->getTraceAsString();
+    $result = array('success' => 0, 'success_text' => 'Ошибка! Не найдены транзакция по коду <b>' . $code . '</b>');
 }
 
+echo json_encode($result);
 
 
 
