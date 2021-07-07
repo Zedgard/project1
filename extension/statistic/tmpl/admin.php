@@ -19,19 +19,16 @@
             </div>
             <div class="row">
                 <div class="col-12">
-
-                    <div class="table-responsive-xl">
+                    <div class="table-responsive-lg">
                         <table class="table table-striped table-bordered pay_data">
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Клиент</th>
                                     <th class="text-center">Тип</th>
-                                    <th class="text-center">Платеж</th>
                                     <th class="text-center">Дата</th>
                                     <th class="text-center">Статус</th>
                                     <th class="text-center">Идентификатор</th>
-                                    <th class="text-center"></th>
                                 </tr>
                             </thead>
                             <tbody>

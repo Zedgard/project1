@@ -19,15 +19,18 @@ if ($p_user->isEditor()) {
         $excel_from = $_POST['excel_from'];
         $excel_to = $_POST['excel_to'];
         $search_pay_user_str = $_POST['search_pay_user_str'];
+        $search_pay_info_str = $_POST['search_pay_info_str'];
         $pay_search_type = $_POST['pay_search_type'];
         $pay_search_status = $_POST['pay_search_status'];
         
         $_SESSION['admin_pay_filter']['excel_from'] = $excel_from;
         $_SESSION['admin_pay_filter']['excel_to'] = $excel_to;
         $_SESSION['admin_pay_filter']['search_pay_user_str'] = $search_pay_user_str;
+        $_SESSION['admin_pay_filter']['search_pay_info_str'] = $search_pay_info_str;
         $_SESSION['admin_pay_filter']['pay_search_type'] = $pay_search_type;
         $_SESSION['admin_pay_filter']['pay_search_status'] = $pay_search_status;
-        $data = $pay->pay_data_list($col, $search_pay_user_str, $excel_from, $excel_to, $pay_search_type, $pay_search_status);
+        
+        $data = $pay->pay_data_list($col, $search_pay_user_str, $search_pay_info_str, $excel_from, $excel_to, $pay_search_type, $pay_search_status);
         //print_r($data);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
@@ -62,4 +65,6 @@ if ($p_user->isEditor()) {
         $data = $pay->get_pay_all_status();
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
+    
+
 }

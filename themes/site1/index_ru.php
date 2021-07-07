@@ -206,16 +206,18 @@
                     <div class="bs-foreground">
                         <div class="container h-100">
                             <div class="row h-100">
-                                <div class="col d-flex align-items-end text-center">
-                                    <a href="/shop/?product=4610" class="btn btn-warning btn_slider_link_keise"
-                                       data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1400">ПОЛУЧИТЬ</a>
-                                </div> 
-                                <div class="col">
-
-                                </div> 
-                                <div class="col">
-
-                                </div> 
+                                <div class="col text-center">
+                                    <div class="slider_text_keise mt-3 mt-lg-4" style="width: 100%;"
+                                         data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600">
+                                        КЕЙС
+                                    </div>
+                                    <img src="/assets/files/image/banner_index/hbd_2.png" class="mt-3" style="width: 77%;"
+                                         data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="800"/>
+                                    <div class="mt-3 mt-lg-5 text-center">
+                                        <a href="/shop/?product=4610" class="btn btn-warning btn_slider_link_keise"
+                                           data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1400">ПОЛУЧИТЬ</a>
+                                    </div> 
+                                </div>
                                 <div class="col  justify-content-center">
                                     <div class="bs-vertical-center text-center ">
 
@@ -225,15 +227,6 @@
                         </div>
                     </div>
                     <div class="bs-background">
-                        <div class="slider_text_keise bs-layer"
-                             <div class="slider_text_keise bs-layer"  
-                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
-                             data-width="400" data-height="300" data-left="290" data-bottom="0" data-top="90">
-                            КЕЙС
-                        </div>
-                        <img src="/assets/files/image/banner_index/hbd_2.png" class="bs-layer"
-                             data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="600"
-                             data-width="400" data-height="300" data-left="150" data-bottom="0" data-top="200"/>
                         <img src="/assets/files/image/banner_index/nbd_bg.jpg" alt="" />
                         <img src="/assets/files/image/banner_index/flakes_bg.png" class="bs-layer" 
                              data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="300"
@@ -460,8 +453,8 @@
             <!-- /Bootslider Controls -->
 
         </div>
-        <script src="/assets/plugins/bootslider/jquery.grozav.plugins.min.js" type="text/javascript"></script>
-        <script src="/assets/plugins/bootslider/jquery.grozav.bootslider.min.js" type="text/javascript"></script>
+        <script src="/assets/plugins/bootslider/jquery.grozav.plugins.min.js<?= $_SESSION['rand'] ?>" type="text/javascript"></script>
+        <script src="/assets/plugins/bootslider/jquery.grozav.bootslider.min.js<?= $_SESSION['rand'] ?>" type="text/javascript"></script>
         <?
         /*
           http://envato.pixevil.com/bootslider/documentation.html#layouts

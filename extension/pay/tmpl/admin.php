@@ -10,13 +10,17 @@
                 <div class="card-body">
 
                     <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="btn-group">
+                        <div class="col-lg">
+                            <div class="">
                                 <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, телефону...">
-                                <input type="button" class="btn btn-outline-secondary" value="Поиск" />
                             </div>
                         </div>
-                        <div class="col-6 text-right">
+                        <div class="col-lg">
+                            <div class="">
+                                <input type="text" class="form-control search_pay_info" placeholder="Поиск по товарам...">
+                            </div>
+                        </div>
+                        <div class="col-lg text-right">
 
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <label style="margin-top: 0.6rem;margin-right: 10px;">начало</label>
@@ -92,19 +96,18 @@
                         <div class="col-12">
                             <div class="table-responsive-lg">
                                 <table class="table table-striped pay_data">
-                                    <thead>
+                                    <thead class="table-light">
                                         <tr>
                                             <th class="text-center">ID</th>
                                             <th class="text-center">Клиент</th>
                                             <th class="text-center">
-                                                <select name="pay_select_type" class="pay_select_type">
+                                                <select name="pay_select_type" class="form-control pay_select_type">
                                                     <option value="">Тип</option>
                                                 </select>
                                             </th>
-                                            <th class="text-center">Платеж</th>
                                             <th class="text-center">Дата</th>
                                             <th class="text-center">
-                                                <select name="pay_select_status" class="pay_select_status">
+                                                <select name="pay_select_status" class="form-control pay_select_status">
                                                     <option value="">Статус</option>
                                                 </select>
                                             </th>
