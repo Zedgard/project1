@@ -472,7 +472,7 @@
                     animationOut: "flipOutX",
                     timeout: 5000,
                     autoplay: true,
-                    preload: false,
+                    preload: true,
                     pauseOnHover: true,
                     thumbnails: false,
                     pagination: false,

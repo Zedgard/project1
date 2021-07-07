@@ -164,7 +164,7 @@ class cart extends \project\extension {
                     "sum" => $price, // (float) Сумма товарной позиции (Не более 2-х знаков после точки).
                     "name" => $title, // (String) Наименование товара (Будет пробито на чеке).
                     "nds_value" => $business_check_nds, // (int) Значение налога.
-                    "nds_not_apply" => false, // (bool) Используется ли НДС для товара.
+                    "nds_not_apply" => true, // (bool) Используется ли НДС для товара.
                     "payment_mode" => 4, // Признак способа расчёта 
                     "item_type" => $item_type// Признак предмета расчёта
                 );
@@ -174,7 +174,7 @@ class cart extends \project\extension {
             //echo "billArray<br/>\n";
             $billArray = [// Массив с данными чека.
                 "command" => [// Массив с данными команды.
-                    "author" => "Сайт {$_SERVER['SERVER_NAME']}", // (String) Имя кассира (Будет пробито на чеке).
+                    "author" => "{$pay_type}", // (String) Имя кассира (Будет пробито на чеке). // Платеж через {$pay_type} на сайте {$_SERVER['SERVER_NAME']}
                     "smsEmail54FZ" => $_SESSION['user']['info']['email'], // (String) Телефон или e-mail покупателя.
                     "c_num" => $pay_id, // (int) Номер чека.
                     "payed_cash" => 0.00, // (float) Сумма оплаты наличными (Не более 2-х знаков после точки).
@@ -186,7 +186,6 @@ class cart extends \project\extension {
 //                                                                  8  - ЕНВД,\n
 //                                                                  16 - ЕСХН,\n 
 //                                                                  32 - ПСН\n\n
-                    "user_data" => $pay_type,
 //                    "goods" => [// Массив с позициями в чеке.
 //                        [
 //                            "count" => 2, // (float) Количество товара (Не более 3-х знаков после точки).
