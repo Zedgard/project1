@@ -25,7 +25,7 @@ class pay extends \project\extension {
      * @param type $page_number
      * @return type
      */
-    public function pay_data_list($page_number, $search_pay_user_str, $excel_from = '', $excel_to = '', $pay_search_type = '', $pay_search_status = '') {
+    public function pay_data_list($page_number, $search_pay_user_str, $search_pay_info_str, $excel_from = '', $excel_to = '', $pay_search_type = '', $pay_search_status = '') {
         //$queryCount = "SELECT count(*) as col FROM `zay_pay`";
         //$this->pay_data_count = $this->getSelectArray($queryCount)[0]['col'];
         $sqlLight = new \project\sqlLight();
@@ -62,9 +62,13 @@ class pay extends \project\extension {
                 . "left join `zay_pay_type` pt on pt.pay_type_code=p.pay_type "
                 . "{$where} "
                 . "ORDER BY p.`pay_date` DESC LIMIT ?";
-        $data = $sqlLight->queryList($querySelect, $queryArray, 0);
-        for ($i = 0; $i < count($data); $i++) {
-            $data[$i]['info'] = $this->get_pay_products_info($data[$i]['id']);
+        $pays = $sqlLight->queryList($querySelect, $queryArray, 0);
+        $data = array();
+        for ($i = 0; $i < count($pays); $i++) {
+            $pays[$i]['info'] = $this->get_pay_products_info($pays[$i]['id'], $search_pay_info_str);
+            if (count($pays[$i]['info']) > 0) {
+                $data[] = $pays[$i];
+            }
         }
         return $data;
     }
@@ -96,10 +100,14 @@ class pay extends \project\extension {
      * @param type $id
      * @return type
      */
-    public function get_pay_products_info($id) {
-        $querySelect = "SELECT pp.*, p.* FROM zay_pay_products pp "
-                . "left join zay_product p on p.id=pp.product_id "
-                . "where pp.pay_id='?' ORDER BY `pay_id` ASC";
+    public function get_pay_products_info($id, $search_pay_info_str = '') {
+        $search = '';
+        if (strlen($search_pay_info_str) > 0) {
+            $search = "and p.title LIKE '%{$search_pay_info_str}%'";
+        }
+        $querySelect = "SELECT pp.*, p.* FROM zay_pay_products pp 
+            left join zay_product p on p.id=pp.product_id 
+            where pp.pay_id='?' {$search} ORDER BY `pay_id` ASC";
         return $this->getSelectArray($querySelect, array($id));
     }
 
