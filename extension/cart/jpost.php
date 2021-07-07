@@ -362,8 +362,9 @@ if (isset($_POST['set_cloudpayments'])) {
                 "amount" => $price_total, // Сумма платежа
                 "currency" => "RUB", // Валюта платежа
                 "customer_email" => $email,
+                "pay_id" => $max_id
             );
-            $data_array['pay_id'] = $max_id;
+            //$data_array['pay_id'] = $max_id;
 
             $_SESSION['PAY_AMOUNT'] = $price_total;
             //print_r($data_array);
@@ -379,50 +380,50 @@ if (isset($_POST['set_cloudpayments'])) {
                 /*
                  * Если уже платеж был не будем дублировать платеж
                  */
-                if (count($pay_objs) == 0) {
-                    $_SESSION['PAY_KEY'] = $pay_key;
-                    $_SESSION['PAY_TYPE_CP'] = 'cp';
+                //if (count($pay_objs) == 0) {
+                $_SESSION['PAY_KEY'] = $pay_key;
+                $_SESSION['PAY_TYPE_CP'] = 'cp';
 
-                    //echo $max_id . "<br/>\n";
-                    // Сохраняем данные платежа в базу
-                    $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
-                            . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-                    if ($sqlLight->query($queryPay, array(($max_id), 'cp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, ''), 0)) {
-                        foreach ($_SESSION['cart']['itms'] as $key => $value) {
-                            //$product_id = $max_id;
-                            $product_id = $value['id'];
-                            $data_array['pay_id'] = $product_id;
-                            if ($product_id > 0) {
-                                if ($value['price_promo'] > 0) {
-                                    $price = $value['price_promo'];
-                                } else {
-                                    $price = $value['price'];
-                                }
-                                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-                                        . "VALUES ('?','?','?')";
-                                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-                                // Зафиксируем продажу
-                                //$products->setSoldAdd($product_id);
+                //echo $max_id . "<br/>\n";
+                // Сохраняем данные платежа в базу
+                $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
+                        . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+                if ($sqlLight->query($queryPay, array(($max_id), 'cp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, ''), 0)) {
+                    foreach ($_SESSION['cart']['itms'] as $key => $value) {
+                        //$product_id = $max_id;
+                        $product_id = $value['id'];
+                        //$data_array['pay_id'] = $product_id;
+                        if ($product_id > 0) {
+                            if ($value['price_promo'] > 0) {
+                                $price = $value['price_promo'];
+                            } else {
+                                $price = $value['price'];
                             }
+                            $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+                                    . "VALUES ('?','?','?')";
+                            $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+                            // Зафиксируем продажу
+                            //$products->setSoldAdd($product_id);
                         }
-
-                        // Отправляем пользователя на страницу оплаты
-                        //header('Location: ' . $confirmationUrl);
-                        $result = array('success' => 1, 'success_text' => '', 'data' => $data_array);
-                    } else {
-                        $_SESSION['errors'][] = 'Ошибка сохранения платежа!';
                     }
-                } else {
 
-                    if ($_SESSION['consultation']['your_master_id'] > 0) {
-                        $_SESSION['consultation']['pay_id'] = $max_id;
-                        $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                    }
-                    $data_array['pay_descr'] = 'Покупка товара';
-
-                    $data_array['pay_id'] = $pay_objs[0]['id'];
+                    // Отправляем пользователя на страницу оплаты
+                    //header('Location: ' . $confirmationUrl);
                     $result = array('success' => 1, 'success_text' => '', 'data' => $data_array);
+                } else {
+                    $_SESSION['errors'][] = 'Ошибка сохранения платежа!';
                 }
+//                } else {
+//
+//                    if ($_SESSION['consultation']['your_master_id'] > 0) {
+//                        $_SESSION['consultation']['pay_id'] = $max_id;
+//                        $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
+//                    }
+//                    $data_array['pay_descr'] = 'Покупка товара';
+//
+//                    $data_array['pay_id'] = $pay_objs[0]['id'];
+//                    $result = array('success' => 1, 'success_text' => '', 'data' => $data_array);
+//                }
             } else {
                 $_SESSION['errors'][] = 'Ошибка операции!';
             }

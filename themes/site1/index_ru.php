@@ -22,10 +22,10 @@
         <link rel="stylesheet" href="/assets/css/fontawesome/css/fontawesome.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/brands.min.css<?= $_SESSION['rand'] ?>"> 
         <link rel="stylesheet" href="/assets/css/fontawesome/css/all.min.css<?= $_SESSION['rand'] ?>"> 
-        <link rel="stylesheet" href="/assets/css/fontawesome/css/regular.min<?= $_SESSION['rand'] ?>">
-        <link rel="stylesheet" href="/assets/css/fontawesome/css/solid.min<?= $_SESSION['rand'] ?>">
-        <link rel="stylesheet" href="/assets/css/fontawesome/css/svg-with-js.min<?= $_SESSION['rand'] ?>">
-        <link rel="stylesheet" href="/assets/css/fontawesome/css/v4-shims.min<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/regular.min.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/solid.min.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/svg-with-js.min.css<?= $_SESSION['rand'] ?>">
+        <link rel="stylesheet" href="/assets/css/fontawesome/css/v4-shims.min.css<?= $_SESSION['rand'] ?>">
 
 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
@@ -117,45 +117,6 @@
                 <!-- Bootslider Slide -->
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
                     <div class="bs-foreground">
-                        <div class="container h-100">
-                            <div class="row h-100">
-                                <div class="col h-100 d-flex align-items-end"> 
-                                    <img src="/assets/files/image/banner_index/edgard.png" class="m-auto m-lg-0 mb-0 " style="width: 75%;"
-                                         data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
-                                         />
-                                </div> 
-                                <div class="col d-flex justify-content-center">
-                                    <div class="bs-vertical-center text-center ">
-                                        <div 
-                                            data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
-                                            <div class="text-white font_2">ОНЛАЙН-КОНСУЛЬТАЦИИ</div>
-                                            <div class="text-white font_26" style="font-weight: bold;">
-                                                ЭДГАРДА ЗАЙЦЕВА
-                                            </div>
-                                            <div class="subheading skolar mt-2 mt-lg-3 font_26" style="color: #ffe36e;">
-                                                РЕЗУЛЬТАТ<br/>
-                                                С ПЕРВОЙ<br/>
-                                                КОНСУЛЬТАЦИИ
-                                            </div>
-                                            <div class="mt-2 mt-lg-3">
-                                                <a href="/consultations/" class="btn btn-warning btn_slider_link_consultations">ПОЛУЧИТЬ</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bs-background">
-
-                        <img src="/assets/files/image/banner_index/consult_bg.jpg" alt="" />
-                    </div>
-                </div>
-                <!-- /Bootslider Slide -->
-
-                <!-- Bootslider Slide -->
-                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
-                    <div class="bs-foreground">
                         <div class="container">
                             <div class="row">
                                 <div class="col">
@@ -193,6 +154,47 @@
                     </div>
                 </div>
                 <!-- /Bootslider Slide -->
+
+                <!-- Bootslider Slide -->
+                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
+                    <div class="bs-foreground">
+                        <div class="container h-100">
+                            <div class="row h-100">
+                                <div class="col h-100 d-flex align-items-end"> 
+                                    <img src="/assets/files/image/banner_index/edgard.png" class="m-auto m-lg-0 mb-0 " style="width: 75%;"
+                                         data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
+                                         />
+                                </div> 
+                                <div class="col d-flex justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+                                        <div 
+                                            data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
+                                            <div class="text-white font_2">ОНЛАЙН-КОНСУЛЬТАЦИИ</div>
+                                            <div class="text-white font_26" style="font-weight: bold;">
+                                                ЭДГАРДА ЗАЙЦЕВА
+                                            </div>
+                                            <div class="subheading skolar mt-2 mt-lg-3 font_26" style="color: #ffe36e;">
+                                                РЕЗУЛЬТАТ<br/>
+                                                С ПЕРВОЙ<br/>
+                                                КОНСУЛЬТАЦИИ
+                                            </div>
+                                            <div class="mt-2 mt-lg-3">
+                                                <a href="/consultations/" class="btn btn-warning btn_slider_link_consultations">ПОЛУЧИТЬ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+
+                        <img src="/assets/files/image/banner_index/consult_bg.jpg" alt="" />
+                    </div>
+                </div>
+                <!-- /Bootslider Slide -->
+
+
 
 
 
@@ -467,26 +469,28 @@
         ?>
         <script>
             $(document).ready(function () {
-                var slider = new bootslider('#bootslider', {
-                    animationIn: "fadeInUp",
-                    animationOut: "flipOutX",
-                    timeout: 5000,
-                    autoplay: true,
-                    preload: true,
-                    pauseOnHover: true,
-                    thumbnails: false,
-                    pagination: false,
-                    mousewheel: false,
-                    keyboard: true,
-                    touchscreen: true,
-                    layout: 'fixedheight-center',
-                    canvas: {
-                        width: 1440,
-                        height: 800
-                    }
-                });
-                slider.init();
-
+                setTimeout(function () {
+                    var slider = new bootslider('#bootslider', {
+                        animationIn: "fadeInUp",
+                        animationOut: "flipOutX",
+                        timeout: 5000,
+                        autoplay: true,
+                        preload: true,
+                        pauseOnHover: true,
+                        thumbnails: false,
+                        pagination: false,
+                        mousewheel: false,
+                        keyboard: true,
+                        touchscreen: true,
+                        layout: 'fixedheight-center',
+                        height_division: 1.3,
+                        canvas: {
+                            width: 1440,
+                            height: 800
+                        }
+                    });
+                    slider.init();
+                }, 200);
 
             });
         </script>
