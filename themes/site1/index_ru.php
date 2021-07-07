@@ -460,8 +460,8 @@
             <!-- /Bootslider Controls -->
 
         </div>
-        <script src="/assets/plugins/bootslider/jquery.grozav.plugins.min.js" type="text/javascript"></script>
-        <script src="/assets/plugins/bootslider/jquery.grozav.bootslider.min.js" type="text/javascript"></script>
+        <script src="/assets/plugins/bootslider/jquery.grozav.plugins.min.js<?= $_SESSION['rand'] ?>" type="text/javascript"></script>
+        <script src="/assets/plugins/bootslider/jquery.grozav.bootslider.min.js<?= $_SESSION['rand'] ?>" type="text/javascript"></script>
         <?
         /*
           http://envato.pixevil.com/bootslider/documentation.html#layouts
