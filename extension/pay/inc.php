@@ -30,6 +30,9 @@ class pay extends \project\extension {
         //$this->pay_data_count = $this->getSelectArray($queryCount)[0]['col'];
         $sqlLight = new \project\sqlLight();
         $queryArray = array();
+
+        $limit_where = "LIMIT ?";
+
         $w = array();
         if (strlen($excel_from) > 0 && strlen($excel_to) > 0) {
             $queryArray[] = date_sql_format($excel_from);
@@ -45,28 +48,38 @@ class pay extends \project\extension {
             $w[] = "p.pay_status='?'";
         }
         if (strlen($search_pay_user_str) > 0) {
+            $limit_where = '';
             $queryArray[] = $search_pay_user_str;
             $queryArray[] = $search_pay_user_str;
             $w[] = "(u.email like '%?%' or u.phone like '%?%') "; //pt.pay_type_title like '%?%'
+        }
+        if (strlen($search_pay_info_str) > 0) {
+            $limit_where = '';
+            $w[] = "p.pay_descr like '%?%'"; 
+            $queryArray[] = $search_pay_info_str;
         }
         //print_r($w);
         if (count($w) > 0) {
             $where = 'WHERE ' . implode(' and ', $w);
         }
-        $queryArray[] = ($page_number * $this->page_max);
-
+        if (strlen($limit_where) > 0) {
+            $queryArray[] = ($page_number * $this->page_max);
+        }
         $querySelect = "SELECT p.*, pt.pay_type_title, "
                 . "u.email, u.phone, u.first_name, u.last_name "
                 . "FROM `zay_pay` p "
                 . "left join `zay_users` u on u.id=p.user_id "
                 . "left join `zay_pay_type` pt on pt.pay_type_code=p.pay_type "
-                . "{$where} "
-                . "ORDER BY p.`pay_date` DESC LIMIT ?";
+                . "{$where} {$querySelectPayDescr} "
+                . "ORDER BY p.`pay_date` DESC {$limit_where}";
         $pays = $sqlLight->queryList($querySelect, $queryArray, 0);
         $data = array();
         for ($i = 0; $i < count($pays); $i++) {
             $pays[$i]['info'] = $this->get_pay_products_info($pays[$i]['id'], $search_pay_info_str);
             if (count($pays[$i]['info']) > 0) {
+                $data[] = $pays[$i];
+            }
+            if (strlen($pays[$i]['pay_descr']) > 0) {
                 $data[] = $pays[$i];
             }
         }
