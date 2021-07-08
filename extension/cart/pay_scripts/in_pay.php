@@ -60,9 +60,9 @@ if (count($_SESSION['cart']['itms']) > 0) {
 /**
  * Заглушка для админов покупка за 1 рубль
  */
-if ($p_user->isEditor()) {
-    $price_total = 1;
-}
+//if ($p_user->isEditor()) {
+//    $price_total = 1;
+//}
 
 if ($price_total > 0) {
     $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
