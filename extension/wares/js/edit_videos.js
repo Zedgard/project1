@@ -10,9 +10,9 @@ $(document).ready(function () {
             var obj_id = $(this).attr('obj_id');
             var id = $(this).attr('id');
             var val = $(this).val();
-            
+
             var asinc = '0';
-            console.log('elm_type: ' + elm_type);
+            //console.log('elm_type: ' + elm_type);
             if (elm_type == 'textarea') {
                 val = $(this).html();
             }
@@ -43,33 +43,42 @@ $(document).ready(function () {
             console.log('val: ' + val);
             // переинициализация аудио плеера
             if (!!$(this).attr('init_audio')) {
-                new Calamansi(document.querySelector('#calamansi-player-' + id), {
-                    skin: '/assets/plugins/calamansi/skins/basic_download2',
-                    playlists: {
-                        'Classics': [
-                            {
-                                source: val
-                            }
-                        ]
-                    },
-                    defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png'
-                });
+                if ($(".calamansi-audio-" + obj_id).length > 0) {
+                    $(".calamansi-audio-" + obj_id).attr("href", val);
+                    $(".calamansi-audio-" + obj_id).html(val);
+                }
+//                new Calamansi(document.querySelector('#calamansi-player-' + id), {
+//                    skin: '/assets/plugins/calamansi/skins/basic_download2',
+//                    playlists: {
+//                        'Classics': [
+//                            {
+//                                source: val
+//                            }
+//                        ]
+//                    },
+//                    defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png'
+//                });
             }
+
 
             // Обработка видео    
             if (!!$(this).attr('init_youtube_src')) {
-                console.log('init_youtube_src');
-                $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_youtube_src')).attr("data-setup", '{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "' + val + '"}] }');
-                var options = {};
-                var player = videojs('video_' + id, options, function onPlayerReady() {
-                    // In this context, `this` is the player that was created by Video.js.
-                    //this.play();
-                    // How about an event listener?
-                    this.on('ended', function () {
-                    });
-                });
-                player.src({src: val, type: 'video/youtube'});
-
+                if ($(".youtube-video-" + obj_id).length > 0) {
+                    $(".youtube-video-" + obj_id).attr("href", val);
+                    $(".youtube-video-" + obj_id).html(val);
+                }
+//                console.log('init_youtube_src');
+//                $(this).closest(".material_tr").find(".material_info").find("." + $(this).attr('init_youtube_src')).attr("data-setup", '{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "' + val + '"}] }');
+//                var options = {};
+//                var player = videojs('video_' + id, options, function onPlayerReady() {
+//                    // In this context, `this` is the player that was created by Video.js.
+//                    //this.play();
+//                    // How about an event listener?
+//                    this.on('ended', function () {
+//                    });
+//                });
+//                player.src({src: val, type: 'video/youtube'});
+//
             }
 
 
