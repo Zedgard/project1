@@ -43,6 +43,35 @@ class cart extends \project\extension {
     }
 
     /**
+     * Связи покупки и продукта
+     * @param type $pay_id
+     * @param type $itms
+     */
+    public function pay_insert_pay_products($pay_id, $itms) {
+        $pr_products = new \project\products();
+        foreach ($itms as $value) {
+            //$product_id = $max_id;
+            $product_id = $value['id'];
+            $where_period_open = "NULL";
+            if ($value['period_open'] > 0) {
+                $where_period_open = "DATE_ADD(NOW(), INTERVAL ({$value['period_open']}+1) DAY)";
+            }
+            if ($product_id > 0) {
+                $price = $value['price'];
+                if ($value['price_promo'] > 0) {
+                    $price = $value['price_promo'];
+                }
+                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`, `close_date`) 
+                    VALUES ('?','?','?', {$where_period_open})";
+                $this->query($queryProductRegister, array($pay_id, $product_id, $price, $where_period_open));
+                
+                // Зафиксируем продажу
+                $pr_products->setSoldProducts($product_id);
+            }
+        }
+    }
+
+    /**
      * Регистрация покупки
      * @param type $pay_id
      */
@@ -64,10 +93,10 @@ class cart extends \project\extension {
             $_SESSION['consultation']['pay_id'] = $pay_id;
             $sign_up_consultation->add_consultation($_SESSION['consultation']);
         }
-        
+
         // Зафиксируем покупку по закрытому клубу
         $close_club->register_ispay_club_month_period($pay_id);
-        
+
         // Регистрируем чек
         $this->register_business_check($pay_id, $_SESSION['cart']['itms']);
 

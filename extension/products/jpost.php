@@ -60,6 +60,7 @@ if (isset($_POST['edit_products'])) {
     $product_new = (isset($_POST['product_new'])) ? $_POST['product_new'] : '0';
     $products_price = (isset($_POST['products_price']) && $_POST['products_price'] > 0) ? $_POST['products_price'] : '0';
     $products_price_promo = (isset($_POST['products_price_promo']) && $_POST['products_price_promo'] > 0) ? $_POST['products_price_promo'] : '0';
+    $products_period_open = (isset($_POST['products_period_open']) && $_POST['products_period_open'] > 0) ? $_POST['products_period_open'] : '0';
     $product_content = (isset($_POST['product_content'])) ? $_POST['product_content'] : '';
     $images_str = (isset($_POST['images_str'])) ? $_POST['images_str'] : '';
 
@@ -69,7 +70,7 @@ if (isset($_POST['edit_products'])) {
     $pr_products->setProducts_theme($products_theme);
 
     if ($pr_products->insertOrUpdateProducts($products_id, $products_title, $products_desc_minimal,
-                    $products_price, $products_price_promo, $products_desc, $products_sold, $product_content, $images_str, $product_new, $products_tax, $products_active)) {
+                    $products_price, $products_price_promo, $products_period_open, $products_desc, $products_sold, $product_content, $images_str, $product_new, $products_tax, $products_active)) {
         $result = array('success' => 1, 'success_text' => 'Выполнено');
         $_SESSION['product']['searchStr'] = '';
         $_SESSION['message'][] = 'Успешно выполнено';
