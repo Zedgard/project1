@@ -16,5 +16,5 @@
            id="video_time_material_<?= $value['id'] ?>" 
            class="form-control form-control-material h-5" 
            row_db="video_time" obj_id="<?= $value['id'] ?>"
-           title="Время продолжительсти видео..." />
+           title="Время продолжительсти видео..." placeholder="Время продолжительсти видео..." />
 </div>

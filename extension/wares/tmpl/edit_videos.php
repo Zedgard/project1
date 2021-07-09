@@ -24,8 +24,8 @@
         <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
         <script src="/system/extension/admin_super_init.js<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" href="/extension/products/office.css<?= $_SESSION['rand'] ?>">
-        <link href="/extension/wares/css/edit_videos.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
+        <link rel="stylesheet" href="/extension/wares/css/edit_videos.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+        <link rel="stylesheet" rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
         <script src="/assets/plugins/calamansi/calamansi.min.js"></script>
 
         <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
@@ -147,14 +147,19 @@
                                                             }
                                                             if ($value['material_type'] == 'material_type_audio') {
                                                                 //include 'material_type_audio.php';
-                                                                echo "Аудио ссылка: {$value['audio_file']}";
+                                                                ?>
+                                                                <div>Аудио ссылка: <a href="<?= $value['audio_file'] ?>" class="calamansi-audio-<?= $value['id'] ?>" target="_blank"><?= $value['audio_file'] ?></a></div>
+                                                                <?
                                                             }
                                                             if ($value['material_type'] == 'material_type_file') {
                                                                 include 'material_type_file.php';
                                                             }
                                                             if ($value['material_type'] == 'material_type_video') {
                                                                 //include 'material_type_video.php';
-                                                                echo "Видео ссылка: {$value['video_youtube']}";
+                                                                //echo "Видео ссылка: {$value['video_youtube']}";
+                                                                ?>
+                                                                <div>Видео ссылка: <a href="<?= $value['video_youtube'] ?>" class="youtube-video-<?= $value['id'] ?>" target="_blank"><?= $value['video_youtube'] ?></a></div>
+                                                                <?
                                                             }
                                                             ?>
                                                         </div>

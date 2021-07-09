@@ -22,7 +22,8 @@
                    row_db="audio_file_download_true" obj_id="<?= $value['id'] ?>" 
                    <?= ($value['audio_file_download_true'] == '1') ? 'checked="checked"' : '' ?>>
             <span class="switch-label" data-on="On" data-off="Off"></span>
-            <span class="switch-handle"></span>
+            <span class="switch-handle"></span> 
         </label>
+        Скачивание файла
     </div>    
 </div>  
