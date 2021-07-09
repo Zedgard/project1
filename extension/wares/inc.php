@@ -134,7 +134,7 @@ class wares extends \project\extension {
         } else {
             $id = $this->queryNextId('zay_wares');
             $query = "INSERT INTO `zay_wares` "
-                    . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, "
+                    . "(`title2`, `descr`, `url_file`, `col`, `club_month_period`, "
                     . "`ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
                     . "VALUES ('?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
