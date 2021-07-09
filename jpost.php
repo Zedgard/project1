@@ -23,6 +23,7 @@ if (isset($_POST)) {
     // Результат выполнения запроса
     $result = array();
     $_SESSION['errors'] = array();
+    
 
     /*
      *  Регистрация token
@@ -70,6 +71,7 @@ if (isset($_POST)) {
             if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php')) {
                 //echo $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php' . "\n";
                 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php';
+                
             } else {
                 $_SESSION['errors'][] = 'Not file jpost!';
             }
@@ -85,7 +87,7 @@ if (isset($_POST)) {
     if ($user->isEditor()) {
         include $_SERVER['DOCUMENT_ROOT'] . '/system/extension/jpost.php';
     }
-
+    
     /*
      * Обработки
      * Если имеются ошибки!
