@@ -389,23 +389,25 @@ if (isset($_POST['set_cloudpayments'])) {
                 $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
                         . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
                 if ($sqlLight->query($queryPay, array(($max_id), 'cp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, ''), 0)) {
-                    foreach ($_SESSION['cart']['itms'] as $key => $value) {
-                        //$product_id = $max_id;
-                        $product_id = $value['id'];
-                        //$data_array['pay_id'] = $product_id;
-                        if ($product_id > 0) {
-                            if ($value['price_promo'] > 0) {
-                                $price = $value['price_promo'];
-                            } else {
-                                $price = $value['price'];
-                            }
-                            $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-                                    . "VALUES ('?','?','?')";
-                            $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-                            // Зафиксируем продажу
-                            //$products->setSoldAdd($product_id);
-                        }
-                    }
+//                    foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//                        //$product_id = $max_id;
+//                        $product_id = $value['id'];
+//                        //$data_array['pay_id'] = $product_id;
+//                        if ($product_id > 0) {
+//                            if ($value['price_promo'] > 0) {
+//                                $price = $value['price_promo'];
+//                            } else {
+//                                $price = $value['price'];
+//                            }
+//                            $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+//                                    . "VALUES ('?','?','?')";
+//                            $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+//                            // Зафиксируем продажу
+//                            //$products->setSoldAdd($product_id);
+//                        }
+//                    }
+                    // Сохраним связи с продуктами
+                    $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
 
                     // Отправляем пользователя на страницу оплаты
                     //header('Location: ' . $confirmationUrl);

@@ -45,6 +45,7 @@
         <link rel="stylesheet" href="/assets/plugins/animate/animate.css<?= $_SESSION['rand'] ?>">
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="/assets/plugins/bootstrap5/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/jquery/jquery.js<?= $_SESSION['rand'] ?>"></script>
         <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.theme.css<?= $_SESSION['rand'] ?>">

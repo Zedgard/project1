@@ -88,18 +88,43 @@
                         <label for="products_price">Цена со скидкой</label>
                         <input type="text" class="form-control products_price_promo" id="products_price_promo" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Цена продукта" required>
                     </div>
-
+                    
                     <div class="form-group">
-                        <label for="products_price">Налог (указывается в чеке)</label>
-                        <select class="form-control products_tax" name="states[]" style="width: 100%">
-
-                        </select>
+                        <label for="products_price">Ограничить срок использования в днях (0 = бессрочно)</label>
+                        <input type="text" class="form-control products_period_open" id="products_period_open" value="0" onkeyup="this.value = this.value.replace(/[^0-9+]/, '')" placeholder="Колличество дней" required>
                     </div>
 
-
                     <div class="form-group">
-                        <label for="product_content">Содержание товара (Произвольный текст отображается в карточке товара)</label>
-                        <textarea name="product_content" id="product_content" class="form-control product_content" placeholder="Текст содержание товара..." style="width: 100%;height: 100px;"></textarea>
+                        <div class="form-group">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header bg-light" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Содержание товара(Произвольный текст)
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <textarea name="product_content" id="product_content" class="form-control product_content" placeholder="Текст содержание товара..." style="width: 100%;height: 100px;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header bg-light" id="headingTwo">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                            Налог (указывается в чеке)
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse hide" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <select class="form-control products_tax" name="states[]" style="width: 100%">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <?
@@ -356,6 +381,7 @@ importWisiwyng('product_content', 150);
 
                                 $(".form_save_products").find(".products_price").val(e['data']['price']);
                                 $(".form_save_products").find(".products_price_promo").val(e['data']['price_promo']);
+                                $(".form_save_products").find(".products_period_open").val(e['data']['period_open']);
 
                                 /* -- images -- */
                                 var images = e['data']['images_str'].split(',');
@@ -432,6 +458,7 @@ importWisiwyng('product_content', 150);
 
             var products_price = $(".form_save_products").find(".products_price").val();
             var products_price_promo = $(".form_save_products").find(".products_price_promo").val();
+            var products_period_open = $(".form_save_products").find(".products_period_open").val();
 
             let images_col = $(".form_save_products").find('.image_elm').length;
             var images_str = [];
@@ -453,6 +480,7 @@ importWisiwyng('product_content', 150);
                         "products_active": products_active,
                         "products_price": products_price,
                         "products_price_promo": products_price_promo,
+                        "products_period_open": products_period_open,
                         "product_new": product_new,
                         "product_content": product_content,
                         "images_str": images_str.toString()},

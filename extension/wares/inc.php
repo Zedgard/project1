@@ -536,12 +536,33 @@ class wares extends \project\extension {
         return array();
     }
 
+    private function init_products_close_date() {
+        if ($_SESSION['user']['info']['id'] > 0) {
+            $array[] = $_SESSION['user']['info']['id'];
+            $querySelect = "SELECT DISTINCT pp.id
+                                FROM
+                                    zay_pay p
+                                LEFT JOIN zay_pay_products pp ON
+                                    pp.pay_id = p.id
+                                WHERE
+                                    p.user_id = '?' AND p.pay_status='succeeded' 
+                                    AND pp.close='0'
+                                    AND pp.close_date is not NULL AND pp.close_date<NOW()";
+            $objs = $this->getSelectArray($querySelect, $array, 0);
+            foreach ($objs as $value) {
+                $query = "UPDATE zay_pay_products pp SET pp.close='1' WHERE pp.id='?'";
+                $this->query($query, array($value['id']));
+            }
+        }
+    }
+
     /**
      * Получение купленных продуктов
      * @param type $product_id
      * @return type
      */
     public function getClientPayProducts($product_id = 0) {
+        $this->init_products_close_date();
         if ($_SESSION['user']['info']['id'] > 0) {
             $array[] = $_SESSION['user']['info']['id'];
             $where1 = '';
@@ -572,7 +593,7 @@ class wares extends \project\extension {
                                 LEFT JOIN zay_category c ON
                                     c.id = pcat.category_id       
                                 WHERE
-                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 {$where1} 
+                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 AND pp.close='0' {$where1} 
                                 ORDER BY
                                     pr.`title` ASC
                                     ) as dd
@@ -585,6 +606,11 @@ class wares extends \project\extension {
         return array();
     }
 
+    /**
+     * Список товаров клиента по продукту
+     * @param type $product_id
+     * @return type
+     */
     public function getClientProductWaresList($product_id) {
         if ($_SESSION['user']['info']['id'] > 0) {
             $array[] = $_SESSION['user']['info']['id'];
@@ -629,6 +655,8 @@ class wares extends \project\extension {
 
     /**
      * Купленные вебинары клиента
+     * @param type $wares_id
+     * @return type
      */
     public function getClientWebinarsProducts($wares_id = 0) {
         if ($_SESSION['user']['info']['id'] > 0) {
@@ -667,6 +695,8 @@ class wares extends \project\extension {
 
     /**
      * Купленные марафоны клиента
+     * @param type $wares_id
+     * @return type
      */
     public function getClientMarathonsProducts($wares_id = 0) {
         if ($_SESSION['user']['info']['id'] > 0) {
@@ -709,9 +739,11 @@ class wares extends \project\extension {
         }
         return array();
     }
-    
+
     /**
      * Купленные онлайн тренинги клиента
+     * @param type $wares_id
+     * @return type
      */
     public function getClientOnlineTreningsProducts($wares_id = 0) {
         if ($_SESSION['user']['info']['id'] > 0) {
@@ -754,8 +786,6 @@ class wares extends \project\extension {
         }
         return array();
     }
-    
-    
 
     /**
      * Получить колличество купоеллных продуктов данной категории

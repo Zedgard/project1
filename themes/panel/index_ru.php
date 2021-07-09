@@ -71,9 +71,11 @@
         ?>
         <!--WOw animations-->
         <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script> 
-
+        
+        <link rel="stylesheet" href="/assets/plugins/bootstrap5/css/bootstrap.min.css<?= $_SESSION['rand'] ?>">
         <link href="/assets/css/sleek.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <script src="/assets/js/sleek.bundle.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/bootstrap5/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sleek.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/js/sortable.js<?= $_SESSION['rand'] ?>"></script>
     </head>

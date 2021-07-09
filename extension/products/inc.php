@@ -188,13 +188,13 @@ class products extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0,$active = 1) {
+    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0, $active = 1) {
         if ($id > 0) {
             $query = "UPDATE `zay_product` "
-                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `desc`='?', `sold`='?', `product_content`='?', "
+                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
                     . "`images_str`='?', `product_new`='?', `tax`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active, $id), 0)) {
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active, $id), 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -203,10 +203,10 @@ class products extends \project\extension {
             }
         } else {
 
-            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `desc`, `sold`, "
+            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
                     . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active))) {
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
+            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active))) {
                 $querySelect = "SELECT MAX(p.id) as id FROM `zay_product` p ";
                 $id = $this->getSelectArray($querySelect)[0]['id'];
                 $this->insertProductWares($id, $this->products_wares);
@@ -531,6 +531,24 @@ class products extends \project\extension {
                 . "FROM `zay_product_reviews` pr "
                 . "WHERE `product_id`='?' and `reviews_acrive`>0";
         return $this->getSelectArray($querySelect, array($product_id));
+    }
+
+    /**
+     * Зафиксировать продажу товаров
+     * @param type $pay_id
+     * @return boolean
+     */
+    public function setSoldProducts($product_id) {
+        if ($product_id > 0) {
+            $obj = $this->getProductSelect($product_id);
+            if ($obj['id'] > 0) {
+                $soldCount = $obj['sold'];
+                $soldCount++;
+                $query = "UPDATE `zay_product` SET `sold`='?' WHERE `id`='?'";
+                return $this->query($query, array($soldCount, $obj['id']));
+            }
+        }
+        return false;
     }
 
     /**
