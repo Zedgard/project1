@@ -77,9 +77,9 @@ if (!function_exists('fileSet')) {
      * $file  = полный путь до файла на сервере
      * $value = текст
      */
-    function fileSet($file, $value) {
+    function fileSet($file, $value, $mode = "w+") {
         @chmod($file, 0777);
-        $file = @fopen($file, "w+");
+        $file = @fopen($file, $mode);
         if (!$file) {
             return FALSE;
         } else {

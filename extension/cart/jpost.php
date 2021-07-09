@@ -330,9 +330,9 @@ if (isset($_POST['set_cloudpayments'])) {
             /**
              * Заглушка для админов покупка за 1 рубль
              */
-            if ($p_user->isEditor()) {
-                $price_total = 1;
-            }
+//            if ($p_user->isEditor()) {
+//                $price_total = 1;
+//            }
 
             $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 

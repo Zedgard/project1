@@ -67,9 +67,9 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
 /**
  * Заглушка для админов покупка за 1 рубль
  */
-if ($p_user->isEditor()) {
-    $price_total = 1;
-}
+//if ($p_user->isEditor()) {
+//    $price_total = 1;
+//}
 
 // Если авторезированный
 if (strlen($p_user->isClientEmail()) > 0) {

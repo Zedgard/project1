@@ -8,7 +8,7 @@ include_once 'inc.php';
 
 $pr_wares = new \project\wares();
 
-$result = array('success' => 0, 'success_text' => 'Ошибка!');
+//$result = array('success' => 0, 'success_text' => 'Ошибка!');
 
 
 // Все товары с фильром
@@ -49,7 +49,7 @@ if (isset($_POST['edit_wares'])) {
     $wares_title = (isset($_POST['wares_title'])) ? $_POST['wares_title'] : '';
     $wares_ex_code = (isset($_POST['wares_ex_code'])) ? $_POST['wares_ex_code'] : '';
     $wares_articul = (isset($_POST['wares_articul'])) ? $_POST['wares_articul'] : '';
-    $wares_col = (isset($_POST['wares_col'])) ? $_POST['wares_col'] : '';
+    $wares_col = (isset($_POST['wares_col'])) ? $_POST['wares_col'] : 1000;
     $club_month_period = (isset($_POST['club_month_period'])) ? $_POST['club_month_period'] : '0';
     $wares_descr = (isset($_POST['wares_descr'])) ? $_POST['wares_descr'] : '';
     $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
@@ -62,8 +62,9 @@ if (isset($_POST['edit_wares'])) {
     }
 
     $pr_wares->setWaresCategory($wares_categorys);
-
+    
     if (count($_SESSION['errors']) == 0) {
+        
         if ($pr_wares->insertOrUpdateWares(
                         $wares_id,
                         $wares_title,

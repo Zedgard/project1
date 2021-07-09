@@ -15,7 +15,7 @@ class OpenApiConnector
      * https://check-dev.business.ru/open-api/v1/ - Тестовый сервис.
      * https://check.business.ru/open-api/v1/ - Stable сервис.
      */
-    const BASE_URL = "https://check-dev.business.ru/open-api/v1/";
+    const BASE_URL = "https://check.business.ru/open-api/v1/";
 
     /**
      * @var string STATIC_APP_ID app_id сервиса (заменить своим из интеграции, если не используется внешнее хранение переменной).

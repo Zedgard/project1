@@ -3,6 +3,7 @@
 namespace project;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 
 /**
  * Запросы к базе данных
@@ -35,7 +36,6 @@ class sqlLight {
         global $cfg_db_prefix, $cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name;
         //include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
         $this->db_prefix = $cfg_db_prefix;
-        //echo 'db_prefix: ' . $this->db_prefix . ' cfg_db_prefix: ' . $cfg_db_prefix . ' ';
         $this->mysqli = new \mysqli($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
 
         /* проверка соединения */
@@ -93,6 +93,7 @@ class sqlLight {
      */
     public function query($query, $values = array(), $see = 0) {
         $ret = false;
+        $log_file = $_SERVER['DOCUMENT_ROOT'] . '/logs/query.log';
         if (strlen($query) > 0) {
             global $lang;
 
@@ -113,12 +114,15 @@ class sqlLight {
 
             /* Включить режим фиксации */
             $this->mysqli->autocommit(TRUE);
+            //echo "query: {$query} <br/>\n";
             if ($see != 0) {
                 echo "query: {$query} <br/>\n";
             } else {
                 //$_SESSION['errors'][] = $query;
             }
             if ($this->mysqli->query($query) === FALSE) {
+                $time = date("d-m-Y H:i:s");
+                fileSet($log_file, "{$time} {$this->mysqli->errno}\n{$this->mysqli->error}\n{$query}\n", 'a+');
                 if ($_SESSION['DEBUG'] == 1) {
                     $_SESSION['errors'][] = "{$this->mysqli->errno} {$this->mysqli->error}<br/>\n{$query}<br/>\n";
                 } else {
