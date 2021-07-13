@@ -71,7 +71,7 @@ if (isset($_GET['oauth'])) {
     }
 }
 
-if (isset($_SESSION['user']) && $_SESSION['user']['info']['id'] > 0) {
+if (isset($_SESSION['user']) && $_SESSION['user']['info']['id'] > 0 && trim($_SESSION['user']['info']['role_privilege']) == '') {
     // присвоим роль
     $auth->insertRole($_SESSION['user']['info']['id'], 3);
 }
