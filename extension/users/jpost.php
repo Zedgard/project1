@@ -26,7 +26,7 @@ if ($user->isEditor()) {
             $_SESSION['user_edit_obj_id'] = $user_id;
         }
         $params = array();
-        
+
         $data = $user->getUserInfo($user_id, $page_num, $_SESSION['input_search_str'], $params);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
@@ -60,13 +60,13 @@ if ($user->isEditor()) {
 
             if ($user_id > 0) {
 
-                $select_query_email = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and id<>'?'"; 
+                $select_query_email = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and id<>'?'";
                 $users_email = $user->getSelectArray($select_query_email, array($email, $user_id));
-                
-                $select_query_phone = "SELECT * FROM `zay_users` u WHERE u.`phone`='?' and id<>'?'"; 
+
+                $select_query_phone = "SELECT * FROM `zay_users` u WHERE u.`phone`='?' and id<>'?'";
                 $users_phone = $user->getSelectArray($select_query_phone, array($phone, $user_id));
 
-                if (count($users_email) == 0 && count($users_phone) == 0) {
+                if (count($users_email) == 1) {
                     $updateUserInfo = "UPDATE `zay_users` SET `email`='?',`phone`='?',`first_name`='?',"
                             . "`last_name`='?', `login_instagram`='?' WHERE id='?' ";
                     $ret = $user->query($updateUserInfo, array($email, $phone, $first_name, $last_name, $login_instagram, $user_id));
