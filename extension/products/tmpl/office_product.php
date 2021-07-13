@@ -161,22 +161,25 @@
                                             include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_file.php';
                                         }
                                         if ($value['material_type'] == 'material_type_video') {
-
-                                            include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
-                                            $video_id = $value['id'];
                                             ?>
-                                            <script>
-                                                var see_video_id = <?= $video_id ?>;
-                                                $(document).ready(function () {
-                                                    $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
-                                                        //console.log("material_video_youtube mouseenter");
-                                                        sendPostLigth('/jpost.php?extension=wares',
-                                                                {"waresVideoSee": see_video_id},
-                                                                function (e) {
-                                                                });
+                                            <div class="">
+                                                <?
+                                                include $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/tmpl/material_type_video.php';
+                                                $video_id = $value['id'];
+                                                ?>
+                                                <script>
+                                                    var see_video_id = <?= $video_id ?>;
+                                                    $(document).ready(function () {
+                                                        $(".see_video_<?= $video_id ?>").unbind('click').click(function () {
+                                                            //console.log("material_video_youtube mouseenter");
+                                                            sendPostLigth('/jpost.php?extension=wares',
+                                                                    {"waresVideoSee": see_video_id},
+                                                                    function (e) {
+                                                                    });
+                                                        });
                                                     });
-                                                });
-                                            </script>
+                                                </script>
+                                            </div>
                                             <?
                                         }
                                         ?>

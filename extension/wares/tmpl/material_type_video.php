@@ -3,7 +3,7 @@
         id="video_<?= $union_elm_id ?>"
         class="video-js vjs-default-skin material_video_youtube"
         controls
-        style="width: 100%;min-height: 400px;margin: 0 auto;"
+        style="width: 100%;min-height: 20rem;margin: 0 auto;"
         data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "<?= $value['video_youtube'] ?>"}] }'
         >
     </video>
