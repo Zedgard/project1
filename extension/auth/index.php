@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Страница index
  */
@@ -68,6 +69,11 @@ if (isset($_GET['oauth'])) {
     if ($_GET['oauth'] == 'vk') {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
     }
+}
+
+if (isset($_SESSION['user']) && $_SESSION['user']['info']['id'] > 0) {
+    // присвоим роль
+    $auth->insertRole($_SESSION['user']['info']['id'], 3);
 }
 /*
  * Редирект в зависимости от роли
