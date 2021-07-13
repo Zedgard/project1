@@ -28,6 +28,11 @@ if ($user->isClient() || $user->isEditor()) {
         $product_data = $pr_wares->getClientPayProducts($_GET['product_id']);
         $wares_list = $pr_wares->getClientProductWaresList($product_data[0]['id']);
         
+        // Если товар один то сразу переходим на страницу с товаром
+        if(count($wares_list) == 1 && !isset($_GET['wares_id'])){
+            location_href("/office/?katalog&product_id={$_GET['product_id']}&wares_id={$wares_list[0]['id']}");
+        }
+        
         if (isset($_GET['wares_id'])) {
 
             $wares_info = $pr_wares->getWaresElem($_GET['wares_id']);
