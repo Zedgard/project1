@@ -90,45 +90,41 @@
 
                 <div class="fl_title mb-5">Авторизация</div>
                 <form id="authorization" action="/jpost.php?extension=auth&url=/shop/cart/" method="POST">
-                    <div class="row">
-                        <div class="form-group col-md-12 mb-4">
+                    <div class="">
+                        <div class="form-group mb-4">
                             <input type="login" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email" placeholder="Телефон / Эл. Почта" required />
-                            <div class="valid-feedback">
-                                принято!
-                            </div>
                         </div>
-                        <div class="form-group col-md-12 ">
+                        <div class="form-group">
                             <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Пароль" required />
-                            <label class="control control-checkbox mt-2 float-right" style="font-size: 0.8rem;">
-                                <input type="checkbox" class="form-check-input password-checkbox">
-                                <div class="control-indicator"></div>
-                                <span class="">Показать пароль</span>
-                            </label>
-                            <div class="valid-feedback">
-                                принято!
+                            
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <div class="control control-checkbox">
+                                        <input class="form-check-input password-checkbox" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Показать пароль
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me" value="1" />
+                                        <label class="form-check-label">
+                                            Запомни меня
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col text-right" style="text-align: right;">
+                                    <a class="text-blue re_password_link" href="javascript:void(0)">Забыли пароль?</a>
+                                </div>
                             </div>
+
                         </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="control control-checkbox">
-                                        <input type="checkbox" id="remember_me" name="remember_me" value="1" />
-                                        <div class="control-indicator"></div>
-                                        Запомни меня
-                                    </label>
-                                </div> 
-                                <div class="col-md-6 text-right">
-                                    <p><a class="text-blue re_password_link" href="javascript:void(0)">Забыли пароль?</a></p>
-                                </div> 
-
-
-                            </div>
+                        <div class="mt-3 text-center">
 
                             <div class="form_result" style="display: none;">
 
                             </div>
-                            <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Авторизация</button>
-                            <div class="mb-4 text-center">
+                            <button type="submit" class="btn btn-lg btn-primary btn-block">Авторизация</button>
+                            <div class="mt-4 mb-2 text-center">
                                 <div style="font-size: 0.8rem;margin-bottom: 0.2rem;">авторизация с помощью</div>
 
                                 <a href="<?= $google_link ?>"><img src="/assets/img/ui-icons/google_32.png"/></a>
@@ -137,7 +133,7 @@
                                 <a href="<?= $facebook_link ?>"><img src="/assets/img/ui-icons/facebook_32.png"/></a>
 
                             </div>
-                            <div class="text-right" style="margin-top: 3rem;font-size: 1rem;">
+                            <div class="text-right" style="margin-top: 2rem;font-size: 1rem;">
                                 Нет учетной записи <a class="text-blue" href="./">Регистрация</a>
                             </div>
                         </div> 
