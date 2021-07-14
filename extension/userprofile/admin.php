@@ -62,7 +62,8 @@ if (isset($_FILES['upload_file']) && strlen($_FILES['upload_file']['name']) > 0)
 if ($user->isClient() || $user->isEditor()) {
     //$pr_products = new \project\products();
 
-    $user_phone_disabled = 'disabled="disabled"';
+    //$user_phone_disabled = 'disabled="disabled"';
+    $user_email_disabled = 'disabled="disabled"';
     $user_phone_disabled_title = 'title="Чтобы изменить номер телефона обратитесть в поддержку!"';
     if ($user->isEditor()) {
         $user_phone_disabled = '';

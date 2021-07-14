@@ -232,6 +232,99 @@ class auth extends \project\user {
         return false;
     }
 
+    public function register_fast($email, $check_private, $active = 1) {
+        global $lang;
+        $error = array();
+        $sqlLight = new \project\sqlLight();
+        if (strlen($email) > 2) {
+
+            $validator = new Validator();
+            if (!$validator->valid_email($email)) {
+                $error[] = $lang['email_false'];
+            }
+
+            if ($check_private != 1) {
+                $error[] = 'Необходимо согласиться с условиями!';
+            }
+
+            $phone = '';
+
+            $pass = $this->password_generate();
+            $wp_hasher = new \project\PasswordHash(8, TRUE);
+            $pass_hash = $wp_hasher->HashPassword(trim($pass));
+
+            $activate_codeBase64 = '';
+            $activate_code = '';
+            // Если не активируем то создаем код активации
+            if ($active == 0) {
+                $activate_code = $this->passHash(PRIVATE_CODE . $email . time());
+                $activate_codeBase64 = base64_encode($activate_code);
+            }
+
+
+            $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1"; // and `active` = 1 // Только активированых 
+            $users = $sqlLight->queryList($query, array($email));
+
+            if (count($users) > 0) {
+                $error[] = $lang['auth'][$_SESSION['lang']]['user_search_register_true'];
+            }
+
+            // поиск возможно существующей учетки
+            $query_find_user = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=0";
+            $find_user = $sqlLight->queryList($query_find_user, array($email));
+
+            if (count($error) == 0) {
+                if (count($find_user) == 0) {
+                    $user_id = $sqlLight->queryNextId('zay_users');
+                    $_SESSION['db_next_id'] = $user_id;
+                    $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
+                            . "VALUES ('?','?','','','?','?','?', NOW() )";
+                    if ($sqlLight->query($query, array($email, $phone, $pass_hash, $active, $activate_code), 0)) {
+                        $this->insertRole($user_id, 3);
+                        $send_emails = new \project\send_emails();
+                        $config = new \project\config();
+
+                        $format_code = 'register_fast_new_user';
+                        $send_emails->send($format_code, $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'user_email' => $email, 'user_pass' => $pass));
+                        if ($this->authorization($email, $pass)) {
+                            return true;
+                        }
+                    } else {
+                        $error[] = $lang['auth'][$_SESSION['lang']]['error_register_form'];
+                    }
+                } else {
+                    $error[] = 'Уже зарегистрирован!';
+                }
+            } else {
+//                $query_update = "UPDATE `zay_users` SET `phone`='?',`first_name`='?',`last_name`='?',`u_pass`='?', "
+//                        . "`active`='?',`active_code`='?',`active_lastdate`=NOW() "
+//                        . "WHERE `id`='?' ";
+//
+//                // Если ввели новый телефон то обновим его
+//                $phone_up = $find_user[0]['phone'];
+//                if (strlen(trim($phone)) > 0) {
+//                    $phone_up = trim($phone);
+//                }
+//                if ($sqlLight->query($query_update, array($phone_up, $pass_hash, $active, $activate_code), 0)) {
+//                    if (strlen($activate_codeBase64) > 0) {
+//                        $this->sendActivateEmail($email, $activate_codeBase64);
+//                    }
+//                    return true;
+//                }
+                $error[] = 'Ошибка!';
+            }
+        } else {
+            $error[] = 'Не заполнены поля!';
+        }
+
+        //print_r($error);
+        if (count($error) > 0) {
+
+            $_SESSION['errors'] = $error;
+        }
+        return false;
+    }
+
     /**
      * Регистрируем куки
      * @param type $user_id
@@ -542,7 +635,7 @@ class auth extends \project\user {
      * @param type $role_id
      * @return boolean
      */
-    public function insertRole($user_id, $role_id) { 
+    public function insertRole($user_id, $role_id) {
         $sqlLight = new \project\sqlLight();
         $querySelect = "select * from `zay_roles_users` WHERE `user_id`='?'";
         $obj = $sqlLight->queryList($querySelect, array($user_id))[0];

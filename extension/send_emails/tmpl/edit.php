@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Управление сообщением</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -50,24 +50,19 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="row">
-                        <label for="email_send">Активность</label>
-                    </div>
-                    <div class="row">
-                        <label class="switch switch-primary form-control-label">
-                            <input type="checkbox" class="switch-input form-check-input email_send" value="1">
-                            <span class="switch-label"></span>
-                            <span class="switch-handle"></span>
-                        </label>
+                <div class="ml-3 form-group">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input email_send" value="1">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Активировать</label>
                     </div>
                 </div>
 
-
+                
+                
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="email_id" class="email_id" id="email_id" value="0" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</button>
                 <button type="button" class="btn btn-primary btn_save_email">Сохранить</button>
             </div>
         </div>

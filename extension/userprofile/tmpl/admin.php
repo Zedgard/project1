@@ -20,7 +20,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="first_name">Email</label>
-                                        <input type="text" class="form-control user_email" id="user_email" <?= $user_phone_disabled ?> placeholder="Email..." required>
+                                        <input type="text" class="form-control user_email" id="user_email" <?= $user_email_disabled ?> placeholder="Email..." required>
                                     </div>
                                 </div>
                             </div>
