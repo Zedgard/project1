@@ -58,7 +58,7 @@ if ($user->isEditor()) {
         $ret = false;
         if (count($_SESSION['errors']) == 0) {
 
-            if ($user_id > 0) {
+            if ($user_id > 0) { 
 
 //                $select_query_email = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and id<>'?'";
 //                $users_email = $user->getSelectArray($select_query_email, array($email, $user_id));

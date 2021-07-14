@@ -10,7 +10,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
  * $_SESSION['user']['info']
  */
 
-class user extends \project\extension {
+class user extends \project\extension { 
 
     private $page_max = 30;
     private $id, $email, $phone, $first_name, $last_name, $u_pass, $lastdate;
