@@ -4,7 +4,7 @@
         clear: both;
     }
     .cart_fast_login .fl_title{
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: 900;
         color: #000000;
         margin-bottom: 1rem;
@@ -27,74 +27,58 @@
     <form id="registration" action="/jpost.php?extension=auth" method="POST">
         <div class="row cart_fast_login">
             <div class="col-md-6 mt-3">
-                <div class="fl_title">Ваши данные</div>
+                <div class="fl_title">Введи свою почту, чтобы купить</div>
+
+                <div class="d-none" style="height: 31px;"></div>
+                <div class="d-none fl_input_title">Контактный телефон*</div>
+                <div class="d-none"><input type="text" class="form-control input-lg phone" name="phone" id="phone" aria-describedby="nameHelp" type="phone"></div>
+                <div class="fl_input_title">Электронная почта*</div>
+                <div><input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email"></div>
                 <div class="fl_info">
                     <div>Для заказа товаров требуется регистрация</div>
                     <div>Если вы уже зарегистрированы, войдите в свою учетную запись</div>
                 </div>
-                <div class="d-block d-md-none mt-3">
-                    <div class="text-right">
-                        <a class="btn btngreen-outline align-self-center cart_product_go_card" href="?registrations">Авторизация</a>
-                    </div>
-                    <div>
-                        <div class="mb-4 text-right">
-                            <div style="font-size: 0.8rem;margin: 0.3rem;">авторизация с помощью</div>
+                <div class="mt-2">
+                    <div class="check_indicator2 mb-2">
+                        <label class="control control-checkbox">
+                            <input type="checkbox" id="check_indicator" name="check_indicator" value="1" class="mr-2" /> 
+                            <span style="margin-left: 6px;">
+                                Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
+                            </span>
+                            <div class="control-indicator"></div>
 
-                            <a href="<?= $google_link ?>"><img src="/assets/img/ui-icons/google_32.png"/></a>
-                            <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
-                            <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
-                            <a href="<?= $facebook_link ?>"><img src="/assets/img/ui-icons/facebook_32.png"/></a>
-
-                        </div>
+                        </label>
                     </div>
+                    <div class="form_result" style="display: none;">
+
+                    </div>
+                    <input type="hidden" name="registration_fast" />  
+                    <button type="submit" class="btn btn-lg btn-primary btn-block mt-4 mb-4" style="">Отправить</button>
                 </div>
-                <div class="d-none d-md-block" style="height: 31px;"></div>
-                <div class="fl_input_title">Контактный телефон*</div>
-                <div><input type="text" class="form-control input-lg phone" name="phone" id="phone" aria-describedby="nameHelp" type="phone"></div>
-                <div class="fl_input_title">Электронная почта*</div>
-                <div><input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email"></div>
-                <div></div>
                 <div></div>
             </div>
             <div class="col-md-6 mt-3">
-                <div class="d-none d-md-block">
-                    <div class="text-right">
-                        <a class="btn btngreen-outline align-self-center cart_product_go_card" href="?registrations">Авторизация</a>
+                <div class=" d-md-block">
+                    <div class="fl_title" style="margin-bottom: 2.7rem;">
+                        или авторизируйся, если уже есть аккаунт 
                     </div>
-                    <div>
-                        <div class="mb-4 text-right">
-                            <div style="font-size: 0.8rem;margin: 0.3rem;">авторизация с помощью</div>
+                    <div class="row">
+                        <div class="col col-mb mb-4 text-center">
+                            <a class="btn btngreen-outline align-self-center cart_product_go_card" href="?registrations">Авторизация</a>
+                        </div>
+                        <div class="col col-mb mb-4 text-center">
 
                             <a href="<?= $google_link ?>"><img src="/assets/img/ui-icons/google_32.png"/></a>
                             <a href="<?= $ya_link ?>"><img src="/assets/img/ui-icons/yandex.png"/></a>
                             <a href="<?= $vk_link ?>"><img src="/assets/img/ui-icons/vk.png"/></a>
                             <a href="<?= $facebook_link ?>"><img src="/assets/img/ui-icons/facebook_32.png"/></a>
-
+                            <div style="font-size: 0.8rem;margin: 0.3rem;">авторизация с помощью</div>
                         </div>
+                        <div class="d-none d-md-block col col-mb mb-4"></div>
                     </div>
                 </div>
-                <div class="fl_input_title">Пароль*</div>
-                <div><input type="password" class="form-control input-lg" name="password" id="password"></div>
-                <div class="fl_input_title">Повторить пароль*</div>
-                <div><input type="password" class="form-control input-lg" name="cpassword" id="cpassword"></div>
             </div>
-            <div class="col-mb-12 mt-2">
-                <div class="check_indicator2">
-                    <label class="control control-checkbox">
-                        <input type="checkbox" id="check_indicator" name="check_indicator" value="1" class="mr-2" /> 
-                        <span style="margin-left: 6px;">
-                            Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
-                        </span>
-                        <div class="control-indicator"></div>
 
-                    </label>
-                </div>
-                <div class="form_result" style="display: none;">
-
-                </div>
-                <input type="hidden" name="registration" />  
-                <button type="submit" class="btn btn-lg btn-primary btn-block mt-4 mb-4" style="">Отправить</button>
-            </div>
         </div>
     </form>
 <? endif; ?>

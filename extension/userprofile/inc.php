@@ -37,12 +37,12 @@ class userprofile extends \project\extension {
                     . "`login_instagram`='?' "
                     . "WHERE `id`='?' ";
             // Телефон могут менять только редакторы
-            if ($user->isEditor()) {
+            //if ($user->isEditor()) {
                 $queryPhoneUpdate = "UPDATE `zay_users` "
                         . "SET `phone`='?' "
                         . "WHERE `id`='?' ";
                 $this->query($queryPhoneUpdate, array($data['user_phone'], $user_id));
-            }
+            //}
             $ret = $this->query($query,
                     array(
                         $data['first_name'],

@@ -68,13 +68,20 @@ if (isset($_POST['registration'])) {
 //        $result = array('success' => 0, 'success_text' => 'Вы не поставили галочку (Я согласен с условиями и положениями)!');
 //    } else {
     if ($auth->register($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['cpassword'], $_POST['check_indicator'])) {
-        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес ( ' . $_POST['email'] . ' )');// , 'action' => '/auth/', 'action_time' => '20'
+        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован, ссылка для активации отправлена на указанный почтовый адрес ( ' . $_POST['email'] . ' )'); // , 'action' => '/auth/', 'action_time' => '20'
     } else {
         //print_r($_SESSION['errors']);
         //$result = array('success' => 0, 'success_text' => 'Ошибка регистрации, напишите администрации!');
     }
     //}
 }
+
+if (isset($_POST['registration_fast'])) {
+    if ($auth->register_fast($_POST['email'], $_POST['check_indicator'], 1)) {
+        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован', 'action' => '/shop/cart/', 'action_time' => 0); // 
+    }
+}
+
 /*
  * Выход
  */
