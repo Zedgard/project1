@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="col-xl-6">
-        <?php
+    <div class="col-xl-12">
+        <?php 
         include 'users.php';
         ?>
     </div>
-    <div class="col-xl-6">
+    <div class="d-none col-xl-6">
         <?php
-        include 'wares_video_see.php';
+        //include 'wares_video_see.php';
         ?>
     </div>
 

@@ -48,6 +48,12 @@ $cfg_db_pass = '58ca5215569643f0'; // Niko1706
 $cfg_db_host = 'rc1a-icoad25j27c229o5.mdb.yandexcloud.net';
 $cfg_db_prefix = '';
 
+$cfg_db_name = 'user1_wp_site';
+$cfg_db_user = 'user1_zay';
+$cfg_db_pass = 'Kopass1987'; // Niko1706 
+$cfg_db_host = 'localhost';
+$cfg_db_prefix = 'zay_';
+
 // Для платежей
 $ya_shop_id = 562437;
 $ya_shop_api_key = 'test_ziioTqfzg1LyIHzYckIdz7jtXd6OEuzGoixG-uwc1LM';

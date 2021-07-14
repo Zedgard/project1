@@ -542,7 +542,7 @@ class auth extends \project\user {
      * @param type $role_id
      * @return boolean
      */
-    public function insertRole($user_id, $role_id) {
+    public function insertRole($user_id, $role_id) { 
         $sqlLight = new \project\sqlLight();
         $querySelect = "select * from `zay_roles_users` WHERE `user_id`='?'";
         $obj = $sqlLight->queryList($querySelect, array($user_id))[0];

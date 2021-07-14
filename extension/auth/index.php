@@ -57,7 +57,7 @@ if (isset($_GET['set_email_false'])) {
     exit();
 }
 
-// Авторизация спомощью cookie
+// Авторизация спомощью cookie 
 if ($_SESSION['user']['other'] == 0 && isset($_COOKIE["edgard_master_cookie_token"])) {
     $auth->authorization_cookie($_COOKIE["edgard_master_cookie_token"]);
 }
@@ -71,8 +71,8 @@ if (isset($_GET['oauth'])) {
     }
 }
 
+// присвоим роль если она не назначена
 if (isset($_SESSION['user']) && $_SESSION['user']['info']['id'] > 0 && trim($_SESSION['user']['info']['role_privilege']) == '') {
-    // присвоим роль
     $auth->insertRole($_SESSION['user']['info']['id'], 3);
 }
 /*
