@@ -24,8 +24,8 @@ setTimeout(function () {
             var obj = this;
             $(this).submit(function (e) {
 
-                $('.form_result').hide(200);
-                $('.form_result').after(ajax_load);
+                $(obj).find('.form_result').hide(200);
+                $(obj).find('.form_result').after(ajax_load);
 
                 var objid = $(obj)[0]['id'];
                 //console.log("sendPost1 " + objid);
@@ -55,31 +55,31 @@ setTimeout(function () {
                              * Обработка ответа от сервера
                              */
                             $(".ajax_load").remove();
-                            $('.form_result').html("");
+                            $(obj).find('.form_result').html("");
                             var metod = 0;
                             if (result['success'] == 1) {
-                                $('.form_result').html(result['success_text']);
-                                $('.form_result').removeClass("alert-danger");
+                                $(obj).find('.form_result').html(result['success_text']);
+                                $(obj).find('.form_result').removeClass("bg-success-error");
                                 metod = 1;
                             }
                             if (result['success'] == 0) {
                                 if (!!result['errors'] && result['errors'].length > 0) {
-                                    $('.form_result').removeClass("alert-success");
-                                    $('.form_result').addClass("alert").addClass("alert-danger");
+                                    $(obj).find('.form_result').removeClass("bg-success");
+                                    $(obj).find('.form_result').addClass("alert").addClass("bg-success-error");
                                     for (var i = 0; i < result['errors'].length; i++) {
                                         $(obj).find(".form_result").append("<div>" + result['errors'][i] + "</div>\n");
                                     }
                                 }
                                 if (!!result['success_text'] && result['success_text'].length > 0) {
-                                    $('.form_result').append("<div>" + result['success_text'] + "</div>\n");
+                                    $(obj).find('.form_result').append("<div>" + result['success_text'] + "</div>\n");
                                 }
                                 metod = 2;
                             }
                             // Непредвиденная ошибка, если result['success'] не передали
                             if (metod == 0) {
                                 if (!!result['errors'] && result['errors'].length > 0) {
-                                    $('.form_result').removeClass("alert-success");
-                                    $('.form_result').addClass("alert").addClass("alert-danger");
+                                    $(obj).find('.form_result').removeClass("bg-success");
+                                    $(obj).find('.form_result').addClass("alert").addClass("bg-success-error");
                                     for (var i = 0; i < result['errors'].length; i++) {
                                         $(obj).find(".form_result").append("Error system №101 !");
                                     }
@@ -107,17 +107,31 @@ setTimeout(function () {
                                     }
                                 }
                             }
+                            /*
+                             * Стили для элементов
+                             */
+                            if (!!result['input_style'] && result['input_style'].length > 0) {
+                                for (var i = 0; i < result['input_style'].length; i++) {
+                                    var inp = result['input_style'][i]['input'];
+                                    var c = result['input_style'][i]['class'];
+                                    $("." + inp).removeClass(c).addClass(c);
+                                    $("." + inp).unbind("keyup").keyup(function () {
+                                        $("." + inp).removeClass(c);
+                                    });
+                                }
+                            }
+
                             // Добавить кнопку закрыть
-                            //$('.form_result').append('<button type="button" class="close"'
+                            //$(obj).find('.form_result').append('<button type="button" class="close"'
                             //        + ' data-dismiss="alert" aria-label="Close">'
                             //        + '<span aria-hidden="true">×</span></button>');
-                            if (result['success_text'].length > 0) {
-                                $('.form_result').show();
+                            if (!!result['success_text'] && result['success_text'].length > 0) {
+                                $(obj).find('.form_result').show();
                             }
                             // Скроем ответы серез 20 сек.
                             setTimeout(function () {
-                                $('.form_result').hide();
-                            }, 20000);
+                                $(obj).find('.form_result').hide();
+                            }, 200000);
                         }
                     });
                 }, 200);
@@ -167,8 +181,8 @@ function sendPostLigth(url, data, func, val_async) {
                     }
                     if (!!$('.form_result')) {
                         $('.form_result').append('<div>' + result['success_text'] + '</div>');
-                        $('.form_result').removeClass("alert-danger");
-                        //$('.form_result').addClass("alert").addClass("alert-success");
+                        $('.form_result').removeClass("bg-success-error");
+                        //$('.form_result').addClass("alert").addClass("bg-success");
                     }
                 }
                 metod = 1;
