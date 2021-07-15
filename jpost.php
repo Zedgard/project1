@@ -18,6 +18,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/init_cache.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
+
+
 if (isset($_POST)) {
     //echo "post \n";
     // Результат выполнения запроса
@@ -61,6 +63,7 @@ if (isset($_POST)) {
         //setcookie($cookie_val, '1'); // это не работает, задавать cookie надо через javascript
         $result = array('success' => 1, 'success_text' => '', 'data' => $cookie_val);
     }
+    
 
     // Определим пользователя и разрешим ему отправлять запросы
     if ((isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) || (isset($_COOKIE['site_user_ajax_access']) && $_COOKIE['site_user_ajax_access'] > 0)) {
@@ -78,7 +81,8 @@ if (isset($_POST)) {
             }
         }
     } else {
-        print_r($_COOKIE['site_user_ajax_access']);
+        $_SESSION['errors'][] = 'Сессия устарела';
+        $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'action' => 'reload');
     }
 
     /*

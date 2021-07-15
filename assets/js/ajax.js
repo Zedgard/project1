@@ -103,7 +103,12 @@ setTimeout(function () {
                                     }, (action_time * 1000));
                                 } else {
                                     if (!!result['action']) {
-                                        window.location.href = result['action'];
+                                        if (result['action'] == 'reload') {
+                                            alert('reload');
+                                            window.location.href = window.location.href;
+                                        } else {
+                                            window.location.href = result['action'];
+                                        }
                                     }
                                 }
                             }
