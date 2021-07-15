@@ -18,42 +18,35 @@
         margin-top: 1rem;
         margin-bottom: 0.5rem;
     }
-    .cart_fast_login .check_indicator{
-        margin-top: 1rem;
-        margin-left: 1rem;
-    }
+
 </style>
+
 <? if (!isset($_GET['registrations'])): ?>
     <form id="registration" action="/jpost.php?extension=auth" method="POST">
         <div class="row cart_fast_login">
-            <div class="col-md-6 mt-3">
+            <div class="form_result" style="display: none;"></div>
+            <div class="col-md-6 mt-2">
                 <div class="fl_title">Введи свою почту, чтобы купить</div>
 
                 <div class="d-none" style="height: 31px;"></div>
-                <div class="d-none fl_input_title">Контактный телефон*</div>
-                <div class="d-none"><input type="text" class="form-control input-lg phone" name="phone" id="phone" aria-describedby="nameHelp" type="phone"></div>
                 <div class="fl_input_title">Электронная почта*</div>
-                <div><input type="email" class="form-control input-lg" name="email" id="email" aria-describedby="emailHelp" type="email"></div>
+                <div><input type="email" class="form-control input-lg user_email" name="email" id="email" aria-describedby="emailHelp"></div>
                 <div class="fl_info">
                     <div>Для заказа товаров требуется регистрация</div>
                     <div>Если вы уже зарегистрированы, войдите в свою учетную запись</div>
                 </div>
                 <div class="mt-2">
-                    <div class="check_indicator2 mb-2">
-                        <label class="control control-checkbox">
-                            <input type="checkbox" id="check_indicator" name="check_indicator" value="1" class="mr-2" /> 
-                            <span style="margin-left: 6px;">
+                    <div class="check_indicator2 mb-3">
+                        <div class="control control-checkbox">
+                            <input type="checkbox" id="check_indicator" name="check_indicator" value="1" class="form-check-input mr-2 check_indicator" /> 
+                            <label class="form-check-label" for="check_indicator">
                                 Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
-                            </span>
-                            <div class="control-indicator"></div>
-
-                        </label>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form_result" style="display: none;">
 
-                    </div>
                     <input type="hidden" name="registration_fast" />  
-                    <button type="submit" class="btn btn-lg btn-primary btn-block mt-4 mb-4" style="">Отправить</button>
+                    <button type="submit" class="btn btn-lg btn-grey btn-block mt-3 mb-3"  style="">Оплатить</button>
                 </div>
                 <div></div>
             </div>
@@ -84,10 +77,27 @@
 <? endif; ?>
 <!-- Блок Авторизация -->
 <? if (isset($_GET['registrations'])): ?>
+    <?
+    if (isset($_SESSION['page_errors']) && count($_SESSION['page_errors']) > 0) {
+        ?>
+        <div class="mt-3 alert bg-success-error">
+            <?
+            foreach ($_SESSION['page_errors'] as $value) {
+                ?>
+                <div>
+                    <?= $value ?>
+                </div>
+                <?
+            }
+            ?>
+        </div>
+        <?
+        $_SESSION['page_errors'] = array();
+    }
+    ?>
     <div class="col-lg-8 col-md-10 offset-md-2">
         <div class="card cart_fast_login">
             <div class="card-body p-5">
-
                 <div class="fl_title mb-5">Авторизация</div>
                 <form id="authorization" action="/jpost.php?extension=auth&url=/shop/cart/" method="POST">
                     <div class="">
@@ -96,7 +106,7 @@
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Пароль" required />
-                            
+
                             <div class="row mt-2">
                                 <div class="col">
                                     <div class="control control-checkbox">

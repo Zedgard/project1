@@ -44,7 +44,17 @@ if (!isset($_SESSION['page_errors'])) {
 if (!isset($_SESSION['errors'])) {
     $_SESSION['errors'] = array();
 }
+if (!isset($_SESSION['input_style'])) {
+    $_SESSION['input_style'] = array();
+}
+if (!isset($_SESSION['action_time'])) {
+    $_SESSION['action_time'] = 0;
+}
+if (!isset($_SESSION['action'])) {
+    $_SESSION['action'] = '';
+}
 
+// Для промо
 if (!isset($_SESSION['promos'])) {
     $_SESSION['promos'] = array();
 }

@@ -236,15 +236,16 @@ class auth extends \project\user {
         global $lang;
         $error = array();
         $sqlLight = new \project\sqlLight();
+        if ($check_private != 1) {
+            $_SESSION['input_style'][] = array('input' => 'check_indicator', 'class' => 'input-error-border');
+            $error[] = 'Необходимо согласиться с условиями!';
+        }
+
         if (strlen($email) > 2) {
 
             $validator = new Validator();
             if (!$validator->valid_email($email)) {
                 $error[] = $lang['email_false'];
-            }
-
-            if ($check_private != 1) {
-                $error[] = 'Необходимо согласиться с условиями!';
             }
 
             $phone = '';
@@ -266,7 +267,12 @@ class auth extends \project\user {
             $users = $sqlLight->queryList($query, array($email));
 
             if (count($users) > 0) {
-                $error[] = $lang['auth'][$_SESSION['lang']]['user_search_register_true'];
+                $error[] = 'ТАКОЙ АДРЕС УЖЕ ЗАРЕГИСТРИРОВАН.<br/>ВОЙДИ В СВОЙ АККАУНТ ДОБРАЯ ДУША.';
+                $_SESSION['page_errors'][] = 'ТАКОЙ АДРЕС УЖЕ ЗАРЕГИСТРИРОВАН.<br/>ВОЙДИ В СВОЙ АККАУНТ ДОБРАЯ ДУША.';
+                $_SESSION['action'] = '/shop/cart/?registrations&move=cart_fast_login';
+                $_SESSION['action_time'] = 0;
+                //echo "action: {$_SESSION['action']}\n";
+                //$error[] = $lang['auth'][$_SESSION['lang']]['user_search_register_true'];
             }
 
             // поиск возможно существующей учетки
@@ -292,10 +298,8 @@ class auth extends \project\user {
                     } else {
                         $error[] = $lang['auth'][$_SESSION['lang']]['error_register_form'];
                     }
-                } else {
-                    $error[] = 'Уже зарегистрирован!';
                 }
-            } else {
+            } //else {
 //                $query_update = "UPDATE `zay_users` SET `phone`='?',`first_name`='?',`last_name`='?',`u_pass`='?', "
 //                        . "`active`='?',`active_code`='?',`active_lastdate`=NOW() "
 //                        . "WHERE `id`='?' ";
@@ -311,10 +315,11 @@ class auth extends \project\user {
 //                    }
 //                    return true;
 //                }
-                $error[] = 'Ошибка!';
-            }
+            //$error[] = 'Ошибка!';
+            //}
         } else {
-            $error[] = 'Не заполнены поля!';
+            $_SESSION['input_style'][] = array('input' => 'user_email', 'class' => 'input-error-border');
+            $error[] = 'Не заполнена <b>Электронная почта</b>!';
         }
 
         //print_r($error);
