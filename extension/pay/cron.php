@@ -136,6 +136,7 @@ if ($_GET['pay_type'] == 'cp') {
     if (isset($_POST['id'])) {
         $pay_key = $_POST['id'];
     }
+    echo "pay_key: {$pay_key} <br/>\n";
 
     // Проверяем статус оплаты
     if (isset($pay_key)) {
