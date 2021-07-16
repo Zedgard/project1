@@ -50,7 +50,7 @@ if (isset($pay_key)) {
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_key`='?'";
     $pays = $sqlLight->queryList($query, array($pay_key));
 } else {
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
 }
 
