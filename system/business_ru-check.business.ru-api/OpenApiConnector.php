@@ -42,6 +42,7 @@ class OpenApiConnector
      */
     const COMMAND_URL = "Command";
 
+    public $BASE_URL = 'https://check.business.ru/open-api/v1/';
     /**
      * @var false|string $appID App_id интеграции.
      */
@@ -72,8 +73,9 @@ class OpenApiConnector
      * @param string $appID
      * @param string $secret
      */
-    public function __construct($appID = self::STATIC_APP_ID, $secret = self::STATIC_SECRET_KEY)
+    public function __construct($appID = self::STATIC_APP_ID, $secret = self::STATIC_SECRET_KEY, $BASE_URL = self::BASE_URL)
     {
+        $this->BASE_URL = $BASE_URL;
         $this->appID = $appID;
         $this->secret = $secret;
         $this->getNonce();
@@ -252,7 +254,7 @@ class OpenApiConnector
             curl_setopt_array(
                 $cURL,
                 [
-                    CURLOPT_URL => self::BASE_URL . $url . "?" . http_build_query($params),
+                    CURLOPT_URL => $this->BASE_URL . $url . "?" . http_build_query($params),
                     CURLOPT_CUSTOMREQUEST => "GET",
                     CURLOPT_HTTPHEADER => [
                         "sign: " . $this->getSign($params),
@@ -263,7 +265,7 @@ class OpenApiConnector
             curl_setopt_array(
                 $cURL,
                 [
-                    CURLOPT_URL => self::BASE_URL . $url,
+                    CURLOPT_URL => $this->BASE_URL . $url,
                     CURLOPT_CUSTOMREQUEST => "POST",
                     CURLOPT_POSTFIELDS => json_encode($params, JSON_UNESCAPED_UNICODE),
                     CURLOPT_HTTPHEADER => [

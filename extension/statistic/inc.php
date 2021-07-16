@@ -37,7 +37,7 @@ class statistic extends \project\extension {
      * @return int
      */
     private function register($hash) {
-        echo "hash {$hash}<br/>\n";
+        //echo "hash {$hash}<br/>\n";
         $query = "INSERT INTO `zay_visitors`(`visitor_id`, `http_user_agent`, `remote_addr`, "
                 . "`request_uri_last`, `request_uri`, `http_referer`, `user`, `height`, `width`, `last_time`, `start_time`) "
                 . "VALUES ('?','?','?','?','?','?','?','?','?',NOW(),NOW())";

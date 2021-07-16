@@ -65,6 +65,11 @@ function init_pay_data_list() {
                         }
                     }
 
+                    var business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Чек сформирован</div>';
+                    if (e['data'][i]['pay_sum'] > 0 && e['data'][i]['business_check'].length == 0) {
+                        business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Нет чека</div> <div><input type="button" class="btn btn-sm btn-primary btn_send_business_check" value="Сформировать чек" pay_id="' + e['data'][i]['id'] + '" /></div>';
+                    }
+
                     var pay_status = e['data'][i]['pay_status'];
                     var border_class = '';
                     if (e['data'][i]['pay_status'] === 'succeeded') {
@@ -96,7 +101,7 @@ function init_pay_data_list() {
                                     <td class="align-middle">' + user_title + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_type_title'] + ' ' + credit_type + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_date'] + '</td> \
-                                    <td class="text-center align-middle">' + pay_status + '</td> \
+                                    <td class="text-center align-middle">' + pay_status + '<br/>' + business_check + '</td> \
                                     <td class="text-center align-middle">' + pay_descr + '</td>\
                                     </tr>');
                 }
@@ -111,6 +116,7 @@ function init_pay_data_list() {
             pay_list_col_true = 1;
 
             init_pay_info();
+            init_send_business_check();
         }
     });
 }
@@ -231,11 +237,11 @@ function init_pay_info() {
                 var btn_pay_check = '';
                 var credit_type = '';
                 var pay_credit = 0;
-                var pay_tinkoff_id = '';
+                var pay_key_id = '';
                 var pay_tinkoff_link = '';
                 if (e['data']['pay_credit'] > 0) {
                     credit_type = '( Кредитный )';
-                    pay_tinkoff_id = '<br/>Тинькоф: ' + e['data']['pay_tinkoff_id'];
+                    pay_key_id = '<br/>Тинькоф: ' + e['data']['pay_tinkoff_id'];
                     pay_tinkoff_link = e['data']['pay_tinkoff_link'];
                     pay_credit = e['data']['pay_credit'];
                 }
@@ -247,6 +253,13 @@ function init_pay_info() {
                     }
                 }
 
+                if (e['data']['pay_type'] == 'ya') {
+                    pay_key_id = e['data']['pay_key'];
+                    if (e['data']['pay_status'] !== 'succeeded') {
+                        btn_pay_check = '<input type="button" value="Проверить платеж" class="btn btn-sm btn-primary btn_pay_check" elm_id="' + e['data']['pay_key'] + '" pay_type="' + e['data']['pay_type'] + '" />';
+                    }
+                }
+
                 var pay_status_html = '<select name="pay_status" class="form-control pay_status init_elm_edit" elm_id="' + objid + '" elm_table="zay_pay" elm_row="pay_status" func="init_pay_data_list()">\n\
                                             <option value="' + e['data']['pay_status'] + '" selected="selected">' + pay_status + '</option>\n\
                                             <option value="succeeded">выполнено</option>\n\
@@ -255,7 +268,7 @@ function init_pay_info() {
                                        </select>';
 
 
-                $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + " " + pay_tinkoff_id + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + " <b style=\"font-size: 0.8rem;\">" + pay_key_id + "</b></td></tr>");
                 $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
                 $(".pay_info_data").append("<tr><td class=\"align-middle\">Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
                 $(".pay_info_data").append("<tr><td class=\"align-middle\">Статус платежа</td><td class=\"border_class\">" + pay_status_html + "</td></tr>");
@@ -299,5 +312,30 @@ function init_btn_pay_check() {
                 }
             });
         }
+        if (pay_type === 'ya') {
+            // Для CloudPayments
+            sendPostLigth('/extension/pay/cron.php?pay_type=ya&pay_key=' + elm_id, {}, function (e) {
+                if (e['success'] == 1) {
+                    $(o).closest(".pay_info_data").find('option[value="succeeded"]').prop('selected', true).trigger('change');
+                } else {
+                    toastr.success(e['success_text']);
+                }
+            });
+        }
+    });
+}
+
+function init_send_business_check() {
+    $(".btn_send_business_check").unbind('click').click(function () {
+        var o = this;
+        var pay_id = $(this).attr("pay_id");
+        sendPostLigth('/jpost.php?extension=cart', {"send_business_check": 1, "pay_id": pay_id}, function (e) {
+            if (e['success'] == 1) {
+                $(".business_check_text_" + pay_id).html("Чек сформирован");
+                $(o).hide(200);
+            } else {
+                $(".business_check_text_" + pay_id).html("Нет чека");
+            }
+        });
     });
 }

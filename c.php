@@ -44,13 +44,13 @@ if (isset($_GET['pay_key'])) {
 
 $result = array();
 
-echo "pay_key: {$pay_key} <br/>\n";
+
 // Проверяем статус оплаты
 if (isset($pay_key)) {
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_key`='?'";
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_key`='?'";
     $pays = $sqlLight->queryList($query, array($pay_key));
 } else {
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_date`>=CURRENT_DATE-1";
     $pays = $sqlLight->queryList($query);
 }
 
@@ -60,6 +60,7 @@ echo "count: " . count($pays) . "<br/>\n";
 if (count($pays) > 0) {
     foreach ($pays as $value) {
         $paymentId = $value['pay_key']; // Получаем ключ платежа
+        echo "pay_key: {$paymentId} <br/>\n";
         $payment = $client->getPaymentInfo($paymentId); // Получаем информацию о платеже
         $pay_check = $payment->getstatus(); // Получаем статус оплаты
         if ($pay_check != 'succeeded') { // Если статус оплаты не завершенный то проверяем оплату еще раз
@@ -104,7 +105,7 @@ if (count($pays) > 0) {
 //            $_SESSION['cart']['itms'] = array();
 //            $_SESSION['PAY_KEY'] = '';
 //            unset($_SESSION['PAY_KEY']);
-            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action' => '/?page_type=pay_thanks');
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
 //            location_href('/?page_type=pay_thanks');
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');

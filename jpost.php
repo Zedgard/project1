@@ -83,6 +83,8 @@ if (isset($_POST)) {
     } else {
         $_SESSION['errors'][] = 'Сессия устарела';
         $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'action' => 'reload');
+        echo json_encode($result);
+        exit();
     }
 
     /*

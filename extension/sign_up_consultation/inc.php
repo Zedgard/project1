@@ -20,57 +20,67 @@ class sign_up_consultation extends \project\extension {
 
     /**
      * Добавление новой консультации
-     * @param type $data
+     * @param type $pay_data Данные о покупки из базы таблица "zay_pay"
      * @return type
      */
-    public function add_consultation($data) {
-        $period_id = ($data['period_id'] > 0) ? $data['period_id'] : 0;
+    public function add_consultation($pay_data) {
 
-        if (!isset($_SESSION['consultation'])) {
-            $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?' and `cancel`=0 ";
-            $objs = $this->getSelectArray($querySelect, array($consultation_date, $data['time']));
-            if (count($objs) == 0) {
-                $_SESSION['errors'][] = 'Уже есть запись на эту дату!';
-            }
-        }
+//        $queryConsultation = "SELECT cp.id as period_id, cp.period_price, cp.text_type, cp.period_time, 
+//                            cm.id as master_id, cm.master_name, 
+//                            c.*     
+//                            FROM zay_consultation c 
+//                            left join zay_consultation_periods cp on cp.id=c.period_id
+//                            left join zay_consultation_master cm on cm.id=c.master_id
+//                            WHERE c.pay_id='?' ";
+//        $consultation = $this->getSelectArray($queryConsultation, array($pay_data['id']));
 
-        if (count($_SESSION['errors']) == 0) {
-            $query = "INSERT INTO `zay_consultation`(`pay_id`, `master_id`, `first_name`, `user_phone`, `user_email`, `pay_descr`, `consultation_date`, `consultation_time`, `period_id`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?')";
 
-            $return = $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $data['date'], $data['time'], $period_id), 0);
-            // Отправим письмо оповещение
-            if ($return) {
-                $period_str = '';
-                if ($period_id > 0) {
-                    $periods = $this->get_master_consultation_periods($data['your_master_id'], $data['date'], $period_id);
-                    if (count($periods) > 0) {
-                        $period_str = $periods[0]['period_hour'] . ':' . $periods[0]['periods_minute']; // . ' цена: ' . $periods[0]['period_price'];
+        $queryPayConsultation = "SELECT * FROM `zay_pay_consultation` WHERE `pay_id`='?' ";
+        $payConsultations = $this->getSelectArray($queryPayConsultation, array($pay_data['id']));
+
+        // `pay_id`, `title`, `period_id`, `master_id`, `user_first_name`, `user_phone`, `user_email`, `date_consultation`, `time_consultation`
+        if (count($payConsultations) > 0) {
+            foreach ($payConsultations as $value) {
+                $period_id = ($value['period_id'] > 0) ? $value['period_id'] : 0;
+
+                $query = "INSERT INTO `zay_consultation`(`pay_id`, `master_id`, `first_name`, `user_phone`, `user_email`, `pay_descr`, `consultation_date`, `consultation_time`, `period_id`) "
+                        . "VALUES ('?','?','?','?','?','?','?','?','?')";
+                $return = $this->query($query, array($value['pay_id'], $value['master_id'],
+                    $value['user_first_name'], $value['user_phone'], $value['user_email'], $value['descr'], $value['date_consultation'], $value['time_consultation'],
+                    $period_id), 0);
+                
+                // Отправим письмо оповещение
+                if ($return) {
+                    $period_str = '';
+                    if ($period_id > 0) {
+                        $periods = $this->get_master_consultation_periods($value['your_master_id'], $value['date_consultation'], $period_id);
+                        if (count($periods) > 0) {
+                            $period_str = $periods[0]['period_hour'] . ':' . $periods[0]['periods_minute']; // . ' цена: ' . $periods[0]['period_price'];
+                        }
                     }
-                }
 
-                $send_emails = new \project\send_emails();
-                $config = new \project\config();
-                $date = $data['date'];
-                $date = date_jquery_format($date);
-                
-                // Отправка письма клиенту
-                $send_emails->send(
-                        'consultation',
-                        $data['user_email'], array(
-                    //'site' => 'https://' . $_SERVER['SERVER_NAME'],
-                    'fio' => $data['first_name'],
-                    'email' => $data['user_email'],
-                    'phone' => $data['user_phone'],
-                    'descr' => $data['pay_descr'],
-                    'date' => $date,
-                    'time' => $data['time'],
-                    'period' => $period_str
-                        )
-                );
+                    $send_emails = new \project\send_emails();
+                    $config = new \project\config();
+                    $date = $value['date_consultation'];
+                    $date = date_jquery_format($date);
 
-                
-                // Отправка на основную почту
+                    // Отправка письма клиенту
+                    $send_emails->send(
+                            'consultation',
+                            $value['user_email'], array(
+                        //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+                        'fio' => $value['user_first_name'],
+                        'email' => $value['user_email'],
+                        'phone' => $value['user_phone'],
+                        'descr' => $value['descr'],
+                        'date' => $date,
+                        'time' => $value['time_consultation'],
+                        'period' => $period_str
+                            )
+                    );
+
+
+                    // Отправка на основную почту
 //                $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
 //                $send_emails->send(
 //                        'consultation',
@@ -85,30 +95,119 @@ class sign_up_consultation extends \project\extension {
 //                    'period' => $period_str
 //                        )
 //                );
+                    // Отправить опопвещение менеджеру
+                    $consultation_manager_email = $config->getConfigParam('consultation_manager_email');
+                    if (strlen($consultation_manager_email) > 0) {
+                        $send_emails->send(
+                                'consultation',
+                                $consultation_manager_email, array(
+                            //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+                            'fio' => $value['user_first_name'],
+                            'email' => $value['user_email'],
+                            'phone' => $value['user_phone'],
+                            'descr' => $value['descr'],
+                            'date' => $date,
+                            'time' => $value['time_consultation'],
+                            'period' => $period_str
+                                )
+                        );
+                    }
 
-                // Отправить опопвещение менеджеру
-                $consultation_manager_email = $config->getConfigParam('consultation_manager_email');
-                if (strlen($consultation_manager_email) > 0) {
-                    $send_emails->send(
-                            'consultation',
-                            $consultation_manager_email, array(
-                        //'site' => 'https://' . $_SERVER['SERVER_NAME'],
-                        'fio' => $data['first_name'],
-                        'email' => $data['user_email'],
-                        'phone' => $data['user_phone'],
-                        'descr' => $data['pay_descr'],
-                        'date' => $date,
-                        'time' => $data['time'],
-                        'period' => $period_str
-                            )
-                    );
+                    if (isset($_SESSION['consultation'])) {
+                        unset($_SESSION['consultation']);
+                    }
+                    return $return;
                 }
-
-                unset($_SESSION['consultation']);
             }
-
-            return $return;
         }
+
+
+        //$period_id = ($data['period_id'] > 0) ? $data['period_id'] : 0;
+//        if (!isset($_SESSION['consultation'])) {
+//            $querySelect = "SELECT * FROM `zay_consultation` WHERE `consultation_date`='?' AND `consultation_time`='?' and `cancel`=0 ";
+//            $objs = $this->getSelectArray($querySelect, array($consultation_date, $data['time']));
+//            if (count($objs) == 0) {
+//                $_SESSION['errors'][] = 'Уже есть запись на эту дату!';
+//            }
+//        }
+
+        /*
+         * Старая обработка
+         */
+//        if (count($_SESSION['errors']) == 0) {
+//            $query = "INSERT INTO `zay_consultation`(`pay_id`, `master_id`, `first_name`, `user_phone`, `user_email`, `pay_descr`, `consultation_date`, `consultation_time`, `period_id`) "
+//                    . "VALUES ('?','?','?','?','?','?','?','?','?')";
+//
+//            $return = $this->query($query, array($data['pay_id'], $data['your_master_id'], $data['first_name'], $data['user_phone'], $data['user_email'], $data['pay_descr'], $data['date'], $data['time'], $period_id), 0);
+//            // Отправим письмо оповещение
+//            if ($return) {
+//                $period_str = '';
+//                if ($period_id > 0) {
+//                    $periods = $this->get_master_consultation_periods($data['your_master_id'], $data['date'], $period_id);
+//                    if (count($periods) > 0) {
+//                        $period_str = $periods[0]['period_hour'] . ':' . $periods[0]['periods_minute']; // . ' цена: ' . $periods[0]['period_price'];
+//                    }
+//                }
+//
+//                $send_emails = new \project\send_emails();
+//                $config = new \project\config();
+//                $date = $data['date'];
+//                $date = date_jquery_format($date);
+//
+//                // Отправка письма клиенту
+//                $send_emails->send(
+//                        'consultation',
+//                        $data['user_email'], array(
+//                    //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+//                    'fio' => $data['first_name'],
+//                    'email' => $data['user_email'],
+//                    'phone' => $data['user_phone'],
+//                    'descr' => $data['pay_descr'],
+//                    'date' => $date,
+//                    'time' => $data['time'],
+//                    'period' => $period_str
+//                        )
+//                );
+//
+//
+//                // Отправка на основную почту
+////                $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
+////                $send_emails->send(
+////                        'consultation',
+////                        $link_ed_mailto, array(
+////                    //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+////                    'fio' => $data['first_name'],
+////                    'email' => $data['user_email'],
+////                    'phone' => $data['user_phone'],
+////                    'descr' => $data['pay_descr'],
+////                    'date' => $date,
+////                    'time' => $data['time'],
+////                    'period' => $period_str
+////                        )
+////                );
+//                // Отправить опопвещение менеджеру
+//                $consultation_manager_email = $config->getConfigParam('consultation_manager_email');
+//                if (strlen($consultation_manager_email) > 0) {
+//                    $send_emails->send(
+//                            'consultation',
+//                            $consultation_manager_email, array(
+//                        //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+//                        'fio' => $data['first_name'],
+//                        'email' => $data['user_email'],
+//                        'phone' => $data['user_phone'],
+//                        'descr' => $data['pay_descr'],
+//                        'date' => $date,
+//                        'time' => $data['time'],
+//                        'period' => $period_str
+//                            )
+//                    );
+//                }
+//
+//                unset($_SESSION['consultation']);
+//            }
+//
+//            return $return;
+//        }
         return false;
     }
 

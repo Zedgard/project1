@@ -536,13 +536,7 @@ if (isset($_POST['check_cloudpayments'])) {
             // Зарегистрируем покупку
             $pr_cart->register_pay($pay_id);
 
-            // Зафиксируем продажу
-            $query_products = "select * from zay_pay_products WHERE pay_id='?'";
-            $products_data = $sqlLight->queryList($query_products, array($pay_id));
-            foreach ($products_data as $v) {
-                $products->setSoldAdd($v['product_id']);
-            }
-            $result = array('success' => 1, 'success_text' => 'Оплата успешно проведена', 'action' => '/?page_type=pay_thanks'); // '/?page_type=pay_thanks'
+            $result = array('success' => 1, 'success_text' => 'Оплата успешно проведена'); // , 'action' => '/?page_type=pay_thanks' '/?page_type=pay_thanks'
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');
         }
@@ -580,4 +574,12 @@ if (isset($_POST['get_cart_other'])) {
             $result = array('success' => 1, 'pay_key' => $pay_key, 'return_url' => $return_url);
         }
     }
-}    
+}
+
+if (isset($_POST['send_business_check'])) {
+    if ($pr_cart->register_business_check($_POST['pay_id'])) {
+        $result = array('success' => 1, 'success_text' => 'Чек успешно сформирован', 'data' => array());
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Не сформирован', 'data' => array());
+    }
+}
