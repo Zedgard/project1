@@ -4,21 +4,28 @@
  * Обработки cron заданий
  */
 
+/*
+ * Yandex kassa
+ * Проверим статусы платежей и зафиксируем успешность проведения платежа
+ * Повесить данный процесс на CRON
+ * 
+ */
+include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
+
+// Подключаем библиотеку Я.Кассы
+require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
+
+use YandexCheckout\Client;
+
 if ($_GET['pay_type'] == 'ya') {
-    /*
-     * Yandex kassa
-     * Проверим статусы платежей и зафиксируем успешность проведения платежа
-     * Повесить данный процесс на CRON
-     * 
-     */
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
+
 
     $pr_cart = new \project\cart();
     $sqlLight = new \project\sqlLight();
@@ -31,10 +38,7 @@ if ($_GET['pay_type'] == 'ya') {
     $ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
 
 
-    // Подключаем библиотеку Я.Кассы
-    require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
 
-    use YandexCheckout\Client;
 
     $client = new Client();
     $client->setAuth($ya_shop_id, $ya_shop_api_key);
