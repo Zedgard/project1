@@ -333,7 +333,7 @@ class cart extends \project\extension {
                 //echo "billArray<br/>\n";
                 $billArray = [// Массив с данными чека.
                     "command" => [// Массив с данными команды.
-                        "author" => "{$pay_type}", // (String) Имя кассира (Будет пробито на чеке). // Платеж через {$pay_type} на сайте {$_SERVER['SERVER_NAME']}
+                        "author" => "{$pay_type} {$pay_id}", // (String) Имя кассира (Будет пробито на чеке). // Платеж через {$pay_type} на сайте {$_SERVER['SERVER_NAME']}
                         "smsEmail54FZ" => $user_info['email'], //$_SESSION['user']['info']['email'], // (String) Телефон или e-mail покупателя.
                         "c_num" => $pay_id, // (int) Номер чека.
                         "payed_cash" => 0.00, // (float) Сумма оплаты наличными (Не более 2-х знаков после точки).
