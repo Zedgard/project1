@@ -65,6 +65,11 @@ function init_pay_data_list() {
                         }
                     }
 
+                    var business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Чек сформирован</div>';
+                    if (e['data'][i]['pay_sum'] > 0 && e['data'][i]['business_check'].length == 0) {
+                        business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Нет чека</div> <div><input type="button" class="btn btn-sm btn-primary btn_send_business_check" value="Сформировать чек" pay_id="' + e['data'][i]['id'] + '" /></div>';
+                    }
+
                     var pay_status = e['data'][i]['pay_status'];
                     var border_class = '';
                     if (e['data'][i]['pay_status'] === 'succeeded') {
@@ -96,7 +101,7 @@ function init_pay_data_list() {
                                     <td class="align-middle">' + user_title + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_type_title'] + ' ' + credit_type + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_date'] + '</td> \
-                                    <td class="text-center align-middle">' + pay_status + '</td> \
+                                    <td class="text-center align-middle">' + pay_status + '<br/>' + business_check + '</td> \
                                     <td class="text-center align-middle">' + pay_descr + '</td>\
                                     </tr>');
                 }
@@ -111,6 +116,7 @@ function init_pay_data_list() {
             pay_list_col_true = 1;
 
             init_pay_info();
+            init_send_business_check();
         }
     });
 }
@@ -291,7 +297,7 @@ function init_pay_info() {
  * Проверка платежа 
  * @returns {undefined}
  */
-function init_btn_pay_check() { 
+function init_btn_pay_check() {
     $(".btn_pay_check").unbind('click').click(function () {
         var o = this;
         var pay_type = $(this).attr("pay_type");
@@ -316,5 +322,20 @@ function init_btn_pay_check() {
                 }
             });
         }
+    });
+}
+
+function init_send_business_check() {
+    $(".btn_send_business_check").unbind('click').click(function () {
+        var o = this;
+        var pay_id = $(this).attr("pay_id");
+        sendPostLigth('/jpost.php?extension=cart', {"send_business_check": 1, "pay_id": pay_id}, function (e) {
+            if (e['success'] == 1) {
+                $(".business_check_text_" + pay_id).html("Чек сформирован");
+                $(o).hide(200);
+            } else {
+                $(".business_check_text_" + pay_id).html("Нет чека");
+            }
+        });
     });
 }

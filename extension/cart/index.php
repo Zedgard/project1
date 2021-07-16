@@ -252,7 +252,7 @@ if ($form_show == 0) {
     
     //$c_cart->register_business_check(279558, array());
     //print_r($_SESSION);
-    $c_cart->register_business_check(279592);
+    
     include 'tmpl/index.php';
 } else {
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
