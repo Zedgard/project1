@@ -47,7 +47,7 @@ $result = array();
 echo "pay_key: {$pay_key} <br/>\n";
 // Проверяем статус оплаты
 if (isset($pay_key)) {
-    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_key`='?'";
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_key`='?'";
     $pays = $sqlLight->queryList($query, array($pay_key));
 } else {
     $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='ya' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
@@ -62,11 +62,13 @@ if (count($pays) > 0) {
         $paymentId = $value['pay_key']; // Получаем ключ платежа
         $payment = $client->getPaymentInfo($paymentId); // Получаем информацию о платеже
         $pay_check = $payment->getstatus(); // Получаем статус оплаты
+        if ($pay_check != 'succeeded') { // Если статус оплаты не завершенный то проверяем оплату еще раз
+            if ($pay_paid = $payment->getPaid()) {
+                $payment->setstatus('succeeded');
+                $pay_check = $payment->getstatus();
+            }
+        }
         echo "pay_check: {$pay_check} <br/>\n";
-        $pay_paid = $payment->getPaid();
-        $payment->setstatus('succeeded');
-        $pay_check_new = $payment->getstatus();
-        echo "pay_check_new: {$pay_check_new} <br/>\n";
 //    //
 //    echo "paymentId: {$paymentId} <br/>\n";
 //    echo "pay_paid: {$pay_paid} <br/>\n";
