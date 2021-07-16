@@ -104,7 +104,6 @@ setTimeout(function () {
                                 } else {
                                     if (!!result['action']) {
                                         if (result['action'] == 'reload') {
-                                            alert('reload');
                                             window.location.href = window.location.href;
                                         } else {
                                             window.location.href = result['action'];
@@ -227,11 +226,18 @@ function sendPostLigth(url, data, func, val_async) {
                 var action_time = 2;
                 if (!!result['action_time'] && Number(result['action_time']) > 0) {
                     action_time = Number(result['action_time']);
+                    setTimeout(function () {
+                        window.location.href = result['action'];
+                    }, (action_time * 1000));
+                } else {
+                    if (!!result['action']) {
+                        if (result['action'] == 'reload') {
+                            window.location.href = window.location.href;
+                        } else {
+                            window.location.href = result['action'];
+                        }
+                    }
                 }
-                setTimeout(function () {
-                    window.location.href = result['action'];
-                }, (action_time * 1000));
-
             }
             // Отобразим если есть сообщение
             if (typeof result['success_text'] != "undefined" && result['success_text'].length > 0) {
