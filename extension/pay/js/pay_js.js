@@ -231,11 +231,11 @@ function init_pay_info() {
                 var btn_pay_check = '';
                 var credit_type = '';
                 var pay_credit = 0;
-                var pay_tinkoff_id = '';
+                var pay_key_id = '';
                 var pay_tinkoff_link = '';
                 if (e['data']['pay_credit'] > 0) {
                     credit_type = '( Кредитный )';
-                    pay_tinkoff_id = '<br/>Тинькоф: ' + e['data']['pay_tinkoff_id'];
+                    pay_key_id = '<br/>Тинькоф: ' + e['data']['pay_tinkoff_id'];
                     pay_tinkoff_link = e['data']['pay_tinkoff_link'];
                     pay_credit = e['data']['pay_credit'];
                 }
@@ -247,6 +247,13 @@ function init_pay_info() {
                     }
                 }
 
+                if (e['data']['pay_type'] == 'ya') {
+                    pay_key_id = e['data']['pay_key'];
+                    if (e['data']['pay_status'] !== 'succeeded') {
+                        btn_pay_check = '<input type="button" value="Проверить платеж" class="btn btn-sm btn-primary btn_pay_check" elm_id="' + e['data']['pay_key'] + '" pay_type="' + e['data']['pay_type'] + '" />';
+                    }
+                }
+
                 var pay_status_html = '<select name="pay_status" class="form-control pay_status init_elm_edit" elm_id="' + objid + '" elm_table="zay_pay" elm_row="pay_status" func="init_pay_data_list()">\n\
                                             <option value="' + e['data']['pay_status'] + '" selected="selected">' + pay_status + '</option>\n\
                                             <option value="succeeded">выполнено</option>\n\
@@ -255,7 +262,7 @@ function init_pay_info() {
                                        </select>';
 
 
-                $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + " " + pay_tinkoff_id + "</td></tr>");
+                $(".pay_info_data").append("<tr><td>Идентификатор</td><td>" + objid + " <b style=\"font-size: 0.8rem;\">" + pay_key_id + "</b></td></tr>");
                 $(".pay_info_data").append("<tr><td>Дата</td><td>" + e['data']['pay_date'] + "</td></tr>");
                 $(".pay_info_data").append("<tr><td class=\"align-middle\">Описание</td><td>" + e['data']['pay_descr'] + "</td></tr>");
                 $(".pay_info_data").append("<tr><td class=\"align-middle\">Статус платежа</td><td class=\"border_class\">" + pay_status_html + "</td></tr>");
@@ -284,7 +291,7 @@ function init_pay_info() {
  * Проверка платежа 
  * @returns {undefined}
  */
-function init_btn_pay_check() {
+function init_btn_pay_check() { 
     $(".btn_pay_check").unbind('click').click(function () {
         var o = this;
         var pay_type = $(this).attr("pay_type");
@@ -292,6 +299,16 @@ function init_btn_pay_check() {
         if (pay_type === 'cp') {
             // Для CloudPayments
             sendPostLigth('/system/cloudpayments-php-client-master/my.php', {"id": elm_id}, function (e) {
+                if (e['success'] == 1) {
+                    $(o).closest(".pay_info_data").find('option[value="succeeded"]').prop('selected', true).trigger('change');
+                } else {
+                    toastr.success(e['success_text']);
+                }
+            });
+        }
+        if (pay_type === 'ya') {
+            // Для CloudPayments
+            sendPostLigth('/extension/pay/cron.php?pay_type=ya&pay_key=' + elm_id, {}, function (e) {
                 if (e['success'] == 1) {
                     $(o).closest(".pay_info_data").find('option[value="succeeded"]').prop('selected', true).trigger('change');
                 } else {
