@@ -87,7 +87,7 @@
                     </div>
 
                     <input type="hidden" name="wares_id" class="wares_id" id="wares_id" value="0" />
-                    <!--<button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Закрыть</button>-->
+                    <!--<button type="button" class="btn btn-danger btn-pill" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</button>-->
                     <a href="./" class="btn btn-danger">Закрыть</a>
                     <button type="button" class="btn btn-primary btn_save_config">Сохранить</button>
 

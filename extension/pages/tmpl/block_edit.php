@@ -4,7 +4,7 @@
         <div class="modal-content form_save_block">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Управление продуктом</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="block_id" class="block_id" id="block_id" value="0" />
-                <span class="btn btn-danger btn-pill" data-dismiss="modal">Закрыть</span>
+                <span class="btn btn-danger btn-pill" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</span>
                 <span class="btn btn-primary btn-pill btn_save_blok">Сохранить</span>
             </div>
         </div>

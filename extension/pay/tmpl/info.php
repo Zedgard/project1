@@ -51,7 +51,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="pay_id" class="pay_id" id="pay_id" value="0" />
-                <span class="btn btn-danger" data-dismiss="modal">Закрыть</span>
+                <span class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</span>
                 <!-- <span class="btn btn-primary btn_save_pay_info">Сохранить</span> -->
             </div>
         </div>

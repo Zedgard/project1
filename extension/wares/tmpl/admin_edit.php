@@ -4,7 +4,7 @@
         <div class="modal-content form_save_wares">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Управление товаром</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -83,7 +83,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="wares_id" class="wares_id" id="wares_id" value="0" />
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</button>
                 <button type="button" class="btn btn-primary btn_save_wares">Сохранить</button>
             </div>
         </div>
