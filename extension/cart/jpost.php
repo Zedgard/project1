@@ -536,7 +536,7 @@ if (isset($_POST['check_cloudpayments'])) {
             // Зарегистрируем покупку
             $pr_cart->register_pay($pay_id);
 
-            $result = array('success' => 1, 'success_text' => 'Оплата успешно проведена', 'action' => '/?page_type=pay_thanks'); // '/?page_type=pay_thanks'
+            $result = array('success' => 1, 'success_text' => 'Оплата успешно проведена'); // , 'action' => '/?page_type=pay_thanks' '/?page_type=pay_thanks'
         } else {
             $result = array('success' => 0, 'success_text' => 'Не проведен! Недостаточно средств или карта не активна!');
         }
