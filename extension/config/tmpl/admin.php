@@ -66,7 +66,7 @@
         <div class="modal-content form_category_modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Управление категориями</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

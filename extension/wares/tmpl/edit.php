@@ -4,7 +4,7 @@
         <div class="modal-content form_save_config">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Управление настройкой</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -57,7 +57,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="config_id" class="config_id" id="config_id" value="0" />
-                <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</button>
                 <button type="button" class="btn btn-primary btn-pill btn_save_config">Сохранить</button>
             </div>
         </div>

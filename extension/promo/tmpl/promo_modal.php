@@ -5,7 +5,7 @@
         <div class="modal-content" style="border: none;background-color: transparent;">
 
             <div class="modal-body m-0 p-0">
-                <button type="button" class="close float-end modal_close_btn" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close" elm_id="<?= $modal_data[0]['id'] ?>">
+                <button type="button" class="close float-end modal_close_btn" data-bs-dismiss="modal" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close" elm_id="<?= $modal_data[0]['id'] ?>">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="container-fluid m-0 p-0">

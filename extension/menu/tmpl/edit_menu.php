@@ -4,7 +4,7 @@
         <div class="modal-content form_save_menu">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Управление меню</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="menu_id" class="menu_id" id="menu_id" value="0" />
-                <span class="btn btn-danger" data-dismiss="modal">Закрыть</span>
+                <span class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</span>
                 <span class="btn btn-primary btn_save_menu">Сохранить</span>
             </div>
         </div>

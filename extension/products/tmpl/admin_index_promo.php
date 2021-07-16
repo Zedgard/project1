@@ -48,7 +48,7 @@
         <div class="modal-content form_save_promo_product">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLarge">Добавление промо продукта</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="products_id" class="products_id" id="products_id" value="0" />
-                <span class="btn btn-danger" data-dismiss="modal">Закрыть</span>
+                <span class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</span>
             </div>
         </div>
     </div>

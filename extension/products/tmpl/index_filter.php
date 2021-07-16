@@ -220,8 +220,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger " data-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-primary " data-dismiss="modal">Применить</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-bs-dismiss="modal">Применить</button>
                     </div>
                 </div>
             </div>

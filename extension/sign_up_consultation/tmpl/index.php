@@ -247,7 +247,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Отмена</button>
+                                <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal" data-bs-dismiss="modal">Отмена</button>
                             </div>
                         </div>
                     </div>

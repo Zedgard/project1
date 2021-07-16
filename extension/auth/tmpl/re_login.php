@@ -4,7 +4,7 @@
         <div class="modal-content form_re_password">
             <div class="modal-header">
                 <h5 class="modal-title">Восстановление пароля</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -17,7 +17,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-dismiss="modal">Закрыть</button>
                 <button type="button" class="btn btn-primary btn_re_password">Отправить</button>
             </div>
         </div>
@@ -34,7 +34,7 @@ if (isset($_GET['repassword']) && strlen($_GET['repassword']) > 0) {
             <div class="modal-content form_re_password2">
                 <div class="modal-header">
                     <h5 class="modal-title">Изменить пароль</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
