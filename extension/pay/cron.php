@@ -29,21 +29,14 @@ require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/
 
 use YandexCheckout\Client;
 
+$sqlLight = new \project\sqlLight();
+$config = new \project\config();
+$pr_cart = new \project\cart();
+
 if ($_GET['pay_type'] == 'ya') {
-
-
-    $pr_cart = new \project\cart();
-    $sqlLight = new \project\sqlLight();
-    $u = new \project\user();
-    $products = new \project\products();
-    $config = new \project\config();
-    $sign_up_consultation = new \project\sign_up_consultation();
 
     $ya_shop_id = $config->getConfigParam('ya_shop_id');
     $ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
-
-
-
 
     $client = new Client();
     $client->setAuth($ya_shop_id, $ya_shop_api_key);
@@ -123,7 +116,6 @@ if ($_GET['pay_type'] == 'ya') {
 // CloudPayments
 if ($_GET['pay_type'] == 'cp') {
 
-    $config = new \project\config();
     $publicKey = $config->getConfigParam('CloudPayments');
     $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
 
@@ -136,7 +128,7 @@ if ($_GET['pay_type'] == 'cp') {
     if (isset($_POST['id'])) {
         $pay_key = $_POST['id'];
     }
-    echo "pay_key: {$pay_key} <br/>\n";
+    //echo "pay_key: {$pay_key} <br/>\n";
 
     // Проверяем статус оплаты
     if (isset($pay_key)) {
