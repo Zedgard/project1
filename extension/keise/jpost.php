@@ -8,7 +8,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/inc.php';
 include_once 'inc.php';
 
-$c_marathons = new \project\marathons();
+$c_keise = new \project\keise();
 $user = new \project\user();
 $config = new \project\config();
 $pr_wares = new \project\wares();

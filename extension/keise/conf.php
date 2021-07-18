@@ -1,10 +1,10 @@
 <?php
 
 $config = array(
-    'title' => 'Марафоны',
-    'descr' => 'Марафоны',
+    'title' => 'Кейсы',
+    'descr' => 'Кейсы',
     'urls' => array(
-        'Марафоны для кабинета пользователя' => '/extension/marathons/office.php',
+        'Кейсы для кабинета пользователя' => '/extension/keise/office.php',
     ),
     'version' => '0.1'
 );

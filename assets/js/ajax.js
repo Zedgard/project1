@@ -104,7 +104,7 @@ setTimeout(function () {
                                 } else {
                                     if (!!result['action']) {
                                         if (result['action'] == 'reload') {
-                                            window.location.href = window.location.href;
+                                            //window.location.href = window.location.href;
                                         } else {
                                             window.location.href = result['action'];
                                         }
@@ -232,7 +232,7 @@ function sendPostLigth(url, data, func, val_async) {
                 } else {
                     if (!!result['action']) {
                         if (result['action'] == 'reload') {
-                            window.location.href = window.location.href;
+                            //window.location.href = window.location.href;
                         } else {
                             window.location.href = result['action'];
                         }

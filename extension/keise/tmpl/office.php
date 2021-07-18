@@ -23,7 +23,7 @@
     <div class="card card-default">
 
         <div class="card-header card-header-border-bottom">
-            <h2 class="col-lg-6">Марафоны</h2>
+            <h2 class="col-lg-6">Кейсы</h2>
         </div>
 
         <div class="card-body">
@@ -49,7 +49,7 @@
     function getClientMarathonsProducts() {
         $(".webinar_products_arrays_data tbody tr").remove();
         $(".webinar_products_arrays_data").html('<div class="w-100 text-center"><div class="spinner-border text-dark" role="status"><span class="sr-only">Loading...</span></div></div>');
-        sendPostLigth('/jpost.php?extension=wares', {"getClientMarathonsProducts": '1'}, function (e) {
+        sendPostLigth('/jpost.php?extension=wares', {"getClientKeiseProducts": '1'}, function (e) {
             $(".webinar_products_arrays_data").html("");
             var data = e['data'];
             if (data.length > 0) {

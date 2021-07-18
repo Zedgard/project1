@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg">
-            <div class="marathons_wares_title border-bottom pb-3"><span style="display: none;">Прохождение марафона &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
+            <div class="marathons_wares_title border-bottom pb-3"><span style="display: none;">Материалы кейса &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
         </div>
         <div class="col-lg">
 
