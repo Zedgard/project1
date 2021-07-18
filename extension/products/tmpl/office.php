@@ -18,13 +18,13 @@
             <div class="row mt-4 mb-4">
                 <div class="col-12">
                     <div class="row controls fast_control_btn">
-                        <div class="col-12 col-lg">
+                        <div class="col-6 col-lg-2">
                             <button type="button" elm='0' data-filter="all" class="btn_category_controll btn_category_controll_active border_radius3 mb-2">Все</button>
                         </div>
                         <?
                         foreach ($categoryArray as $value) {
                             ?>
-                            <div class="col-12 col-lg">
+                            <div class="col-6 col-lg-2">
                                 <button type="button" elm="<?= $value['id'] ?>" data-filter=".category-<?= $value['id'] ?>" class="btn_category_controll border_radius3 mb-2"><?= $value['title'] ?></button>
                             </div>
                             <?
