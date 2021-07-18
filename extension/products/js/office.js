@@ -83,7 +83,7 @@ function init_getClientPayProducts() {
 //                                </div>\n\
 //                         </a>');
                 $(".products_arrays_data").append('<div class="mb-0 mb-lg-3 category-' + data[i]['pcategory_id'] + '" data-ref="mixitup-target">\n\
-                        <a href="?wares_id=' + data[i]['id'] + '">\n\
+                        <a href="?product_id=' + data[i]['id'] + '">\n\
                             <div class="m-0 m-lg-2 p-2 p-lg-4 h-100 d-flex flex-column product_info item">\n\
                                 <span class="class_category_lbl opacity75" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['cat_title'] + '</span>\n\
                                 <div class="mb-2 align-items-start text-center flex-fill"><img src="' + data[i]['images_str'] + '" style="width: 100%;"/></div>\n\
