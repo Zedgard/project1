@@ -191,6 +191,11 @@ if (isset($_POST['getClientMarathonsProducts'])) {
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
+if (isset($_POST['getClientKeiseProducts'])) {
+    $data = $pr_wares->getClientCategoryProducts($wares_id, 'Кейсы');
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
 if (isset($_POST['getClientOnlineTreningsProducts'])) {
     $data = $pr_wares->getClientOnlineTreningsProducts();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);

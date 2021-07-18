@@ -741,6 +741,53 @@ class wares extends \project\extension {
     }
 
     /**
+     * Купленные марафоны клиента
+     * @param type $wares_id
+     * @return type
+     */
+    public function getClientCategoryProducts($wares_id = 0, $product_category = '') {
+        if ($_SESSION['user']['info']['id'] > 0 && strlen($product_category) > 0) {
+            if ($wares_id == 0) {
+                $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        MIN(p.id) as pay_id, wcat.category_id 
+                        FROM zay_pay p 
+                        left join zay_pay_products pp on pp.pay_id=p.id 
+                        left join zay_product pr on pr.id=pp.product_id 
+                        left join zay_product_wares pw on pw.product_id=pr.id 
+                        left join zay_wares w on w.id=pw.wares_id 
+                        left join zay_wares_category wcat on wcat.wares_id=w.id 
+                        left join zay_product_category pcat on pcat.product_id=pr.id
+                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
+                        and cpcat.type='product_category' and  cpcat.title='?' 
+                        GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
+                        order by pp.id DESC ";
+                $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $product_category), 0);
+                return $objs;
+            } else {
+                $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        MIN(p.id) as pay_id, wcat.category_id 
+                        FROM zay_pay p 
+                        left join zay_pay_products pp on pp.pay_id=p.id 
+                        left join zay_product pr on pr.id=pp.product_id 
+                        left join zay_product_wares pw on pw.product_id=pr.id 
+                        left join zay_wares w on w.id=pw.wares_id 
+                        left join zay_wares_category wcat on wcat.wares_id=w.id 
+                        left join zay_product_category pcat on pcat.product_id=pr.id 
+                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
+                        and cpcat.type='product_category' and  cpcat.title='?' 
+                        GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
+                        order by pp.id DESC ";
+                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, $product_category, 0))[0];
+            }
+        }
+        return array();
+    }
+
+    /**
      * Купленные онлайн тренинги клиента
      * @param type $wares_id
      * @return type
