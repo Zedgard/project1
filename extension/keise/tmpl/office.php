@@ -28,7 +28,7 @@
 
         <div class="card-body"> 
             <div class="container-fluid">
-                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 container_mix products_arrays_data"></div>
+                <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 container_mix products_arrays_data"></div>
             </div>
         </div>
 
@@ -59,11 +59,10 @@
                     $(".products_arrays_data").append(
                             '<a href="?wares_id=' + data[i]['id'] + '">\n\
                                 <div class="m-0 m-lg-2 p-2 p-lg-4 h-100 d-flex flex-column product_info item">\n\
-                                <div class="mb-2 align-items-start text-center flex-fill"><img src="' + data[i]['images'] + '" style="width: 100%;"/></div>\n\
-                                <div class="wares_title d-flex align-items-end text-center flex-fill">\n\
-                                <div class="mt-0 mb-0 ml-auto mr-auto">' + data[i]['title'] + '</div>\n\
-                                </div>\n\
-                                </div>\n\
+                                    <div class="mb-2 align-items-start text-center flex-fill"><img src="' + data[i]['images'] + '" style="width: 100%;"/></div>\n\
+                                    <div class="wares_title d-flex align-items-end text-center flex-fill">\n\
+                                        <div class="mt-0 mb-0 ml-auto mr-auto">' + data[i]['title'] + '</div>\n\
+                                    </div>\n\
                                 </div>\n\
                                 </a>');
                 }

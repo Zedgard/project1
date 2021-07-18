@@ -61,7 +61,7 @@ function getClientProducts() {
  * Купленные продукты
  * @returns {undefined}
  */
-function init_getClientPayProducts(){
+function init_getClientPayProducts() {
     $(".products_arrays_data div").remove();
     $(".products_arrays_data").html('<div class="w-100 text-center"><div class="spinner-border text-dark" role="status"><span class="sr-only">Загрузка...</span></div></div>');
     sendPostLigth('/jpost.php?extension=wares', {
@@ -80,19 +80,26 @@ function init_getClientPayProducts(){
 //                        </div>');
 //                }
                 var wcc_color = data[i]['cat_color'];
-                var wares_cat_name = '<span class="class_category" style="color: ' + wcc_color + ';">' + data[i]['cat_title'] + '</span>';
+                //var wares_cat_name = '<span class="class_category" style="color: ' + wcc_color + ';">' + data[i]['cat_title'] + '</span>';
                 // Товары продукта .product_id_' + data[i]['id'] + ' .product_elms
-                $('.products_arrays_data').append(
-                        '<div class="product_info category-' + data[i]['pcategory_id'] + ' mb-lg-3" data-ref="mixitup-target">\n\
-                                <a href="?katalog&product_id=' + data[i]['id'] + '">\n\
-                                <div class="card item p-3 p-lg-4 h-100 text-center">\n\
-                                <span class="class_category_lbl opacity75" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['cat_title'] + '</span>\n\
-                                <div class="mb-2"><img src="' + data[i]['images_str'] + '" style="max-width: 100%;max-height: 160px;"/></div>\n\
-                                <div class="mb-3 wares_title h-100"><span class="">' + data[i]['title'] + '</span></div>\n\
+//                $('.products_arrays_data').append(
+//                        '<a href="?katalog&product_id=' + data[i]['id'] + '" class="col m-0 m-lg-2 p-2 p-lg-4 w-100 item category-' + data[i]['pcategory_id'] + '" data-ref="mixitup-target">\n\
+//                                <div class="product_info h-100 d-flex flex-column">\n\
+//                                        <span class="class_category_lbl opacity75" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['cat_title'] + '</span>\n\
+//                                        <div class="mb-2 align-items-start text-center flex-fill"><img src="' + data[i]['images_str'] + '" style="width: 100%;"/></div>\n\
+//                                        <div class="d-flex align-items-end text-center flex-fill wares_title">' + data[i]['title'] + '</div>\n\
+//                                </div>\n\
+//                         </a>');
+                $(".products_arrays_data").append(
+                        '<a href="?wares_id=' + data[i]['id'] + '" class="mb-0 mb-lg-3">\n\
+                                <div class="m-0 m-lg-2 p-2 p-lg-4 h-100 d-flex flex-column product_info item category-' + data[i]['pcategory_id'] + '" data-ref="mixitup-target">\n\
+                                    <span class="class_category_lbl opacity75" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['cat_title'] + '</span>\n\
+                                    <div class="mb-2 align-items-start text-center flex-fill"><img src="' + data[i]['images_str'] + '" style="width: 100%;"/></div>\n\
+                                    <div class="wares_title d-flex align-items-end text-center flex-fill">\n\
+                                        <div class="mt-0 mb-0 ml-auto mr-auto">' + data[i]['title'] + '</div>\n\
+                                    </div>\n\
                                 </div>\n\
-                                </a>\n\
-                                </div>\n\
-                                ');
+                                </a>');
             }
             /*
              * Активируем фильтр

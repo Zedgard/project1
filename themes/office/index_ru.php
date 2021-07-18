@@ -160,7 +160,7 @@
                                 </g>
                                 </svg>
                                 -->
-                                <span class="brand-name text-truncate">Личный кабинет</span>
+                                <span class="brand-name text-truncate">Главная сайта</span>
                             </a>
                         </div>
                         <!-- begin sidebar scrollbar -->
