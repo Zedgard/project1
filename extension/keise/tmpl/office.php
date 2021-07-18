@@ -26,8 +26,8 @@
             <h2 class="col-lg-6">Кейсы</h2>
         </div>
 
-        <div class="card-body">
-            <div class="container_mix webinar_products_arrays_data">
+        <div class="card-body"> 
+            <div class="container_mix row row-cols-5 g-2 g-lg-3 webinar_products_arrays_data">
 
             </div>
         </div>
@@ -57,13 +57,13 @@
                     var wcc_color = data[i]['wcc_color'];
                     var wares_cat_name = '<span class="class_category" style="color: ' + wcc_color + ';">' + data[i]['wcc_title'] + '</span>';
                     $(".webinar_products_arrays_data").append(
-                            '<div class="col-lg-3 mb-3 pt-4 pb-4 product_info item" style="border: 1px solid #e5e9f2;">\n\
-                                <a href="?wares_id=' + data[i]['id'] + '">\n\
+                            '<a href="?wares_id=' + data[i]['id'] + '" attr="main">\n\
+                                <div class="mb-3 pt-4 pb-4 h-100 product_info item">\n\
                                 <div class="mb-2 text-center"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
                                 <div class="mb-3 wares_title text-center"><span class="">' + data[i]['title'] + '</span></div>\n\
                                 </div>\n\
-                                </a>\n\
-                                </div>');
+                                </div>\n\
+                                </a>');
                 }
             } else {
                 $(".webinar_products_arrays_data").html("Нет записей");

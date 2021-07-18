@@ -741,7 +741,7 @@ class wares extends \project\extension {
     }
 
     /**
-     * Купленные марафоны клиента
+     * Отобразим товары по категории
      * @param type $wares_id
      * @return type
      */
@@ -758,7 +758,7 @@ class wares extends \project\extension {
                         left join zay_wares w on w.id=pw.wares_id 
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id
-                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        left join zay_category cpcat on cpcat.id=wcat.category_id
                         where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
                         and cpcat.type='product_category' and  cpcat.title='?' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
@@ -776,12 +776,12 @@ class wares extends \project\extension {
                         left join zay_wares w on w.id=pw.wares_id 
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id 
-                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        left join zay_category cpcat on cpcat.id=wcat.category_id
                         where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
                         and cpcat.type='product_category' and  cpcat.title='?' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
-                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, $product_category, 0))[0];
+                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, $product_category, 0), 0)[0];
             }
         }
         return array();
