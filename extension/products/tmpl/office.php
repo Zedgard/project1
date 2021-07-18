@@ -34,7 +34,7 @@
                 </div>
             </div>
             <!-- Sorted block end --> 
-            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 container_mix products_arrays_data"></div>
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 container_mix products_arrays_data" data-ref="mixitup-container"></div>
         </div>
         <br/>
     </div>

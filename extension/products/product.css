@@ -105,6 +105,9 @@
 
 }
 
+.items {
+    overflow: hidden;
+}
 .waresListImages{
     /*
     background: rgb(227,227,227);
@@ -451,12 +454,12 @@
 /* Корректировка для мобильной версии */
 @media (max-width: 768px) {
     .cart_product_title{
-        font-size: 1.2rem;
+        font-size: 1rem;
         line-height: 1;
     }
     .cart_product_add{
-        font-size: 1.4rem;
-        padding: 0.8rem 2.2rem;
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
     }
     .cart_product_go_card{
         font-size: 1.3rem;
