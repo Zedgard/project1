@@ -6,7 +6,7 @@
 <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <div class="office_block_top_main">
     <div class="office_block_top_left">
-        <a href="/office/?katalog&product_id=<?= $_GET['product_id'] ?>" class="office_link_back">
+        <a href="/office/?katalog&product_id=<?= $_GET['product_id'] ?>&back=1" class="office_link_back">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="ml-3" style="float: left;font-size: 1.4rem;padding: 0.8rem 0;color: <?= $wares_info['category_color'] ?>;"><?= $wares_info['category_title'] ?></div>
