@@ -2,6 +2,8 @@
 
 defined('__CMS__') or die;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/inc.php';
 include_once 'inc.php';
 
 $pr_products = new \project\products();
@@ -293,3 +295,14 @@ if (isset($_POST['delete_promo_product'])) {
     }
 }
 
+if (isset($_POST['general'])) {
+    $pr_wares = new \project\wares();
+    $wares_info = $pr_wares->getWaresElem($_POST['wares_id']);
+    $wares = $pr_wares->getClientProducts($_POST['wares_id']);
+
+    $wares_img = '';
+    if (is_file($_SERVER['DOCUMENT_ROOT'] . $wares['images'])) {
+        $wares_img = '<img src="' . $wares['images'] . '" style="width: 80px;max-height: 80px;"/>';
+    }
+    include 'tmpl/general.php';
+}

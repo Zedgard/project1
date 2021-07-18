@@ -225,26 +225,47 @@
             success: function (e) {
                 if (e['success'] == '1') {
 
-                    $(o).find(".material_content_block").html(e['html']);
-                    $(o).find(".marathons_elm_content").html(e['html']);
+                    if (e['html'].length > 0) {
+                        $(o).find(".material_content_block").html(e['html']);
+                        $(o).find(".marathons_elm_content").html(e['html']);
 
-                    $(".material_info").unbind('mouseenter').mouseenter(function () {
-                        var wares_id = $(".marathons_wares_id").val();
-                        var series_id = $(this).attr('series_id');
-                        var material_id = $(this).attr('material_id');
-                        if (series_id > 0 && material_id > 0) {
-                            sendPostLigth('/jpost.php?extension=wares',
-                                    {"waresVideoSeriesSee": series_id, "wares_id": wares_id},
-                                    function (e) {
-                                        if (e['data']['bonus_open'] == '1') {
-                                            $(".marathons_material_bonus").find(".fa-lock").remove();
-                                            bonus_lock = 0;
-                                        }
-                                    });
-                        }
-                    });
+                        $(".material_info").unbind('mouseenter').mouseenter(function () {
+                            var wares_id = $(".marathons_wares_id").val();
+                            var series_id = $(this).attr('series_id');
+                            var material_id = $(this).attr('material_id');
+                            if (series_id > 0 && material_id > 0) {
+                                sendPostLigth('/jpost.php?extension=wares',
+                                        {"waresVideoSeriesSee": series_id, "wares_id": wares_id},
+                                        function (e) {
+                                            if (e['data']['bonus_open'] == '1') {
+                                                $(".marathons_material_bonus").find(".fa-lock").remove();
+                                                bonus_lock = 0;
+                                            }
+                                        });
+                            }
+                        });
+                    } else {
+                        get_general(o, '<?= $_GET['wares_id'] ?>');
+                    }
                 }
 
+            }
+        });
+    }
+
+    function get_general(o, wares_id) {
+        $.ajax({
+            url: '/jpost.php?extension=products',
+            type: 'POST',
+            async: true,
+            dataType: 'html',
+            data: {
+                "general": 1,
+                "wares_id": wares_id
+            },
+            success: function (e) {
+                $(o).find(".material_content_block").html(e);
+                $(o).find(".marathons_elm_content").html(e);
             }
         });
     }
