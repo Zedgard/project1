@@ -575,7 +575,7 @@ class wares extends \project\extension {
                             (SELECT DISTINCT
                                     pr.*, pcat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
                                     (IF( EXISTS(SELECT * FROM zay_category cat WHERE cat.id=pcat.category_id  
-                                                    AND (cat.title<>'Марафоны' and cat.title<>'Вебинары' and cat.title<>'Онлайн-тренинги') 
+                                                    AND (cat.title<>'Марафоны' and cat.title<>'Вебинары' and cat.title<>'Онлайн-тренинги' and cat.title<>'Кейсы') 
                                                ), 1, 0)
                                         ) AS wares_show
                                 FROM

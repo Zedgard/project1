@@ -103,7 +103,7 @@ class category extends \project\extension {
                         LEFT JOIN zay_category cat ON cat.id=pcat.category_id  
                         WHERE
                             p.user_id='?' AND p.pay_status='succeeded' AND w.id>0 AND(
-                                cat.type='product_category' and cat.title<>'Вебинары' and cat.title<>'Марафоны' and cat.title<>'Онлайн-тренинги'
+                                cat.type='product_category' and cat.title<>'Вебинары' and cat.title<>'Марафоны' and cat.title<>'Онлайн-тренинги' and cat.title<>'Кейсы'
                             )
                             and  pcat.category_id IS NOT NULL
                     ) dd
