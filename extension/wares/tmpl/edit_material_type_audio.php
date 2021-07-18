@@ -24,6 +24,6 @@
             <span class="switch-label" data-on="On" data-off="Off"></span>
             <span class="switch-handle"></span> 
         </label>
-        Скачивание файла
+        Запретить скачивание файла
     </div>    
 </div>  
