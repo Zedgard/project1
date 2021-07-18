@@ -18,7 +18,7 @@
     </div>
 
     <!-- мобильный вид -->
-    <div class="row mt-3 mb-1 bread d-block d-xl-none">
+    <div class="row mt-4 mb-3 bread d-block d-xl-none">
         <div class="col-12">
             <?= $page->bread_get() ?>
         </div>
@@ -46,13 +46,13 @@
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="row controls fast_control_btn">
-                            <div class="col-lg-3">
+                            <div class="col-6 col-lg-2">
                                 <button type="button" elm='0' data-filter="all" class="btn_category_controll btn_category_controll_active border_radius3 mb-2">Все</button>
                             </div>
                             <?
                             foreach ($categoryArray as $value) {
                                 ?>
-                                <div class="col-lg-3">
+                                <div class="col-6 col-lg-2">
                                     <button type="button" elm="<?= $value['id'] ?>" data-filter=".category-<?= $value['id'] ?>" class="btn_category_controll border_radius3 mb-2"><?= $value['title'] ?></button>
                                 </div>
                                 <?
