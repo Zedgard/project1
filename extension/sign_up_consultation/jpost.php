@@ -278,7 +278,11 @@ if (isset($_POST['edit_master_consultation_rejection'])) {
     $data['master_id'] = $_POST['master_id'];
     $data['rejection_day'] = $_POST['rejection_day'];
     $data['rejection_time'] = $_POST['rejection_time'];
-    $sign_up_consultation->set_master_consultant_rejection($data);
+    if ($sign_up_consultation->set_master_consultant_rejection($data)) {
+        $result = array('success' => 1, 'success_text' => '');
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    }
 }
 
 /*
