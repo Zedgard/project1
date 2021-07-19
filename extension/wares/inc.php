@@ -574,7 +574,7 @@ class wares extends \project\extension {
             $querySelect = "SELECT dd.* from
                             (SELECT DISTINCT
                                     pr.*, pcat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
-                                    (IF( EXISTS(SELECT * FROM zay_category cat WHERE cat.id=pcat.category_id  
+                                    (IF( EXISTS(SELECT * FROM zay_category cat WHERE cat.id=wcat.category_id  
                                                     AND (cat.title<>'Марафоны' and cat.title<>'Вебинары' and cat.title<>'Онлайн-тренинги' and cat.title<>'Кейсы') 
                                                ), 1, 0)
                                         ) AS wares_show
@@ -590,8 +590,9 @@ class wares extends \project\extension {
                                     w.id = pw.wares_id
                                 LEFT JOIN zay_product_category pcat ON
                                     pcat.product_id = pr.id    
+                                LEFT JOIN zay_wares_category wcat on wcat.wares_id=w.id    
                                 LEFT JOIN zay_category c ON
-                                    c.id = pcat.category_id       
+                                    c.id = wcat.category_id       
                                 WHERE
                                     p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 AND pp.close='0' {$where1} 
                                 ORDER BY
