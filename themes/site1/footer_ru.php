@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 d-none">
                         <a href="https://t.me/edgardzaitsev_channel">
                             <img class="alignnone size-full wp-image-421776" src="https://download.edgardzaitsev.com/wp-content/uploads/2020/09/tgg-4.jpg" alt="" width="190" height="70">
                         </a>
