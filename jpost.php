@@ -66,7 +66,7 @@ if (isset($_POST)) {
 
 
     // Определим пользователя и разрешим ему отправлять запросы
-    if ((isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) || (isset($_COOKIE['site_user_ajax_access']) && $_COOKIE['site_user_ajax_access'] > 0)) {
+    //if ((isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) || (isset($_COOKIE['site_user_ajax_access']) && $_COOKIE['site_user_ajax_access'] > 0)) {
         //include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/jpost.php';
 
         /*
@@ -80,12 +80,12 @@ if (isset($_POST)) {
                 $_SESSION['errors'][] = 'Not file jpost!';
             }
         }
-    } else {
-        $_SESSION['errors'][] = 'Сессия устарела';
-        $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'action' => 'reload');
-        echo json_encode($result);
-        exit();
-    }
+//    } else {
+//        $_SESSION['errors'][] = 'Сессия устарела';
+//        $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'action' => 'reload');
+//        echo json_encode($result);
+//        exit();
+//    }
 
     /*
      * Отправка только редакторы сайта
