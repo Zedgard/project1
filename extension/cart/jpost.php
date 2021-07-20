@@ -170,6 +170,7 @@ if (isset($_POST['cart_product_remove'])) {
         $_SESSION['cart']['itms'] = $new_arr;
         init_prices();
     }
+    $result = array('success' => 1, 'success_text' => '');
 }
 
 if (isset($_POST['cart_product_get_array'])) {
