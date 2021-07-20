@@ -89,7 +89,7 @@ function initTable() {
                 $(".users_data").find('tr[elmid="' + user_edit + '"]').find(".userEdit").click();
             }, 1000);
             initUserEdit();
-        });
+        }, '1');
     }
 }
 
