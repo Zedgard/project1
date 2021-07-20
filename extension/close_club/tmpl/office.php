@@ -9,7 +9,7 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <div class="mb-3" style="margin-top: -20px;">
+                <div class="mb-3 d-none" style="margin-top: -20px;">
                     Задай вопрос своему <a href="https://t.me/valerevna_annet" target="_blank">куратору</a>
                 </div>
 
