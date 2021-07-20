@@ -10,13 +10,11 @@
         <div class="webinar_head_logo2 mb-2 text-center">
             <img src="<?= $wares_info['images'] ?>" class="webinar_head_logo_img mt-2"/>    
         </div>
+        <div class="webinar_head_articul text-right mb-2">
+            Артикул: <span><?= $wares_info['articul'] ?></span>
+        </div>
     </div>
     <div class="col-md-9 mb-3">
-        <div class="mb-3">
-            <div class="webinar_head_title" style="display: block;">
-                <?= $wares_info['title'] ?>
-            </div>
-        </div>
         <div class="webinar_head_file2 mb-2">
             <div>
                 <?
@@ -58,9 +56,7 @@
                 ?>
             </div>
         </div>
-        <div class="webinar_head_articul text-right mb-2">
-            Артикул: <span><?= $wares_info['articul'] ?></span>
-        </div>
+
         <div class="wares_info_descr ulli">
             <?= $wares_info['descr'] ?>
         </div>

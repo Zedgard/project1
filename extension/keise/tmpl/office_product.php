@@ -214,10 +214,13 @@
      * @param {type} series_id
      * @returns {undefined}     */
     function marathon_series_material_post(o, series_id) {
+        if (series_id == 0) {
+            get_general(o, '<?= $_GET['wares_id'] ?>');
+        }
         $.ajax({
             url: '/jpost.php?extension=marathons',
             type: 'GET',
-            async: true,
+            async: false,
             dataType: 'json',
             //processData: false,
             crossDomain: true,
@@ -229,10 +232,11 @@
             },
             success: function (e) {
                 if (e['success'] == '1') {
-
                     if (e['html'].length > 0) {
-                        $(o).find(".material_content_block").html(e['html']);
-                        $(o).find(".marathons_elm_content").html(e['html']);
+                        $(o).find(".material_content_block").append(e['html']);
+                        $(o).find(".marathons_elm_content").append(e['html']);
+                        
+                         $(o).find(".spinner-border").remove();
 
                         $(".material_info").unbind('mouseenter').mouseenter(function () {
                             var wares_id = $(".marathons_wares_id").val();
@@ -249,8 +253,6 @@
                                         });
                             }
                         });
-                    } else {
-                        get_general(o, '<?= $_GET['wares_id'] ?>');
                     }
                 }
 
@@ -259,18 +261,19 @@
     }
 
     function get_general(o, wares_id) {
+    console.log('get_general');
         $.ajax({
             url: '/jpost.php?extension=products',
             type: 'POST',
-            async: true,
+            async: false,
             dataType: 'html',
             data: {
                 "general": 1,
                 "wares_id": wares_id
             },
             success: function (e) {
-                $(o).find(".material_content_block").html(e);
-                $(o).find(".marathons_elm_content").html(e);
+                $(o).find(".material_content_block").append(e);
+                $(o).find(".marathons_elm_content").append(e);
             }
         });
     }
