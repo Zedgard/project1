@@ -51,9 +51,9 @@ if ($user->isEditor()) {
         if (strlen($email) < 2 && $auth->emailValid($email)) {
             $_SESSION['errors'][] = 'Адрес электронной почты должен быть корректен';
         }
-        if (strlen($phone) == 0) {
-            $_SESSION['errors'][] = 'Номер телефона должен быть заполнен';
-        }
+//        if (strlen($phone) == 0) {
+//            $_SESSION['errors'][] = 'Номер телефона должен быть заполнен';
+//        }
 
         $ret = false;
         if (count($_SESSION['errors']) == 0) {
