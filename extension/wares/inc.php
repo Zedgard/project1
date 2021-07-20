@@ -704,7 +704,7 @@ class wares extends \project\extension {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -722,7 +722,7 @@ class wares extends \project\extension {
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -751,7 +751,7 @@ class wares extends \project\extension {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -769,7 +769,7 @@ class wares extends \project\extension {
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -798,7 +798,7 @@ class wares extends \project\extension {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -816,7 +816,7 @@ class wares extends \project\extension {
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 

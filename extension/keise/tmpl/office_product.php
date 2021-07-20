@@ -10,8 +10,13 @@
         <div class="col-lg">
             <div class="marathons_wares_title border-bottom pb-3"><span style="display: none;">Материалы кейса &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
         </div>
-        <div class="col-lg">
-
+        <div class="col-lg text-center pb-3 d-flex justify-content-center align-items-center" style="font-size: 1rem;color: #000000;">
+            <? if ($wares['period_open'] > 0) {
+                ?>
+                успей пройти "<?= date_jquery_format($wares['period_open_date']) ?>" заканчивается
+                <?
+            }
+            ?>
         </div>
     </div>
 
@@ -27,14 +32,14 @@
                                series_id="0" 
                                elm_type="D"
                                >
-                                <span>Общие материалы марафона</span>
+                                <span>Общие материалы кейса</span>
                             </a>
                             <a href="javascript:void(0)" 
                                class="d-block d-lg-none marathons_btn marathons_btn_green marathons_material_series_btn ckick_to_upload_page" 
                                series_id="0" 
                                elm_type="M"
                                >
-                                <span>Общие материалы марафона</span>
+                                <span>Общие материалы кейса</span>
                             </a>
                         </div>
                     </div>
