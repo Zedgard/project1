@@ -10,7 +10,7 @@
 
 <div class="card card-default">
     <div class="card-header card-header-border-bottom">
-        <h2 class="col-lg-6">Продукты</h2>
+        <h2 class="col-lg-6">Мои товары</h2>
     </div>
     <div class="card-body pt-2 pb-2">
         <div class="container-fluid">
