@@ -484,8 +484,7 @@ class wares extends \project\extension {
                                     (
                                     SELECT
                                         dd.*,
-                                        (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = dd.product_id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
-                                        ) AS wares_show,
+                                        1 AS wares_show,
                                         COALESCE(
                                             (
                                             SELECT
@@ -573,7 +572,8 @@ class wares extends \project\extension {
 
             $querySelect = "SELECT dd.* from
                             (SELECT DISTINCT
-                                    pr.*, wcat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
+                                    w.*, pr.id as product_id, wcat.category_id as wcategory_id, pcat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
+                                    catp.title as pcat_title, catp.color as pcat_color,
                                     /*
                                     (IF( EXISTS(SELECT * FROM zay_category cat WHERE cat.id=wcat.category_id  
                                                     AND (cat.title<>'Марафоны' and cat.title<>'Вебинары' and cat.title<>'Онлайн-тренинги' and cat.title<>'Кейсы') 
@@ -593,7 +593,9 @@ class wares extends \project\extension {
                                     pcat.product_id = pr.id    
                                 LEFT JOIN zay_wares_category wcat on wcat.wares_id=w.id    
                                 LEFT JOIN zay_category c ON
-                                    c.id = wcat.category_id       
+                                    c.id = wcat.category_id    
+                                LEFT JOIN zay_category catp ON
+                                    catp.id = pcat.category_id  
                                 WHERE
                                     p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 AND pp.close='0' {$where1} 
                                 ORDER BY

@@ -2,9 +2,18 @@
 <script src="/assets/plugins/calamansi/calamansi.min.js<?= $_SESSION['rand'] ?>"></script>
 <link href="/extension/marathons/css/marathons.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<link href="/extension/products/office.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <input type="hidden" name="marathons_wares_id" value="<?= $_GET['wares_id'] ?>" class="marathons_wares_id" />
+<div class="office_block_top_main">
+    <div class="office_block_top_left">
+        <a href="#" onclick="window.history.go(-1); return false;" class="office_link_back">
+            <i class="fas fa-arrow-left"></i>
+        </a> 
+        <div class="ml-3" style="float: left;font-size: 1.4rem;padding: 0.8rem 0;color: <?= $wares_info['category_color'] ?>;"><?= $wares_info['category_title'] ?></div>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg">
@@ -185,8 +194,8 @@
                     $('.materials_list').find(".marathons_material_list_block").show(200);
                 }
 
-                $(".fas").removeClass('fa-minus');
-                $(".fas").addClass('fa-plus');
+                $('.series_block').find(".fas").removeClass('fa-minus');
+                $('.series_block').find(".fas").addClass('fa-plus');
 
                 setTimeout(function () {
                     if ($('.materials_list').find(".marathons_material_list_block").css('display') == 'none') {
