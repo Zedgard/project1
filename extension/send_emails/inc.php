@@ -184,8 +184,8 @@ class send_emails extends \project\extension {
             if (strlen($user_info['email']) > 0) {
                 $params['user_email'] = $user_info['email'];
             }
-            
-            if(!isset($params['user_password']) || strlen($params['user_password'])==0){
+
+            if (!isset($params['user_password']) || strlen($params['user_password']) == 0) {
                 $params['user_password'] = '*****';
             }
 
@@ -232,7 +232,11 @@ class send_emails extends \project\extension {
                     $mail->Username = $smtp_user_info['user_email'];    // YOUR gmail email
                     $mail->Password = $smtp_user_info['user_password']; // YOUR gmail password    
                     // Sender and recipient settings
-                    $mail->setFrom($smtp_user_info['user_email'], $email_info['email_subject']); // 
+                    if (strlen($params['user_email']) > 0) {
+                        $mail->setFrom($params['user_email'], $email_info['email_subject']); // от кого (email и имя)
+                    } else {
+                        $mail->setFrom($smtp_user_info['user_email'], $email_info['email_subject']); // от кого (email и имя)
+                    }
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_subject']); // to set the reply to
                     // Setting the email content L2f6lernBsFZ
