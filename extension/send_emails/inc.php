@@ -233,7 +233,7 @@ class send_emails extends \project\extension {
                     $mail->Password = $smtp_user_info['user_password']; // YOUR gmail password    
                     // Sender and recipient settings
                     if (strlen($params['user_email']) > 0) {
-                        $mail->setFrom($params['user_email'], $email_info['email_subject']); // от кого (email и имя)
+                        $mail->setFrom($params['user_email'], $params['user_first_name']); // от кого (email и имя)
                     } else {
                         $mail->setFrom($smtp_user_info['user_email'], $email_info['email_subject']); // от кого (email и имя)
                     }
