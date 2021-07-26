@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--metatextblock-->
         <title>ДЕНЕГ ВАЛОМ</title>
+        <meta name="robots" content="noindex">
         <meta name="description" content="ДЕНЕГ ВАЛОМ" />
         <meta property="og:url" content="https://edgardzaycev.ru/deneg-valom" />
         <meta property="og:title" content="ДЕНЕГ ВАЛОМ" />
@@ -32,6 +33,7 @@
         <link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-zoom-2.0.min.css" type="text/css" media="print" onload="this.media = 'all';" /><noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-zoom-2.0.min.css" type="text/css" media="all" /></noscript>
         <link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-forms-1.0.min.css" type="text/css" media="all" />
         <link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-carousel-1.0.min.css" type="text/css" media="print" onload="this.media = 'all';" /><noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-carousel-1.0.min.css" type="text/css" media="all" /></noscript>
+        <link rel="stylesheet" href="/bootstrap5/css/bootstrap.min.css" type="text/css" media="all" />
         <script src="https://static.tildacdn.com/js/jquery-1.10.2.min.js"></script>
         <script src="https://static.tildacdn.com/js/tilda-scripts-3.0.min.js"></script>
         <script src="https://ws.tildacdn.com/project3253408/tilda-blocks-2.7.js?t=1626279994"></script>
@@ -45,9 +47,34 @@
         <script src="https://static.tildacdn.com/js/tilda-zoom-2.0.min.js" charset="utf-8" async></script>
         <script src="https://static.tildacdn.com/js/tilda-forms-1.0.min.js" charset="utf-8" async></script>
         <script src="https://static.tildacdn.com/js/tilda-cart-1.0.min.js" charset="utf-8" async></script>
+        <script src="/bootstrap5/jquery.min.js" charset="utf-8"></script>
+        <script src="/bootstrap5/js/bootstrap.min.js" charset="utf-8"></script>
+        <script src="/bootstrap5/js/bootstrap.bundle.min.js" charset="utf-8"></script>
     </head>
 
     <body class="t-body" style="margin:0;">
+
+
+        <div class="modal show" id="modal_adgard_message" tabindex="-1" aria-hidden="false">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Сообщение</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Данный сайт был взломан злоумышленниками - ведутся восстановительные работы.</p>
+                        <p>Просмотреть другие продукты можно на основном сайте <a href="https://edgardzaycev.com/">перейти</a>.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary d-none" data-bs-dismiss="modal">Перейти</button>
+                        <a href="https://edgardzaycev.com/" class="btn btn-secondary">перейти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!--allrecords-->
         <div id="allrecords" class="t-records" data-hook="blocks-collection-content-node" data-tilda-project-id="3253408" data-tilda-page-id="19117859" data-tilda-page-alias="deneg-valom" data-tilda-formskey="4034cebe4cc0dafb5c89d81cf5f1c484" data-tilda-lazy="yes">
             <div id="rec308928734" class="r t-rec t-rec_pt_0 t-rec_pt-res-480_0 t-rec_pb_0 t-screenmin-980px" style="padding-top:0px;padding-bottom:0px; " data-animationappear="off" data-record-type="456" data-screen-min="980px">
@@ -141,7 +168,8 @@
                 <script>
                     $(document).ready(function () {
                         $("#rec308928800").attr('data-animationappear', 'off');
-                        $("#rec308928800").css('opacity', '1'); t450_initMenu('308928800');
+                        $("#rec308928800").css('opacity', '1');
+                        t450_initMenu('308928800');
                     });
                 </script>
                 <script type="text/javascript">
@@ -802,10 +830,13 @@
                             t_onFuncLoad('tcart__init', function () {
                                 tcart__init('309657471', '');
                             });
-                        }, 50); /* fix for Android */ var ua = navigator.userAgent.toLowerCase();
+                        }, 50); /* fix for Android */
+                        var ua = navigator.userAgent.toLowerCase();
                         var isAndroid = (ua.indexOf("android") > -1);
                         if (isAndroid && !$('.t-body').hasClass('t-body_scrollable-hack-for-android')) {
-                            $('.t-body').addClass('t-body_scrollable-hack-for-android'); $('head').append("<style>@media screen and (max-width: 560px) {\n.t-body_scrollable-hack-for-android {\noverflow: visible !important;\n}\n}\n</style>"); console.log('Android css hack was inited');
+                            $('.t-body').addClass('t-body_scrollable-hack-for-android');
+                            $('head').append("<style>@media screen and (max-width: 560px) {\n.t-body_scrollable-hack-for-android {\noverflow: visible !important;\n}\n}\n</style>");
+                            console.log('Android css hack was inited');
                         } /* fix Instagram iPhone keyboard bug */
                         if (ua.indexOf("instagram") !== -1 && ua.indexOf("iphone") !== -1) {
                             $(".t-body").css("position", "relative");
@@ -866,7 +897,10 @@
                                                     if (!document.getElementById('t-phonemask-script')) {
                                                         (function (d, w, o) {
                                                             var n = d.getElementsByTagName(o)[0], s = d.createElement(o), f = function () {
-                                                                n.parentNode.insertBefore(s, n);}; s.type = "text/javascript"; s.async = true;
+                                                                n.parentNode.insertBefore(s, n);
+                                                            };
+                                                            s.type = "text/javascript";
+                                                            s.async = true;
                                                             s.id = 't-phonemask-script';
                                                             s.src = "https://static.tildacdn.com/js/tilda-phone-mask-1.1.min.js";
                                                             if (w.opera == "[object Opera]") {
@@ -874,10 +908,14 @@
                                                             } else {
                                                                 f();
                                                             }
-                                                        })(document, window, 'script'); } else {
+                                                        })(document, window, 'script');
+                                                    } else {
                                                         $(document).ready(function () {
                                                             if (typeof t_form_phonemask_load == 'function') {
-                                                                t_form_phonemask_load($('#rec309657471 [data-phonemask-lid=1496239478607]')); } }); }
+                                                                t_form_phonemask_load($('#rec309657471 [data-phonemask-lid=1496239478607]'));
+                                                            }
+                                                        });
+                                                    }
                                                 </script>
                                                 <div class="t-input-error"></div>
                                             </div>
@@ -1268,18 +1306,40 @@
                 <div class="t270"></div>
                 <script>
                     $(document).ready(function () {
-                        var hash = window.location.hash; t270_scroll(hash, -3); setTimeout(function () {
-                            var curPath = window.location.pathname; var curFullPath = window.location.origin + curPath; $('a[href^="#"]:not([href="#"],.carousel-control,.t-carousel__control,[href^="#price"],[href^="#popup"],[href^="#prodpopup"],[href^="#order"],a[href^="#!"]),a[href^="' + curPath + '#"]:not(a[href*="#!/tproduct/"],a[href*="#!/tab/"],[href*="#popup"]),a[href^="' + curFullPath + '#"]:not(a[href*="#!/tproduct/"],a[href*="#!/tab/"],[href*="#popup"])').click(function (e) {
-                                e.preventDefault(); var hash = this.hash.trim(); t270_scroll(hash, -3); }); if ($(".js-store").length > 0 || $(".js-feed").length > 0) {
-                                t270_scroll(hash, -3, 1); } }, 500); setTimeout(function () {
-                            var hash = window.location.hash; if (hash && $('a[name="' + hash.slice(1) + '"]').length) {
+                        var hash = window.location.hash;
+                        t270_scroll(hash, -3);
+                        setTimeout(function () {
+                            var curPath = window.location.pathname;
+                            var curFullPath = window.location.origin + curPath;
+                            $('a[href^="#"]:not([href="#"],.carousel-control,.t-carousel__control,[href^="#price"],[href^="#popup"],[href^="#prodpopup"],[href^="#order"],a[href^="#!"]),a[href^="' + curPath + '#"]:not(a[href*="#!/tproduct/"],a[href*="#!/tab/"],[href*="#popup"]),a[href^="' + curFullPath + '#"]:not(a[href*="#!/tproduct/"],a[href*="#!/tab/"],[href*="#popup"])').click(function (e) {
+                                e.preventDefault();
+                                var hash = this.hash.trim();
+                                t270_scroll(hash, -3);
+                            });
+                            if ($(".js-store").length > 0 || $(".js-feed").length > 0) {
+                                t270_scroll(hash, -3, 1);
+                            }
+                        }, 500);
+                        setTimeout(function () {
+                            var hash = window.location.hash;
+                            if (hash && $('a[name="' + hash.slice(1) + '"]').length) {
                                 if (window.isMobile) {
-                                    t270_scroll(hash, 0); } else {
-                                    t270_scroll(hash, 0); } } }, 1000); $(window).on('popstate', function (event) {
-                            var hash = window.location.hash; if (hash && $('a[name="' + hash.slice(1) + '"]').length) {
+                                    t270_scroll(hash, 0);
+                                } else {
+                                    t270_scroll(hash, 0);
+                                }
+                            }
+                        }, 1000);
+                        $(window).on('popstate', function (event) {
+                            var hash = window.location.hash;
+                            if (hash && $('a[name="' + hash.slice(1) + '"]').length) {
                                 if (window.isMobile) {
-                                    t270_scroll(hash, 0); } else {
-                                    t270_scroll(hash, 0); } } });
+                                    t270_scroll(hash, 0);
+                                } else {
+                                    t270_scroll(hash, 0);
+                                }
+                            }
+                        });
                     });
                 </script>
             </div>
@@ -1297,5 +1357,10 @@
         </div>
 
     </body>
-
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('modal_adgard_message'), {
+            keyboard: true
+        });
+        myModal.show();
+    </script>
 </html>
