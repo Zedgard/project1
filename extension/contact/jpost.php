@@ -35,6 +35,8 @@ if (isset($_POST['user_send_message'])) {
         //$link_ed_mailto = 'koman1706@gmail.com';
          
         //echo "link_ed_mailto: {$link_ed_mailto} <br/>\n";
+        // Отправить мне чтобы проверять сообщения
+        $p_user->sendEmail('koman1706@gmail.com', 'send_user_message', $arrayReplaseText);
 
         if ($p_user->sendEmail($link_ed_mailto, 'send_user_message', $arrayReplaseText)) {
             $result = array('success' => 1, 'success_text' => 'Успешно отправлено, ждите ответа.');

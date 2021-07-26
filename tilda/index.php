@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--metatextblock-->
         <title>Главная</title>
+        <meta name="robots" content="noindex">
         <meta property="og:url" content="https://edgardzaycev.ru" />
         <meta property="og:title" content="Главная" />
         <meta property="og:description" content="" />
@@ -30,6 +31,7 @@
         <link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-slds-1.4.min.css" type="text/css" media="print" onload="this.media = 'all';" /><noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-slds-1.4.min.css" type="text/css" media="all" /></noscript>
         <link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-zoom-2.0.min.css" type="text/css" media="print" onload="this.media = 'all';" /><noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-zoom-2.0.min.css" type="text/css" media="all" /></noscript>
         <link rel="stylesheet" href="https://static.tildacdn.com/css/tilda-cover-1.0.min.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="/bootstrap5/css/bootstrap.min.css" type="text/css" media="all" />
         <script src="https://static.tildacdn.com/js/jquery-1.10.2.min.js"></script>
         <script src="https://static.tildacdn.com/js/tilda-scripts-3.0.min.js"></script>
         <script src="/tilda-blocks-2.7.js?t=1620123505"></script>
@@ -41,8 +43,29 @@
         <script src="https://static.tildacdn.com/js/tilda-slds-1.4.min.js" charset="utf-8" async></script>
         <script src="https://static.tildacdn.com/js/hammer.min.js" charset="utf-8" async></script>
         <script src="https://static.tildacdn.com/js/tilda-zoom-2.0.min.js" charset="utf-8" async></script>
-
+        <script src="/bootstrap5/jquery.min.js" charset="utf-8"></script>
+        <script src="/bootstrap5/js/bootstrap.min.js" charset="utf-8"></script>
+        <script src="/bootstrap5/js/bootstrap.bundle.min.js" charset="utf-8"></script>
     </head>
+
+    <div class="modal show" id="modal_adgard_message" tabindex="-1" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Сообщение</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Данный сайт был взломан злоумышленниками - ведутся восстановительные работы.</p>
+                    <p>Просмотреть другие продукты можно на основном сайте <a href="https://edgardzaycev.com/">перейти</a>.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary d-none" data-bs-dismiss="modal">Перейти</button>
+                    <a href="https://edgardzaycev.com/" class="btn btn-secondary">перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <body class="t-body" style="margin:0;">
         <!--allrecords-->
@@ -270,5 +293,10 @@
         </div>
 
     </body>
-
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('modal_adgard_message'), {
+            keyboard: true
+        });
+        myModal.show();
+    </script>
 </html>

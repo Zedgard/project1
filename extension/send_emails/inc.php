@@ -181,7 +181,9 @@ class send_emails extends \project\extension {
             if (strlen($params['user_first_name']) == 0) {
                 $params['user_first_name'] = $user_info['email'];
             }
-            $params['user_email'] = $user_info['email'];
+            if (strlen($user_info['email']) > 0) {
+                $params['user_email'] = $user_info['email'];
+            }
             
             if(!isset($params['user_password']) || strlen($params['user_password'])==0){
                 $params['user_password'] = '*****';
