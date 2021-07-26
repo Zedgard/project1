@@ -18,7 +18,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/init_cache.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
-
+$extension = new \project\extension();
 
 if (isset($_POST)) {
     //echo "post \n";
@@ -54,6 +54,8 @@ if (isset($_POST)) {
             $result = array('t' => 0);
         }
     }
+    
+    $extension->set_jpost_log('jpost');
 
     /*
      * Регистрация разрешения cookie 
