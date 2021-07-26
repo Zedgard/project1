@@ -181,6 +181,11 @@ class send_emails extends \project\extension {
             if (strlen($params['user_first_name']) == 0) {
                 $params['user_first_name'] = $user_info['email'];
             }
+
+            if (strlen($params['user_fio']) > 0) {
+                $params['user_first_name'] = $params['user_fio'];
+            }
+
             if (strlen($user_info['email']) > 0) {
                 $params['user_email'] = $user_info['email'];
             }
@@ -193,6 +198,10 @@ class send_emails extends \project\extension {
             $mail = new PHPMailer(false);
             $smtp_user_info = $this->get_smtp_user_info();
             $email_info = $this->get_email($email_code);
+
+            if (strlen($user_info['email']) > 0) {
+                $email_info['email_reply_to'] = $user_info['email'];
+            }
             //echo "user_info: {$smtp_user_info}<br/>\n";
             //echo "send_email: {$email_info['email_send']} <br/>\n";
             if ($email_info['email_send'] > 0) {
