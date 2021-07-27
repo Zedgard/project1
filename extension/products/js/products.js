@@ -140,8 +140,19 @@ $(document).ready(function () {
 //            document.location.reload();
 //        });
 //    });
+
+//    $(".productSearchString").delayKeyup(function () {
+//        
+//        var productSearchString = $(this).val();
+//        console.log('productSearchString delayKeyup: ' + productSearchString);
+//        sendPostLigth('/jpost.php?extension=products', {"productSearchString": productSearchString}, function (e) {
+//            document.location.href = '/shop/';
+//        });
+//    }, 700);
+console.log('productSearchString');
     $(".productSearchString").change(function () {
         var productSearchString = $(this).val();
+        console.log('productSearchString delayKeyup: ' + productSearchString);
         sendPostLigth('/jpost.php?extension=products', {"productSearchString": productSearchString}, function (e) {
             document.location.href = '/shop/';
         });
