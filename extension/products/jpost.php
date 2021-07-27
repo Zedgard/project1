@@ -103,12 +103,15 @@ if (isset($_POST['getProducts'])) {
 // Сохраним данные по фильтрам
 if (isset($_POST['productSearchString'])) {
     $_SESSION['product']['filter']['productSearchString'] = $_POST['productSearchString'];
+    $result = array('success' => 1, 'success_text' => '');
 }
 if (isset($_POST['checkedProductNew'])) {
     $_SESSION['product']['filter']['ProductNew'] = $_POST['checkedProductNew'];
+    $result = array('success' => 1, 'success_text' => '');
 }
 if (isset($_POST['checkedProductPromo'])) {
     $_SESSION['product']['filter']['ProductPromo'] = $_POST['checkedProductPromo'];
+    $result = array('success' => 1, 'success_text' => '');
 }
 if (isset($_POST['check_categorys'])) {
     if ($_POST['checked'] == 1) {
@@ -120,6 +123,7 @@ if (isset($_POST['check_categorys'])) {
             }
         }
     }
+    $result = array('success' => 1, 'success_text' => '');
 }
 if (isset($_POST['click_product_theme'])) {
     if ($_SESSION['product']['filter']['product_theme'] == $_POST['click_product_theme']) {
@@ -127,6 +131,7 @@ if (isset($_POST['click_product_theme'])) {
     } else {
         $_SESSION['product']['filter']['product_theme'] = $_POST['click_product_theme'];
     }
+    $result = array('success' => 1, 'success_text' => '');
 }
 
 if (isset($_POST['category_controll'])) {
@@ -135,6 +140,7 @@ if (isset($_POST['category_controll'])) {
     } else {
         $_SESSION['product']['filter']['category_controll'] = '';
     }
+    $result = array('success' => 1, 'success_text' => '');
 }
 
 if (isset($_POST['filter_clear'])) {
@@ -144,6 +150,7 @@ if (isset($_POST['filter_clear'])) {
     $_SESSION['product']['filter']['check_categorys'] = array();
     $_SESSION['product']['filter']['product_theme'] = '';
     $_SESSION['product']['filter']['category_controll'] = '';
+    $result = array('success' => 1, 'success_text' => '');
 }
 
 /* Рейтинг */
