@@ -104,9 +104,7 @@ $api = new TinkoffMerchantAPI(
         $tk_shop_secret_key    //Ваш Secret_Key
 );
 
-
 $enabledTaxation = true;
-
 
 /*
   Собираем данные по платежу
@@ -198,19 +196,21 @@ if ($api->error) {
             . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
     if ($sqlLight->query($queryPay, array(($max_id), 'tk', $client_id, $price_total, $pay_date, $pay_key, 'Tinkoff', '', '', $pay_status, '', $pay_descr, $api->paymentUrl), 1)) {
 
-        foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            $product_id = $value['id'];
-            if ($product_id > 0) {
-                if ($value['price_promo'] > 0) {
-                    $price = $value['price_promo'];
-                } else {
-                    $price = $value['price'];
-                }
-                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-                        . "VALUES ('?','?','?')";
-                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-            }
-        }
+//        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//            $product_id = $value['id'];
+//            if ($product_id > 0) {
+//                if ($value['price_promo'] > 0) {
+//                    $price = $value['price_promo'];
+//                } else {
+//                    $price = $value['price'];
+//                }
+//                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+//                        . "VALUES ('?','?','?')";
+//                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+//            }
+//        }
+        // Сохраним связи с продуктами
+        $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
         /*
          * Если это консультация 
          */
