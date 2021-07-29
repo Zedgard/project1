@@ -111,23 +111,26 @@ if (count($pays) == 0) {
     $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_descr`, `confirmationUrl`) "
             . "VALUES ('?', '?','?', '?', '?', '?', '?', '?', '?')";
     if ($sqlLight->query($query, array(($max_id), 'pp', $client_id, $price_total, $pay_date, $pay_key, $pay_status, $pay_descr, ''))) {
-        foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            $product_id = $value['id'];
-            if ($product_id > 0) {
-                if ($value['price_promo'] > 0) {
-                    $price = $value['price_promo'];
-                } else {
-                    $price = $value['price'];
-                }
-                // доп. данные
-                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-                        . "VALUES ('?','?','?')";
-                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-                // Зафиксируем продажу
-//                echo $product_id . "<br/>\n";
-//                $products->setSoldAdd($product_id);
-            }
-        }
+//        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//            $product_id = $value['id'];
+//            if ($product_id > 0) {
+//                if ($value['price_promo'] > 0) {
+//                    $price = $value['price_promo'];
+//                } else {
+//                    $price = $value['price'];
+//                }
+//                // доп. данные
+//                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+//                        . "VALUES ('?','?','?')";
+//                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+//                // Зафиксируем продажу
+////                echo $product_id . "<br/>\n";
+////                $products->setSoldAdd($product_id);
+//            }
+//        }
+        
+        // Сохраним связи с продуктами
+        $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
         /*
          * Если это консультация 
          */
