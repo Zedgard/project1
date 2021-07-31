@@ -15,10 +15,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 $price_total = 0;
 if (isset($_SESSION['cart']['itms'])) {
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
+        $price = $value['price'];
         if ($value['price_promo'] > 0) {
             $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
         }
         $price_total += $price;
     }
@@ -27,9 +26,6 @@ if (isset($_SESSION['cart']['itms'])) {
         if (isset($_GET['yandex'])) {
             include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/ya_pay.php';
         }
-//    if (isset($_GET['paypal'])) {
-//        //include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/ya_pay.php';
-//    }
         if (isset($_GET['interkassa'])) {
             include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_pay.php';
         }

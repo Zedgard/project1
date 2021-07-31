@@ -181,7 +181,6 @@ $TinkoffShopId = $config->getConfigParam('TinkoffShopId');
 $TinkoffShowcaseId = $config->getConfigParam('TinkoffShowcaseId');
 $TinkoffPromoCode = $config->getConfigParam('TinkoffPromoCode');
 
-
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 
@@ -370,8 +369,8 @@ if (count($_SESSION['errors']) > 0) {
     foreach ($_SESSION['errors'] as $value) {
         ?>
         <div class="alert alert-danger" role="alert">
-        <?= $value ?>
+            <?= $value ?>
         </div>
-            <?
-        }
+        <?
     }
+}
