@@ -24,6 +24,7 @@ $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "succeeded"; // Устанавливаем стандартный статус платежа
 
 if (count($_SESSION['cart']['itms']) > 0) {
+    $price_total = 0;
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
         $email = $value['user_email'];
         if ($value['price_promo'] > 0) {
@@ -34,7 +35,7 @@ if (count($_SESSION['cart']['itms']) > 0) {
         $price_total += $price;
     }
 
-    if ($price == 0) {
+    if ($price_total == 0) {
         $client_id = ($u->isClientId() > 0) ? $u->isClientId() : 0;
 
         // Передадим ID пользователя (Создается при консультации)
