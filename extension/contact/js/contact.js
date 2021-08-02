@@ -27,7 +27,7 @@ function init_btn_send_message() {
                 }, function (e) {
                     if (e['success'] == '1') {
                         alert("Успешно отправлено, ждите ответа.");
-                        $(".form_send_user_message").find(".user_email").val("");
+                        $(".form_send_user_message").find(".form-control").val("");
                     } else {
                         alert("Ошибка!");
                     }
