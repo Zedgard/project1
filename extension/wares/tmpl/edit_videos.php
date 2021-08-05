@@ -122,7 +122,7 @@
                 <div class="col-12">
                     <div class="card card-default">
                         <div class="card-body">
-                            <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="wares_material" db-row="position">
+                            <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="zay_wares_material" db-row="position">
                                 <?
                                 $video_i = 0;
                                 /*
@@ -304,7 +304,7 @@
 
                                         <div id="collapse<?= $series_value['id'] ?>" class="collapse" aria-labelledby="heading<?= $series_value['id'] ?>" data-parent="#accordion<?= $series_value['id'] ?>" style="">
                                             <div class="card-body">
-                                                <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="wares_material" db-row="position">    
+                                                <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="zay_wares_material" db-row="position">    
                                                     <?
                                                     foreach ($materials as $key => $value) {
                                                         if ($value['series_id'] == $series_value['id']) {
@@ -327,14 +327,18 @@
                                                                                         }
                                                                                         if ($value['material_type'] == 'material_type_audio') {
                                                                                             //include 'material_type_audio.php';
-                                                                                            echo "Аудио ссылка: {$value['audio_file']}";
+                                                                                            ?>
+                                                                                            <div>Аудио ссылка: <a href="<?= $value['audio_file'] ?>" class="calamansi-audio-<?= $value['id'] ?>" target="_blank"><?= $value['audio_file'] ?></a></div>
+                                                                                            <?
                                                                                         }
                                                                                         if ($value['material_type'] == 'material_type_file') {
                                                                                             include 'material_type_file.php';
                                                                                         }
                                                                                         if ($value['material_type'] == 'material_type_video') {
                                                                                             //include 'material_type_video.php';
-                                                                                            echo "Видео ссылка: {$value['video_youtube']}";
+                                                                                            ?>
+                                                                                            <div>Видео ссылка: <a href="<?= $value['video_youtube'] ?>" class="youtube-video-<?= $value['id'] ?>" target="_blank"><?= $value['video_youtube'] ?></a></div>
+                                                                                            <?
                                                                                         }
                                                                                         ?>
                                                                                     </div>

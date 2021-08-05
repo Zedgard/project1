@@ -484,8 +484,7 @@ class wares extends \project\extension {
                                     (
                                     SELECT
                                         dd.*,
-                                        (IF( EXISTS( SELECT * FROM zay_product_category pcat WHERE pcat.product_id = dd.product_id AND (pcat.category_id = 2 or pcat.category_id = 9 or pcat.category_id is null)), 0, 1)
-                                        ) AS wares_show,
+                                        1 AS wares_show,
                                         COALESCE(
                                             (
                                             SELECT
@@ -573,11 +572,13 @@ class wares extends \project\extension {
 
             $querySelect = "SELECT dd.* from
                             (SELECT DISTINCT
-                                    pr.*, pcat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
-                                    (IF( EXISTS(SELECT * FROM zay_category cat WHERE cat.id=pcat.category_id  
-                                                    AND (cat.title<>'Марафоны' and cat.title<>'Вебинары' and cat.title<>'Онлайн-тренинги') 
+                                    w.*, pr.id as product_id, wcat.category_id as wcategory_id, pcat.category_id as pcategory_id, c.title as cat_title, c.color as cat_color,
+                                    catp.title as pcat_title, catp.color as pcat_color,
+                                    /*
+                                    (IF( EXISTS(SELECT * FROM zay_category cat WHERE cat.id=wcat.category_id  
+                                                    AND (cat.title<>'Марафоны' and cat.title<>'Вебинары' and cat.title<>'Онлайн-тренинги' and cat.title<>'Кейсы') 
                                                ), 1, 0)
-                                        ) AS wares_show
+                                        )*/ 1 AS wares_show
                                 FROM
                                     zay_pay p
                                 LEFT JOIN zay_pay_products pp ON
@@ -590,8 +591,11 @@ class wares extends \project\extension {
                                     w.id = pw.wares_id
                                 LEFT JOIN zay_product_category pcat ON
                                     pcat.product_id = pr.id    
+                                LEFT JOIN zay_wares_category wcat on wcat.wares_id=w.id    
                                 LEFT JOIN zay_category c ON
-                                    c.id = pcat.category_id       
+                                    c.id = wcat.category_id    
+                                LEFT JOIN zay_category catp ON
+                                    catp.id = pcat.category_id  
                                 WHERE
                                     p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 AND pp.close='0' {$where1} 
                                 ORDER BY
@@ -703,7 +707,7 @@ class wares extends \project\extension {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -721,7 +725,7 @@ class wares extends \project\extension {
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -741,7 +745,7 @@ class wares extends \project\extension {
     }
 
     /**
-     * Купленные марафоны клиента
+     * Отобразим товары по категории
      * @param type $wares_id
      * @return type
      */
@@ -750,7 +754,7 @@ class wares extends \project\extension {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -758,7 +762,7 @@ class wares extends \project\extension {
                         left join zay_wares w on w.id=pw.wares_id 
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id
-                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        left join zay_category cpcat on cpcat.id=wcat.category_id
                         where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
                         and cpcat.type='product_category' and  cpcat.title='?' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
@@ -768,7 +772,7 @@ class wares extends \project\extension {
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -776,12 +780,12 @@ class wares extends \project\extension {
                         left join zay_wares w on w.id=pw.wares_id 
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id 
-                        left join zay_category cpcat on cpcat.id=pcat.category_id
+                        left join zay_category cpcat on cpcat.id=wcat.category_id
                         where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
                         and cpcat.type='product_category' and  cpcat.title='?' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
-                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, $product_category, 0))[0];
+                return $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id'], $wares_id, $product_category, 0), 0)[0];
             }
         }
         return array();
@@ -797,7 +801,7 @@ class wares extends \project\extension {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 
@@ -815,7 +819,7 @@ class wares extends \project\extension {
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
                         w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
-                        MIN(p.id) as pay_id, wcat.category_id 
+                        MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
                         left join zay_product pr on pr.id=pp.product_id 

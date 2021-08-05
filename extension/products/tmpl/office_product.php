@@ -2,13 +2,14 @@
 <link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
 <script src="/assets/plugins/calamansi/calamansi.min.js"></script>
 <link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<link href="/extension/products/office.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <div class="office_block_top_main">
     <div class="office_block_top_left">
-        <a href="/office/?katalog&product_id=<?= $_GET['product_id'] ?>" class="office_link_back">
+        <a href="#" onclick="window.history.go(-1); return false;" class="office_link_back">
             <i class="fas fa-arrow-left"></i>
-        </a>
+        </a> 
         <div class="ml-3" style="float: left;font-size: 1.4rem;padding: 0.8rem 0;color: <?= $wares_info['category_color'] ?>;"><?= $wares_info['category_title'] ?></div>
     </div>
 </div>

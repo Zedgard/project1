@@ -104,9 +104,7 @@ $api = new TinkoffMerchantAPI(
         $tk_shop_secret_key    //Ваш Secret_Key
 );
 
-
 $enabledTaxation = true;
-
 
 /*
   Собираем данные по платежу
@@ -131,99 +129,105 @@ foreach ($_SESSION['cart']['itms'] as $key => $value) {
 //    $price_total = 1;
 //}
 
-$amount = $price_total * 100;
+if ($price_total == 0) {
+    $result = array('success' => 1, 'success_text' => '', 'data' => array(), 'action' => '/pay.php');
+} else {
+    $amount = $price_total * 100;
 
-$client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
+    $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
 // Если авторезированный
-if (strlen($p_user->isClientEmail()) > 0) {
-    $email = $p_user->isClientEmail();
-}
+    if (strlen($p_user->isClientEmail()) > 0) {
+        $email = $p_user->isClientEmail();
+    }
 
 // Получаем платежный ключ
-$pay_key = uniqid('', true);
-$_SESSION['PAY_KEY'] = $pay_key;
+    $pay_key = uniqid('', true);
+    $_SESSION['PAY_KEY'] = $pay_key;
 
-$max_id = $sqlLight->queryNextId('zay_pay');
+    $max_id = $sqlLight->queryNextId('zay_pay');
 
 //if(strlen($max_id)==0){
 //    echo "max_id: {$max_id}";
 //    exit();
 //}
 
-$params = [
-    'OrderId' => $max_id,
-    'Amount' => $amount,
-    'DATA' => [
+    $params = [
+        'OrderId' => $max_id,
+        'Amount' => $amount,
+        'DATA' => [
+            'Email' => $email,
+            'Connection_type' => 'example'
+        ],
+    ];
+
+    $receipt = [
+        'EmailCompany' => $emailCompany,
         'Email' => $email,
-        'Connection_type' => 'example'
-    ],
-];
+        'Taxation' => $taxations['osn'],
+        'Items' => [[
+        "Name" => "Продажа товаров",
+        "Price" => $amount,
+        "Quantity" => 1.00,
+        "Amount" => $amount,
+        "Tax" => "none"
+            ]],
+    ];
 
-$receipt = [
-    'EmailCompany' => $emailCompany,
-    'Email' => $email,
-    'Taxation' => $taxations['osn'],
-    'Items' => [[
-    "Name" => "Продажа товаров",
-    "Price" => $amount,
-    "Quantity" => 1.00,
-    "Amount" => $amount,
-    "Tax" => "none"
-        ]],
-];
-
-if ($enabledTaxation) {
-    $params['Receipt'] = $receipt;
-}
+    if ($enabledTaxation) {
+        $params['Receipt'] = $receipt;
+    }
 //echo "<br/>\n";
 //print_r($params);
 //echo "<br/>\n"; 
-$api->init($params);
+    $api->init($params);
 
 //echo "response: " . $api->response . "<br/>\n";
 //echo "<br/>\n";
 
-if ($api->error) {
-    echo "error: " . $api->error . "<br/>\n";
-} else {
-    $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
-    $pay_status = "pending"; // Устанавливаем стандартный статус платежа
-    $pay_key = $api->paymentId;
-    $_SESSION['PAY_KEY'] = $pay_key;
-    $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
+    if ($api->error) {
+        echo "error: " . $api->error . "<br/>\n";
+    } else {
+        $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
+        $pay_status = "pending"; // Устанавливаем стандартный статус платежа
+        $pay_key = $api->paymentId;
+        $_SESSION['PAY_KEY'] = $pay_key;
+        $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
 
-    // Сохраняем данные платежа в базу
-    $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
-            . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-    if ($sqlLight->query($queryPay, array(($max_id), 'tk', $client_id, $price_total, $pay_date, $pay_key, 'Tinkoff', '', '', $pay_status, '', $pay_descr, $api->paymentUrl), 1)) {
+        // Сохраняем данные платежа в базу
+        $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
+                . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+        if ($sqlLight->query($queryPay, array(($max_id), 'tk', $client_id, $price_total, $pay_date, $pay_key, 'Tinkoff', '', '', $pay_status, '', $pay_descr, $api->paymentUrl), 1)) {
 
-        foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            $product_id = $value['id'];
-            if ($product_id > 0) {
-                if ($value['price_promo'] > 0) {
-                    $price = $value['price_promo'];
-                } else {
-                    $price = $value['price'];
-                }
-                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-                        . "VALUES ('?','?','?')";
-                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-            }
-        }
-        /*
-         * Если это консультация 
-         */
+//        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//            $product_id = $value['id'];
+//            if ($product_id > 0) {
+//                if ($value['price_promo'] > 0) {
+//                    $price = $value['price_promo'];
+//                } else {
+//                    $price = $value['price'];
+//                }
+//                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+//                        . "VALUES ('?','?','?')";
+//                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+//            }
+//        }
+            // Сохраним связи с продуктами
+            $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
+            /*
+             * Если это консультация 
+             */
 //        if ($_SESSION['consultation']['your_master_id'] > 0) {
 //            $_SESSION['consultation']['pay_id'] = $max_id;
 //            $sign_up_consultation->add_consultation($_SESSION['consultation']);
 //        }
-        // Отправляем пользователя на страницу оплаты
-        header('Location: ' . $api->paymentUrl);
-    } else {
-        echo 'Ошибка операции!';
-    }
+            // Отправляем пользователя на страницу оплаты
+            header('Location: ' . $api->paymentUrl);
+        } else {
+            echo 'Ошибка операции!';
+        }
 
-    echo "paymentUrl: " . $api->paymentUrl . "<br/>\n";
-    echo "paymentId: " . $api->paymentId . "<br/>\n";
+        echo "paymentUrl: " . $api->paymentUrl . "<br/>\n";
+        echo "paymentId: " . $api->paymentId . "<br/>\n";
+    }
 }

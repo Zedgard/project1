@@ -2,16 +2,30 @@
 <script src="/assets/plugins/calamansi/calamansi.min.js<?= $_SESSION['rand'] ?>"></script>
 <link href="/extension/marathons/css/marathons.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
+<link href="/extension/products/office.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <input type="hidden" name="marathons_wares_id" value="<?= $_GET['wares_id'] ?>" class="marathons_wares_id" />
+<div class="office_block_top_main">
+    <div class="office_block_top_left">
+        <a href="#" onclick="window.history.go(-1); return false;" class="office_link_back">
+            <i class="fas fa-arrow-left"></i>
+        </a> 
+        <div class="ml-3" style="float: left;font-size: 1.4rem;padding: 0.8rem 0;color: <?= $wares_info['category_color'] ?>;"><?= $wares_info['category_title'] ?></div>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg">
             <div class="marathons_wares_title border-bottom pb-3"><span style="display: none;">Материалы кейса &laquo; <?= $wares['title'] ?> &raquo;</span><?= $wares['title'] ?></div>
         </div>
-        <div class="col-lg">
-
+        <div class="col-lg text-center pb-3 d-flex justify-content-center align-items-center" style="font-size: 1rem;color: #000000;">
+            <? if ($wares['period_open'] > 0) {
+                ?>
+                успей пройти "<?= date_jquery_format($wares['period_open_date']) ?>" заканчивается
+                <?
+            }
+            ?>
         </div>
     </div>
 
@@ -27,14 +41,14 @@
                                series_id="0" 
                                elm_type="D"
                                >
-                                <span>Общие материалы марафона</span>
+                                <span>Общие материалы кейса</span>
                             </a>
                             <a href="javascript:void(0)" 
                                class="d-block d-lg-none marathons_btn marathons_btn_green marathons_material_series_btn ckick_to_upload_page" 
                                series_id="0" 
                                elm_type="M"
                                >
-                                <span>Общие материалы марафона</span>
+                                <span>Общие материалы кейса</span>
                             </a>
                         </div>
                     </div>
@@ -185,8 +199,8 @@
                     $('.materials_list').find(".marathons_material_list_block").show(200);
                 }
 
-                $(".fas").removeClass('fa-minus');
-                $(".fas").addClass('fa-plus');
+                $('.series_block').find(".fas").removeClass('fa-minus');
+                $('.series_block').find(".fas").addClass('fa-plus');
 
                 setTimeout(function () {
                     if ($('.materials_list').find(".marathons_material_list_block").css('display') == 'none') {
@@ -209,10 +223,13 @@
      * @param {type} series_id
      * @returns {undefined}     */
     function marathon_series_material_post(o, series_id) {
+        if (series_id == 0) {
+            get_general(o, '<?= $_GET['wares_id'] ?>');
+        }
         $.ajax({
             url: '/jpost.php?extension=marathons',
             type: 'GET',
-            async: true,
+            async: false,
             dataType: 'json',
             //processData: false,
             crossDomain: true,
@@ -224,27 +241,49 @@
             },
             success: function (e) {
                 if (e['success'] == '1') {
+                    if (e['html'].length > 0) {
+                        $(o).find(".material_content_block").append(e['html']);
+                        $(o).find(".marathons_elm_content").append(e['html']);
+                        
+                         $(o).find(".spinner-border").remove();
 
-                    $(o).find(".material_content_block").html(e['html']);
-                    $(o).find(".marathons_elm_content").html(e['html']);
-
-                    $(".material_info").unbind('mouseenter').mouseenter(function () {
-                        var wares_id = $(".marathons_wares_id").val();
-                        var series_id = $(this).attr('series_id');
-                        var material_id = $(this).attr('material_id');
-                        if (series_id > 0 && material_id > 0) {
-                            sendPostLigth('/jpost.php?extension=wares',
-                                    {"waresVideoSeriesSee": series_id, "wares_id": wares_id},
-                                    function (e) {
-                                        if (e['data']['bonus_open'] == '1') {
-                                            $(".marathons_material_bonus").find(".fa-lock").remove();
-                                            bonus_lock = 0;
-                                        }
-                                    });
-                        }
-                    });
+                        $(".material_info").unbind('mouseenter').mouseenter(function () {
+                            var wares_id = $(".marathons_wares_id").val();
+                            var series_id = $(this).attr('series_id');
+                            var material_id = $(this).attr('material_id');
+                            if (series_id > 0 && material_id > 0) {
+                                sendPostLigth('/jpost.php?extension=wares',
+                                        {"waresVideoSeriesSee": series_id, "wares_id": wares_id},
+                                        function (e) {
+                                            if (e['data']['bonus_open'] == '1') {
+                                                $(".marathons_material_bonus").find(".fa-lock").remove();
+                                                bonus_lock = 0;
+                                            }
+                                        });
+                            }
+                        });
+                    }
                 }
 
+            }
+        });
+    }
+
+    function get_general(o, wares_id) {
+    console.log('get_general');
+        $.ajax({
+            url: '/jpost.php?extension=products',
+            type: 'POST',
+            async: false,
+            dataType: 'html',
+            data: {
+                "general": 1,
+                "wares_id": wares_id
+            },
+            success: function (e) {
+                $(o).find(".material_content_block").append(e);
+                $(o).find(".marathons_elm_content").append(e);
+                $(o).find(".spinner-border").remove();
             }
         });
     }

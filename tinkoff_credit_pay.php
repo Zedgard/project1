@@ -181,7 +181,6 @@ $TinkoffShopId = $config->getConfigParam('TinkoffShopId');
 $TinkoffShowcaseId = $config->getConfigParam('TinkoffShowcaseId');
 $TinkoffPromoCode = $config->getConfigParam('TinkoffPromoCode');
 
-
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 
@@ -339,19 +338,21 @@ if ($sqlLight->query($query_insert, array($max_id, $pay_type, $pay_key, $pay_sta
             . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
     if ($sqlLight->query($queryPay, array(($max_id), $pay_type, $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $pay_tinkoff_link), 0)) {
         // Создадим связь с продуктами
-        foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            $product_id = $value['id'];
-            if ($product_id > 0) {
-                if ($value['price_promo'] > 0) {
-                    $price = $value['price_promo'];
-                } else {
-                    $price = $value['price'];
-                }
-                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-                        . "VALUES ('?','?','?')";
-                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-            }
-        }
+//        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//            $product_id = $value['id'];
+//            if ($product_id > 0) {
+//                if ($value['price_promo'] > 0) {
+//                    $price = $value['price_promo'];
+//                } else {
+//                    $price = $value['price'];
+//                }
+//                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+//                        . "VALUES ('?','?','?')";
+//                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+//            }
+//        }
+        // Сохраним связи с продуктами
+        $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
 
         // Отправляем пользователя на страницу оплаты
         header('Location: ' . $pay_tinkoff_link);
@@ -368,8 +369,8 @@ if (count($_SESSION['errors']) > 0) {
     foreach ($_SESSION['errors'] as $value) {
         ?>
         <div class="alert alert-danger" role="alert">
-        <?= $value ?>
+            <?= $value ?>
         </div>
-            <?
-        }
+        <?
     }
+}

@@ -27,8 +27,8 @@
         </div>
 
         <div class="card-body">
-            <div class="container_mix webinar_products_arrays_data">
-
+            <div class="container-fluid">
+                <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 container_mix products_arrays_data"></div>
             </div>
         </div>
 
@@ -56,14 +56,15 @@
                 for (var i = 0; i < data.length; i++) {
                     var wcc_color = data[i]['wcc_color'];
                     var wares_cat_name = '<span class="class_category" style="color: ' + wcc_color + ';">' + data[i]['wcc_title'] + '</span>';
-                    $(".webinar_products_arrays_data").append(
-                            '<div class="col-lg-3 mb-3 pt-4 pb-4 product_info item" style="border: 1px solid #e5e9f2;">\n\
-                                <a href="?wares_id=' + data[i]['id'] + '">\n\
-                                <div class="mb-2 text-center"><img src="' + data[i]['images'] + '" style="max-width: 200px;max-height: 160px;"/></div>\n\
-                                <div class="mb-3 wares_title text-center"><span class="">' + data[i]['title'] + '</span></div>\n\
+                    $(".products_arrays_data").append(
+                            '<a href="?wares_id=' + data[i]['id'] + '">\n\
+                                <div class="m-0 m-lg-2 p-2 p-lg-4 h-100 d-flex flex-column product_info item">\n\
+                                <div class="mb-2 align-items-start text-center flex-fill"><img src="' + data[i]['images'] + '" style="width: 100%;"/></div>\n\
+                                <div class="wares_title d-flex align-items-end text-center flex-fill">\n\
+                                <div class="mt-0 mb-0 ml-auto mr-auto">' + data[i]['title'] + '</div>\n\
                                 </div>\n\
-                                </a>\n\
-                                </div>');
+                                </div>\n\
+                                </a>');
                 }
             } else {
                 $(".webinar_products_arrays_data").html("Нет записей");

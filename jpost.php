@@ -18,7 +18,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/init_cache.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
-
+$extension = new \project\extension();
 
 if (isset($_POST)) {
     //echo "post \n";
@@ -54,6 +54,8 @@ if (isset($_POST)) {
             $result = array('t' => 0);
         }
     }
+    
+    $extension->set_jpost_log('jpost');
 
     /*
      * Регистрация разрешения cookie 
@@ -63,10 +65,10 @@ if (isset($_POST)) {
         //setcookie($cookie_val, '1'); // это не работает, задавать cookie надо через javascript
         $result = array('success' => 1, 'success_text' => '', 'data' => $cookie_val);
     }
-    
+
 
     // Определим пользователя и разрешим ему отправлять запросы
-    if ((isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) || (isset($_COOKIE['site_user_ajax_access']) && $_COOKIE['site_user_ajax_access'] > 0)) {
+    //if ((isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) || (isset($_COOKIE['site_user_ajax_access']) && $_COOKIE['site_user_ajax_access'] > 0)) {
         //include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/jpost.php';
 
         /*
@@ -80,12 +82,12 @@ if (isset($_POST)) {
                 $_SESSION['errors'][] = 'Not file jpost!';
             }
         }
-    } else {
-        $_SESSION['errors'][] = 'Сессия устарела';
-        $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'action' => 'reload');
-        echo json_encode($result);
-        exit();
-    }
+//    } else {
+//        $_SESSION['errors'][] = 'Сессия устарела';
+//        $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'action' => 'reload');
+//        echo json_encode($result);
+//        exit();
+//    }
 
     /*
      * Отправка только редакторы сайта
@@ -113,6 +115,7 @@ if (isset($_POST)) {
 
 
     $_SESSION['errors'] = array();
-
-    echo json_encode($result);
+    if (count($result) > 0) {
+        echo json_encode($result);
+    }
 }

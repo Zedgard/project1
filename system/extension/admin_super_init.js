@@ -15,7 +15,7 @@ function super_init() {
  * @returns {undefined}
  */
 function init_super_insert() {
-    console.log('init_super_insert');
+    //console.log('init_super_insert');
     if ($(".init_super_insert").length > 0) {
         $(".init_super_insert").unbind('click').click(function () {
             console.log('init_super_insert click ' + jpost_url);
@@ -31,6 +31,32 @@ function init_super_insert() {
         });
     }
 }
+
+/**
+ * Отправляет запрос
+ * @param {type} elm_id
+ * @param {type} value
+ * @param {type} elm_table
+ * @param {type} elm_row
+ * @returns {undefined}
+ */
+function init_super_post(elm_id, value, elm_table, elm_row, func) {
+    sendPostLigth('/jpost.php?super=1',
+            {
+                "elm_edit": 1,
+                "elm_id": elm_id,
+                "value": value,
+                "elm_table": elm_table,
+                "elm_row": elm_row
+            },
+            function (e) {
+                if (typeof func != "undefined") {
+                    eval(func);
+                }
+            });
+
+}
+
 
 /**
  * Инициализирует редактирование
@@ -80,6 +106,7 @@ function init_super_delete() {
             var elm_table = $(this).attr("elm_table");
             var elm_table_tr_hide = $(this).attr("elm_table_tr_hide");
             var func = $(this).attr("func");
+            console.log('init_elm_delete: ' + " elm_table=" + elm_table + " elm_id=" + elm_id);
             sendPostLigth('/jpost.php?super=1',
                     {
                         "elm_delete": 1,
@@ -99,30 +126,3 @@ function init_super_delete() {
         });
     }
 }
-
-
-/**
- * Отправляет запрос
- * @param {type} elm_id
- * @param {type} value
- * @param {type} elm_table
- * @param {type} elm_row
- * @returns {undefined}
- */
-function init_super_post(elm_id, value, elm_table, elm_row, func) {
-    sendPostLigth('/jpost.php?super=1',
-            {
-                "elm_edit": 1,
-                "elm_id": elm_id,
-                "value": value,
-                "elm_table": elm_table,
-                "elm_row": elm_row
-            },
-            function (e) {
-                if (typeof func != "undefined") {
-                    eval(func);
-                }
-            });
-
-}
-

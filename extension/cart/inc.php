@@ -163,6 +163,8 @@ class cart extends \project\extension {
             }
         }
 
+        $this->send_email_message($pay_id);
+
         // Зафиксируем продажу товара
         $query_products = "SELECT pp.* FROM zay_pay p 
                             left join zay_pay_products pp on pp.pay_id=p.id
@@ -171,6 +173,49 @@ class cart extends \project\extension {
         foreach ($products_data as $v) {
             $products->setSoldAdd($v['product_id']);
         }
+    }
+
+    /**
+     * Отправить оповещение клиенту о покупке
+     * @param type $pay_id
+     * @return boolean
+     */
+    public function send_email_message($pay_id) {
+        // Список приобретенных продуктов
+        $query_products = "SELECT pp.product_price, pp.creat_date, pr.* FROM zay_pay_products pp 
+                                LEFT JOIN zay_product pr on pr.id=pp.product_id
+                                WHERE pp.pay_id='?'";
+        $products = $this->getSelectArray($query_products, array($pay_id));
+
+        $products_title = array();
+        foreach ($products as $value) {
+            $products_title[] = $value['title'];
+        }
+        // продукты в строку, для письма
+        $products_title_str = implode(', ', $products_title);
+
+        $send_emails = new \project\send_emails();
+        $user_info = $this->get_pay_user_info($pay_id);
+        if (strlen($user_info['email']) > 0) {
+            return $send_emails->send('product_bay', $user_info['email'], array('products_title_str' => $products_title_str));
+        }
+        return false;
+    }
+
+    /**
+     * Найти клиента сделавшего покупку
+     * @param type $pay_id
+     * @return type
+     */
+    public function get_pay_user_info($pay_id) {
+        $query = "SELECT u.* FROM zay_pay p
+                            LEFT JOIN zay_users u on u.id=p.user_id
+                           WHERE p.id='?' ";
+        $data = $this->getSelectArray($query, array($pay_id));
+        if (count($data) > 0) {
+            return $data[0];
+        }
+        return $data;
     }
 
     /**
@@ -200,7 +245,6 @@ class cart extends \project\extension {
             $query = "SELECT * FROM zay_pay WHERE id='?'";
             $pay_data = $this->getSelectArray($query, array($pay_id));
 
-
             $query_pay_type = "SELECT * FROM zay_pay_type WHERE pay_type_code='?'";
             $pay_type = $this->getSelectArray($query_pay_type, array($pay_data[0]['pay_type']))[0]['pay_type_title'];
 
@@ -212,7 +256,6 @@ class cart extends \project\extension {
                                 LEFT JOIN zay_product pr on pr.id=pp.product_id
                                 WHERE pp.pay_id='?'";
                 $products = $this->getSelectArray($query_products, array($pay_data[0]['id']));
-
 
                 /*
                  * Получаем информацию о продуктах из базы а не из сессии покупателя

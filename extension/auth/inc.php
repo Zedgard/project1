@@ -698,7 +698,11 @@ class auth extends \project\user {
                                 )
                         )) {
                     return true;
+                } else {
+                    $_SESSION['errors'][] = 'Сообщение не отправлено!';
                 }
+            } else {
+                $_SESSION['errors'][] = 'Пользователь не обновлен!';
             }
         } else {
             $_SESSION['errors'][] = 'Пользователь не зарегистрирован или неверно указали адрес электронной почты';

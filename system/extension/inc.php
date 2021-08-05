@@ -266,4 +266,28 @@ class extension {
         return $sqlLight->query($query, array($elm_table, $elm_id));
     }
 
+    /**
+     * Запись $_POST запроса в лог
+     * @param type $metod
+     * @return type
+     */
+    public function set_jpost_log($metod) {
+        ob_start();
+        print_r($_POST);
+        $post_log = ob_get_clean();
+
+        $insert = 0;
+        // Записываем если передали user_email
+        if (isset($_POST['user_email'])) {
+            $insert = 1;
+        }
+
+        if ($insert > 0) {
+            $sqlLight = new \project\sqlLight();
+            $query = "INSERT INTO `zay_log_jpost`(`post_log`, `metod`) VALUES ('?','?')";
+            return $sqlLight->query($query, array($post_log, $metod));
+        }
+        return false;
+    }
+
 }

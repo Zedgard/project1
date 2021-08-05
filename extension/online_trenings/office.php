@@ -32,10 +32,9 @@ if ($user->isClient() || $user->isEditor()) {
         $chat->chat_init('webinar_' . $wares['id']);
         //$r = $chat->chat_get_messages();
         //print_r($wares_info);
-
+        $bonus_btn_style = 'display:none;';
         foreach ($series as $series_value) {
             if ($series_value['series_enable'] == 1) {
-                $bonus_btn_style = 'display:none;';
                 $bonus_material_id = '0';
                 $bonus_lock_content = '<i class="fas fa-lock"></i>';
                 $bonus_lock = 1;

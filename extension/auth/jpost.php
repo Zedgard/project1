@@ -104,7 +104,7 @@ if (isset($_POST['logout'])) {
 if (isset($_POST['re_password'])) {
     $email = trim($_POST['re_user_email']);
     if ($auth->re_password($email)) {
-        $result = array('success' => 1, 'success_text' => 'На указанную почту отправлено письмо с инструкцией восстановления', 'action' => '/', 'action_time' => '5');
+        $result = array('success' => 1, 'success_text' => 'На указанную почту отправлено письмо с инструкцией восстановления', 'action' => '/', 'action_time' => '10');
     } else {
         $result = array('success' => 0, 'success_text' => 'Ошибка процедуры!');
     }
