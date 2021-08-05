@@ -952,7 +952,7 @@ class wares extends \project\extension {
                 $t = 1;
             }
         }
-        if ($t == 1) {
+        if ($t == 1 && $_SESSION['user']['info']['id'] > 0) {
             $_SESSION['wares_serie_see'][] = $series_id;
             $count_see = 0;
             $querySelect = "SELECT * FROM zay_wares_video_series_see wvs where wvs.series_id='?' and wvs.user_id='?' ";
