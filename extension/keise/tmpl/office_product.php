@@ -83,6 +83,13 @@
                                 continue;
                             }
                             ?>
+                            <?
+                            if (strlen($series_value['title_top']) > 0) {
+                                ?>
+                                <h3 class="text-center mt-3 mb-3"><strong><?= $series_value['title_top'] ?></strong></h3>
+                                <?
+                            }
+                            ?>
                             <div class="series_block series_<?= $series_value['id'] ?>">
                                 <div class="marathons_elm mb-1">
                                     <a href="javascript:void(0)" 
@@ -244,8 +251,8 @@
                     if (e['html'].length > 0) {
                         $(o).find(".material_content_block").append(e['html']);
                         $(o).find(".marathons_elm_content").append(e['html']);
-                        
-                         $(o).find(".spinner-border").remove();
+
+                        $(o).find(".spinner-border").remove();
 
                         $(".material_info").unbind('mouseenter').mouseenter(function () {
                             var wares_id = $(".marathons_wares_id").val();
@@ -270,7 +277,7 @@
     }
 
     function get_general(o, wares_id) {
-    console.log('get_general');
+        console.log('get_general');
         $.ajax({
             url: '/jpost.php?extension=products',
             type: 'POST',
