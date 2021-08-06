@@ -217,7 +217,7 @@
             </div>
             <!-- Серии -->
             <h2 class="text-center mb-3" style="color: #000000;">Серии</h2>
-            <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="wares_video_series" db-row="position">
+            <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="zay_wares_video_series" db-row="position">
                 <?
                 /*
                  * Если указана серия уроков
@@ -230,32 +230,65 @@
                                 <i class="mdi mdi-arrow-all handle" style="font-size: 2rem;"></i>
                             </div>
                             <div class="col-11">
+                                <div class="text-center h2 series_title_top_<?= $series_value['id'] ?>">
+                                    <?= $series_value['title_top'] ?>
+                                </div>
                                 <div id="accordion<?= $series_value['id'] ?>" class="accordion accordion-bordered">
                                     <div class="card" style="overflow: inherit;">
 
                                         <div class="card-header " style="padding: 1rem 0;" id="heading<?= $series_value['id'] ?>">
                                             <button class="btn btn-link collapsed " video_id="<?= $series_value['id'] ?>" data-toggle="collapse" data-target="#collapse<?= $series_value['id'] ?>" aria-expanded="false" aria-controls="collapse<?= $series_value['id'] ?>"></button>
                                         </div>
-                                        <div class="ml-4" style="margin-top: -60px;width: 70%;z-index: 1;">
-                                            <div class="float-left w-25">
-                                                <input type="text" 
-                                                       name="series_title<?= $value['id'] ?>" 
-                                                       value="<?= $series_value['title'] ?>" 
-                                                       id="series_title_<?= $series_value['id'] ?>" 
-                                                       class="form-control form-control-series series_title_<?= $value['id'] ?>" 
-                                                       row_db="title" 
-                                                       obj_id="<?= $series_value['id'] ?>" 
-                                                       title="Название серии уроков..." style="float: left;width: 60%;" />
-                                                <input type="text" 
-                                                       name="series_date_<?= $value['id'] ?>" 
-                                                       value="<?= $series_value['start_day'] ?>" 
-                                                       id="series_date_<?= $series_value['id'] ?>" 
-                                                       class="form-control form-control-series init_elm_edit" 
-                                                       obj_id="<?= $series_value['id'] ?>"
-                                                       elm_id="<?= $series_value['id'] ?>"
-                                                       elm_table="zay_wares_video_series" 
-                                                       elm_row="start_day"
-                                                       title="Дата старта урока..." style="float: left;width: 35%;margin-left: 5%;" />
+                                        <div class="ml-4" style="margin-top: -60px;width: 90%;z-index: 1;">
+                                            <div class="float-left w-75">
+                                                <table class="w-100">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 15rem;">Название серии</td>
+                                                            <td>
+                                                                <input type="text" 
+                                                                       name="series_title<?= $value['id'] ?>" 
+                                                                       value="<?= $series_value['title'] ?>" 
+                                                                       id="series_title_<?= $series_value['id'] ?>" 
+                                                                       class="form-control form-control-series series_title_<?= $value['id'] ?>" 
+                                                                       row_db="title" 
+                                                                       obj_id="<?= $series_value['id'] ?>" style="float: left;" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Дата старта урока</td>
+                                                            <td>
+                                                                <input type="text" 
+                                                                       name="series_date_<?= $value['id'] ?>" 
+                                                                       value="<?= $series_value['start_day'] ?>" 
+                                                                       id="series_date_<?= $series_value['id'] ?>" 
+                                                                       class="form-control init_elm_edit" 
+                                                                       obj_id="<?= $series_value['id'] ?>"
+                                                                       elm_id="<?= $series_value['id'] ?>"
+                                                                       elm_table="zay_wares_video_series" 
+                                                                       elm_row="start_day"
+                                                                       title="Дата старта урока..." style="float: left;width: 5rem;" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Раздление (заголовок сверху)</td>
+                                                            <td>
+                                                                <input type="text" 
+                                                                       name="series_title_top<?= $value['id'] ?>" 
+                                                                       value="<?= $series_value['title_top'] ?>" 
+                                                                       id="series_title_top_<?= $series_value['id'] ?>" 
+                                                                       class="form-control form-control-series series_title_top series_title_<?= $value['id'] ?>" 
+                                                                       obj_id="<?= $series_value['id'] ?>"
+                                                                       elm_id="<?= $series_value['id'] ?>"
+                                                                       elm_table="zay_wares_video_series" 
+                                                                       row_db="title_top" 
+                                                                       obj_id="<?= $series_value['id'] ?>" style="float: left;" />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+
                                                 <script>
                                                     $(document).ready(function () {
                                                         //                                                        $(".datepicker<?= $series_value['id'] ?>").datepicker({
@@ -295,7 +328,7 @@
                                                     });
                                                 </script>
                                             </div> 
-                                            <div class="float-left ml-3" style="margin-top: 7px;">
+                                            <div class="float-right ml-3" style="margin-top: 7px;">
                                                 <span><a href="?wares_id=<?= $wares_id ?>&delete_series=<?= $series_value['id'] ?>" class="btn btn-danger btn-sm">удалить</a></span>
                                             </div>
                                         </div>
@@ -303,7 +336,8 @@
                                         <div style="height: 18px;"></div>
 
                                         <div id="collapse<?= $series_value['id'] ?>" class="collapse" aria-labelledby="heading<?= $series_value['id'] ?>" data-parent="#accordion<?= $series_value['id'] ?>" style="">
-                                            <div class="card-body">
+                                            <hr/>
+                                            <div class="card-body" style="padding-top: 0;">
                                                 <ul class="sortable-ul" ajax-url="/jpost.php?extension=wares" ajax-metod="material_update_positions" db-table="zay_wares_material" db-row="position">    
                                                     <?
                                                     foreach ($materials as $key => $value) {

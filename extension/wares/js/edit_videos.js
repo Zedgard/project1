@@ -174,7 +174,10 @@ $(document).ready(function () {
                     },
                     function (e) {
                         if (e['success'] == '1') {
-
+                            // специальные действия 
+                            if (row_db == "title_top") {
+                                $(".series_title_top_" + obj_id).html(val);
+                            }
                         } else {
                             alert('Ошибка сохранения!');
                         }
