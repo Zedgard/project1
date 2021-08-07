@@ -11,8 +11,17 @@
                row_db="audio_file" obj_id="<?= $value['id'] ?>" 
                placeholder="Ссылка на фаил..." />    
     </div>
-
     <div class="mb-3">
+        <input type="text" 
+           name="material_title<?= $value['material_title'] ?>" 
+           value="<?= $value['material_title'] ?>" 
+           id="material_title_<?= $value['id'] ?>" 
+           class="form-control form-control-material material_title w-50 h-5" 
+           row_db="material_title" obj_id="<?= $value['id'] ?>"
+           init_html="material_file_title_<?= $value['id'] ?>"
+           placeholder="Текст заголовка..." />
+    </div>
+    <div class="">
         <label class="switch switch-text switch-primary form-control-label">
             <input type="checkbox" 
                    class="switch-input form-check-input form-control-material audio_file_download_true" 

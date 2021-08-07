@@ -1,4 +1,11 @@
 <div class="player-block calamansi-player-block float-left">
+    <?
+    if (strlen($value['material_title']) > 0) {
+        ?>
+        <div class="mb-2"><?= $value['material_title'] ?></div>
+        <?
+    }
+    ?>
     <div id="calamansi-player-<?= $union_elm_id ?>" class="calamansi_audio_file">
         Загрузка плеера... 
     </div>
