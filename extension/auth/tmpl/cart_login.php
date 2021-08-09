@@ -50,7 +50,7 @@
                 </div>
                 <div></div>
             </div>
-            <div class="col-md-6 mt-3">
+            <div class="col-md-6 mt-2">
                 <div class=" d-md-block">
                     <div class="fl_title" style="margin-bottom: 2.7rem;">
                         или авторизируйся, если уже есть аккаунт 
@@ -133,7 +133,7 @@
                             <div class="form_result" style="display: none;">
 
                             </div>
-                            <button type="submit" class="btn btn-lg btn-primary btn-block">Авторизация</button>
+                            <button type="submit" class="btn btn-lg btngreen btn-success w-100">войти</button>
                             <div class="mt-4 mb-2 text-center">
                                 <div style="font-size: 0.8rem;margin-bottom: 0.2rem;">авторизация с помощью</div>
 

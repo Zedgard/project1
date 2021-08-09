@@ -1979,16 +1979,16 @@ fieldset:disabled a.btn {
 
 .btn-success {
     color: #ffffff;
-    background-color: #29cc97;
-    border-color: #29cc97; }
+    background-color: #04be4e;
+    border-color: #04be4e; }
 .btn-success:hover {
     color: #ffffff;
-    background-color: #23ac7f;
-    border-color: #20a278; }
+    background-color: #038c3a;
+    border-color: #038c3a; }
 .btn-success:focus, .btn-success.focus {
     color: #ffffff;
-    background-color: #23ac7f;
-    border-color: #20a278;
+    background-color: #038c3a;
+    border-color: #038c3a;
     box-shadow: 0 0 0 0.2rem rgba(73, 212, 167, 0.5); }
 .btn-success.disabled, .btn-success:disabled {
     color: #ffffff;

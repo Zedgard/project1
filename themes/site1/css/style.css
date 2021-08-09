@@ -70,6 +70,15 @@ a, a:hover, a:focus {
     text-decoration: none;
     /* color: inherit; */
 }
+a {
+    color: #038c3a;
+    text-decoration: none;
+}
+a:hover {
+    color: #146c43;
+    text-decoration: underline;
+}
+
 /* Деактивируем цвета для ссылок */
 .bread a {
     color: inherit; 
@@ -691,6 +700,7 @@ ul.social-icons.white li a:focus{
 }
 .btngreen, .btngreen-alt{
     background-color: #04be4e;
+    border: 1px solid #04be4e; 
     color: #fff;
 }
 .btngreen-outline{
@@ -794,8 +804,8 @@ ul.social-icons.white li a:focus{
     margin-top: -6rem;
 }
 .exam_bg{
-        margin-top: -7%;
-    }
+    margin-top: -7%;
+}
 @media (max-width: 992px) {
     .btn_slider_link_exam{
         padding: 0.2rem 0.6rem;

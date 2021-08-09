@@ -103,7 +103,7 @@
                                                 <div class="form_result" style="display: none;">
 
                                                 </div>
-                                                <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Авторизация</button>
+                                                <button type="submit" class="btn btn-lg btn-success btn-block mb-4">войти</button>
                                                 <div class="mb-4 text-center">
                                                     <div style="font-size: 0.8rem;margin-bottom: 0.2rem;">авторизация с помощью</div>
 

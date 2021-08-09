@@ -116,27 +116,28 @@
 }
 
 .btn_category_controll{
-    border: 2px solid #418e99;
+    border: 2px solid #04be4e;
     width: 100%;
     padding: 14px 0;
     background-color: #FFFFFF;
     float: left;
+    color: #000000;
 }
 .btn_category_controll:hover{
     cursor: pointer;
-    background-color: #418e99;
+    background-color: #04be4e;
     color: #FFFFFF;
 }
 .btn_category_controll:focus, .btn_category_controll:active {
     cursor: pointer;
-    background-color: #418e99;
+    background-color: #04be4e;
     color: #FFFFFF;
-    border: 2px solid #418e99;
+    border: 2px solid #04be4e;
 }
 .btn_category_controll_active{
-    background-color: #418e99;
+    background-color: #04be4e;
     color: #FFFFFF;
-    border: 2px solid #418e99;
+    border: 2px solid #04be4e;
 }
 .border_radius3{
     -webkit-border-radius: 3px;
@@ -576,6 +577,7 @@
     font-size: 1.4rem;
     font-weight: 600;
 }
+
 .btn_category_controll_cart:hover{
     cursor: pointer;
 }

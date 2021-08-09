@@ -484,6 +484,25 @@ class products extends \project\extension {
     }
 
     /**
+     * Категории имеющихся товаров в продаже
+     */
+    public function getCategorysIndex() {
+        $querySelect = "SELECT distinct c.category_id
+                                FROM `zay_product` p
+                                left join zay_product_category c on c.product_id=p.id
+                                left join zay_product_wares pww on pww.product_id=p.id
+                                left join zay_wares ww on ww.id=pww.wares_id 
+                                where p.active='1' and p.is_delete='0' and ww.club_month_period='0' 
+                        ";
+        $data = $this->getSelectArray($querySelect, array(), 0);
+        $ids = array();
+        foreach ($data as $value) {
+            $ids[] = $value['category_id'];
+        }
+        return $ids;
+    }
+
+    /**
      * Информация о товарах
      * @param type $waresElementsIds Список через запятую
      * @return type Array

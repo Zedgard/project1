@@ -24,6 +24,7 @@ class sign_up_consultation extends \project\extension {
      * @return type
      */
     public function add_consultation($pay_data) {
+        $return = false;
 
 //        $queryConsultation = "SELECT cp.id as period_id, cp.period_price, cp.text_type, cp.period_time, 
 //                            cm.id as master_id, cm.master_name, 
@@ -48,7 +49,7 @@ class sign_up_consultation extends \project\extension {
                 $return = $this->query($query, array($value['pay_id'], $value['master_id'],
                     $value['user_first_name'], $value['user_phone'], $value['user_email'], $value['descr'], $value['date_consultation'], $value['time_consultation'],
                     $period_id), 0);
-                
+
                 // Отправим письмо оповещение
                 if ($return) {
                     $period_str = '';
@@ -116,8 +117,23 @@ class sign_up_consultation extends \project\extension {
                     if (isset($_SESSION['consultation'])) {
                         unset($_SESSION['consultation']);
                     }
-                    return $return;
                 }
+                if ($return == false) {
+                    $send_emails->send(
+                            'consultation_not',
+                            $consultation_manager_email, array(
+                        //'site' => 'https://' . $_SERVER['SERVER_NAME'],
+                        'fio' => $value['user_first_name'],
+                        'email' => $value['user_email'],
+                        'phone' => $value['user_phone'],
+                        'descr' => $value['descr'],
+                        'date' => $date,
+                        'time' => $value['time_consultation'],
+                        'period' => $period_str
+                            )
+                    );
+                }
+                return $return;
             }
         }
 

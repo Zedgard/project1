@@ -19,13 +19,13 @@
 
     <!-- мобильный вид -->
     <div class="row mt-4 mb-3 bread d-block d-xl-none">
-        <div class="col-12">
+        <div class="col-lg-12">
             <?= $page->bread_get() ?>
         </div>
     </div>
     <!-- десктоп вид  style="margin-left: -2.8rem;" -->
-    <div class="row mt-2 mb-2 bread d-none d-xl-block" >
-        <div class="col-12">
+    <div class="row mt-3 mb-3 bread d-none d-xl-block" >
+        <div class="col-lg-12">
             <?= $page->bread_get() ?>
         </div>
     </div>
@@ -41,9 +41,34 @@
              */
             include_once 'index_filter.php';
             ?>
-            <div class="col-lg-10">
-                <!-- Sorted block -->    
-                <div class="row mb-4">
+            <div class="col-lg-12">
+                <!-- Sorted block -->   
+                <div class="row mb-3 row-cols-2 row-cols-md-5 g-2 g-lg-3">
+                    <div class="col text-center <?= $none ?>">
+                        <a href="/shop/" class="mb-1 btn_category_controll border_radius3">ВСЕ</a>
+                    </div>
+                    <?
+                    foreach ($categoryArray as $value) {
+                        $active = '';
+                        $none = 'd-none';
+                        if (isset($_GET['k']) && $_GET['k'] == $value['id']) {
+                            $active = 'btn_category_controll_active';
+                        }
+                        foreach ($category_ids as $v) {
+                            if ($v == $value['id']) {
+                                $none = '';
+                            }
+                        }
+                        ?>
+                        <div class="col text-center <?= $none ?>">
+                            <a href="?k=<?= $value['id'] ?>" class="mb-1 btn_category_controll border_radius3 <?= $active ?>"><?= $value['title'] ?></a>
+                        </div>
+                        <?
+                    }
+                    ?>
+                </div>
+
+                <div class="row mb-4 d-none">
                     <div class="col-12">
                         <div class="row controls fast_control_btn">
                             <div class="col-6 col-lg-2">
@@ -66,7 +91,7 @@
 
 
                 <!-- product list -->
-                <div class="row container_mix row-cols-2 row-cols-md-3 g-2 g-lg-3" data-ref="mixitup-container">
+                <div class="row container_mix row-cols-2 row-cols-md-4 g-2 g-lg-3" data-ref="mixitup-container">
                     <?
                     if ($productsFilterCount > 0) {
                         for ($i = 0; $i < $productsFilterCount; $i++) {
@@ -97,9 +122,9 @@
                             }
 
                             $display = '';
-                            if ($i > 6) {
-                                $display = 'display: none;';
-                            }
+                            //if ($i > 6) {
+                            //$display = 'display: none;';
+                            //}
                             ?>
                             <div class="col mb-2 mb-lg-4 mixitup-container <?= $class_category ?>" i='<?= $i ?>' data-ref="mixitup-target" style="<?= $display ?>">
                                 <div class="card p-2 p-lg-4 item"> 
@@ -248,15 +273,15 @@
     var category_controll = '<?= $_SESSION['product']['filter']['category_controll'] ?>';
     $(document).ready(function () {
         //setTimeout(function () {
-            var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
-            if (!!containerEl) {
-                //console.log('containerEl');
-                var mixer = mixitup(containerEl, {
-                    selectors: {
-                        target: '[data-ref~="mixitup-target"]'
-                    }
-                });
-            }
+        var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
+        if (!!containerEl) {
+            //console.log('containerEl');
+            var mixer = mixitup(containerEl, {
+                selectors: {
+                    target: '[data-ref~="mixitup-target"]'
+                }
+            });
+        }
         //}, 1000);
     });
 </script>

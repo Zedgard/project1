@@ -55,21 +55,26 @@ $product_theme = '0';
 if (isset($_SESSION['product']['filter']['product_theme'])) {
     $product_theme = $_SESSION['product']['filter']['product_theme'];
 }
-if(isset($_GET['product_theme'])){
+if (isset($_GET['product_theme'])) {
     $product_theme = $_GET['product_theme'];
 }
-if(isset($_GET['category'])){
+if (isset($_GET['category'])) {
     $_SESSION['product']['filter']['category_controll'] = $_GET['category'];
+}
+if (isset($_GET['k'])) {
+    $categoryStr = $_GET['k'];
 }
 
 /* Все продукты сайта с учетом фильтра */
-$productsFilterArray = $c_product->getProductsIndex($productSearchString, '', $productTopicStr, $ProductPromo, $ProductNew, $product_theme);
+$productsFilterArray = $c_product->getProductsIndex($productSearchString, $categoryStr, $productTopicStr, $ProductPromo, $ProductNew, $product_theme);
 $productsFilterCount = count($productsFilterArray);
 
 // Для рекомендаций
 $rand_product1 = mt_rand(0, $productsFilterCount);
 $rand_product2 = mt_rand(0, $productsFilterCount);
 $rand_product3 = mt_rand(0, $productsFilterCount);
+
+$category_ids = $c_product->getCategorysIndex();
 
 /*
  * Когда выбрали товар информация по товару
@@ -117,12 +122,14 @@ if (isset($_GET['product'])) {
         //echo 'bread_get: ' . $page->bread_get() . "<br/>\n";
         //echo 'url_href: ' .$_SESSION['url_href']; 
     }
-} 
+}
 
-//foreach ($productsFilterArray as $value) {
-//print_r($value);
-//break;
-//}
+// Добавим в хлебные крошки
+foreach ($categoryArray as $value) {
+    if (isset($_GET['k']) && $_GET['k'] == $value['id']) {
+        $page->bread_add('?k=' . $value['id'], $value['title']);
+    }
+}
 
 include 'tmpl/index.php';
 include 'tmpl/go_cart_modal.php';

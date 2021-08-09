@@ -78,3 +78,19 @@ label {
     display: list-item;
     margin: 0.2rem 0 0.2rem 1rem;
 }
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #ced4da;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(3, 140, 58, 0.25);
+}
+.form-check-input:focus {
+  border-color: #ced4da;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(3, 140, 58, 0.25);
+}
+.form-check-input:checked {
+  background-color: #04be4e;
+  border-color: #04be4e;
+}
