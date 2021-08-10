@@ -132,11 +132,13 @@
     </div>
 </div>
 <script>
+    var obj_o = '';
     var bonus_lock = '<?= $bonus_lock ?>';
     var init_series_id = '';
     $(document).ready(function () {
         $(".marathons_material_series_btn").unbind('click').click(function () {
             var o = this;
+            obj_o = o;
             var series_id = $(o).attr('series_id');
             var elm_type = $(o).attr('elm_type');
             var title = $(o).find('span').html();
@@ -196,7 +198,7 @@
                     }
                 }, 200);
             } else { // Десктоп
-                console.log('D ' + init_series_id + ' === ' + series_id);
+                //console.log('D ' + init_series_id + ' === ' + series_id);
                 if (init_series_id === series_id) {
                     $('.materials_list').find(".marathons_material_list_block").toggle(200);
                 } else {
@@ -249,6 +251,14 @@
             success: function (e) {
                 if (e['success'] == '1') {
                     if (e['html'].length > 0) {
+
+                        // Перемещение элемента 
+                        var height = $(obj_o).height();
+                        var top = $(obj_o).offset().top - 412; // (height / 2)
+                        $('.materials_list').find(".marathons_material_list_block").css('margin-top', top);
+
+                        //console.log("height: " + height + " top: " + top);
+
                         $(o).find(".material_content_block").append(e['html']);
                         $(o).find(".marathons_elm_content").append(e['html']);
 
