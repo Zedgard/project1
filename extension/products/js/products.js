@@ -13,33 +13,34 @@ $.fn.isInViewport = function () {
 $(document).ready(function () {
 
 
+    if ($(".container_mix").length > 0) {
+        setInterval(function () {
+            //console.log('btn_category_controll_active');
+            var filter = $(".btn_category_controll_active").attr("data-filter");
+            if ($(".product_load_next").isInViewport() && filter == 'all') {
+                var i = 0;
+                var max = 6;
+                var t = 1;
+                $(".container_mix").find(".mixitup-container").each(function () {
+                    i++;
+                    if ($(this).is(':hidden') && max > 0) {
+                        max--;
+                        var e = this;
+                        setTimeout(function () {
+                            $(e).show(200);
+                        }, (t * 100));
+                        t = t + 1;
+                    }
+                    if (max < 0) {
+                        max = 10;
+                        t = 1;
+                    }
+                });
+            } else {
 
-    setInterval(function () {
-        //console.log('btn_category_controll_active');
-        var filter = $(".btn_category_controll_active").attr("data-filter");
-        if ($(".product_load_next").isInViewport() && filter == 'all') {
-            var i = 0;
-            var max = 6;
-            var t = 1;
-            $(".container_mix").find(".mixitup-container").each(function () {
-                i++;
-                if ($(this).is(':hidden') && max > 0) {
-                    max--;
-                    var e = this;
-                    setTimeout(function () {
-                        $(e).show(200);
-                    }, (t * 100));
-                    t = t + 1;
-                }
-                if (max < 0) {
-                    max = 10;
-                    t = 1;
-                }
-            });
-        } else {
-
-        }
-    }, 500);
+            }
+        }, 500);
+    }
 
 
 //    $('.carousel').carousel({
@@ -149,7 +150,7 @@ $(document).ready(function () {
 //            document.location.href = '/shop/';
 //        });
 //    }, 700);
-console.log('productSearchString');
+    console.log('productSearchString');
     $(".productSearchString").change(function () {
         var productSearchString = $(this).val();
         console.log('productSearchString delayKeyup: ' + productSearchString);

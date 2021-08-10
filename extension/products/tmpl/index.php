@@ -272,16 +272,16 @@
 <script>
     var category_controll = '<?= $_SESSION['product']['filter']['category_controll'] ?>';
     $(document).ready(function () {
-        //setTimeout(function () {
-        var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
-        if (!!containerEl) {
-            //console.log('containerEl');
-            var mixer = mixitup(containerEl, {
-                selectors: {
-                    target: '[data-ref~="mixitup-target"]'
-                }
-            });
-        }
-        //}, 1000);
+
+//        var containerEl = document.querySelector('[data-ref~="mixitup-container"]');
+//        if (!!containerEl) {
+//            //console.log('containerEl');
+//            var mixer = mixitup(containerEl, {
+//                selectors: {
+//                    target: '[data-ref~="mixitup-target"]'
+//                }
+//            });
+//        }
+
     });
 </script>
