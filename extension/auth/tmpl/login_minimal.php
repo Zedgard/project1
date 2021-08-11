@@ -191,7 +191,9 @@
 
     </div>
 </div>
-
+<?
+include 're_login.php';
+?>
 <script>
     $(function () {
         $('#authorization').sendPost(function (result) {

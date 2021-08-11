@@ -158,7 +158,9 @@
         </div>
     </div>
 </div>
-
+<?
+include 're_login.php';
+?>
 <script>
     $(function () {
         init_show_other_form();
