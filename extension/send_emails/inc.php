@@ -13,6 +13,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/Exception.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/PHPMailer.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/system/PHPMailer/SMTP.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 
 class send_emails extends \project\extension {
@@ -173,16 +174,22 @@ class send_emails extends \project\extension {
             $p_user = new \project\user();
             $user_info = $p_user->user_info($to_email);
             $user_hello_text = '';
-            
+
+            // Ссылка на быструю авторизацию
+            $params['user_auth_fast'] = '/auth/';
+            if (count($user_info) > 0 && strlen($user_info['email']) > 0) {
+                $auth = new \project\auth();
+                $code_integration = $auth->set_code_integration($user_info['email']);
+                $params['user_auth_fast_url'] = '/auth/?code_integration=' . $code_integration;
+            }
 
             //echo "email_code: {$email_code} to_email: {$to_email} <br/>\n";
             $mail = new PHPMailer(false);
             $smtp_user_info = $this->get_smtp_user_info();
             $email_info = $this->get_email($email_code);
 
-            /**
-             * Обработка данных ответа
-             */
+
+            //Обработка данных ответа
 //            if (strlen($params['user_first_name']) == 0) {
 //                $params['user_first_name'] = $user_info['email'];
 //            }
@@ -191,28 +198,28 @@ class send_emails extends \project\extension {
 //                $params['user_first_name'] = $params['user_fio'];
 //            }
 
-            if (strlen($params['user_email'])==0 && strlen($user_info['email']) > 0) {
+            if (strlen($params['user_email']) == 0 && strlen($user_info['email']) > 0) {
                 $params['user_email'] = $user_info['email'];
             }
-            
+
             if (!isset($params['user_password']) || strlen($params['user_password']) == 0) {
                 $params['user_password'] = '*****';
             }
-            
+
             // Куда ответить
             if (strlen($user_info['email']) > 0) {
                 $email_info['email_reply_to'] = $user_info['email'];
             }
-            
+
             $email_info['email_reply_subject'] = $email_info['email_subject'];
-            
+
             // Если отправил клиент сообщение ответим ему напрямую
             if (strlen($params['user_email']) > 0) {
                 $email_info['email_reply_to'] = $params['user_email'];
                 $email_info['email_reply_subject'] = $params['user_fio'];
             }
-            
-            
+
+
             //echo "user_info: {$smtp_user_info}<br/>\n";
             //echo "send_email: {$email_info['email_send']} <br/>\n";
             if ($email_info['email_send'] > 0) {

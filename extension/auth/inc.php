@@ -744,20 +744,23 @@ class auth extends \project\user {
      * @param type $code
      * @return boolean
      */
-    public function set_code_integration($email, $code) {
+    public function set_code_integration($email, $code = '', $change = 0) {
         $error = array();
         $sqlLight = new \project\sqlLight();
 
+        if (strlen($code) == 0) {
+            $code = base64_encode(uniqid('', true)); // Генерируем ключ
+        }
         $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active` = '1' ";
         $users = $sqlLight->queryList($query, array($email));
 
-        if ($users[0]['id'] > 0) {
+        if ($users[0]['id'] > 0 && (strlen($users[0]['code_integration']) == 0 || $change == 1)) {
             $q = "UPDATE `zay_users` SET `code_integration`='?' WHERE `id`='?' ";
             if ($sqlLight->query($q, array($code, $users[0]['id']))) {
-                return true;
+                return $code;
             }
         }
-        return false;
+        return '';
     }
 
     /**
