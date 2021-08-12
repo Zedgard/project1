@@ -31,7 +31,7 @@ if ($user->isEditor()) {
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
 
-// Сохранить данные по пользователю
+    // Сохранить данные по пользователю
     if (isset($_POST['saveProfilSettings'])) {
         $user_id = $_SESSION['user_edit_obj_id'];
         $first_name = $_POST['first_name'];
@@ -58,14 +58,13 @@ if ($user->isEditor()) {
         $ret = false;
         if (count($_SESSION['errors']) == 0) {
 
-            if ($user_id > 0) { 
+            if ($user_id > 0) {
 
 //                $select_query_email = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and id<>'?'";
 //                $users_email = $user->getSelectArray($select_query_email, array($email, $user_id));
 //
 //                $select_query_phone = "SELECT * FROM `zay_users` u WHERE u.`phone`='?' and id<>'?'";
 //                $users_phone = $user->getSelectArray($select_query_phone, array($phone, $user_id));
-
                 //if (count($users_email) == 1) {
                 $updateUserInfo = "UPDATE `zay_users` SET `email`='?',`phone`='?',`first_name`='?',"
                         . "`last_name`='?', `login_instagram`='?' WHERE id='?' ";
@@ -210,5 +209,19 @@ if ($user->isEditor()) {
             $url = '/';
         }
         $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '0');
+    }
+}
+
+// Генерация ссылки для быстрой авторизации
+if (isset($_POST['creat_fast_auth_link'])) {
+    if (isset($_POST['email'])) {
+        $code = $auth->set_code_integration($_POST['email']);
+        $result = array(
+            'success' => 1,
+            'success_text' => 'Успешно создана ссылка',
+            'data' => array('code' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}/auth/?code_integration=" . $code)
+        );
+    } else {
+        $result = array('success' => 0, 'success_text' => 'Не передан email адрес');
     }
 }

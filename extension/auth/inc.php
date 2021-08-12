@@ -244,7 +244,6 @@ class auth extends \project\user {
         }
 
         if (strlen($email) > 2) {
-
             $validator = new Validator();
             if (!$validator->valid_email($email)) {
                 $error[] = $lang['email_false'];
@@ -263,7 +262,6 @@ class auth extends \project\user {
                 $activate_code = $this->passHash(PRIVATE_CODE . $email . time());
                 $activate_codeBase64 = base64_encode($activate_code);
             }
-
 
             $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`=1"; // and `active` = 1 // Только активированых 
             $users = $sqlLight->queryList($query, array($email));
@@ -751,7 +749,7 @@ class auth extends \project\user {
         if (strlen($code) == 0) {
             $code = base64_encode(uniqid('', true)); // Генерируем ключ
         }
-        $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active` = '1' ";
+        $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`='1' ";
         $users = $sqlLight->queryList($query, array($email));
 
         if ($users[0]['id'] > 0 && (strlen($users[0]['code_integration']) == 0 || $change == 1)) {
@@ -759,6 +757,8 @@ class auth extends \project\user {
             if ($sqlLight->query($q, array($code, $users[0]['id']))) {
                 return $code;
             }
+        } else {
+            return $users[0]['code_integration'];
         }
         return '';
     }

@@ -9,7 +9,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
 $user = new \project\user();
 
-if ($user->isEditor()) {
+if ($user->isEditorUTM()) {
     include_once 'inc.php';
     include 'lang.php';
 

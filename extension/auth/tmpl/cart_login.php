@@ -27,7 +27,6 @@
             <div class="form_result" style="display: none;"></div>
             <div class="col-md-6 mt-2">
                 <div class="fl_title">Введи свою почту, чтобы купить</div>
-
                 <div class="d-none" style="height: 31px;"></div>
                 <div class="fl_input_title">Электронная почта*</div>
                 <div><input type="email" class="form-control input-lg user_email" name="email" id="email" aria-describedby="emailHelp"></div>
@@ -39,14 +38,14 @@
                     <div class="check_indicator2 mb-3">
                         <div class="control control-checkbox">
                             <input type="checkbox" id="check_indicator" name="check_indicator" value="1" class="form-check-input mr-2 check_indicator" /> 
-                            <label class="form-check-label" for="check_indicator">
+                            <label class="form-check-label check_indicator" for="check_indicator">
                                 Я ознакомлен(-а) с условиями и положениями <a href="/privacy_policy/" target="_blank">Политики конфиденциальности</a> и даю <a href="/personal_data/" target="_blank">согласие на обработку персональных данных</a>
                             </label>
                         </div>
                     </div>
 
                     <input type="hidden" name="registration_fast" />  
-                    <button type="submit" class="btn btn-lg btn-grey btn-block mt-3 mb-3"  style="">Оплатить</button>
+                    <button type="submit" class="btn btn-lg btn-grey btn-block mt-3 mb-3 btn_cart_fast_login"  style="">Оплатить</button>
                 </div>
                 <div></div>
             </div>
@@ -183,6 +182,22 @@ include 're_login.php';
                 clearInterval(uLogin);
             }
         }, 300);
+
+        $(".check_indicator,.user_email").bind('click keyup change keypress', function (event) {
+            console.log("keyup");
+            var user_email = $(".user_email").val();
+            var check_indicator = 0;
+            if ($(".check_indicator").prop('checked')) {
+                check_indicator = 1;
+            }
+            if (validateEmail(user_email) && check_indicator === 1) {
+                $(".btn_cart_fast_login").removeClass("btn-grey");
+                $(".btn_cart_fast_login").addClass("btn-success");
+            } else {
+                $(".btn_cart_fast_login").removeClass("btn-success");
+                $(".btn_cart_fast_login").addClass("btn-grey");
+            }
+        });
         //$('.phone').mask('+7 (999) 999-9999');
     });
 

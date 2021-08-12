@@ -194,6 +194,10 @@ class cart extends \project\extension {
         // продукты в строку, для письма
         $products_title_str = implode(', ', $products_title);
 
+        if (strlen($products_title_str) == 0) {
+            $products_title_str = 'Онлайн консультацию';
+        }
+
         $send_emails = new \project\send_emails();
         $user_info = $this->get_pay_user_info($pay_id);
         if (strlen($user_info['email']) > 0) {

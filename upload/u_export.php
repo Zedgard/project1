@@ -46,16 +46,16 @@ $sqlLight = new \project\sqlLight();
 /*
  * Импортируем данные из другой базы
  */
-$wp_users = $sqlLight->queryList("SELECT "
-        . "`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`,"
-        . "(SELECT m1.meta_value FROM `wp_usermeta` m1 WHERE `user_id` = u.ID and m1.meta_key='first_name') as first_name, "
-        . "(SELECT m2.meta_value FROM `wp_usermeta` m2 WHERE `user_id` = u.ID and m2.meta_key='last_name') as last_name, "
-        . "(SELECT m3.meta_value FROM `wp_usermeta` m3 WHERE `user_id` = u.ID and m3.meta_key='billing_address_1') as billing_address_1, "
-        . "(SELECT m4.meta_value FROM `wp_usermeta` m4 WHERE `user_id` = u.ID and m4.meta_key='billing_city') as billing_city, "
-        . "(SELECT m5.meta_value FROM `wp_usermeta` m5 WHERE `user_id` = u.ID and m5.meta_key='billing_postcode') as billing_postcode, "
-        . "(SELECT m6.meta_value FROM `wp_usermeta` m6 WHERE `user_id` = u.ID and m6.meta_key='billing_phone') as billing_phone, "
-        . "(SELECT m7.meta_value FROM `wp_usermeta` m7 WHERE `user_id` = u.ID and m7.meta_key='wc_last_active') as wc_last_active "
-        . "FROM `wp_users` u where u.ID>? ORDER BY u.`ID` ASC limit 200 ", array($external_code), 1);
+$wp_users = $sqlLight->queryList("SELECT 
+        `ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`,
+        (SELECT m1.meta_value FROM `wp_usermeta` m1 WHERE `user_id` = u.ID and m1.meta_key='first_name') as first_name, 
+        (SELECT m2.meta_value FROM `wp_usermeta` m2 WHERE `user_id` = u.ID and m2.meta_key='last_name') as last_name, 
+        (SELECT m3.meta_value FROM `wp_usermeta` m3 WHERE `user_id` = u.ID and m3.meta_key='billing_address_1') as billing_address_1, 
+        (SELECT m4.meta_value FROM `wp_usermeta` m4 WHERE `user_id` = u.ID and m4.meta_key='billing_city') as billing_city, 
+        (SELECT m5.meta_value FROM `wp_usermeta` m5 WHERE `user_id` = u.ID and m5.meta_key='billing_postcode') as billing_postcode, 
+        (SELECT m6.meta_value FROM `wp_usermeta` m6 WHERE `user_id` = u.ID and m6.meta_key='billing_phone') as billing_phone, 
+        (SELECT m7.meta_value FROM `wp_usermeta` m7 WHERE `user_id` = u.ID and m7.meta_key='wc_last_active') as wc_last_active 
+        FROM `wp_users` u where u.ID>? ORDER BY u.`ID` ASC limit 200 ", array($external_code), 1);
 
 unset($sqlLight);
 // новое подключение

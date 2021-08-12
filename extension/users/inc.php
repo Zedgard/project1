@@ -242,6 +242,19 @@ class user extends \project\extension {
         }
         return false;
     }
+    
+    /**
+     * Редакторы
+     * @return boolean
+     */
+    static public function isEditorUTM() {
+        //print_r($_SESSION['user']['info']);
+        $role_privilege = $_SESSION['user']['info']['role_privilege'];
+        if ($role_privilege >= 7) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Только клиенты

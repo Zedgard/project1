@@ -4,9 +4,12 @@ defined('__CMS__') or die;
 
 session_start();
 include 'inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include 'lang.php';
 
 $auth = new \project\auth();
+$user = new \project\user();
 
 /*
  * Авторизация
@@ -28,11 +31,11 @@ if (isset($_POST['authorization'])) {
             $url = '/shop/cart/';
             $r = 1;
         }
-        if (\project\user::isAdmin() || \project\user::isEditor()) {
+        if ($user->isAdmin() || $user->isEditor()) {
             $url = '/admin/';
             $r = 1;
         }
-        if (\project\user::isClient()) {
+        if ($user->isClient()) {
             $url = '/office/?katalog';
             $r = 1;
         }

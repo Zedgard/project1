@@ -16,6 +16,13 @@
                             <a href="?edit_user=0" class="btn btn-primary">Создать нового пользователя</a>
                         </div>
                         <div class="col text-right">
+                            <?
+                            if ($user->isAdmin()):
+                                ?>
+                                <a href="?user_roles=1" class="btn btn-primary">Управление ролей пользователя</a>
+                                <?
+                            endif;
+                            ?>
                         </div>
                     </div>
                     <div class="row mb-2">

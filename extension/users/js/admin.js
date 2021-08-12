@@ -49,6 +49,7 @@ function initTable() {
                 var close_club_text = '';
                 var close_club_status_text = '';
                 var close_club_end_date = '';
+                var code_integration_url = '<span><input type="button" value="Создать ссылку авторизации" class="btn btn-primary btn-sm btn_creat_fast_auth_link" /></span>';
                 if (data['data'][i]['close_club_true'] == '1') {
                     close_club_status = data['data'][i]['close_club_status'];
                     close_club_text = '<span class="alert-success">Участник закрытого клуба</span>';
@@ -61,10 +62,13 @@ function initTable() {
                     close_club = '<br/>' + close_club_text + '<br/>' + close_club_status_text + '<br/>' + close_club_end_date;
                 }
 
+                if (data['data'][i]['code_integration'].length > 0) {
+                    code_integration_url = '<span>' + window.location.protocol + '//' + window.location.hostname + '/auth/?code_integration=' + data['data'][i]['code_integration'] + '</span>';
+                }
 
-                $(".users_data tbody").append('<tr elmid="' + data['data'][i]['id'] + '" title="' + data['data'][i]['id'] + ' ' + data['data'][i]['first_name'] + ' ' + data['data'][i]['last_name'] + '"> \
+                $(".users_data tbody").append('<tr elmid="' + data['data'][i]['id'] + '" email="' + data['data'][i]['email'] + '" title="' + data['data'][i]['id'] + ' ' + data['data'][i]['first_name'] + ' ' + data['data'][i]['last_name'] + '"> \
                                     <td style="text-align: center;">' + a + '</td> \
-                                    <td style="text-align: center;">' + data['data'][i]['email'] + '</td> \
+                                    <td style="text-align: center;">' + data['data'][i]['email'] + '<br/>' + code_integration_url + '</td> \
                                     <td style="text-align: center;">' + data['data'][i]['phone'] + '</td> \
                                         <td style="text-align: center;">' + data['data'][i]['role_name'] + '</td> \
                                     <td style="text-align: center;">' + active_text + '</td> \
@@ -89,6 +93,7 @@ function initTable() {
                 $(".users_data").find('tr[elmid="' + user_edit + '"]').find(".userEdit").click();
             }, 1000);
             initUserEdit();
+            init_btn_creat_fast_auth_link();
         }, '1');
     }
 }
@@ -259,8 +264,21 @@ function init_edit_close_club(user_id) {
             } else {
                 $(".btn_close_club_insert").show();
                 $(".btn_close_club_insert .init_super_insert").attr('jpost_url', '/jpost.php?extension=close_club&close_club_insert=1&user_id=' + user_id);
-                $(".btn_close_club_insert .init_super_insert").attr('func',"init_edit_close_club('" + user_id + "')");
+                $(".btn_close_club_insert .init_super_insert").attr('func', "init_edit_close_club('" + user_id + "')");
             }
         });
     }
+}
+
+function init_btn_creat_fast_auth_link() {
+    $(".btn_creat_fast_auth_link").click(function () {
+        var email = $(this).closest("tr").attr("email");
+        var span = $(this).closest("span");
+        sendPostLigth('/jpost.php?extension=users', {"creat_fast_auth_link": 1, "email": email}, function (e) {
+            if (e['success'] == 1) {
+                $(span).html(e['data']['code']);
+            }
+        });
+    });
+
 }

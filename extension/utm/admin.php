@@ -8,7 +8,7 @@ include_once 'inc.php';
 $user = new \project\user();
 $pr_utm = new \project\utm();
 
-if ($user->isEditor()) {
+if ($user->isEditorUTM()) {
 
     if (isset($_GET['utm_creat'])) {
         if (isset($_GET['edit'])) {
