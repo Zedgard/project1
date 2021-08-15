@@ -251,13 +251,13 @@
             success: function (e) {
                 if (e['success'] == '1') {
                     if (e['html'].length > 0) {
-
                         // Перемещение элемента 
-                        var height = $(obj_o).height();
-                        var top = $(obj_o).offset().top - 412; // (height / 2)
+                        var top = $(obj_o).offset().top - 213;
+                        if (top < -30) {
+                            console.log('top=0');
+                            top = 0;
+                        } 
                         $('.materials_list').find(".marathons_material_list_block").css('margin-top', top);
-
-                        //console.log("height: " + height + " top: " + top);
 
                         $(o).find(".material_content_block").append(e['html']);
                         $(o).find(".marathons_elm_content").append(e['html']);
