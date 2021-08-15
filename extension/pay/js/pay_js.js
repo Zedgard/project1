@@ -89,13 +89,6 @@ function init_pay_data_list() {
                         credit_type = '( Кредитный )';
                     }
 
-
-//                var processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-danger btn-pill btn_set_processed btn-sm text-nowrap">не просмотрено</a>';
-//                if (e['data'][i]['processed'] == '1') {
-//                    processed = '<a href="javascript:void(0)" objid="' + e['data'][i]['id'] + '" class="btn btn-success btn-pill btn_set_processed btn-sm text-nowrap">обработано</a>';
-//                }
-//                <td class="text-center">' + processed + '</td> \ class=\"align-middle\"
-
                     $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
                                     <td class="text-center align-middle"><a href="javascript:void(0)" class="btn btn-link btn_pay_info_modal" objid="' + e['data'][i]['id'] + '">' + e['data'][i]['id'] + '</a></td> \
                                     <td class="align-middle">' + user_title + '</td> \

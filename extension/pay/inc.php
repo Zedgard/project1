@@ -13,7 +13,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 
 class pay extends \project\extension {
 
-    private $page_max = 10; // Колличество на страницу
+    private $page_max = 30; // Колличество на страницу
     private $pay_data_count = 0;
 
     public function __construct() {
@@ -55,7 +55,8 @@ class pay extends \project\extension {
         }
         if (strlen($search_pay_info_str) > 0) {
             $limit_where = '';
-            $w[] = "p.pay_descr like '%?%'"; 
+            $w[] = "(p.pay_descr like '%?%' or pr.title like '%?%')";
+            $queryArray[] = $search_pay_info_str;
             $queryArray[] = $search_pay_info_str;
         }
         //print_r($w);
@@ -65,22 +66,28 @@ class pay extends \project\extension {
         if (strlen($limit_where) > 0) {
             $queryArray[] = ($page_number * $this->page_max);
         }
-        $querySelect = "SELECT p.*, pt.pay_type_title, "
-                . "u.email, u.phone, u.first_name, u.last_name "
-                . "FROM `zay_pay` p "
-                . "left join `zay_users` u on u.id=p.user_id "
-                . "left join `zay_pay_type` pt on pt.pay_type_code=p.pay_type "
-                . "{$where} {$querySelectPayDescr} "
-                . "ORDER BY p.`pay_date` DESC {$limit_where}";
+        $querySelect = "SELECT DISTINCT p.*, pt.pay_type_title, 
+                u.email, u.phone, u.first_name, u.last_name 
+                FROM zay_pay p 
+                left join zay_pay_products pp on pp.pay_id=p.id
+                left join zay_product pr on pr.id=pp.product_id
+                left join zay_users u on u.id=p.user_id 
+                left join zay_pay_type pt on pt.pay_type_code=p.pay_type 
+                {$where} 
+                ORDER BY p.`pay_date` DESC {$limit_where}";
         $pays = $sqlLight->queryList($querySelect, $queryArray, 0);
         $data = array();
-        for ($i = 0; $i < count($pays); $i++) {
-            $pays[$i]['info'] = $this->get_pay_products_info($pays[$i]['id'], $search_pay_info_str);
-            if (count($pays[$i]['info']) > 0) {
-                $data[] = $pays[$i];
-            }
-            if (strlen($pays[$i]['pay_descr']) > 0) {
-                $data[] = $pays[$i];
+        if (count($pays) > 0) {
+            for ($i = 0; $i < count($pays); $i++) {
+                $pays[$i]['info'] = $this->get_pay_products_info($pays[$i]['id'], $search_pay_info_str);
+//            if (count($pays[$i]['info']) > 0) {
+//                $data[] = $pays[$i];
+//            }
+                if (strlen($pays[$i]['pay_descr']) > 0) {
+                    $data[] = $pays[$i];
+                } else {
+                    $data[] = $pays[$i];
+                }
             }
         }
         return $data;
@@ -118,10 +125,10 @@ class pay extends \project\extension {
         if (strlen($search_pay_info_str) > 0) {
             $search = "and p.title LIKE '%{$search_pay_info_str}%'";
         }
-        $querySelect = "SELECT pp.*, p.* FROM zay_pay_products pp 
+        $querySelect = "SELECT p.* FROM zay_pay_products pp 
             left join zay_product p on p.id=pp.product_id 
-            where pp.pay_id='?' {$search} ORDER BY `pay_id` ASC";
-        return $this->getSelectArray($querySelect, array($id));
+            where pp.pay_id='?' {$search} ORDER BY p.title ASC";
+        return $this->getSelectArray($querySelect, array($id), 0);
     }
 
     /**
