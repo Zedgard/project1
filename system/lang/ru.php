@@ -5,7 +5,7 @@
  */
  
 $lang = array( 
-    'site_title' => 'Сайт зайцева',
+    'site_title' => 'Сайт Зайцева',
     'site_author_name' => 'Эдгард Зайцев',
     'text_activate_account' => 'Активация учетной записи на сайте',
     'email_false' => 'Адрес электронной почты введен не верно',

@@ -12,7 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
         <!-- Required meta tags -->
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Сайт зайцева</title>
+        <title>Сайт Зайцева</title>
         <meta name="description" content="Корзина покупки товара" />
         <link href="/favicon.ico<?= $_SESSION['rand'] ?>" rel="icon">
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
