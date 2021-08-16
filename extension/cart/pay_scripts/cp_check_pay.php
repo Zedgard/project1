@@ -12,7 +12,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/cloudpayments-php-client-maste
  * для CRON
  * https://edgardzaycev.com/check_pay.php?check_pay=tk
  */
-
 $config = new \project\config();
 $sqlLight = new \project\sqlLight();
 $publicKey = $config->getConfigParam('CloudPayments');
@@ -25,19 +24,21 @@ $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='cp' and `pay_status`!='succe
 $pays = $sqlLight->queryList($query);
 if (count($pays) > 0) {
     foreach ($pays as $value) {
-        $code = $value['id'];
+        $pay_id = $value['id'];
 
         try {
             $payment_info = $client->findPayment($code);
             if ($client->getSuccess()) {
                 $query_update = "UPDATE zay_pay SET pay_status='succeeded' WHERE id='?'";
-                $sqlLight->query($query_update, array($code));
+                $sqlLight->query($query_update, array($pay_id));
                 echo "pay_id: {$code} status=succeeded <br/>\n";
                 $result = array('success' => 1, 'success_text' => 'Платеж успешно выполнен', 'data' => array());
             } else {
                 if ($client->getSuccess()) {
                     $query_update = "UPDATE zay_pay SET pay_status='succeeded' WHERE id='?'";
-                    $sqlLight->query($query_update, array($code));
+                    $sqlLight->query($query_update, array($pay_id));
+                    // Зарегистрируем покупку
+                    $pr_cart->register_pay($pay_id);
                     echo "pay_id: {$code} status=succeeded <br/>\n";
                     $message = $client->getMessage();
                     //echo "message: {$message} <br/>\n";

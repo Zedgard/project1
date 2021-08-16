@@ -222,6 +222,10 @@ $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 if ($client_id == 0) {
     $client_id = $_SESSION['cart']['itms'][0]['user_id'];
 }
+if ($client_id == 0) {
+    $client_id = $pr_cart->get_user_id_fast_login();
+}
+
 $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
 if (strlen($pay_descr) > 0) {
     $_SESSION['consultation'] = $_SESSION['cart']['itms'][0];

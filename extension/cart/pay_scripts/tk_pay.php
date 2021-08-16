@@ -135,6 +135,13 @@ if ($price_total == 0) {
     $amount = $price_total * 100;
 
     $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
+    // Передадим ID пользователя (Создается при консультации)
+    if ($client_id == 0) {
+        $client_id = $_SESSION['cart']['itms'][0]['user_id'];
+    }
+    if ($client_id == 0) {
+        $client_id = $pr_cart->get_user_id_fast_login();
+    }
 
 // Если авторезированный
     if (strlen($p_user->isClientEmail()) > 0) {
