@@ -4,11 +4,4 @@
 <div>Ваш пароль на сайте: {{user_password}}</div>
 <div><br/></div>
 <div>{{site_ps}}</div>
-{{site_footer}}
-
-
-
-
-
-
-</body></html>
+{{site_footer}}</body></html>
