@@ -29,7 +29,7 @@
 
                     <div class="row pb-4 pt-3">
                         <div class="col-9" style="font-size: 1.2rem">
-                            Итого:
+                            Итого: 
                         </div>
                         <div class="col-3 text-right" style="font-size: 1.4rem;">
                             <span class="cart_total init_price_val">0</span> <i class="fa fa-ruble"></i>
@@ -75,7 +75,7 @@
                 <div class="col-12 pay_result font-bold color-black text-center pt-2 pb-4" style="display: none;"></div>
             </div>
             <?
-            if ($p_user->isClientId() > 0) {
+            if ($p_user->isClientId() > 0 || (isset($_SESSION['fast_login_email']) && strlen($_SESSION['fast_login_email']) > 2)) {
                 include 'pay_metods.php';
             } else {
                 ?>

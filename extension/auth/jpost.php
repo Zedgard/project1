@@ -80,9 +80,22 @@ if (isset($_POST['registration'])) {
 }
 
 if (isset($_POST['registration_fast'])) {
-    if ($auth->register_fast($_POST['email'], $_POST['check_indicator'], 1)) {
-        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован', 'action' => '/shop/cart/', 'action_time' => 0); // 
+    $error = array();
+    if ($_POST['check_indicator'] != 1) {
+        $_SESSION['input_style'][] = array('input' => 'check_indicator', 'class' => 'input-error-border');
+        $error[] = 'Необходимо согласиться с условиями!';
     }
+    if (count($error) == 0) {
+        $auth->fast_login_email($_POST['email']);
+        if (isset($_SESSION['fast_login_email'])) {
+            $result = array('success' => 1, 'success_text' => '', 'action' => '/shop/cart/', 'action_time' => 0);
+        }
+    } else {
+        $_SESSION['errors'] = $error;
+    }
+//    if ($auth->register_fast($_POST['email'], $_POST['check_indicator'], 1)) {
+//        $result = array('success' => 1, 'success_text' => 'Успешно зарегистрирован', 'action' => '/shop/cart/', 'action_time' => 0); // 
+//    }
 }
 
 /*

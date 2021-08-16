@@ -65,7 +65,7 @@ if (isset($_POST['send_consultation_form'])) {
      * Проверим есть ли пользователь, если нет зарегистрирован регистрируем
      */
     $sqlLight = new \project\sqlLight();
-    $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active` = 1";
+    $query = "SELECT * FROM zay_users u WHERE (u.email='?' or u.phone='?') and u.active=1";
     $users = $sqlLight->queryList($query, array($user_email, $user_phone));
     if (count($users) == 0) {
         $password = $this->password_generate();
@@ -75,7 +75,7 @@ if (isset($_POST['send_consultation_form'])) {
         $send_emails = new \project\send_emails();
         $send_emails->send('new_password', $user_email, array('user_password' => $password));
         $this->register($user_email, $user_phone, $password, $password, '1');
-        $query = "SELECT * FROM `zay_users` u WHERE (u.`email`='?' or u.`phone`='?') and `active` = 1";
+        $query = "SELECT * FROM zay_users u WHERE (u.email='?' or u.phone='?') and u.active=1";
         $users = $sqlLight->queryList($query, array($user_email, $user_phone), 1);
         if (count($users) > 0) {
             $user_id = $users[0]['id'];
@@ -336,11 +336,14 @@ if (isset($_POST['set_cloudpayments'])) {
 //            }
 
             $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
-
             // Передадим ID пользователя (Создается при консультации)
             if ($client_id == 0) {
                 $client_id = $_SESSION['cart']['itms'][0]['user_id'];
             }
+            if ($client_id == 0) {
+                $client_id = $pr_cart->get_user_id_fast_login();
+            }
+
             $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
             if (strlen($pay_descr) > 0) {
                 $_SESSION['consultation'] = $_SESSION['cart']['itms'][0];
@@ -490,7 +493,7 @@ if (isset($_POST['check_cloudpayments'])) {
 //    }
 
 
-    if (isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && count($pay_obj) > 0 && $u->isClientId() > 0) {
+    if (isset($_SESSION['PAY_KEY']) && strlen($_SESSION['PAY_KEY']) > 0 && count($pay_obj) > 0) {
         $total = $pay_obj[0]['pay_sum'];
         $pay_id = $pay_obj[0]['id'];
 

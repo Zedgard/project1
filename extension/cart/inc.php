@@ -440,4 +440,30 @@ class cart extends \project\extension {
         return false;
     }
 
+    /**
+     * Найти аккаунт клиента по одному полю
+     * Поучить Id клиента по email или телефону
+     * @return type
+     */
+    public function get_user_id_fast_login() {
+        $userid = 0;
+        $fast_login_email = (isset($_SESSION['fast_login_email'])) ? $_SESSION['fast_login_email'] : '';
+        $fast_login_phone = (isset($_SESSION['fast_login_email'])) ? $_SESSION['fast_login_phone'] : '';
+        if (strlen($fast_login_email) > 2) {
+            $query = "SELECT * FROM zay_users u WHERE u.email='?' and u.active=1";
+            $users = $this->getSelectArray($query, array($fast_login_email));
+            if (count($users) > 0) {
+                $userid = $users[0]['id'];
+            }
+        }
+        if ($userid == 0 && strlen($fast_login_phone) > 2) {
+            $query = "SELECT * FROM zay_users u WHERE u.phone='?' and u.active=1";
+            $users = $this->getSelectArray($query, array($fast_login_phone));
+            if (count($users) > 0) {
+                $userid = $users[0]['id'];
+            }
+        }
+        return $userid;
+    }
+
 }

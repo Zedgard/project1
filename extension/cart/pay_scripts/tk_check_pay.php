@@ -119,16 +119,12 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
                     . "WHERE `pay_type`='tk' and id='?'";
             $sqlLight->query($query_update, array($pay_check, $value['id']));
             if ($pay_check == 'succeeded') {
-
+                
                 // Зарегистрируем покупку
                 $pr_cart->register_pay($pay_id);
-
-                // Зафиксируем продажу
-                $query_products = "select * from zay_pay_products WHERE pay_id='?'";
-                $products_data = $sqlLight->queryList($query_products, array($value['id']));
-                foreach ($products_data as $v) {
-                    $products->setSoldAdd($v['product_id']);
-                }
+                
+                echo "pay_id: {$value['id']}, status: {$pay_check}";
+                
                 $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен');
             } else {
                 $result = array('success' => 0, 'success_text' => 'Не проведен! Проверьте чуть позже еще раз');
@@ -149,7 +145,7 @@ if (isset($_SESSION['PAY_KEY']) && isset($_GET['Success'])) {
             }
         }
     }
-    header('Location: ' . '/?page_type=pay_thanks');
+    //header('Location: ' . '/?page_type=pay_thanks');
     //header('Location: ' . '/shop/cart/?in_payment_true=2');
     exit();
 }

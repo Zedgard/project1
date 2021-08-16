@@ -184,7 +184,6 @@ include 're_login.php';
         }, 300);
 
         $(".check_indicator,.user_email").bind('click keyup change keypress', function (event) {
-            console.log("keyup");
             var user_email = $(".user_email").val();
             var check_indicator = 0;
             if ($(".check_indicator").prop('checked')) {

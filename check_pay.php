@@ -24,12 +24,14 @@ if ($check_pay == 'ya') {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/ya_check_pay.php';
 }
 // Обработка ответа интеркассы
-if ($check_pay == 'in') {
+//if ($check_pay == 'in') {
     //include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_check_pay.php';
-}
+//}
 // Обработка ответа интеркассы
 if ($check_pay == 'tk') {
-    //echo "tk ";
-    //echo $_SESSION['PAY_KEY'];
     include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/tk_check_pay.php';
+}
+// Обработка ответа cloudpayments
+if ($check_pay == 'cp') {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/cp_check_pay.php';
 }

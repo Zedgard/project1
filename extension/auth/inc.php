@@ -267,6 +267,7 @@ class auth extends \project\user {
             $users = $sqlLight->queryList($query, array($email));
 
             if (count($users) > 0) {
+                //$_SESSION['cart']['itms'][0]['user_id'];
                 $error[] = 'ТАКОЙ АДРЕС УЖЕ ЗАРЕГИСТРИРОВАН.<br/>ВОЙДИ В СВОЙ АККАУНТ ДОБРАЯ ДУША.';
                 $_SESSION['page_errors'][] = 'ТАКОЙ АДРЕС УЖЕ ЗАРЕГИСТРИРОВАН.<br/>ВОЙДИ В СВОЙ АККАУНТ ДОБРАЯ ДУША.';
                 $_SESSION['action'] = '/shop/cart/?registrations&move=cart_fast_login';
@@ -328,6 +329,14 @@ class auth extends \project\user {
             $_SESSION['errors'] = $error;
         }
         return false;
+    }
+    
+    /**
+     * Регистрируем email для покупки
+     * @param type $email
+     */
+    public function fast_login_email($email) {
+        $_SESSION['fast_login_email'] = $email;
     }
 
     /**
