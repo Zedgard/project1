@@ -14,6 +14,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.ph
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/utm/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/business_ru-check.business.ru-api/OpenApiConnector.php'; // Импорт файла с классом
 
@@ -459,6 +460,16 @@ class cart extends \project\extension {
         if ($userid == 0 && strlen($fast_login_phone) > 2) {
             $query = "SELECT * FROM zay_users u WHERE u.phone='?' and u.active=1";
             $users = $this->getSelectArray($query, array($fast_login_phone));
+            if (count($users) > 0) {
+                $userid = $users[0]['id'];
+            }
+        }
+        if ($userid == 0) {
+            // регистрация клиента по email
+            $auth = new \project\auth();
+            $auth->register_fast($fast_login_email, 1, 1);
+            $query = "SELECT * FROM zay_users u WHERE u.email='?' and u.active=1";
+            $users = $this->getSelectArray($query, array($fast_login_email));
             if (count($users) > 0) {
                 $userid = $users[0]['id'];
             }
