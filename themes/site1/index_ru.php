@@ -100,9 +100,6 @@
         <!--PreLoader Ends-->
         <?= $_SESSION['page']['block_top'] ?>
 
-
-
-
         <div class="bootslider m-0 p-0" id="bootslider">
             <!-- Bootslider Loader -->
             <div class="bs-loader">
@@ -112,6 +109,43 @@
 
             <!-- Bootslider Container -->
             <div class="bs-container">
+                
+                <!-- Bootslider Slide -->
+                <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
+                    <div class="bs-foreground">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="bs-vertical-center">
+
+                                    </div>
+                                </div> 
+                                <div class="col d-flex justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+                                        <div>
+                                            <div class="">
+                                                <img src="/assets/files/image/banner_index/ddl_2.jpg.png" style="width: 80%;"
+                                                     data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="800"
+                                                     >
+                                            </div>
+                                            <div class="mt-3 mt-lg-4">
+                                                <a href="/shop/?product=4631" 
+                                                   data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1400"
+                                                   class="btn btn-warning btn_slider_link_exam">ПОЛУЧИТЬ
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
+
+                        <img src="/assets/files/image/banner_index/ddl_1.jpg" alt="" class="exam_bg" />
+                    </div>
+                </div>
+                <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
