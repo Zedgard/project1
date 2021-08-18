@@ -89,27 +89,27 @@
                             </div>
                             <?
                         } else {
-                            ?>
-
-
-                            <div class="mb-3 freeze_title_text"><i class="far fa-snowflake"></i> Заморозить абонемент на:</div>
-                            <div class="freeze_day_buttons">
-                                <?
-                                foreach ($freeze_day_buttons as $value) {
-                                    ?>
-                                    <div class="freeze_button">
-                                        <div class="freeze_bg <?= $value['class'] ?>">
-                                            <div class="title_sum"><?= $value['title_sum'] ?></div>
-                                            <div class="title_name"><?= $value['title_name'] ?></div>
-                                        </div>
-                                        <div class="button_text button btn-success textcenter p-1 w-100 <?= $value['button_class'] ?>"><?= $value['button_text'] ?></div>
-                                    </div>
-                                    <?
-                                }
+                            if ($close_club_info[0]['status'] == '1') {
                                 ?>
+                                <div class="mb-3 freeze_title_text"><i class="far fa-snowflake"></i> Заморозить абонемент на:</div>
+                                <div class="freeze_day_buttons">
+                                    <?
+                                    foreach ($freeze_day_buttons as $value) {
+                                        ?>
+                                        <div class="freeze_button">
+                                            <div class="freeze_bg <?= $value['class'] ?>">
+                                                <div class="title_sum"><?= $value['title_sum'] ?></div>
+                                                <div class="title_name"><?= $value['title_name'] ?></div>
+                                            </div>
+                                            <div class="button_text button btn-success textcenter p-1 w-100 <?= $value['button_class'] ?>"><?= $value['button_text'] ?></div>
+                                        </div>
+                                        <?
+                                    }
+                                    ?>
 
-                            </div>
-                            <?
+                                </div>
+                                <?
+                            }
                         }
                         ?>
                         <div class="clearfix"></div>
