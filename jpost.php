@@ -19,7 +19,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
 $extension = new \project\extension();
-$user = new \project\user();
 
 if (isset($_POST)) {
     //echo "post \n";
@@ -93,6 +92,7 @@ if (isset($_POST)) {
     /*
      * Отправка только редакторы сайта
      */
+    $user = new \project\user();
     if ($user->isEditor()) {
         include $_SERVER['DOCUMENT_ROOT'] . '/system/extension/jpost.php';
     }
