@@ -47,7 +47,6 @@ function init_pay_data_list() {
                 var user_title = '';
                 var user_descr = '';
                 var pay_descr = '';
-                pay_summ_all = pay_summ_all + Number(e['data'][i]['pay_sum']);
                 //console.log(typeof e['data'][i]['email']);
                 if (e['data'][i]['email'].length > 0) {
                     user_title = e['data'][i]['email'];
@@ -80,6 +79,7 @@ function init_pay_data_list() {
                     if (e['data'][i]['pay_status'] === 'succeeded') {
                         pay_status = 'выполнено';
                         border_class = 'table-success';
+                        pay_summ_all = pay_summ_all + Number(e['data'][i]['pay_sum']);
                     }
                     if (e['data'][i]['pay_status'] === 'canceled') {
                         pay_status = 'отмененная';
