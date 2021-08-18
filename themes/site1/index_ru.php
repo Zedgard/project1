@@ -587,9 +587,6 @@
     <!--Equal-Heights-->
     <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
 
-    <!--Owl Slider-->
-    <script src="/themes/site1/js/owl.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
-
     <!--number counters-->
     <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
 

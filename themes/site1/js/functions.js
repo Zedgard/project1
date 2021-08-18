@@ -4,7 +4,7 @@ jQuery(window).on("load", function () {
     jQuery(".loader").fadeOut(800);
 
 });
- 
+
 
 jQuery(function ($) {
     "use strict";
@@ -67,9 +67,7 @@ jQuery(function ($) {
         }
 
     });
-    $(document).on('contextmenu', function () {
-        return false;
-    });
+
 
 
 
@@ -455,7 +453,7 @@ jQuery(function ($) {
         animationEffect: "fade",
         hash: null,
     });
-    
+
     $(".fancybox").fancybox();
 
 
