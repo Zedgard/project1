@@ -38,6 +38,7 @@ class pay extends \project\extension {
             $queryArray[] = date_sql_format($excel_from);
             $queryArray[] = date_sql_format($excel_to);
             $w[] = "p.pay_date BETWEEN '? 00:00:00' AND '? 23:59:59' ";
+            $limit_where = '';
         }
         if (strlen($pay_search_type) > 0) {
             $queryArray[] = $pay_search_type;
@@ -66,7 +67,7 @@ class pay extends \project\extension {
         if (strlen($limit_where) > 0) {
             $queryArray[] = ($page_number * $this->page_max);
         }
-        $querySelect = "SELECT DISTINCT p.*, pt.pay_type_title, 
+        $querySelect = "SELECT p.*, pt.pay_type_title, 
                 u.email, u.phone, u.first_name, u.last_name 
                 FROM zay_pay p 
                 left join zay_pay_products pp on pp.pay_id=p.id
@@ -75,7 +76,7 @@ class pay extends \project\extension {
                 left join zay_pay_type pt on pt.pay_type_code=p.pay_type 
                 {$where} 
                 ORDER BY p.`pay_date` DESC {$limit_where}";
-        $pays = $sqlLight->queryList($querySelect, $queryArray, 0);
+        $pays = $this->getSelectArray($querySelect, $queryArray, 0);
         $data = array();
         if (count($pays) > 0) {
             for ($i = 0; $i < count($pays); $i++) {

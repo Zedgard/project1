@@ -111,7 +111,7 @@
                                                     <option value="">Статус</option>
                                                 </select>
                                             </th>
-                                            <th class="text-center">Товары</th>
+                                            <th class="text-center">Товары <span class="pay_summ_all"></span></th>
                                         </tr>
                                     </thead>
                                     <tbody>

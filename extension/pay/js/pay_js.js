@@ -27,6 +27,7 @@ $(document).ready(function () {
 function init_pay_data_list() {
     excel_from = $(".excel-from").val();
     excel_to = $(".excel-to").val();
+    $(".get_next_page").html(ajax_spinner);
     // pay_datas_page
     sendPostLigth('/jpost.php?extension=pay', {
         "pay_data_page": pay_num,
@@ -38,11 +39,15 @@ function init_pay_data_list() {
         "search_pay_info_str": search_pay_info_str
     }, function (e) {
         $(".pay_data tbody").html("");
+        $(".get_next_page").html("Дальше...");
+        var pay_summ_all = 0;
         if (e['data'].length > 0) {
+            pay_list_col = 0;
             for (var i = 0; i < e['data'].length; i++) {
                 var user_title = '';
                 var user_descr = '';
                 var pay_descr = '';
+                pay_summ_all = pay_summ_all + Number(e['data'][i]['pay_sum']);
                 //console.log(typeof e['data'][i]['email']);
                 if (e['data'][i]['email'].length > 0) {
                     user_title = e['data'][i]['email'];
@@ -55,7 +60,7 @@ function init_pay_data_list() {
                     if (e['data'][i]['pay_descr'].length > 0) {
                         pay_descr = e['data'][i]['pay_descr'];
                     }
-                    if (e['data'][i]['info'].length > 0) {
+                    if (!!e['data'][i]['info'] && e['data'][i]['info'].length > 0) {
                         pay_descr = '';
                         for (var a = 0; a < e['data'][i]['info'].length; a++) {
                             if (pay_descr.length > 0) {
@@ -99,6 +104,7 @@ function init_pay_data_list() {
                                     </tr>');
                 }
             }
+            $(".pay_summ_all").html(pay_summ_all + 'р.');
             if (pay_list_col_true === 1 && pay_list_col == e['data'].length) {
                 $(".get_next_page").hide();
             } else {
@@ -252,14 +258,14 @@ function init_pay_info() {
                         btn_pay_check = '<input type="button" value="Проверить платеж" class="btn btn-sm btn-primary btn_pay_check" elm_id="' + e['data']['pay_key'] + '" pay_type="' + e['data']['pay_type'] + '" />';
                     }
                 }
-                
+
                 // Проверить платеж на tinkoff
                 if (e['data']['pay_type'] == 'tk' && e['data']['confirmationUrl'].length > 0) {
                     if (e['data']['pay_status'] !== 'succeeded') {
                         btn_pay_check = '<a href="' + e['data']['confirmationUrl'] + '" class="btn btn-sm btn-primary" target="_blank">Проверить платеж</a>';
                     }
                 }
-                
+
 
                 var pay_status_html = '<select name="pay_status" class="form-control pay_status init_elm_edit" elm_id="' + objid + '" elm_table="zay_pay" elm_row="pay_status" func="init_pay_data_list()">\n\
                                             <option value="' + e['data']['pay_status'] + '" selected="selected">' + pay_status + '</option>\n\

@@ -1,6 +1,7 @@
 /* 
  * Отправка данных из формы
  */
+var ajax_spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 var ajax_load = '<div class="ajax_load col-md-12 mb-4"><center><img src="/assets/img/ajax_load_2.svg" style="width: 40px;" /></center></div>';
 var ajax_load_true = 0;
 setTimeout(function () {
