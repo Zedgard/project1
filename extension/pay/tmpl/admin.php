@@ -98,7 +98,7 @@
                                 <table class="table table-striped pay_data">
                                     <thead class="table-light">
                                         <tr>
-                                            <th class="text-center">ID</th>
+                                            <th class="text-center">ID <span class="pay_col"></span></th>
                                             <th class="text-center">Клиент</th>
                                             <th class="text-center">
                                                 <select name="pay_select_type" class="form-control pay_select_type">
@@ -109,7 +109,7 @@
                                             <th class="text-center">
                                                 <select name="pay_select_status" class="form-control pay_select_status">
                                                     <option value="">Статус</option>
-                                                </select> <span class="pay_col"></span>
+                                                </select>
                                             </th>
                                             <th class="text-center">Товары <span class="pay_summ_all"></span></th>
                                         </tr>

@@ -23,28 +23,38 @@
     <div class="col-xxl-12">
         <div class="card card-default w-100">
             <div class="card-header card-header-border-bottom">
-                <div class="row w-100">
-                    <div class="col-12">
-                        <h2 class="font-bold float-left">Календарь событий</h2>
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm float-right update_calendar">Обновить календарь</a>
-                        <br/>
-                        <div>
-                            <select name="init_master" class="form-control init_master mt-2" style="width: 200px;">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col">
+                            <h2 class="font-bold float-left">Календарь событий</h2>
+                        </div>
+                        <div class="col">
+                            <a href="javascript:void(0)" class="btn btn-primary btn-sm float-right update_calendar">Обновить календарь</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <select name="init_master" class="form-select init_master mt-2" style="width: 200px;">
                                 <? foreach ($consultation_masters as $value): ?>
                                     <option value="<?= $value['id'] ?>" <?= ($_SESSION['consultation_id'] == $value['id']) ? 'selected="selected"' : '' ?>><?= $value['master_name'] ?></option>
                                 <? endforeach; ?>
                             </select>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-success add_new_event_calendar">Добавить консультацию</a>
+                        </div>
+                        <div class="col mb-2">
+                            <a href="javascript:void(0)" class="btn btn-success float-start float-lg-end add_new_event_calendar">Добавить консультацию</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
                 <div id='loading'>loading...</div>
                 <div id='calendar'></div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="row">
     <div class="col-xxl-12">
