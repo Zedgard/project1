@@ -109,7 +109,7 @@
                                             <th class="text-center">
                                                 <select name="pay_select_status" class="form-control pay_select_status">
                                                     <option value="">Статус</option>
-                                                </select>
+                                                </select> <span class="pay_col"></span>
                                             </th>
                                             <th class="text-center">Товары <span class="pay_summ_all"></span></th>
                                         </tr>

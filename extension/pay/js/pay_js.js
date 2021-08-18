@@ -43,7 +43,9 @@ function init_pay_data_list() {
         var pay_summ_all = 0;
         if (e['data'].length > 0) {
             pay_list_col = 0;
+            pay_col = 0;
             for (var i = 0; i < e['data'].length; i++) {
+                pay_col++;
                 var user_title = '';
                 var user_descr = '';
                 var pay_descr = '';
@@ -105,6 +107,7 @@ function init_pay_data_list() {
                 }
             }
             $(".pay_summ_all").html(pay_summ_all + 'р.');
+            $(".pay_col").html(pay_col);
             if (pay_list_col_true === 1 && pay_list_col == e['data'].length) {
                 $(".get_next_page").hide();
             } else {
