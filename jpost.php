@@ -19,6 +19,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 
 $extension = new \project\extension();
+$user = new \project\user();
 
 if (isset($_POST)) {
     //echo "post \n";
@@ -54,7 +55,7 @@ if (isset($_POST)) {
             $result = array('t' => 0);
         }
     }
-    
+
     $extension->set_jpost_log('jpost');
 
     /*
@@ -69,19 +70,19 @@ if (isset($_POST)) {
 
     // Определим пользователя и разрешим ему отправлять запросы
     //if ((isset($_SESSION['token_hash']) && strlen($_SESSION['token_hash']) > 0) || (isset($_COOKIE['site_user_ajax_access']) && $_COOKIE['site_user_ajax_access'] > 0)) {
-        //include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/jpost.php';
+    //include_once $_SERVER['DOCUMENT_ROOT'] . '/system/user/auth/jpost.php';
 
-        /*
-         * Отправляем данные на расширения
-         */
-        if (isset($_GET['extension']) && strlen($_GET['extension']) > 0) {
-            if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php')) {
-                //echo $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php' . "\n";
-                include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php';
-            } else {
-                $_SESSION['errors'][] = 'Not file jpost!';
-            }
+    /*
+     * Отправляем данные на расширения
+     */
+    if (isset($_GET['extension']) && strlen($_GET['extension']) > 0) {
+        if (is_file($_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php')) {
+            //echo $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php' . "\n";
+            include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/' . $_GET['extension'] . '/jpost.php';
+        } else {
+            $_SESSION['errors'][] = 'Not file jpost!';
         }
+    }
 //    } else {
 //        $_SESSION['errors'][] = 'Сессия устарела';
 //        $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'action' => 'reload');
@@ -92,7 +93,6 @@ if (isset($_POST)) {
     /*
      * Отправка только редакторы сайта
      */
-    $user = new \project\user();
     if ($user->isEditor()) {
         include $_SERVER['DOCUMENT_ROOT'] . '/system/extension/jpost.php';
     }
@@ -113,9 +113,13 @@ if (isset($_POST)) {
         $result = array('success' => 0, 'errors' => $_SESSION['errors'], 'input_style' => $_SESSION['input_style'], 'action' => $_SESSION['action'], 'action_time' => $_SESSION['action_time']);
     }
 
-
     $_SESSION['errors'] = array();
     if (count($result) > 0) {
         echo json_encode($result);
+    } else {
+        // Если сессия закончилась отправим на страницу авторизации
+        if ($user->isClientId() == 0) {
+            $result = array('success' => 0, 'success_text' => '', 'action' => '/auth/', 'action_time' => '0', 'data' => array());
+        }
     }
 }
