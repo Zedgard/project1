@@ -81,10 +81,6 @@ class user extends \project\extension {
                 $where_array[] = $input_search_str;
             }
 
-
-
-
-
             if (count($where_val) > 0) {
                 $w = implode(' or ', $where_val);
                 $where = "WHERE {$w} ";

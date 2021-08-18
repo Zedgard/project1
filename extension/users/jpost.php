@@ -14,10 +14,9 @@ $auth = new \project\auth();
 if ($user->isEditor()) {
     // Данные по пользователю
     if (isset($_POST['getUsersList'])) {
+        $params = array();
         $page_num = $_POST['page_num'];
-
-        $input_search_close_club_users = $_POST['input_search_close_club_users'];
-        $params['input_search_close_club_users'] = $input_search_close_club_users;
+        $params['input_search_close_club_users'] = (isset($_POST['input_search_close_club_users'])) ? $_POST['input_search_close_club_users'] : 0;
         $_SESSION['input_search_str'] = $_POST['input_search_str'];
 
         $user_id = 0;
@@ -25,8 +24,7 @@ if ($user->isEditor()) {
             $user_id = $_POST['system_user_id'];
             $_SESSION['user_edit_obj_id'] = $user_id;
         }
-        $params = array();
-
+        
         $data = $user->getUserInfo($user_id, $page_num, $_SESSION['input_search_str'], $params);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
