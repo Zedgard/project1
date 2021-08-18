@@ -79,17 +79,19 @@
                     </div>
                 </div>
 
-                <div class="row freeze_ticket_block mb-3 p-3">
-                    <div class="col-12 text-center">
-                        <?
-                        if (strlen(trim($close_club_info[0]['freeze_date_str'])) > 0) {
-                            ?>
-                            <div class="freeze_date_str">
-                                Абонемент заморожен до: <span class="freeze_date"><?= date_jquery_format($close_club_info[0]['freeze_date_str']) ?></span> <i class="far fa-snowflake"></i>
-                            </div>
+                <?
+                if ($close_club_info[0]['status'] == '1') {
+                    ?>
+                    <div class="row freeze_ticket_block mb-3 p-3">
+                        <div class="col-12 text-center">
                             <?
-                        } else {
-                            if ($close_club_info[0]['status'] == '1') {
+                            if (strlen(trim($close_club_info[0]['freeze_date_str'])) > 0) {
+                                ?>
+                                <div class="freeze_date_str">
+                                    Абонемент заморожен до: <span class="freeze_date"><?= date_jquery_format($close_club_info[0]['freeze_date_str']) ?></span> <i class="far fa-snowflake"></i>
+                                </div>
+                                <?
+                            } else {
                                 ?>
                                 <div class="mb-3 freeze_title_text"><i class="far fa-snowflake"></i> Заморозить абонемент на:</div>
                                 <div class="freeze_day_buttons">
@@ -110,13 +112,14 @@
                                 </div>
                                 <?
                             }
-                        }
-                        ?>
-                        <div class="clearfix"></div>
+                            ?>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
-                </div>
 
-
+                    <?
+                }
+                ?>
             </div>
             <div class="col-lg-6">
 
