@@ -1,4 +1,6 @@
 var input_search_close_club_users = 0;
+var page_num = 1;
+var list_col_true = 1;
 $(document).ready(function () {
     $(".input_search").delayKeyup(function () {
         initTable();
@@ -19,6 +21,7 @@ function initTable() {
     //console.log('initTable');
     if ($(".users_data").length > 0) {
         var input_search = $(".input_search").val();
+        $(".get_next_page").html(ajax_spinner);
         //var h = $(".users_data tbody").height();
         //$(".users_data tbody").height(h);
         sendPostLigth('/jpost.php?extension=users', {
@@ -27,7 +30,9 @@ function initTable() {
             'input_search_str': input_search,
             'input_search_close_club_users': input_search_close_club_users
         }, function (data) {
+            var data_col = 0;
             $(".users_data tbody").html("");
+            $(".get_next_page").html("Дальше...");
             var a = 1;
             for (var i = 0; i < data['data'].length; i++) {
                 var active_text = '<span class="badge badge-danger">не активированный</span>';
@@ -94,6 +99,13 @@ function initTable() {
             }, 1000);
             initUserEdit();
             init_btn_creat_fast_auth_link();
+            if (list_col_true === 1 && data_col == data['data'].length) {
+                $(".get_next_page").hide();
+            } else {
+                $(".get_next_page").show();
+                data_col = data['data'].length;
+            }
+            init_get_next_page();
         }, '1');
     }
 }
@@ -281,4 +293,15 @@ function init_btn_creat_fast_auth_link() {
         });
     });
 
+}
+
+/**
+ * Кнопка отобразить следующие данные
+ * @returns {undefined} 
+ */
+function init_get_next_page() {
+    $(".get_next_page").unbind("click").click(function () {
+        page_num = page_num + 1;
+        initTable();
+    });
 }

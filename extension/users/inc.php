@@ -12,7 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 
 class user extends \project\extension { 
 
-    private $page_max = 30;
+    private $page_max = 50;
     private $id, $email, $phone, $first_name, $last_name, $u_pass, $lastdate;
     protected $errors = array();
 

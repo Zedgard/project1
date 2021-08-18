@@ -11,56 +11,63 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col">
-                            <a href="?edit_user=0" class="btn btn-primary">Создать нового пользователя</a>
-                        </div>
-                        <div class="col text-right">
-                            <?
-                            if ($user->isAdmin()):
-                                ?>
-                                <a href="?user_roles=1" class="btn btn-primary">Управление ролей пользователя</a>
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col">
+                                <a href="?edit_user=0" class="btn btn-primary">Создать нового пользователя</a>
+                            </div>
+                            <div class="col text-right">
                                 <?
-                            endif;
-                            ?>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col">
-                            <input type="text" class="form-control input_search w-100" value="<?= (strlen($_GET['search_str'] > 0)) ? $_GET['search_str'] : $_SESSION['input_search_str'] ?>" placeholder="Поиск...">
-                        </div>
-                        <div class="col">
-                            <div class="form-check" style="padding-top: 0.8rem;">
-                                <input class="input_search_close_club_users" type="checkbox" value="">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Участник закрытого клуба
-                                </label>
+                                if ($user->isAdmin()):
+                                    ?>
+                                    <a href="?user_roles=1" class="btn btn-primary">Управление ролей пользователя</a>
+                                    <?
+                                endif;
+                                ?>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive-lg">
-                                <table class="table users_data">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center;">№</th>
-                                            <th style="text-align: center;">email</th>
-                                            <th style="text-align: center;">Телефон</th>
-                                            <th style="text-align: center;">Роль</th>
-                                            <th style="text-align: center;">Активность</th>
-                                            <th style="text-align: center;">Дата последней активности</th>
-                                            <th style="text-align: center;"></th>
-                                            <th style="text-align: center;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <input type="text" class="form-control input_search w-100" value="<?= (strlen($_GET['search_str'] > 0)) ? $_GET['search_str'] : $_SESSION['input_search_str'] ?>" placeholder="Поиск...">
+                            </div>
+                            <div class="col">
+                                <div class="form-check" style="padding-top: 0.8rem;">
+                                    <input class="input_search_close_club_users" type="checkbox" value="">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Участник закрытого клуба
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <div class="table-responsive-lg">
+                                    <table class="table users_data">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">№</th>
+                                                <th style="text-align: center;">email</th>
+                                                <th style="text-align: center;">Телефон</th>
+                                                <th style="text-align: center;">Роль</th>
+                                                <th style="text-align: center;">Активность</th>
+                                                <th style="text-align: center;">Дата последней активности</th>
+                                                <th style="text-align: center;"></th>
+                                                <th style="text-align: center;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row mb-2">
+                            <div class="col-12 text-center">
+                                <a href="javascript:void(0)" class="btn btn-primary get_next_page" style="display: none;">Дальше...</a>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
 
                 <div class="form-footer pt-4 pt-5 mt-4 border-top">
