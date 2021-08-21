@@ -117,11 +117,11 @@ class products extends \project\extension {
      * @return type
      */
     public function getProductsClubArray() {
-        $querySelect = "SELECT p.*, w.club_month_period FROM zay_product p "
-                . "left join zay_product_wares pw on pw.product_id=p.id "
-                . "left join zay_wares w on w.id=pw.wares_id "
-                . "WHERE p.active=1 and p.is_delete<>1 and w.club_month_period>0 "
-                . "order by p.title desc";
+        $querySelect = "SELECT p.*, w.club_month_period FROM zay_product p 
+                left join zay_product_wares pw on pw.product_id=p.id 
+                left join zay_wares w on w.id=pw.wares_id 
+                WHERE p.active=1 and p.is_delete<>1 and w.club_month_period>0 
+                order by p.title desc";
         return $this->getSelectArray($querySelect, array());
     }
 
@@ -465,7 +465,7 @@ class products extends \project\extension {
                                 left join zay_product_theme pth on pth.product_id=p.id
                                 left join zay_product_wares pww on pww.product_id=p.id
                                 left join zay_wares ww on ww.id=pww.wares_id 
-                                where p.active='1' and p.is_delete='0' and ww.club_month_period='0'   
+                                where p.active='1' and p.is_delete='0' 
                                 {$queryValSearchStr} 
                                 {$queryValCategory} 
                                 {$queryValTopic}
@@ -474,7 +474,7 @@ class products extends \project\extension {
                                 {$queryValTroductTheme}
                             GROUP by p.id   
                         ) ORDER BY p2.product_new desc, p2.id desc
-                        ";
+                        "; /* and ww.club_month_period='0' */
 
         //echo ""; 
         //print_r($_SESSION['product']['filter']['check_categorys']);
