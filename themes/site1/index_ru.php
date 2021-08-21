@@ -532,7 +532,7 @@
         ?>
         <script>
             $(document).ready(function () {
-                setTimeout(function () {
+                //setTimeout(function () {
                     var slider = new bootslider('#bootslider', {
                         animationIn: "fadeInUp",
                         animationOut: "flipOutX",
@@ -553,7 +553,7 @@
                         }
                     });
                     slider.init();
-                }, 200);
+                //}, 200);
 
             });
         </script>
