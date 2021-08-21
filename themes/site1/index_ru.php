@@ -109,7 +109,7 @@
 
             <!-- Bootslider Container -->
             <div class="bs-container">
-                
+
                 <!-- Bootslider Slide -->
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
                     <div class="bs-foreground">
@@ -533,27 +533,27 @@
         <script>
             $(document).ready(function () {
                 //setTimeout(function () {
-                    var slider = new bootslider('#bootslider', {
-                        animationIn: "fadeInUp",
-                        animationOut: "flipOutX",
-                        timeout: 5000,
-                        autoplay: true,
-                        preload: true,
-                        pauseOnHover: true,
-                        thumbnails: false,
-                        pagination: false,
-                        mousewheel: false,
-                        keyboard: true,
-                        touchscreen: true,
-                        layout: 'fixedheight-center',
-                        height_division: 1.3,
-                        canvas: {
-                            width: 1440,
-                            height: 800
-                        }
-                    });
-                    slider.init();
-                //}, 200);
+                var slider = new bootslider('#bootslider', {
+                    animationIn: "fadeInUp",
+                    animationOut: "flipOutX",
+                    timeout: 5000,
+                    autoplay: true,
+                    preload: true,
+                    pauseOnHover: true,
+                    thumbnails: false,
+                    pagination: false,
+                    mousewheel: false,
+                    keyboard: true,
+                    touchscreen: true,
+                    layout: 'fixedheight-center',
+                    height_division: 1.3,
+                    canvas: {
+                        width: 1440,
+                        height: 800
+                    }
+                });
+                slider.init();
+            //}, 200);
 
             });
         </script>
