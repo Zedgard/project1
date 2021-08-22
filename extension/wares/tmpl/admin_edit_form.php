@@ -67,9 +67,9 @@
                     <div class="mb-3" style="padding: 1%;background-color: #f7f7f7;">
                         <h3>Закрытый клуб</h3>
                         <div class="form-group">
-                            <label for="club_month_period">Колличество месяцев для доступа к закрытому клубу</label>
+                            <label for="club_month_period">Количество месяцев для доступа к закрытому клубу</label>
                             <select id="club_month_period" name="club_month_period" class="form-control club_month_period">
-                                <option value="0">Не предосавлено</option>
+                                <option value="0">Не предоставлено</option>
                                 <option value="1">1 месяц</option>
                                 <option value="2">2 месяц</option>
                                 <option value="3">3 месяц</option>
@@ -85,7 +85,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="club_days_period">Колличество дней</label>
+                            <label for="club_days_period">Количество дней</label>
                             <select id="club_days_period" name="club_days_period" class="form-control club_days_period">
                                 <option value="0">Не предоставлено</option>
                                 <?
