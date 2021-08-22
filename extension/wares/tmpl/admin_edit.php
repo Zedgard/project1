@@ -64,7 +64,7 @@
                     <div class="form-group">
                         <label for="club_month_period">Колличество месяцев для доступа к закрытому клубу</label>
                         <select id="club_month_period" name="club_month_period" class="form-control club_month_period">
-                            <option value="0">Не предосавлено</option>
+                            <option value="0">Не предоставлено</option>
                             <option value="1">1 месяц</option>
                             <option value="2">2 месяц</option>
                             <option value="3">3 месяц</option>
@@ -77,6 +77,19 @@
                             <option value="10">10 месяц</option>
                             <option value="11">11 месяц</option>
                             <option value="12">12 месяц</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="club_days_period">Колличество дней для доступа к закрытому клубу</label>
+                        <select id="club_days_period" name="club_days_period" class="form-control club_days_period">
+                            <option value="0">Не предоставлено</option>
+                            <?
+                            for ($day_i = 0;$day_i<28;$day_i++) {
+                                ?>
+                                <option value="<?= $day_i ?>"><?= $day_i ?></option>
+                                <?
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>

@@ -4,13 +4,13 @@ session_start();
 defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 include_once 'inc.php';
 
 $pr_wares = new \project\wares();
 
 //$result = array('success' => 0, 'success_text' => 'Ошибка!');
-
-
 // Все товары с фильром
 if (isset($_POST['getWaresArray'])) {
     $searchStr = (strlen($_POST['searchStr']) > 0) ? $_POST['searchStr'] : '';
@@ -51,6 +51,7 @@ if (isset($_POST['edit_wares'])) {
     $wares_articul = (isset($_POST['wares_articul'])) ? $_POST['wares_articul'] : '';
     $wares_col = (isset($_POST['wares_col'])) ? $_POST['wares_col'] : 1000;
     $club_month_period = (isset($_POST['club_month_period'])) ? $_POST['club_month_period'] : '0';
+    $club_days_period = (isset($_POST['club_days_period'])) ? $_POST['club_days_period'] : '0';
     $wares_descr = (isset($_POST['wares_descr'])) ? $_POST['wares_descr'] : '';
     $wares_url_file = (isset($_POST['wares_url_file'])) ? $_POST['wares_url_file'] : '';
     $wares_active = (isset($_POST['wares_active'])) ? $_POST['wares_active'] : '1';
@@ -62,9 +63,9 @@ if (isset($_POST['edit_wares'])) {
     }
 
     $pr_wares->setWaresCategory($wares_categorys);
-    
+
     if (count($_SESSION['errors']) == 0) {
-        
+
         if ($pr_wares->insertOrUpdateWares(
                         $wares_id,
                         $wares_title,
@@ -72,6 +73,7 @@ if (isset($_POST['edit_wares'])) {
                         $wares_url_file,
                         $wares_col,
                         $club_month_period,
+                        $club_days_period,
                         $wares_ex_code,
                         $wares_articul,
                         $wares_images,
@@ -247,4 +249,18 @@ if (isset($_POST['ajax_metod'])) {
             }
         }
     }
+}
+
+// Отправляю сообщение о проблеме с аудио файлом
+if (isset($_POST['error_message_material_file_source'])) {
+    $send_emails = new \project\send_emails();
+    $config = new \project\config();
+    $mailto_error = $config->getConfigParam('mailto_error');
+    $material_id = $_POST['material_id'];
+    $material_file = $_POST['material_file'];
+    $params['message_body'] = "<p>Проблема с аудио файлом</p>
+        <p>material_id: <strong>{$material_id}</strong></p>
+        <p>Ссылка: <strong>{$material_file}</strong></p>
+    ";
+    $send_emails->send('site_errors', $mailto_error, $params);
 }

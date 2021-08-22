@@ -553,7 +553,7 @@
                     }
                 });
                 slider.init();
-            //}, 200);
+                //}, 200);
 
             });
         </script>
@@ -625,6 +625,19 @@
     foreach ($_SESSION['body_javascript'] as $js) {
         echo $js . "\n";
     }
+    /*
+     <script>
+                window.replainSettings = {id: 'f346900b-3b2e-416b-b910-b20b91ea8843'};
+                (function (u) {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = u;
+                    var x = document.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                })('https://widget.replain.cc/dist/client.js');
+    </script>
+     */
     ?>
-
+    
 </html>

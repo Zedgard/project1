@@ -84,6 +84,19 @@
                                 <option value="12">12 месяц</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="club_days_period">Колличество дней</label>
+                            <select id="club_days_period" name="club_days_period" class="form-control club_days_period">
+                                <option value="0">Не предоставлено</option>
+                                <?
+                                for ($day_i = 1; $day_i < 29; $day_i++) {
+                                    ?>
+                                    <option value="<?= $day_i ?>"><?= $day_i ?></option>
+                                    <?
+                                }
+                                ?>
+                            </select>
+                        </div>
                     </div>
 
                     <input type="hidden" name="wares_id" class="wares_id" id="wares_id" value="0" />
@@ -127,6 +140,7 @@ importWisiwyng('wares_descr');
             var wares_articul = $(".wares_articul").val();
             var wares_col = $(".wares_col").val();
             var club_month_period = $(".club_month_period").val();
+            var club_days_period = $(".club_days_period").val();
             var wares_descr = tinymce.get('wares_descr').getContent();
             var wares_url_file = $(".wares_url_file").val();
             var categorys = $(".wares_categorys").val();
@@ -150,6 +164,7 @@ importWisiwyng('wares_descr');
                         "wares_articul": wares_articul,
                         "wares_col": wares_col,
                         "club_month_period": club_month_period,
+                        "club_days_period": club_days_period,
                         "wares_descr": wares_descr,
                         "wares_url_file": wares_url_file,
                         "wares_active": wares_active,
@@ -184,6 +199,8 @@ importWisiwyng('wares_descr');
                             $(".wares_url_file").val(e['data']['url_file']);
                             //console.log("club_month_period: " + e['data']['club_month_period']);
                             $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
+                            $('.club_days_period option[value="' + e['data']['club_days_period'] + '"]').attr("selected", "selected");
+                            
 
                             var interval = setInterval(function () {
                                 if (tinymce_init == 1) {
@@ -240,6 +257,7 @@ importWisiwyng('wares_descr');
                                 tinymce.get('wares_descr').setContent(e['data']['descr']);
                                 $(".wares_col").val(e['data']['col']);
                                 $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
+                                $('.club_days_period option[value="' + e['data']['club_days_period'] + '"]').attr("selected", "selected");
 
                                 if (e['data']['active'] > 0) {
                                     if (!$(".wares_active").is(':checked')) {

@@ -120,7 +120,7 @@ class products extends \project\extension {
         $querySelect = "SELECT p.*, w.club_month_period FROM zay_product p 
                 left join zay_product_wares pw on pw.product_id=p.id 
                 left join zay_wares w on w.id=pw.wares_id 
-                WHERE p.active=1 and p.is_delete<>1 and w.club_month_period>0 
+                WHERE p.active=1 and p.is_delete<>1 and (w.club_month_period>0 or w.club_days_period>0)
                 order by p.title desc";
         return $this->getSelectArray($querySelect, array());
     }
@@ -492,7 +492,7 @@ class products extends \project\extension {
                                 left join zay_product_category c on c.product_id=p.id
                                 left join zay_product_wares pww on pww.product_id=p.id
                                 left join zay_wares ww on ww.id=pww.wares_id 
-                                where p.active='1' and p.is_delete='0' and ww.club_month_period='0' 
+                                where p.active='1' and p.is_delete='0' 
                         ";
         $data = $this->getSelectArray($querySelect, array(), 0);
         $ids = array();

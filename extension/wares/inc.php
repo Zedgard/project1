@@ -73,7 +73,7 @@ class wares extends \project\extension {
      * @return type
      */
     public function getWaresClubArray() {
-        $querySelect = "SELECT * FROM zay_wares w WHERE w.club_month_period>0 order by w.title desc ";
+        $querySelect = "SELECT * FROM zay_wares w WHERE (w.club_month_period>0 or w.club_days_period>0) order by w.title desc ";
         return $this->getSelectArray($querySelect, array(), 0);
     }
 
@@ -115,18 +115,18 @@ class wares extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $club_month_period, $ex_code, $articul, $wares_images, $active) {
+    public function insertOrUpdateWares($id, $title, $descr, $wares_url_file, $col, $club_month_period, $club_days_period, $ex_code, $articul, $wares_images, $active) {
         if (strlen($col) == 0) {
             $col = 0;
         }
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
-                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', "
+                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', `club_days_period`='?' "
                     . "`ex_code`='?', `articul`='?', `images`='?', `active`='?', "
                     . "is_delete='0', "
                     . "`lastdate`=NOW() "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period,
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, $club_days_period,
                         $ex_code, $articul, $wares_images, $active, $id), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
@@ -134,11 +134,11 @@ class wares extends \project\extension {
         } else {
             $id = $this->queryNextId('zay_wares');
             $query = "INSERT INTO `zay_wares` "
-                    . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, "
+                    . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, `club_days_period`, "
                     . "`ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
                     . "VALUES ('?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
-            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period,
+            if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, $club_days_period,
                         $ex_code, $articul, $wares_images, $active), 0)) {
                 $this->insertWaresCategory($id, $this->wares_categorys);
                 return true;
@@ -443,7 +443,6 @@ class wares extends \project\extension {
                                             w.id = pw.wares_id
                                         WHERE
                                             p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0
-                                            AND w.club_month_period = 0
                                             {$category_sql}
                                         ORDER BY
                                             w.`title` ASC
@@ -517,7 +516,6 @@ class wares extends \project\extension {
                                             w.id = pw.wares_id
                                         WHERE
                                             p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.id='?'
-                                            AND w.club_month_period = 0
                                             {$category_sql}
                                         ORDER BY
                                             w.`title` ASC
@@ -597,11 +595,13 @@ class wares extends \project\extension {
                                 LEFT JOIN zay_category catp ON
                                     catp.id = pcat.category_id  
                                 WHERE
-                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 AND pp.close='0' {$where1} 
+                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 
+                                    AND pp.close='0' {$where1} 
                                 ORDER BY
                                     pr.`title` ASC
                                     ) as dd
                                     WHERE dd.wares_show = '1'";
+                                    /* AND (w.club_month_period='0' AND w.club_days_period='0') */
 
             //echo "{$querySelect}\n\n";
             $objs = $this->getSelectArray($querySelect, $array, 0);
@@ -644,7 +644,7 @@ class wares extends \project\extension {
                                 LEFT JOIN zay_category c ON
                                     c.id = cat.category_id       
                                 WHERE
-                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.club_month_period = 0 {$where1} 
+                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0  {$where1} 
                                 ORDER BY
                                     w.`title` ASC
                                     ) as dd
@@ -706,7 +706,7 @@ class wares extends \project\extension {
         if ($_SESSION['user']['info']['id'] > 0) {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
-                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, w.club_days_period, 
                         MIN(p.id) as pay_id, wcat.category_id, pr.period_open, DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
@@ -724,7 +724,7 @@ class wares extends \project\extension {
                 return $objs;
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
-                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, w.club_days_period, 
                         MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
@@ -753,7 +753,7 @@ class wares extends \project\extension {
         if ($_SESSION['user']['info']['id'] > 0 && strlen($product_category) > 0) {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
-                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, w.club_days_period, 
                         MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
@@ -771,7 +771,7 @@ class wares extends \project\extension {
                 return $objs;
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
-                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, w.club_days_period, 
                         MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
@@ -800,7 +800,7 @@ class wares extends \project\extension {
         if ($_SESSION['user']['info']['id'] > 0) {
             if ($wares_id == 0) {
                 $querySelect = "SELECT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
-                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, w.club_days_period, 
                         MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 
@@ -818,7 +818,7 @@ class wares extends \project\extension {
                 return $objs;
             } else {
                 $querySelect = "SELECT DISTINCT w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, 
-                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, 
+                        w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, w.club_days_period, 
                         MIN(p.id) as pay_id, wcat.category_id, pr.period_open, cast(DATE_ADD(p.pay_date, INTERVAL pr.period_open DAY) as date) as period_open_date
                         FROM zay_pay p 
                         left join zay_pay_products pp on pp.pay_id=p.id 

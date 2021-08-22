@@ -11,7 +11,7 @@
 <div class="container">
     <div>Популярные товары</div>
     <!-- product list -->
-    <div class="row mt-3 container_mix row-cols-1 row-cols-md-4" data-ref="mixitup-container">
+    <div class="row mt-3 container_mix row-cols-2 row-cols-md-4" data-ref="mixitup-container">
         <?
         //$obj_product['products_wares'] = $this->getProducts_wares($obj_product['id']);
         //$obj_product['products_category'] = $this->getProducts_category($obj_product['id']);
