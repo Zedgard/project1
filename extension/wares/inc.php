@@ -121,7 +121,7 @@ class wares extends \project\extension {
         }
         if ($id > 0) {
             $query = "UPDATE `zay_wares` "
-                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', `club_days_period`='?' "
+                    . "SET `title`='?', `descr`='?', `url_file`='?', `col`='?', `club_month_period`='?', `club_days_period`='?', "
                     . "`ex_code`='?', `articul`='?', `images`='?', `active`='?', "
                     . "is_delete='0', "
                     . "`lastdate`=NOW() "
