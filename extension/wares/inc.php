@@ -596,12 +596,13 @@ class wares extends \project\extension {
                                     catp.id = pcat.category_id  
                                 WHERE
                                     p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 
+                                    AND (w.club_month_period='0' AND w.club_days_period='0') 
                                     AND pp.close='0' {$where1} 
                                 ORDER BY
                                     pr.`title` ASC
                                     ) as dd
                                     WHERE dd.wares_show = '1'";
-                                    /* AND (w.club_month_period='0' AND w.club_days_period='0') */
+                                    
 
             //echo "{$querySelect}\n\n";
             $objs = $this->getSelectArray($querySelect, $array, 0);

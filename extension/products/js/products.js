@@ -150,7 +150,7 @@ $(document).ready(function () {
 //            document.location.href = '/shop/';
 //        });
 //    }, 700);
-    console.log('productSearchString');
+    //console.log('productSearchString');
     $(".productSearchString").change(function () {
         var productSearchString = $(this).val();
         console.log('productSearchString delayKeyup: ' + productSearchString);
