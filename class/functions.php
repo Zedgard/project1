@@ -1230,3 +1230,25 @@ if (!function_exists('fast_mysql_select_data')) {
     }
 
 }
+
+if (!function_exists('isAvailableVideo')) {
+
+    /**
+     * Проверить доступно ли видео на Youtube
+     * @param type $videoId
+     * @return boolean
+     */
+    function isAvailableVideo($videoId) {
+        $url = 'http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=' . $videoId . '&format=json';
+        $html = file_get_contents($url);
+        
+        var_dump($html);
+return true;
+//        if (substr($headers[0], 9, 3) !== '404') {
+//            return true;
+//        } else {
+//            return false;
+//        }
+    }
+
+}

@@ -238,6 +238,7 @@ jQuery(function ($) {
 
     /* ------ OWL Slider ------ */
     /*Partners / LOgo*/
+    /*
     $("#partners-slider").owlCarousel({
         items: 5,
         autoplay: 1500,
@@ -266,9 +267,10 @@ jQuery(function ($) {
             },
         }
     });
-
+*/
 
     /*Testimonials 3columns*/
+    /*
     $("#testimonial-slider").owlCarousel({
         items: 3,
         autoplay: 2500,
@@ -289,8 +291,9 @@ jQuery(function ($) {
             },
         }
     });
-
+*/
     /*Testimonial one slide fade*/
+    /*
     $("#testimonial-quote").owlCarousel({
         items: 1,
         autoplay: 2500,
@@ -341,9 +344,10 @@ jQuery(function ($) {
             },
         }
     });
-
+*/
 
     /*Our Team*/
+    /*
     $("#ourteam-slider").owlCarousel({
         items: 3,
         margin: 30,
@@ -361,8 +365,9 @@ jQuery(function ($) {
             },
         }
     });
-
+*/
     /*Simple text fadng banner*/
+    /*
     $("#text-fading").owlCarousel({
         items: 1,
         autoplay: true,
@@ -379,9 +384,10 @@ jQuery(function ($) {
             }
         }
     });
-
+*/
 
     /*Services Box Slider*/
+    /*
     $("#services-slider").owlCarousel({
         autoplay: true,
         autoplayTimeout: 3000,
@@ -403,7 +409,7 @@ jQuery(function ($) {
             }
         }
     });
-
+    */
 
     /* ----------- Counters ---------- */
     $(".value_formatter").data("countToOptions", {

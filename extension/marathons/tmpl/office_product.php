@@ -1,10 +1,7 @@
-<link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css<?= $_SESSION['rand'] ?>">
-<script src="/assets/plugins/calamansi/calamansi.min.js<?= $_SESSION['rand'] ?>"></script>
 <link href="/extension/marathons/css/marathons.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-<link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <link href="/extension/products/office.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-<script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
-<script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
+<script src="/assets/plugins/plyr/plyr.js?v=<?= rand() ?>"></script>
+<link rel="stylesheet" href="/assets/plugins/plyr/css/plyr.min.css?v=<?= rand() ?>" />
 <input type="hidden" name="marathons_wares_id" value="<?= $_GET['wares_id'] ?>" class="marathons_wares_id" />
 <div class="office_block_top_main">
     <div class="office_block_top_left">
@@ -120,11 +117,13 @@
     </div>
 </div>
 <script>
+    var obj_o = '';
     var bonus_lock = '<?= $bonus_lock ?>';
     var init_series_id = '';
     $(document).ready(function () {
         $(".marathons_material_series_btn").unbind('click').click(function () {
             var o = this;
+            obj_o = o;
             var series_id = $(o).attr('series_id');
             var elm_type = $(o).attr('elm_type');
             var title = $(o).find('span').html();
@@ -135,7 +134,10 @@
                 series_id = bonus_material_id;
             }
 
-
+            // Остановим воспроизведение 
+            if (typeof (eplayer) != "undefined" && eplayer != '') {
+                eplayer.pause();
+            }
 //            var e = $(o).find('.fas'); // <i class="fas fa-minus">
 //            if (e.length > 0) {
 //                e.removeClass('fa-plus');
@@ -218,6 +220,9 @@
      * @param {type} series_id
      * @returns {undefined}     */
     function marathon_series_material_post(o, series_id) {
+        if (series_id == 0) {
+            get_general(o, '<?= $_GET['wares_id'] ?>');
+        }
         $.ajax({
             url: '/jpost.php?extension=marathons',
             type: 'GET',
@@ -233,6 +238,19 @@
             },
             success: function (e) {
                 if (e['success'] == '1') {
+
+                    // Перемещение элемента 
+                    var top = $(obj_o).offset().top - 213;
+                    if (top < -30) {
+                        console.log('top=0');
+                        top = 0;
+                    }
+                    $('.materials_list').find(".marathons_material_list_block").css('margin-top', top);
+                    setTimeout(function () {
+                        if ($('.materials_list').find(".marathons_material_list_block").css('margin-top') != top) {
+                            $('.materials_list').find(".marathons_material_list_block").css('margin-top', top);
+                        }
+                    }, 200);
 
                     $(o).find(".material_content_block").html(e['html']);
                     $(o).find(".marathons_elm_content").html(e['html']);
@@ -254,6 +272,25 @@
                     });
                 }
 
+            }
+        });
+    }
+
+    function get_general(o, wares_id) {
+        console.log('get_general');
+        $.ajax({
+            url: '/jpost.php?extension=products',
+            type: 'POST',
+            async: false,
+            dataType: 'html',
+            data: {
+                "general": 1,
+                "wares_id": wares_id
+            },
+            success: function (e) {
+                $(o).find(".material_content_block").append(e);
+                $(o).find(".marathons_elm_content").append(e);
+                $(o).find(".spinner-border").remove();
             }
         });
     }

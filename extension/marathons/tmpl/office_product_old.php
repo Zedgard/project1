@@ -243,7 +243,7 @@
             video_id = $(this).attr("video_id");
         });
 
-        $(".video_see").mouseenter(function () {
+        $(".video_see").unbind('mouseenter').mouseenter(function () {
             // waresVideoSee
             //var video_id = $(this).attr("video_id");
             sendPostLigth('/jpost.php?extension=wares',

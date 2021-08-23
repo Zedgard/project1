@@ -1,10 +1,7 @@
-<link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css<?= $_SESSION['rand'] ?>">
-<script src="/assets/plugins/calamansi/calamansi.min.js<?= $_SESSION['rand'] ?>"></script>
 <link href="/extension/marathons/css/marathons.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-<link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <link href="/extension/products/office.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-<script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
-<script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
+<script src="/assets/plugins/plyr/plyr.js<?= $_SESSION['rand'] ?>"></script>
+<link rel="stylesheet" href="/assets/plugins/plyr/css/plyr.min.css<?= $_SESSION['rand'] ?>" />
 <input type="hidden" name="marathons_wares_id" value="<?= $_GET['wares_id'] ?>" class="marathons_wares_id" />
 <div class="office_block_top_main">
     <div class="office_block_top_left">
@@ -149,6 +146,10 @@
                 series_id = bonus_material_id;
             }
 
+            // Остановим воспроизведение 
+            if (typeof (eplayer) != "undefined" && eplayer != '') {
+                eplayer.pause();
+            }
 
 //            var e = $(o).find('.fas'); // <i class="fas fa-minus">
 //            if (e.length > 0) {
@@ -251,13 +252,19 @@
             success: function (e) {
                 if (e['success'] == '1') {
                     if (e['html'].length > 0) {
+
                         // Перемещение элемента 
                         var top = $(obj_o).offset().top - 213;
                         if (top < -30) {
                             console.log('top=0');
                             top = 0;
-                        } 
+                        }
                         $('.materials_list').find(".marathons_material_list_block").css('margin-top', top);
+                        setTimeout(function () {
+                            if ($('.materials_list').find(".marathons_material_list_block").css('margin-top') != top) {
+                                $('.materials_list').find(".marathons_material_list_block").css('margin-top', top);
+                            }
+                        }, 200);
 
                         $(o).find(".material_content_block").append(e['html']);
                         $(o).find(".marathons_elm_content").append(e['html']);

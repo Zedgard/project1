@@ -6,6 +6,7 @@ defined('__CMS__') or die;
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once 'inc.php';
 
 $pr_wares = new \project\wares();
@@ -253,14 +254,48 @@ if (isset($_POST['ajax_metod'])) {
 
 // Отправляю сообщение о проблеме с аудио файлом
 if (isset($_POST['error_message_material_file_source'])) {
+    $user = new project\user();
     $send_emails = new \project\send_emails();
     $config = new \project\config();
     $mailto_error = $config->getConfigParam('mailto_error');
+    $type = $_POST['type'];
     $material_id = $_POST['material_id'];
     $material_file = $_POST['material_file'];
-    $params['message_body'] = "<p>Проблема с аудио файлом</p>
+
+    $type_str = 'файлом';
+    if ($type == 'audio') {
+        $type_str = 'аудио файлом';
+    }
+    if ($type == 'video_youtube') {
+        $type_str = 'видео на YouTube';
+    }
+
+
+    $user_data = $user->getUserInfo($user->isClientId());
+    $time = date("d-m-Y H:i:s");
+
+    $params['message_body'] = "
+        <p>Проблема с {$type_str}</p>
         <p>material_id: <strong>{$material_id}</strong></p>
         <p>Ссылка: <strong>{$material_file}</strong></p>
+        <p>Клиент: <strong>{$user_data['email']}</strong> id: <strong>{$user_data['id']}</strong></p>
+        <p>Имя: {$user_data['first_name']}</p>
+        <p>Роль: <strong>{$user_data['role_name']}</strong></p>
+        <p>Время: <strong>{$time}</strong></p>
     ";
+    $params['subject'] = "Ошибка! Проблема с {$type_str}";   
     $send_emails->send('site_errors', $mailto_error, $params);
+}
+
+if (isset($_POST['youtube_video_data'])) {
+    $videoId = $_POST['video_id'];
+    $c = curl_init('https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=' . $videoId . '&format=json');
+    curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+    $data = curl_exec($c);
+
+    if ($data != 'Not Found') {
+        $result = array('success' => 1, 'success_text' => '', 'data' => json_decode($data));
+    } else {
+        $result = array('success' => 0, 'success_text' => '', 'data' => array());
+    }
 }

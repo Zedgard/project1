@@ -1,10 +1,7 @@
 <link rel="stylesheet" href="/extension/products/office.css<?= $_SESSION['rand'] ?>">
-<link rel="stylesheet" href="/assets/plugins/calamansi/calamansi.min.css">
-<script src="/assets/plugins/calamansi/calamansi.min.js"></script>
-<link href="/assets/plugins/video/css/videojs.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 <link href="/extension/products/office.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
-<script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
-<script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
+<script src="/assets/plugins/plyr/plyr.js?v=<?= rand() ?>"></script>
+<link rel="stylesheet" href="/assets/plugins/plyr/css/plyr.min.css?v=<?= rand() ?>" />
 <div class="office_block_top_main">
     <div class="office_block_top_left">
         <a href="#" onclick="window.history.go(-1); return false;" class="office_link_back">
@@ -34,29 +31,45 @@
                             if (strlen($wares['url_file']) > 0) {
                                 $file_type = array_reverse(explode('.', $wares['url_file']))[0];
                                 if ($file_type == 'mp3') {
+                                    $union_elm_id = $wares['id'];
                                     ?>
-
-                                    <div class="player-block float-left">
-                                        <div id="calamansi-player-<?= $wares['id'] ?>">
-                                            Загрузка плеера... 
-                                        </div>
-                                    </div>
+                                    <audio id="player_<?= $wares['id'] ?>" class="player_<?= $wares['id'] ?>" controls style="--plyr-color-main: #1ac266;"> 
+                                        <source src="<?= $wares['url_file'] ?>" type="audio/mp3" />
+                                    </audio>
                                     <script>
-                                        Calamansi.autoload();
-                                        // document.getElementById('full-demo-player')
-                                        //document.querySelector('#calamansi-player-<?= $wares['id'] ?>')
-                                        new Calamansi(document.querySelector('#calamansi-player-<?= $wares['id'] ?>'), {
-                                            skin: '/assets/plugins/calamansi/skins/basic_download2',
-                                            playlists: {
-                                                'Classics': [
-                                                    {
-                                                        source: '<?= $wares['url_file'] ?>',
-                                                    }
-                                                ],
-                                            },
-                                            defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
+                                        //const player = new Plyr('#player_<?= $wares['id'] ?>', {controls});
+                                        const player<?= $union_elm_id ?> = new Plyr('#player_<?= $union_elm_id ?>', {controls, 'autopause': true});
+                                        controls.remove('download');
+
+                                        /*
+                                         * Оповещение если ссылка на фаил не верная 
+                                         */
+                                        $("#mp3_<?= $union_elm_id ?>").on("error", function (e) {
+
+                                            const player<?= $union_elm_id ?> = new Plyr('#player_<?= $union_elm_id ?>', {controls, 'autopause': true});
+                                            controls.remove('download');
+                                            $("#mp3_<?= $union_elm_id ?>").on("error", function (e) {
+                                                sendPostLigth('/jpost.php?extension=wares',
+                                                        {
+                                                            'error_message_material_file_source': 1,
+                                                            'material_id': '<?= $wares['id'] ?>',
+                                                            'material_file': '<?= $wares['url_file'] ?>',
+                                                            'type': 'audio'
+                                                        },
+                                                        function (e) {
+                                                        });
+                                            });
                                         });
-                                        //player.destroy();
+
+                                        player<?= $union_elm_id ?>.on('playing', event => {
+                                            if (!!eplayer && eplayer != player<?= $union_elm_id ?>) {
+                                                eplayer.pause();
+                                            }
+                                            eplayer = player<?= $union_elm_id ?>;
+                                            const instance = event.detail.plyr;
+                                            const players = Plyr.setup('.js-player');
+
+                                        });
                                     </script>
                                     <div style="clear: both;height: 1rem;"></div>
                                     <?
@@ -97,25 +110,11 @@
                             $file_type = array_reverse(explode('.', $wares['url_file']))[0];
                             if ($file_type == 'mp3') {
                                 ?>
-                                <div class="player-block float-left">
-                                    <div id="calamansi-player-<?= $wares['id'] ?>2">
-                                        Загрузка плеера... 
-                                    </div>
-                                </div>
+                                <audio id="player_<?= $wares['id'] ?>" class="player_<?= $wares['id'] ?>" controls style="--plyr-color-main: #1ac266;"> 
+                                    <source src="<?= $wares['url_file'] ?>" type="audio/mp3" />
+                                </audio>
                                 <script>
-                                    Calamansi.autoload();
-                                    new Calamansi(document.querySelector('#calamansi-player-<?= $wares['id'] ?>2'), {
-                                        skin: '/assets/plugins/calamansi/skins/basic_download2',
-                                        playlists: {
-                                            'Classics': [
-                                                {
-                                                    source: '<?= $wares['url_file'] ?>',
-                                                }
-                                            ],
-                                        },
-                                        defaultAlbumCover: '/assets/plugins/calamansi/skins/default-album-cover.png',
-                                    });
-                                    //player.destroy();
+                                    const player = new Plyr('#player_<?= $wares['id'] ?>', {controls});
                                 </script>
                                 <div style="clear: both;height: 1rem;"></div>
                                 <?

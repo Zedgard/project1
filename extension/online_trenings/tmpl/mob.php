@@ -46,7 +46,7 @@
                                                 <script>
                                                     var see_video_id_<?= $video_id ?> = '<?= $video_id ?>';
                                                     $(document).ready(function () {
-                                                        $(".series_<?= $value['series_id'] ?>").mouseenter(function () {
+                                                        $(".series_<?= $value['series_id'] ?>").unbind('mouseenter').mouseenter(function () {
                                                             //console.log("material_video_youtube mouseenter");
                                                             sendPostLigth('/jpost.php?extension=wares',
                                                                     {"waresVideoSee": see_video_id_<?= $video_id ?>},
