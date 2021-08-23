@@ -243,38 +243,38 @@ jQuery(function ($) {
     /* ------ OWL Slider ------ */
     /*Partners / LOgo*/
     /*
-    $("#partners-slider").owlCarousel({
-        items: 5,
-        autoplay: 1500,
-        smartSpeed: 1500,
-        autoplayHoverPause: true,
-        slideBy: 1,
-        loop: true,
-        margin: 30,
-        dots: false,
-        nav: false,
-        responsive: {
-            1200: {
-                items: 5,
-            },
-            900: {
-                items: 4,
-            },
-            768: {
-                items: 3,
-            },
-            480: {
-                items: 2,
-            },
-            320: {
-                items: 1,
-            },
-        }
-    });
-*/
+     $("#partners-slider").owlCarousel({
+     items: 5,
+     autoplay: 1500,
+     smartSpeed: 1500,
+     autoplayHoverPause: true,
+     slideBy: 1,
+     loop: true,
+     margin: 30,
+     dots: false,
+     nav: false,
+     responsive: {
+     1200: {
+     items: 5,
+     },
+     900: {
+     items: 4,
+     },
+     768: {
+     items: 3,
+     },
+     480: {
+     items: 2,
+     },
+     320: {
+     items: 1,
+     },
+     }
+     });
+     */
 
     /*Testimonials 3columns*/
-    /*
+
     $("#testimonial-slider").owlCarousel({
         items: 3,
         autoplay: 2500,
@@ -295,125 +295,125 @@ jQuery(function ($) {
             },
         }
     });
-*/
+
     /*Testimonial one slide fade*/
     /*
-    $("#testimonial-quote").owlCarousel({
-        items: 1,
-        autoplay: 2500,
-        autoplayHoverPause: true,
-        mouseDrag: false,
-        loop: true,
-        margin: 30,
-        dots: true,
-        dotsContainer: "#owl-thumbs",
-        nav: false,
-        animateIn: "fadeIn",
-        animateOut: "fadeOut",
-        responsive: {
-            1280: {
-                items: 1,
-            },
-            600: {
-                items: 1,
-            },
-            320: {
-                items: 1,
-            },
-        }
-    });
-
-    $("#testimonial-quote-nav").owlCarousel({
-        items: 1,
-        autoplay: 2500,
-        autoplayHoverPause: true,
-        mouseDrag: false,
-        loop: true,
-        margin: 30,
-        animateIn: "fadeIn",
-        animateOut: "fadeOut",
-        dots: true,
-        dotsContainer: "#owl-thumbs",
-        nav: true,
-        navText: ["<i class='fa fa-arrow-left'></i>", "<i class='fa fa-arrow-right'></i>"],
-        responsive: {
-            1280: {
-                items: 1,
-            },
-            600: {
-                items: 1,
-            },
-            320: {
-                items: 1,
-            },
-        }
-    });
-*/
+     $("#testimonial-quote").owlCarousel({
+     items: 1,
+     autoplay: 2500,
+     autoplayHoverPause: true,
+     mouseDrag: false,
+     loop: true,
+     margin: 30,
+     dots: true,
+     dotsContainer: "#owl-thumbs",
+     nav: false,
+     animateIn: "fadeIn",
+     animateOut: "fadeOut",
+     responsive: {
+     1280: {
+     items: 1,
+     },
+     600: {
+     items: 1,
+     },
+     320: {
+     items: 1,
+     },
+     }
+     });
+     
+     $("#testimonial-quote-nav").owlCarousel({
+     items: 1,
+     autoplay: 2500,
+     autoplayHoverPause: true,
+     mouseDrag: false,
+     loop: true,
+     margin: 30,
+     animateIn: "fadeIn",
+     animateOut: "fadeOut",
+     dots: true,
+     dotsContainer: "#owl-thumbs",
+     nav: true,
+     navText: ["<i class='fa fa-arrow-left'></i>", "<i class='fa fa-arrow-right'></i>"],
+     responsive: {
+     1280: {
+     items: 1,
+     },
+     600: {
+     items: 1,
+     },
+     320: {
+     items: 1,
+     },
+     }
+     });
+     */
 
     /*Our Team*/
     /*
-    $("#ourteam-slider").owlCarousel({
-        items: 3,
-        margin: 30,
-        dots: false,
-        nav: false,
-        responsive: {
-            1280: {
-                items: 3,
-            },
-            600: {
-                items: 2,
-            },
-            320: {
-                items: 1,
-            },
-        }
-    });
-*/
+     $("#ourteam-slider").owlCarousel({
+     items: 3,
+     margin: 30,
+     dots: false,
+     nav: false,
+     responsive: {
+     1280: {
+     items: 3,
+     },
+     600: {
+     items: 2,
+     },
+     320: {
+     items: 1,
+     },
+     }
+     });
+     */
     /*Simple text fadng banner*/
     /*
-    $("#text-fading").owlCarousel({
-        items: 1,
-        autoplay: true,
-        autoplayHoverPause: true,
-        loop: true,
-        mouseDrag: false,
-        animateIn: "fadeIn",
-        animateOut: "fadeOut",
-        dots: true,
-        nav: false,
-        responsive: {
-            0: {
-                items: 1
-            }
-        }
-    });
-*/
+     $("#text-fading").owlCarousel({
+     items: 1,
+     autoplay: true,
+     autoplayHoverPause: true,
+     loop: true,
+     mouseDrag: false,
+     animateIn: "fadeIn",
+     animateOut: "fadeOut",
+     dots: true,
+     nav: false,
+     responsive: {
+     0: {
+     items: 1
+     }
+     }
+     });
+     */
 
     /*Services Box Slider*/
     /*
-    $("#services-slider").owlCarousel({
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        smartSpeed: 1200,
-        loop: true,
-        nav: false,
-        navText: false,
-        dots: false,
-        mouseDrag: true,
-        touchDrag: true,
-        center: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            640: {
-                items: 3
-            }
-        }
-    });
-*/
+     $("#services-slider").owlCarousel({
+     autoplay: true,
+     autoplayTimeout: 3000,
+     autoplayHoverPause: true,
+     smartSpeed: 1200,
+     loop: true,
+     nav: false,
+     navText: false,
+     dots: false,
+     mouseDrag: true,
+     touchDrag: true,
+     center: true,
+     responsive: {
+     0: {
+     items: 1
+     },
+     640: {
+     items: 3
+     }
+     }
+     });
+     */
 
     /* ----------- Counters ---------- */
     $(".value_formatter").data("countToOptions", {
