@@ -274,7 +274,6 @@ jQuery(function ($) {
      */
 
     /*Testimonials 3columns*/
-
     $("#testimonial-slider").owlCarousel({
         items: 3,
         autoplay: 2500,
