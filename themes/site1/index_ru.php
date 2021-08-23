@@ -111,6 +111,7 @@
             <div class="bs-container">
 
                 <!-- Bootslider Slide -->
+                <!--
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
                     <div class="bs-foreground">
                         <div class="container">
@@ -145,9 +146,11 @@
                         <img src="/assets/files/image/banner_index/ddl_1.jpg" alt="" class="exam_bg" />
                     </div>
                 </div>
+                -->
                 <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
+                <!--
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
                     <div class="bs-foreground">
                         <div class="container">
@@ -182,9 +185,11 @@
                         <img src="/assets/files/image/banner_index/covid_bg.jpg" alt="" class="exam_bg" />
                     </div>
                 </div>
+                -->
                 <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
+                <!--
                 <div class="bs-slide active" data-animate-in="flipInX" data-animate-out="holeOut">
                     <div class="bs-foreground">
                         <div class="container">
@@ -223,6 +228,7 @@
                         <img src="/assets/files/image/banner_index/exam_bg.jpg" alt="" class="exam_bg" />
                     </div>
                 </div>
+                -->
                 <!-- /Bootslider Slide -->
 
                 <!-- Bootslider Slide -->
@@ -271,7 +277,7 @@
 
 
                 <!-- Bootslider Slide -->
-
+                <!--
                 <div class="bs-slide active" data-animate-in="bounceInUp" data-animate-out="hinge">
                     <div class="bs-foreground">
                         <div class="container h-100">
@@ -303,7 +309,7 @@
                              data-width="100%" data-height="100%" data-bottom="0" />
                     </div>
                 </div>
-
+                -->
                 <!-- /Bootslider Slide -->
 
 
@@ -331,7 +337,7 @@
                             <div class="row mt-2 h-100">
                                 <div class="col">
                                     <div>
-                                        <a href="https://edgardzaycev.ru/club" target="_blank" class="btn btn-warning btn_slider_link_club"
+                                        <a href="/shop/?k=45" target="_blank" class="btn btn-warning btn_slider_link_club"
                                            data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="1200">ПРИСОЕДИНИТЬСЯ</a>
                                     </div>
                                 </div> 
