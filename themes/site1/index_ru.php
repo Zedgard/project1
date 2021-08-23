@@ -337,7 +337,7 @@
                             <div class="row mt-2 h-100">
                                 <div class="col">
                                     <div>
-                                        <a href="/shop/?k=45" target="_blank" class="btn btn-warning btn_slider_link_club"
+                                        <a href="/shop/?k=45" class="btn btn-warning btn_slider_link_club"
                                            data-animate-in="fadeInLeftBig" data-animate-out="fadeOutLeftBig" data-delay="1200">ПРИСОЕДИНИТЬСЯ</a>
                                     </div>
                                 </div> 
