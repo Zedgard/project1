@@ -71,6 +71,9 @@ if ($c_user->isClient() || $c_user->isEditor()) {
 
     $waresClub = $c_products->getProductsClubArray();
     include 'tmpl/office.php';
+    if (strlen($_SESSION['user']['info']['login_instagram']) < 1) {
+        include 'tmpl/modal_not_insta_login.php';
+    }
 }
 // Для загрузки активных пользователей
 // Запрос в WP
