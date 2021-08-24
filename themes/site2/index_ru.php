@@ -71,7 +71,7 @@
         ?>        
         <?= $config->getConfigParam('site_development1') ?>
         <!--PreLoader-->
-        <!--
+ 
         <div class="loader">
             <div class="loader-inner">
                 <div class="loader-blocks">
@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        -->
+
         <!--PreLoader Ends-->
 
         <?= $_SESSION['page']['block_top'] ?>
