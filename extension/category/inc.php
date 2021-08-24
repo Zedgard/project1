@@ -102,7 +102,7 @@ class category extends \project\extension {
                             pcat.product_id = pr.id
                         LEFT JOIN zay_category cat ON cat.id=pcat.category_id  
                         WHERE
-                            p.user_id='?' AND p.pay_status='succeeded' AND w.id>0
+                            p.user_id='?' AND p.pay_status='succeeded' AND w.id>0 AND (w.club_month_period=0 AND w.club_days_period=0)
                             
 /*
 Исключали продукты 

@@ -840,7 +840,7 @@ class wares extends \project\extension {
     }
 
     /**
-     * Получить колличество купоеллных продуктов данной категории
+     * Получить колличество куполеных продуктов данной категории
      * @return type
      */
     public function getClientWaresCol() {
