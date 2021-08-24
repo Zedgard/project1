@@ -24,7 +24,7 @@ if ($user->isEditor()) {
             $user_id = $_POST['system_user_id'];
             $_SESSION['user_edit_obj_id'] = $user_id;
         }
-        
+
         $data = $user->getUserInfo($user_id, $page_num, $_SESSION['input_search_str'], $params);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
@@ -153,13 +153,36 @@ if ($user->isEditor()) {
         }
     }
 
-// пулучить доступные роли
+    // Получение всех доступных ролей
     if (isset($_POST['get_roles_array'])) {
         $data = $user->get_roles_array();
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
 
-// отправить email сообщение 
+    if (isset($_GET['add_new_role'])) {
+        if ($user->add_new_role()) {
+            $result = array('success' => 1, 'success_text' => 'Упешно добавлено');
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Ошибка!');
+        }
+    }
+
+    // Генерация ссылки для быстрой авторизации
+    if (isset($_POST['creat_fast_auth_link'])) {
+        if (isset($_POST['email'])) {
+            $code = $auth->set_code_integration($_POST['email']);
+            $result = array(
+                'success' => 1,
+                'success_text' => 'Успешно создана ссылка',
+                'data' => array('code' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}/auth/?code_integration=" . $code)
+            );
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Не передан email адрес');
+        }
+    }
+
+
+    // отправить email сообщение 
     if (isset($_POST['userSendActivateEmail'])) {
         if ($_POST['userSendActivateEmail'] > 0) {
             $user_id = $_POST['userSendActivateEmail'];
@@ -210,16 +233,3 @@ if ($user->isEditor()) {
     }
 }
 
-// Генерация ссылки для быстрой авторизации
-if (isset($_POST['creat_fast_auth_link'])) {
-    if (isset($_POST['email'])) {
-        $code = $auth->set_code_integration($_POST['email']);
-        $result = array(
-            'success' => 1,
-            'success_text' => 'Успешно создана ссылка',
-            'data' => array('code' => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}/auth/?code_integration=" . $code)
-        );
-    } else {
-        $result = array('success' => 0, 'success_text' => 'Не передан email адрес');
-    }
-}

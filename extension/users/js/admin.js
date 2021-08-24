@@ -14,6 +14,8 @@ $(document).ready(function () {
         initTable();
     });
     initTable();
+    // Редактирование ролей
+    init_all_roles();
 });
 
 
@@ -304,4 +306,25 @@ function init_get_next_page() {
         page_num = page_num + 1;
         initTable();
     });
+}
+
+function init_all_roles() {
+    if ($(".all_roles").length > 0) {
+        $(".all_roles tbody").html("");
+        sendPostLigth('/jpost.php?extension=users', {"get_roles_array": 1}, function (e) {
+            for (var i = 0; i < e['data'].length; i++) {
+                var selected = '';
+                //e['data'][i]['id']
+                $(".all_roles tbody").append('<tr>\n\
+                    <td class="text-center">' + e['data'][i]['id'] + '</td>\n\
+                    <td><input type="text" name="role_name" value="' + e['data'][i]['role_name'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_roles" elm_row="role_name" class="form-control init_elm_edit" /></td>\n\
+                    <td><input type="text" name="role_code" value="' + e['data'][i]['role_code'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_roles" elm_row="role_code" class="form-control init_elm_edit" /></td>\n\
+                    <td><input type="text" name="role_privilege" value="' + e['data'][i]['role_privilege'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_roles" elm_row="role_privilege" class="form-control init_elm_edit" /></td>\n\
+                    <td><input type="text" name="auth_url_panel" value="' + e['data'][i]['auth_url_panel'] + '" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_roles" elm_row="auth_url_panel" class="form-control init_elm_edit" /></td>\n\
+                    <td class="text-center"><span class="btn btn-danger init_elm_delete" elm_id="' + e['data'][i]['id'] + '" elm_table="zay_roles" func="init_all_roles()"><i class="mdi mdi-delete"></i></span></td>\n\
+                </tr>');
+                  
+            }
+        });
+    }
 }

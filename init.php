@@ -29,6 +29,9 @@ if (!isset($_SESSION['token_hash'])) {
 if (!isset($_SESSION['user'])) {
     $_SESSION['user'] = array();
 }
+if (!isset($_SESSION['user_roles'])) {
+    $_SESSION['user_roles'] = array();
+}
 
 // Ошибки которые произошли в системе
 $_SESSION['url'] = array();

@@ -71,8 +71,6 @@ class page {
             /*
              * Если страница открыта только для определенной роли то необходима авторизация
              */
-            //print_r($roles);
-            //exit();
             // Так как страница найдена то по умолчанию отправим на авторизацию
             $page_show = 2;
             if (count($roles) > 0) {
@@ -80,12 +78,15 @@ class page {
                 foreach ($roles as $v) {
                     $_SESSION['page']['roles'][] = $v;
                 }
+                
+                //print_r($_SESSION['page']['roles']);
 
-                //print_r($_SESSION['user']['info']);
-                //echo "<br/>";
                 //Если авторизированный пользователь 
                 if (isset($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 0) {
+                    
                     foreach ($roles as $value) {
+                        //echo $value['role_code'] . "<br/>\n";
+                        //echo $_SESSION['user']['info']['role_privilege'] . '>=' . $value['role_privilege'] . "<br/>\n";
                         if ($_SESSION['user']['info']['role_privilege'] >= $value['role_privilege']) {
                             $page_show = 1;
                             break;
@@ -103,7 +104,7 @@ class page {
                         }
                     }
                 } else {
-                    //echo 111;
+                    //echo 222;
                     // Поишем роль общедоступную
                     foreach ($roles as $v) {
                         if ($v['role_privilege'] == 0) {

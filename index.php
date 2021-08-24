@@ -100,6 +100,7 @@ if (isset($_COOKIE[$_SESSION['SERVER_NAME'] . '_cookie_access'])) {
 }
 
 $user = new \project\user();
+$_SESSION['user_roles'] = $user->get_roles_array();
 $user->upUserRole(); // role_privilege
 
 $p_utm->utm_insert_href($_SERVER['QUERY_STRING']);

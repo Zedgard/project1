@@ -780,14 +780,13 @@ class auth extends \project\user {
     public function code_integration_auth_user($code) {
         $error = array();
         $sqlLight = new \project\sqlLight();
-        $query = "SELECT * FROM `zay_users` u WHERE u.`code_integration`='?' and `active` = '1' ";
+        $query = "SELECT * FROM zay_users u WHERE u.code_integration='?' and u.active='1'";
         $users = $sqlLight->queryList($query, array($code));
 
-        $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and u.`u_pass`='?' and `active` = 1";
+        $query = "SELECT * FROM zay_users u WHERE u.email='?' and u.u_pass='?' and u.active='1'";
         $user = $sqlLight->queryList($query, array($users[0]['email'], $users[0]['u_pass']));
 
         if (count($user) > 0) {
-            $_SESSION['user']['info'] = $user[0];
             $data = $this->getUserInfo($user[0]['id']);
             $_SESSION['user']['info'] = $data;
             return true;

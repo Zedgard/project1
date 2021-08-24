@@ -2,6 +2,7 @@
 
 namespace project;
 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/validator.php';
@@ -10,7 +11,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
  * $_SESSION['user']['info']
  */
 
-class user extends \project\extension { 
+class user extends \project\extension {
 
     private $page_max = 50;
     private $id, $email, $phone, $first_name, $last_name, $u_pass, $lastdate;
@@ -157,8 +158,14 @@ class user extends \project\extension {
      * @return type
      */
     public function get_roles_array() {
-        $querySelect = "SELECT * FROM `zay_roles` ORDER BY `role_name` ASC ";
+        $querySelect = "SELECT * FROM `zay_roles` ORDER BY `role_privilege` DESC";
         return $this->getSelectArray($querySelect);
+    }
+
+    public function add_new_role() {
+        $next_id = $this->queryNextId('zay_roles');
+        $query = "INSERT INTO `zay_roles`(`role_name`, `role_code`, `role_privilege`, `auth_url_panel`) VALUES ('New','role{$next_id}','0','')";
+        return $this->query($query, array(), 0);
     }
 
     /**
@@ -214,13 +221,29 @@ class user extends \project\extension {
         return $block_see;
     }
 
+    public function isAccess($location_href = 0) {
+        $role_privilege = 0;
+        $url = '';
+        foreach ($_SESSION['user_roles'] as $value) {
+            if ($value['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
+                $role_privilege = $value['role_privilege'];
+                $url = $value['auth_url_panel'];
+                break;
+            }
+        }
+        if ($location_href == 1 && strlen($url) > 0) {
+            location_href($url);
+        }
+        return $role_privilege;
+    }
+
     /**
      * Админы
      * @return boolean
      */
-    static public function isAdmin() {
-        $role_privilege = $_SESSION['user']['info']['role_privilege'];
-        if ($role_privilege >= 10) {
+    public function isAdmin() {
+        //$role_privilege = $this->isAccess(); //$_SESSION['user']['info']['role_privilege'];
+        if ($this->isAccess() >= 10) {
             return true;
         }
         return false;
@@ -230,23 +253,23 @@ class user extends \project\extension {
      * Редакторы
      * @return boolean
      */
-    static public function isEditor() {
+    public function isEditor() {
         //print_r($_SESSION['user']['info']);
-        $role_privilege = $_SESSION['user']['info']['role_privilege'];
-        if ($role_privilege >= 8) {
+        //$role_privilege = $_SESSION['user']['info']['role_privilege'];
+        if ($this->isAccess() >= 8) {
             return true;
         }
         return false;
     }
-    
+
     /**
      * Редакторы
      * @return boolean
      */
-    static public function isEditorUTM() {
+    public function isEditorUTM() {
         //print_r($_SESSION['user']['info']);
-        $role_privilege = $_SESSION['user']['info']['role_privilege'];
-        if ($role_privilege >= 7) {
+        //$role_privilege = $_SESSION['user']['info']['role_privilege'];
+        if ($this->isAccess() >= 7) {
             return true;
         }
         return false;
@@ -256,7 +279,7 @@ class user extends \project\extension {
      * Только клиенты
      * @return boolean
      */
-    static public function isClient() {
+    public function isClient() {
         if (trim($_SESSION['user']['info']['role_privilege']) == '') {
             if ($_SESSION['user']['other'] == 1) {
                 $role_privilege = 1;
@@ -275,7 +298,7 @@ class user extends \project\extension {
      * Для всех
      * @return boolean
      */
-    static public function isAll() {
+    public function isAll() {
         return true;
     }
 

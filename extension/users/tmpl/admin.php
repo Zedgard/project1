@@ -20,7 +20,7 @@
                                 <?
                                 if ($user->isAdmin()):
                                     ?>
-                                    <a href="?user_roles=1" class="btn btn-primary">Управление ролей пользователя</a>
+                                    <a href="?user_roles=1" class="btn btn-primary">Управление ролями</a>
                                     <?
                                 endif;
                                 ?>
