@@ -67,7 +67,7 @@ class pay extends \project\extension {
         if (strlen($limit_where) > 0) {
             $queryArray[] = ($page_number * $this->page_max);
         }
-        $querySelect = "SELECT p.*, pt.pay_type_title, 
+        $querySelect = "SELECT DISTINCT dd.* FROM ( SELECT p.*, pt.pay_type_title, 
                 u.email, u.phone, u.first_name, u.last_name 
                 FROM zay_pay p 
                 left join zay_pay_products pp on pp.pay_id=p.id
@@ -75,7 +75,7 @@ class pay extends \project\extension {
                 left join zay_users u on u.id=p.user_id 
                 left join zay_pay_type pt on pt.pay_type_code=p.pay_type 
                 {$where} 
-                ORDER BY p.`pay_date` DESC {$limit_where}";
+                ORDER BY p.`pay_date` DESC {$limit_where} ) as dd";
         $pays = $this->getSelectArray($querySelect, $queryArray, 0);
         $data = array();
         if (count($pays) > 0) {
