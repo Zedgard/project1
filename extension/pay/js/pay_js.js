@@ -50,7 +50,7 @@ function init_pay_data_list() {
                 var user_descr = '';
                 var pay_descr = '';
                 //console.log(typeof e['data'][i]['email']);
-                if (e['data'][i]['email'].length > 0) {
+                //if (e['data'][i]['email'].length > 0) {
                     user_title = e['data'][i]['email'];
 
                     if (e['data'][i]['phone'].length > 0) {
@@ -104,7 +104,7 @@ function init_pay_data_list() {
                                     <td class="text-center align-middle">' + pay_status + '<br/>' + business_check + '</td> \
                                     <td class="text-center align-middle">' + pay_descr + '</td>\
                                     </tr>');
-                }
+                //}
             }
             $(".pay_summ_all").html(pay_summ_all + 'р.');
             $(".pay_col").html(pay_col);
