@@ -207,7 +207,7 @@ function init_pay() {
 
     $(".btn_cart_other").unbind('click').click(function () {
         var preloader = '<div class="pay_preloader"><div class="spinner-border text-center" role="status"><span class="sr-only">Loading...</span></div></div>';
-        $(".block_cart_other").html('<div id="payment-form">' + preloader + '</div>');
+        $(".block_cart_other").html('<div id="payment-form"></div>');
         pay_status = 0;
         $(".block_cart_other").show(200);
         $(".pay_preloader").show(200);

@@ -14,20 +14,33 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/close_club/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
+
+require $_SERVER['DOCUMENT_ROOT'] . '/system/paypal-sdk/autoload.php';
+
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Core\ProductionEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
 $sqlLight = new \project\sqlLight();
-$u = new \project\user();
 $config = new \project\config();
-$sign_up_consultation = new \project\sign_up_consultation();
-$close_club = new \project\close_club();
+$pr_cart = new \project\cart();
+$p_user = new \project\user();
 
-$in_shop_id = $config->getConfigParam('in_shop_id');
-$in_secret_key = $config->getConfigParam('in_secret_key');
+// Данные платежной системы
+$clientId = $config->getConfigParam('paypal_client_id');
+$clientSecret = $config->getConfigParam('paypal_client_secret');
 
-
-$client_email = $u->isClientEmail();
-$client_id = ($u->isClientId() > 0) ? $u->isClientId() : 0;
+// Подключаемся к системе
+if ($clientId == 'AWhQommTsM02uROFM78sl252sngt6qgOLDOJ9VkuyG1F61ZJ8rjUUuQjE-IJvgfhQtV1hXMLeoKbvwfe') {
+    $environment = new ProductionEnvironment($clientId, $clientSecret);
+} else {
+    $environment = new SandboxEnvironment($clientId, $clientSecret); // Для тестирования
+}
+$client = new PayPalHttpClient($environment);
 
 $total = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
@@ -44,121 +57,102 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
     }
 }
 
-/**
- * Заглушка для админов покупка за 1 рубль
- */
-if ($p_user->isEditor()) {
-    $total = 1;
-}
-
 $pay_key = $_SESSION['pay_key'];
-
-/*
-  echo "client_email: {$client_email} <br/>\n";
-  echo "client_id: {$client_id} <br/>\n";
-  echo "total: {$total} <br/>\n";
-  echo "idempotenceKey: {$pay_key} <br/>\n";
- */
-
 $pay_check = 'succeeded';
 
-$amount = $_GET['amt'];
-$currency = $_GET['cc'];
-$check_amount = $total;
-$check_currency = 'USD';
-
-// проверим что платеж прошел по нашей цене
-if ($amount == $check_amount) {
-    if (strlen($pay_key) > 0) {
-        $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1 and pay_key='?'";
-        $pays = $sqlLight->queryList($query, array($pay_key));
+// Подтверждение заказа клиента
+if (isset($_GET['token'])) {
+    $paypal_status = '';
+    //print_r($_GET);
+    if (isset($_GET['type']) && $_GET['type'] == 'success') {
+        $pay_check = 'succeeded';
     } else {
-        $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
-        $pays = $sqlLight->queryList($query, array(), 0);
+        $pay_check = 'canceled'; // Отмена заказа
     }
-//    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
-//    $pays = $sqlLight->queryList($query, array($pay_key), 1);
+// Here, OrdersCaptureRequest() creates a POST request to /v2/checkout/orders
+// $response->result->id gives the orderId of the order created above
+    $request = new OrdersCaptureRequest($_GET['token']);
+    $request->prefer('return=representation');
+    try {
+        // Call API with your client and get a response for your call
+        $response = $client->execute($request);
+
+        // If call returns body in response, you can get the deserialized version from the result attribute of the response
+        //print_r($response);
+//      echo "<br/>\n";
+//      echo "<b>code: </b>{$_SESSION['code']}<br/>\n";
+//      echo "<br/>\n";
+//      echo "response: {$response->statusCode} | {$response->result->id} | {$response->result->status}<br/>\n";
+        $pay_id = 0;
+        // Завершаем оплату успешным результатом
+        if ($response->result->status == 'COMPLETED') {
+            if (strlen($pay_key) > 0) {
+                $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1 and pay_key='?'";
+                $pays = $sqlLight->queryList($query, array($pay_key));
+            } else {
+                $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
+                $pays = $sqlLight->queryList($query, array(), 0);
+            }
+
+            if (count($pays) > 0) {
+                foreach ($pays as $value) {
+                    $pay_id = $value['id'];
+                    $query_update = "UPDATE zay_pay SET pay_status='?' WHERE id='?' ";
+                    if ($sqlLight->query($query_update, array($pay_check, $pay_id))) {
+
+                        $pr_cart->register_pay($pay_id);
+                    } else {
+                        echo 'Ошибка регистрации платежа! Пожалуйста сообщите администрации сайта о данный проблеме!';
+                    }
+                }
+            }
+            //goBack($url = '/shop/cart/?in_payment_true=1', $time = '0');
+            $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
+            $_SESSION['cart']['total'] = $total;
+            $_SESSION['cart']['pay_id'] = $pay_id;
+            $_SESSION['cart']['itms'] = array();
+            $_SESSION['PAY_KEY'] = '';
+            $_SESSION['PAY_AMOUNT'] = '';
+            unset($_SESSION['PAY_KEY']);
+            unset($_SESSION['PAY_AMOUNT']);
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно проведен', 'action' => '/?page_type=pay_thanks');
+            location_href('/?page_type=pay_thanks');
+        } else {
+            $result = array('success' => 0, 'success_text' => "Ошибка платежа!");
+        }
+    } catch (HttpException $ex) {
+        //echo $ex->statusCode;
+        //print_r($ex->getMessage());
+        $result = array('success' => 0, 'success_text' => "Не проведен! code: {$ex->statusCode}");
+    }
+} else {
+    // Подтверждение транзакций
+    $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
+    $pays = $sqlLight->queryList($query, array(), 0);
+
     if (count($pays) > 0) {
         foreach ($pays as $value) {
-            //echo "- {$value['id']}<br/>\n";
             $pay_id = $value['id'];
-            $query_update = "UPDATE zay_pay SET pay_status='?'  WHERE id='?' ";
-            if ($sqlLight->query($query_update, array($pay_check, $pay_id))) {
-                /*
-                 * Если установлена настройка отправим в календарь событие
-                 */
-                //if ($_SESSION['consultation']['your_master_id'] > 0) {
-                //    if ($config->getConfigParam('event_sent_on_pay_calendar') == '1') {
-//                        $queryMaster = "SELECT * FROM `zay_consultation_master` WHERE id='?' ";
-//                        $master = $sqlLight->queryList($queryMaster, array($_SESSION['consultation']['your_master_id']))[0];
-//                        $master_token = $master['token_file_name'];
-//                        $master_credentials = $master['credentials_file_name'];
-//
-//                        $first_name = $_SESSION['consultation']['first_name'];
-//                        $user_phone = $_SESSION['consultation']['user_phone'];
-//                        $user_email = $_SESSION['consultation']['user_email'];
-//                        $pay_descr = $_SESSION['consultation']['pay_descr'];
-//                        $user_date = $_SESSION['consultation']['date'];
-//                        $user_time = $_SESSION['consultation']['time'];
 
-                /*
-                  'your_master_id' => $your_master,
-                  'first_name' => $first_name,
-                  'user_phone' => $user_phone,
-                  'user_email' => $user_email,
-                  'pay_descr' => "<div>Консультация с {$first_name}</div>"
-                  . "<div>Телефон: {$user_phone}</div>"
-                  . "<div>Email: {$user_email}</div>"
-                  . "<div>Консультант: {$your_master_text}</div>"
-                  . "<div>Дата и время: {$datepicker_data} {$timepicker_data}</div>",
-                  'date' => $datepicker_data,
-                  'time' => $timepicker_data,
-                  'price' => $price
-                 */
-                //$master_token = $master['credentials_file_name'];
-                //include $_SERVER['DOCUMENT_ROOT'] . '/system/google-api-php-client-master/addevent.php';
-                //   }
-                /*
-                 * Если это консультация 
-                 */
-//                    if ($_SESSION['consultation']['your_master_id'] > 0) {
-//                        $_SESSION['consultation']['pay_id'] = $max_id;
-//                        $sign_up_consultation->add_consultation($_SESSION['consultation']);
-//                    }
-                //}
+            $request = new OrdersCaptureRequest($value['pay_key']);
+            $request->prefer('return=representation');
+            try {
+                // Call API with your client and get a response for your call
+                $response = $client->execute($request);
+                // Завершаем оплату успешным результатом
+                if ($response->result->status == 'COMPLETED') {
+                    $query_update = "UPDATE zay_pay SET pay_status='?' WHERE id='?' ";
+                    if ($sqlLight->query($query_update, array($pay_check, $pay_id))) {
 
-                /*
-                 * Если это консультация 
-                 */
-                if ($_SESSION['consultation']['your_master_id'] > 0) {
-                    $_SESSION['consultation']['pay_id'] = $pay_id;
-                    $data_array['pay_descr'] = $_SESSION['consultation']['pay_descr'];
-                    $sign_up_consultation->add_consultation($_SESSION['consultation']);
+                        $pr_cart->register_pay($pay_id);
+                    } else {
+                        echo 'Ошибка регистрации платежа! Пожалуйста сообщите администрации сайта о данный проблеме!';
+                    }
                 }
-                
-                $close_club->register_ispay_club_month_period($pay_id);
-
-                // Зафиксируем продажу
-                $query_products = "select * from zay_pay_products WHERE pay_id='?'";
-                $products_data = $sqlLight->queryList($query_products, array($pay_id));
-                foreach ($products_data as $v) {
-                    $products->setSoldAdd($v['product_id']);
-                }
-
-                $_SESSION['cart']['cart_itms'] = $_SESSION['cart']['itms'];
-                $_SESSION['cart']['total'] = $total;
-                $_SESSION['cart']['pay_id'] = $pay_id;
-                $_SESSION['cart']['itms'] = array();
-                $_SESSION['PAY_KEY'] = '';
-                unset($_SESSION['PAY_KEY']);
-                unset($_SESSION['pay_key']);
-                goBack($url = '/shop/cart/?in_payment_true=1', $time = '0');
-            } else {
-                echo 'Ошибка регистрации платежа! Пожалуйста сообщите администрации сайта о данный проблеме!';
+            } catch (HttpException $ex) {
+                echo $ex->statusCode;
+                print_r($ex->getMessage());
             }
         }
     }
-} else {
-    echo 'Ошибка платежа!';
-}
-
+}    

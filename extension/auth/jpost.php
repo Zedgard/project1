@@ -81,8 +81,12 @@ if (isset($_POST['registration'])) {
 
 if (isset($_POST['registration_fast'])) {
     $error = array();
-    if ($_POST['check_indicator'] != 1) {
+    if(strlen($_POST['email'])<2){
+        $error[] = 'Укажите адрес электронной почты!';
         $_SESSION['input_style'][] = array('input' => 'check_indicator', 'class' => 'input-error-border');
+    }
+    if ($_POST['check_indicator'] != 1) {
+        $_SESSION['input_style'][] = array('input' => 'user_email', 'class' => 'input-error-border');
         $error[] = 'Необходимо согласиться с условиями!';
     }
     if (count($error) == 0) {

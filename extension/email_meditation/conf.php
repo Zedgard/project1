@@ -1,11 +1,10 @@
 <?php
 
 $config = array(
-    'title' => $lang['pages'][$_SESSION['lang']]['title'],
-    'descr' => $lang['pages'][$_SESSION['lang']]['descr'],
+    'title' => 'Введите email и получи медитацию',
+    'descr' => 'Введите email и получи медитацию',
     'urls' => array(
-        $lang['statistic'][$_SESSION['lang']]['extension_admin'] => '/extension/pages/admin.php',
-        $lang['statistic'][$_SESSION['lang']]['extension_index'] => '/extension/pages/index.php'
+        'Форма (Введите email и получи медитацию)' => '/extension/email_meditation/index.php'
     ),
     'version' => '0.1'
 );

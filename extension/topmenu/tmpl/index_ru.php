@@ -39,13 +39,13 @@
                     
                     <div class="col-lg-2 mb-2 mobile_contxt_center" style="text-align: center;">
 
-                        <a href="#" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a>
+                        <a href="#" class="header_close_club" style="color: #519a80;">Закрытый клуб</a>
                     </div>
                     -->
                     <div class="col-lg contxt_right">
 
                         <div style="float: right;margin-top: 4px;">
-                            <!--<a href="/auth/" class="header_close_club" style="color: #04be4e;">Закрытый клуб</a> | -->
+                            <!--<a href="/auth/" class="header_close_club" style="color: #519a80;">Закрытый клуб</a> | -->
                             <?
                             if (strlen(trim($_SESSION['user']['info']['first_name'])) > 0) {
                                 $show_user_name = $_SESSION['user']['info']['first_name'];
@@ -59,14 +59,14 @@
                             <? endif; ?>
                         </div>
                         <div style="float: left;" class="soc_links d-block d-lg-none">
-                            <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
-                            <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
-                            <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
+                            <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #519a80;"></i></a>
+                            <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #519a80;"></i></a>
+                            <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #519a80;"></i></a>
                         </div>
                         <div style="float: right;margin-right: 1rem;" class="soc_links d-none d-lg-block">
-                            <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
-                            <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #04be4e;"></i></a>
-                            <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #04be4e;"></i></a>
+                            <a href="https://t.me/edgardzaitsev_channel" target="_blank"><i class="fab fa-telegram-plane mr-3" style="font-size: 24px;color: #519a80;"></i></a>
+                            <a href="https://www.youtube.com/user/zaiaz67" target="_blank"><i class="fab fa-youtube mr-3" style="font-size: 24px;color: #519a80;"></i></a>
+                            <a href="https://instagram.com/edgard_zaycev" target="_blank"><i class="fab fa-instagram" style="font-size: 24px;color: #519a80;"></i></a>
                         </div>
 
 <!--<span class="header_user_auth"> <a href="/auth/" class="header_close_club" style="color: #808080;"> </a></span> -->

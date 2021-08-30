@@ -12,11 +12,16 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 
+$check_pay = '';
+$type = '';
 if (isset($_POST['check_pay'])) {
     $check_pay = $_POST['check_pay'];
 }
 if (isset($_GET['check_pay'])) {
     $check_pay = $_GET['check_pay'];
+}
+if (isset($_GET['type'])) {
+    $type = $_GET['type'];
 }
 
 // обработка ответа yandex
@@ -25,7 +30,7 @@ if ($check_pay == 'ya') {
 }
 // Обработка ответа интеркассы
 //if ($check_pay == 'in') {
-    //include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_check_pay.php';
+//include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/in_check_pay.php';
 //}
 // Обработка ответа интеркассы
 if ($check_pay == 'tk') {
@@ -34,4 +39,8 @@ if ($check_pay == 'tk') {
 // Обработка ответа cloudpayments
 if ($check_pay == 'cp') {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/cp_check_pay.php';
+}
+// Обработка ответа paypal
+if ($check_pay == 'pp') {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/pay_scripts/paypal_check.php';
 }

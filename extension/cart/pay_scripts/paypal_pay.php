@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Оплата через PayPal
  */
@@ -12,176 +11,190 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/cart/inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/sign_up_consultation/inc.php';
 
-/*
-  // Справка
-  // https://dcblog.dev/how-to-integrate-paypal-into-php
-  // $paypal_url = "https://ipnpb.paypal.com/cgi-bin/webscr"; // работает когда простая форма
+require $_SERVER['DOCUMENT_ROOT'] . '/system/paypal-sdk/autoload.php';
 
-  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-  <input type="hidden" name="cmd" value="_xclick">
-  <input type="hidden" name="business" value="<?= $paypal_email ?>">
-  <input type="hidden" name="item_name" value="<?= $title ?>">
-  <input type="hidden" name="item_number" value="1">
-  <input type="hidden" name="amount" value="<?= $price_total ?>">
-  <input type="hidden" name="return" value="<?= $url_ref ?>">
-  <input type="hidden" name="no_shipping" value="1">
-  <input type="hidden" name="currency_code" value="RUB">
-  <input type="hidden" name="lc" value="RU" />
-  <input type="hidden" name="email" value="<?= $email ?>">
-  <input type="submit" name="submit" border="0" class="btn button btngreen2 text-center btn_cart btn_cart_paypal" value="PayPal">
-  </form>
- */
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Core\ProductionEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 
-$sign_up_consultation = new \project\sign_up_consultation();
 $sqlLight = new \project\sqlLight();
 $config = new \project\config();
-$products = new \project\products();
-$c_cart = new \project\cart();
+$pr_cart = new \project\cart();
 $p_user = new \project\user();
 
-$paypal_url = "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr"; // работает через curl
+// Данные платежной системы
+$clientId = $config->getConfigParam('paypal_client_id');
+$clientSecret = $config->getConfigParam('paypal_client_secret');
 
-$url_ref = $config->getConfigParam('pay_site_url_ref');
-$url_ref = "{$url_ref}/pay.php?paypal=1";
+// Подключаемся к системе
+if ($clientId == 'AWhQommTsM02uROFM78sl252sngt6qgOLDOJ9VkuyG1F61ZJ8rjUUuQjE-IJvgfhQtV1hXMLeoKbvwfe') {
+    $environment = new ProductionEnvironment($clientId, $clientSecret);
+} else {
+    $environment = new SandboxEnvironment($clientId, $clientSecret); // Для тестирования
+}
+$client = new PayPalHttpClient($environment);
+
+// Сопутствующие данные
+$site_url = $config->getConfigParam('pay_site_url_ref');
+$site_url_thanks = '/?page_type=pay_thanks';
+$url_ref = $site_url . $site_url_thanks;
 $paypal_email = $config->getConfigParam('paypal_email');
 
-$paypal_email = $config->getConfigParam('paypal_email');
-//print_r($_SESSION['cart']['itms']);
-$price_total = 0;
-if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
-    $title = "";
-    foreach ($_SESSION['cart']['itms'] as $key => $value) {
-        $email = $value['user_email'];
-        $title .= $value['title'] . " : ";
-        if ($value['price_promo'] > 0) {
-            $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
-        }
-        $price_total += $price;
-    }
-}
-
-/**
- * Заглушка для админов покупка за 1 рубль
- */
-//if ($p_user->isEditor()) {
-//    $price_total = 1;
-//}
-
-// Если авторезированный
-if (strlen($p_user->isClientEmail()) > 0) {
-    $email = $p_user->isClientEmail();
-}
-
-/*
- * Зафиксируем платеж в базе данных 
- */
-// подготовим данные
-if (!isset($_SESSION['pay_key'])) {
-    $_SESSION['pay_key'] = uniqid('', true);
-}
-$pay_key = $_SESSION['pay_key'];
-
-$client_email = $p_user->isClientEmail();
-$client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
-
-// Передадим ID пользователя (Создается при консультации)
-if ($client_id == 0) {
-    $client_id = $_SESSION['cart']['itms'][0]['user_id'];
-}
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 
-$pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
-if (strlen($pay_descr) > 0) {
-    $_SESSION['consultation'] = $_SESSION['cart']['itms'][0];
-}
+$price_total = 0;
+$item_name = '';
 
-// начнем заносить данные в базу данных
-$querySelect = "select * from `zay_pay` WHERE pay_type='pp' AND pay_key='?'";
-$pays = $sqlLight->queryList($querySelect, array($pay_key));
-if (count($pays) == 0) {
-    $queryMaxId = "select MAX(p.id) max_id from `zay_pay` p";
-    $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
-
-    // Сохраняем данные платежа в базу
-    $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_descr`, `confirmationUrl`) "
-            . "VALUES ('?', '?','?', '?', '?', '?', '?', '?', '?')";
-    if ($sqlLight->query($query, array(($max_id), 'pp', $client_id, $price_total, $pay_date, $pay_key, $pay_status, $pay_descr, ''))) {
-//        foreach ($_SESSION['cart']['itms'] as $key => $value) {
-//            $product_id = $value['id'];
-//            if ($product_id > 0) {
-//                if ($value['price_promo'] > 0) {
-//                    $price = $value['price_promo'];
-//                } else {
-//                    $price = $value['price'];
-//                }
-//                // доп. данные
-//                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-//                        . "VALUES ('?','?','?')";
-//                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
-//                // Зафиксируем продажу
-////                echo $product_id . "<br/>\n";
-////                $products->setSoldAdd($product_id);
-//            }
-//        }
-        
-        // Сохраним связи с продуктами
-        $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
-        /*
-         * Если это консультация 
-         */
-        if ($_SESSION['consultation']['your_master_id'] > 0) {
-            $_SESSION['consultation']['pay_id'] = $max_id;
-            $sign_up_consultation->add_consultation($_SESSION['consultation']);
-        }
+foreach ($_SESSION['cart']['itms'] as $key => $value) {
+    $email = $value['user_email'];
+    if (strlen($item_name) == 0) {
+        $item_name = 'Товар';
+        //$item_name = preg_replace('/[a-zA-Zа-яА-Я]/', '', $value['title']);
     }
+    if ($value['price_promo'] > 0) {
+        $price = $value['price_promo'];
+    } else {
+        $price = $value['price'];
+    }
+    $price_total += $price;
 }
 
-
-$pay_email = trim($_GET['pay_email']);
-
-$post_array = array('cmd' => '_xclick',
-    'business' => $paypal_email,
-    'item_name' => 'test_1',
-    'item_number' => '1',
-    'amount' => $price_total,
-    'return' => $url_ref,
-    'no_shipping' => '1',
-    'currency_code' => 'RUB',
-    'lc' => 'RU',
-    'email' => $pay_email//'koman1706@gmail.com'
-    );
-foreach ($post_array as $key => $value) {
-    $req .= "&{$key}={$value}";
-}
-//$req = '&cmd=_xclick';
-$ch = curl_init($paypal_url);
-curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
-curl_setopt($ch, CURLOPT_HEADER, 1);
-curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
-$res = curl_exec($ch);
-
-if (curl_errno($ch) != 0) {
-    throw new \Exception("Can't connect to PayPal to validate IPN message: " . curl_error($ch));
+if ($price_total == 0) {
+    $result = array('success' => 1, 'success_text' => '', 'data' => array(), 'action' => '/pay.php');
 } else {
-    $ex = explode("\n", $res);
-    foreach ($ex as $value) {
-        $ex2 = explode(": ", $value);
-        if ($ex2[0] == 'X-PP-HTTP-FORWARD') {
-            header("Location: {$ex2[1]}");
+
+
+    $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
+    if (count($_SESSION['cart']['itms']) > 0) {
+
+
+        $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
+        // Передадим ID пользователя (Создается при консультации)
+        if ($client_id == 0) {
+            $client_id = $_SESSION['cart']['itms'][0]['user_id'];
         }
+        if ($client_id == 0) {
+            $client_id = $pr_cart->get_user_id_fast_login();
+        }
+
+        $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
+        if (strlen($pay_descr) > 0) {
+            $_SESSION['consultation'] = $_SESSION['cart']['itms'][0];
+        }
+
+        // Создаем платеж
+        $pay_key = uniqid('', true); // Генерируем ключ
+        $errors = 0;
+
+        // Если авторезированный
+        if (strlen($p_user->isClientEmail()) > 0) {
+            $email = $p_user->isClientEmail();
+        }
+
+        /*
+         * Зафиксируем платеж в базе данных 
+         */
+
+        $queryMaxId = "select MAX(p.id) max_id from `zay_pay` p";
+        $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
+
+        $_SESSION['PAY_AMOUNT'] = $price_total;
+
+        $_SESSION['PAY_KEY'] = $pay_key;
+        $_SESSION['PAY_TYPE_CP'] = 'pp';
+
+        // Paypal Создаем транзакцию
+        $amount_val = floatval($price_total);
+        $request = new OrdersCreateRequest();
+        $request->prefer('return=representation');
+        $request->body = [
+            "id" => $max_id,
+            "intent" => "CAPTURE",
+            "purchase_units" => [[
+            "reference_id" => $max_id,
+            "amount" => [
+                "value" => $amount_val,
+                "currency_code" => "RUB"
+            ]
+                ]],
+            "application_context" => [
+                "cancel_url" => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/check_pay.php?check_pay=pp&type=canceled",
+                "return_url" => "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/check_pay.php?check_pay=pp&type=success"
+            ]
+        ];
+
+        try {
+            // Call API with your client and get a response for your call
+            $response = $client->execute($request);
+
+            $href = '';
+            if ($response->result->status == 'CREATED') {
+                $pay_key = $response->result->id;
+                $_SESSION['PAY_KEY'] = $pay_key;
+
+                // If call returns body in response, you can get the deserialized version from the result attribute of the response
+                //echo "response: {$response->statusCode} | {$response->result->id} | {$response->result->status}<br/>\n";
+                //echo "links: {$response->links} | {$response->result->id} | {$response->result->status}<br/>\n";
+//            print_r($response);
+//            echo "<br/>\n";
+//            echo "<br/>\n";
+//            print "Status Code: {$response->statusCode}<br/>\n";
+//            print "Status: {$response->result->status}<br/>\n";
+//            print "Order ID: {$response->result->id}<br/>\n";
+//            print "Intent: {$response->result->intent}<br/>\n";
+//            print "Links:\n";
+//            foreach ($response->result->links as $link) {
+//                print "\t{$link->rel}: {$link->href}\tCall Type: {$link->method}<br/>\n";
+//            }
+//            echo "<br/>\n";
+                $_SESSION['code'] = $response->result->id;
+
+                $i = 0;
+                foreach ($response->result->links as $value) {
+                    $i++;
+                    $pos = strpos($value->href, 'checkoutnow');
+                    if ($pos > 0) {
+                        $href = $value->href;
+                    }
+                }
+
+                // Сохраняем данные платежа в базу
+                $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
+                        . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+                if ($sqlLight->query($queryPay, array(($max_id), 'pp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $href), 0)) {
+                    // Сохраним связи с продуктами
+                    $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
+
+                    // Отправляем пользователя на страницу оплаты
+                    //header('Location: ' . $confirmationUrl);
+
+                    if (strlen($href) > 0) {
+                        location_href($href);
+                    }
+                } else {
+                    $_SESSION['errors'][] = 'Ошибка сохранения платежа!';
+                }
+            } else {
+                $_SESSION['errors'][] = "Status: {$response->result->status}!";
+            }
+        } catch (HttpException $ex) {
+            $_SESSION['errors'][] = $ex->statusCode . ' | ' . $ex->getMessage();
+        }
+
+
+
+        // Если есть ошибки
+        if (is_array($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
+            $result = array('success' => 0, 'errors' => $_SESSION['errors']);
+        }
+    } else {
+        ?>
+        <div>Корзина пуста</div>
+        <?
     }
-}
-curl_close($ch);
+}    

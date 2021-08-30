@@ -9,9 +9,11 @@
     }
 </style>
 <div class="container">
-    <div>Популярные товары</div>
+    <div class="text-center TestimonialsTitle">ТОП ПРОДУКТЫ</div>
+    <div class="hr"></div>
+    <br/>
     <!-- product list -->
-    <div class="row mt-3 container_mix row-cols-2 row-cols-md-4" data-ref="mixitup-container">
+    <div class="row container_mix row-cols-2 row-cols-md-4" data-ref="mixitup-container">
         <?
         //$obj_product['products_wares'] = $this->getProducts_wares($obj_product['id']);
         //$obj_product['products_category'] = $this->getProducts_category($obj_product['id']);
@@ -163,6 +165,7 @@
     </div>
     <div class="mt-3 mb-3">
         <div class="index_promo_list_btn text-center">
+            <a href="/shop/" class="btn btn-success mb-4 text-uppercase p-3" style="font-size: 1.4rem;font-weight: bold;">Перейти в каталог</a>
             <div class="index_promo_list_btn_text">Показать больше</div>
             <div class="mt-3"><i class="fas fa-chevron-down" style="font-size: 1.3rem;"></i></div>
         </div>

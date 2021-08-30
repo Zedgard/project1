@@ -1,7 +1,3 @@
-<!-- 
-Функция подписки на рассылку (имейл попадает к нам в базу, человеку отправляется подтверждающий имейл). 
-Градиент (с левого верхнего угла #6bdd78 зеленый до правого нижнего угла 63a7d6 синий)
--->
 <link id="sleek-css" rel="stylesheet" href="/extension/get_emails/css/get_emails.css<?= $_SESSION['rand'] ?>" />
 <div class="get_emails_container">
     <div class="container">

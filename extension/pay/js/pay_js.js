@@ -268,7 +268,13 @@ function init_pay_info() {
                         btn_pay_check = '<a href="' + e['data']['confirmationUrl'] + '" class="btn btn-sm btn-primary" target="_blank">Проверить платеж</a>';
                     }
                 }
-
+                
+                // Проверить платеж на paypal
+                if (e['data']['pay_type'] == 'pp' && e['data']['confirmationUrl'].length > 0) {
+                    if (e['data']['pay_status'] !== 'succeeded') {
+                        btn_pay_check = '<input type="button" value="Проверить платеж" class="btn btn-sm btn-primary btn_pay_check" elm_id="' + e['data']['pay_key'] + '" pay_type="' + e['data']['pay_type'] + '" />';
+                    }
+                }
 
                 var pay_status_html = '<select name="pay_status" class="form-control pay_status init_elm_edit" elm_id="' + objid + '" elm_table="zay_pay" elm_row="pay_status" func="init_pay_data_list()">\n\
                                             <option value="' + e['data']['pay_status'] + '" selected="selected">' + pay_status + '</option>\n\
@@ -325,6 +331,16 @@ function init_btn_pay_check() {
         if (pay_type === 'ya') {
             // Для Yandex
             sendPostLigth('/extension/pay/cron.php?pay_type=ya&pay_key=' + elm_id, {}, function (e) {
+                if (e['success'] == 1) {
+                    $(o).closest(".pay_info_data").find('option[value="succeeded"]').prop('selected', true).trigger('change');
+                } else {
+                    toastr.success(e['success_text']);
+                }
+            });
+        }
+        if (pay_type === 'pp') {
+            // Для Yandex
+            sendPostLigth('/extension/pay/cron.php?pay_type=pp&pay_key=' + elm_id, {}, function (e) {
                 if (e['success'] == 1) {
                     $(o).closest(".pay_info_data").find('option[value="succeeded"]').prop('selected', true).trigger('change');
                 } else {

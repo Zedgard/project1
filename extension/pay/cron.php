@@ -10,6 +10,16 @@
  * Повесить данный процесс на CRON
  * 
  */
+
+require $_SERVER['DOCUMENT_ROOT'] . '/system/paypal-sdk/autoload.php';
+
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Core\ProductionEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
+use PayPalCheckoutSdk\Orders\OrdersGetRequest;
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/lang/' . $_SESSION['lang'] . '.php';
@@ -129,7 +139,6 @@ if ($_GET['pay_type'] == 'cp') {
         $pay_key = $_POST['id'];
     }
     //echo "pay_key: {$pay_key} <br/>\n";
-
     // Проверяем статус оплаты
     if (isset($pay_key)) {
         $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='cp' and `id`='?'";
@@ -182,4 +191,73 @@ if ($_GET['pay_type'] == 'cp') {
     }
 
     echo json_encode($result);
+}
+
+// Paypal
+if ($_GET['pay_type'] == 'pp') {
+
+    if (isset($_GET['pay_key'])) {
+        $pay_key = $_GET['pay_key'];
+        // Данные платежной системы
+        $clientId = $config->getConfigParam('paypal_client_id');
+        $clientSecret = $config->getConfigParam('paypal_client_secret');
+
+        if ($clientId == 'AWhQommTsM02uROFM78sl252sngt6qgOLDOJ9VkuyG1F61ZJ8rjUUuQjE-IJvgfhQtV1hXMLeoKbvwfe') {
+            $environment = new ProductionEnvironment($clientId, $clientSecret);
+        } else {
+            $environment = new SandboxEnvironment($clientId, $clientSecret); // Для тестирования
+        }
+        $client = new PayPalHttpClient($environment);
+
+        $response = $client->execute(new OrdersGetRequest($pay_key));
+
+        if ($response->result->status == 'COMPLETED') {
+            $result = array('success' => 1, 'success_text' => 'Платеж успешно выполнен', 'data' => array());
+        } else {
+            $result = array('success' => 0, 'success_text' => 'Платеж не выполнен!', 'data' => array());
+        }
+        /**
+         * Enable the following line to print complete response as JSON.
+         */
+//    print_r($response);
+//    echo "<br/>\n";
+//    //print json_encode($response->result);
+//    print "Status Code: {$response->statusCode}<br/>\n";
+//    print "Status: {$response->result->status}<br/>\n";
+//    print "Order ID: {$response->result->id}<br/>\n";
+//    print "Intent: {$response->result->intent}<br/>\n";
+//    echo "reference_id: {$response->result->purchase_units[0]->reference_id} <br/>\n";
+//    print "Links:<br/>\n<br/>\n";
+        echo json_encode($result);
+    } else {
+        // Подтверждение транзакций
+        $query = "SELECT * FROM `zay_pay` WHERE `pay_type`='pp' and `pay_status`='pending' and `pay_date`>=CURRENT_DATE-1";
+        $pays = $sqlLight->queryList($query, array(), 0);
+
+        if (count($pays) > 0) {
+            foreach ($pays as $value) {
+                $pay_id = $value['id'];
+
+                $request = new OrdersCaptureRequest($value['pay_key']);
+                $request->prefer('return=representation');
+                try {
+                    // Call API with your client and get a response for your call
+                    $response = $client->execute($request);
+                    // Завершаем оплату успешным результатом
+                    if ($response->result->status == 'COMPLETED') {
+                        $query_update = "UPDATE zay_pay SET pay_status='?' WHERE id='?' ";
+                        if ($sqlLight->query($query_update, array($pay_check, $pay_id))) {
+
+                            $pr_cart->register_pay($pay_id);
+                        } else {
+                            echo 'Ошибка регистрации платежа! Пожалуйста сообщите администрации сайта о данный проблеме!';
+                        }
+                    }
+                } catch (HttpException $ex) {
+                    echo $ex->statusCode;
+                    print_r($ex->getMessage());
+                }
+            }
+        }
+    }
 }

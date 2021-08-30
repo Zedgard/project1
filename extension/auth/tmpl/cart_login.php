@@ -45,7 +45,9 @@
                     </div>
 
                     <input type="hidden" name="registration_fast" />  
-                    <button type="submit" class="btn btn-lg btn-grey btn-block mt-3 mb-3 btn_cart_fast_login"  style="">Оплатить</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-lg btn-success btn-block p-3 w-75 mt-3 mb-3 btn_cart_fast_login" style="font-size: 2rem;text-transform: uppercase;">Оплатить</button>
+                    </div>
                 </div>
                 <div></div>
             </div>
@@ -190,11 +192,11 @@ include 're_login.php';
                 check_indicator = 1;
             }
             if (validateEmail(user_email) && check_indicator === 1) {
-                $(".btn_cart_fast_login").removeClass("btn-grey");
+                $(".btn_cart_fast_login").removeClass("btn-success");
                 $(".btn_cart_fast_login").addClass("btn-success");
             } else {
                 $(".btn_cart_fast_login").removeClass("btn-success");
-                $(".btn_cart_fast_login").addClass("btn-grey");
+                $(".btn_cart_fast_login").addClass("btn-success");
             }
         });
         //$('.phone').mask('+7 (999) 999-9999');

@@ -50,7 +50,7 @@
         <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css<?= $_SESSION['rand'] ?>">
         <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.theme.css<?= $_SESSION['rand'] ?>">
         <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js<?= $_SESSION['rand'] ?>"></script>
-        
+
         <!-- timepicker -->
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/jquery-ui-timepicker-addon.js<?= $_SESSION['rand'] ?>"></script>
         <script type="text/javascript" src="/assets/plugins/jquery/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js<?= $_SESSION['rand'] ?>"></script>
@@ -74,7 +74,7 @@
         <?= $_SESSION['message']['text'] ?>
 
         <!--PreLoader-->
-     
+
         <div class="loader">
             <div class="loader-inner">
                 <div class="loader-blocks">
@@ -97,11 +97,17 @@
                 </div>
             </div>
         </div>
-        
+
         <!--PreLoader Ends-->
         <?= $_SESSION['page']['block_top'] ?>
 
-        <div class="bootslider m-0 p-0" id="bootslider">
+        <div class="mb-3">
+            <img src="/assets/files/image/banner_index/grtng_block1.jpg" class="index_banner_top"/>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="bootslider m-0 p-0 mb-3" id="bootslider">
             <!-- Bootslider Loader -->
             <div class="bs-loader">
                 <img src="/assets/img/ajax_load_2.svg" width="31" height="31" alt="Loading.." id="loader"/>
@@ -270,7 +276,44 @@
                     </div>
                 </div>
                 <!-- /Bootslider Slide -->
+                <!-- Bootslider Slide -->
+                <div class="bs-slide " data-animate-in="flipInX" data-animate-out="holeOut">
+                    <div class="bs-foreground">
+                        <div class="container h-100">
+                            <div class="row h-100">
+                                <div class="col h-100 d-flex align-items-end"> 
+                                    <img src="/assets/files/image/banner_index/edgard.png" class="m-auto m-lg-0 mb-0 " style="width: 75%;"
+                                         data-animate-in="fadeInRightBig" data-animate-out="fadeOutRightBig" data-delay="400"
+                                         />
+                                </div> 
+                                <div class="col d-flex justify-content-center">
+                                    <div class="bs-vertical-center text-center ">
+                                        <div 
+                                            data-animate-in="fadeInRight" data-animate-out="fadeOutUpBig" data-delay="1600">
+                                            <div class="text-white font_2">ОНЛАЙН-КОНСУЛЬТАЦИИ</div>
+                                            <div class="text-white font_26" style="font-weight: bold;">
+                                                ЭДГАРДА ЗАЙЦЕВА
+                                            </div>
+                                            <div class="subheading skolar mt-2 mt-lg-3 font_26" style="color: #ffe36e;">
+                                                РЕЗУЛЬТАТ<br/>
+                                                С ПЕРВОЙ<br/>
+                                                КОНСУЛЬТАЦИИ
+                                            </div>
+                                            <div class="mt-2 mt-lg-3">
+                                                <a href="/consultations/" class="btn btn-warning btn_slider_link_consultations">ПОЛУЧИТЬ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bs-background">
 
+                        <img src="/assets/files/image/banner_index/consult_bg.jpg" alt="" />
+                    </div>
+                </div>
+                <!-- /Bootslider Slide -->
 
 
 
@@ -315,8 +358,8 @@
 
 
                 <!-- Bootslider Slide -->
-
-                <div class="bs-slide active" data-animate-in="bounceInUp" data-animate-out="hinge">
+                <!--
+                <div class="bs-slide" data-animate-in="bounceInUp" data-animate-out="hinge">
                     <div class="bs-foreground">
                         <div class="container text-center h-100">
                             <div class="row mt-4 mt-lg-5">
@@ -355,7 +398,7 @@
 
                     </div>
                 </div>
-
+                -->
                 <!-- /Bootslider Slide -->
 
                 <?php /*
@@ -633,18 +676,18 @@
         echo $js . "\n";
     }
     /*
-     <script>
-                window.replainSettings = {id: 'f346900b-3b2e-416b-b910-b20b91ea8843'};
-                (function (u) {
-                    var s = document.createElement('script');
-                    s.type = 'text/javascript';
-                    s.async = true;
-                    s.src = u;
-                    var x = document.getElementsByTagName('script')[0];
-                    x.parentNode.insertBefore(s, x);
-                })('https://widget.replain.cc/dist/client.js');
-    </script>
+      <script>
+      window.replainSettings = {id: 'f346900b-3b2e-416b-b910-b20b91ea8843'};
+      (function (u) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = u;
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+      })('https://widget.replain.cc/dist/client.js');
+      </script>
      */
     ?>
-    
+
 </html>
