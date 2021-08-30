@@ -1,5 +1,5 @@
-<html><body><p>Добрая душа, ты приобрел ({{products_title_str}}) на моем сайте <a href="https://{{site}}/" target="_blank">www.edgardzaycev.com</a></p>
-<p>Для пользования покупками я приглашаю тебя в твой личный кабинет <a href="https://{{site}}{{user_auth_fast_url}}" target="_blank">переходи по ссылке</a></p>
+<html><body><p>Добрая душа, ты приобрёл {{products_title_str}} на моём сайте <a href="https://{{site}}/" target="_blank">www.edgardzaycev.com</a></p>
+<p>Для пользования покупками я приглашаю тебя в твой личный кабинет — <a href="https://{{site}}{{user_auth_fast_url}}" target="_blank">переходи по ссылке</a></p>
 <p>Благодарю тебя, добрая душа.</p>  
 <p>Эдгард Зайцев</p>
 <p>—————————</p>

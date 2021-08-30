@@ -61,3 +61,9 @@ string(1572) "<!DOCTYPE html>
 </html>
 "
 
+24-08-2021 22:08:46 Покупка: 281754 не сформирован чек
+string(42) "{"result":"1001","message":"invalid sign"}"
+
+25-08-2021 09:18:10 Покупка: 281754 не сформирован чек
+string(42) "{"result":"1001","message":"invalid sign"}"
+
