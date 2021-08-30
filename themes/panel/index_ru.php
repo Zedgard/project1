@@ -221,7 +221,8 @@
                                         </ul>
                                     </li>
 
-                                    <li class="right-sidebar-2-menu">
+                                    <li class="right-sidebar-2-menu"> 
+                                        <a href="/system/elfinder/index.php" class="btn_file_manager" title="Файлы сайта" target="_blank"><i class="mdi mdi-inbox-multiple"></i></a>
                                         <span class="btn_update_cache" title="Обновить кэш сайта"><i class="mdi mdi-file-restore-outline"></i></span>
                                         <span class="real_time" title="Серверное время"></span>
                                     </li>

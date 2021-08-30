@@ -13,15 +13,15 @@ if (isset($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 
             <title>elFinder</title>
 
             <!-- jQuery UI (REQUIRED) -->
-            <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+            <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css?v=<?= rand() ?>">
             <!-- elFinder CSS (REQUIRED) -->
             <link rel="stylesheet" type="text/css" href="/system/elfinder/css/elfinder.full.css?v=<?= rand() ?>">
             <link rel="stylesheet" type="text/css" href="/system/elfinder/css/theme.css?v=<?= rand() ?>">
             <script src="/assets/plugins/jquery/jquery.js?v=1515819968"></script>
 
-            <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css?v=1515819968">
-            <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.theme.css?v=1515819968">
-            <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js?v=1515819968"></script>
+            <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.css?v=<?= rand() ?>">
+            <link rel="stylesheet" href="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.theme.css?v=<?= rand() ?>">
+            <script src="/assets/plugins/jquery/jquery-ui-1.12.1/jquery-ui.js?v=<?= rand() ?>"></script>
             <!-- elFinder JS (REQUIRED) -->
             <script src="/system/elfinder/js/elfinder.min.js?v=<?= rand() ?>"></script>
             <!-- Extra contents editors (OPTIONAL) -->
@@ -30,12 +30,7 @@ if (isset($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 
         </head>
         <body>
 
-
             <div id="elfinder"></div>
-
-
-
-
 
         </body>
         <script>
@@ -46,24 +41,10 @@ if (isset($_SESSION['user']['info']['id']) && $_SESSION['user']['info']['id'] > 
                     url: '/system/elfinder/php/connector.minimal.php', // connector URL (REQUIRED)
                     lang: 'ru', // language (OPTIONAL)
                     getFileCallback: function (file) { // editor callback
-                        console.log(file.url); // pass selected file path to TinyMCE
-                        FileBrowserDialogue.mySubmit(file.url);
+                        alert(file.url); // pass selected file path to TinyMCE
                     }
                 }).elfinder('instance');
             });
-
-            var FileBrowserDialogue = {
-                init: function () {
-                    // Here goes your code for setting your custom things onLoad.
-                },
-                mySubmit: function (URL) {
-                    // pass selected file path to TinyMCE
-                    parent.tinyMCE.activeEditor.windowManager.getParams().my_insert(URL);
-
-                    // close popup window
-                    parent.tinyMCE.activeEditor.windowManager.close();
-                }
-            }
         </script>
     </html>
     <?

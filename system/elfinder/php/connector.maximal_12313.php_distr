@@ -248,82 +248,136 @@ $logger = new elFinderSimpleLogger('.log.txt');
 
 // Documentation for connector options:
 // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options
+//$opts = array(
+//    'debug' => true, // enable debug mode
+//    'roots' => array(
+//        // Items volume
+//        array(
+//            'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
+//            'path'          => '../files/',                 // path to files (REQUIRED)
+//            'URL'           => dirname($_SERVER['PHP_SELF']) . '/../files/', // URL to files (REQUIRED)
+//            'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
+//            'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+//            'uploadDeny'    => array('all'),                // All Mimetypes not allowed to upload
+//            'uploadAllow'   => array('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'), // Mimetype `image` and `text/plain` allowed to upload
+//            'uploadOrder'   => array('deny', 'allow'),      // allowed Mimetype `image` and `text/plain` only
+//            'accessControl' => 'access',                    // disable and hide dot starting files (OPTIONAL)
+//            'attributes'    => array(                       // additional thumbnail directories
+//                                'pattern' => '~^/\.tmb(?:Cloud|Netmount)$~',
+//                                'read'    => false,
+//                                'write'   => false,
+//                                'locked'  => true,
+//                                'hidden'  => true ),
+//        ),
+//        // Trash volume
+//        array(
+//            'id'            => '1',
+//            'driver'        => 'Trash',
+//            'path'          => '../files/.trash/',
+//            'tmbURL'        => dirname($_SERVER['PHP_SELF']) . '/../files/.trash/.tmb/',
+//            'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+//            'uploadDeny'    => array('all'),                // Recomend the same settings as the original volume that uses the trash
+//            'uploadAllow'   => array('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'), // Same as above
+//            'uploadOrder'   => array('deny', 'allow'),      // Same as above
+//            'accessControl' => 'access',                    // Same as above
+//        ),
+//    ),
+//    // some bind functions
+//    'bind' => array(
+//        // enable logger
+//        // '*' => array($logger, 'log'),
+//        'mkdir mkfile rename duplicate upload rm paste' => array($logger, 'log'),
+//        // enable plugins
+//        'archive.pre ls.pre mkdir.pre mkfile.pre rename.pre upload.pre' => array(
+//            'Plugin.Normalizer.cmdPreprocess',
+//            'Plugin.Sanitizer.cmdPreprocess'
+//        ),
+//        'upload.presave' => array(
+//            'Plugin.AutoRotate.onUpLoadPreSave',
+//            'Plugin.AutoResize.onUpLoadPreSave',
+//            'Plugin.Watermark.onUpLoadPreSave',
+//            'Plugin.Normalizer.onUpLoadPreSave',
+//            'Plugin.Sanitizer.onUpLoadPreSave',
+//        ),
+//    ),
+//    // volume options of netmount volumes
+//    'optionsNetVolumes' => array(
+//        '*' => array( // "*" is all of netmount volumes
+//            'tmbURL'    => dirname($_SERVER['PHP_SELF']) . '/../files/.tmbNetmount/',
+//            'tmbPath'   => '../files/.tmbNetmount',
+//            'tmbGcMaxlifeHour' => 1,  // 1 hour
+//            'tmbGcPercentage'  => 10, // 10 execute / 100 tmb querys
+//            'plugin' => array(
+//                'AutoResize' => array(
+//                    'enable' => false
+//                ),
+//                'Watermark' => array(
+//                    'enable' => false
+//                ),
+//                'Normalizer' => array(
+//                    'enable' => false
+//                ),
+//                'Sanitizer' => array(
+//                    'enable' => false
+//                )
+//            ),
+//        )
+//    ),
+//);
+
 $opts = array(
-    'debug' => true, // enable debug mode
-    'roots' => array(
-        // Items volume
-        array(
-            'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
-            'path'          => '../files/',                 // path to files (REQUIRED)
-            'URL'           => dirname($_SERVER['PHP_SELF']) . '/../files/', // URL to files (REQUIRED)
-            'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
-            'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
-            'uploadDeny'    => array('all'),                // All Mimetypes not allowed to upload
-            'uploadAllow'   => array('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'), // Mimetype `image` and `text/plain` allowed to upload
-            'uploadOrder'   => array('deny', 'allow'),      // allowed Mimetype `image` and `text/plain` only
-            'accessControl' => 'access',                    // disable and hide dot starting files (OPTIONAL)
-            'attributes'    => array(                       // additional thumbnail directories
-                                'pattern' => '~^/\.tmb(?:Cloud|Netmount)$~',
-                                'read'    => false,
-                                'write'   => false,
-                                'locked'  => true,
-                                'hidden'  => true ),
-        ),
-        // Trash volume
-        array(
-            'id'            => '1',
-            'driver'        => 'Trash',
-            'path'          => '../files/.trash/',
-            'tmbURL'        => dirname($_SERVER['PHP_SELF']) . '/../files/.trash/.tmb/',
-            'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
-            'uploadDeny'    => array('all'),                // Recomend the same settings as the original volume that uses the trash
-            'uploadAllow'   => array('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'), // Same as above
-            'uploadOrder'   => array('deny', 'allow'),      // Same as above
-            'accessControl' => 'access',                    // Same as above
-        ),
-    ),
-    // some bind functions
-    'bind' => array(
-        // enable logger
-        // '*' => array($logger, 'log'),
-        'mkdir mkfile rename duplicate upload rm paste' => array($logger, 'log'),
-        // enable plugins
-        'archive.pre ls.pre mkdir.pre mkfile.pre rename.pre upload.pre' => array(
-            'Plugin.Normalizer.cmdPreprocess',
-            'Plugin.Sanitizer.cmdPreprocess'
-        ),
-        'upload.presave' => array(
-            'Plugin.AutoRotate.onUpLoadPreSave',
-            'Plugin.AutoResize.onUpLoadPreSave',
-            'Plugin.Watermark.onUpLoadPreSave',
-            'Plugin.Normalizer.onUpLoadPreSave',
-            'Plugin.Sanitizer.onUpLoadPreSave',
-        ),
-    ),
-    // volume options of netmount volumes
-    'optionsNetVolumes' => array(
-        '*' => array( // "*" is all of netmount volumes
-            'tmbURL'    => dirname($_SERVER['PHP_SELF']) . '/../files/.tmbNetmount/',
-            'tmbPath'   => '../files/.tmbNetmount',
-            'tmbGcMaxlifeHour' => 1,  // 1 hour
-            'tmbGcPercentage'  => 10, // 10 execute / 100 tmb querys
-            'plugin' => array(
-                'AutoResize' => array(
-                    'enable' => false
-                ),
-                'Watermark' => array(
-                    'enable' => false
-                ),
-                'Normalizer' => array(
-                    'enable' => false
-                ),
-                'Sanitizer' => array(
-                    'enable' => false
-                )
+        // 'debug' => true,
+        'roots' => array(
+            // Items volume
+            array(
+                'driver' => 'LocalFileSystem', // driver for accessing file system (REQUIRED)
+                'path' => $_SERVER['DOCUMENT_ROOT'] . '/assets/files/', // path to files (REQUIRED)
+                'URL' => '/assets/files/', // URL to files (REQUIRED)
+                'trashHash' => 't1_Lw', // elFinder's hash of trash folder
+                'winHashFix' => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+                'uploadDeny' => array('all'), // All Mimetypes not allowed to upload
+                'uploadAllow' => array(
+                    'image/x-ms-bmp', 
+                    'image/gif', 
+                    'image/jpeg', 
+                    'image/png', 
+                    'image/x-icon', 
+                    'text/plain', 
+                    'video/mp4', 
+                    'video/ogg', 
+                    'video/webm', 
+                    'audio/mpeg',
+                    'audio/mp3',
+                    'application/pdf'
+                    ), // Mimetype `image` and `text/plain` allowed to upload
+                'uploadOrder' => array('deny', 'allow'), // allowed Mimetype `image` and `text/plain` only
+                'accessControl' => 'access'                     // disable and hide dot starting files (OPTIONAL)
+            ),
+            // Trash volume
+            array(
+                'id' => '1',
+                'driver' => 'Trash',
+                'path' => $_SERVER['DOCUMENT_ROOT'] . '/assets/files/.trash/',
+                'tmbURL' => dirname($_SERVER['PHP_SELF']) . '/../assets/files/.trash/.tmb/',
+                'winHashFix' => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+                'uploadDeny' => array('all'), // Recomend the same settings as the original volume that uses the trash
+                'uploadAllow' => array(
+                    'image/x-ms-bmp', 
+                    'image/gif', 
+                    'image/jpeg', 
+                    'image/png', 
+                    'image/x-icon', 
+                    'text/plain', 
+                    'audio/mpeg',
+                    'audio/mp3',
+                    'application/pdf'
+                    ), // Same as above
+                'uploadOrder' => array('deny', 'allow'), // Same as above
+                'accessControl' => 'access', // Same as above
             ),
         )
-    ),
-);
+    );
+
 
 // Extended other volume types
 // To get an access token or refresh token, see the elFinder wiki.

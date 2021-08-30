@@ -18,3 +18,10 @@ table tbody .inp_datepicker{
 .navbar .navbar-right .navbar-nav .right-sidebar-2-menu .btn_update_cache .mdi-file-restore-outline:active{
     color: #ff8888;
 }
+.navbar .navbar-right .navbar-nav .right-sidebar-2-menu .btn_file_manager .mdi-inbox-multiple:hover{
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.navbar .navbar-right .navbar-nav .right-sidebar-2-menu .btn_file_manager .mdi-inbox-multiple:active{
+    color: #ff8888;
+}

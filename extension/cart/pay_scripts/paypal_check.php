@@ -5,7 +5,6 @@ session_start();
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- * [ik_co_id] => 5f5dfdf8f3f7ad5888515cd6 [ik_inv_id] => 244440086 [ik_inv_st] => success [ik_pm_no] => 1 ) 
  */
 include_once $_SERVER['DOCUMENT_ROOT'] . '/init.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
