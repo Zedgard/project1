@@ -122,6 +122,7 @@ function initUserEdit() {
                 $(".last_name").val(data['data']['last_name']);
                 $(".user_phone").val(data['data']['phone']);
                 $(".user_email").val(data['data']['email']);
+                $(".login_instagram").val(data['data']['login_instagram']);
                 init_roles(data['data']['role_id']);
                 //$('.user_phone').mask('+7 (999) 999-9999');
             });
