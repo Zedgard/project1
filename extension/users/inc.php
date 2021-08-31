@@ -71,7 +71,7 @@ class user extends \project\extension {
             $where_array = array();
             $where2 = '';
             $w = '';
-            if (strlen($input_search_str) > 0) {
+            if (strlen($input_search_str) > 2) {
                 $where_val[] = "`email` LIKE '%?%'";
                 $where_val[] = "`phone` LIKE '%?%'";
                 $where_val[] = "`first_name` LIKE '%?%'";
