@@ -450,6 +450,7 @@ class cart extends \project\extension {
         $userid = 0;
         $fast_login_email = (isset($_SESSION['fast_login_email'])) ? $_SESSION['fast_login_email'] : '';
         $fast_login_phone = (isset($_SESSION['fast_login_email'])) ? $_SESSION['fast_login_phone'] : '';
+        $_SESSION['user']['info']['email'] = $fast_login_email;
         if (strlen($fast_login_email) > 2) {
             $query = "SELECT * FROM zay_users u WHERE u.email='?' and u.active=1";
             $users = $this->getSelectArray($query, array($fast_login_email));

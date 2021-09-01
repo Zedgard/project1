@@ -142,12 +142,15 @@ if ($price_total == 0) {
     if ($client_id == 0) {
         $client_id = $pr_cart->get_user_id_fast_login();
     }
-
+    
 // Если авторезированный
     if (strlen($p_user->isClientEmail()) > 0) {
         $email = $p_user->isClientEmail();
     }
 
+    //echo "get_user_id_fast_login: {$client_id}<br/>\n";
+    //echo "email: {$email}<br/>\n";
+    
 // Получаем платежный ключ
     $pay_key = uniqid('', true);
     $_SESSION['PAY_KEY'] = $pay_key;
@@ -193,7 +196,9 @@ if ($price_total == 0) {
 //echo "<br/>\n";
 
     if ($api->error) {
-        echo "error: " . $api->error . "<br/>\n";
+        //echo "error: " . $api->error . "<br/>\n";
+        $_SESSION['errors'][] = 'Ошибка платежа!';
+        header('Location: /shop/cart/');
     } else {
         $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
         $pay_status = "pending"; // Устанавливаем стандартный статус платежа
