@@ -222,12 +222,14 @@ class user extends \project\extension {
     }
 
     public function isAccess($location_href = 0) {
+        $_SESSION['location_href'] = '';
         $role_privilege = 0;
         $url = '';
         foreach ($_SESSION['user_roles'] as $value) {
             if ($value['role_privilege'] <= $_SESSION['user']['info']['role_privilege']) {
                 $role_privilege = $value['role_privilege'];
                 $url = $value['auth_url_panel'];
+                $_SESSION['location_href'] = $value['auth_url_panel'];
                 break;
             }
         }

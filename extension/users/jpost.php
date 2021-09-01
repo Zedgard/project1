@@ -11,6 +11,7 @@ include_once DOCUMENT_ROOT . '/extension/auth/lang.php';
 $user = new \project\user();
 $auth = new \project\auth();
 
+$_SESSION['user_roles'] = $user->get_roles_array();
 if ($user->isEditor()) {
     // Данные по пользователю
     if (isset($_POST['getUsersList'])) {
@@ -218,17 +219,20 @@ if ($user->isEditor()) {
             // Аватар по умолчанию
             $_SESSION['user']['info']['avatar'] = '/assets/img/user/user.jpg';
         }
-        if (\project\user::isAdmin() || \project\user::isEditor()) {
-            $url = '/admin/';
-            $r = 1;
-        }
-        if (\project\user::isClient()) {
-            $url = '/office/?katalog';
-            $r = 1;
-        }
-        if ($r == 0) {
-            $url = '/';
-        }
+        $user->isAccess(0);
+        $url = $_SESSION['location_href'];
+//        if ($user->isAdmin() || $user->isEditor()) {
+//            $url = '/admin/';
+//            $r = 1;
+//        }
+//        if (\project\user::isClient()) {
+//            $url = '/office/?katalog';
+//            $r = 1;
+//        }
+//        if ($r == 0) {
+//            $url = '/';
+//        }
+        //echo 'url: ' . $url;
         $result = array('success' => 1, 'success_text' => 'Успешно авторизирован', 'action' => $url, 'action_time' => '0');
     }
 }
