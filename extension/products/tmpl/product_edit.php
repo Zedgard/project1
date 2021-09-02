@@ -360,7 +360,7 @@ importWisiwyng('product_content', 150);
 
 
                                 $(".form_save_products").find(".products_sold").val(e['data']['sold']);
-                                $(".form_save_products").find(".product_content").val(e['data']['product_content']);
+                                $(".product_content").val(e['data']['product_content']);
 
                                 // active
                                 if (e['data']['active'] > 0) {
