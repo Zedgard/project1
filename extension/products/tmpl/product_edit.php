@@ -159,7 +159,7 @@
 //include 'admin_edit.php';
 importWisiwyng('products_desc_minimal', 150);
 importWisiwyng('products_desc', 300);
-importWisiwyng('product_content', 150);
+importWisiwyng('product_content', 300);
 ?>
 <script>
     var product_edit = '<?= $_GET['product_edit'] ?>';
