@@ -67,3 +67,6 @@ string(42) "{"result":"1001","message":"invalid sign"}"
 25-08-2021 09:18:10 Покупка: 281754 не сформирован чек
 string(42) "{"result":"1001","message":"invalid sign"}"
 
+02-09-2021 11:49:36 Покупка: 281961 не сформирован чек
+string(42) "{"result":"1001","message":"invalid sign"}"
+
