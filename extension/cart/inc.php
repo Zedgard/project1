@@ -30,16 +30,19 @@ class cart extends \project\extension {
      * Покупки пользователя
      * @return type
      */
-    public function get_pay_user_list() {
-        $query = "select distinct p.id, p.pay_date, p.pay_sum, p.pay_descr, "
-                . "(select GROUP_CONCAT(w.title SEPARATOR ',') from "
-                . "zay_pay_products pp "
-                . "left join zay_product_wares pw on pw.product_id=pp.product_id "
-                . "left join zay_wares w on w.id=pw.wares_id "
-                . "where pp.pay_id=p.id) as wares_title "
-                . "from zay_pay p "
-                . "where p.user_id='?' and p.pay_status='succeeded' ORDER BY p.pay_date DESC";
-        $data = $this->getSelectArray($query, array($_SESSION['user']['info']['id']), 0);
+    public function get_pay_user_list($user_id = 0) {
+        if ($user_id == 0) {
+            $user_id = $_SESSION['user']['info']['id'];
+        }
+        $query = "select distinct p.id, pp.product_id, p.pay_date, p.pay_sum, p.pay_descr,
+                (select GROUP_CONCAT(w.title SEPARATOR ',') from 
+                zay_product_wares pw 
+                left join zay_wares w on w.id=pw.wares_id 
+                where pw.product_id=pp.product_id ) as wares_title 
+                from zay_pay p 
+                left join zay_pay_products pp on pp.pay_id=p.id 
+                where p.user_id='?' and p.pay_status='succeeded' ORDER BY p.pay_date DESC";
+        $data = $this->getSelectArray($query, array($user_id), 0);
         return $data;
     }
 
@@ -201,6 +204,11 @@ class cart extends \project\extension {
 
         $send_emails = new \project\send_emails();
         $user_info = $this->get_pay_user_info($pay_id);
+        // Активируем учетку если она была не активна
+        if ($user_info['active'] == 0) {
+            $query_active_up = "UPDATE `zay_users` SET `active`='?' WHERE `id`='?'";
+            $this->query($query_active_up, array(1, $user_info['id']));
+        }
         if (strlen($user_info['email']) > 0) {
             return $send_emails->send('product_bay', $user_info['email'], array('products_title_str' => $products_title_str));
         }
@@ -448,22 +456,30 @@ class cart extends \project\extension {
      */
     public function get_user_id_fast_login() {
         $userid = 0;
+        $active = 0;
         $fast_login_email = (isset($_SESSION['fast_login_email'])) ? $_SESSION['fast_login_email'] : '';
         $fast_login_phone = (isset($_SESSION['fast_login_email'])) ? $_SESSION['fast_login_phone'] : '';
         $_SESSION['user']['info']['email'] = $fast_login_email;
         if (strlen($fast_login_email) > 2) {
-            $query = "SELECT * FROM zay_users u WHERE u.email='?' and u.active=1";
+            $query = "SELECT * FROM zay_users u WHERE u.email='?'";
             $users = $this->getSelectArray($query, array($fast_login_email));
             if (count($users) > 0) {
                 $userid = $users[0]['id'];
+                $active = $users[0]['active'];
             }
         }
         if ($userid == 0 && strlen($fast_login_phone) > 2) {
-            $query = "SELECT * FROM zay_users u WHERE u.phone='?' and u.active=1";
+            $query = "SELECT * FROM zay_users u WHERE u.phone='?'";
             $users = $this->getSelectArray($query, array($fast_login_phone));
             if (count($users) > 0) {
                 $userid = $users[0]['id'];
+                $active = $users[0]['active'];
             }
+        }
+        // Активируем учетку если она была не активна
+        if ($active == 0) {
+            $query_active_up = "UPDATE `zay_users` SET `active`='?' WHERE `id`='?'";
+            $this->query($query_active_up, array(1, $userid));
         }
         if ($userid == 0) {
             // регистрация клиента по email

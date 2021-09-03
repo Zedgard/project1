@@ -12,7 +12,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
-                        
+
 include_once 'inc.php';
 
 $config = new \project\config();
@@ -21,6 +21,8 @@ $c_cart = new \project\cart();
 $p_user = new \project\user();
 $auth = new \project\auth();
 
+//$client_id = $c_cart->get_user_id_fast_login();
+//echo "client_id: {$client_id}";
 //echo "col: " . count($_SESSION['cart']['itms']) . "<br/>\n";
 /*
  * Добавления товара в корзину
@@ -238,8 +240,6 @@ if ($form_show == 0) {
 //    if ($p_user->isEditor()) {
 //        $price_total = 1;
 //    }
-
-
     // Если авторезированный
     if (strlen($p_user->isClientEmail()) > 0) {
         $email = $p_user->isClientEmail();
@@ -249,10 +249,10 @@ if ($form_show == 0) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/vk.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/facebook.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/system/oauth/google.php';
-    
+
     //$c_cart->register_business_check(279558, array());
     //print_r($_SESSION);
-    
+
     include 'tmpl/index.php';
 } else {
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
