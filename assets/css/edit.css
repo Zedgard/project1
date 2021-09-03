@@ -25,3 +25,11 @@ table tbody .inp_datepicker{
 .navbar .navbar-right .navbar-nav .right-sidebar-2-menu .btn_file_manager .mdi-inbox-multiple:active{
     color: #ff8888;
 }
+.form_result{
+    color: #038c3a;
+    display: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 0rem 1rem 0rem;
+    text-align: center;
+}

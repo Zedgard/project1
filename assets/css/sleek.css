@@ -13656,3 +13656,11 @@ html[dir="rtl"] .github-link svg {
     width: 100%;
     background-color: #FFFFFF;
 }
+.form_result{
+    color: #038c3a;
+    display: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 0rem 1rem 0rem;
+    text-align: center;
+}

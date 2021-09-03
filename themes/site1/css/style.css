@@ -5107,3 +5107,12 @@ footer_menu{
     font-weight: 400;
     text-transform: initial;
 }
+
+.form_result{
+    color: #038c3a;
+    display: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 0rem 1rem 0rem;
+    text-align: center;
+}
