@@ -786,14 +786,19 @@ class auth extends \project\user {
     public function code_integration_auth_user($code) {
         $error = array();
         $sqlLight = new \project\sqlLight();
-        $query = "SELECT * FROM zay_users u WHERE u.code_integration='?' and u.active='1'";
+        $query = "SELECT * FROM zay_users u WHERE u.code_integration='?' ";
         $users = $sqlLight->queryList($query, array($code));
 
-        $query = "SELECT * FROM zay_users u WHERE u.email='?' and u.u_pass='?' and u.active='1'";
-        $user = $sqlLight->queryList($query, array($users[0]['email'], $users[0]['u_pass']));
+        // Активируем учетку если она была не активна
+        if ($users[0]['active'] == 0) {
+            $query_active_up = "UPDATE `zay_users` SET `active`='?' WHERE `id`='?'";
+            $this->query($query_active_up, array(1, $users[0]['id']));
+        }
+        //$query = "SELECT * FROM zay_users u WHERE u.email='?' and u.u_pass='?'";
+        //$user = $sqlLight->queryList($query, array($users[0]['email'], $users[0]['u_pass']));
 
         if (count($user) > 0) {
-            $data = $this->getUserInfo($user[0]['id']);
+            $data = $this->getUserInfo($users[0]['id']);
             $_SESSION['user']['info'] = $data;
             return true;
         }
