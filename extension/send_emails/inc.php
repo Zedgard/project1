@@ -170,8 +170,12 @@ class send_emails extends \project\extension {
     public function send($email_code, $to_email, $params = array()) {
         if (strlen($email_code) > 0 && strlen($to_email) > 0) {
 
+            $config = new \project\config();
             // Информиция по клиенту
             $p_user = new \project\user();
+
+            $site_title = $config->getConfigParam('site_title');
+
             $user_info = $p_user->user_info($to_email);
             $user_hello_text = '';
 
@@ -190,13 +194,16 @@ class send_emails extends \project\extension {
 
 
             //Обработка данных ответа
-//            if (strlen($params['user_first_name']) == 0) {
-//                $params['user_first_name'] = $user_info['email'];
-//            }
-//
-//            if (strlen($params['user_fio']) > 0) {
-//                $params['user_first_name'] = $params['user_fio'];
-//            }
+            if (strlen($params['user_first_name']) == 0) {
+                $params['user_first_name'] = $user_info['email'];
+            }
+
+            if (strlen($params['user_fio']) > 0) {
+                $params['user_first_name'] = $params['user_fio'];
+            }
+            if (strlen($user_info['first_name']) > 0) {
+                $params['user_first_name'] = $user_info['first_name'];
+            }
 
             if (strlen($params['user_email']) == 0 && strlen($user_info['email']) > 0) {
                 $params['user_email'] = $user_info['email'];
@@ -227,6 +234,8 @@ class send_emails extends \project\extension {
                 //echo 'user_email: ' . $params['user_email'] . "\n";
                 $body = $this->file_get_html($email_info['email_body_file'], $params); //echo $body;
                 //echo "body: {$body}<br/>\n";
+                //print_r($params);
+                //echo "<br/>\n";
 
                 $body = $body;
                 try {
@@ -259,14 +268,14 @@ class send_emails extends \project\extension {
                     $mail->Username = $smtp_user_info['user_email'];    // YOUR gmail email
                     $mail->Password = $smtp_user_info['user_password']; // YOUR gmail password    
                     // Sender and recipient settings
-                    //if (strlen($params['user_email']) > 0) {
-                    //    $mail->setFrom($params['user_email'], $params['user_first_name']); // от кого (email и имя)
-                    //} else {
-                    $mail->setFrom($smtp_user_info['user_email'], $email_info['email_subject']); // от кого (email и имя)
-                    //}
+                    if (strlen($params['user_first_name']) > 0) {
+                        //echo 'user_first_name: ' . $params['user_email'] . ' | '.$params['user_first_name'] . "<br/>\n";
+                        $mail->setFrom($smtp_user_info['user_email'], $site_title); // от кого (email и имя)
+                    } else {
+                        $mail->setFrom($smtp_user_info['user_email'], $site_title); // от кого (email и имя) $email_info['email_subject']
+                    }
                     $mail->addAddress($to_email, $email_info['email_subject']);
                     $mail->addReplyTo($email_info['email_reply_to'], $email_info['email_reply_subject']); // Ответить сюда
-                    // Setting the email content L2f6lernBsFZ
                     // Отправка с нашего сервере    
                     $mail->Host = 'mail.edgardzaycev.com';
                     $mail->Port = 587;
@@ -284,7 +293,7 @@ class send_emails extends \project\extension {
                     $return = $mail->send();
                     if (!$return) {
                         $_SESSION['errors'][] = $mail->ErrorInfo;
-                        //echo "{$mail->ErrorInfo} <br/>\n";
+                        echo "{$mail->ErrorInfo} <br/>\n";
                     }
                     return $return;
                     //echo "Email message sent. <br/>\n";

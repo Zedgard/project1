@@ -608,7 +608,13 @@ class auth extends \project\user {
         if (strlen($email_format_code) > 0) {
             $format_code = $email_format_code;
         }
-        if ($send_emails->send($format_code, $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'activate_code' => "/?activation=" . $activate_code))) {
+        if ($send_emails->send($format_code, $email, 
+                array(
+                    'site' => 'https://www.' . $_SERVER['SERVER_NAME'], 
+                    'activate_code' => "/?activation=" . $activate_code,
+                    
+                        )
+                )) {
             return true;
         }
         return false;
@@ -758,7 +764,7 @@ class auth extends \project\user {
         if (strlen($code) == 0) {
             $code = base64_encode(uniqid('', true)); // Генерируем ключ
         }
-        $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' and `active`='1' ";
+        $query = "SELECT * FROM `zay_users` u WHERE u.`email`='?' ";
         $users = $sqlLight->queryList($query, array($email));
 
         if ($users[0]['id'] > 0 && (strlen($users[0]['code_integration']) == 0 || $change == 1)) {

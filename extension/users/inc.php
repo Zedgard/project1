@@ -37,7 +37,7 @@ class user extends \project\extension {
      * @return array
      */
     public function user_info($email) {
-        $select = "SELECT * FROM zay_users u WHERE u.active='1' and u.email='?'";
+        $select = "SELECT * FROM zay_users u WHERE u.email='?'";
         $data = $this->getSelectArray($select, array($email), 0);
         if (count($data) == 1) {
             return $data[0];
