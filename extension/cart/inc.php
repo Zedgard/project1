@@ -34,7 +34,7 @@ class cart extends \project\extension {
         if ($user_id == 0) {
             $user_id = $_SESSION['user']['info']['id'];
         }
-        $query = "select distinct p.id, pp.product_id, p.pay_date, p.pay_sum, p.pay_descr,
+        $query = "select distinct p.id, pp.id as pay_product_id, pp.product_id, p.pay_date, p.pay_sum, p.pay_descr,
                 (select GROUP_CONCAT(w.title SEPARATOR ',') from 
                 zay_product_wares pw 
                 left join zay_wares w on w.id=pw.wares_id 

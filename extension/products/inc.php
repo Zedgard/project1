@@ -72,7 +72,7 @@ class products extends \project\extension {
                     . "order by p.id desc ";
             $data = $this->getSelectArray($querySelect, array($id), 0);
         } else {
-            if (strlen($searchStr) > 0) {
+            if (strlen($searchStr) > 2) {
                 $querySelect = "SELECT DISTINCT p.* FROM zay_product p "
                         . "left join zay_product_wares pw on pw.product_id=p.id "
                         . "left join zay_wares w on w.id=pw.wares_id "

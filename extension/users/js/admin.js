@@ -87,6 +87,7 @@ function initTable() {
                                     </a> \
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-product"> \
                                         <li class="dropdown-item"><i class="mdi mdi-account-edit"></i> <a href="#" class="userEdit" obj_id="' + data['data'][i]['id'] + '" data-toggle="modal" data-target="#editModal">Редактировать</a></li> \
+                                        <li class="dropdown-item"><i class="mdi mdi-account-edit"></i> <a href="?user_product_edit=' + data['data'][i]['id'] + '" class="productModal" obj_id="' + data['data'][i]['id'] + '" target="_blank">Управление товарами</a></li> \
                                         <li class="dropdown-item"><i class="mdi mdi-account-remove"></i> <a href="#" class="userDelete" obj_id="' + data['data'][i]['id'] + '">Удалить</a></li> \
                                         <li class="dropdown-item"><i class="mdi mdi-contact-mail"></i> <a href="#" class="userSendActivateEmail" obj_id="' + data['data'][i]['id'] + '">Отправить код активации повторно</a></li> \
                                         <li class="dropdown-item"><i class="mdi mdi-login-variant"></i> <a href="#" class="userAuth" obj_id="' + data['data'][i]['id'] + '">Войти в учетку</a></li> \

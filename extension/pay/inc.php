@@ -52,7 +52,8 @@ class pay extends \project\extension {
             $limit_where = '';
             $queryArray[] = $search_pay_user_str;
             $queryArray[] = $search_pay_user_str;
-            $w[] = "(u.email like '%?%' or u.phone like '%?%') "; //pt.pay_type_title like '%?%'
+            $queryArray[] = $search_pay_user_str;
+            $w[] = "(u.email like '%?%' or u.phone like '%?%' or p.id like '%?%') "; //pt.pay_type_title like '%?%'
         }
         if (strlen($search_pay_info_str) > 0) {
             $limit_where = '';
@@ -75,7 +76,9 @@ class pay extends \project\extension {
                 left join zay_users u on u.id=p.user_id 
                 left join zay_pay_type pt on pt.pay_type_code=p.pay_type 
                 {$where} 
-                ORDER BY p.`pay_date` DESC {$limit_where} ) as dd";
+                ORDER BY p.`id` DESC    
+                {$limit_where} ) as dd  
+                ORDER BY dd.`id` DESC";
         $pays = $this->getSelectArray($querySelect, $queryArray, 0);
         $data = array();
         if (count($pays) > 0) {
@@ -196,9 +199,7 @@ class pay extends \project\extension {
                     . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
             if ($sqlLight->query($query, array(($max_id), 'in', $user_id, $price, $pay_date, '', $pay_status, '', $pay_descr, ''), 0)) {
 
-                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
-                        . "VALUES ('?','?','?')";
-                $sqlLight->query($queryProductRegister, array($max_id, $product_id, $price));
+                $this->insert_pay_products($max_id, $product_id, $price);
                 // Зафиксируем продажу
                 $products->setSoldAdd($max_id);
             }
@@ -229,6 +230,32 @@ class pay extends \project\extension {
         $sqlLight = new \project\sqlLight();
         $query = "SELECT DISTINCT `pay_status` FROM `zay_pay`";
         return $sqlLight->queryList($query, array());
+    }
+
+    /**
+     * Добавление связи продажа и продукт
+     * @param type $pay_id
+     * @param type $product_id
+     * @param type $price = 0
+     * @return type
+     */
+    public function insert_pay_products($pay_id, $product_id, $price = 0) {
+        $sqlLight = new \project\sqlLight();
+        $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`) "
+                . "VALUES ('?','?','?')";
+        return $sqlLight->query($queryProductRegister, array($pay_id, $product_id, $price));
+    }
+
+    /**
+     * Переместить транзакцию покупки
+     * @param type $pay_id
+     * @param type $user_id
+     * @return type
+     */
+    public function move_pay($pay_id, $user_id) {
+        $sqlLight = new \project\sqlLight();
+        $queryPay = "UPDATE zay_pay p SET p.user_id='?' WHERE p.id='?'";
+        return $sqlLight->query($queryPay, array($user_id, $pay_id));
     }
 
 }

@@ -22,14 +22,14 @@ if ($p_user->isEditor()) {
         $search_pay_info_str = $_POST['search_pay_info_str'];
         $pay_search_type = $_POST['pay_search_type'];
         $pay_search_status = $_POST['pay_search_status'];
-        
+
         $_SESSION['admin_pay_filter']['excel_from'] = $excel_from;
         $_SESSION['admin_pay_filter']['excel_to'] = $excel_to;
         $_SESSION['admin_pay_filter']['search_pay_user_str'] = $search_pay_user_str;
         $_SESSION['admin_pay_filter']['search_pay_info_str'] = $search_pay_info_str;
         $_SESSION['admin_pay_filter']['pay_search_type'] = $pay_search_type;
         $_SESSION['admin_pay_filter']['pay_search_status'] = $pay_search_status;
-        
+
         $data = $pay->pay_data_list($col, $search_pay_user_str, $search_pay_info_str, $excel_from, $excel_to, $pay_search_type, $pay_search_status);
         //print_r($data);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
@@ -59,12 +59,37 @@ if ($p_user->isEditor()) {
         $data = $pay->get_pay_all_tipes();
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
-    
+
     // Получить типы операций
     if (isset($_POST['pay_select_status'])) {
         $data = $pay->get_pay_all_status();
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
-    
 
+    // Добавление связи покупки и продукта
+    if ($_POST['insert_pay_products']) {
+        $pay_id = $_POST['pay_id'];
+        $product_id = $_POST['product_id'];
+        $price = (isset($_POST['price'])) ? $_POST['price'] : 0;
+        if ($pay_id > 0 && $product_id > 0) {
+            if ($pay->insert_pay_products($pay_id, $product_id, $price = 0)) {
+                $result = array('success' => 1, 'success_text' => '', 'data' => array());
+            } else {
+                $result = array('success' => 0, 'success_text' => '', 'data' => array());
+            }
+        }
+    }
+
+    // Переместить транзакцию покупки
+    if ($_POST['move_pay_products']) {
+        $pay_id = $_POST['pay_id'];
+        $user_id = $_POST['user_id'];
+        if ($pay_id > 0 && $user_id) {
+            if ($pay->move_pay($pay_id, $user_id)) {
+                $result = array('success' => 1, 'success_text' => '', 'data' => array());
+            } else {
+                $result = array('success' => 0, 'success_text' => '', 'data' => array());
+            }
+        }
+    }
 }

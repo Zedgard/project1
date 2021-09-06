@@ -8,6 +8,8 @@ var pay_search_status = '';
 var excel_from = '';
 var excel_to = '';
 $(document).ready(function () {
+    search_pay_user_str = $(".search_pay_user").val();
+    search_pay_info_str = $(".search_pay_info").val();
     $(".excel-from, .excel-to").change(function () {
         excel_from = $(".excel-from").val();
         excel_to = $(".excel-to").val();
@@ -51,52 +53,52 @@ function init_pay_data_list() {
                 var pay_descr = '';
                 //console.log(typeof e['data'][i]['email']);
                 //if (e['data'][i]['email'].length > 0) {
-                    user_title = e['data'][i]['email'];
+                user_title = e['data'][i]['email'];
 
-                    if (e['data'][i]['phone'].length > 0) {
-                        user_title = e['data'][i]['email'] + '<br/>' + e['data'][i]['phone'];
-                    }
-                    user_descr = e['data'][i]['first_name'] + ' ' + e['data'][i]['last_name'];
+                if (e['data'][i]['phone'].length > 0) {
+                    user_title = e['data'][i]['email'] + '<br/>' + e['data'][i]['phone'];
+                }
+                user_descr = e['data'][i]['first_name'] + ' ' + e['data'][i]['last_name'];
 
-                    if (e['data'][i]['pay_descr'].length > 0) {
-                        pay_descr = e['data'][i]['pay_descr'];
-                    }
-                    if (!!e['data'][i]['info'] && e['data'][i]['info'].length > 0) {
-                        pay_descr = '';
-                        for (var a = 0; a < e['data'][i]['info'].length; a++) {
-                            if (pay_descr.length > 0) {
-                                pay_descr += '<hr/>';
-                            }
-                            pay_descr = pay_descr + '<div class="mb-2">' + e['data'][i]['info'][a]['title'] + '<br/>\n<img src="' + e['data'][i]['info'][a]['images_str'] + '" style="width:50px;" /> Цена:' + e['data'][i]['info'][a]['price'] + 'р. <a href="/shop/?product=' + e['data'][i]['info'][a]['id'] + '" target="_blank">>></a></div>';
+                if (e['data'][i]['pay_descr'].length > 0) {
+                    pay_descr = e['data'][i]['pay_descr'];
+                }
+                if (!!e['data'][i]['info'] && e['data'][i]['info'].length > 0) {
+                    pay_descr = '';
+                    for (var a = 0; a < e['data'][i]['info'].length; a++) {
+                        if (pay_descr.length > 0) {
+                            pay_descr += '<hr/>';
                         }
+                        pay_descr = pay_descr + '<div class="mb-2">' + e['data'][i]['info'][a]['title'] + '<br/>\n<img src="' + e['data'][i]['info'][a]['images_str'] + '" style="width:50px;" /> Цена:' + e['data'][i]['info'][a]['price'] + 'р. <a href="/shop/?product=' + e['data'][i]['info'][a]['id'] + '" target="_blank">>></a></div>';
                     }
+                }
 
-                    var business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Чек сформирован</div>';
-                    if (e['data'][i]['pay_sum'] > 0 && e['data'][i]['business_check'].length == 0) {
-                        business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Нет чека</div> <div><input type="button" class="btn btn-sm btn-primary btn_send_business_check" value="Сформировать чек" pay_id="' + e['data'][i]['id'] + '" /></div>';
-                    }
+                var business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Чек сформирован</div>';
+                if (e['data'][i]['pay_sum'] > 0 && e['data'][i]['business_check'].length == 0) {
+                    business_check = '<div class="business_check_text_' + e['data'][i]['id'] + '">Нет чека</div> <div><input type="button" class="btn btn-sm btn-primary btn_send_business_check" value="Сформировать чек" pay_id="' + e['data'][i]['id'] + '" /></div>';
+                }
 
-                    var pay_status = e['data'][i]['pay_status'];
-                    var border_class = '';
-                    if (e['data'][i]['pay_status'] === 'succeeded') {
-                        pay_status = 'выполнено';
-                        border_class = 'table-success';
-                        pay_summ_all = pay_summ_all + Number(e['data'][i]['pay_sum']);
-                    }
-                    if (e['data'][i]['pay_status'] === 'canceled') {
-                        pay_status = 'отмененная';
-                        border_class = 'table-danger';
-                    }
-                    if (e['data'][i]['pay_status'] === 'pending') {
-                        pay_status = 'Незавершенная';
-                        border_class = 'table-danger';
-                    }
-                    var credit_type = '';
-                    if (e['data'][i]['pay_credit'] > 0) {
-                        credit_type = '( Кредитный )';
-                    }
+                var pay_status = e['data'][i]['pay_status'];
+                var border_class = '';
+                if (e['data'][i]['pay_status'] === 'succeeded') {
+                    pay_status = 'выполнено';
+                    border_class = 'table-success';
+                    pay_summ_all = pay_summ_all + Number(e['data'][i]['pay_sum']);
+                }
+                if (e['data'][i]['pay_status'] === 'canceled') {
+                    pay_status = 'отмененная';
+                    border_class = 'table-danger';
+                }
+                if (e['data'][i]['pay_status'] === 'pending') {
+                    pay_status = 'Незавершенная';
+                    border_class = 'table-danger';
+                }
+                var credit_type = '';
+                if (e['data'][i]['pay_credit'] > 0) {
+                    credit_type = '( Кредитный )';
+                }
 
-                    $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
+                $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
                                     <td class="text-center align-middle"><a href="javascript:void(0)" class="btn btn-link btn_pay_info_modal" objid="' + e['data'][i]['id'] + '">' + e['data'][i]['id'] + '</a></td> \
                                     <td class="align-middle">' + user_title + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_type_title'] + ' ' + credit_type + '</td> \
@@ -268,7 +270,7 @@ function init_pay_info() {
                         btn_pay_check = '<a href="' + e['data']['confirmationUrl'] + '" class="btn btn-sm btn-primary" target="_blank">Проверить платеж</a>';
                     }
                 }
-                
+
                 // Проверить платеж на paypal
                 if (e['data']['pay_type'] == 'pp' && e['data']['confirmationUrl'].length > 0) {
                     if (e['data']['pay_status'] !== 'succeeded') {

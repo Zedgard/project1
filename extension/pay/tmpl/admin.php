@@ -12,12 +12,12 @@
                     <div class="row mb-3">
                         <div class="col-lg">
                             <div class="">
-                                <input type="text" class="form-control search_pay_user" placeholder="Поиск по email, телефону...">
+                                <input type="text" class="form-control search_pay_user" value="<?= $_SESSION['admin_pay_filter']['search_pay_user_str'] ?>" placeholder="Поиск по ID, email и телефону...">
                             </div>
                         </div>
                         <div class="col-lg">
                             <div class="">
-                                <input type="text" class="form-control search_pay_info" placeholder="Поиск по товарам...">
+                                <input type="text" value="<?= $_SESSION['admin_pay_filter']['search_pay_info_str'] ?>" class="form-control search_pay_info" placeholder="Поиск по товарам...">
                             </div>
                         </div>
                         <div class="col-lg text-right">
