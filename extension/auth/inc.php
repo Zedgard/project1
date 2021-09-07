@@ -797,7 +797,7 @@ class auth extends \project\user {
         //$query = "SELECT * FROM zay_users u WHERE u.email='?' and u.u_pass='?'";
         //$user = $sqlLight->queryList($query, array($users[0]['email'], $users[0]['u_pass']));
 
-        if (count($user) > 0) {
+        if (count($users) > 0) {
             $data = $this->getUserInfo($users[0]['id']);
             $_SESSION['user']['info'] = $data;
             return true;
