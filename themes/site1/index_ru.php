@@ -10,6 +10,9 @@
         <meta name="google-site-verification" content="Sozz79bTt3VOI21yJOn4xH2czaki3n7psELbIxXdI34" />
         <meta name="interkassa-verification" content="777d8a842d5f8a07fe433d7f9e9537fd" />
         <meta name="facebook-domain-verification" content="vc6skm5viu4tp16daw2a6q7arju3kx" />
+        
+        <?= $_SESSION['meta'] ?>
+        
         <?= $_SESSION['noindex'] ?>
 
         <!-- SLEEK CSS -->

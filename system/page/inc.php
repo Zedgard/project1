@@ -42,6 +42,7 @@ class page {
 
         // Отчистим хлебные крошки
         $this->bread_clear();
+        $_SESSION['meta'] = '';
 
         if ($_SESSION['url'][0] == $_SESSION['url'][1]) {
             $page_url = $_SESSION['url'][1];

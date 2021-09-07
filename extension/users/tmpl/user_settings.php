@@ -55,8 +55,7 @@
 
         <div class="form-group mb-4">
             <label for="user_role">Роль пользователя</label>
-            <select class="form-control user_role" name="user_role" name="user_role">
-
+            <select class="form-control user_role" name="user_role" name="user_role" <? if (!$user->isAdmin()) { echo 'disabled="disabled"'; } ?> >
             </select>
         </div>
 

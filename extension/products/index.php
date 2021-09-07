@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Страница index
  */
@@ -87,6 +86,10 @@ if (isset($_GET['product'])) {
     }
     if ($productId > 0) {
         $productData = $c_product->getProductElem($productId);
+        $_SESSION['site_title'] = $_SESSION['site_title'] . ' - ' . $productData['title'];
+        $_SESSION['page']['info']['description'] = $productData['title'];
+
+        init_og_meta($productData['title'], $productData['images_str']);
 
         // Определим категорию
         $title_category = array();

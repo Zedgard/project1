@@ -15,6 +15,11 @@ if (!isset($_SESSION['SERVER_NAME'])) {
     $_SESSION['SERVER_NAME'] = $ex[0];
 }
 
+
+if (!isset($_SESSION['meta'])) {
+    $_SESSION['meta'] = '';
+}
+
 // Время прихода пользователя на сайт
 if (!isset($_SESSION['user_load_page_time'])) {
     $_SESSION['user_load_page_time'];

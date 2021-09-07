@@ -11,6 +11,8 @@
         <meta name="interkassa-verification" content="777d8a842d5f8a07fe433d7f9e9537fd" />
         <meta name="facebook-domain-verification" content="vc6skm5viu4tp16daw2a6q7arju3kx" />
         <?= $_SESSION['noindex'] ?>
+        
+        <?= $_SESSION['meta'] ?>
 
         <!-- SLEEK CSS -->
         <link rel="stylesheet" href="/themes/site1/css/plugins.css<?= $_SESSION['rand'] ?>">
