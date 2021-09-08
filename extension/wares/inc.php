@@ -136,7 +136,7 @@ class wares extends \project\extension {
             $query = "INSERT INTO `zay_wares` "
                     . "(`title`, `descr`, `url_file`, `col`, `club_month_period`, `club_days_period`, "
                     . "`ex_code`, `articul`, `images`,`active`, `is_delete`, `creat_date`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','0', NOW(), NOW()) " // (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR))
                     . "";
             if ($this->query($query, array($title, $descr, $wares_url_file, $col, $club_month_period, $club_days_period,
                         $ex_code, $articul, $wares_images, $active), 0)) {
