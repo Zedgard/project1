@@ -636,16 +636,16 @@ class products extends \project\extension {
      * @param type $val
      * @return type
      */
-    public function blockDataEdit($id, $products_id, $block_type, $row, $val) {
+    public function blockDataEdit($id, $products_id, $block_type, $row, $val, $parent = 0) {
         if ($id > 0) {
             $query = "UPDATE `zay_product_block_data` "
-                    . "SET `products_id`='?',`block_type`='?',`row`='?',`val`='?' "
+                    . "SET `products_id`='?',`block_type`='?',`row`='?',`val`='?', `parent`='?' "
                     . "WHERE `id`='?' ";
-            return $this->query($query, array($products_id, $block_type, $row, $val, $id));
+            return $this->query($query, array($products_id, $block_type, $row, $val, $parent, $id));
         } else {
-            $query = "INSERT INTO `zay_product_block_data`(`products_id`, `block_type`, `row`, `val`) "
-                    . "VALUES ('?','?','?','?')";
-            return $this->query($query, array($products_id, $block_type, $row, $val));
+            $query = "INSERT INTO `zay_product_block_data`(`products_id`, `block_type`, `row`, `val`, `parent`) "
+                    . "VALUES ('?','?','?','?','?')";
+            return $this->query($query, array($products_id, $block_type, $row, $val, $parent));
         }
     }
 
@@ -656,6 +656,19 @@ class products extends \project\extension {
      * @return type
      */
     public function blockDataDelete($id) {
+        $query = "DELETE FROM `zay_product_block_data` WHERE `id`='?' ";
+        return $this->query($query, array($id));
+    }
+
+    /**
+     * Удалить данные по блоку
+     * @param type $id
+     * @param type $wares_id
+     * @return type
+     */
+    public function blockConditionDataDelete($id) {
+        $query = "DELETE FROM `zay_product_block_data` WHERE `parent`='?' ";
+        $this->query($query, array($id));
         $query = "DELETE FROM `zay_product_block_data` WHERE `id`='?' ";
         return $this->query($query, array($id));
     }
@@ -672,6 +685,19 @@ class products extends \project\extension {
                 . "WHERE `products_id`='?' and `block_type`='?' and `row`='?' "
                 . "order by `val` asc";
         return $this->getSelectArray($querySelect, array($products_id, $block_type, $row));
+    }
+
+    /**
+     * Получим данные к блоку условия
+     * @param type $products_id
+     * @return type
+     */
+    public function blockConditionDataArray($products_id) {
+        if ($products_id > 0) {
+            $querySelect = "SELECT * FROM zay_product_block_data pbd where pbd.products_id='?' and pbd.block_type='block_conditions' order by `id` asc";
+            return $this->getSelectArray($querySelect, array($products_id));
+        }
+        return array();
     }
 
 }

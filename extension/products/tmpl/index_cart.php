@@ -188,11 +188,17 @@
         include 'index_block_profit.php';
     }
     ?>
-
     <!-- Блоки "Трейлер продукта" --> 
     <?
-    if ($productData['block_trailer'] == '1') {
-        include 'index_block_trailer.php';
+    if ($productData['block_feedback'] == '1') {
+        include 'index_block_feedback.php';
+    }
+    ?>
+
+    <!-- Блоки "Трейлер условия" --> 
+    <?
+    if ($productData['block_conditions'] == '1') {
+        include 'index_block_conditions.php';
     }
     ?>
 

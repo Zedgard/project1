@@ -57,6 +57,7 @@
         var block_type = 'block_feedback';
         var row = 'feedback';
         if ($(".feedback").length > 0) {
+            $(".feedback").html(ajax_spinner);
             sendPostLigth('/jpost.php?extension=products',
                     {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
                     function (e) {

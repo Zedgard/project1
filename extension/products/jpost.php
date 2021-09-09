@@ -180,6 +180,8 @@ if (isset($_POST['block_show'])) {
     $show = $_POST['show'];
     if (!$pr_products->blockShow($products_id, $block, $show)) {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    } else {
+        $result = array('success' => 1, 'success_text' => '');
     }
 }
 
@@ -192,28 +194,52 @@ if (isset($_POST['block_data_array'])) {
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
 
+// Получим данные к блоку условия
+if (isset($_POST['block_condition_data_array'])) {
+    $products_id = $_POST['products_id'];
+    $data = $pr_products->blockConditionDataArray($products_id);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+
 // Блок "block_profit" добавление кому подходит
 if (isset($_POST['block_data_edit'])) {
-    $id = $_POST['block_id'];
+    $id = (isset($_POST['block_id'])) ? $_POST['block_id'] : 0;
     $products_id = $_POST['products_id'];
     $block_type = $_POST['block_type'];
     $row = $_POST['row'];
     $val = $_POST['val'];
+    $parent = (isset($_POST['parent'])) ? $_POST['parent'] : 0;
 
     if ($block_type == 'block_trailer') {
         $ex = array_reverse(explode('/', $val));
         $val = 'http://www.youtube.com/embed/' . $ex[0];
     }
 
-
-    if (!$pr_products->blockDataEdit($id, $products_id, $block_type, $row, $val)) {
+    if (!$pr_products->blockDataEdit($id, $products_id, $block_type, $row, $val, $parent)) {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    } else {
+        if ($id == 0) {
+            $id = $pr_products->queryNextId('zay_product_block_data') - 1;
+        }
+        $result = array('success' => 1, 'success_text' => '', 'data' => $id);
     }
 }
+
 if (isset($_POST['block_data_delete'])) {
     $id = $_POST['block_id'];
     if (!$pr_products->blockDataDelete($id)) {
         $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    } else {
+        $result = array('success' => 1, 'success_text' => '');
+    }
+}
+
+if (isset($_POST['block_condition_data_delete'])) {
+    $id = $_POST['block_id'];
+    if (!$pr_products->blockConditionDataDelete($id)) {
+        $result = array('success' => 0, 'success_text' => 'Ошибка!');
+    } else {
+        $result = array('success' => 1, 'success_text' => '');
     }
 }
 
@@ -312,4 +338,25 @@ if (isset($_POST['general'])) {
         $wares_img = '<img src="' . $wares['images'] . '" style="width: 80px;max-height: 80px;"/>';
     }
     include 'tmpl/general.php';
+}
+
+// Получим все иконки из awesome
+if (isset($_POST['fontawesome_icons'])) {
+    $dir1 = $_SERVER['DOCUMENT_ROOT'] . '/assets/css/fontawesome/svgs/regular/';
+    $dir2 = $_SERVER['DOCUMENT_ROOT'] . '/assets/css/fontawesome/svgs/solid/';
+    $data = array();
+    foreach (scandir($dir2) as $item) {
+        if ($item == '.' || $item == '..') {
+            continue;
+        }
+        $data[] = 'fa fa-' . str_replace('.svg', '', $item);
+    }
+    foreach (scandir($dir1) as $item) {
+        if ($item == '.' || $item == '..') {
+            continue;
+        }
+        $data[] = 'fa fa-' . str_replace('.svg', '', $item);
+    }
+
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }

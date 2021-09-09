@@ -4,3 +4,5 @@
 /config.php
 /time.log
 /assets/files/**
+/config_old.php
+/config_old_affile.php

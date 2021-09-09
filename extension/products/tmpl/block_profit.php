@@ -85,6 +85,7 @@
         var block_type = 'block_profit';
         var row = 'question';
         if ($(".questions").length > 0) {
+            $(".questions").html(ajax_spinner);
             sendPostLigth('/jpost.php?extension=products',
                     {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
                     function (e) {
@@ -116,6 +117,7 @@
         var block_type = 'block_profit';
         var row = 'plus';
         if ($(".pluss").length > 0) {
+            $(".pluss").html(ajax_spinner);
             sendPostLigth('/jpost.php?extension=products',
                     {"block_data_array": 1, "products_id": products_id, "block_type": block_type, "row": row},
                     function (e) {

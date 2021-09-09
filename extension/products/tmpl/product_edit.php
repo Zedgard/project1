@@ -136,6 +136,7 @@
                         include 'block_profit.php';
                         include 'block_trailer.php';
                         include 'block_feedback.php';
+                        include 'block_conditions.php';
                     } else {
                         ?>
                         <div>Управление блоками возможно только на уже созданом товаре</div>
@@ -390,7 +391,7 @@ importWisiwyng('product_content', 300);
                                 }
                                 /* -- images end -- */
 
-                                // Отобразим "Блок выгода" 
+                                // Отобразим "Блок" 
                                 if (e['data']['block_profit'] == '1') {
                                     if (!$(".block_profit_checked").is(':checked')) {
                                         $(".block_profit_checked").click();
@@ -400,11 +401,19 @@ importWisiwyng('product_content', 300);
                                 init_block_profit_questions_array();
                                 init_block_profit_plus_array();
 
-                                // Отобразим "Блок выгода" 
+                                // Отобразим "Блок" 
                                 if (e['data']['block_trailer'] == '1') {
                                     if (!$(".block_trailer_checked").is(':checked')) {
                                         $(".block_trailer_checked").click();
                                         $(".btn_block_trailer").click();
+                                    }
+                                }
+                                
+                                // Отобразим "Блок" 
+                                if (e['data']['block_conditions'] == '1') {
+                                    if (!$(".block_conditions_checked").is(':checked')) {
+                                        $(".block_conditions_checked").click();
+                                        $(".btn_block_conditions").click();
                                     }
                                 }
                                 init_block_trailer_array();
@@ -539,16 +548,17 @@ importWisiwyng('product_content', 300);
                 var block_id = $(this).attr("elm_id");
                 var block_type = $(this).attr("block_type");
                 var row = $(this).attr("row");
+                var parent = $(this).attr("parent");
                 var val = $(this).val();
                 sendPostLigth('/jpost.php?extension=products',
-                        {"block_data_edit": 1, "block_id": block_id, "products_id": products_id, "block_type": block_type, "row": row, "val": val},
+                        {"block_data_edit": 1, "block_id": block_id, "products_id": products_id, "block_type": block_type, "row": row, "val": val, "parent": parent},
                         function (e) {
                             func();
                         });
             });
         }
     }
-
+    
     /*
      * Общая функция удаления информации по блоку
      */
