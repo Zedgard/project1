@@ -27,5 +27,3 @@ Allow: /shop/?product=4641
 Allow: /shop/?product=4642
 Allow: /shop/?product=4643
 Allow: /shop/?k*
-
-Sitemap: https://edgardzaycev.com/sitemap.xml

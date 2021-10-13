@@ -103,7 +103,7 @@
                                     <div class="row mt-1">
                                         <div class="col-mb-12">
                                             <div style="clear: both;"> 
-                                                <a href="<?= urlRequestAddLink('product=' . $productsFilterArray[$i]['id']) ?>" class="product_links">
+                                            <a href="/shop/<?= urlRequestAddLinkArray($recomend_links) ?>">
                                                     <?= $category_title ?>&nbsp;&nbsp;<span class="cart_product_title"><?= mb_strimwidth($productsFilterArray[$i]['title'], 0, 100, "...") ?></span>
                                                 </a>
                                             </div>

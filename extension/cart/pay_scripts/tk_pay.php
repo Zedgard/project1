@@ -113,15 +113,85 @@ $p_user = new \project\user();
 
 $price_total = 0;
 
-foreach ($_SESSION['cart']['itms'] as $key => $value) {
-    $email = $value['user_email'];
-    if ($value['price_promo'] > 0) {
-        $price = $value['price_promo'];
-    } else {
-        $price = $value['price'];
+$data = array();
+$promo_array = array();
+if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+    foreach ($_SESSION['cart']['itms'] as $key => $value) {
+        $alliance = 1;
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    if ($v['alliance'] == 0) {
+                        $alliance = 0;
+                    }
+                }
+            }
+        }
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    $price = (int) $value['price'];
+                    if (strlen($v['product_ids']) > 0) {
+                        $ex = explode(',', $v['product_ids']);
+                        foreach ($ex as $product_id) {
+                            if ($value['id'] == $product_id) {
+                                if ($v['amount'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                    } else {
+                                        $value['price_promo'] = ($price - $v['amount']);
+                                    }
+                                }
+                                if ($v['percent'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                    } else {
+                                        $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if ($v['amount'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                            } else {
+                                $value['price_promo'] = ($price - $v['amount']);
+                            }
+                        }
+                        if ($v['percent'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                            } else {
+                                $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $data[] = $value;
     }
+}
+foreach ($data as $item) {
+    if($item['price_promo'] > 0) {
+        $price = $item['price_promo'];
+    } else {
+        $price = $item['price'];
+    }
+    $email = $item['user_email'];
     $price_total += $price;
 }
+
+//foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//    $email = $value['user_email'];
+//    if ($value['price_promo'] > 0) {
+//        $price = $value['price_promo'];
+//    } else {
+//        $price = $value['price'];
+//    }
+//    $price_total += $price;
+//}
 /**
  * Заглушка для админов покупка за 1 рубль
  */
