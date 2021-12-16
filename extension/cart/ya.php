@@ -24,8 +24,8 @@ $pr_cart = new \project\cart();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
-$ya_shop_id = $config->getConfigParam('ya_shop_id');
-$ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
+$ya_shop_id = $config->getConfigParamByCategory('ya_shop_id',7);//kaijean
+$ya_shop_api_key = $config->getConfigParamByCategory('ya_shop_api_key',7);//kaijean
 
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа

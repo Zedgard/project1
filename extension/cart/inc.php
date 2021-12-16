@@ -243,11 +243,11 @@ class cart extends \project\extension {
             $config = new \project\config();
             // Настройка
             // appID
-            $business_check_appID = $config->getConfigParam('business_check_appID');
+            $business_check_appID = $config->getConfigParamByCategory('business_check_appID',7);//kaijean
             // secret
-            $business_check_secret = $config->getConfigParam('business_check_secret');
+            $business_check_secret = $config->getConfigParamByCategory('business_check_secret',7);//kaijean
             // ндс
-            $business_check_nds = $config->getConfigParam('business_check_nds');
+            $business_check_nds = $config->getConfigParamByCategory('business_check_nds',7);//kaijean
             if ($business_check_nds == '') {
                 $business_check_nds = 0; // По умолчанию 20%
             }

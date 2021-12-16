@@ -177,9 +177,9 @@ if (isset($_GET['response'])) {
 }
 
 // Настройки
-$TinkoffShopId = $config->getConfigParam('TinkoffShopId');
-$TinkoffShowcaseId = $config->getConfigParam('TinkoffShowcaseId');
-$TinkoffPromoCode = $config->getConfigParam('TinkoffPromoCode');
+$TinkoffShopId = $config->getConfigParamByCategory('TinkoffShopId',7);//kaijean
+$TinkoffShowcaseId = $config->getConfigParamByCategory('TinkoffShowcaseId',7);//kaijean
+$TinkoffPromoCode = $config->getConfigParamByCategory('TinkoffPromoCode',7);//kaijean
 
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
