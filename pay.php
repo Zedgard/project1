@@ -74,12 +74,14 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     }
 }
 foreach ($data as $item) {
-    if($item['price_promo'] > 0) {
-        $price = $item['price_promo'];
-    } else {
-        $price = $item['price'];
+    if($item['account_id'] != 2){//kaijean
+        if($item['price_promo'] > 0) {
+            $price = $item['price_promo'];
+        } else {
+            $price = $item['price'];
+        }
+        $price_total += $price;
     }
-    $price_total += $price;
 }
 if (isset($_SESSION['cart']['itms'])) {
 //    foreach ($_SESSION['cart']['itms'] as $key => $value) {

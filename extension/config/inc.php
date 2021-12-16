@@ -75,7 +75,32 @@ class config extends \project\extension {
         }
         return '';
     }
-
+    //kaijean
+    /**
+     * Данные параметра выбранной категории
+     * @param type $config_code
+     * @param type $category_id
+     * @return array
+     */
+    public function getConfigParamByCategory($config_code,$category_id) {
+        if (strlen($config_code) > 0) {
+            if (isset($_SESSION['config'][$category_id][$config_code]) && strlen($_SESSION['config'][$category_id][$config_code]) > 0) {
+                $v = $_SESSION['config'][$category_id][$config_code];
+            } else {
+                $querySelect = "SELECT * FROM `zay_configs` WHERE `config_code`='?' AND `category`='?'";
+                $data = $this->getSelectArray($querySelect, array($config_code,$category_id)); //[0]['config_val'];
+                if (count($data) > 0) {
+                    $_SESSION['config'][$category_id][$config_code] = $data[0]['config_val'];
+                    $v = $data[0]['config_val'];
+                } else {
+                    $v = '';
+                }
+            }
+            return $v;
+        }
+        return '';
+    }
+    //kaijean
     /**
      * Создание изменение
      * @param type $id

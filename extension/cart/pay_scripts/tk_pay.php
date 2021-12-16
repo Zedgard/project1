@@ -23,8 +23,10 @@ $pr_cart = new \project\cart();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
-$tk_shop_terminal_key = $config->getConfigParam('tk_shop_terminal_key');
-$tk_shop_secret_key = $config->getConfigParam('tk_shop_secret_key');
+// $tk_shop_terminal_key = $config->getConfigParam('tk_shop_terminal_key');
+// $tk_shop_secret_key = $config->getConfigParam('tk_shop_secret_key');
+$tk_shop_terminal_key = $config->getConfigParamByCategory('tk_shop_terminal_key',7);//kaijean
+$tk_shop_secret_key = $config->getConfigParamByCategory('tk_shop_secret_key',7);//kaijean
 
 /*
  *  Для тестирования
@@ -174,13 +176,15 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     }
 }
 foreach ($data as $item) {
-    if($item['price_promo'] > 0) {
-        $price = $item['price_promo'];
-    } else {
-        $price = $item['price'];
+    if($item['account_id'] != 2){//kaijean
+        if($item['price_promo'] > 0) {
+            $price = $item['price_promo'];
+        } else {
+            $price = $item['price'];
+        }
+        $email = $item['user_email'];
+        $price_total += $price;
     }
-    $email = $item['user_email'];
-    $price_total += $price;
 }
 
 //foreach ($_SESSION['cart']['itms'] as $key => $value) {

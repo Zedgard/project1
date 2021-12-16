@@ -26,13 +26,15 @@ $pay_status = "succeeded"; // Устанавливаем стандартный 
 if (count($_SESSION['cart']['itms']) > 0) {
     $price_total = 0;
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
-        $email = $value['user_email'];
-        if ($value['price_promo'] > 0) {
-            $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
+        if($value['account_id'] != 2){//kaijean
+            $email = $value['user_email'];
+            if ($value['price_promo'] > 0) {
+                $price = $value['price_promo'];
+            } else {
+                $price = $value['price'];
+            }
+            $price_total += $price;
         }
-        $price_total += $price;
     }
 
     if ($price_total == 0) {

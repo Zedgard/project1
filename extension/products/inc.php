@@ -9,6 +9,7 @@ class products extends \project\extension {
 
     private $products_wares = array();
     private $products_category = array();
+    private $products_account = array();//kaijean
     private $products_topic = array();
     private $products_theme = array();
 
@@ -35,7 +36,17 @@ class products extends \project\extension {
             $this->products_category = $products_category;
         }
     }
-
+    //kaijean
+    /**
+     * Сохраним данные для обработки по категориям
+     * @param type $products_category
+     */
+    function setProducts_account($products_account) {
+        // if (is_array($products_category)) {
+            $this->products_account = $products_account;
+        // }
+    }
+    //kaijean
     /**
      * Темы
      * @param type $products_theme
@@ -150,6 +161,7 @@ class products extends \project\extension {
                 $obj_product[0]['products_wares'] = $this->getProducts_wares($obj_product[0]['id']);
                 $obj_product[0]['products_category'] = $this->getProducts_category($obj_product[0]['id']);
                 $obj_product[0]['products_topic'] = $this->getProducts_topic($obj_product[0]['id']);
+                $obj_product[0]['products_account'] = $this->getProducts_account($obj_product[0]['account_id']);//kaijean
                 $obj_product[0]['products_theme'] = $this->getProducts_theme($obj_product[0]['id']);
 
                 if (count($obj_product[0]['products_category']) > 0) {
@@ -188,13 +200,14 @@ class products extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0, $active = 1) {
+    //kaijean
+    public function insertOrUpdateProducts($id, $account_id, $title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0, $active = 1) {
         if ($id > 0) {
             $query = "UPDATE `zay_product` "
-                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
+                    . "SET `title`='?', `account_id`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
                     . "`images_str`='?', `product_new`='?', `tax`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active, $id), 0)) {
+            if ($this->query($query, array($title, $account_id, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active, $id), 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -203,10 +216,10 @@ class products extends \project\extension {
             }
         } else {
 
-            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
+            $query = "INSERT INTO `zay_product` (`title`, `account_id`, `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
                     . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active))) {
+                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
+            if ($this->query($query, array($title, $account_id, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active))) {
                 $querySelect = "SELECT MAX(p.id) as id FROM `zay_product` p ";
                 $id = $this->getSelectArray($querySelect)[0]['id'];
                 $this->insertProductWares($id, $this->products_wares);
@@ -219,6 +232,7 @@ class products extends \project\extension {
 
         return false;
     }
+    //kaijean
 
     /**
      * Привязка категорий
@@ -332,6 +346,18 @@ class products extends \project\extension {
         $this->products_category = explode(',', $this->getSelectArray($querySelect, array($product_id))[0]['category_ids']);
         return $this->products_category;
     }
+    //kaijean
+    /**
+     * ID связанного счёта для платежей
+     * @param type $account_id
+     * @return type
+     */
+    function getProducts_account($account_id) {
+        $querySelect = "SELECT ac.id, ac.name FROM `zay_accounts` ac WHERE ac.`id`='?'";
+        $this->products_account = $this->getSelectArray($querySelect, array($account_id))[0]['id'];
+        return $this->products_account;
+    }
+    //kaijean
 
     /**
      * Список ID связанных тем 

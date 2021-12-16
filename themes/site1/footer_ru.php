@@ -112,15 +112,15 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="row mb-3 d-none">
+                <div class="row mb-3">
                     <div class="col-lg-12">
                         <span class="font-weight-bold text-white">ПОДПИСАТЬСЯ НА НОВОСТИ</span>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-lg-12 d-none">
-                        <a href="https://t.me/edgardzaitsev_channel">
-                            <img class="alignnone size-full wp-image-421776" src="https://download.edgardzaitsev.com/wp-content/uploads/2020/09/tgg-4.jpg" alt="" width="190" height="70">
+                    <div class="col-lg-12">
+                        <a href="https://t.me/EZ_friends">
+                            <img class="alignnone size-full wp-image-421776" src="/assets/img/EZ_TG_chat_banner.jpg" alt="" width="190" height="70">
                         </a>
                     </div>
                 </div>

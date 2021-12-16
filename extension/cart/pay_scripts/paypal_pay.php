@@ -27,8 +27,10 @@ $pr_cart = new \project\cart();
 $p_user = new \project\user();
 
 // Данные платежной системы
-$clientId = $config->getConfigParam('paypal_client_id');
-$clientSecret = $config->getConfigParam('paypal_client_secret');
+// $clientId = $config->getConfigParam('paypal_client_id');
+// $clientSecret = $config->getConfigParam('paypal_client_secret');
+$clientId = $config->getConfigParamByCategory('paypal_client_id',7);//kaijean
+$clientSecret = $config->getConfigParamByCategory('paypal_client_secret',7);//kaijean
 
 // Подключаемся к системе
 if ($clientId == 'AWhQommTsM02uROFM78sl252sngt6qgOLDOJ9VkuyG1F61ZJ8rjUUuQjE-IJvgfhQtV1hXMLeoKbvwfe') {
@@ -111,16 +113,18 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     }
 }
 foreach ($data as $item) {
-    if($item['price_promo'] > 0) {
-        $price = $item['price_promo'];
-    } else {
-        $price = $item['price'];
+    if($item['account_id'] != 2){//kaijean
+        if($item['price_promo'] > 0) {
+            $price = $item['price_promo'];
+        } else {
+            $price = $item['price'];
+        }
+        $email = $item['user_email'];
+        if (strlen($item_name) == 0) {
+            $item_name = 'Товар';
+        }
+        $price_total += $price;
     }
-    $email = $item['user_email'];
-    if (strlen($item_name) == 0) {
-        $item_name = 'Товар';
-    }
-    $price_total += $price;
 }
 
 //foreach ($_SESSION['cart']['itms'] as $key => $value) {

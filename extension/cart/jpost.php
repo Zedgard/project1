@@ -264,7 +264,8 @@ if (isset($_POST['cart_product_get_array'])) {
     }
     // $_SESSION['cart']['itms']
     //print_r($data);
-    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    // $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data, 'email' => $p_user->isClientEmail());//kaijean
 }
 
 if (isset($_POST['cart_product_get_count'])) {
@@ -302,7 +303,8 @@ if (isset($_POST['set_cloudpayments'])) {
     $sign_up_consultation = new \project\sign_up_consultation();
 
 
-    $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    // $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    $CloudPayments_id = $config->getConfigParamByCategory('CloudPayments',7);//kaijean
     $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
     $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 
@@ -375,12 +377,14 @@ if (isset($_POST['set_cloudpayments'])) {
         }
     }
     foreach ($data as $item) {
-        if($item['price_promo'] > 0) {
-            $price = $item['price_promo'];
-        } else {
-            $price = $item['price'];
+        if($item['account_id'] != 2){//kaijean
+            if($item['price_promo'] > 0) {
+                $price = $item['price_promo'];
+            } else {
+                $price = $item['price'];
+            }
+            $price_total += $price;
         }
-        $price_total += $price;
     }
 
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
@@ -537,7 +541,8 @@ if (isset($_POST['check_cloudpayments'])) {
     $sign_up_consultation = new \project\sign_up_consultation();
     $close_club = new \project\close_club();
 
-    $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    // $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    $CloudPayments_id = $config->getConfigParamByCategory('CloudPayments',7);//kaijean
 
 // Проверяем статус оплаты
     if (isset($_SESSION['PAY_KEY'])) {
@@ -575,8 +580,10 @@ if (isset($_POST['check_cloudpayments'])) {
         $pay_check = 'pending';
 
         include_once $_SERVER['DOCUMENT_ROOT'] . '/system/cloudpayments-php-client-master/src/Manager.php';
-        $publicKey = $config->getConfigParam('CloudPayments');
-        $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
+        // $publicKey = $config->getConfigParam('CloudPayments');
+        // $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
+        $publicKey = $config->getConfigParamByCategory('CloudPayments',7);//kaijean
+        $privateKey = $config->getConfigParamByCategory('CloudPayments_PrivateKey',7);//kaijean
         $client = new \CloudPayments\Manager($publicKey, $privateKey);
 
         //echo "paymentResult_success: {$_POST['paymentResult']['success']}";

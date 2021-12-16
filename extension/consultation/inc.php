@@ -183,14 +183,24 @@ class Calendar {
         $m = (int)$curent[1];
         $y = (int)$curent[2];
         $end_m = (int)$end[1];
+        // print_r($m);
+        // print_r($date_new);
+        // print_r($end);
+
         do {
             $out .= self::getMonth($m, $y, $events);
 
             if ($m == $end_m) {
                 $begin = false;
             }
-
-            $m++;
+            elseif($m > $end_m)
+            {
+            	$begin = false;
+            }
+            else
+            {
+            	$m++;
+            }
 //            if ($curent[0] == 13) {
 //                $curent[0] = 1;
 //                $m++;

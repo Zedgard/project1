@@ -17,6 +17,11 @@
                         <label for="config_title">Название</label>
                         <input type="text" class="form-control products_title" id="products_title" placeholder="Наименование..." required>
                     </div>
+                    <div class="form-group">
+                        <label for="products_account" class="label_products_account">Счёт для оплаты</label>
+                        <select class="form-control products_account" name="states[]" style="width: 100%">
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label for="products_wares" class="label_products_wares">Товары</label>
@@ -182,7 +187,13 @@ importWisiwyng('product_content', 300);
             placeholder: "Выберите категории",
             allowClear: true
         });
-
+        //kaijean
+        products_account = $(".products_account").select2({
+            width: "100%",
+            placeholder: "Выберите счёт для платежей",
+            allowClear: true
+        });
+        //kaijean
         var products_topic = $(".products_topic").select2({
             width: "100%",
             placeholder: "Выберите темы",
@@ -206,6 +217,7 @@ importWisiwyng('product_content', 300);
             getWaresArray(0);
             getTopicArray(0);
             getCategoryArray(0);
+            getAccountArray(0);//kaijean
             getProductThemeArray(0);
         }
 
@@ -230,6 +242,29 @@ importWisiwyng('product_content', 300);
             }
         }
 
+        /**
+         * Платежный счёт
+         * @returns {undefined}
+         */
+         //kaijean
+        function getAccountArray(v) {
+            if ($(".products_account").length > 0) {
+                $(".products_account option").remove();
+                sendPostLigth('/jpost.php?extension=accounts', {"get_accounts_all": 1}, function (e) {
+                    var data = e['data'];
+                    if (data.length > 0) {
+                        $(".products_account").append('<option></option>');//kaijean
+                        for (var i = 0; i < data.length; i++) {
+                            $(".products_account").append('<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>');
+                        }
+                        if (!!v && v.length > 0) {
+                            products_account.val(v).trigger("change");
+                        }
+                    }
+                });
+            }
+        }
+        //kaijean
         /**
          * Категории 
          * @returns {undefined}
@@ -321,6 +356,15 @@ importWisiwyng('product_content', 300);
                                     }
                                 }
                                 //products_category.val(products_category_array).trigger("change");
+                                //kaijean
+                                 // Счёт для платежных систем
+                                var products_account_array = [];
+                                if (e['data']['products_account'] > 0) {
+                                    // for (var i = 0; i < e['data']['products_account'].length; i++) {
+                                        products_account_array.push(e['data']['products_account']);
+                                    // }
+                                }
+                                //kaijean
 
                                 // Темы
                                 var products_topic_array = [];
@@ -341,6 +385,7 @@ importWisiwyng('product_content', 300);
                                 getWaresArray(products_wares_array);
                                 getTopicArray(products_topic_array);
                                 getCategoryArray(products_category_array);
+                                getAccountArray(products_account_array);//kaijean
                                 getProductThemeArray(products_theme_array);
 
                                 setTimeout(function () {
@@ -448,6 +493,7 @@ importWisiwyng('product_content', 300);
             var products_wares = $(".form_save_products").find(".products_wares").val();
             var products_topic = $(".form_save_products").find(".products_topic").val();
             var products_category = $(".form_save_products").find(".products_category").val();
+            var products_account = $(".form_save_products").find(".products_account").val();//kaijean
             var products_theme = $(".form_save_products").find(".product_theme").val();
             var products_tax = $(".form_save_products").find(".products_tax").val();
             var products_desc_minimal = tinymce.get('products_desc_minimal').getContent();
@@ -481,6 +527,7 @@ importWisiwyng('product_content', 300);
                         "products_wares": products_wares,
                         "products_topic": products_topic,
                         "products_category": products_category,
+                        "products_account": products_account,//kaijean
                         "products_tax": products_tax,
                         "products_theme": products_theme,
                         "products_desc_minimal": products_desc_minimal,

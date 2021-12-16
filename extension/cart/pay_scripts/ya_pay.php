@@ -23,8 +23,10 @@ $pr_cart = new \project\cart();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
-$ya_shop_id = $config->getConfigParam('ya_shop_id');
-$ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
+// $ya_shop_id = $config->getConfigParam('ya_shop_id');
+// $ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
+$ya_shop_id = $config->getConfigParamByCategory('ya_shop_id',7);//kaijean
+$ya_shop_api_key = $config->getConfigParamByCategory('ya_shop_api_key',7);//kaijean
 
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
@@ -104,12 +106,14 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     }
 }
 foreach ($data as $item) {
-    if($item['price_promo'] > 0) {
-        $price = $item['price_promo'];
-    } else {
-        $price = $item['price'];
+    if($item['account_id'] != 2){//kaijean
+        if($item['price_promo'] > 0) {
+            $price = $item['price_promo'];
+        } else {
+            $price = $item['price'];
+        }
+        $price_total += $price;
     }
-    $price_total += $price;
 }
 
 //foreach ($_SESSION['cart']['itms'] as $key => $value) {

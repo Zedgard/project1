@@ -18,8 +18,10 @@ $config = new \project\config();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
-$in_shop_id = $config->getConfigParam('in_shop_id');
-$in_secret_key = $config->getConfigParam('in_secret_key');
+// $in_shop_id = $config->getConfigParam('in_shop_id');
+// $in_secret_key = $config->getConfigParam('in_secret_key');
+$in_shop_id = $config->getConfigParamByCategory('in_shop_id',7);//kaijean
+$in_secret_key = $config->getConfigParamByCategory('in_secret_key',7);//kaijean
 
 // подготовим данные
 if (!isset($_SESSION['pay_key'])) {

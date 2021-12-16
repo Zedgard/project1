@@ -28,8 +28,10 @@ $close_club = new \project\close_club();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
-$tk_shop_terminal_key = $config->getConfigParam('tk_shop_terminal_key');
-$tk_shop_secret_key = $config->getConfigParam('tk_shop_secret_key');
+// $tk_shop_terminal_key = $config->getConfigParam('tk_shop_terminal_key');
+// $tk_shop_secret_key = $config->getConfigParam('tk_shop_secret_key');
+$tk_shop_terminal_key = $config->getConfigParamByCategory('tk_shop_terminal_key', 7);//kaijean
+$tk_shop_secret_key = $config->getConfigParamByCategory('tk_shop_secret_key',7);//kaijean
 
 
 spl_autoload_register(function ($class_name) {
