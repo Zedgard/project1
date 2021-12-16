@@ -72,8 +72,8 @@ if (isset($_POST['edit_products'])) {
     $pr_products->setProducts_account($products_account);//kaijean
     $pr_products->setProducts_topic($products_topic);
     $pr_products->setProducts_theme($products_theme);
-
-    if ($pr_products->insertOrUpdateProducts($products_id, $products_title, $products_desc_minimal,
+    //kaijean
+    if ($pr_products->insertOrUpdateProducts($products_id, $products_account, $products_title, $products_desc_minimal,
                     $products_price, $products_price_promo, $products_period_open, $products_desc, $products_sold, $product_content, $images_str, $product_new, $products_tax, $products_active)) {
         $result = array('success' => 1, 'success_text' => 'Выполнено');
         $_SESSION['product']['searchStr'] = '';
