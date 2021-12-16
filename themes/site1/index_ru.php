@@ -619,7 +619,172 @@
 
         <?= $_SESSION['page']['block_center'] ?>
 
+<section id="funfacts" class="padding_top fact-iconic gradient_bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12 margin_bottom text-md-left text-center wow fadeInLeft" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInLeft;">
+                        <h3 class="bottom25" style="font-size: 36px;">Опыт нашей команды в цифрах</h3>
+                        <p class="title">Наша команда высококвалифицированных профессионалов широко зарекомендовала себя за десять лет работы.</p>
+                    </div>
+                    <div class="col-md-7 col-sm-12 text-center">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom  wow fadeInRight" data-wow-delay="400ms" style="visibility: visible; animation-delay: 400ms; animation-name: fadeInRight;text-align: center;">
+                                <div class="img-icon bottom15">
+                                    <!--<i class="fa fa-smile-o"></i>--> 
+                                    <img src="/assets/img/mental-health.svg" style="width: 60px;"/>
 
+                                </div>
+                                <p class="title">более</p>
+                                <div class="counters">
+                                    <span class="count_nums" data-to="900" data-speed="3000">900</span> <i class="fa fa-plus"></i>
+                                </div>
+                                <p class="title">Консультаций в год</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom wow fadeInRight" data-wow-delay="350ms" style="visibility: visible; animation-delay: 350ms; animation-name: fadeInRight;">
+                                <div class="img-icon bottom15">
+                                    <!-- <i class="fa fa-language"> </i>-->
+                                    <img src="/assets/img/positive-thinking.svg" style="width: 60px;"/>
+                                </div>
+                                <p class="title">более</p>
+                                <div class="counters">
+                                    <span class="count_nums" data-to="20000" data-speed="2500">20000</span> <i class="fa fa-plus"></i>
+                                </div>
+                                <p class="title">Счастливых клиентов</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 icon-counters margin_bottom wow fadeInRight" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInRight;">
+                                <div class="img-icon bottom15">
+                                    <!--<i class="fa fa-desktop"></i>-->
+                                    <img src="/assets/img/award.svg" style="width: 60px;"/>
+                                </div>
+                                <p class="title">более</p>
+                                <div class="counters">
+                                    <span class="count_nums" data-to="7" data-speed="3000">7</span> <i class="fa fa-plus"></i>
+                                </div>
+                                <p class="title">Книг и более 20 статей написано</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <!-- Testimonials -->
+        <section id="our-testimonial" class="padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 text-center">
+                        <div class="heading-title bottom30 wow fadeInUp" data-wow-delay="300ms">
+                            <h2 class="TestimonialsTitle">Отзывы счастливых людей</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div id="testimonial-slider" class="owl-carousel">
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
+                                    <small class="defaultcolor">Бизнес-вумен</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
+                                    <small class="defaultcolor">Менеджер</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
+
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
+                                    <small class="defaultcolor">Счастливая жена</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
+                                    <small class="defaultcolor">Бизнес-вумен</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
+                                    <small class="defaultcolor">Менеджер</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
+
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
+                                    <small class="defaultcolor">Счастливая жена</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
+                                    <small class="defaultcolor">Бизнес-вумен</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
+                                    <small class="defaultcolor">Менеджер</small>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="testimonial-wrapp">
+                                    <span class="quoted"><i class="fa fa-quote-right"></i></span>
+                                    <div class="testimonial-text">
+                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
+
+                                    </div>
+                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
+                                    <small class="defaultcolor">Счастливая жена</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Testimonials Ends-->
 
         <?
         include 'footer_' . $_SESSION['lang'] . '.php'

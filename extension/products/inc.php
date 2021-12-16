@@ -202,12 +202,32 @@ class products extends \project\extension {
      */
     //kaijean
     public function insertOrUpdateProducts($id, $account_id, $title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0, $active = 1) {
+        $data = [];
+        $data[] = $title;
         if ($id > 0) {
-            $query = "UPDATE `zay_product` "
-                    . "SET `title`='?', `account_id`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
+            $query = "UPDATE `zay_product` "."SET `title`='?',";
+            if(!empty($account_id))
+            {
+                $query .= " `account_id`='?',";
+                $data[] = $account_id;
+            }
+            $query .= " `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
                     . "`images_str`='?', `product_new`='?', `tax`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $account_id, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active, $id), 0)) {
+            $data[] = $desc_minimal;
+            $data[] = $price;
+            $data[] = $price_promo;
+            $data[] = $period_open;
+            $data[] = $desc;
+            $data[] = $sold;
+            $data[] = $product_content;
+            $data[] = $images_str;
+            $data[] = $product_new;
+            $data[] = $tax;
+            $data[] = $active;
+            $data[] = $id;
+
+            if ($this->query($query, $data, 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -215,11 +235,30 @@ class products extends \project\extension {
                 return true;
             }
         } else {
-
-            $query = "INSERT INTO `zay_product` (`title`, `account_id`, `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
-                    . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $account_id, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active))) {
+            $values = "VALUES ('?',";
+            $query = "INSERT INTO `zay_product` (`title`,";
+            if(!empty($account_id))
+            {
+                $query .= " `account_id`,";
+                $data[] = $account_id;
+                $values .= "'?',";
+            }
+            $query .= " `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
+                    . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) ";
+            $values .= "'?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
+            $query .= $values;
+            $data[] = $desc_minimal;
+            $data[] = $price;
+            $data[] = $price_promo;
+            $data[] = $period_open;
+            $data[] = $desc;
+            $data[] = $sold;
+            $data[] = $product_content;
+            $data[] = $images_str;
+            $data[] = $product_new;
+            $data[] = $tax;
+            $data[] = $active;
+            if ($this->query($query, $data)) {
                 $querySelect = "SELECT MAX(p.id) as id FROM `zay_product` p ";
                 $id = $this->getSelectArray($querySelect)[0]['id'];
                 $this->insertProductWares($id, $this->products_wares);
