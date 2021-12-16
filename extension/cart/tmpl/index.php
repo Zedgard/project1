@@ -33,6 +33,9 @@
                 }
                 /*kaijean*/
             </style>
+            <div class="disabled_cart_list">
+                
+            </div>
             <div class="cart_list">
 
             </div>
