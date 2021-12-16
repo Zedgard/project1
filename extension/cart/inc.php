@@ -54,23 +54,25 @@ class cart extends \project\extension {
     public function pay_insert_pay_products($pay_id, $itms) {
         $pr_products = new \project\products();
         foreach ($itms as $value) {
-            //$product_id = $max_id;
-            $product_id = $value['id'];
-            $where_period_open = "NULL";
-            if ($value['period_open'] > 0) {
-                $where_period_open = "DATE_ADD(NOW(), INTERVAL ({$value['period_open']}+1) DAY)";
-            }
-            if ($product_id > 0) {
-                $price = $value['price'];
-                if ($value['price_promo'] > 0) {
-                    $price = $value['price_promo'];
+            if($value['account_id'] != 2){
+                //$product_id = $max_id;
+                $product_id = $value['id'];
+                $where_period_open = "NULL";
+                if ($value['period_open'] > 0) {
+                    $where_period_open = "DATE_ADD(NOW(), INTERVAL ({$value['period_open']}+1) DAY)";
                 }
-                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`, `close_date`) 
-                    VALUES ('?','?','?', {$where_period_open})";
-                $this->query($queryProductRegister, array($pay_id, $product_id, $price, $where_period_open));
+                if ($product_id > 0) {
+                    $price = $value['price'];
+                    if ($value['price_promo'] > 0) {
+                        $price = $value['price_promo'];
+                    }
+                    $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`, `close_date`) 
+                        VALUES ('?','?','?', {$where_period_open})";
+                    $this->query($queryProductRegister, array($pay_id, $product_id, $price, $where_period_open));
 
-                // Зафиксируем продажу
-                $pr_products->setSoldProducts($product_id);
+                    // Зафиксируем продажу
+                    $pr_products->setSoldProducts($product_id);
+                }
             }
         }
         // Связи покупки и консультации
