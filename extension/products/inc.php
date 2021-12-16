@@ -211,6 +211,10 @@ class products extends \project\extension {
                 $query .= " `account_id`='?',";
                 $data[] = $account_id;
             }
+            else
+            {
+                $query .= " `account_id`=NULL,";
+            }
             $query .= " `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
                     . "`images_str`='?', `product_new`='?', `tax`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
@@ -241,7 +245,11 @@ class products extends \project\extension {
             {
                 $query .= " `account_id`,";
                 $data[] = $account_id;
-                $values .= "'?',";
+                $values .= "NULL,";
+            }
+            else
+            {
+                $query .= " `account_id`,";
             }
             $query .= " `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
                     . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) ";
