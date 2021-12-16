@@ -558,8 +558,11 @@ function initCartArray() {
                         }
                     }
                 }
-                html = '<div class="alert alert-warning">Обратите внимание.Товар выше приобретается отдельно. <a href="https://oplata.edgardzaycev.com/?go_cart=['+disabled_cart_itms+']&email='+e['email']+'" class="alert-link" target="_blank">Оплатить отдельно</a></div>';
-                $(".disabled_cart_list").append(html);
+                if(disabled_cart_itms.length > 0){
+                    html = '<div class="alert alert-warning">Обратите внимание.Товар выше приобретается отдельно. <a href="https://oplata.edgardzaycev.com/?go_cart=['+disabled_cart_itms+']&email='+e['email']+'" class="alert-link" target="_blank">Оплатить отдельно</a></div>';
+                    $(".disabled_cart_list").append(html);
+                }
+                
             }
             //kaijean
             if (typeof $(".fancybox")[0] != 'undefined') {
