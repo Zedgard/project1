@@ -17,6 +17,7 @@ if(!empty($_POST) && isset($_POST['payment']))
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+	$payment = json_decode($_POST['payment']);
 	$p_products = new \project\products();
 	$p_user = new \project\user();
 	$auth = new \project\auth();
@@ -34,16 +35,16 @@ if(!empty($_POST) && isset($_POST['payment']))
 	$pay_status = "succeeded";//статус платежа
 	$pay_descr = null;//описание платежа
 	$confirm_url = $_SERVER['HTTP_REFERER'];//адрес, откуда пришли данные
-	if(isset($_POST['payment']['products']))//проверяем, передано ли название товара
+	if(isset($payment['products']))//проверяем, передано ли название товара
 	{
-		foreach ($_POST['payment']['products'] as $prod_name)//для каждого названия
+		foreach ($payment['products'] as $prod_name)//для каждого названия
 		{
 			$pay_descr .= $prod_name;//записываем название в таблицу
 		}
 	}
-	if(isset($_POST['payment']['amount']))
+	if(isset($payment['amount']))
 	{
-		$pay_sum = $_POST['payment']['amount'];
+		$pay_sum = $payment['amount'];
 	}
 	if(isset($_POST['paymentsystem']))
 	{
@@ -87,11 +88,12 @@ if(!empty($_POST) && isset($_POST['payment']))
 		$user = $p_user->user_info_by_phone_or_email($_POST['phone'],$_POST['email']);
 		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($user));
 	}
-	if(!empty($product) && !empty($user) && !empty($pay_type) && !empty($pay_sum) && !empty($pay_descr))
-	{
+	// if(!empty($product) && !empty($user) && !empty($pay_type) && !empty($pay_sum) && !empty($pay_descr))
+	// {
 		// $result = $webhook->create_payment($max_id, $pay_type, $user['id'], $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirmUrl);
-		file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode(['id'=>$max_id, 'pay_type'=>$pay_type, 'user_id'=>$user['id'], 'pay_sum'=>$pay_sum, 'pay_date'=>$pay_date, 'pay_key'=>$pay_key, 'pay_status'=>$pay_status, 'pay_descr'=>$pay_descr ,'confirmUrl'=>$confirmUrl]));
-	}
+		file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode(['id'=>$max_id, 'pay_type'=>$pay_type, 'user_id'=>$user['id'], 'pay_sum'=>$pay_sum, 'pay_date'=>$pay_date, 'pay_key'=>$pay_key, 'pay_status'=>$pay_status, 'pay_descr'=>$pay_descr ,'confirm_url'=>$confirmUrl]));
+		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", $_POST['payment']);
+	// }
 
 
 }
