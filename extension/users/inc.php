@@ -44,7 +44,27 @@ class user extends \project\extension {
         }
         return array();
     }
-
+    // kaijean
+    /**
+     * Информация по пользователю
+     * @param type $phone
+     * @param type $email
+     * @return array
+     */
+    public function user_info_by_phone_or_email($phone,$email)
+    {
+        $phoneDigits = preg_replace("/[^0-9]/", '', $phone);
+        $regAr = str_split($phoneDigits);
+        $regStr = implode(".*", $regAr);
+        $regExp = "^.*(".$regStr.").*$";
+        $select = "SELECT u.id FROM zay_users u WHERE u.phone REGEXP '?' OR u.email='?'";
+        $data = $this->getSelectArray($select, array($regExp,$email), 0);
+        if (count($data) == 1) {
+            return $data[0];
+        }
+        return array();
+    }
+    //kaijean
     /**
      * Инофрмация по пользователю
      * @param type $id

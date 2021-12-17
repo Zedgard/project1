@@ -4,6 +4,8 @@ namespace project;
 
 defined('__CMS__') or die;
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 
 class webhook extends \project\extension {
 
@@ -13,11 +15,22 @@ class webhook extends \project\extension {
 
     /**
      * Получить все аккаунты
+     * @param new_id
+     * @param pay_type
+     * @param user_id
+     * @param pay_sum
+     * @param pay_date
+     * @param pay_key
+     * @param pay_status
+     * @param pay_descr
+     * @param confirmationUrl
+     * @param processed
      * @return type
      */
-    public function get_accounts_all() {
-        $querySelect = "SELECT * FROM `zay_accounts` ac order by ac.name asc";
-        return $this->getSelectArray($querySelect, array());
+    public function create_payment($new_id, $pay_type, $user_id, $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirmationUrl) {
+        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_descr`, `confirmationUrl`, `processed`) "
+            ."VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+        return $sqlLight->query($query, [$new_id, $pay_type, $user_id, $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirmationUrl, 1]);
     }
 
     /**

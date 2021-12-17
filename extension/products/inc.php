@@ -188,6 +188,17 @@ class products extends \project\extension {
         $query = "select * from `zay_product` where id='?'";
         return $this->getSelectArray($query, array($product_id))[0];
     }
+    //kaijean
+    /**
+     * Получить идентификатор по продукту из таблицы products
+     * @param type $product_id
+     * @return type
+     */
+    public function getProductId($product_id) {
+        $query = "select p.id from `zay_product` p where id='?'";
+        return $this->getSelectArray($query, array($product_id))[0];
+    }
+    //kaijean
 
     /**
      * Создание изменение товара
