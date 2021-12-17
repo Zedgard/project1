@@ -256,11 +256,12 @@ class products extends \project\extension {
             {
                 $query .= " `account_id`,";
                 $data[] = $account_id;
-                $values .= "NULL,";
+                $values .= "'?',";
             }
             else
             {
                 $query .= " `account_id`,";
+                $values .= " NULL,";
             }
             $query .= " `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
                     . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) ";
