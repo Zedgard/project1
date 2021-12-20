@@ -195,7 +195,8 @@ class Calendar {
             }
             elseif($m > $end_m)
             {
-            	$begin = false;
+            	$m = $end_m;
+                $y++;
             }
             else
             {

@@ -28,9 +28,9 @@ class webhook extends \project\extension {
      * @return type
      */
     public function create_payment($new_id, $pay_type, $user_id, $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirmationUrl) {
-        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_descr`, `confirmationUrl`, `processed`) "
-            ."VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-        return $sqlLight->query($query, [$new_id, $pay_type, $user_id, $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirmationUrl, 1]);
+        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_descr`, `confirmationUrl`) "
+            ."VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?')";
+        return $this->query($query, [$new_id, $pay_type, $user_id, $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirmationUrl]);
     }
 
     /**

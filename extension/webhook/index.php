@@ -6,6 +6,7 @@
 defined('__CMS__') or die;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/system/extension/inc.php';
 
 include_once 'inc.php';
 
@@ -100,10 +101,10 @@ if(!empty($_POST) && isset($_POST['payment']))
 	if(!empty($product) && !empty($user) && !empty($pay_type) && !empty($pay_sum) && !empty($pay_descr))
 	{
 		$p_payment = $webhook->create_payment($max_id, $pay_type, $user['id'], $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirm_url);//добавляем оплату в базу
-		$res = $p_pay->insert_pay_products($p_payment['id'], $product['id'], $pay_sum);
+		$res = $p_pay->insert_pay_products($max_id, $product['id'], $pay_sum);
 		// $data = array('id' => $max_id, 'pay_type' => $pay_type, 'user_id' => $user['id'], 'pay_sum' => $pay_sum, 'pay_date' => $pay_date, 'pay_key' => $pay_key, 'pay_status' => $pay_status, 'pay_descr' => $pay_descr,'confirm_url' => $confirm_url);
-		$result = json_encode($res);
-		file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", $result);
+		// $result = json_encode($p_payment);
+		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", $result);
 		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($p_payment));
 	}
 
