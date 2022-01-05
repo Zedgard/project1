@@ -690,93 +690,75 @@
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-58-47.jpg">
+                                        <!-- <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p> -->
                                     </div>
-                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
-                                    <small class="defaultcolor">Бизнес-вумен</small>
+                                    <!-- <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
+                                    <small class="defaultcolor">Бизнес-вумен</small> -->
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-58-50.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
-                                    <small class="defaultcolor">Менеджер</small>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
-
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-58-53.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
-                                    <small class="defaultcolor">Счастливая жена</small>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-58-56.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
-                                    <small class="defaultcolor">Бизнес-вумен</small>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-58-59.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
-                                    <small class="defaultcolor">Менеджер</small>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
-
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-59-01.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
-                                    <small class="defaultcolor">Счастливая жена</small>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">После целого ряда неудачных отношений стало понятно, что это не чистая случайность, что я привлекаю не таких мужчин, которые мне нравятся, но иначе не могу, другие или мне не нравятся, или не нравлюс я.</p>
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-59-03.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Виктория Сборовская</h4>
-                                    <small class="defaultcolor">Бизнес-вумен</small>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">Я Абсолют, после таких медитаций это утверждение не кажется пустой фразой, оно сила, оно помогает жить и дает понимание многого. И со своими отношениями я разобралась, позволила себе быть счастливой.</p>
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-59-05.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Адам Сендлер</h4>
-                                    <small class="defaultcolor">Менеджер</small>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="testimonial-wrapp">
                                     <span class="quoted"><i class="fa fa-quote-right"></i></span>
                                     <div class="testimonial-text">
-                                        <p class="bottom40">Весь мой предыдущий опыт никак не соответствовал первым дням моей «новой» медитации. Я буквально почувствовала освобождение. Меня это очень вдохновило и я начала все больше узнавать про медитацию.</p>
-
+                                        <img src="/assets/files/image/comments/photo_2021-03-26_11-59-08.jpg">
                                     </div>
-                                    <h4 class="darkcolor mt-5">Людмила Казакова</h4>
-                                    <small class="defaultcolor">Счастливая жена</small>
                                 </div>
                             </div>
                         </div>

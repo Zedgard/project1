@@ -161,6 +161,7 @@
         <a href="./" class="btn btn-link">назад</a>
     </div>
 </div>
+<script src="/assets/plugins/tinymce/tinymce.js<?= $_SESSION['rand'] ?>"></script>
 <?
 //include 'admin_edit.php';
 importWisiwyng('products_desc_minimal', 150);
@@ -387,20 +388,25 @@ importWisiwyng('product_content', 300);
                                 getCategoryArray(products_category_array);
                                 getAccountArray(products_account_array);//kaijean
                                 getProductThemeArray(products_theme_array);
+                                // kaijean
+                                //устанавливаем описание в контейнер для дальнейшего редактирования
+                                $(".products_desc_minimal").html(e['data']['desc_minimal']);
+                                $(".products_desc").html(e['data']['desc']);
+                                // setTimeout(function () {
+                                    // try {
+                                        // устанавливаем содержимое контейнера в редактор при запросе через ajax
+                                        // tinymce.get('products_desc_minimal').setContent(e['data']['desc_minimal']);
+                                    // } catch (e) {
+                                        // console.log('Error products_desc_minimal');
+                                    // }
 
-                                setTimeout(function () {
-                                    try {
-                                        tinymce.get('products_desc_minimal').setContent(e['data']['desc_minimal']);
-                                    } catch (e) {
-                                        console.log('Error products_desc_minimal');
-                                    }
-
-                                    try {
-                                        tinymce.get('products_desc').setContent(e['data']['desc']);
-                                    } catch (e) {
-                                        console.log('Error products_desc');
-                                    }
-                                }, 1500);
+                                    // try {
+                                        // tinymce.get('products_desc').setContent(e['data']['desc']);
+                                    // } catch (e) {
+                                        // console.log('Error products_desc');
+                                    // }
+                                // }, 1500);
+                                // kaijean
 
 
 
@@ -561,9 +567,12 @@ importWisiwyng('product_content', 300);
         });
 
         products_init();
+
+        // setTimeout(function () {
+
+            // tinymce.get('products_desc_minimal').getContent();
+        // },1000);
     });
-
-
 
     /*
      * Отобразить или скрыть дополнительный блок
