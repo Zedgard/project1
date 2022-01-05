@@ -161,13 +161,7 @@
         <a href="./" class="btn btn-link">назад</a>
     </div>
 </div>
-<script src="/assets/plugins/tinymce/tinymce.js<?= $_SESSION['rand'] ?>"></script>
-<?
-//include 'admin_edit.php';
-importWisiwyng('products_desc_minimal', 150);
-importWisiwyng('products_desc', 300);
-importWisiwyng('product_content', 300);
-?>
+
 <script>
     var product_edit = '<?= $_GET['product_edit'] ?>';
     var products_id = product_edit;
@@ -569,8 +563,6 @@ importWisiwyng('product_content', 300);
         products_init();
 
         // setTimeout(function () {
-
-            // tinymce.get('products_desc_minimal').getContent();
         // },1000);
     });
 
@@ -645,4 +637,17 @@ importWisiwyng('product_content', 300);
                     }
                 });
     }
+</script>
+<script src="/assets/plugins/tinymce/tinymce.js"></script>
+<?
+//include 'admin_edit.php';
+importWisiwyng('products_desc_minimal', 150);
+importWisiwyng('products_desc', 300);
+importWisiwyng('product_content', 300);
+?>
+<script>
+    window.addEventListener("load", function(event) {
+        tinymce.get('products_desc_minimal').setContent(document.querySelector(".products_desc_minimal").textContent);
+        tinymce.get('products_desc').setContent(document.querySelector(".products_desc").textContent);
+  });
 </script>
