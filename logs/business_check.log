@@ -413,3 +413,9 @@ string(43) "{"result":"1001","message":"invalid token"}"
 05-01-2022 18:03:08 Покупка: 283928 не сформирован чек
 string(43) "{"result":"1001","message":"invalid token"}"
 
+06-01-2022 10:23:46 Покупка: 283930 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
+06-01-2022 13:48:16 Покупка: 283933 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
