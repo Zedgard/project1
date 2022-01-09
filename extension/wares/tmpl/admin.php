@@ -207,7 +207,7 @@
             $(".form_save_wares").find(".wares_ex_code").val("");
             $(".form_save_wares").find(".wares_articul").val("");
             wares_categorys.val([]).trigger("change");
-            tinymce.get('wares_descr').setContent("<p></p>");
+            // tinymce.get('wares_descr').setContent("<p></p>");
             $(".form_save_wares").find(".wares_col").val("");
             $(".form_save_wares").find('.images').html("");
             $(".form_save_wares").find(".wares_id").val("0");
@@ -310,9 +310,10 @@
             }
         });
     }
-  //   window.addEventListener("load", function(event) {
-  //       tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
-  // });
+    window.addEventListener("load", function(event) {
+        document.querySelector(".wares_descr").textContent = "<p></p>";
+        tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
+  });
 </script>
 <script src="/assets/plugins/tinymce/tinymce.js"></script>
 <script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>
