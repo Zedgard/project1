@@ -164,7 +164,7 @@
                                     $(".form_save_wares").find(".wares_title").val(e['data']['title']);
                                     $(".form_save_wares").find(".wares_ex_code").val(e['data']['ex_code']);
                                     $(".form_save_wares").find(".wares_articul").val(e['data']['articul']);
-                                    tinymce.get('wares_descr').setContent(e['data']['descr']);
+                                    // tinymce.get('wares_descr').setContent(e['data']['descr']);
                                     $(".form_save_wares").find(".wares_col").val(e['data']['col']);
 
                                     // Каталоги
@@ -311,5 +311,7 @@
             }
         });
     }
-
+  //   window.addEventListener("load", function(event) {
+  //       tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
+  // });
 </script>    

@@ -115,7 +115,7 @@
         </div>
     </div>
 </div>
-<script src="/assets/plugins/tinymce/tinymce.js"></script> 
+<!-- <script src="/assets/plugins/tinymce/tinymce.js"></script>  -->
 <?
 importWisiwyng('wares_descr');
 ?>

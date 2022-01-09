@@ -102,5 +102,6 @@
         </div>
     </div>
 </div>
+<script src="/assets/plugins/tinymce/tinymce.js"></script>
 
 
