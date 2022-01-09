@@ -13,9 +13,18 @@
                             <? if (!isset($_GET['edit'])): ?>
                                 <a href="#" class="btn btn-primary float-left add_wares" data-toggle="modal" data-target="#form_edit_wares_modal">Добавление товара</a>
                                 <?
-                                include 'admin_edit.php';
+                                include 'admin_edit.php';?>
+                                <script src="/assets/plugins/tinymce/tinymce.js"></script>
+                                <script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>
+                                <?
                                 importWisiwyng('wares_descr');
                                 ?>
+                                <script>
+                                    window.addEventListener("load", function(event) {
+                                        document.querySelector(".wares_descr").textContent = "<p></p>";
+                                        tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
+                                  });
+                                </script>
                             <? endif; ?>
                             <select name="visible" class="form-control w-25 float-left ml-2 visible_wares">
                                 <option value="1" <?= (isset($_SESSION['wares']['visible']) && $_SESSION['wares']['visible'] == 1) ? 'selected="selected"' : '' ?>>Отображаемые</option>
@@ -310,10 +319,4 @@
             }
         });
     }
-    window.addEventListener("load", function(event) {
-        document.querySelector(".wares_descr").textContent = "<p></p>";
-        tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
-  });
 </script>
-<script src="/assets/plugins/tinymce/tinymce.js"></script>
-<script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>

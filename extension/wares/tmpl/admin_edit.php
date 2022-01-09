@@ -102,7 +102,5 @@
         </div>
     </div>
 </div>
-<script src="/assets/plugins/tinymce/tinymce.js"></script>
-<script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>
 
 
