@@ -80,7 +80,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="club_days_period">Колличество дней для доступа к закрытому клубу</label>
+                        <label for="club_days_period">Количество дней для доступа к закрытому клубу</label>
                         <select id="club_days_period" name="club_days_period" class="form-control club_days_period">
                             <option value="0">Не предоставлено</option>
                             <?
@@ -103,5 +103,6 @@
     </div>
 </div>
 <script src="/assets/plugins/tinymce/tinymce.js"></script>
+<script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>
 
 

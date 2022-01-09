@@ -62,7 +62,6 @@
         </div>
     </div>
 </div>
-<script src="/assets/plugins/tinymce/tinymce.js"></script>
 <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
 <script>
@@ -314,4 +313,6 @@
   //   window.addEventListener("load", function(event) {
   //       tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
   // });
-</script>    
+</script>
+<script src="/assets/plugins/tinymce/tinymce.js"></script>
+<script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>

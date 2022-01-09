@@ -115,10 +115,6 @@
         </div>
     </div>
 </div>
-<!-- <script src="/assets/plugins/tinymce/tinymce.js"></script>  -->
-<?
-importWisiwyng('wares_descr');
-?>
 
 <script>
     var wares_id = '<?= $wares_id ?>';
@@ -334,4 +330,9 @@ importWisiwyng('wares_descr');
     window.addEventListener("load", function(event) {
         tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
   });
-</script>    
+</script>   
+<script src="/assets/plugins/tinymce/tinymce.js"></script> 
+<script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>
+<?
+importWisiwyng('wares_descr');
+?>
