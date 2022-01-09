@@ -114,7 +114,8 @@
 
         </div>
     </div>
-</div>  
+</div>
+<script src="/assets/plugins/tinymce/tinymce.js"></script> 
 <?
 importWisiwyng('wares_descr');
 ?>
@@ -254,7 +255,7 @@ importWisiwyng('wares_descr');
                                 $(".wares_ex_code").val(e['data']['ex_code']);
                                 $(".wares_articul").val(e['data']['articul']);
                                 $(".wares_url_file").val(e['data']['url_file']);
-                                tinymce.get('wares_descr').setContent(e['data']['descr']);
+                                // tinymce.get('wares_descr').setContent(e['data']['descr']);
                                 $(".wares_col").val(e['data']['col']);
                                 $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
                                 $('.club_days_period option[value="' + e['data']['club_days_period'] + '"]').attr("selected", "selected");
@@ -330,5 +331,7 @@ importWisiwyng('wares_descr');
             });
         }
     }
-
+    window.addEventListener("load", function(event) {
+        tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
+  });
 </script>    
