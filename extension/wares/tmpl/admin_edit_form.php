@@ -194,17 +194,18 @@
                             $(".wares_ex_code").val(e['data']['ex_code']);
                             $(".wares_articul").val(e['data']['articul']);
                             $(".wares_url_file").val(e['data']['url_file']);
+                            $(".wares_descr").html(e['data']['descr']);
                             //console.log("club_month_period: " + e['data']['club_month_period']);
                             $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
                             $('.club_days_period option[value="' + e['data']['club_days_period'] + '"]').attr("selected", "selected");
                             
 
-                            var interval = setInterval(function () {
-                                if (tinymce_init == 1) {
-                                    tinymce.get('wares_descr').setContent(e['data']['descr']);
-                                    clearInterval(interval);
-                                }
-                            }, 300);
+                            // var interval = setInterval(function () {
+                            //     if (tinymce_init == 1) {
+                            //         tinymce.get('wares_descr').setContent(e['data']['descr']);
+                            //         clearInterval(interval);
+                            //     }
+                            // }, 300);
 
                             $(".wares_col").val(e['data']['col']);
 
