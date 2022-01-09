@@ -251,6 +251,7 @@
                                 $(".wares_ex_code").val(e['data']['ex_code']);
                                 $(".wares_articul").val(e['data']['articul']);
                                 $(".wares_url_file").val(e['data']['url_file']);
+                                $(".wares_descr").html(e['data']['descr']);
                                 // tinymce.get('wares_descr').setContent(e['data']['descr']);
                                 $(".wares_col").val(e['data']['col']);
                                 $('.club_month_period option[value="' + e['data']['club_month_period'] + '"]').attr("selected", "selected");
@@ -327,12 +328,15 @@
             });
         }
     }
-    window.addEventListener("load", function(event) {
-        tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
-  });
 </script>   
 <script src="/assets/plugins/tinymce/tinymce.js"></script> 
 <script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>
 <?
 importWisiwyng('wares_descr');
 ?>
+<script>
+    window.addEventListener("load", function(event) {
+        // document.querySelector(".wares_descr").textContent = "<p></p>";
+        tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
+  });
+</script>
