@@ -40,7 +40,7 @@ $tk_shop_secret_key = $config->getConfigParamByCategory('tk_shop_secret_key',7);
   4000 0000 0000 0119      1122        111
  */
 
-//$email = 'koman1706@gmail.com';
+//$email = 'email@gmail.com';
 $emailCompany = 'edzaytsev.psy@gmail.com';
 $phone = '89141820605';
 // Тестовые данные

@@ -269,7 +269,7 @@ include 'edit_consult_master.php';
 //                                    start: to_date
 //                                }
 //                            ], 
-//                            //'en.usa#koman1706@gmail.com.v.calendar.google.com', // events: 'en.usa#holiday@group.v.calendar.google.com',
+//                            //'en.usa#email@gmail.com.v.calendar.google.com', // events: 'en.usa#holiday@group.v.calendar.google.com',
 
                     eventClick: function (arg) {
 

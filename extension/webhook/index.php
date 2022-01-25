@@ -15,6 +15,7 @@ include_once 'inc.php';
 if(!empty($_POST) && isset($_POST['payment']))
 {
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/products/inc.php';
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/wares/inc.php';
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/auth/inc.php';
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/webhook/inc.php';
@@ -22,6 +23,7 @@ if(!empty($_POST) && isset($_POST['payment']))
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 	// $p_pay = json_decode($_POST['payment']);
 	$p_products = new \project\products();
+	$prod_wares = new \project\wares();//список кейсов
 	$p_user = new \project\user();
 	$auth = new \project\auth();
 	$sqlLight = new \project\sqlLight();
@@ -38,6 +40,7 @@ if(!empty($_POST) && isset($_POST['payment']))
 	$pay_status = "succeeded";//статус платежа
 	$pay_descr = null;//описание платежа
 	$confirm_url = $_SERVER['HTTP_REFERER'];//адрес, откуда пришли данные
+	$prod_ids = [];//массив идентификаторов продуктов
 	if(!empty($_POST['payment']['products'])) //проверяем, передано ли название товара
 	{
 		if(is_array($_POST['payment']['products']))
@@ -81,13 +84,22 @@ if(!empty($_POST) && isset($_POST['payment']))
 			// default:
 		}
 	}
-	if(isset($_POST['product_id']))
+	if(isset($_POST['product_id']))//если передан ид продукта
 	{
-		$product = $p_products->getProductId($_POST['product_id']);
+		$prod_ids[] = $_POST['product_id'];//получаем продукт в базе
 		// if(!empty($product['id']))
 		// {
 			// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($product));
 		// }
+	}
+	elseif (isset($_POST['wares_id']))//
+	{
+		$prod_arrays = $prod_wares->getProductsByWaresId($_POST['wares_id']);//получаю продукты кейса
+		foreach ($prod_arrays as $prod)
+		{
+			$prod_ids[] = $prod['product_id'];
+		}
+		file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($prod_ids));
 	}
 	// if(isset($_POST['email']))
 	// {
@@ -98,16 +110,21 @@ if(!empty($_POST) && isset($_POST['payment']))
 		$user = $p_user->user_info_by_phone_or_email($_POST['phone'],$_POST['email']);
 		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($user));
 	}
-	if(!empty($product) && !empty($user) && !empty($pay_type) && !empty($pay_sum) && !empty($pay_descr))
+	if(!empty($prod_ids) && !empty($user) && !empty($pay_type) && !empty($pay_sum) && !empty($pay_descr))
 	{
-		$p_payment = $webhook->create_payment($max_id, $pay_type, $user['id'], $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirm_url);//добавляем оплату в базу
-		$res = $p_pay->insert_pay_products($max_id, $product['id'], $pay_sum);
+		// $p_payment = $webhook->create_payment($max_id, $pay_type, $user['id'], $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirm_url);//добавляем оплату в базу
+		$some = $p_products->getProductsByIds($prod_ids);
+		// foreach ($prod_ids as $prod_id)
+		// {
+			// $p_products->getProductId($prod_id);
+
+		// }
+		// $res = $p_pay->insert_pay_products($max_id, $product['id'], $pay_sum);
 		// $data = array('id' => $max_id, 'pay_type' => $pay_type, 'user_id' => $user['id'], 'pay_sum' => $pay_sum, 'pay_date' => $pay_date, 'pay_key' => $pay_key, 'pay_status' => $pay_status, 'pay_descr' => $pay_descr,'confirm_url' => $confirm_url);
-		// $result = json_encode($p_payment);
-		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", $result);
+		$result = json_encode($some);
+		file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", $result);
 		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($p_payment));
 	}
-
 
 }
 else

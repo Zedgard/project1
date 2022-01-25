@@ -110,9 +110,9 @@ class cart extends \project\extension {
               [title] => Консультация "Эдгард Зайцев" Дата: 20.07.2021 04:00:00
               [images_str] => /assets/img/products/consultation.jpg
               [first_name] => Виктор
-              [user_phone] => 89143720027
-              [user_email] => koman1706@gmail.com
-              [pay_descr] => <div>Консультация с Виктор</div><div>Телефон: 89143720027</div><div>Email: koman1706@gmail.com</div><div>Консультант: Эдгард Зайцев</div><div>Дата и время: 20.07.2021 04:00:00</div><div>Цена: 11000</div>
+              [user_phone] => 891437200**
+              [user_email] => email
+              [pay_descr] => <div>Консультация с Виктор</div><div>Телефон: 89143720027</div><div>Email: email</div><div>Консультант: Эдгард Зайцев</div><div>Дата и время: 20.07.2021 04:00:00</div><div>Цена: 11000</div>
               [date] => 2021-07-20
               [time] => 04:00:00
               [price] => 11000

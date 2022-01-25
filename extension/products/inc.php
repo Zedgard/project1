@@ -198,7 +198,20 @@ class products extends \project\extension {
         $query = "select p.id from `zay_product` p where id='?'";
         return $this->getSelectArray($query, array($product_id))[0];
     }
+    /**
+     * Получить идентификатор по продукту из таблицы products
+     * @param type $product_id
+     * @return type
+     */
+    public function getProductsByIds($prodIdsArray = [])
+    {
+        $idsStr = implode(",", $prodIdsArray);
+        $idsStr = "(".$idStr.")";
+        $query = "select p.id,p.product_price from `zay_product` p where id in(4620,4626)"/*.$idStr*/;
+        return $this->getSelectArray($query);
+    }
     //kaijean
+
 
     /**
      * Создание изменение товара

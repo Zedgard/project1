@@ -1235,5 +1235,21 @@ class wares extends \project\extension {
         $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'";
         return $this->query($query, array($this->db_prefix . $db_table, $db_row, $position_val, $material_id), 0);
     }
-
+    //kaijean
+    /**
+     * получить товары кейса
+     * @param type $цфкуы_id
+     * @return type
+     */
+    public function getProductsByWaresId($wares_id = 0)
+    {
+        if($wares_id > 0)
+        {
+            $querySelect = "SELECT pw.product_id from `zay_product_wares` pw where pw.wares_id = '?'";
+            $objs = $this->getSelectArray($querySelect, [$wares_id]);
+            return $objs;
+        }
+        return false;
+    }
+    //kaijean
 }
