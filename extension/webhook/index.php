@@ -127,6 +127,10 @@ if(!empty($_POST) && isset($_POST['payment']))
 	}
 
 }
+elseif(isset($_GET['sendpulse']) && $_GET['sendpulse'] == "yes")
+{
+
+}
 else
 {
 	goBack('/',0);

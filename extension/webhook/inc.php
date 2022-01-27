@@ -12,9 +12,48 @@ class webhook extends \project\extension {
     public function __construct() {
         parent::__construct();
     }
-
+    //kaijean
+    //Получить информацию по проданным продуктам - количество продаж, количество позиций
+    public function user_product_payments($user_id = 0)
+    {
+        if($user_id > 0)
+        {
+            $querySelect = "SELECT u.first_name, u.last_name, u.email, u.phone, p.id AS payment_id, p.pay_sum AS payment_sum, pp.product_id AS product_id, pr.title AS product_title FROM zay_pay p 
+                LEFT JOIN zay_users u ON p.user_id=u.id 
+                RIGHT JOIN zay_pay_products pp ON pp.pay_id=p.id 
+                LEFT JOIN zay_product pr ON pp.product_id=pr.id 
+                WHERE u.id='?' AND p.pay_status='succeeded' AND pr.title <> 'NULL'";
+            // $select = "SELECT u.first_name, u.last_name, u.email, u.phone FROM zay_users u WHERE u.id='?'";
+            $data = $this->getSelectArray($querySelect, array($user_id));
+            return $data;
+        }
+        return [];
+    }
     /**
-     * Получить все аккаунты
+     * Информация по консультациям пользователя
+     * @param type $phone
+     * @param type $email
+     * @return array
+     */
+    public function user_consultations($phone,$email)
+    {
+        if(!empty($phone) && !empty($email))
+        {
+            $phoneDigits = preg_replace("/[^0-9]/", '', $phone);
+            $regAr = str_split($phoneDigits);
+            $regStr = implode(".*", $regAr);
+            $regExp = "^.*(".$regStr.").*$";
+            $select = "SELECT pc.id, p.pay_sum FROM zay_pay_consultation pc 
+                LEFT JOIN zay_pay p ON pc.pay_id=p.id 
+                WHERE p.id <> 'NULL' AND (pc.user_phone REGEXP '?' OR pc.user_email='?')";
+            $data = $this->getSelectArray($select, array($regExp,$email));
+            return $data;
+        }
+        else
+            return [];
+    }
+    /**
+     * Создать оплату по данным переданным снаружи на вебхук
      * @param new_id
      * @param pay_type
      * @param user_id

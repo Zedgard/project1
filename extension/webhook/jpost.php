@@ -8,9 +8,90 @@ include_once 'inc.php';
 $webhook = new \project\webhook();
 // $items = new \project\menu_item();
 
-/*
- * Все аккаунты
- */
+//получаю данные пользователя
+if (isset($_POST['user_payments']))
+{
+	$productsAr = [];//массив для хранения данных по покупкам продуктов
+	$productsPayAr = [];//количество продаж товаров
+	$productsCount = 0;//количество проданных товаров
+	$productsPayCount = 0;//количество продаж
+	$productsPaySum = 0;//сумма продаж
+
+	$consultAr = [];//массив для хранения данных по покупкам консультаций
+	$consultCount = 0;//количество консультаций
+	$consultSum = null;//сумма продаж консультаций
+    // if(isset($_POST['user_id']) && $_POST['user_id'] > 0)
+    // {
+	//из файла
+        $usersFile = fopen($_SERVER['DOCUMENT_ROOT']."/upload/zay_users.csv", "r");
+        // $idxFile = fopen($_SERVER['DOCUMENT_ROOT']."/upload/idx.txt", "w");
+    //индекс считываемого символа в файле пользователей
+        $idx = file_get_contents($_SERVER['DOCUMENT_ROOT']."/upload/idx.txt");
+        // if(empty($idx))
+        // {
+        //     $idx = 0;
+        // }
+        fseek($usersFile, $idx);//перемещаю указатель на нужный символ в файле пользователей
+        $usersStr = "";
+        while(false !== ($char = fgetc($usersFile)))//пока считываются символы
+        {
+            if($char == "\n" || $char == "\r")//если символ равен окончанию или переносу строки
+            {
+                break;//выход из цикла
+            }
+            else
+            {
+                $usersStr .= $char;//записываем символ в строку хранения
+            }
+        }
+        $usersAr = explode(";", $usersStr);//разбиваем строку для получения данных конкретного пользователя
+        $user_id = $usersAr[0];//идентификатор пользователя
+        if($user_id != "id")//если не первая строка со списком полей,то
+        {
+        	$productsData = $webhook->user_product_payments(15);//получаем данные по продажам продуктов пользователя
+        	foreach ($productsData as $index => $dataRow)
+        	{
+        		if (!array_key_exists($dataRow['product_id'],$productsAr))
+        		{
+        			$productsAr[$dataRow['product_id']] = $dataRow['product_title'];
+        			$productsCount++;
+        		}
+        		if(!array_key_exists($dataRow['payment_id'], $productsPayAr))
+        		{
+        			$productsPayAr[$dataRow['payment_id']] = floatval($dataRow['payment_sum']);
+        			$productsPayCount++;
+        			$productsPaySum += floatval($dataRow['payment_sum']);
+        		}
+        	}
+        	if(!empty($productsData[0]))//если данные имеются
+        	{
+        		$consultData = $webhook->user_consultations($productsData[0]['phone'],$productsData[0]['email']);//получить данные по консультациям пользователя
+        		foreach ($consultData as $index => $dataRow)
+	        	{
+	        		if(!array_key_exists($dataRow['id'],$consultAr))
+	        		{
+	        			$consultAr[$dataRow['id']] = floatval($dataRow['pay_sum']);
+	        			$consultCount++;
+	        			$consultSum += floatval($dataRow['pay_sum']);
+	        		}
+	        	}
+        	}
+            $regTimeStamp = strtotime($usersAr[12]);//
+            $regDate = date("m/d/Y",$regTimeStamp);//
+            $lastTimeStamp = strtotime($usersAr[9]);//
+            $lastDate = date("m/d/Y", $lastTimeStamp);//
+        	$userVars = ['Phone' => $usersAr[2],'first_name' => $usersAr[3], 'last_name' => $usersAr[4], 'products_list' => implode("|", $productsAr), 'products_count' => $productsCount,'products_pays_count' => $productsPayCount, 'products_pay_sum' => array_sum($productsPayAr), 'consult_count' => $consultCount, 'consult_sum' => $consultSum, 'register_date' => $regDate, 'last_date' => $lastDate];
+        	$userData = ["email" => $usersAr[1], 'variables' => $userVars];
+        	$data['emails'] = [$userData];
+        }
+
+        $idx = ftell($usersFile)+1;//записываю новую позицию указателя
+        // file_put_contents($_SERVER['DOCUMENT_ROOT']."/upload/idx.txt", $idx);//записываю индекс укзаателя в файл
+        // $data = $productsPayAr;
+        $result = array('success' => 1, 'success_text' => '', 'data' => $data);//возвращаю данные
+    // }
+}
+
 if (isset($_POST['product_id'])) {
     $data = $webhook->get_accounts_all();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
@@ -23,111 +104,4 @@ if (isset($_POST['get_menu'])) {
     $menu_id = (isset($_POST['menu_id']) && $_POST['menu_id'] > 0) ? $_POST['menu_id'] : 0;
     $data = $menu->get_menu($menu_id);
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
-}
-
-/*
- * Редактировать информацию по меню
- */
-if (isset($_POST['edit_account'])) {
-    $account_id = (isset($_POST['account_id']) && $_POST['account_id'] > 0) ? $_POST['account_id'] : 0;
-    $account_name = (isset($_POST['account_name']) && strlen($_POST['account_name']) > 0) ? $_POST['account_name'] : '';
-    $account_category = (isset($_POST['account_category']) && strlen($_POST['account_category']) > 0) ? $_POST['account_category'] : '';
-    // $menu_descr = (isset($_POST['menu_descr']) && strlen($_POST['menu_descr']) > 0) ? $_POST['menu_descr'] : '';
-    // $menu_role = (isset($_POST['menu_role']) && $_POST['menu_role'] > 0) ? $_POST['menu_role'] : 0;
-
-    if (strlen($account_category) < 1) {
-        $_SESSION['errors'][] = 'Код долже быть заполнен';
-    }
-    if (strlen($account_name) < 3) {
-        $_SESSION['errors'][] = 'Наименование долже быть заполнено';
-    }
-    if (count($_SESSION['errors']) == 0) {
-        if ($accounts->edit_account($account_id, $account_name, $account_category)) {
-            $result = array('success' => 1, 'success_text' => 'Выполнено');
-        } else {
-            $_SESSION['errors'][] = 'Ошибка операции';
-        }
-    }
-}
-
-/*
- * Информация по одному меню
- */
-if (isset($_POST['delete_account'])) {
-    $account_id = (isset($_POST['account_id']) && $_POST['account_id'] > 0) ? $_POST['account_id'] : 0;
-    if ($accounts->delete_account($account_id)) {
-        $result = array('success' => 1, 'success_text' => 'Выполнено');
-    } else {
-        $_SESSION['errors'][] = 'Ошибка операции';
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Данные по пунктам меню
-// -----------------------------------------------------------------------------
-// Список всех пунктов
-if (isset($_POST['menu_items_list'])) {
-    $data = $items->menu_items_list($_POST['menu_items_list']);
-    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
-}
-// Список всех пунктов
-if (isset($_POST['list_items'])) {
-    $data = $items->get_menu_items_list();
-    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
-}
-// редактирование пункта меню
-if (isset($_POST['edit_item'])) {
-    $id = ($_POST['edit_item'] > 0 ) ? $_POST['edit_item'] : 0;
-    $menu_id = ($_POST['menu_id'] > 0) ? $_POST['menu_id'] : 0;
-    $title = trim($_POST['title']);
-    $link = trim($_POST['link']);
-    $css = trim($_POST['css']);
-    $parent_id = $_POST['parent_id'];
-    $role = trim($_POST['menu_item_role']);
-    if ($id == 0) {
-        $position = $items->items_count($menu_id) + 1;
-    }
-    if ($menu_id > 0) {
-        if ($items->edit_menu_item($id, $menu_id, $parent_id, $title, $link, $css, $position, $role)) {
-            $result = array('success' => 1, 'success_text' => 'Выполнено');
-        } else {
-            $_SESSION['errors'][] = "Ошибка запроса";
-        }
-    } else {
-        $_SESSION['errors'][] = "Не определено меню";
-    }
-}
-// Обновить позицию
-//if (isset($_POST['set_position'])) {
-//    $item_id = $_POST['item_id'];
-//    $menu_id = $_POST['menu_id'];
-//    $position = $_POST['set_position'];
-//    if ($items->set_position($menu_id, $item_id, $position)) {
-//        
-//    }
-//}
-// Обновить позицию
-if (isset($_POST['ajax_metod'])) {
-    // Сортировка 
-    if ($_POST['ajax_metod'] == 'update_position') {
-        $db_table = trim($_POST['db_table']);
-        $db_row = trim($_POST['db_row']);
-        $result = array('success' => 1, 'success_text' => '');
-        if (count($_POST['ids']) > 0) {
-            $i = 0;
-            foreach ($_POST['ids'] as $value) {
-                $items->position_update($db_table, $db_row, $value, $i);
-                $i++;
-            }
-        }
-    }
-}
-
-// Удаление элемента меню
-if (isset($_POST['delete_item'])) {
-    if ($items->delete_menu_item($_POST['delete_item'])) {
-        $result = array('success' => 1, 'success_text' => 'Выполнено');
-    } else {
-        $result = array('success' => 0, 'success_text' => 'Ошибка!');
-    }
 }

@@ -4,13 +4,14 @@
             <div class="card card-default">
 
                 <div class="card-header card-header-border-bottom">
-                    <h2 class="col-lg-6">Управление аккаунтами</h2>
+                    <h2 class="col-lg-6">Список пользователей для синхронизации с SendPulse</h2>
                 </div>
 
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <a href="#" class="btn btn-primary btn_account_edit" obj_i="">Добавление аккаунта</a>
+                            <button class="btn btn-primary sendpulse_auth" onclick="sendpPulseAuthorize()">Войти в SendPulse</button>
+                            <button class="btn btn-info sendpulse_auth" onclick="getUsersData()">Получить данные пользователя</button>
                         </div>
                     </div>
                     <br/>
@@ -39,17 +40,97 @@
         </div>
     </div>
 </div>
-<?include 'edit_account.php';?>
+<?//include 'edit_account.php';?>
 <script>
     var roles = [];
     var accounts = [];
     var account_id = 0;
     $(document).ready(function () {
         // init_roles_list();
-        init_get_account_all();
-        init_edit_account();
+
+        // init_get_account_all();
+        // init_edit_account();
         console.log("READY");
     });
+    /*
+     * получить данные пользователей по продажам и последним входам
+     */
+    function getUsersData()
+    {
+        console.log('userdata');
+        // $.ajax({
+        //    url: "/jpost.php?extension=webhook",
+        //    type: 'POST',
+        //    // dataType: 'json',
+        //    data: {"user_product_payments": 1, "user_id": 15},
+        //    contentType: 'application/json',
+        //    // headers: {
+        //    //    'X-Requested-With': 'XMLHttpRequest'
+        //    // },
+        //    success: function (result) {
+        //         console.log(result);
+        //         // localStorage.setItem('token',result['access_token']);
+        //        // CallBack(result);
+        //    },
+        //    error: function (error) {
+        //         console.log(error);
+        //    }
+        // });
+        sendPostLigth('/jpost.php?extension=webhook',
+            {"user_payments": 1},
+            function (e) {
+                console.log(e);
+                var tkn = localStorage.getItem('token');
+                if(!tkn)
+                {
+                    sendpPulseAuthorize();
+                }
+                else
+                {
+                    $.ajax({
+                        url: "https://api.sendpulse.com/addressbooks/89384270/emails",
+                        type: 'POST',
+                        data: e['data'],
+                        headers:{
+                            'Authorization':'Bearer '+tkn
+                        },
+                        success: function(result)
+                        {
+                            console.log("some success");
+                        },
+                        error: function(error)
+                        {
+                            console.log("some error");
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+    }
+    /*
+     * авторизоваться в sendpulse
+     */
+    function sendpPulseAuthorize()
+    {
+        var authUrl = "https://api.sendpulse.com/oauth/access_token";
+        $.ajax({
+           url: authUrl,
+           type: 'POST',
+           data: {grant_type:"client_credentials", client_id:"1e2246d5cf334cf3490810cc11ecc80a", client_secret:"d2f5d50a9981d9d399abecc1c5d812f7"},
+           // contentType: 'application/json',
+           headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+           },
+           success: function (result) {
+                console.log(result);
+                localStorage.setItem('token',result['access_token']);
+               // CallBack(result);
+           },
+           error: function (error) {
+                console.log(error);
+           }
+        });
+    }
 
     /*
      * получить меню

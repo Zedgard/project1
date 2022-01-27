@@ -7,9 +7,8 @@ include_once 'inc.php';
 include 'lang.php';
 
 
-$db_accs = new \project\accounts();
 $usr = new \project\user();
-if ($usr->isEditor()) {
+if ($usr->isAdmin()) {
     // $accounts = $db_accs->get_accounts_all();
         include 'tmpl/admin.php';
 } else {
