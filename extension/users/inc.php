@@ -51,18 +51,30 @@ class user extends \project\extension {
      * @param type $email
      * @return array
      */
-    public function user_info_by_phone_or_email($phone,$email)
+    public function user_info_by_phone_or_email($email,$phone)
     {
         $phoneDigits = preg_replace("/[^0-9]/", '', $phone);
-        $regAr = str_split($phoneDigits);
+        $phone = substr($phoneDigits, 1);
+        $regAr = str_split($phone);
         $regStr = implode(".*", $regAr);
         $regExp = "^.*(".$regStr.").*$";
-        $select = "SELECT u.id FROM zay_users u WHERE u.phone REGEXP '?' OR u.email='?'";
+        $select = "SELECT u.id, u.phone, u.email FROM zay_users u WHERE u.phone REGEXP '?' OR u.email='?'";
         $data = $this->getSelectArray($select, array($regExp,$email), 0);
-        if (count($data) == 1) {
-            return $data[0];
+        $haveEmailIndex = null;//индекс записи с найденным email
+        foreach ($data as $index => $user)
+        {
+            if($user['email'] == $email)
+                $haveEmailIndex = $index;
         }
-        return array();
+        if($haveEmailIndex != null || $haveEmailIndex != false)//если учётная запись с email найдена
+        {
+            return $data[$haveEmailIndex];//возвращаем найденную запись
+        }
+        else//иначе если учетной записи с таким email нет, то
+        {
+            return array();//возвращаем первую найденную учётную запись
+        }
+        // return array();
     }
     //kaijean
     /**

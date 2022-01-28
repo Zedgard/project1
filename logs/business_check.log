@@ -821,3 +821,24 @@ string(43) "{"result":"1001","message":"invalid token"}"
 26-01-2022 19:18:54 Покупка: 284213 не сформирован чек
 string(43) "{"result":"1001","message":"invalid token"}"
 
+27-01-2022 20:18:16 Покупка: 284223 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
+27-01-2022 21:44:48 Покупка: 284226 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
+28-01-2022 02:38:52 Покупка: 284231 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
+28-01-2022 08:06:34 Покупка: 284235 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
+28-01-2022 08:35:30 Покупка: 284237 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
+28-01-2022 08:36:24 Покупка: 284237 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+
+28-01-2022 08:55:39 Покупка: 284238 не сформирован чек
+string(43) "{"result":"1001","message":"invalid token"}"
+

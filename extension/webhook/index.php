@@ -105,23 +105,54 @@ if(!empty($_POST) && isset($_POST['payment']))
 	// {
 	// 	$user = $p_user->user_info($_POST['email']);
 	// }
-	if(isset($_POST['phone']) && isset($_POST['email']))
+	$phone = null;//переменная номер телефона
+	$email = null;//переменная почтового адреса
+	$name = null;//переменная имени
+	if(isset($_POST['phone']) && isset($_POST['email']))//если название полей параметров в нижнем регистре
 	{
-		$user = $p_user->user_info_by_phone_or_email($_POST['phone'],$_POST['email']);
+		$phone = $_POST['phone'];
+		$email = $_POST['email'];		
+	}
+	elseif(isset($_POST['Phone']) && isset($_POST['Email']))//иначе если названия полей параметров в CaseCamel регистре
+	{
+		$phone = $_POST['Phone'];
+		$email = $_POST['Email'];
+	}
+	if(isset($_POST['name']))
+	{
+		$name = $_POST['name'];
+	}
+	elseif(isset($_POST['Name']))
+	{
+		$name = $_POST['Name'];
+	}
+	if(!empty($phone) && !empty($email) && !empty($name))
+	{
+		$user = $p_user->user_info_by_phone_or_email($email,$phone);//проверяем есть ли пользователь уже в базе
+		$registered = false;
+		if(empty($user))//если пользователя нет в базе
+		{
+			$registered = $auth->register_fast_with_email_phone_name($email, $phone, $name, 1);//запрашиваем быструю регистрацию и получаем её результат
+			if($registered)
+			{
+				$user = $p_user->user_info_by_phone_or_email($email,$phone);//проверяем есть ли пользователь уже в базе
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($_SESSION['errors']));
+		}
 		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($user));
 	}
 	if(!empty($prod_ids) && !empty($user) && !empty($pay_type) && !empty($pay_sum) && !empty($pay_descr))
 	{
-		// $p_payment = $webhook->create_payment($max_id, $pay_type, $user['id'], $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirm_url);//добавляем оплату в базу
-		$some = $p_products->getProductsByIds($prod_ids);
-		// foreach ($prod_ids as $prod_id)
-		// {
+		$p_payment = $webhook->create_payment($max_id, $pay_type, $user['id'], $pay_sum, $pay_date, $pay_key, $pay_status, $pay_descr ,$confirm_url);//добавляем оплату в базу
+		$prodAr = $p_products->getProductsByIds($prod_ids);
+		foreach ($prodAr as $prod)
+		{
 			// $p_products->getProductId($prod_id);
-
-		// }
+			$p_pay->insert_pay_products($max_id, $prod['id'], $prod['price']);
+		}
 		// $res = $p_pay->insert_pay_products($max_id, $product['id'], $pay_sum);
 		// $data = array('id' => $max_id, 'pay_type' => $pay_type, 'user_id' => $user['id'], 'pay_sum' => $pay_sum, 'pay_date' => $pay_date, 'pay_key' => $pay_key, 'pay_status' => $pay_status, 'pay_descr' => $pay_descr,'confirm_url' => $confirm_url);
-		$result = json_encode($some);
+		$result = json_encode($prodAr);
 		file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", $result);
 		// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($p_payment));
 	}

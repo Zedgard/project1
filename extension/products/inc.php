@@ -205,10 +205,17 @@ class products extends \project\extension {
      */
     public function getProductsByIds($prodIdsArray = [])
     {
-        $idsStr = implode(",", $prodIdsArray);
-        $idsStr = "(".$idStr.")";
-        $query = "select p.id,p.product_price from `zay_product` p where id in(4620,4626)"/*.$idStr*/;
-        return $this->getSelectArray($query);
+        if(!empty($prodIdsArray))
+        {
+            $idsStr = implode(",", $prodIdsArray);
+            $query = "SELECT p.id, p.price FROM zay_product p WHERE p.id IN('?')";
+            $data = $this->getSelectArray($query, [$idsStr]);
+            return $data;
+        }
+        else
+        {
+            return [];
+        }
     }
     //kaijean
 
