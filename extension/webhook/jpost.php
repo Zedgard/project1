@@ -19,6 +19,7 @@ $bookID = 89384270;
 $webhook = new \project\webhook();
 $data = [];
 // $items = new \project\menu_item();
+file_put_contents($_SERVER['DOCUMENT_ROOT']."/upload/idx.txt", "lolkek");
 
 //получаю данные пользователя
 if (isset($_POST['user_payments']))
@@ -213,6 +214,7 @@ if (isset($_POST['user_payments_today']))
         $data['result'] = "end";
     }
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);//возвращаю данные
+    file_put_contents($_SERVER['DOCUMENT_ROOT']."/upload/idx.txt", $result);//записываю индекс указателя в файл
     // $regTimeStamp = strtotime($usersAr[12]);//
     // $regDate = date("m/d/Y",$regTimeStamp);//
     // $lastTimeStamp = strtotime($usersAr[9]);//
