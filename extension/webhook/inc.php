@@ -14,9 +14,9 @@ class webhook extends \project\extension {
     }
     //kaijean
     //Получить информацию по проданным продуктам - количество продаж, количество позиций
-    public function user_product_payments($user_id = 0)
+    public function user_product_payments($user_id = "")
     {
-        if($user_id > 0)
+        if(!empty($user_id))
         {
             $querySelect = "SELECT u.first_name, u.last_name, u.email, u.phone, p.id AS payment_id, p.pay_sum AS payment_sum, pp.product_id AS product_id, pr.title AS product_title FROM zay_pay p 
                 LEFT JOIN zay_users u ON p.user_id=u.id 
@@ -24,8 +24,25 @@ class webhook extends \project\extension {
                 LEFT JOIN zay_product pr ON pp.product_id=pr.id 
                 WHERE u.id='?' AND p.pay_status='succeeded' AND pr.title <> 'NULL'";
             // $select = "SELECT u.first_name, u.last_name, u.email, u.phone FROM zay_users u WHERE u.id='?'";
-            $data = $this->getSelectArray($querySelect, array($user_id));
-            return $data;
+            $res = $this->getSelectArray($querySelect, array($user_id));
+            return $res;
+        }
+        return [];
+    }
+    //kaijean
+    //Получить информацию по проданным продуктам - количество продаж, количество позиций за день
+    public function user_product_payments_by_now_date($last_day_start = "", $last_day_end = "")
+    {
+        if($last_day_start != "" && $last_day_end != "")
+        {
+            $querySelect = "SELECT u.id, u.first_name, u.last_name, u.email, u.phone, u.active_lastdate, u.date_registered, p.id AS payment_id, p.pay_sum AS payment_sum, pp.product_id AS product_id, pr.title AS product_title FROM zay_pay p 
+                LEFT JOIN zay_users u ON p.user_id=u.id 
+                RIGHT JOIN zay_pay_products pp ON pp.pay_id=p.id 
+                LEFT JOIN zay_product pr ON pp.product_id=pr.id 
+                WHERE p.pay_status='succeeded' AND pr.title <> 'NULL' AND p.pay_date BETWEEN '".$last_day_start."' AND '".$last_day_end."'";
+            // $select = "SELECT u.first_name, u.last_name, u.email, u.phone FROM zay_users u WHERE u.id='?'";
+            $res = $this->getSelectArray($querySelect, array());
+            return $res;
         }
         return [];
     }
@@ -44,10 +61,32 @@ class webhook extends \project\extension {
             $regStr = implode(".*", $regAr);
             $regExp = "^.*(".$regStr.").*$";
             $select = "SELECT pc.id, p.pay_sum FROM zay_pay_consultation pc 
-                LEFT JOIN zay_pay p ON pc.pay_id=p.id 
+                LEFT JOIN zay_pay p ON pc.pay_id=p.id  
                 WHERE p.id <> 'NULL' AND (pc.user_phone REGEXP '?' OR pc.user_email='?')";
-            $data = $this->getSelectArray($select, array($regExp,$email));
-            return $data;
+            $res = $this->getSelectArray($select, array($regExp,$email));
+            return $res;
+        }
+        else
+            return [];
+    }
+    /**
+     * Информация по консультациям пользователя за прошедший день
+     * @return array
+     */
+    public function user_consultations_by_now_date($last_day_start = "", $last_day_end = "")
+    {
+        if(!empty($last_day_start) && !empty($last_day_end))
+        {
+            // $phoneDigits = preg_replace("/[^0-9]/", '', $phone);
+            // $regAr = str_split($phoneDigits);
+            // $regStr = implode(".*", $regAr);
+            // $regExp = "^.*(".$regStr.").*$";
+            $select = "SELECT pc.id, pc.user_email, pc.user_phone, u.first_name, u.last_name, u.active_lastdate, u.date_registered, p.pay_sum FROM zay_pay_consultation pc 
+                LEFT JOIN zay_pay p ON pc.pay_id=p.id 
+                LEFT JOIN zay_users u ON pc.user_email=u.email 
+                WHERE p.id <> 'NULL' AND p.pay_date BETWEEN '".$last_day_start."' AND '".$last_day_end."'";
+            $res = $this->getSelectArray($select, array());
+            return $res;
         }
         else
             return [];
