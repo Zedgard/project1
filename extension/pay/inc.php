@@ -231,6 +231,23 @@ class pay extends \project\extension {
         $query = "SELECT DISTINCT `pay_status` FROM `zay_pay`";
         return $sqlLight->queryList($query, array());
     }
+    /**
+     * Имзенить статус платежа
+     * @return type
+     */
+    public function set_manual_status($payment_id, $status = "")
+    {
+        $sqlLight = new \project\sqlLight();
+        $query = "UPDATE zay_pay p SET p.manual_status='";
+        if($status == "hidden")
+            $query .= "hidden' ";
+        else
+            $query .= "' ";
+        $query .= "WHERE p.id=".$payment_id.";";
+
+        return $sqlLight->query($query, array());
+    }
+    
 
     /**
      * Добавление связи продажа и продукт

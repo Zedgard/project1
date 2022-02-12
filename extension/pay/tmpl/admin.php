@@ -112,6 +112,11 @@
                                                 </select>
                                             </th>
                                             <th class="text-center">Товары <span class="pay_summ_all"></span></th>
+                                            <th class="text-center">
+                                                <select name="manual_select_status" class="form-control manual_select_status">
+                                                    <!-- <option value="">Статус для кабинета</option> -->
+                                                </select>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,4 +143,9 @@
     </div>
 </div>
 <script src="/extension/pay/js/pay_js.js<?= $_SESSION['rand'] ?>"></script>
-
+<style type="text/css">
+    .double .btn
+    {
+        padding:0 5px;
+    }
+</style>

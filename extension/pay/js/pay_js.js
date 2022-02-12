@@ -20,6 +20,7 @@ $(document).ready(function () {
     init_search_pay_user();
     init_pay_select_type();
     init_pay_select_status();
+    init_manual_select_status();
 });
 
 /**
@@ -97,14 +98,27 @@ function init_pay_data_list() {
                 if (e['data'][i]['pay_credit'] > 0) {
                     credit_type = '( Кредитный )';
                 }
-
+                //kaijean
+                var manual_status = e['data'][i]['manual_status'];
+                var cur_status = null;
+                if(manual_status === 'hidden')
+                {
+                    cur_status = '<button class="btn btn-secondary disabled" disabled>скрыто</button><button class="btn btn-success" onclick="changeManualStatus(this)">отобразить</button>';
+                }
+                else
+                {
+                    cur_status = '<button class="btn btn-danger" onclick="changeManualStatus(this)">скрыть</button><button class="btn btn-secondary disabled" disabled>отображается</button>';
+                }
+                var res_status = '<div class="btn btn "></div>'
+                //kaijean
                 $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
                                     <td class="text-center align-middle"><a href="javascript:void(0)" class="btn btn-link btn_pay_info_modal" objid="' + e['data'][i]['id'] + '">' + e['data'][i]['id'] + '</a></td> \
                                     <td class="align-middle">' + user_title + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_type_title'] + ' ' + credit_type + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_date'] + '</td> \
                                     <td class="text-center align-middle">' + pay_status + '<br/>' + business_check + '</td> \
-                                    <td class="text-center align-middle">' + pay_descr + '</td>\
+                                    <td class="text-center align-middle">' + pay_descr + '</td> \
+                                    <td class="text-center align-middle double">' + cur_status + '</td> \
                                     </tr>');
                 //}
             }
@@ -123,6 +137,25 @@ function init_pay_data_list() {
             init_send_business_check();
         }
     });
+}
+function changeManualStatus(btn)
+{
+    var manual_status = null;
+    if(btn.classList.contains("btn-danger"))
+    {
+        manual_status = "hidden";
+    }
+    else if(btn.classList.contains("btn-success"))
+    {
+        manual_status = "";
+    }
+    var tr = btn.closest('tr');
+    var objid = tr.getAttribute("objid");
+    console.log("change");
+    sendPostLigth('/jpost.php?extension=pay', {"set_manual_status": manual_status,"payment_id":objid}, function (e) {
+        console.log("yeah");
+            init_pay_data_list();
+        });
 }
 
 /**
@@ -183,6 +216,30 @@ function init_pay_select_status() {
         $(".pay_select_status").change(function () {
             pay_search_status = $(this).val();
             init_pay_data_list();
+        });
+    });
+}
+// Получить Статусы для кабинета kaijean
+function init_manual_select_status() {
+    sendPostLigth('/jpost.php?extension=pay', {"manual_select_status": 1}, function (e) {
+        $(".manual_select_status").html("<option value=\"\">Статус для кабинета</option>");
+        if (e['data'].length > 0) {
+            for (var i = 0; i < e['data'].length; i++) {
+                var pay_status = e['data'][i]['manual_status'];
+                if (pay_status === 'hidden')
+                {
+                    pay_status_text = 'скрыто';
+                }
+                else
+                {
+                    pay_status_text = 'отображается';
+                }
+                $(".manual_select_status").append('<option value="' + pay_status + '">' + pay_status_text + '</option>');
+            }
+        }
+        $(".manual_select_status").change(function () {
+            pay_search_status = $(this).val();
+            // init_pay_data_list();
         });
     });
 }

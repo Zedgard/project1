@@ -84,7 +84,7 @@ if(!empty($_POST) && isset($_POST['payment']))
 			// default:
 		}
 	}
-	if(isset($_POST['product_id']))//если передан ид продукта
+	if(isset($_POST['product_id']) && !empty($_POST['product_id']))//если передан ид продукта
 	{
 		$prod_ids[] = $_POST['product_id'];//получаем продукт в базе
 		// if(!empty($product['id']))
@@ -92,7 +92,7 @@ if(!empty($_POST) && isset($_POST['payment']))
 			// file_put_contents($_SERVER['DOCUMENT_ROOT']."/webhook.txt", json_encode($product));
 		// }
 	}
-	elseif (isset($_POST['wares_id']))//
+	elseif (isset($_POST['wares_id']) && !empty($_POST['wares_id']))//
 	{
 		$prod_arrays = $prod_wares->getProductsByWaresId($_POST['wares_id']);//получаю продукты кейса
 		foreach ($prod_arrays as $prod)
