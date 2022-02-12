@@ -1241,6 +1241,32 @@ class wares extends \project\extension {
      * @param type $цфкуы_id
      * @return type
      */
+    public function hideWaresPayments($wares_id = 0,$u_id)
+    {
+        if($wares_id > 0)
+        {
+            $ar = $this->getProductsByWaresId($wares_id);
+            $prodAr = [];
+            foreach ($ar as $qAr)
+            {
+                $prodAr[] = $qAr['product_id'];
+            }
+            $proStr = implode(",", $prodAr);
+            $querySelect = "UPDATE zay_pay p 
+                LEFT JOIN zay_pay_products pp on pp.pay_id=p.id 
+                SET p.manual_status = 'hidden' 
+                WHERE pp.product_id IN(".$proStr.") AND p.user_id=".$u_id;
+            $res = $this->query($querySelect, []);
+            return $res;
+        }
+        return false;
+    }
+    //kaijean
+    /**
+     * получить товары кейса
+     * @param type $цфкуы_id
+     * @return type
+     */
     public function getProductsByWaresId($wares_id = 0)
     {
         if($wares_id > 0)

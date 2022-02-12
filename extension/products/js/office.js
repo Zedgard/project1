@@ -112,7 +112,7 @@ function init_getClientPayProducts() {
 //                                        <div class="d-flex align-items-end text-center flex-fill wares_title">' + data[i]['title'] + '</div>\n\
 //                                </div>\n\
 //                         </a>');
-                $(".products_arrays_data").append('<div class="mb-0 mb-lg-3 category-' + data[i]['wcategory_id'] + '" data-ref="mixitup-target">\n\
+                $(".products_arrays_data").append('<div class="pos mb-0 mb-lg-3 category-' + data[i]['wcategory_id'] + '" data-ref="mixitup-target">\n\
                         <a href="' + href + data[i]['id'] + '" attr_cat="' + data[i]['cat_title'] + '">\n\
                             <div class="m-0 m-lg-2 p-2 p-lg-4 h-100 d-flex flex-column product_info item">\n\
                                 <span class="class_category_lbl opacity75" style="background-color: ' + wcc_color + ';margin-top: 0rem;">' + data[i]['cat_title'] + '</span>\n\
@@ -122,6 +122,7 @@ function init_getClientPayProducts() {
                                 </div>\n\
                             </div>\n\
                             </a>\n\
+                            <button class="btn btn-danger del" onclick="deleteConfirm(this)"><i class="fas fa-trash"></i></button>\n\
                         </div>');
             }
             /*
@@ -142,3 +143,34 @@ function init_getClientPayProducts() {
         }
     });
 }
+//kaijean
+function deleteConfirm(btn)
+{
+    var div = btn.closest(".pos");
+    var a = div.querySelector("a");
+    var lnk = a.getAttribute("href");
+    var wares_id = lnk.substr(lnk.lastIndexOf("wares_id")+9);
+
+    var wares_div = div.querySelector(".wares_title");
+    var innerDiv = wares_div.querySelector("div");
+    var title = innerDiv.innerHTML;
+    var modal = document.querySelector(".delete-confirm");
+    var content = modal.querySelector(".modal-body .row .col-12");
+    content.innerHTML = "Вы действительно хотите удалить " + title + " ?" + '<input type="hidden" value="'+wares_id+'">';
+    $('.delete-confirm').modal('toggle');
+}
+//kaijean
+function processDelete(btn)
+{
+    var modal = btn.closest(".modal-content");
+    var input = modal.querySelector('input');
+    var wares_id = input.value;
+    sendPostLigth('/jpost.php?extension=wares', {
+        "hideWaresPayments": wares_id
+    }, function (e) {
+        console.log(e['data']);
+        init_getClientPayProducts();
+        $('.delete-confirm').modal('toggle');
+    });
+}
+//kaijean

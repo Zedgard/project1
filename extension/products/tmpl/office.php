@@ -40,8 +40,44 @@
     </div>
 
 
-</div> 
+</div>
+<div class="delete-confirm modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalSmall" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalSmall">Удаление товара</h5>
+                <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="btn btn-danger" onclick="processDelete(this)">Да</span>
+                <span class="btn btn-dark" data-dismiss="modal" data-bs-dismiss="modal">Нет</span>
+                <!-- <span class="btn btn-primary btn_save_pay_info">Сохранить</span> -->
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .pos
+    {
+        position: relative;
+    }
+    .btn.del
+    {
+        position: absolute;
+        right: 15px;
+        bottom: 0px;
+        cursor:grabbing;
+    }
+</style>
 <script src="/assets/plugins/mixitup/mixitup.min.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
 <script src="/extension/products/js/office.js<?= $_SESSION['rand'] ?>"></script>
