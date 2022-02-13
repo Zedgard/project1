@@ -57,9 +57,9 @@ if (count($_SESSION['cart']['itms']) > 0) {
         $queryMaxId = "select MAX(p.id) max_id from `zay_pay` p";
         $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
 
-        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
-                . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-        if ($sqlLight->query($query, array(($max_id), 'nm', $client_id, $price_total, $pay_date, '', $pay_status, '', $pay_descr, ''), 0)) {
+        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`, `manual_status`) "
+                . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+        if ($sqlLight->query($query, array(($max_id), 'nm', $client_id, $price_total, $pay_date, '', $pay_status, '', $pay_descr, '', ''), 0)) {
 
             // Сохраним связи с продуктами
             $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);

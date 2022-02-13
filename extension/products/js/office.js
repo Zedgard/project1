@@ -122,7 +122,6 @@ function init_getClientPayProducts() {
                                 </div>\n\
                             </div>\n\
                             </a>\n\
-                            <button class="btn btn-danger del" onclick="deleteConfirm(this)"><i class="fas fa-trash"></i></button>\n\
                         </div>');
             }
             /*
@@ -144,6 +143,7 @@ function init_getClientPayProducts() {
     });
 }
 //kaijean
+//<button class="btn btn-danger del" onclick="deleteConfirm(this)"><i class="fas fa-trash"></i></button>
 function deleteConfirm(btn)
 {
     var div = btn.closest(".pos");

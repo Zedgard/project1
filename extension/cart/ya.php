@@ -222,9 +222,9 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
                 //print_r($payment);
 //echo $max_id . "<br/>\n";
 // Сохраняем данные платежа в базу
-                $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
-                        . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-                if ($sqlLight->query($queryPay, array(($max_id), 'ya', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $confirmationUrl), 0)) {
+                $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`, `manual_status`) "
+                        . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+                if ($sqlLight->query($queryPay, array(($max_id), 'ya', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $confirmationUrl, ''), 0)) {
 //                foreach ($_SESSION['cart']['itms'] as $key => $value) {
 //                    $product_id = $value['id'];
 //                    if ($product_id > 0) {
