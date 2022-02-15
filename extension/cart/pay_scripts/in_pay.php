@@ -147,8 +147,8 @@ if ($price_total > 0) {
         $max_id = $sqlLight->queryList($queryMaxId, array())[0]['max_id'] + 1;
 
         // Сохраняем данные платежа в базу
-        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_descr`, `confirmationUrl`, `manual_status`) "
-                . "VALUES ('?', '?','?', '?', '?', '?', '?', '?', '?', '?')";
+        $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_descr`, `confirmationUrl`) "
+                . "VALUES ('?', '?','?', '?', '?', '?', '?', '?', '?')";
         if ($sqlLight->query($query, array(($max_id), 'in', $client_id, $price_total, $pay_date, $pay_key, $pay_status, $pay_descr, '', ''))) {
             foreach ($_SESSION['cart']['itms'] as $key => $value) {
                 $product_id = $value['id'];

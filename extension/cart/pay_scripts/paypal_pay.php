@@ -241,8 +241,8 @@ if ($price_total == 0) {
                 }
 
                 // Сохраняем данные платежа в базу
-                $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`, `manual_status`) "
-                        . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?' ,'?')";
+                $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
+                        . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
                 if ($sqlLight->query($queryPay, array(($max_id), 'pp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $href, ''), 0)) {
                     // Сохраним связи с продуктами
                     $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);

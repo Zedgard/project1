@@ -112,11 +112,10 @@
                                                 </select>
                                             </th>
                                             <th class="text-center">Товары <span class="pay_summ_all"></span></th>
-                                            <th class="text-center">
+                                            <!-- <th class="text-center">
                                                 <select name="manual_select_status" class="form-control manual_select_status">
-                                                    <!-- <option value="">Статус для кабинета</option> -->
                                                 </select>
-                                            </th>
+                                            </th> -->
                                         </tr>
                                     </thead>
                                     <tbody>

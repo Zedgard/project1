@@ -72,7 +72,7 @@ if ($p_user->isEditor()) {
     }
     //изменить статус платежа
     if (isset($_POST['set_manual_status'])) {
-        $data = $pay->set_manual_status($_POST['payment_id'],$_POST['set_manual_status']);
+        $data = $pay->set_manual_status($_POST['payment_id'],$_POST['set_manual_status'],$_POST['product_id'],$_POST['user_email']);
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
     
