@@ -150,8 +150,8 @@ function changeManualStatus(btn)
     var tr = btn.closest('tr');
     var objid = tr.getAttribute("objid");//идентификатор покупки
     
-    var td = btn.closest('td');
-    var a = td.querySelector('a');//элемент ссылки на товар
+    var div = btn.closest('.mb-2');
+    var a = div.querySelector('a');//элемент ссылки на товар
     var link = a.getAttribute("href");//непосредственно ссылка на товар
     var prod_str = link.substring(link.indexOf("product"));//подстрока с ид товара
     var prodAr = prod_str.split("=");

@@ -235,7 +235,7 @@ class pay extends \project\extension {
      * Изменить статус товара в платеже
      * @return type
      */
-    public function set_manual_status($payment_id, $status = "",$prod_id,$user_email)
+    public function set_manual_status($payment_id, $status = "",$product_id,$user_email)
     {
         $sqlLight = new \project\sqlLight();
         $query = "SELECT u.id from zay_users u where u.email='".$user_email."';";//запрос пользователя 
@@ -247,7 +247,7 @@ class pay extends \project\extension {
             $query .= "hidden' ";
         else
             $query .= "' ";
-        $query .= "WHERE p.user_id=".$user[0]['id']." AND pp.product_id=".$prod_id.";";
+        $query .= "WHERE p.user_id=".$user[0]['id']." AND pp.product_id=".$product_id.";";
 
         return $sqlLight->query($query, array());
     }
