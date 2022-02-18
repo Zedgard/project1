@@ -406,7 +406,7 @@
 
 
                                 $(".form_save_products").find(".products_sold").val(e['data']['sold']);
-                                $(".product_content").val(e['data']['product_content']);
+                                $(".product_content").html(e['data']['product_content']);
 
                                 // active
                                 if (e['data']['active'] > 0) {
@@ -649,5 +649,6 @@ importWisiwyng('product_content', 300);
     window.addEventListener("load", function(event) {
         tinymce.get('products_desc_minimal').setContent(document.querySelector(".products_desc_minimal").textContent);
         tinymce.get('products_desc').setContent(document.querySelector(".products_desc").textContent);
+        tinymce.get('product_content').setContent(document.querySelector(".product_content").textContent);
   });
 </script>
