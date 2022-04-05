@@ -67,7 +67,7 @@
         <script async="async" type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
-        <?= $config->getConfigParam('yandex_metrika') ?>
+        <?//=$config->getConfigParam('yandex_metrika')?>
 
     </head>  
     <body data-spy="scroll" data-target=".navbar" data-offset="90" style="background-color: #FFFFFF;">
@@ -775,69 +775,67 @@
         <?
         include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/promo/index.php';
         ?>
+        <!--Bootstrap Core-->
+        <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/bootstrap5/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
 
+        <!--to view items on reach-->
+        <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
+
+        <!--Equal-Heights-->
+        <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
+
+        <!--number counters-->
+        <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
+
+        <!--Parallax Background-->
+        <script src="/themes/site1/js/parallaxie.js<?= $_SESSION['rand'] ?>"></script>
+
+        <!--Cubefolio Gallery-->
+        <script src="/themes/site1/js/jquery.cubeportfolio.min.js<?= $_SESSION['rand'] ?>"></script>
+
+        <!--FancyBox popup-->
+        <script src="/themes/site1/js/jquery.fancybox.min.js<?= $_SESSION['rand'] ?>"></script>       
+
+        <!-- Video Background-->
+        <script src="/themes/site1/js/jquery.background-video.js<?= $_SESSION['rand'] ?>"></script>
+
+        <!--TypeWriter-->
+        <script src="/themes/site1/js/typewriter.js<?= $_SESSION['rand'] ?>"></script> 
+
+        <!--Particles-->
+        <script src="/themes/site1/js/particles.min.js<?= $_SESSION['rand'] ?>"></script>            
+
+        <!--WOw animations-->
+        <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
+
+        <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
+        <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
+        <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
+
+        <!--Google Map API-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
+        <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>   
+        <?
+        foreach ($_SESSION['body_javascript'] as $js) {
+            echo $js . "\n";
+        }
+        /*
+          <script>
+          window.replainSettings = {id: 'f346900b-3b2e-416b-b910-b20b91ea8843'};
+          (function (u) {
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = u;
+          var x = document.getElementsByTagName('script')[0];
+          x.parentNode.insertBefore(s, x);
+          })('https://widget.replain.cc/dist/client.js');
+          </script>
+         */
+        ?>
     </body>
-    <!--Bootstrap Core-->
-    <script src="/themes/site1/js/popper.min.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/plugins/bootstrap5/js/bootstrap.min.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--to view items on reach-->
-    <script src="/themes/site1/js/jquery.appear.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--Equal-Heights-->
-    <script src="/themes/site1/js/jquery.matchHeight-min.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--number counters-->
-    <script src="/themes/site1/js/jquery-countTo.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--Parallax Background-->
-    <script src="/themes/site1/js/parallaxie.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--Cubefolio Gallery-->
-    <script src="/themes/site1/js/jquery.cubeportfolio.min.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--FancyBox popup-->
-    <script src="/themes/site1/js/jquery.fancybox.min.js<?= $_SESSION['rand'] ?>"></script>       
-
-    <!-- Video Background-->
-    <script src="/themes/site1/js/jquery.background-video.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--TypeWriter-->
-    <script src="/themes/site1/js/typewriter.js<?= $_SESSION['rand'] ?>"></script> 
-
-    <!--Particles-->
-    <script src="/themes/site1/js/particles.min.js<?= $_SESSION['rand'] ?>"></script>            
-
-    <!--WOw animations-->
-    <script src="/themes/site1/js/wow.min.js<?= $_SESSION['rand'] ?>"></script>
-
-    <script src="/assets/plugins/daterangepicker/moment.min.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/plugins/daterangepicker/daterangepicker.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/plugins/select2/js/select2.min.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/plugins/jquery-mask-input/jquery.mask.min.js<?= $_SESSION['rand'] ?>"></script>
-    <script src="/assets/js/ajax.js<?= $_SESSION['rand'] ?>"></script>   
-    <script src="/extension/products/js/products.js<?= $_SESSION['rand'] ?>"></script>
-
-    <!--Google Map API-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJnKEvlwpyjXfS_h-J1Cne2fPMqeb44Mk"></script>
-    <script src="/themes/site1/js/functions.js<?= $_SESSION['rand'] ?>"></script>	
-    <?
-    foreach ($_SESSION['body_javascript'] as $js) {
-        echo $js . "\n";
-    }
-    /*
-      <script>
-      window.replainSettings = {id: 'f346900b-3b2e-416b-b910-b20b91ea8843'};
-      (function (u) {
-      var s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.async = true;
-      s.src = u;
-      var x = document.getElementsByTagName('script')[0];
-      x.parentNode.insertBefore(s, x);
-      })('https://widget.replain.cc/dist/client.js');
-      </script>
-     */
-    ?>
-
 </html>

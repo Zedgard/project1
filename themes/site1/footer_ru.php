@@ -41,14 +41,14 @@
                 <div class="row mb-1 d-none">
                     <div class="col-lg-12">
                         <a href="https://apps.apple.com/us/app/эдгард-зайцев/id1468250750" target="_blank" rel="noopener noreferrer">
-                            <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_app.png" width="97" height="30">
+                            <!-- <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_app.png" width="97" height="30"> -->
                         </a>
                     </div>
                 </div>
                 <div class="row mb-1 d-none">
                     <div class="col-lg-12">
                         <a href="https://play.google.com/store/apps/details?id=ru.dvfx.edgardzaitsev" target="_blank" rel="noopener noreferrer">
-                            <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_google-300x99.png" width="97" height="30">
+                            <!-- <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_google-300x99.png" width="97" height="30"> -->
                         </a>
                     </div>
                 </div>
