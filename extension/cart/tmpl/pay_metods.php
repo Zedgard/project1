@@ -37,7 +37,24 @@
 </div>
 
 
-
+<!-- Modal -->
+<div class="modal fade" id="credModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Выбрать рассрочку</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-grid gap-2">
+            <input type="button" class="btn btn-choose TINKOFF_BTN_YELLOW" data-bs-dismiss="modal" name="installment_0_0_3_6,3" value="3 месяца">
+            <input type="button" class="btn btn-choose TINKOFF_BTN_YELLOW" data-bs-dismiss="modal" name="installment_0_0_6_10,68" value="6 месяцев">
+            <input type="button" class="btn btn-choose TINKOFF_BTN_YELLOW" data-bs-dismiss="modal" name="installment_0_0_12_18,64" value="12 месяцев">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="row mb-3 justify-content-md-center d-none">
     <div class="col-lg-4 text-center text-lg-left mt-3" style="display: block;">

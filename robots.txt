@@ -2,6 +2,8 @@ Host: https://edgardzaycev.com
 
 User-agent: *
 Disallow: /shop/?product*product*
+Disallow: /lolkek.php
+Disallow: /edzay.php
 Allow: /shop/?product=4321
 Allow: /shop/?product=4584
 Allow: /shop/?product=4598

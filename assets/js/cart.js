@@ -249,7 +249,15 @@ function init_pay() {
     });
 
     $(".btn_cart_credit").unbind('click').click(function () {
+        var credModal = new bootstrap.Modal(document.getElementById('credModal'), {
+        keyboard: false
+        });
         fn_dataLayer();
-        window.location.href = '/tinkoff_credit_pay.php';
+        credModal.toggle();
+        // window.location.href = '/tinkoff_credit_pay.php';
+    });
+    $(".btn-choose").unbind('click').click(function() {
+        var credType = $(this).attr("name");
+        window.location.href = '/tinkoff_credit_pay.php?promoCode='+credType;
     });
 }
