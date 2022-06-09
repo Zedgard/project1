@@ -31,9 +31,9 @@ $ya_shop_api_key = $config->getConfigParamByCategory('ya_shop_api_key',7);//kaij
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 // Подключаем библиотеку Я.Кассы
-require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/system/yookassa-sdk-php-master/lib/autoload.php';
 
-use YandexCheckout\Client;
+use YooKassa\Client;
 
 $client = new Client();
 $client->setAuth($ya_shop_id, $ya_shop_api_key);
@@ -201,7 +201,7 @@ if ($price_total == 0) {
         try {
             $payment = $client->createPayment(
                     $data_array,
-                    uniqid('', true)
+                    $idempotenceKey
             );
         } catch (Exception $exc) {
             $errors = 1;

@@ -30,9 +30,9 @@ $ya_shop_api_key = $config->getConfigParamByCategory('ya_shop_api_key',7);//kaij
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 // Подключаем библиотеку Я.Кассы
-require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/system/yookassa-sdk-php-master/lib/autoload.php';
 
-use YandexCheckout\Client;
+use YooKassa\Client;
 
 $client = new Client();
 $client->setAuth($ya_shop_id, $ya_shop_api_key);
@@ -46,6 +46,7 @@ $price_total = 0;
 
 $data = array();
 $promo_array = array();
+
 if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
         $alliance = 1;
@@ -134,7 +135,6 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
 //    if ($p_user->isEditor()) {
 //        $price_total = 1;
 //    }
-
         $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
         // Передадим ID пользователя (Создается при консультации)
@@ -199,14 +199,14 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
             try {
                 $payment = $client->createPayment(
                         $data_array,
-                        uniqid('', true)
+                        $idempotenceKey
                 );
             } catch (Exception $exc) {
                 $errors = 1;
                 //echo $exc->getTraceAsString();
+                
                 echo 'Ошибка генерации массива данных';
             }
-
             if ($errors == 0) {
                 //print_r($payment);
                 // Получаем ссылку на оплату
