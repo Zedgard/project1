@@ -1,7 +1,8 @@
 var pay_status = 0;
-$(document).ready(function () {
-    init_pay();
-});
+document.addEventListener('DOMContentLoaded', init_pay);
+// $(document).ready(function () {
+//     init_pay();
+// });
 
 function fn_dataLayer() {
     window.dataLayer = window.dataLayer || [];

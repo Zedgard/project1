@@ -23,12 +23,12 @@
 
     </div>
 </div>
-<div class="row justify-content-md-center">
+<!-- <div class="row justify-content-md-center">
     <div class="col-lg-4 text-center text-lg-left mt-3" style="display: block;">
         <a href="javascript:void(0)" class="btn button btngreen text-center btn_cart btn_cart_paypal">Через PayPal<br/>
             <span class="btn_pay_small_text">(Подходит для оплаты из заграницы)</span></a>
     </div>
-</div>
+</div> -->
 
 <div class="row justify-content-md-center">
     <div class="col-lg-4 text-center text-lg-left mt-3" style="display: block;">
@@ -73,5 +73,5 @@
 </div>
 
 <script>
-    init_pay();
+    document.addEventListener('DOMContentLoaded', init_pay);
 </script>

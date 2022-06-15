@@ -32,7 +32,7 @@ $ya_shop_api_key = $config->getConfigParamByCategory('ya_shop_api_key',7);//kaij
 // Подключаем библиотеку Я.Кассы
 require $_SERVER['DOCUMENT_ROOT'] . '/system/yookassa-sdk-php-master/lib/autoload.php';
 
-use YooKassa\Client;
+use \YooKassa\Client;
 
 $client = new Client();
 $client->setAuth($ya_shop_id, $ya_shop_api_key);
