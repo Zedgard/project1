@@ -19,7 +19,23 @@
                     text-align: center;
                     color: red;
                 }
+                /*kaijean*/
+                .disabled_cart_list .row, .disabled_cart_list .cart_product_remove
+                {
+                    opacity: 0.5;
+                }
+                .disabled_cart_list .btn_cart_product_remove_display_none {
+                    margin-top: -30px;
+                    float: right;
+                    padding: 0.5rem 1rem;
+                    border: 1px solid #CCCCCC;
+                    display: block;
+                }
+                /*kaijean*/
             </style>
+            <div class="disabled_cart_list">
+                
+            </div>
             <div class="cart_list">
 
             </div>

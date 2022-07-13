@@ -264,7 +264,8 @@ if (isset($_POST['cart_product_get_array'])) {
     }
     // $_SESSION['cart']['itms']
     //print_r($data);
-    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    // $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data, 'email' => $p_user->isClientEmail());//kaijean
 }
 
 if (isset($_POST['cart_product_get_count'])) {
@@ -302,7 +303,8 @@ if (isset($_POST['set_cloudpayments'])) {
     $sign_up_consultation = new \project\sign_up_consultation();
 
 
-    $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    // $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    $CloudPayments_id = $config->getConfigParamByCategory('CloudPayments',7);//kaijean
     $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
     $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 
@@ -314,16 +316,93 @@ if (isset($_POST['set_cloudpayments'])) {
     $_SESSION['errors'] = array();
     $price_total = 0;
 
+    $data = array();
+    $promo_array = array();
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
-        foreach ($_SESSION['cart']['itms'] as $value) {
-            $email = $value['user_email'];
-            if ($value['price_promo'] > 0) {
-                $price = $value['price_promo'];
+        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+            $alliance = 1;
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        if ($v['alliance'] == 0) {
+                            $alliance = 0;
+                        }
+                    }
+                }
+            }
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        $price = (int) $value['price'];
+                        if (strlen($v['product_ids']) > 0) {
+                            $ex = explode(',', $v['product_ids']);
+                            foreach ($ex as $product_id) {
+                                if ($value['id'] == $product_id) {
+                                    if ($v['amount'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                        } else {
+                                            $value['price_promo'] = ($price - $v['amount']);
+                                        }
+                                    }
+                                    if ($v['percent'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                        } else {
+                                            $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if ($v['amount'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                } else {
+                                    $value['price_promo'] = ($price - $v['amount']);
+                                }
+                            }
+                            if ($v['percent'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                } else {
+                                    $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $data[] = $value;
+        }
+    }
+    foreach ($data as $item) {
+        if($item['account_id'] != 2){//kaijean
+            if($item['price_promo'] > 0) {
+                $price = $item['price_promo'];
             } else {
-                $price = $value['price'];
+                $price = $item['price'];
             }
             $price_total += $price;
         }
+    }
+
+    if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+//        foreach ($_SESSION['cart']['itms'] as $value) {
+//            $email = $value['user_email'];
+//            if(!empty($_SESSION['promos'])) {
+//                $array = $_SESSION['promos'];
+//                $price = reset($array);
+//                $price = $value['price'] - $price['amount'];
+//            }
+////            if ($value['price_promo'] > 0) {
+////                $price = $value['price_promo'];
+////            }
+//            else {
+//                $price = $value['price'];
+//            }
+//            $price_total += $price;
+//        }
 
         if ($price_total == 0) {
             $result = array('success' => 1, 'success_text' => '', 'data' => array(), 'action' => '/pay.php');
@@ -392,7 +471,7 @@ if (isset($_POST['set_cloudpayments'])) {
                 // Сохраняем данные платежа в базу
                 $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
                         . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-                if ($sqlLight->query($queryPay, array(($max_id), 'cp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, ''), 0)) {
+                if ($sqlLight->query($queryPay, array(($max_id), 'cp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, '',''), 0)) {
 //                    foreach ($_SESSION['cart']['itms'] as $key => $value) {
 //                        //$product_id = $max_id;
 //                        $product_id = $value['id'];
@@ -462,7 +541,8 @@ if (isset($_POST['check_cloudpayments'])) {
     $sign_up_consultation = new \project\sign_up_consultation();
     $close_club = new \project\close_club();
 
-    $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    // $CloudPayments_id = $config->getConfigParam('CloudPayments');
+    $CloudPayments_id = $config->getConfigParamByCategory('CloudPayments',7);//kaijean
 
 // Проверяем статус оплаты
     if (isset($_SESSION['PAY_KEY'])) {
@@ -500,8 +580,10 @@ if (isset($_POST['check_cloudpayments'])) {
         $pay_check = 'pending';
 
         include_once $_SERVER['DOCUMENT_ROOT'] . '/system/cloudpayments-php-client-master/src/Manager.php';
-        $publicKey = $config->getConfigParam('CloudPayments');
-        $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
+        // $publicKey = $config->getConfigParam('CloudPayments');
+        // $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
+        $publicKey = $config->getConfigParamByCategory('CloudPayments',7);//kaijean
+        $privateKey = $config->getConfigParamByCategory('CloudPayments_PrivateKey',7);//kaijean
         $client = new \CloudPayments\Manager($publicKey, $privateKey);
 
         //echo "paymentResult_success: {$_POST['paymentResult']['success']}";
@@ -558,16 +640,87 @@ if (isset($_POST['check_cloudpayments'])) {
 }
 
 if (isset($_POST['get_cart_other'])) {
+    $price_total = 0;
+
+    $data = array();
+    $promo_array = array();
     if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            $email = $value['user_email'];
-            if ($value['price_promo'] > 0) {
-                $price = $value['price_promo'];
-            } else {
-                $price = $value['price'];
+            $alliance = 1;
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        if ($v['alliance'] == 0) {
+                            $alliance = 0;
+                        }
+                    }
+                }
             }
-            $price_total += $price;
+            if (count($_SESSION['promos']) > 0) {
+                foreach ($_SESSION['promos'] as $v) {
+                    if (strlen($v['code']) > 0) {
+                        $price = (int) $value['price'];
+                        if (strlen($v['product_ids']) > 0) {
+                            $ex = explode(',', $v['product_ids']);
+                            foreach ($ex as $product_id) {
+                                if ($value['id'] == $product_id) {
+                                    if ($v['amount'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                        } else {
+                                            $value['price_promo'] = ($price - $v['amount']);
+                                        }
+                                    }
+                                    if ($v['percent'] > 0) {
+                                        if ($value['price_promo'] > 0 && $alliance == 1) {
+                                            $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                        } else {
+                                            $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if ($v['amount'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                } else {
+                                    $value['price_promo'] = ($price - $v['amount']);
+                                }
+                            }
+                            if ($v['percent'] > 0) {
+                                if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                    $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                } else {
+                                    $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $data[] = $value;
         }
+    }
+    foreach ($data as $item) {
+        if($item['price_promo'] > 0) {
+            $price = $item['price_promo'];
+        } else {
+            $price = $item['price'];
+        }
+        $email = $item['user_email'];
+        $price_total += $price;
+    }
+    if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+//        foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//            $email = $value['user_email'];
+//            if ($value['price_promo'] > 0) {
+//                $price = $value['price_promo'];
+//            } else {
+//                $price = $value['price'];
+//            }
+//            $price_total += $price;
+//        }
 
         if ($price_total == 0) {
             //location_href('/pay.php');

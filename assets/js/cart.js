@@ -1,7 +1,8 @@
 var pay_status = 0;
-$(document).ready(function () {
-    init_pay();
-});
+document.addEventListener('DOMContentLoaded', init_pay);
+// $(document).ready(function () {
+//     init_pay();
+// });
 
 function fn_dataLayer() {
     window.dataLayer = window.dataLayer || [];
@@ -129,7 +130,6 @@ function init_pay() {
                                                     "paymentResult": paymentResult,
                                                     "options": options
                                                 }, function (e) {
-                                                    console.log(e);
                                                     if (e['success'] == '1') {
                                                         pay_status = 1;
                                                     }
@@ -213,9 +213,11 @@ function init_pay() {
         $(".pay_preloader").show(200);
 
         fn_dataLayer();
+
         sendPostLigth('/jpost.php?extension=cart', {
             "get_cart_other": 1
         }, function (e) {
+            console.log(e);
             if (e['success'] == '1') {
                 if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
                     document.location.href = e['action'];
@@ -249,7 +251,15 @@ function init_pay() {
     });
 
     $(".btn_cart_credit").unbind('click').click(function () {
+        var credModal = new bootstrap.Modal(document.getElementById('credModal'), {
+        keyboard: false
+        });
         fn_dataLayer();
-        window.location.href = '/tinkoff_credit_pay.php';
+        credModal.toggle();
+        // window.location.href = '/tinkoff_credit_pay.php';
+    });
+    $(".btn-choose").unbind('click').click(function() {
+        var credType = $(this).attr("name");
+        window.location.href = '/tinkoff_credit_pay.php?promoCode='+credType;
     });
 }

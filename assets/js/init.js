@@ -358,7 +358,121 @@ function initCartArray() {
                 if (!!e['data']) {
                     window.dataLayer = window.dataLayer || [];
                     for (var i = 0; i < e['data'].length; i++) {
-                        cart_itms.push(e['data'][i]);
+                        if(e['data'][i]['account_id'] != 2){//kaijean
+                            cart_itms.push(e['data'][i]);
+                            var isPromo = 0;
+                            var price_promo = 0;
+                            var price = e['data'][i]['price'];
+                            if (e['data'][i]['price_promo'] > 0) {
+                                isPromo = 1;
+                                price_promo = Number(e['data'][i]['price_promo']);
+                                price_promo_total += price - price_promo;
+                            }
+                            var imgFirst = '/themes/site1/images/gallery-box1.jpg';
+                            if (typeof e['data'][i]['images_str'] != 'undefined' && e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
+                                imgFirst = e['data'][i]['images_str'];//e['data'][i]['products_wares_info'][0]['images'];
+                            }
+
+                            var products_category_list = e['data'][i]['products_category_list'];
+                            // ' + products_category_list.toString() + '
+
+                            var html = '<div class="row">';
+                            html += '<div class="col-3">';
+
+                            html += '<a href="' + imgFirst + '" class="fancybox d-none d-lg-block"><img src="' + imgFirst + '" class="cart_product_list_img"/></a>';
+                            html += '<a href="' + imgFirst + '" class="fancybox d-lg-none"><img src="' + imgFirst + '" class="w-100"/></a>';
+                            html += '</div>';
+                            html += '<div class="col-6">';
+                            html += '<div class="row">';
+                            html += '<div class="col-12 font-weight-bold"></div>';
+                            html += '</div>';
+                            html += '<div class="row">';
+                            html += '<div class="col-12 cart_product_list_title">' + e['data'][i]['title'] + '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '<div class="col-3 text-right font-weight-bold" style="font-size: 1.4rem;">';
+
+                            var product_price = 0;
+                            if (isPromo > 0) {
+                                total += Number(price_promo);
+                                product_price = price_promo;
+                                html += '<div><span class="init_price_val" style="color:#FF0000;">' + price_promo + '</span> <i class="fa fa-ruble" style="color:#FF0000;"></i></div>';
+                                html += '<div><span class="init_price_val wares_old_price_cart">' + price + '</span> <i class="fa fa-ruble" style="color: #808080;"></i></div>';
+                            } else {
+                                total += Number(price);
+                                product_price = price;
+                                html += '<div><span class="init_price_val">' + price + '</span> <i class="fa fa-ruble"></i></div>';
+                            }
+
+
+                            html += '</div>';
+                            html += '</div>';
+                            html += '<div class="cart_product_remove btn_cart_product_remove_display_none" product_id="' + e['data'][i]['id'] + '" title="Удалить из корзины" style="font-size: 1rem;text-align: right;z-index: 9;position: relative;">Удалить</div>';
+
+                            html += '<hr/>';
+                            // <span class="fas fa-times"></span>
+
+                            $(".price_promo_total").html((price_promo_total * -1));
+
+                            $(".cart_list").append(html);
+
+                            // Оформление заказа.
+                            if (window.location.pathname == "/shop/cart/") { // зафиксируем только на странице корзины
+                                dataLayer.push({
+                                    'ecommerce': {
+                                        'currencyCode': 'UAH',
+                                        'coupon': 'Номер купона',
+                                        'checkout': {
+                                            'actionField': {'step': 1},
+                                            'products': [{
+                                                    "name": e['data'][i]['title'],
+                                                    "price": product_price,
+                                                    "quantity": 1,
+                                                },
+                                                {
+                                                    "name": e['data'][i]['title'],
+                                                    "price": product_price,
+                                                    "quantity": 1
+                                                }]
+                                        }
+                                    },
+                                    'event': 'gtm-ee-event',
+                                    'gtm-ee-event-category': 'Enhanced Ecommerce',
+                                    'gtm-ee-event-action': 'Checkout Step 1',
+                                    'gtm-ee-event-non-interaction': 'False',
+                                });
+                            }
+                        }
+                    }
+                    if (price_promo_total > 0) {
+                        $(".cart_product_promo_block").show();
+                    } else {
+                        $(".cart_product_promo_block").hide();
+                    }
+                    $(".total_cart").html(total);
+                    $(".cart_total").html(total);
+                    if (e['data'].length > 0) {
+                        $(".cart-info").show();
+                    } else {
+                        $(".cart-info").hide();
+                    }
+                    // cart_list
+                    //move(".cart_list", 300);
+
+                    ;
+                }
+            }
+            //kaijean
+            if (!!$(".disabled_cart_list")) {
+                var disabled_cart_itms = [];
+                var total = 0;
+                var price_promo_total = 0;
+                $(".disabled_cart_list").html("");
+                if (!!e['data']) {
+                    for (var i = 0; i < e['data'].length; i++) {
+                        // console.log(e['data'][i]['account_id']);
+                        if(e['data'][i]['account_id'] == 2){//kaijean
+                        disabled_cart_itms.push(e['data'][i]['id']);
                         var isPromo = 0;
                         var price_promo = 0;
                         var price = e['data'][i]['price'];
@@ -413,7 +527,7 @@ function initCartArray() {
 
                         $(".price_promo_total").html((price_promo_total * -1));
 
-                        $(".cart_list").append(html);
+                        $(".disabled_cart_list").append(html);
 
                         // Оформление заказа.
                         if (window.location.pathname == "/shop/cart/") { // зафиксируем только на странице корзины
@@ -441,25 +555,16 @@ function initCartArray() {
                                 'gtm-ee-event-non-interaction': 'False',
                             });
                         }
+                        }
                     }
-                    if (price_promo_total > 0) {
-                        $(".cart_product_promo_block").show();
-                    } else {
-                        $(".cart_product_promo_block").hide();
-                    }
-                    $(".total_cart").html(total);
-                    $(".cart_total").html(total);
-                    if (e['data'].length > 0) {
-                        $(".cart-info").show();
-                    } else {
-                        $(".cart-info").hide();
-                    }
-                    // cart_list
-                    //move(".cart_list", 300);
-
-                    ;
                 }
+                if(disabled_cart_itms.length > 0){
+                    html = '<div class="alert alert-warning">Обратите внимание.Товар выше приобретается отдельно. <a href="https://oplata.edgardzaycev.com/?go_cart=['+disabled_cart_itms+']&email='+e['email']+'" class="alert-link" target="_blank">Оплатить отдельно</a></div>';
+                    $(".disabled_cart_list").append(html);
+                }
+                
             }
+            //kaijean
             if (typeof $(".fancybox")[0] != 'undefined') {
                 $(".fancybox").fancybox();
             }

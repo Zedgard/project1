@@ -20,6 +20,7 @@ $(document).ready(function () {
     init_search_pay_user();
     init_pay_select_type();
     init_pay_select_status();
+    // init_manual_select_status();
 });
 
 /**
@@ -43,6 +44,7 @@ function init_pay_data_list() {
         $(".pay_data tbody").html("");
         $(".get_next_page").html("Дальше...");
         var pay_summ_all = 0;
+        var manual_status = '';//kaijean
         if (e['data'].length > 0) {
             pay_list_col = 0;
             pay_col = 0;
@@ -69,7 +71,18 @@ function init_pay_data_list() {
                         if (pay_descr.length > 0) {
                             pay_descr += '<hr/>';
                         }
-                        pay_descr = pay_descr + '<div class="mb-2">' + e['data'][i]['info'][a]['title'] + '<br/>\n<img src="' + e['data'][i]['info'][a]['images_str'] + '" style="width:50px;" /> Цена:' + e['data'][i]['info'][a]['price'] + 'р. <a href="/shop/?product=' + e['data'][i]['info'][a]['id'] + '" target="_blank">>></a></div>';
+                        manual_status = e['data'][i]['info'][a]['manual_status'];
+                        var cur_status = null;
+                        if(manual_status === 'hidden')
+                        {
+                            cur_status = '<div style="float:right"><button class="btn btn-sm btn-secondary disabled" disabled>скрыто</button><button class="btn btn-sm btn-success" onclick="changeManualStatus(this)">отобразить</button></div>';
+                        }
+                        else
+                        {
+                            cur_status = '<div style="float:right"><button class="btn btn-sm btn-danger" onclick="changeManualStatus(this)">скрыть</button><button class="btn btn-sm btn-secondary disabled" disabled>отображается</button></div>';
+                        }
+                        pay_descr = pay_descr + '<div class="mb-2">' + e['data'][i]['info'][a]['title'] + '<br/>\n<img src="' + e['data'][i]['info'][a]['images_str'] + '" style="width:50px;" /> Цена:' + e['data'][i]['info'][a]['price'] + 'р. <a href="/shop/?product=' + e['data'][i]['info'][a]['id'] + '" target="_blank">>></a>'+cur_status+'</div>';
+
                     }
                 }
 
@@ -97,14 +110,13 @@ function init_pay_data_list() {
                 if (e['data'][i]['pay_credit'] > 0) {
                     credit_type = '( Кредитный )';
                 }
-
                 $(".pay_data tbody").append('<tr class="' + border_class + '" objid="' + e['data'][i]['id'] + '" title="' + user_descr + '"> \
                                     <td class="text-center align-middle"><a href="javascript:void(0)" class="btn btn-link btn_pay_info_modal" objid="' + e['data'][i]['id'] + '">' + e['data'][i]['id'] + '</a></td> \
                                     <td class="align-middle">' + user_title + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_type_title'] + ' ' + credit_type + '</td> \
                                     <td class="text-center align-middle">' + e['data'][i]['pay_date'] + '</td> \
                                     <td class="text-center align-middle">' + pay_status + '<br/>' + business_check + '</td> \
-                                    <td class="text-center align-middle">' + pay_descr + '</td>\
+                                    <td class="text-center align-middle">' + pay_descr + '</td> \
                                     </tr>');
                 //}
             }
@@ -123,6 +135,37 @@ function init_pay_data_list() {
             init_send_business_check();
         }
     });
+}
+function changeManualStatus(btn)
+{
+    var manual_status = null;//статус ручного скрытия
+    if(btn.classList.contains("btn-danger"))//если нажата кнопка скрыть
+    {
+        manual_status = "hidden";//устанавливаем статус скрыто
+    }
+    else if(btn.classList.contains("btn-success"))//если же нажата кнопка отобразить
+    {
+        manual_status = "";//устанавливаем пустой статус
+    }
+    var tr = btn.closest('tr');
+    var objid = tr.getAttribute("objid");//идентификатор покупки
+    
+    var div = btn.closest('.mb-2');
+    var a = div.querySelector('a');//элемент ссылки на товар
+    var link = a.getAttribute("href");//непосредственно ссылка на товар
+    var prod_str = link.substring(link.indexOf("product"));//подстрока с ид товара
+    var prodAr = prod_str.split("=");
+    var prod_id = prodAr[1];//ид товара
+    var tds = tr.querySelectorAll("td");
+    var user_str = tds[1].innerHTML;
+    var user_ar = user_str.split("<br>");
+
+    console.log(user_ar[0]);
+    sendPostLigth('/jpost.php?extension=pay', {"set_manual_status": manual_status,"payment_id":objid, "product_id":prod_id, "user_email":user_ar[0]}, function (e) {
+        console.log("yeah");
+        console.log(e['data']);
+            init_pay_data_list();
+        });
 }
 
 /**
@@ -183,6 +226,30 @@ function init_pay_select_status() {
         $(".pay_select_status").change(function () {
             pay_search_status = $(this).val();
             init_pay_data_list();
+        });
+    });
+}
+// Получить Статусы для кабинета kaijean
+function init_manual_select_status() {
+    sendPostLigth('/jpost.php?extension=pay', {"manual_select_status": 1}, function (e) {
+        $(".manual_select_status").html("<option value=\"\">Статус для кабинета</option>");
+        if (e['data'].length > 0) {
+            for (var i = 0; i < e['data'].length; i++) {
+                var pay_status = e['data'][i]['manual_status'];
+                if (pay_status === 'hidden')
+                {
+                    pay_status_text = 'скрыто';
+                }
+                else
+                {
+                    pay_status_text = 'отображается';
+                }
+                $(".manual_select_status").append('<option value="' + pay_status + '">' + pay_status_text + '</option>');
+            }
+        }
+        $(".manual_select_status").change(function () {
+            pay_search_status = $(this).val();
+            // init_pay_data_list();
         });
     });
 }

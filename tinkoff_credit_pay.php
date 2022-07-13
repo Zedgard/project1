@@ -113,13 +113,13 @@ if (isset($_GET['response'])) {
 
                     if (count($pay_data) > 0) {
                         $query_update = "UPDATE zay_pay "
-                                . "SET pay_status='?' "
-                                . "WHERE id='?' AND pay_key='?' ";
+                            . "SET pay_status='?' "
+                            . "WHERE id='?' AND pay_key='?' ";
                         $sqlLight->query($query_update, array($pay_status, $pay_data[0]['id'], $_GET['orderId']), 0);
 
                         $query_update_credit = "UPDATE zay_pay_credit "
-                                . "SET pay_status='?' "
-                                . "WHERE pay_id='?' AND pay_key='?' ";
+                            . "SET pay_status='?' "
+                            . "WHERE pay_id='?' AND pay_key='?' ";
                         $sqlLight->query($query_update_credit, array($pay_status, $pay_data[0]['id'], $_GET['orderId']), 0);
 
                         // Зарегистрируем покупку
@@ -154,13 +154,13 @@ if (isset($_GET['response'])) {
 
                     if (count($pay_data) > 0) {
                         $query_update = "UPDATE zay_pay "
-                                . "SET pay_status='?' "
-                                . "WHERE id='?' AND pay_key='?' ";
+                            . "SET pay_status='?' "
+                            . "WHERE id='?' AND pay_key='?' ";
                         $sqlLight->query($query_update, array($pay_status, $pay_data[0]['id'], $_GET['orderId']));
 
                         $query_update = "UPDATE zay_pay_credit "
-                                . "SET pay_status='?' "
-                                . "WHERE pay_id='?' AND pay_key='?' ";
+                            . "SET pay_status='?' "
+                            . "WHERE pay_id='?' AND pay_key='?' ";
                         $sqlLight->query($query_update, array($pay_status, $pay_data[0]['id'], $_GET['orderId']));
                     }
                     $add_url = '/cart/?in_payment_cancel=1';
@@ -177,9 +177,16 @@ if (isset($_GET['response'])) {
 }
 
 // Настройки
-$TinkoffShopId = $config->getConfigParam('TinkoffShopId');
-$TinkoffShowcaseId = $config->getConfigParam('TinkoffShowcaseId');
-$TinkoffPromoCode = $config->getConfigParam('TinkoffPromoCode');
+$TinkoffShopId = $config->getConfigParamByCategory('TinkoffShopId',7);//kaijean
+$TinkoffShowcaseId = $config->getConfigParamByCategory('TinkoffShowcaseId',7);//kaijean
+if(isset($_GET['promoCode']))
+{
+    $TinkoffPromoCode = $_GET['promoCode'];
+}
+else
+{
+    $TinkoffPromoCode = $config->getConfigParamByCategory('TinkoffPromoCode',7);//kaijean
+}
 
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
@@ -190,24 +197,99 @@ $pay_status = "pending"; // Устанавливаем стандартный с
 $p_user = new \project\user();
 
 $price_total = 0;
-
 $items = [];
-$item_counts = 0;
-foreach ($_SESSION['cart']['itms'] as $key => $value) {
-    $email = $value['user_email'];
-    if ($value['price_promo'] > 0) {
-        $price = $value['price_promo'];
-    } else {
-        $price = $value['price'];
+$data = array();
+$promo_array = array();
+if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+    foreach ($_SESSION['cart']['itms'] as $key => $value) {
+        $alliance = 1;
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    if ($v['alliance'] == 0) {
+                        $alliance = 0;
+                    }
+                }
+            }
+        }
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    $price = (int)$value['price'];
+                    if (strlen($v['product_ids']) > 0) {
+                        $ex = explode(',', $v['product_ids']);
+                        foreach ($ex as $product_id) {
+                            if ($value['id'] == $product_id) {
+                                if ($v['amount'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                    } else {
+                                        $value['price_promo'] = ($price - $v['amount']);
+                                    }
+                                }
+                                if ($v['percent'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                    } else {
+                                        $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if ($v['amount'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                            } else {
+                                $value['price_promo'] = ($price - $v['amount']);
+                            }
+                        }
+                        if ($v['percent'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                            } else {
+                                $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $data[] = $value;
     }
-    // Если админ
-//    if ($p_user->isEditor()) {
-//        $price = 1;
-//    }
+}
+$item_counts = 0;
+foreach ($data as $item) {
+    if ($item['price_promo'] > 0) {
+        $price = $item['price_promo'];
+    } else {
+        $price = $item['price'];
+    }
     $items[] = array("name" => $value['title'], "quantity" => 1, "price" => $price);
     $price_total += $price;
-    $item_counts++;
+    ++$item_counts;
 }
+
+
+//$price_total = 0;
+//
+//$items = [];
+//$item_counts = 0;
+//foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//    $email = $value['user_email'];
+//    if ($value['price_promo'] > 0) {
+//        $price = $value['price_promo'];
+//    } else {
+//        $price = $value['price'];
+//    }
+//    // Если админ
+////    if ($p_user->isEditor()) {
+////        $price = 1;
+////    }
+//    $items[] = array("name" => $value['title'], "quantity" => 1, "price" => $price);
+//    $price_total += $price;
+//    $item_counts++;
+//}
 /**
  * Заглушка для админов покупка за 1 рубль
  */
@@ -230,7 +312,6 @@ $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION
 if (strlen($pay_descr) > 0) {
     $_SESSION['consultation'] = $_SESSION['cart']['itms'][0];
 }
-
 
 
 if ($item_counts == 0) {
@@ -306,7 +387,8 @@ $array = array(
 //print_r($array);
 //print_r($array_test);
 // Отправить запрос в тинькоф
-function send_tinkoff($url, $array) {
+function send_tinkoff($url, $array)
+{
     $postdata = json_encode($array);
 
     $ch = curl_init($url);
@@ -334,12 +416,11 @@ $pay_tinkoff_link = $j->link;
 //
 // Добавим данные по кредиту
 $query_insert = "INSERT INTO `zay_pay_credit`(`pay_id`, `pay_type`, `pay_key`, `pay_status`, `pay_tinkoff_id`, `pay_tinkoff_link`, `lastdate`) "
-        . "VALUES ('?','?','?','?','?','?', NOW())";
+    . "VALUES ('?','?','?','?','?','?', NOW())";
 if ($sqlLight->query($query_insert, array($max_id, $pay_type, $pay_key, $pay_status, $pay_tinkoff_id, $pay_tinkoff_link))) {
-
     // Зафиксируем покупку
     $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
-            . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
+        . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
     if ($sqlLight->query($queryPay, array(($max_id), $pay_type, $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $pay_tinkoff_link), 0)) {
         // Создадим связь с продуктами
 //        foreach ($_SESSION['cart']['itms'] as $key => $value) {

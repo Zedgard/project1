@@ -239,7 +239,7 @@ class send_emails extends \project\extension {
 
                 $body = $body;
                 try {
-                    //mail('koman1706@gmail.com','Тема','Сообщение 1');
+                    //mail('email@gmail.com','Тема','Сообщение 1');
                     // Для отправки HTML-письма должен быть установлен заголовок Content-type
 //                    $headers = 'MIME-Version: 1.0' . "\r\n";
 //                    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";

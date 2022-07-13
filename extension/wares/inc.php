@@ -442,7 +442,7 @@ class wares extends \project\extension {
                                         LEFT JOIN zay_wares w ON
                                             w.id = pw.wares_id
                                         WHERE
-                                            p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0
+                                            p.user_id = '?' AND (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) AND p.pay_status = 'succeeded' AND w.id > 0
                                             {$category_sql}
                                         ORDER BY
                                             w.`title` ASC
@@ -515,7 +515,7 @@ class wares extends \project\extension {
                                         LEFT JOIN zay_wares w ON
                                             w.id = pw.wares_id
                                         WHERE
-                                            p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 AND w.id='?'
+                                            p.user_id = '?' AND (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) AND p.pay_status = 'succeeded' AND w.id > 0 AND w.id='?'
                                             {$category_sql}
                                         ORDER BY
                                             w.`title` ASC
@@ -542,7 +542,7 @@ class wares extends \project\extension {
                                 LEFT JOIN zay_pay_products pp ON
                                     pp.pay_id = p.id
                                 WHERE
-                                    p.user_id = '?' AND p.pay_status='succeeded' 
+                                    p.user_id = '?' AND p.pay_status='succeeded' AND (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) 
                                     AND pp.close='0'
                                     AND pp.close_date is not NULL AND pp.close_date<NOW()";
             $objs = $this->getSelectArray($querySelect, $array, 0);
@@ -595,7 +595,7 @@ class wares extends \project\extension {
                                 LEFT JOIN zay_category catp ON
                                     catp.id = pcat.category_id  
                                 WHERE
-                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0 
+                                    p.user_id = '?' AND (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) AND p.pay_status = 'succeeded' AND w.id > 0 
                                     AND (w.club_month_period='0' AND w.club_days_period='0') 
                                     AND pp.close='0' {$where1} 
                                 ORDER BY
@@ -645,7 +645,7 @@ class wares extends \project\extension {
                                 LEFT JOIN zay_category c ON
                                     c.id = cat.category_id       
                                 WHERE
-                                    p.user_id = '?' AND p.pay_status = 'succeeded' AND w.id > 0  {$where1} 
+                                    p.user_id = '?'  AND (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) AND p.pay_status = 'succeeded' AND w.id > 0  {$where1} 
                                 ORDER BY
                                     w.`title` ASC
                                     ) as dd
@@ -674,7 +674,7 @@ class wares extends \project\extension {
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
                         . "left join zay_wares_category wcat on wcat.wares_id=w.id "
                         . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id` > 0 "
+                        . "where p.`user_id`='?' and (pp.`manual_status`<>'hidden' or pp.`manual_status` is null) and p.`pay_status`='succeeded' and w.`id` > 0 "
                         . "and pcat.`category_id`=2 " // вебинары
                         . "order by pp.`id` DESC ";
                 $objs = $this->getSelectArray($querySelect, array($_SESSION['user']['info']['id']), 0);
@@ -688,7 +688,7 @@ class wares extends \project\extension {
                         . "left join `zay_wares` w on w.`id`=pw.`wares_id` "
                         . "left join zay_wares_category wcat on wcat.wares_id=w.id "
                         . "left join `zay_product_category` pcat on pcat.`product_id`=pr.`id` "
-                        . "where p.`user_id`='?' and p.`pay_status`='succeeded' and w.`id`='?' "
+                        . "where p.`user_id`='?' and (pp.`manual_status`<>'hidden' or pp.`manual_status` is null) and p.`pay_status`='succeeded' and w.`id`='?' "
                         . "and pcat.`category_id`=2 " //  вебинары
                         . "order by pp.`id` DESC ";
                 //echo "{$querySelect}\n";
@@ -717,7 +717,7 @@ class wares extends \project\extension {
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id
                         left join zay_category cpcat on cpcat.id=pcat.category_id
-                        where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
+                        where p.user_id='?' and (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) and p.pay_status='succeeded' and w.id > 0 
                         and cpcat.type='product_category' and  cpcat.title='Марафоны' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
@@ -735,7 +735,7 @@ class wares extends \project\extension {
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id 
                         left join zay_category cpcat on cpcat.id=pcat.category_id
-                        where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
+                        where p.user_id='?' and (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) and p.pay_status='succeeded' and w.id='?' 
                         and cpcat.type='product_category' and  cpcat.title='Марафоны' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
@@ -764,7 +764,7 @@ class wares extends \project\extension {
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id
                         left join zay_category cpcat on cpcat.id=wcat.category_id
-                        where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
+                        where p.user_id='?' and (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) and p.pay_status='succeeded' and w.id > 0 
                         and cpcat.type='product_category' and  cpcat.title='?' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
@@ -782,7 +782,7 @@ class wares extends \project\extension {
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id 
                         left join zay_category cpcat on cpcat.id=wcat.category_id
-                        where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
+                        where p.user_id='?' and (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) and p.pay_status='succeeded' and w.id='?' 
                         and cpcat.type='product_category' and  cpcat.title='?' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
@@ -811,7 +811,7 @@ class wares extends \project\extension {
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id
                         left join zay_category cpcat on cpcat.id=pcat.category_id
-                        where p.user_id='?' and p.pay_status='succeeded' and w.id > 0 
+                        where p.user_id='?' and (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) and p.pay_status='succeeded' and w.id > 0 
                         and cpcat.type='product_category' and  cpcat.title='Онлайн-тренинги' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
@@ -829,7 +829,7 @@ class wares extends \project\extension {
                         left join zay_wares_category wcat on wcat.wares_id=w.id 
                         left join zay_product_category pcat on pcat.product_id=pr.id 
                         left join zay_category cpcat on cpcat.id=pcat.category_id
-                        where p.user_id='?' and p.pay_status='succeeded' and w.id='?' 
+                        where p.user_id='?' and (pp.manual_status <> 'hidden' OR pp.manual_status IS NULL) and p.pay_status='succeeded' and w.id='?' 
                         and cpcat.type='product_category' and  cpcat.title='Онлайн-тренинги' 
                         GROUP BY w.id, w.title, w.descr, w.col, w.ex_code, w.articul, w.images, w.url_file, w.active, w.creat_date, w.lastdate, w.is_delete, w.block_profit, w.club_month_period, wcat.category_id
                         order by pp.id DESC ";
@@ -866,7 +866,7 @@ class wares extends \project\extension {
                                 LEFT JOIN zay_wares_category wcat ON
                                     wcat.wares_id = w.id
                                 WHERE
-                                    p.`user_id` = '?' AND p.`pay_status` = 'succeeded' AND w.`id` > 0 AND(
+                                    p.`user_id` = '?' AND (pp.`manual_status`<>'hidden' OR pp.`manual_status` IS NULL) AND p.`pay_status` = 'succeeded' AND w.`id` > 0 AND(
                                         wcat.category_id <> 2 OR wcat.category_id IS NULL
                                     )
                                 ORDER BY
@@ -1235,5 +1235,47 @@ class wares extends \project\extension {
         $query = "UPDATE `?` SET `?`='?' WHERE `id`='?'";
         return $this->query($query, array($this->db_prefix . $db_table, $db_row, $position_val, $material_id), 0);
     }
-
+    //kaijean
+    /**
+     * получить товары кейса
+     * @param type $wares_id
+     * @return type
+     */
+    public function hideWaresPayments($wares_id = 0,$u_id)
+    {
+        if($wares_id > 0)
+        {
+            $ar = $this->getProductsByWaresId($wares_id);
+            $prodAr = [];
+            foreach ($ar as $qAr)
+            {
+                $prodAr[] = $qAr['product_id'];
+            }
+            $proStr = implode(",", $prodAr);
+            $querySelect = "UPDATE zay_pay_products pp 
+                LEFT JOIN zay_pay p on pp.pay_id=p.id 
+                SET pp.manual_status = 'hidden' 
+                WHERE pp.product_id IN(".$proStr.") AND p.user_id=".$u_id;
+            $res = $this->query($querySelect, []);
+            return $res;
+        }
+        return false;
+    }
+    //kaijean
+    /**
+     * получить товары кейса
+     * @param type $цфкуы_id
+     * @return type
+     */
+    public function getProductsByWaresId($wares_id = 0)
+    {
+        if($wares_id > 0)
+        {
+            $querySelect = "SELECT pw.product_id from `zay_product_wares` pw where pw.wares_id = '?'";
+            $objs = $this->getSelectArray($querySelect, [$wares_id]);
+            return $objs;
+        }
+        return false;
+    }
+    //kaijean
 }

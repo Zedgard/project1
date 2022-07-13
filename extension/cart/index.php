@@ -217,20 +217,22 @@ if ($form_show == 0) {
     $url_ref = $config->getConfigParam('pay_site_url_ref');
     $url_ref = "{$url_ref}/pay.php?pay_payment_true=1";
 
-    $paypal_email = $config->getConfigParam('paypal_email');
+    $paypal_email = $config->getConfigParamByCategory('paypal_email',7);
     //print_r($_SESSION['cart']['itms']);
     $price_total = 0;
     if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
         $title = "";
         foreach ($_SESSION['cart']['itms'] as $key => $value) {
-            $email = $value['user_email'];
-            $title .= $value['title'] . " : ";
-            if ($value['price_promo'] > 0) {
-                $price = $value['price_promo'];
-            } else {
-                $price = $value['price'];
+            if($value['account_id'] != 2){//kaijean
+                $email = $value['user_email'];
+                $title .= $value['title'] . " : ";
+                if ($value['price_promo'] > 0) {
+                    $price = $value['price_promo'];
+                } else {
+                    $price = $value['price'];
+                }
+                $price_total += $price;
             }
-            $price_total += $price;
         }
     }
 

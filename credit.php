@@ -9,8 +9,8 @@
             type="button"
             class="TINKOFF_BTN_YELLOW"
             onclick="tinkoff.createDemo({
-                        shopId: 'db9d1536-707b-4697-aae0-e661be297bb1',
-                        showcaseId: 'ca489979-d661-4070-9f93-fb7b98ca3856',
+                        shopId: '8d347766-7999-4a78-9c99-4593d9e3d3a6',
+                        showcaseId: 'f0d873d9-8200-4640-90df-3fd85d8d4d9f',
                         demoFlow: 'sms',
                         items: [
                             {name: 'iPhone 11', price: 10000, quantity: 1},
@@ -32,8 +32,8 @@
                                 items: [{name: 'iphone 11', price: 10000, quantity: 1}, {name: 'Чехол', price: 5000, quantity: 1}],
                                 demoFlow: 'sms',
                                 promoCode: 'installment_0_0_6_5',
-                                shopId: 'db9d1536-707b-4697-aae0-e661be297bb1',
-                                showcaseId: 'ca489979-d661-4070-9f93-fb7b98ca3856',
+                                shopId: '8d347766-7999-4a78-9c99-4593d9e3d3a6',
+                                showcaseId: 'f0d873d9-8200-4640-90df-3fd85d8d4d9f',
                             },
                             {view: 'newTab'}
                     )"

@@ -26,13 +26,15 @@ $pay_status = "succeeded"; // Устанавливаем стандартный 
 if (count($_SESSION['cart']['itms']) > 0) {
     $price_total = 0;
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
-        $email = $value['user_email'];
-        if ($value['price_promo'] > 0) {
-            $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
+        if($value['account_id'] != 2){//kaijean
+            $email = $value['user_email'];
+            if ($value['price_promo'] > 0) {
+                $price = $value['price_promo'];
+            } else {
+                $price = $value['price'];
+            }
+            $price_total += $price;
         }
-        $price_total += $price;
     }
 
     if ($price_total == 0) {
@@ -57,7 +59,7 @@ if (count($_SESSION['cart']['itms']) > 0) {
 
         $query = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
                 . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-        if ($sqlLight->query($query, array(($max_id), 'nm', $client_id, $price_total, $pay_date, '', $pay_status, '', $pay_descr, ''), 0)) {
+        if ($sqlLight->query($query, array(($max_id), 'nm', $client_id, $price_total, $pay_date, '', $pay_status, '', $pay_descr, '', ''), 0)) {
 
             // Сохраним связи с продуктами
             $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);

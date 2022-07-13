@@ -24,15 +24,15 @@ $pr_cart = new \project\cart();
 
 // Ссылка на переадресацию ответа 
 $url_ref = $config->getConfigParam('pay_site_url_ref');
-$ya_shop_id = $config->getConfigParam('ya_shop_id');
-$ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
+$ya_shop_id = $config->getConfigParamByCategory('ya_shop_id',7);//kaijean
+$ya_shop_api_key = $config->getConfigParamByCategory('ya_shop_api_key',7);//kaijean
 
 $pay_date = date("Y-m-d H:i:s"); // Получаем дату и время
 $pay_status = "pending"; // Устанавливаем стандартный статус платежа
 // Подключаем библиотеку Я.Кассы
-require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/system/yookassa-sdk-php-master/lib/autoload.php';
 
-use YandexCheckout\Client;
+use \YooKassa\Client;
 
 $client = new Client();
 $client->setAuth($ya_shop_id, $ya_shop_api_key);
@@ -43,16 +43,88 @@ $client->setAuth($ya_shop_id, $ya_shop_api_key);
 $p_user = new \project\user();
 
 $price_total = 0;
+
+$data = array();
+$promo_array = array();
+
 if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
-        $email = $value['user_email'];
-        if ($value['price_promo'] > 0) {
-            $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
+        $alliance = 1;
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    if ($v['alliance'] == 0) {
+                        $alliance = 0;
+                    }
+                }
+            }
         }
-        $price_total += $price;
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    $price = (int) $value['price'];
+                    if (strlen($v['product_ids']) > 0) {
+                        $ex = explode(',', $v['product_ids']);
+                        foreach ($ex as $product_id) {
+                            if ($value['id'] == $product_id) {
+                                if ($v['amount'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                    } else {
+                                        $value['price_promo'] = ($price - $v['amount']);
+                                    }
+                                }
+                                if ($v['percent'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                    } else {
+                                        $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if ($v['amount'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                            } else {
+                                $value['price_promo'] = ($price - $v['amount']);
+                            }
+                        }
+                        if ($v['percent'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                            } else {
+                                $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $data[] = $value;
     }
+}
+foreach ($data as $item) {
+    if($item['price_promo'] > 0) {
+        $price = $item['price_promo'];
+    } else {
+        $price = $item['price'];
+    }
+    $email = $item['user_email'];
+    $price_total += $price;
+}
+
+if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+//    foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//        $email = $value['user_email'];
+//        if ($value['price_promo'] > 0) {
+//            $price = $value['price_promo'];
+//        } else {
+//            $price = $value['price'];
+//        }
+//        $price_total += $price;
+//    }
 
     if ($price_total == 0) {
         $result = array('success' => 1, 'success_text' => '', 'data' => array(), 'action' => '/pay.php');
@@ -63,7 +135,6 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
 //    if ($p_user->isEditor()) {
 //        $price_total = 1;
 //    }
-
         $client_id = ($p_user->isClientId() > 0) ? $p_user->isClientId() : 0;
 
         // Передадим ID пользователя (Создается при консультации)
@@ -128,14 +199,14 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
             try {
                 $payment = $client->createPayment(
                         $data_array,
-                        uniqid('', true)
+                        $idempotenceKey
                 );
             } catch (Exception $exc) {
                 $errors = 1;
                 //echo $exc->getTraceAsString();
+                
                 echo 'Ошибка генерации массива данных';
             }
-
             if ($errors == 0) {
                 //print_r($payment);
                 // Получаем ссылку на оплату
@@ -153,7 +224,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
 // Сохраняем данные платежа в базу
                 $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
                         . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-                if ($sqlLight->query($queryPay, array(($max_id), 'ya', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $confirmationUrl), 0)) {
+                if ($sqlLight->query($queryPay, array(($max_id), 'ya', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $confirmationUrl, ''), 0)) {
 //                foreach ($_SESSION['cart']['itms'] as $key => $value) {
 //                    $product_id = $value['id'];
 //                    if ($product_id > 0) {

@@ -308,11 +308,12 @@ if (!function_exists('importWisiwyng')) {
 
     function importWisiwyng($elm_id = '', $height = 300) {
         if (strlen($elm_id) > 0) {
-            $elm_id = "#{$elm_id}";
+            $some_id = $elm_id;
+            $elm_id = "#{$elm_id}"; 
         }
         if ($GLOBALS["ImportWisiwyng"] == 0) {
             ?>
-            <script src="/assets/plugins/tinymce/tinymce.js<?= $_SESSION['rand'] ?>"></script>
+            
             <?
         }
         ?>

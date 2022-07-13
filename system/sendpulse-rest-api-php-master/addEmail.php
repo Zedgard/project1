@@ -27,7 +27,7 @@ define('API_SECRET', 'd9f486960c73c26d23f6d4f8f289ec7b');
 define('PATH_TO_ATTACH_FILE', __FILE__);
 
 $bookID = 2249296;
-$email = 'koman1706@gmail.com';
+$email = 'email@gmail.com';
 
 $SPApiClient = new ApiClient(API_USER_ID, API_SECRET, new FileStorage());
 

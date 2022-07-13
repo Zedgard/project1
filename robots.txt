@@ -1,1 +1,33 @@
 Host: https://edgardzaycev.com
+
+User-agent: *
+Disallow: /shop/?product*product*
+Disallow: /lolkek.php
+Disallow: /edzay.php
+Allow: /shop/?product=4321
+Allow: /shop/?product=4584
+Allow: /shop/?product=4598
+Allow: /shop/?product=4600
+Allow: /shop/?product=4602
+Allow: /shop/?product=4603
+Allow: /shop/?product=4604
+Allow: /shop/?product=4605
+Allow: /shop/?product=4610
+Allow: /shop/?product=4620
+Allow: /shop/?product=4622
+Allow: /shop/?product=4633
+Allow: /shop/?product=4634
+Allow: /shop/?product=4635
+Allow: /shop/?product=4636
+Allow: /shop/?product=4637
+Allow: /shop/?product=4623
+Allow: /shop/?product=4629
+Allow: /shop/?product=4631
+Allow: /shop/?product=4639
+Allow: /shop/?product=4640
+Allow: /shop/?product=4641
+Allow: /shop/?product=4642
+Allow: /shop/?product=4643
+Allow: /shop/?k*
+
+Sitemap: https://edgardzaycev.com/sitemap.xml

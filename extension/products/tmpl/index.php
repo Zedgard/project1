@@ -215,7 +215,7 @@
                                                         <input type="hidden" name="product_title" class="info_product_title" value="<?= $productsFilterArray[$i]['title'] ?>" />
                                                         <input type="hidden" name="product_title" class="info_product_price" value="<?= $product_price ?>" />
                                                         <input type="hidden" name="product_title" class="info_product_img" value="<?= $image ?>" />
-                                                        <a href="javascript:void(0)" class="btn btngreen cart_product_add" product_id="<?= $productsFilterArray[$i]['id'] ?>">В корзину</a>
+                                                        <a href="javascript:void(0)" class="btn btngreen cart_product_add" product_id="<?= $productsFilterArray[$i]['id'] ?>" onclick="sendGoal(this)">В корзину</a>
                                                         <div class="btn-group">
                                                             <a href="/shop/cart/" class="btn btngreen-outline align-self-center cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;padding: 0.8rem;border-right: none;">В корзине</a>
                                                             <a href="javascript:void(0)" class="btn btn-danger cart_product_remove cart_product_go_card" product_id="<?= $productsFilterArray[$i]['id'] ?>" style="display: none;padding: 0.4rem;" title="Удалить из корзины"><i class="fa fa-trash"></i></a>
