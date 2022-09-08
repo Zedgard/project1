@@ -29,7 +29,7 @@ $(document).ready(function () {
     init_bottom_cookie_btn();
     init_promo_input();
     init_real_time();
-    get_promos('0');
+    // get_promos('0');
 
     init_ckick_to_upload_page();
 
@@ -296,7 +296,6 @@ function initCartArray() {
             var o = $(".mini-products-list");
             var total_titles = '';
             var total = 0;
-
             /* Отображение в мини корзине */
             if (!!$(".cart-info")) {
                 o.html("");
@@ -307,7 +306,10 @@ function initCartArray() {
                             price = Number(e['data'][i]['price_promo']);
 
                         }
-
+                        else if(e['data'][i]['price_promo'] == 0 && e['data'][i]['by_product'])
+                        {
+                            price = 0;
+                        }
 
 
                         var imgFirst = '/themes/site1/images/gallery-box1.jpg';
@@ -367,6 +369,12 @@ function initCartArray() {
                                 isPromo = 1;
                                 price_promo = Number(e['data'][i]['price_promo']);
                                 price_promo_total += price - price_promo;
+                            }
+                            else if(e['data'][i]['price_promo'] == 0 && e['data'][i]['by_product'])
+                            {
+                                isPromo = 1;
+                                price_promo = 0;
+                                price_promo_total += price_promo;
                             }
                             var imgFirst = '/themes/site1/images/gallery-box1.jpg';
                             if (typeof e['data'][i]['images_str'] != 'undefined' && e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
@@ -444,10 +452,21 @@ function initCartArray() {
                             }
                         }
                     }
+                    console.log(price_promo_total);
                     if (price_promo_total > 0) {
                         $(".cart_product_promo_block").show();
                     } else {
                         $(".cart_product_promo_block").hide();
+                    }
+                    if(total > 0)
+                    {
+                        $(".non-zero").removeClass('d-none');
+                        $(".zero").addClass('d-none');
+                    }
+                    else
+                    {
+                        // $(".non-zero").addClass('d-none');
+                        // $(".zero").removeClass('d-none');
                     }
                     $(".total_cart").html(total);
                     $(".cart_total").html(total);
@@ -480,6 +499,12 @@ function initCartArray() {
                             isPromo = 1;
                             price_promo = Number(e['data'][i]['price_promo']);
                             price_promo_total += price - price_promo;
+                        }
+                        else if(e['data'][i]['price_promo'] == 0 && e['data'][i]['by_product'])
+                        {
+                            isPromo = 1;
+                            price_promo = 0;
+                            price_promo_total += price_promo;
                         }
                         var imgFirst = '/themes/site1/images/gallery-box1.jpg';
                         if (typeof e['data'][i]['images_str'] != 'undefined' && e['data'][i]['images_str'].length > 0) { //e['data'][i]['products_wares_info'].length > 0
@@ -592,12 +617,13 @@ function init_promo_input() {
 }
 
 function get_promos(code) {
+    console.log("INPUT:");
     if ($(".input_promo_code").length > 0) {
         $(".errors_promo_code .html_text").html(ajax_load);
         sendPostLigth('/jpost.php?extension=promo', {"getCodePromos": code}, function (e) {
             $(".list_promos div").remove();
             if (e['success'] == '1') {
-                //console.log(e['data']);
+                console.log(e['data']);
                 if (e['data'].length > 0) {
                     $(".list_promos").append('<div class="mb-3" style="font-size:1.5rem;">Список купонов:</div>');
                     //console.log(e['data'].length);

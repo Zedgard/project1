@@ -141,6 +141,9 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
         if ($client_id == 0) {
             $client_id = $_SESSION['cart']['itms'][0]['user_id'];
         }
+        if ($client_id == 0) {
+            $client_id = $pr_cart->get_user_id_fast_login();
+        }
         if ($client_id > 0) {
             $pay_descr = (strlen($_SESSION['cart']['itms'][0]['pay_descr']) > 0) ? $_SESSION['cart']['itms'][0]['pay_descr'] : '';
             if (strlen($pay_descr) > 0) {

@@ -26,7 +26,11 @@
                 <div class="row mb-2">
                     <div class="col-lg-12">
                         <p>
-                            <i class="fa fa-map-marker"></i> <span class="ml-2">г. Комсомольск-на-Амуре,<br> ул. Вокзальная, 49, оф. 1006</span>
+                            <i class="fa fa-map-marker"></i> <span class="ml-2">г. Комсомольск-на-Амуре,<br> ул. Вокзальная, 49, оф. 1006</span><br>
+                            <span>&copy; ООО "ДИМО", <?= date('Y') ?><span><br>
+                            <span>ОГРН 1202700017981<span><br>
+                            <span>ИНН 2703102063</span><br>
+                            <span>КПП 270301001</span><br>
                         </p>
                     </div>
                 </div>
@@ -52,11 +56,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="row mb-1">
-                    <div class="col-lg-12">
-                        &copy; ИП Зайцев Эдгард Александрович, <?= date('Y') ?>
-                    </div>
-                </div>
+                
                 <!--
                 <ul class="social-icons bottom25 wow fadeInUp" data-wow-delay="300ms">
                     <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i> </a> </li>
@@ -124,7 +124,14 @@
                         </a>
                     </div>
                 </div>
+                <div class="row mb-1">
+                    <div class="col-lg-12">
+                        <span>Банк: "Азиатско-Тихоокеанский Банк" (АО)</span><br>
+                        <span>БИК: 041012765</span><br>
+                        <span>Р/С: 40702810600260078063</span><br>
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>

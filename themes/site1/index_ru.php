@@ -17,7 +17,8 @@
 
         <!-- SLEEK CSS -->
         <link rel="stylesheet" href="/themes/site1/css/plugins.css<?= $_SESSION['rand'] ?>">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet"> -->
+        <link href="/assets/fonts/OpenSans/css2.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
         <link href="/assets/fonts/SkolarPE/stylesheet.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
 
         <link href="/themes/site1/css/fonts.css<?= $_SESSION['rand'] ?>" rel="stylesheet">
@@ -31,13 +32,13 @@
         <link rel="stylesheet" href="/assets/css/fontawesome/css/v4-shims.min.css<?= $_SESSION['rand'] ?>">
 
 
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css<?= $_SESSION['rand'] ?>">
+        <link href="/assets/css/fontawesome-4.2.0/font-awesome.min.css<?= $_SESSION['rand'] ?>">
         <link href="/assets/plugins/daterangepicker/daterangepicker.css<?= $_SESSION['rand'] ?>" rel="stylesheet" />
 
         <!-- Web Fonts  -->
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,800;1,900&display=swap" rel="stylesheet">
+        <link href="/assets/fonts/Montserrat/css3.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet">
+        <link href="/assets/fonts/OverPass/css4.css" rel="stylesheet">
 
         <!-- bootstrap CSS -->
         <link rel="stylesheet" href="/assets/plugins/bootstrap5/css/bootstrap.min.css<?= $_SESSION['rand'] ?>">
@@ -63,7 +64,7 @@
         <script src="/themes/site1/js/owl.carousel.min.js<?= $_SESSION['rand'] ?>"></script>
 
         <script type="text/javascript" src="/assets/js/init.js<?= $_SESSION['rand'] ?>"></script>
-        <script src="/assets/js/cart.js<?= $_SESSION['rand'] ?>"></script>  
+        <!-- <script src="/assets/js/cart.js<?= $_SESSION['rand'] ?>"></script>   -->
         <script async="async" type="text/javascript" src="/assets/plugins/lazyload/lazyload.min.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/video/videojs.js<?= $_SESSION['rand'] ?>"></script>
         <script src="/assets/plugins/video/Youtube.js<?= $_SESSION['rand'] ?>"></script>
@@ -837,5 +838,6 @@
           </script>
          */
         ?>
+        <script src="/assets/js/cart.js<?= $_SESSION['rand'] ?>"></script>  
     </body>
 </html>

@@ -120,7 +120,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
     }
 }
 foreach ($data as $item) {
-    if($item['price_promo'] > 0) {
+    if($item['price_promo'] >= 0) {
         $price = $item['price_promo'];
     } else {
         $price = $item['price'];
@@ -153,7 +153,7 @@ if ($price_total > 0) {
             foreach ($_SESSION['cart']['itms'] as $key => $value) {
                 $product_id = $value['id'];
                 if ($product_id > 0) {
-                    if ($value['price_promo'] > 0) {
+                    if ($value['price_promo'] >= 0) {
                         $price = $value['price_promo'];
                     } else {
                         $price = $value['price'];

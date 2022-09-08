@@ -126,6 +126,11 @@
                                 <span class="nav-text">Настройки webhook</span>
                             </a>
                         </li>
+                        <li style="margin: 0;padding: 0;" class="<?= ($_SESSION['page_url'] == 'refferals_settings') ? 'active' : '' ?>" >
+                            <a class="sidenav-item-link" href="/admin/refferals_settings/">
+                                <span class="nav-text">Рефферальная программа</span>
+                            </a>
+                        </li>
 
                         <!--
                                             <li >

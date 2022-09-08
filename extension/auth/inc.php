@@ -17,6 +17,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/class/validator.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/sqlLight.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/class/mail.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/users/inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/refferals/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/config/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/extension/send_emails/inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/system/wordpress/class-phpass.php';
@@ -193,12 +194,32 @@ class auth extends \project\user {
                     $_SESSION['db_next_id'] = $sqlLight->queryNextId('zay_users');
                     $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
                             . "VALUES ('?','?','','','?','?','?', NOW() )";
+                    $ref_id = null;
+                    if(isset($_COOKIE["ref"]))
+                        $ref_id = $_COOKIE["ref"];//ид пользовтеля из рефферальной программы
+                    $res = false;
                     if ($sqlLight->query($query, array($email, $phone, $pass_hash, $active, $activate_code), 0)) {
                         if (strlen($activate_codeBase64) > 0) {
                             $this->sendActivateEmail($email, $activate_codeBase64);
                         }
+                        //добавляем в рефферальную программу
+                        if(!empty($ref_id))
+                        {
+                            $ref = new \project\refferals();
+                            $res = $ref->addRegUserToRef($ref_id,$_SESSION['db_next_id']);
+                        }
                         return true;
                     } else {
+                        //если куки с ид пользовтеля рефферальной программы пусто
+                        if(empty($ref_id))
+                        {
+                            $error[] = "Ошибка при добавлении пользователя в качестве рефферала. Вероятно, время хранения куки истекло. Стоит открыть рефферальную ссылку повторно";
+                        }
+                        if(!$res)
+                        {
+                            $error[] = "Ошибка при обновлении таблицы zay_refferal_users";
+                            $error = array_merge($error,$sqlLight->errors);
+                        }
                         $error[] = $lang['auth'][$_SESSION['lang']]['error_register_form'];
                     }
                 } else {
@@ -286,6 +307,8 @@ class auth extends \project\user {
                     $_SESSION['db_next_id'] = $user_id;
                     $query = "INSERT INTO `zay_users`(`email`, `phone`, `first_name`, `last_name`, `u_pass`, `active`, `active_code`, `active_lastdate`) "
                             . "VALUES ('?','?','','','?','?','?', NOW() )";
+                    $ref_id = $_COOKIE['ref'];//ид пользовтеля из рефферальной программы
+                    $res= false;
                     if ($sqlLight->query($query, array($email, $phone, $pass_hash, $active, $activate_code), 0)) {
                         $this->insertRole($user_id, 3);
                         $send_emails = new \project\send_emails();
@@ -293,10 +316,26 @@ class auth extends \project\user {
 
                         $format_code = 'register_fast_new_user';
                         $send_emails->send($format_code, $email, array('site' => 'https://www.' . $_SERVER['SERVER_NAME'], 'user_email' => $email, 'user_pass' => $pass));
+                        //добавляем в рефферальную программу
+                        if(!empty($ref_id))
+                        {
+                            $ref = new \project\refferals();
+                            $res = $ref->addRegUserToRef($ref_id,$user_id);
+                        }
                         if ($this->authorization($email, $pass)) {
                             return true;
                         }
                     } else {
+                        //если куки с ид пользовтеля рефферальной программы пусто
+                        if(empty($ref_id))
+                        {
+                            $error[] = "Ошибка при добавлении пользователя в качесатве рефферала. Вероятно, время хранения куки истекло. Стоит открыть рефферальную ссылку повторно";
+                        }
+                        if(!$res)
+                        {
+                            $error[] = "Ошибка при обновлении таблицы zay_refferal_users";
+                            $error = array_merge($error,$sqlLight->errors);
+                        }
                         $error[] = $lang['auth'][$_SESSION['lang']]['error_register_form'];
                     }
                 }

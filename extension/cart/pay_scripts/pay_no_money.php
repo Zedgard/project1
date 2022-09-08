@@ -28,7 +28,7 @@ if (count($_SESSION['cart']['itms']) > 0) {
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
         if($value['account_id'] != 2){//kaijean
             $email = $value['user_email'];
-            if ($value['price_promo'] > 0) {
+            if ($value['price_promo'] > 0 || $value['by_product']) {
                 $price = $value['price_promo'];
             } else {
                 $price = $value['price'];

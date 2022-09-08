@@ -35,6 +35,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
                         $ex = explode(',', $v['product_ids']);
                         foreach ($ex as $product_id) {
                             if ($value['id'] == $product_id) {
+                                $value['by_product'] = true;
                                 if ($v['amount'] > 0) {
                                     if ($value['price_promo'] > 0 && $alliance == 1) {
                                         $value['price_promo'] = ($value['price_promo'] - $v['amount']);
@@ -75,7 +76,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
 }
 foreach ($data as $item) {
     if($item['account_id'] != 2){//kaijean
-        if($item['price_promo'] > 0) {
+        if($item['price_promo'] > 0 || $item['by_product']) {
             $price = $item['price_promo'];
         } else {
             $price = $item['price'];

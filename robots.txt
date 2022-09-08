@@ -4,6 +4,7 @@ User-agent: *
 Disallow: /shop/?product*product*
 Disallow: /lolkek.php
 Disallow: /edzay.php
+Disallow: /info.php
 Allow: /shop/?product=4321
 Allow: /shop/?product=4584
 Allow: /shop/?product=4598

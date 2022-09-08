@@ -9,7 +9,7 @@ function fn_dataLayer() {
     for (var i = 0; i < cart_itms.length; i++) {
         var isPromo = 0;
         var product_price = 0;
-        if (typeof cart_itms[i]['price_promo'] != 'undefined' && cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0) {
+        if (typeof cart_itms[i]['price_promo'] != 'undefined' && cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0 || cart_itms[i]['by_product']) {
             isPromo = 1;
         }
         if (isPromo == 1) {
@@ -71,7 +71,10 @@ function init_pay() {
 //            document.location.href = '/pay.php?yandex=1';
 //        }, 500);
     });
-
+    $(".btn_cart_zero").unbind('click').click(function () {
+        fn_dataLayer();
+        window.location.href = '/pay.php';
+    });
     // Тинькоф обычная оплата
     $(".btn_cart_tinkoff").unbind('click').click(function () {
         fn_dataLayer();
@@ -229,6 +232,7 @@ function init_pay() {
                         confirmation_token: 'ct-' + pay_key,
                         return_url: return_url,
                         error_callback(error) {
+                            console.log(error);
                             //Обработка ошибок инициализации
                         }
                     });
