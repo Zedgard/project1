@@ -114,7 +114,7 @@ if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
                                 "value" => $price_total,
                                 "currency" => "RUB"
                             ),
-                            "tax_system_code" => "2", // Налогообложение 
+                            "tax_system_code" => "6", // Налогообложение
                             "vat_code" => "2",
                             "payment_mode" => "full_prepayment", // Полный платеж
                             "payment_subject" => "service" // Услуга
