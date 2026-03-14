@@ -5,7 +5,7 @@
   "homepage": "https://plyr.io",
   "author": "Sam Potts <sam@potts.es>",
   "dependencies": {
-    "@sentry/browser": "^5.22.3",
+    "@sentry/browser": "^7.119.1",
     "core-js": "^3.6.5",
     "custom-event-polyfill": "^1.0.7",
     "shr-buttons": "2.0.3",
