@@ -65,6 +65,17 @@ if ($p_user->isEditor()) {
         $data = $pay->get_pay_all_status();
         $result = array('success' => 1, 'success_text' => '', 'data' => $data);
     }
+    // Получить типы операций
+    if (isset($_POST['manual_select_status'])) {
+        $data = /*$pay->get_manual_all_status()*/[ 0 => ["manual_status" => "hidden"], 1 => ["manual_status" => ""]];
+        $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    }
+    //изменить статус платежа
+    if (isset($_POST['set_manual_status'])) {
+        $data = $pay->set_manual_status($_POST['payment_id'],$_POST['set_manual_status'],$_POST['product_id'],$_POST['user_email']);
+        $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+    }
+    
 
     // Добавление связи покупки и продукта
     if ($_POST['insert_pay_products']) {

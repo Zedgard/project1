@@ -52,6 +52,7 @@ if (isset($_POST['edit_products'])) {
         }
     }
     //$products_category[] = (isset($_POST['products_category'])) ? $_POST['products_category'] : '';// old
+    $products_account = (isset($_POST['products_account'])) ? $_POST['products_account'] : '';//kaijean
     $products_tax = (isset($_POST['products_tax']) && $_POST['products_tax'] > 0) ? $_POST['products_tax'] : '0';
     $products_theme = (isset($_POST['products_theme'])) ? $_POST['products_theme'] : '';
     $products_topic = (isset($_POST['products_topic'])) ? $_POST['products_topic'] : '';
@@ -68,10 +69,11 @@ if (isset($_POST['edit_products'])) {
 
     $pr_products->setProducts_wares($products_wares);
     $pr_products->setProducts_category($products_category);
+    $pr_products->setProducts_account($products_account);//kaijean
     $pr_products->setProducts_topic($products_topic);
     $pr_products->setProducts_theme($products_theme);
-
-    if ($pr_products->insertOrUpdateProducts($products_id, $products_title, $products_desc_minimal,
+    //kaijean
+    if ($pr_products->insertOrUpdateProducts($products_id, $products_account, $products_title, $products_desc_minimal,
                     $products_price, $products_price_promo, $products_period_open, $products_desc, $products_sold, $product_content, $images_str, $product_new, $products_tax, $products_active)) {
         $result = array('success' => 1, 'success_text' => 'Выполнено');
         $_SESSION['product']['searchStr'] = '';

@@ -54,23 +54,25 @@ class cart extends \project\extension {
     public function pay_insert_pay_products($pay_id, $itms) {
         $pr_products = new \project\products();
         foreach ($itms as $value) {
-            //$product_id = $max_id;
-            $product_id = $value['id'];
-            $where_period_open = "NULL";
-            if ($value['period_open'] > 0) {
-                $where_period_open = "DATE_ADD(NOW(), INTERVAL ({$value['period_open']}+1) DAY)";
-            }
-            if ($product_id > 0) {
-                $price = $value['price'];
-                if ($value['price_promo'] > 0) {
-                    $price = $value['price_promo'];
+            if($value['account_id'] != 2){
+                //$product_id = $max_id;
+                $product_id = $value['id'];
+                $where_period_open = "NULL";
+                if ($value['period_open'] > 0) {
+                    $where_period_open = "DATE_ADD(NOW(), INTERVAL ({$value['period_open']}+1) DAY)";
                 }
-                $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`, `close_date`) 
-                    VALUES ('?','?','?', {$where_period_open})";
-                $this->query($queryProductRegister, array($pay_id, $product_id, $price, $where_period_open));
+                if ($product_id > 0) {
+                    $price = $value['price'];
+                    if ($value['price_promo'] > 0) {
+                        $price = $value['price_promo'];
+                    }
+                    $queryProductRegister = "INSERT INTO `zay_pay_products`(`pay_id`, `product_id`, `product_price`, `close_date`) 
+                        VALUES ('?','?','?', {$where_period_open})";
+                    $this->query($queryProductRegister, array($pay_id, $product_id, $price, $where_period_open));
 
-                // Зафиксируем продажу
-                $pr_products->setSoldProducts($product_id);
+                    // Зафиксируем продажу
+                    $pr_products->setSoldProducts($product_id);
+                }
             }
         }
         // Связи покупки и консультации
@@ -108,9 +110,9 @@ class cart extends \project\extension {
               [title] => Консультация "Эдгард Зайцев" Дата: 20.07.2021 04:00:00
               [images_str] => /assets/img/products/consultation.jpg
               [first_name] => Виктор
-              [user_phone] => 89143720027
-              [user_email] => koman1706@gmail.com
-              [pay_descr] => <div>Консультация с Виктор</div><div>Телефон: 89143720027</div><div>Email: koman1706@gmail.com</div><div>Консультант: Эдгард Зайцев</div><div>Дата и время: 20.07.2021 04:00:00</div><div>Цена: 11000</div>
+              [user_phone] => 891437200**
+              [user_email] => email
+              [pay_descr] => <div>Консультация с Виктор</div><div>Телефон: 89143720027</div><div>Email: email</div><div>Консультант: Эдгард Зайцев</div><div>Дата и время: 20.07.2021 04:00:00</div><div>Цена: 11000</div>
               [date] => 2021-07-20
               [time] => 04:00:00
               [price] => 11000
@@ -243,11 +245,11 @@ class cart extends \project\extension {
             $config = new \project\config();
             // Настройка
             // appID
-            $business_check_appID = $config->getConfigParam('business_check_appID');
+            $business_check_appID = $config->getConfigParamByCategory('business_check_appID',7);//kaijean
             // secret
-            $business_check_secret = $config->getConfigParam('business_check_secret');
+            $business_check_secret = $config->getConfigParamByCategory('business_check_secret',7);//kaijean
             // ндс
-            $business_check_nds = $config->getConfigParam('business_check_nds');
+            $business_check_nds = $config->getConfigParamByCategory('business_check_nds',7);//kaijean
             if ($business_check_nds == '') {
                 $business_check_nds = 0; // По умолчанию 20%
             }

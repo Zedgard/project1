@@ -25,10 +25,8 @@ try {
     $mail->Port = 587;
     //$mail->Port = 465;
 
-    $mail->Username = 'koman1706@gmail.com'; // YOUR gmail email
-    $mail->Password = '{f,fhjdcr 2011'; // YOUR gmail password
-    //$mail->Username = 'admin@agenstvnet.ru'; // YOUR gmail email
-    //$mail->Password = 'Kopass1987'; // YOUR gmail password
+    $mail->Username = ''; // YOUR gmail email
+    $mail->Password = '****'; // YOUR gmail password
     // Sender and recipient settings
     $mail->setFrom('resko1987@mail.ru', 'ВКонтакте'); // samodinskaya1611@mail.ru
     $mail->addAddress('resko1987@mail.ru', 'ВКонтакте');

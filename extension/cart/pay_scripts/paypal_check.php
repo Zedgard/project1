@@ -30,8 +30,10 @@ $pr_cart = new \project\cart();
 $p_user = new \project\user();
 
 // Данные платежной системы
-$clientId = $config->getConfigParam('paypal_client_id');
-$clientSecret = $config->getConfigParam('paypal_client_secret');
+// $clientId = $config->getConfigParam('paypal_client_id');
+// $clientSecret = $config->getConfigParam('paypal_client_secret');
+$clientId = $config->getConfigParamByCategory('paypal_client_id',7);//kaijean
+$clientSecret = $config->getConfigParamByCategory('paypal_client_secret',7);//kaijean
 
 // Подключаемся к системе
 if ($clientId == 'AWhQommTsM02uROFM78sl252sngt6qgOLDOJ9VkuyG1F61ZJ8rjUUuQjE-IJvgfhQtV1hXMLeoKbvwfe') {
@@ -45,14 +47,16 @@ $total = 0;
 if (isset($_SESSION['cart']) && is_array($_SESSION['cart']['itms']) > 0) {
     $title = "";
     foreach ($_SESSION['cart']['itms'] as $key => $value) {
-        $email = $value['user_email'];
-        $title .= $value['title'] . " : ";
-        if ($value['price_promo'] > 0) {
-            $price = $value['price_promo'];
-        } else {
-            $price = $value['price'];
+        if($value['account_id'] != 2){//kaijean
+            $email = $value['user_email'];
+            $title .= $value['title'] . " : ";
+            if ($value['price_promo'] > 0) {
+                $price = $value['price_promo'];
+            } else {
+                $price = $value['price'];
+            }
+            $total += $price;
         }
-        $total += $price;
     }
 }
 

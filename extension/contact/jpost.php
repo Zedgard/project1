@@ -32,11 +32,11 @@ if (isset($_POST['user_send_message'])) {
 
     if (strlen($config->getConfigParam('link_ed_mailto')) > 0) {
         $link_ed_mailto = $config->getConfigParam('link_ed_mailto');
-        //$link_ed_mailto = 'koman1706@gmail.com';
+        //$link_ed_mailto = 'email';
          
         //echo "link_ed_mailto: {$link_ed_mailto} <br/>\n";
         // Отправить мне чтобы проверять сообщения
-        $p_user->sendEmail('koman1706@gmail.com', 'send_user_message', $arrayReplaseText);
+        // $p_user->sendEmail('email@gmail.com', 'send_user_message', $arrayReplaseText);
 
         if ($p_user->sendEmail($link_ed_mailto, 'send_user_message', $arrayReplaseText)) {
             $result = array('success' => 1, 'success_text' => 'Успешно отправлено, ждите ответа.');

@@ -1,14 +1,15 @@
 var pay_status = 0;
-$(document).ready(function () {
-    init_pay();
-});
+document.addEventListener('DOMContentLoaded', init_pay);
+// $(document).ready(function () {
+//     init_pay();
+// });
 
 function fn_dataLayer() {
     window.dataLayer = window.dataLayer || [];
     for (var i = 0; i < cart_itms.length; i++) {
         var isPromo = 0;
         var product_price = 0;
-        if (typeof cart_itms[i]['price_promo'] != 'undefined' && cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0) {
+        if (typeof cart_itms[i]['price_promo'] != 'undefined' && cart_itms[i]['price_promo'].length > 0 && Number(cart_itms[i]['price_promo']) > 0 || cart_itms[i]['by_product']) {
             isPromo = 1;
         }
         if (isPromo == 1) {
@@ -70,7 +71,10 @@ function init_pay() {
 //            document.location.href = '/pay.php?yandex=1';
 //        }, 500);
     });
-
+    $(".btn_cart_zero").unbind('click').click(function () {
+        fn_dataLayer();
+        window.location.href = '/pay.php';
+    });
     // Тинькоф обычная оплата
     $(".btn_cart_tinkoff").unbind('click').click(function () {
         fn_dataLayer();
@@ -129,7 +133,6 @@ function init_pay() {
                                                     "paymentResult": paymentResult,
                                                     "options": options
                                                 }, function (e) {
-                                                    console.log(e);
                                                     if (e['success'] == '1') {
                                                         pay_status = 1;
                                                     }
@@ -213,9 +216,11 @@ function init_pay() {
         $(".pay_preloader").show(200);
 
         fn_dataLayer();
+
         sendPostLigth('/jpost.php?extension=cart', {
             "get_cart_other": 1
         }, function (e) {
+            console.log(e);
             if (e['success'] == '1') {
                 if (typeof e['action'] !== 'undefined' && e['action'].length > 0) {
                     document.location.href = e['action'];
@@ -227,6 +232,7 @@ function init_pay() {
                         confirmation_token: 'ct-' + pay_key,
                         return_url: return_url,
                         error_callback(error) {
+                            console.log(error);
                             //Обработка ошибок инициализации
                         }
                     });
@@ -249,7 +255,15 @@ function init_pay() {
     });
 
     $(".btn_cart_credit").unbind('click').click(function () {
+        var credModal = new bootstrap.Modal(document.getElementById('credModal'), {
+        keyboard: false
+        });
         fn_dataLayer();
-        window.location.href = '/tinkoff_credit_pay.php';
+        credModal.toggle();
+        // window.location.href = '/tinkoff_credit_pay.php';
+    });
+    $(".btn-choose").unbind('click').click(function() {
+        var credType = $(this).attr("name");
+        window.location.href = '/tinkoff_credit_pay.php?promoCode='+credType;
     });
 }

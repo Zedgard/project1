@@ -128,8 +128,8 @@ class pay extends \project\extension {
         $search = '';
         if (strlen($search_pay_info_str) > 0) {
             $search = "and p.title LIKE '%{$search_pay_info_str}%'";
-        }
-        $querySelect = "SELECT p.* FROM zay_pay_products pp 
+        }//kaijean
+        $querySelect = "SELECT p.*, pp.manual_status FROM zay_pay_products pp 
             left join zay_product p on p.id=pp.product_id 
             where pp.pay_id='?' {$search} ORDER BY p.title ASC";
         return $this->getSelectArray($querySelect, array($id), 0);
@@ -231,6 +231,27 @@ class pay extends \project\extension {
         $query = "SELECT DISTINCT `pay_status` FROM `zay_pay`";
         return $sqlLight->queryList($query, array());
     }
+    /**
+     * Изменить статус товара в платеже
+     * @return type
+     */
+    public function set_manual_status($payment_id, $status = "",$product_id,$user_email)
+    {
+        $sqlLight = new \project\sqlLight();
+        $query = "SELECT u.id from zay_users u where u.email='".$user_email."';";//запрос пользователя 
+        $user = $sqlLight->queryList($query, array());
+        $query = "UPDATE zay_pay_products pp 
+                LEFT JOIN zay_pay p on p.id = pp.pay_id 
+                SET pp.manual_status='";
+        if($status == "hidden")
+            $query .= "hidden' ";
+        else
+            $query .= "' ";
+        $query .= "WHERE p.user_id=".$user[0]['id']." AND pp.product_id=".$product_id.";";
+
+        return $sqlLight->query($query, array());
+    }
+    
 
     /**
      * Добавление связи продажа и продукт

@@ -20,8 +20,10 @@ $p_products = new \project\products();
 $config = new \project\config();
 $sign_up_consultation = new \project\sign_up_consultation();
 
-$in_shop_id = $config->getConfigParam('in_shop_id');
-$in_secret_key = $config->getConfigParam('in_secret_key');
+// $in_shop_id = $config->getConfigParam('in_shop_id');
+// $in_secret_key = $config->getConfigParam('in_secret_key');
+$in_shop_id = $config->getConfigParamByCategory('in_shop_id',7);//kaijean
+$in_secret_key = $config->getConfigParamByCategory('in_secret_key',7);//kaijean
 
 
 $client_email = $u->isClientEmail();

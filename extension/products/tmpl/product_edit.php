@@ -17,6 +17,11 @@
                         <label for="config_title">Название</label>
                         <input type="text" class="form-control products_title" id="products_title" placeholder="Наименование..." required>
                     </div>
+                    <div class="form-group">
+                        <label for="products_account" class="label_products_account">Счёт для оплаты</label>
+                        <select class="form-control products_account" name="states[]" style="width: 100%">
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label for="products_wares" class="label_products_wares">Товары</label>
@@ -156,12 +161,7 @@
         <a href="./" class="btn btn-link">назад</a>
     </div>
 </div>
-<?
-//include 'admin_edit.php';
-importWisiwyng('products_desc_minimal', 150);
-importWisiwyng('products_desc', 300);
-importWisiwyng('product_content', 300);
-?>
+
 <script>
     var product_edit = '<?= $_GET['product_edit'] ?>';
     var products_id = product_edit;
@@ -182,7 +182,13 @@ importWisiwyng('product_content', 300);
             placeholder: "Выберите категории",
             allowClear: true
         });
-
+        //kaijean
+        products_account = $(".products_account").select2({
+            width: "100%",
+            placeholder: "Выберите счёт для платежей",
+            allowClear: true
+        });
+        //kaijean
         var products_topic = $(".products_topic").select2({
             width: "100%",
             placeholder: "Выберите темы",
@@ -206,6 +212,7 @@ importWisiwyng('product_content', 300);
             getWaresArray(0);
             getTopicArray(0);
             getCategoryArray(0);
+            getAccountArray(0);//kaijean
             getProductThemeArray(0);
         }
 
@@ -230,6 +237,29 @@ importWisiwyng('product_content', 300);
             }
         }
 
+        /**
+         * Платежный счёт
+         * @returns {undefined}
+         */
+         //kaijean
+        function getAccountArray(v) {
+            if ($(".products_account").length > 0) {
+                $(".products_account option").remove();
+                sendPostLigth('/jpost.php?extension=accounts', {"get_accounts_all": 1}, function (e) {
+                    var data = e['data'];
+                    if (data.length > 0) {
+                        $(".products_account").append('<option></option>');//kaijean
+                        for (var i = 0; i < data.length; i++) {
+                            $(".products_account").append('<option value="' + data[i]['id'] + '">' + data[i]['name'] + '</option>');
+                        }
+                        if (!!v && v.length > 0) {
+                            products_account.val(v).trigger("change");
+                        }
+                    }
+                });
+            }
+        }
+        //kaijean
         /**
          * Категории 
          * @returns {undefined}
@@ -321,6 +351,15 @@ importWisiwyng('product_content', 300);
                                     }
                                 }
                                 //products_category.val(products_category_array).trigger("change");
+                                //kaijean
+                                 // Счёт для платежных систем
+                                var products_account_array = [];
+                                if (e['data']['products_account'] > 0) {
+                                    // for (var i = 0; i < e['data']['products_account'].length; i++) {
+                                        products_account_array.push(e['data']['products_account']);
+                                    // }
+                                }
+                                //kaijean
 
                                 // Темы
                                 var products_topic_array = [];
@@ -341,27 +380,33 @@ importWisiwyng('product_content', 300);
                                 getWaresArray(products_wares_array);
                                 getTopicArray(products_topic_array);
                                 getCategoryArray(products_category_array);
+                                getAccountArray(products_account_array);//kaijean
                                 getProductThemeArray(products_theme_array);
+                                // kaijean
+                                //устанавливаем описание в контейнер для дальнейшего редактирования
+                                $(".products_desc_minimal").html(e['data']['desc_minimal']);
+                                $(".products_desc").html(e['data']['desc']);
+                                // setTimeout(function () {
+                                    // try {
+                                        // устанавливаем содержимое контейнера в редактор при запросе через ajax
+                                        // tinymce.get('products_desc_minimal').setContent(e['data']['desc_minimal']);
+                                    // } catch (e) {
+                                        // console.log('Error products_desc_minimal');
+                                    // }
 
-                                setTimeout(function () {
-                                    try {
-                                        tinymce.get('products_desc_minimal').setContent(e['data']['desc_minimal']);
-                                    } catch (e) {
-                                        console.log('Error products_desc_minimal');
-                                    }
-
-                                    try {
-                                        tinymce.get('products_desc').setContent(e['data']['desc']);
-                                    } catch (e) {
-                                        console.log('Error products_desc');
-                                    }
-                                }, 1500);
+                                    // try {
+                                        // tinymce.get('products_desc').setContent(e['data']['desc']);
+                                    // } catch (e) {
+                                        // console.log('Error products_desc');
+                                    // }
+                                // }, 1500);
+                                // kaijean
 
 
 
 
                                 $(".form_save_products").find(".products_sold").val(e['data']['sold']);
-                                $(".product_content").val(e['data']['product_content']);
+                                $(".product_content").html(e['data']['product_content']);
 
                                 // active
                                 if (e['data']['active'] > 0) {
@@ -448,6 +493,7 @@ importWisiwyng('product_content', 300);
             var products_wares = $(".form_save_products").find(".products_wares").val();
             var products_topic = $(".form_save_products").find(".products_topic").val();
             var products_category = $(".form_save_products").find(".products_category").val();
+            var products_account = $(".form_save_products").find(".products_account").val();//kaijean
             var products_theme = $(".form_save_products").find(".product_theme").val();
             var products_tax = $(".form_save_products").find(".products_tax").val();
             var products_desc_minimal = tinymce.get('products_desc_minimal').getContent();
@@ -481,6 +527,7 @@ importWisiwyng('product_content', 300);
                         "products_wares": products_wares,
                         "products_topic": products_topic,
                         "products_category": products_category,
+                        "products_account": products_account,//kaijean
                         "products_tax": products_tax,
                         "products_theme": products_theme,
                         "products_desc_minimal": products_desc_minimal,
@@ -514,9 +561,10 @@ importWisiwyng('product_content', 300);
         });
 
         products_init();
+
+        // setTimeout(function () {
+        // },1000);
     });
-
-
 
     /*
      * Отобразить или скрыть дополнительный блок
@@ -589,4 +637,18 @@ importWisiwyng('product_content', 300);
                     }
                 });
     }
+</script>
+<script src="/assets/plugins/tinymce/tinymce.js"></script>
+<?
+//include 'admin_edit.php';
+importWisiwyng('products_desc_minimal', 150);
+importWisiwyng('products_desc', 300);
+importWisiwyng('product_content', 300);
+?>
+<script>
+    window.addEventListener("load", function(event) {
+        tinymce.get('products_desc_minimal').setContent(document.querySelector(".products_desc_minimal").textContent);
+        tinymce.get('products_desc').setContent(document.querySelector(".products_desc").textContent);
+        tinymce.get('product_content').setContent(document.querySelector(".product_content").textContent);
+  });
 </script>

@@ -63,6 +63,11 @@ if (isset($_GET['category'])) {
 if (isset($_GET['k'])) {
     $categoryStr = $_GET['k'];
 }
+//Рефферальная ссылка
+if(isset($_GET['ref']))
+{
+    setcookie("ref",$_GET['ref'],time()+60*60*24*3,"/");
+}
 
 /* Все продукты сайта с учетом фильтра */
 $productsFilterArray = $c_product->getProductsIndex($productSearchString, $categoryStr, $productTopicStr, $ProductPromo, $ProductNew, $product_theme);

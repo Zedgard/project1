@@ -308,11 +308,12 @@ if (!function_exists('importWisiwyng')) {
 
     function importWisiwyng($elm_id = '', $height = 300) {
         if (strlen($elm_id) > 0) {
-            $elm_id = "#{$elm_id}";
+            $some_id = $elm_id;
+            $elm_id = "#{$elm_id}"; 
         }
         if ($GLOBALS["ImportWisiwyng"] == 0) {
             ?>
-            <script src="/assets/plugins/tinymce/tinymce.js<?= $_SESSION['rand'] ?>"></script>
+            
             <?
         }
         ?>
@@ -1252,7 +1253,7 @@ if (!function_exists('fast_mysql_select_data')) {
     function fast_mysql_select_data($query) {
         include $_SERVER['DOCUMENT_ROOT'] . '/config.php';
         $data = array();
-        $conn = new mysqli($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
+        $conn = new mysqli('p:'.$cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         } else {

@@ -23,7 +23,7 @@ $api = new TinkoffMerchantAPI(
 
 <?php
 
-$email = 'koman1706@gmail.com';
+$email = 'email@gmail.com';
 $emailCompany = 'testCompany@test.com';
 $phone = '89179990000';
 

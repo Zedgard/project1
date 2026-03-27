@@ -27,8 +27,10 @@ $pr_cart = new \project\cart();
 $p_user = new \project\user();
 
 // Данные платежной системы
-$clientId = $config->getConfigParam('paypal_client_id');
-$clientSecret = $config->getConfigParam('paypal_client_secret');
+// $clientId = $config->getConfigParam('paypal_client_id');
+// $clientSecret = $config->getConfigParam('paypal_client_secret');
+$clientId = $config->getConfigParamByCategory('paypal_client_id',7);//kaijean
+$clientSecret = $config->getConfigParamByCategory('paypal_client_secret',7);//kaijean
 
 // Подключаемся к системе
 if ($clientId == 'AWhQommTsM02uROFM78sl252sngt6qgOLDOJ9VkuyG1F61ZJ8rjUUuQjE-IJvgfhQtV1hXMLeoKbvwfe') {
@@ -50,19 +52,94 @@ $pay_status = "pending"; // Устанавливаем стандартный с
 $price_total = 0;
 $item_name = '';
 
-foreach ($_SESSION['cart']['itms'] as $key => $value) {
-    $email = $value['user_email'];
-    if (strlen($item_name) == 0) {
-        $item_name = 'Товар';
-        //$item_name = preg_replace('/[a-zA-Zа-яА-Я]/', '', $value['title']);
+$data = array();
+$promo_array = array();
+if (isset($_SESSION['cart']['itms']) && count($_SESSION['cart']['itms']) > 0) {
+    foreach ($_SESSION['cart']['itms'] as $key => $value) {
+        $alliance = 1;
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    if ($v['alliance'] == 0) {
+                        $alliance = 0;
+                    }
+                }
+            }
+        }
+        if (count($_SESSION['promos']) > 0) {
+            foreach ($_SESSION['promos'] as $v) {
+                if (strlen($v['code']) > 0) {
+                    $price = (int) $value['price'];
+                    if (strlen($v['product_ids']) > 0) {
+                        $ex = explode(',', $v['product_ids']);
+                        foreach ($ex as $product_id) {
+                            if ($value['id'] == $product_id) {
+                                if ($v['amount'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                                    } else {
+                                        $value['price_promo'] = ($price - $v['amount']);
+                                    }
+                                }
+                                if ($v['percent'] > 0) {
+                                    if ($value['price_promo'] > 0 && $alliance == 1) {
+                                        $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                                    } else {
+                                        $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if ($v['amount'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = ($value['price_promo'] - $v['amount']);
+                            } else {
+                                $value['price_promo'] = ($price - $v['amount']);
+                            }
+                        }
+                        if ($v['percent'] > 0) {
+                            if ($value['price_promo'] > 0 && $v['alliance'] > 0) {
+                                $value['price_promo'] = $value['price_promo'] - (($v['percent'] / 100) * $price);
+                            } else {
+                                $value['price_promo'] = $price - (($v['percent'] / 100) * $price);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $data[] = $value;
     }
-    if ($value['price_promo'] > 0) {
-        $price = $value['price_promo'];
-    } else {
-        $price = $value['price'];
-    }
-    $price_total += $price;
 }
+foreach ($data as $item) {
+    if($item['account_id'] != 2){//kaijean
+        if($item['price_promo'] > 0) {
+            $price = $item['price_promo'];
+        } else {
+            $price = $item['price'];
+        }
+        $email = $item['user_email'];
+        if (strlen($item_name) == 0) {
+            $item_name = 'Товар';
+        }
+        $price_total += $price;
+    }
+}
+
+//foreach ($_SESSION['cart']['itms'] as $key => $value) {
+//    $email = $value['user_email'];
+//    if (strlen($item_name) == 0) {
+//        $item_name = 'Товар';
+//        //$item_name = preg_replace('/[a-zA-Zа-яА-Я]/', '', $value['title']);
+//    }
+//    if ($value['price_promo'] > 0) {
+//        $price = $value['price_promo'];
+//    } else {
+//        $price = $value['price'];
+//    }
+//    $price_total += $price;
+//}
 
 if ($price_total == 0) {
     $result = array('success' => 1, 'success_text' => '', 'data' => array(), 'action' => '/pay.php');
@@ -166,7 +243,7 @@ if ($price_total == 0) {
                 // Сохраняем данные платежа в базу
                 $queryPay = "INSERT INTO `zay_pay` (`id`, `pay_type`, `user_id`, `pay_sum`, `pay_date`, `pay_key`, `payment_type`, `payment_c`, `payment_bank`, `pay_status`, `pay_interkassa_id`, `pay_descr`, `confirmationUrl`) "
                         . "VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?')";
-                if ($sqlLight->query($queryPay, array(($max_id), 'pp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $href), 0)) {
+                if ($sqlLight->query($queryPay, array(($max_id), 'pp', $client_id, $price_total, $pay_date, $pay_key, '', '', '', $pay_status, '', $pay_descr, $href, ''), 0)) {
                     // Сохраним связи с продуктами
                     $pr_cart->pay_insert_pay_products($max_id, $_SESSION['cart']['itms']);
 
@@ -197,4 +274,4 @@ if ($price_total == 0) {
         <div>Корзина пуста</div>
         <?
     }
-}    
+}

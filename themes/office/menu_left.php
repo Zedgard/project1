@@ -82,6 +82,14 @@
                 <span class="nav-text">Покупки</span> 
             </a> 
         </li>
+        <?if($_SESSION['user']['info']['id'] == 38427){?>
+        <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'refferals') ? 'active' : '' ?> ">
+            <a class="sidenav-item-link" href="/office/refferals/">
+                <i class="fas fa-user-plus"></i>
+                <span class="nav-text">Реффералы</span> 
+            </a> 
+        </li>
+        <?}?>
         <li style="margin: 0;padding: 0;" class="has-sub <?= ($_SESSION['page_url'] == 'userprofile_admin') ? 'active' : '' ?> ">
             <a class="sidenav-item-link" href="/office/userprofile_admin/">
                 <i class="mdi mdi-calendar-today"></i>

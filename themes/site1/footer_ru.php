@@ -26,7 +26,11 @@
                 <div class="row mb-2">
                     <div class="col-lg-12">
                         <p>
-                            <i class="fa fa-map-marker"></i> <span class="ml-2">г. Комсомольск-на-Амуре,<br> ул. Вокзальная, 49, оф. 1006</span>
+                            <i class="fa fa-map-marker"></i> <span class="ml-2">г. Комсомольск-на-Амуре,<br> ул. Вокзальная, 49, оф. 1006</span><br>
+                            <span>&copy; ООО "ДИМО", <?= date('Y') ?><span><br>
+                            <span>ОГРН 1202700017981<span><br>
+                            <span>ИНН 2703102063</span><br>
+                            <span>КПП 270301001</span><br>
                         </p>
                     </div>
                 </div>
@@ -41,22 +45,18 @@
                 <div class="row mb-1 d-none">
                     <div class="col-lg-12">
                         <a href="https://apps.apple.com/us/app/эдгард-зайцев/id1468250750" target="_blank" rel="noopener noreferrer">
-                            <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_app.png" width="97" height="30">
+                            <!-- <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_app.png" width="97" height="30"> -->
                         </a>
                     </div>
                 </div>
                 <div class="row mb-1 d-none">
                     <div class="col-lg-12">
                         <a href="https://play.google.com/store/apps/details?id=ru.dvfx.edgardzaitsev" target="_blank" rel="noopener noreferrer">
-                            <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_google-300x99.png" width="97" height="30">
+                            <!-- <img src="https://storage.yandexcloud.net/cdn.edgardzaitsev.com/wp-content/uploads/2019/07/download_google-300x99.png" width="97" height="30"> -->
                         </a>
                     </div>
                 </div>
-                <div class="row mb-1">
-                    <div class="col-lg-12">
-                        &copy; ИП Зайцев Эдгард Александрович, <?= date('Y') ?>
-                    </div>
-                </div>
+                
                 <!--
                 <ul class="social-icons bottom25 wow fadeInUp" data-wow-delay="300ms">
                     <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i> </a> </li>
@@ -112,19 +112,26 @@
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="row mb-3 d-none">
+                <div class="row mb-3">
                     <div class="col-lg-12">
                         <span class="font-weight-bold text-white">ПОДПИСАТЬСЯ НА НОВОСТИ</span>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-lg-12 d-none">
-                        <a href="https://t.me/edgardzaitsev_channel">
-                            <img class="alignnone size-full wp-image-421776" src="https://download.edgardzaitsev.com/wp-content/uploads/2020/09/tgg-4.jpg" alt="" width="190" height="70">
+                    <div class="col-lg-12">
+                        <a href="https://t.me/EZ_friends">
+                            <img class="alignnone size-full wp-image-421776" src="/assets/img/EZ_TG_chat_banner.jpg" alt="" width="190" height="70">
                         </a>
                     </div>
                 </div>
+                <div class="row mb-1">
+                    <div class="col-lg-12">
+                        <span>Банк: "Азиатско-Тихоокеанский Банк" (АО)</span><br>
+                        <span>БИК: 041012765</span><br>
+                        <span>Р/С: 40702810600260078063</span><br>
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>

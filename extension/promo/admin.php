@@ -42,10 +42,14 @@ if ($c_user->isEditor()) {
             $data['promo_alliance'] = ($_POST['promo_alliance'] > 0) ? $_POST['promo_alliance'] : 0;
             $data['promo_products'] = $_POST['promo_products'];
             $data['number_uses'] = $_POST['number_uses'];
-            if ($c_promo->promo_update($_POST['promo_id'], $data)) {
+            //kaijean
+            $result = $c_promo->promo_update($_POST['promo_id'], $data);//обновление или создание промокода
+            if ($result) {
                 location_href('/admin/promo/');
             } else {
                 $_SESSION['page_errors'][] = 'Ошибка сохранения';
+                $_SESSION['page_errors'][] = $result;
+
             }
         }
 

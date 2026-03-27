@@ -9,7 +9,17 @@ $.fn.isInViewport = function () {
     var viewportBottom = viewportTop + $(window).height();
     return elementBottom > viewportTop && elementTop < viewportBottom;
 };
+//отправляем данные по наждатой кнопки в вк
+function sendGoal(el)
+{
 
+    var prod_id = el.getAttribute('product_id');//получаем индентификатор товара
+    if(prod_id == 4681)//если это живой тренинг
+    {
+        // console.log('clicked');
+        VK.Goal('add_to_cart', {value: 7600});//отправляем данные в пиксель ВК
+    }
+}
 $(document).ready(function () {
 
 

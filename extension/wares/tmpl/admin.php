@@ -13,9 +13,18 @@
                             <? if (!isset($_GET['edit'])): ?>
                                 <a href="#" class="btn btn-primary float-left add_wares" data-toggle="modal" data-target="#form_edit_wares_modal">Добавление товара</a>
                                 <?
-                                include 'admin_edit.php';
+                                include 'admin_edit.php';?>
+                                <script src="/assets/plugins/tinymce/tinymce.js"></script>
+                                <script src="/assets/plugins/tinymce/themes/modern/theme.js"></script>
+                                <?
                                 importWisiwyng('wares_descr');
                                 ?>
+                                <script>
+                                    window.addEventListener("load", function(event) {
+                                        // document.querySelector(".wares_descr").textContent = "<p></p>";
+                                        tinymce.get('wares_descr').setContent(document.querySelector(".wares_descr").textContent);
+                                  });
+                                </script>
                             <? endif; ?>
                             <select name="visible" class="form-control w-25 float-left ml-2 visible_wares">
                                 <option value="1" <?= (isset($_SESSION['wares']['visible']) && $_SESSION['wares']['visible'] == 1) ? 'selected="selected"' : '' ?>>Отображаемые</option>
@@ -163,7 +172,8 @@
                                     $(".form_save_wares").find(".wares_title").val(e['data']['title']);
                                     $(".form_save_wares").find(".wares_ex_code").val(e['data']['ex_code']);
                                     $(".form_save_wares").find(".wares_articul").val(e['data']['articul']);
-                                    tinymce.get('wares_descr').setContent(e['data']['descr']);
+                                    $(".wares_descr").html(e['data']['descr']);
+                                    // tinymce.get('wares_descr').setContent(e['data']['descr']);
                                     $(".form_save_wares").find(".wares_col").val(e['data']['col']);
 
                                     // Каталоги
@@ -207,7 +217,7 @@
             $(".form_save_wares").find(".wares_ex_code").val("");
             $(".form_save_wares").find(".wares_articul").val("");
             wares_categorys.val([]).trigger("change");
-            tinymce.get('wares_descr').setContent("<p></p>");
+            // tinymce.get('wares_descr').setContent("<p></p>");
             $(".form_save_wares").find(".wares_col").val("");
             $(".form_save_wares").find('.images').html("");
             $(".form_save_wares").find(".wares_id").val("0");
@@ -310,5 +320,4 @@
             }
         });
     }
-
-</script>    
+</script>

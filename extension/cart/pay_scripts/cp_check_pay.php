@@ -14,8 +14,10 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/system/cloudpayments-php-client-maste
  */
 $config = new \project\config();
 $sqlLight = new \project\sqlLight();
-$publicKey = $config->getConfigParam('CloudPayments');
-$privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
+// $publicKey = $config->getConfigParam('CloudPayments');
+// $privateKey = $config->getConfigParam('CloudPayments_PrivateKey');
+$publicKey = $config->getConfigParamByCategory('CloudPayments',7);//kaijean
+$privateKey = $config->getConfigParamByCategory('CloudPayments_PrivateKey',7);//kaijean
 
 $client = new \CloudPayments\Manager($publicKey, $privateKey);
 //echo "id: {$_GET['id']} <br/>\n";

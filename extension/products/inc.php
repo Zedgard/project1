@@ -9,6 +9,7 @@ class products extends \project\extension {
 
     private $products_wares = array();
     private $products_category = array();
+    private $products_account = array();//kaijean
     private $products_topic = array();
     private $products_theme = array();
 
@@ -35,7 +36,17 @@ class products extends \project\extension {
             $this->products_category = $products_category;
         }
     }
-
+    //kaijean
+    /**
+     * Сохраним данные для обработки по категориям
+     * @param type $products_category
+     */
+    function setProducts_account($products_account) {
+        // if (is_array($products_category)) {
+            $this->products_account = $products_account;
+        // }
+    }
+    //kaijean
     /**
      * Темы
      * @param type $products_theme
@@ -150,6 +161,7 @@ class products extends \project\extension {
                 $obj_product[0]['products_wares'] = $this->getProducts_wares($obj_product[0]['id']);
                 $obj_product[0]['products_category'] = $this->getProducts_category($obj_product[0]['id']);
                 $obj_product[0]['products_topic'] = $this->getProducts_topic($obj_product[0]['id']);
+                $obj_product[0]['products_account'] = $this->getProducts_account($obj_product[0]['account_id']);//kaijean
                 $obj_product[0]['products_theme'] = $this->getProducts_theme($obj_product[0]['id']);
 
                 if (count($obj_product[0]['products_category']) > 0) {
@@ -176,6 +188,37 @@ class products extends \project\extension {
         $query = "select * from `zay_product` where id='?'";
         return $this->getSelectArray($query, array($product_id))[0];
     }
+    //kaijean
+    /**
+     * Получить идентификатор по продукту из таблицы products
+     * @param type $product_id
+     * @return type
+     */
+    public function getProductId($product_id) {
+        $query = "select p.id from `zay_product` p where id='?'";
+        return $this->getSelectArray($query, array($product_id))[0];
+    }
+    /**
+     * Получить идентификатор по продукту из таблицы products
+     * @param type $product_id
+     * @return type
+     */
+    public function getProductsByIds($prodIdsArray = [])
+    {
+        if(!empty($prodIdsArray))
+        {
+            $idsStr = implode(",", $prodIdsArray);
+            $query = "SELECT p.id, p.price FROM zay_product p WHERE p.id IN('?')";
+            $data = $this->getSelectArray($query, [$idsStr]);
+            return $data;
+        }
+        else
+        {
+            return [];
+        }
+    }
+    //kaijean
+
 
     /**
      * Создание изменение товара
@@ -188,13 +231,38 @@ class products extends \project\extension {
      * @param type $articul
      * @return boolean
      */
-    public function insertOrUpdateProducts($id, $title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0, $active = 1) {
+    //kaijean
+    public function insertOrUpdateProducts($id, $account_id, $title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax = 0, $active = 1) {
+        $data = [];
+        $data[] = $title;
         if ($id > 0) {
-            $query = "UPDATE `zay_product` "
-                    . "SET `title`='?', `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
+            $query = "UPDATE `zay_product` "."SET `title`='?',";
+            if(!empty($account_id))
+            {
+                $query .= " `account_id`='?',";
+                $data[] = $account_id;
+            }
+            else
+            {
+                $query .= " `account_id`=NULL,";
+            }
+            $query .= " `desc_minimal`='?', `price`='?', `price_promo`='?', `period_open`='?', `desc`='?', `sold`='?', `product_content`='?', "
                     . "`images_str`='?', `product_new`='?', `tax`='?', `active`='?', is_delete='0', `lastdate`=(DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) "
                     . "WHERE `id`='?' ";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active, $id), 0)) {
+            $data[] = $desc_minimal;
+            $data[] = $price;
+            $data[] = $price_promo;
+            $data[] = $period_open;
+            $data[] = $desc;
+            $data[] = $sold;
+            $data[] = $product_content;
+            $data[] = $images_str;
+            $data[] = $product_new;
+            $data[] = $tax;
+            $data[] = $active;
+            $data[] = $id;
+
+            if ($this->query($query, $data, 0)) {
                 $this->insertProductWares($id, $this->products_wares);
                 $this->insertProductCategory($id, $this->products_category);
                 $this->insertProductTopic($id, $this->products_topic);
@@ -202,11 +270,35 @@ class products extends \project\extension {
                 return true;
             }
         } else {
-
-            $query = "INSERT INTO `zay_product` (`title`, `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
-                    . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) "
-                    . "VALUES ('?','?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
-            if ($this->query($query, array($title, $desc_minimal, $price, $price_promo, $period_open, $desc, $sold, $product_content, $images_str, $product_new, $tax, $active))) {
+            $values = "VALUES ('?',";
+            $query = "INSERT INTO `zay_product` (`title`,";
+            if(!empty($account_id))
+            {
+                $query .= " `account_id`,";
+                $data[] = $account_id;
+                $values .= "'?',";
+            }
+            else
+            {
+                $query .= " `account_id`,";
+                $values .= " NULL,";
+            }
+            $query .= " `desc_minimal`, `price`, `price_promo`, `period_open`, `desc`, `sold`, "
+                    . "`product_content`, `images_str`, `product_new`, `tax`, `active`, `lastdate`) ";
+            $values .= "'?','?','?','?','?','?','?','?','?','?','?', (DATE_ADD(NOW(), INTERVAL {$_SESSION['HOUR']} HOUR)) )";
+            $query .= $values;
+            $data[] = $desc_minimal;
+            $data[] = $price;
+            $data[] = $price_promo;
+            $data[] = $period_open;
+            $data[] = $desc;
+            $data[] = $sold;
+            $data[] = $product_content;
+            $data[] = $images_str;
+            $data[] = $product_new;
+            $data[] = $tax;
+            $data[] = $active;
+            if ($this->query($query, $data)) {
                 $querySelect = "SELECT MAX(p.id) as id FROM `zay_product` p ";
                 $id = $this->getSelectArray($querySelect)[0]['id'];
                 $this->insertProductWares($id, $this->products_wares);
@@ -219,6 +311,7 @@ class products extends \project\extension {
 
         return false;
     }
+    //kaijean
 
     /**
      * Привязка категорий
@@ -332,6 +425,18 @@ class products extends \project\extension {
         $this->products_category = explode(',', $this->getSelectArray($querySelect, array($product_id))[0]['category_ids']);
         return $this->products_category;
     }
+    //kaijean
+    /**
+     * ID связанного счёта для платежей
+     * @param type $account_id
+     * @return type
+     */
+    function getProducts_account($account_id) {
+        $querySelect = "SELECT ac.id, ac.name FROM `zay_accounts` ac WHERE ac.`id`='?'";
+        $this->products_account = $this->getSelectArray($querySelect, array($account_id))[0]['id'];
+        return $this->products_account;
+    }
+    //kaijean
 
     /**
      * Список ID связанных тем 

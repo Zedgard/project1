@@ -22,15 +22,17 @@ $products = new \project\products();
 $config = new \project\config();
 $sign_up_consultation = new \project\sign_up_consultation();
 
-$ya_shop_id = $config->getConfigParam('ya_shop_id');
-$ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
+// $ya_shop_id = $config->getConfigParam('ya_shop_id');
+// $ya_shop_api_key = $config->getConfigParam('ya_shop_api_key');
+$ya_shop_id = $config->getConfigParamByCategory('ya_shop_id',7);//kaijean
+$ya_shop_api_key = $config->getConfigParamByCategory('ya_shop_api_key',7);//kaijean
 //echo "ya_shop_id: {$ya_shop_id}, ya_shop_api_key: {$ya_shop_api_key} \n";
 //echo "PAY_KEY: {$_SESSION['PAY_KEY']}\n";
 //$connection = mysqli_connect($cfg_db_host, $cfg_db_user, $cfg_db_pass, $cfg_db_name) or die(mysqli_error($connection)); // Подключаемся к базе данных
 // Подключаем библиотеку Я.Кассы
-require $_SERVER['DOCUMENT_ROOT'] . '/system/yandex-checkout-sdk-php-master/lib/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/system/yookassa-sdk-php-master/lib/autoload.php';
 
-use YandexCheckout\Client;
+use \YooKassa\Client;
 
 $client = new Client();
 $client->setAuth($ya_shop_id, $ya_shop_api_key);

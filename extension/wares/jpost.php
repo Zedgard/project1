@@ -183,7 +183,16 @@ if (isset($_POST['getClientPayProducts'])) {
     $data = $pr_wares->getClientPayProducts();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
 }
-
+//kaijean
+if (isset($_POST['hideWaresPayments'])) {
+    $u_id = $_SESSION['user']['info']['id'];
+    if($u_id > 0)
+    {
+        $data = $pr_wares->hideWaresPayments($_POST['hideWaresPayments'],$u_id);
+    }
+    $result = array('success' => 1, 'success_text' => '', 'data' => $data);
+}
+//kaijean
 if (isset($_POST['getClientWebinarsProducts'])) {
     $data = $pr_wares->getClientWebinarsProducts();
     $result = array('success' => 1, 'success_text' => '', 'data' => $data);
